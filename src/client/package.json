@@ -1,0 +1,53 @@
+{
+  "name": "universal-dashboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server --config webpack.config.js --progress --env development",
+    "build": "webpack -p --env production"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aspnet/signalr-client": "1.0.0-alpha2-final",
+    "chart.js": "2.7.0",
+    "griddle-react": "1.9.0",
+    "numeral": "2.0.6",
+    "font-awesome": "4.7.0",
+    "jquery": "3.2.1",
+    "js-cookie": "2.2.0",
+    "materialize-css": "0.100.2",
+    "moment": "2.18.1",
+    "promise-polyfill": "6.0.2",
+    "pubsub-js": "1.5.7",
+    "react": "^16.0.0",
+    "react-color": "2.13.8",
+    "highlight.js": "9.12.0",
+    "react-chartjs-2": "2.6.2",
+    "create-react-class": "15.6.2",
+    "react-debounce-input": "3.2.0",
+    "react-dom": "^16.0.0",
+    "react-materialize": "1.1.0",
+    "react-redux":"5.0.7",
+    "redux-thunk":"2.3.0",
+    "react-interval": "^2.0.1",
+    "react-router-dom": "4.2.2",
+    "whatwg-fetch": "^2.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-2": "6.24.1",
+    "css-loader": "^0.28.7",
+    "file-loader": "^0.11.2",
+    "html-webpack-plugin": "2.30.1",
+    "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "0.4.6",
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.8.2"
+  }
+}

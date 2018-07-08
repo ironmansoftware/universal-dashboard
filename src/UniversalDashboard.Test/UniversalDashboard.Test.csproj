@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Controller\ComponentController.Test.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20171031-01" />
+    <PackageReference Include="NSubstitute" Version="3.1.0" />
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-preview-02"/>
+    <PackageReference Include="xunit" Version="2.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\UniversalDashboard\UniversalDashboard.csproj" />
+  </ItemGroup>
+
+</Project>

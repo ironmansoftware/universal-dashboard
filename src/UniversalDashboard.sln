@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard", "UniversalDashboard\UniversalDashboard.csproj", "{2B55B58C-49FC-4838-94EA-476D64A7345B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Test", "UniversalDashboard.Test\UniversalDashboard.Test.csproj", "{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A666D7E6-4A88-482A-B2AC-885457D2B5FD}"
+	ProjectSection(SolutionItems) = preProject
+		build.ps1 = build.ps1
+		new-markdown-help.ps1 = new-markdown-help.ps1
+		process-runtimes-json.ps1 = process-runtimes-json.ps1
+		UniversalDashboard.psm1 = UniversalDashboard.psm1
+		UniversalDashboardServer.psm1 = UniversalDashboardServer.psm1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{3C812BBD-3316-4410-A9FD-268F0FA5A023}"
+	ProjectSection(SolutionItems) = preProject
+		samples\azure-dashboard.ps1 = samples\azure-dashboard.ps1
+		samples\debug.ps1 = samples\debug.ps1
+		samples\server-performance-dashboard.ps1 = samples\server-performance-dashboard.ps1
+		samples\stock-price.ps1 = samples\stock-price.ps1
+		samples\utils.ps1 = samples\utils.ps1
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Server", "UniversalDashboard.Server\UniversalDashboard.Server.csproj", "{5A6E2F1A-410A-46DA-8B37-D21F01789A18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Common", "UniversalDashboard.Common\UniversalDashboard.Common.csproj", "{B074A1C4-B953-472D-B99C-D48AC3D252F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2B55B58C-49FC-4838-94EA-476D64A7345B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B55B58C-49FC-4838-94EA-476D64A7345B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B55B58C-49FC-4838-94EA-476D64A7345B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B55B58C-49FC-4838-94EA-476D64A7345B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A6E2F1A-410A-46DA-8B37-D21F01789A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A6E2F1A-410A-46DA-8B37-D21F01789A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A6E2F1A-410A-46DA-8B37-D21F01789A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A6E2F1A-410A-46DA-8B37-D21F01789A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B074A1C4-B953-472D-B99C-D48AC3D252F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B074A1C4-B953-472D-B99C-D48AC3D252F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B074A1C4-B953-472D-B99C-D48AC3D252F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B074A1C4-B953-472D-B99C-D48AC3D252F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D146209A-757D-4EEE-972D-EA95AA277F0A}
+	EndGlobalSection
+EndGlobal

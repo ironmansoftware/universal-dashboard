@@ -1,0 +1,29 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:8836/",
+      "sslPort": 0
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "UniversalDashboard": {
+      "commandName": "Executable",
+      "executablePath": "C:\\windows\\system32\\windowspowershell\\v1.0\\powershell.exe",
+      "commandLineArgs": "-ExecutionPolicy Unrestricted -NoExit -Command .\\debug.ps1 ",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:5001/"
+    }
+  }
+}
