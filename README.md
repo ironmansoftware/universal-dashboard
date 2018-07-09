@@ -23,6 +23,10 @@ Install-Module UniversalDashboard
 - Generate REST APIs with only PowerShell
 - Extreme customization 
 
+## Build Status
+
+[![Build status](https://ci.appveyor.com/api/projects/status/ng3ye067j04eblwi?svg=true)](https://ci.appveyor.com/project/adamdriscoll/universal-dashboard)
+
 ## Examples
 
 ### [Chatroom](https://github.com/ironmansoftware/ud-chatroom)
