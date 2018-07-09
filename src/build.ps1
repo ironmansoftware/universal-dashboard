@@ -68,7 +68,6 @@ Copy-Item "$PSScriptRoot\web.config" $outputDirectory
 Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboard.psm1" $outputDirectory
 Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboardServer.psm1" $outputDirectory
 Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net462\UniversalDashboard.Controls.psm1" $outputDirectory
-Copy-Item "$PSScriptRoot\UniversalDashboard\license.txt" $outputDirectory
 Copy-Item "$PSScriptRoot\poshud" $poshud -Recurse -Container
 
 . "$PSScriptRoot\CorFlags.exe" /32BITREQ-  "$outputDirectory\net462\UniversalDashboard.Server.exe" 
