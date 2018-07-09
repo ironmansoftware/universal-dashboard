@@ -54,3 +54,10 @@ Invoke-PesterTest -FileName Manifest.Tests.ps1 -Release:$Release
 
 Get-Process firefox -ErrorAction SilentlyContinue | Stop-Process
 Stop-Service -Name UniversalDashboard -ErrorAction SilentlyContinue
+
+if ($null -ne $env:APPVEYOR_JOB_ID) {
+    Get-ChildItem $OutputPath | ForEach-Object {
+        $wc = New-Object 'System.Net.WebClient'
+        $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit3/$($env:APPVEYOR_JOB_ID)", ($_.FullName))
+    }
+}
