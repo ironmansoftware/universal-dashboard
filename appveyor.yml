@@ -1,7 +1,7 @@
 version: 2.0.{build}
 
 build_script:
-  ps: .\src\build.ps1 -Configuration -Release
+- ps: .\src\build.ps1 -Configuration -Release
 
 test_script:
-  ps: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration
+- ps: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration
