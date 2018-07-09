@@ -1,5 +1,12 @@
 param([Switch]$Release, [Switch]$Integration)
 
+$Pester = Import-Module Pester  -PassThru -ErrorAction Ignore
+if ($Pester -eq $null) {
+	Install-Module Pester -Scope CurrentUser -Force
+	Import-Module Pester -Force
+}
+
+
 if (-not $Release) {
     Copy-Item "$PSScriptRoot\..\UniversalDashboard\bin\debug\net462\UniversalDashboard.Community.psd1" "$PSScriptRoot\..\UniversalDashboard\bin\debug\"
     Copy-Item "$PSScriptRoot\..\UniversalDashboard\bin\debug\net462\UniversalDashboard.psm1" "$PSScriptRoot\..\UniversalDashboard\bin\debug\"
