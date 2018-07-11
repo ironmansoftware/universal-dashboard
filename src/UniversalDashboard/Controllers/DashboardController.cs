@@ -61,28 +61,12 @@ namespace UniversalDashboard.Controllers
 		[Route("/dashboard/theme")]
 	    public IActionResult Theme()
 	    {
-				return new ContentResult()
+			return new ContentResult()
             {
                 Content = _dashboard?.Themes?.FirstOrDefault()?.RenderedContent,
                 ContentType = "text/css",
             };
 	    }
-
-        //TODO: Move to enterprise
-
-        //[Authorize]
-        //[Route("/dashboard/loadingoptions")]
-        //public IActionResult LoadingOptions()
-        //{
-        //    return new JsonResult(new
-        //    { _dashboard?.LoadingScreen?.BackgroundColor,
-        //      _dashboard?.LoadingScreen?.TextColor,
-        //      _dashboard?.LoadingScreen?.ShowSplash,
-        //      _dashboard?.LoadingScreen?.Text
-        //    });
-        //}
-
-        //TODO: Move to enterprise
 
         [Route("/api/dashboard/reload")]
 		public async Task<IActionResult> Reload() {
