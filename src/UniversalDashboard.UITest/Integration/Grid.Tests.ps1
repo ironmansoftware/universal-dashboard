@@ -29,7 +29,7 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Start-Sleep 5
 
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
@@ -67,13 +67,13 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Start-Sleep 5
 
         It "should click button" {
             $Button = Find-SeElement -LinkText "Hey" -Driver $Driver 
             Invoke-SeClick -Element $Button 
 
-            Start-Sleep 1
+            Start-Sleep 3
 
             (Find-SeElement -Id "Hey" -Driver $Driver).Text | should be "Hey"
         }
@@ -121,7 +121,7 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Start-Sleep 5
 
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
@@ -172,7 +172,7 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Start-Sleep 5
 
         It "should have data" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
@@ -319,7 +319,7 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 4
+        Start-Sleep 5
 
         It "should not page when NoPaging set" {
             $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Driver
@@ -428,7 +428,7 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Start-Sleep 5
 
         It "should have sorted correctly" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
@@ -459,7 +459,7 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Start-Sleep 5
 
         It "should have sorted correctly" {
             $previousText = ""
