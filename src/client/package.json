@@ -30,8 +30,8 @@
     "react-debounce-input": "3.2.0",
     "react-dom": "^16.0.0",
     "react-materialize": "1.1.0",
-    "react-redux":"5.0.7",
-    "redux-thunk":"2.3.0",
+    "react-redux": "5.0.7",
+    "redux-thunk": "2.3.0",
     "react-interval": "^2.0.1",
     "react-router-dom": "4.2.2",
     "whatwg-fetch": "^2.0.3"
