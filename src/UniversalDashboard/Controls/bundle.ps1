@@ -3,7 +3,7 @@ param($TargetDir)
 $PS1s = Get-ChildItem "$PSScriptRoot\src" | Where-Object Extension -eq ".ps1"
 
 $TargetFile = Join-Path $TargetDir "UniversalDashboard.Controls.psm1"
-Remove-Item $TargetFile -Force
+Remove-Item $TargetFile -ErrorAction SilentlyContinue -Force
 
 Write-Host "$TargetFile"
 
