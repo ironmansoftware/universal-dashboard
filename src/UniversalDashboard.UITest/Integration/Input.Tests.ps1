@@ -63,7 +63,6 @@ Describe "Input" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should select date" {
 
@@ -225,7 +224,6 @@ Describe "Input" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should not clear monitor after input" {
 
@@ -280,7 +278,6 @@ Describe "Input" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should output text" {
             $Element = Find-SeElement -Name "Textbox" -Driver $Driver
@@ -384,7 +381,6 @@ Describe "Input" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should have different submit text" {
             $Element = Find-SeElement -LinkText "Insert" -Driver $Driver
@@ -417,7 +413,6 @@ Describe "Input" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "have cleared input on toast" {
             $Element = Find-SeElement -Name "test" -Driver $Driver
@@ -451,7 +446,6 @@ Describe "Input" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should have different submit text" {
             $Element = Find-SeElement -LinkText "Insert" -Driver $Driver
@@ -487,7 +481,6 @@ Describe "Input" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should redirect to correct page" {
             $Element = Find-SeElement -Name "PageNumber" -Driver $Driver
@@ -495,8 +488,6 @@ Describe "Input" {
 
             $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
             Invoke-SeClick -Element $Button 
-
-            Start-Sleep 1
 
             $Element = Find-SeElement -Id "PageCard" -Driver $Driver
             $Element.Text | Should be "Page 6"
@@ -522,7 +513,6 @@ Describe "Input" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should have different content after click" {
             $Element = Find-SeElement -Name "Test" -Driver $Driver

@@ -80,7 +80,6 @@ Describe "Formatting" {
         #Open firefox
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "Should not change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Driver
@@ -112,7 +111,6 @@ Describe "Formatting" {
         #Open firefox
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "Should change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Driver
@@ -144,7 +142,6 @@ Describe "Formatting" {
         #Open firefox
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "Should not change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Driver
@@ -176,7 +173,6 @@ Describe "Formatting" {
         #Open firefox
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "Should change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Driver

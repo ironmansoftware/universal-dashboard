@@ -44,7 +44,6 @@ Describe "Chart" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "Changes the chart with a filter" {
             $Element = Find-SeElement -Name "Text" -Driver $Driver
@@ -76,7 +75,6 @@ Describe "Chart" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should have chart" {
             Find-SeElement -Id "Chart" -Driver $Driver | Should not be $null

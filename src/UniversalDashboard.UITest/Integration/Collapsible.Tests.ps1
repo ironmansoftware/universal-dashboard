@@ -54,7 +54,6 @@ Describe "Collapsible" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should have title text" {
             $Element = Find-SeElement -Id "First-header" -Driver $Driver
