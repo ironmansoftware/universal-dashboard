@@ -33,9 +33,7 @@ function New-UDColumn {
         [Parameter(ParameterSetName = "endpoint")]
         [Switch]$AutoRefresh,
         [Parameter(ParameterSetName = "endpoint")]
-        [int]$RefreshInterval = 5,
-        [Parameter(ParameterSetName = "endpoint")]
-        [Switch]$DebugEndpoint
+        [int]$RefreshInterval = 5
     )
 
     $classes = "col"
@@ -71,7 +69,7 @@ function New-UDColumn {
     } else {
         New-UDElement -Tag 'div' -Attributes @{
             className = $classes
-        } -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -DebugEndpoint:$DebugEndpoint
+        } -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval 
     }
 
     

@@ -12,13 +12,12 @@ namespace UniversalDashboard.Cmdlets
     {
         public static string[] SkippedVariables = new[] { "args", "input", "psboundparameters", "pscommandpath", "foreach", "myinvocation", "psscriptroot", "DefaultVIServer", "DefaultVIServers"  };
 
-        public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState, bool debugEndpoint)
+        public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState)
         {
             var logger = LogManager.GetLogger("CallbackCmdlet");
 
             var callback = new Endpoint();
             callback.Name = id;
-            callback.Debug = debugEndpoint;
             callback.ScriptBlock = endpoint;
 
             try

@@ -15,13 +15,13 @@ Creates a new page in the dashboard.
 ### static
 ```
 New-UDPage [-Name] <String> [[-Icon] <FontAwesomeIcons>] [-Content] <ScriptBlock> [-Endpoint <ScriptBlock>]
- [-AutoRefresh] [-RefreshInterval <Int32>] [-DebugEndpoint] [-Id <String>] [<CommonParameters>]
+ [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
 
 ### dynamic
 ```
 New-UDPage [[-Icon] <FontAwesomeIcons>] [-Url] <String> [-Endpoint <ScriptBlock>] [-AutoRefresh]
- [-RefreshInterval <Int32>] [-DebugEndpoint] [-Id <String>] [<CommonParameters>]
+ [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -86,21 +86,6 @@ Aliases:
 
 Required: True
 Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugEndpoint
-Runs the Endpoint in the UDDebug runspace.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

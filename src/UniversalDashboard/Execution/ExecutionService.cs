@@ -55,7 +55,6 @@ namespace UniversalDashboard.Execution
 
         public object ExecuteEndpoint(ExecutionContext context, Endpoint endpoint)
         {
-            var debugEndpoint = endpoint.Debug;
             var script = endpoint.ScriptBlock.ToString();
             var scriptBlockAst = endpoint.ScriptBlock.Ast as ScriptBlockAst;
             
@@ -88,7 +87,7 @@ namespace UniversalDashboard.Execution
             string json;
             using (var ps = PowerShell.Create())
 			{
-                using (var runspaceRef = debugEndpoint ? _runspace.GetDebugRunspace() : _runspace.GetRunspace())
+                using (var runspaceRef =  _runspace.GetRunspace())
                 {
                     Runspace.DefaultRunspace = runspaceRef.Runspace;
                     ps.Runspace = runspaceRef.Runspace;

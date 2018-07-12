@@ -59,7 +59,7 @@ namespace UniversalDashboard.Cmdlets
 			options.Certificate = Certificate;
 			options.CertificateFile = CertificateFile;
 			options.Password = CertificateFilePassword;
-			options.EndpointInitializationScript = EndpointInitializationScript?.GenerateCallback("IS", SessionState, false);
+			options.EndpointInitializationScript = EndpointInitializationScript?.GenerateCallback("IS", SessionState);
 
             AddDynamicParameters(options);
             ValidateModel(options);

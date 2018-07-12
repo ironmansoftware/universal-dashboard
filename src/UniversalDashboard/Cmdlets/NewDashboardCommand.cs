@@ -82,7 +82,7 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.CyclePagesInterval = CyclePagesInterval;
 			dashboard.Footer = Footer;
 			dashboard.NavBarLogo = NavBarLogo;
-			dashboard.InitializationScript = EndpointInitializationScript?.GenerateCallback("IS", SessionState, false);
+			dashboard.InitializationScript = EndpointInitializationScript?.GenerateCallback("IS", SessionState);
 			dashboard.GeoLocation = GeoLocation;
            
             if (Theme != null) {

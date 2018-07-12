@@ -16,7 +16,7 @@ Creates a grid in the dashboard.
 New-UDGrid [-Title <String>] -Headers <String[]> -Properties <String[]> [-DefaultSortColumn <String>]
  [-DefaultSortDescending] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Links <Link[]>]
  [-ServerSideProcessing] [-DateTimeFormat <String>] [-PageSize <Int32>] [-NoPaging] [-FilterText <String>]
- [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>] [-DebugEndpoint] [-Id <String>]
+ [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>]
  [<CommonParameters>]
 ```
 
@@ -90,20 +90,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DebugEndpoint
-Runs the Endpoint in the UDDebug runspace.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -DefaultSortColumn
 Specifies the column index of the default sort column. This index begins with zero.  

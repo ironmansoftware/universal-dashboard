@@ -10,9 +10,7 @@ function New-UDRow {
         [Parameter(ParameterSetName = "dynamic")]
         [Switch]$AutoRefresh,
         [Parameter(ParameterSetName = "dynamic")]
-        [int]$RefreshInterval = 5,
-        [Parameter(ParameterSetName = "dynamic")]
-        [Switch]$DebugEndpoint
+        [int]$RefreshInterval = 5
     )
 
     if ($PSCmdlet.ParameterSetName -eq 'static') {
@@ -23,6 +21,6 @@ function New-UDRow {
     else {
         New-UDElement -Tag 'div' -Attributes @{
             className = 'row'
-        } -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -DebugEndpoint:$DebugEndpoint
+        } -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval 
     }
 }

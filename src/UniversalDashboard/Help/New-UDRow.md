@@ -19,7 +19,7 @@ New-UDRow [-Id <String>] [[-Columns] <ScriptBlock>] [<CommonParameters>]
 
 ### dynamic
 ```
-New-UDRow [-Id <String>] [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>] [-DebugEndpoint]
+New-UDRow [-Id <String>] [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>]
  [<CommonParameters>]
 ```
 
@@ -90,21 +90,6 @@ Aliases:
 
 Required: False
 Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugEndpoint
-Runs the Endpoint in the UDDebug runspace.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: dynamic
-Aliases: 
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

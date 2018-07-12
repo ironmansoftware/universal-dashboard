@@ -32,16 +32,12 @@ namespace UniversalDashboard.Cmdlets.Inputs
 		[Parameter()]
 		public ScriptBlock Content { get; set; }
 
-		[Parameter()]
-		public SwitchParameter DebugEndpoint { get; set; }
-
 		protected Endpoint GenerateCallback()
 		{
 			var logger = LogManager.GetLogger("NewInputCommand");
 
 			var callback = new Endpoint();
 			callback.ScriptBlock = Endpoint;
-			callback.Debug = DebugEndpoint;
 
 			try
 			{

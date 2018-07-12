@@ -15,12 +15,10 @@ namespace UniversalDashboard.Services
 {
     public class RunspaceReference : IRunspaceReference {
 		private IUDRunspaceFactory _factory;
-		private bool _debugRunspace;
 
-		public RunspaceReference(IUDRunspaceFactory factory, Runspace runspace, bool debugRunspace) {
+		public RunspaceReference(IUDRunspaceFactory factory, Runspace runspace) {
 			_factory = factory;
 			Runspace = runspace;
-			_debugRunspace = debugRunspace;
 		}
 
 		public Runspace Runspace {get;}
@@ -34,11 +32,7 @@ namespace UniversalDashboard.Services
             {
                 if (disposing)
                 {
-					if (_debugRunspace) {
-						_factory.ReturnDebugRunspace();
-					} else {
-						_factory.ReturnRunspace(Runspace);
-					}
+					_factory.ReturnRunspace(Runspace);
                 }
 
                 disposedValue = true;
@@ -59,42 +53,24 @@ namespace UniversalDashboard.Services
 		private readonly Logger Log = LogManager.GetLogger("UDRunspaceFactory");
 		
 		private ObjectPool<Runspace> _runspacePool;
-		private Runspace _debugRunspace;
 		private Endpoint _initializationScript;
-		private Semaphore _debugRunspaceSemaphore = new Semaphore(1, 1);
 		private IDashboardService _dashboardService;
 
 		public IRunspaceReference GetRunspace() {
 			var runspace = _runspacePool.Allocate();
 
-			return new RunspaceReference(this, runspace, false);
+			return new RunspaceReference(this, runspace);
 		}
 
 		public void ReturnRunspace(Runspace runspace) {
 			_runspacePool.Free(runspace);
 		}
 
-		public void ReturnDebugRunspace() {
-			_debugRunspaceSemaphore.Release();
-		}
-
-
 		public UDRunspaceFactory(IDashboardService dashboardService, Endpoint initializationScript) {
 			_initializationScript = initializationScript;
 			_dashboardService = dashboardService;
 
 			_runspacePool = new ObjectPool<Runspace>(CreateRunspace);
-		}
-
-		public IRunspaceReference GetDebugRunspace() {
-			_debugRunspaceSemaphore.WaitOne();
-
-			if (_debugRunspace == null) {
-				_debugRunspace = CreateRunspace();
-				//TODO: _debugRunspace. = "UDDebug";
-			}
-			
-			return new RunspaceReference(this, _debugRunspace, true);
 		}
 
 		private Runspace CreateRunspace() {

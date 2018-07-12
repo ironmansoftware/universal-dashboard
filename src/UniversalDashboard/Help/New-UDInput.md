@@ -14,7 +14,7 @@ Creates an input card on the dashboard to accept user input.
 
 ```
 New-UDInput [-Title <String>] [-SubmitText <String>] [-BackgroundColor <DashboardColor>]
- [-FontColor <DashboardColor>] -Endpoint <ScriptBlock> [-Content <ScriptBlock>] [-DebugEndpoint] [-Id <String>]
+ [-FontColor <DashboardColor>] -Endpoint <ScriptBlock> [-Content <ScriptBlock>] [-Id <String>]
  [<CommonParameters>]
 ```
 
@@ -63,21 +63,6 @@ Specify custom content for a UDInput. If this is specified, the param block in t
 
 ```yaml
 Type: ScriptBlock
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugEndpoint
-Enables debug endpoint for New-UDInput.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 

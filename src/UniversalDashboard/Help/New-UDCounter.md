@@ -16,7 +16,7 @@ Creates a simple counter.
 New-UDCounter [-Title <String>] [-Format <String>] [-Icon <FontAwesomeIcons>]
  [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Links <Link[]>] [-TextSize <TextSize>]
  [-TextAlignment <TextAlignment>] [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>]
- [-DebugEndpoint] [-Id <String>] [<CommonParameters>]
+ [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -65,20 +65,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DebugEndpoint
-Runs the Endpoint in the UDDebug runspace.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Endpoint
 The endpoint that is called on the server to get data for the counter. The data should be piped to ConvertTo-Json before returning from this cmdlet. 

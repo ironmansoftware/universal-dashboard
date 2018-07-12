@@ -18,16 +18,14 @@ namespace UniversalDashboard.Cmdlets
 	    [Parameter]
 	    public int RefreshInterval { get; set; } = 5;
 
-		[Parameter]
-		public SwitchParameter DebugEndpoint { get; set;}
         protected Endpoint GenerateCallback(string id)
         {
-            return Endpoint.GenerateCallback(id, SessionState, DebugEndpoint);
+            return Endpoint.GenerateCallback(id, SessionState);
         }
 
         protected Endpoint GenerateCallback(string id, ScriptBlock endpoint)
         {
-            return endpoint.GenerateCallback(id, SessionState, DebugEndpoint);
+            return endpoint.GenerateCallback(id, SessionState);
         }
     }
 
@@ -42,15 +40,11 @@ namespace UniversalDashboard.Cmdlets
 	    [Parameter]
 	    public int RefreshInterval { get; set; } = 5;
 
-		[Parameter]
-		public SwitchParameter DebugEndpoint { get; set;}
-
 		protected Endpoint GenerateCallback()
 		{
 			var logger = LogManager.GetLogger("CallbackCmdlet");
 
 			var callback = new Endpoint();
-			callback.Debug = DebugEndpoint;
 			callback.ScriptBlock = Endpoint;
 
 			try

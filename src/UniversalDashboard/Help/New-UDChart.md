@@ -16,7 +16,7 @@ Creates a new chart.
 New-UDChart [-Labels <String[]>] [-Type <ChartType>] [-Title <String>] [-Options <Hashtable>]
  [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Links <Link[]>]
  [-FilterFields <ScriptBlock>] [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>]
- [-DebugEndpoint] [-Id <String>] [<CommonParameters>]
+ [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -69,21 +69,6 @@ Background color of the chart control.
 
 ```yaml
 Type: DashboardColor
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugEndpoint
-Runs the Endpoint in the UDDebug runspace.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 

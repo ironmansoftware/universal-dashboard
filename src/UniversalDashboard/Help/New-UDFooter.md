@@ -15,7 +15,7 @@ Configuration options for the footer.
 ```
 New-UDFooter [-Links <Link[]>] [-Copyright <String>] [-BackgroundColor <DashboardColor>]
  [-FontColor <DashboardColor>] [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>]
- [-DebugEndpoint] [-Id <String>] [<CommonParameters>]
+ [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,21 +68,6 @@ Copyright text.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugEndpoint
-Not used.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 

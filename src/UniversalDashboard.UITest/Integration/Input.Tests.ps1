@@ -57,7 +57,7 @@ Describe "Input" {
                     test9 = $test9
                    # test10 = $test10
                 } | ConvertTo-Json | Out-File -FilePath $tempFile
-            } -DebugEndpoint 
+            } 
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
@@ -96,10 +96,6 @@ Describe "Input" {
             $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
 
             $Output.test6 | Should be "Hello!!!!!!!!!!!!!!!!!!!!!!!!!"
-        }
-
-        It "should execute in the debug runspace" {
-            Get-Runspace -Name "UDDebug" | Should not be $null
         }
 
         It "should submit password" {

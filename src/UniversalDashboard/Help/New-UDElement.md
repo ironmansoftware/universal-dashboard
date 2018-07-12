@@ -15,13 +15,13 @@ Create new HTML and JavaScript elements.
 ### HTML
 ```
 New-UDElement -Tag <String> [-Attributes <Hashtable>] [-Content <ScriptBlock>] [-Endpoint <ScriptBlock>]
- [-AutoRefresh] [-RefreshInterval <Int32>] [-DebugEndpoint] [-Id <String>] [<CommonParameters>]
+ [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
 
 ### JS
 ```
 New-UDElement -JavaScriptPath <String> [-ComponentName <String>] -ModuleName <String> [-Properties <Hashtable>]
- [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>] [-DebugEndpoint] [-Id <String>]
+ [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>]
  [<CommonParameters>]
 ```
 
@@ -94,21 +94,6 @@ The static content for this HTML node. This can be a string or another element.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: HTML
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugEndpoint
-Runs this element's endpoint in the UDDebug runspace for debugging.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
 Aliases: 
 
 Required: False

@@ -15,7 +15,7 @@ Creates a new table of data within the dashboard.
 ```
 New-UDTable [[-Id] <String>] [[-Title] <String>] [-Headers] <String[]> [[-BackgroundColor] <DashboardColor>]
  [[-FontColor] <DashboardColor>] [[-Style] <String>] [[-DateTimeFormat] <String>] [[-Links] <Link[]>]
- [-Endpoint] <ScriptBlock> [-AutoRefresh] [[-RefreshInterval] <Int32>] [-DebugEndpoint] [<CommonParameters>]
+ [-Endpoint] <ScriptBlock> [-AutoRefresh] [[-RefreshInterval] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -79,20 +79,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DebugEndpoint
-Runs the Endpoint in the UDDebug runspace.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Endpoint
 The endpoint to call to retrieve data for the table. The endpoint should return data using the Out-UDTableData cmdlet.

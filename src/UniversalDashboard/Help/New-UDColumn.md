@@ -23,7 +23,7 @@ New-UDColumn [-Id <String>] [-SmallSize <Int32>] [-LargeSize <Int32>] [-MediumSi
 ```
 New-UDColumn [-Id <String>] [-SmallSize <Int32>] [-LargeSize <Int32>] [-MediumSize <Int32>]
  [-SmallOffset <Int32>] [-MediumOffset <Int32>] [-LargeOffset <Int32>] [-Endpoint <ScriptBlock>] [-AutoRefresh]
- [-RefreshInterval <Int32>] [-DebugEndpoint] [<CommonParameters>]
+ [-RefreshInterval <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -87,21 +87,6 @@ Aliases:
 
 Required: False
 Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugEndpoint
-Runs the Endpoint in the UDDebug runspace.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: endpoint
-Aliases: 
-
-Required: False
-Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

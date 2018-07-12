@@ -17,7 +17,7 @@ New-UDMonitor [-Type <ChartType>] -Title <String> [-DataPointHistory <Int32>] [-
  [-ChartBackgroundColor <DashboardColor[]>] [-ChartBorderColor <DashboardColor[]>]
  [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-BorderWidth <Int32>] [-Label <String[]>]
  [-Links <Link[]>] [-FilterFields <ScriptBlock>] [-Endpoint <ScriptBlock>] [-AutoRefresh]
- [-RefreshInterval <Int32>] [-DebugEndpoint] [-Id <String>] [<CommonParameters>]
+ [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -116,21 +116,6 @@ The number of data points to keep in the history.
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugEndpoint
-Runs the Endpoint in the UDDebug runspace.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 

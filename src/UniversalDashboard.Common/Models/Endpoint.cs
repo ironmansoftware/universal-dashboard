@@ -5,7 +5,6 @@ namespace UniversalDashboard.Models
 {
     public class Endpoint
     {
-		public bool Debug { get; set; }
 		public ScriptBlock ScriptBlock { get; set; }
 		public Dictionary<string, object> Variables { get; set; }
         public List<string> Modules { get; set; }
