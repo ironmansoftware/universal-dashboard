@@ -59,9 +59,9 @@ namespace UniversalDashboard.Cmdlets
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
 
 #if DEBUG
-            var tempPath = Path.Combine(assemblyBasePath, "UniversalDashboard.psd1");
+            var tempPath = Path.Combine(assemblyBasePath, "UniversalDashboard.Community.psd1");
 #else 
-			var tempPath = Path.Combine(assemblyBasePath, "..\\UniversalDashboard.psd1");
+			var tempPath = Path.Combine(assemblyBasePath, "..\\UniversalDashboard.Community.psd1");
 #endif
 
             // Cache dashboard
