@@ -71,6 +71,8 @@ Describe "Grid" {
             $Button = Find-SeElement -LinkText "Hey" -Driver $Driver 
             Invoke-SeClick -Element $Button 
 
+            Start-Sleep -Seconds 1
+
             (Find-SeElement -Id "Hey" -Driver $Driver).Text | should be "Hey"
         }
 
