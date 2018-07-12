@@ -107,7 +107,7 @@ namespace UniversalDashboard.Services
 #endif
 			var initialSessionState = InitialSessionState.CreateDefault();
 			initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
-			initialSessionState.ImportPSModule(tempPath);
+			initialSessionState.ImportPSModule(new [] {tempPath});
 			var runspace = RunspaceFactory.CreateRunspace(new UDHost(), initialSessionState);
 			runspace.Open();
 
