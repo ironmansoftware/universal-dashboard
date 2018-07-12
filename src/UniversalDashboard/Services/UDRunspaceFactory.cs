@@ -107,19 +107,9 @@ namespace UniversalDashboard.Services
 #endif
 			var initialSessionState = InitialSessionState.CreateDefault();
 			initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
-			initialSessionState.ImportPSModulesFromPath(tempPath);
+			initialSessionState.ImportPSModule(tempPath);
 			var runspace = RunspaceFactory.CreateRunspace(new UDHost(), initialSessionState);
 			runspace.Open();
-
-            using (var powerShell = PowerShell.Create())
-            {
-                powerShell.Runspace = runspace;
-
-                Log.Debug($"Loading UD module from {tempPath}");
-                powerShell.AddStatement().AddCommand("Import-Module").AddParameter("Name", tempPath);
-
-                powerShell.Invoke();
-            }
 
             if (_initializationScript != null) {
 				using(var powerShell = PowerShell.Create()) {
