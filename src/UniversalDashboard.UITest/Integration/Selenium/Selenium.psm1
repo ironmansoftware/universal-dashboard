@@ -1,6 +1,5 @@
 [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\WebDriver.dll")
 [System.Reflection.Assembly]::LoadFrom("$PSScriptRoot\WebDriver.Support.dll")
-
 function Start-SeChrome {
     New-Object -TypeName "OpenQA.Selenium.Chrome.ChromeDriver"
 }
@@ -16,7 +15,9 @@ function Start-SeFirefox {
         New-Object -TypeName "OpenQA.Selenium.Firefox.FirefoxDriver" -ArgumentList $firefoxProfile
     }
     else {
-        New-Object -TypeName "OpenQA.Selenium.Firefox.FirefoxDriver"
+        $Driver = New-Object -TypeName "OpenQA.Selenium.Firefox.FirefoxDriver"
+        $Driver.Manage().Timeouts().ImplicitWait = [TimeSpan]::FromSeconds(10)
+        $Driver
     }
     
 }

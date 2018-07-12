@@ -31,7 +31,6 @@ Describe "Auto reload" {
 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
 
         It "auto reloads" {
             {
@@ -44,9 +43,9 @@ Describe "Auto reload" {
                 $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -AutoReload
             }.ToString() | Out-File $tempFile -Force
 
-            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
             Start-Sleep 5
 
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
             (Find-SeElement -Driver $Driver -Id "Card").Text | Should BeLike "*THIS IS AUTORELOADED*"
 
         }

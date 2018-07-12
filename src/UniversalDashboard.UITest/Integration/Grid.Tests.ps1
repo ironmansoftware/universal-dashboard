@@ -29,7 +29,6 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
 
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
@@ -67,13 +66,10 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
 
         It "should click button" {
             $Button = Find-SeElement -LinkText "Hey" -Driver $Driver 
             Invoke-SeClick -Element $Button 
-
-            Start-Sleep 3
 
             (Find-SeElement -Id "Hey" -Driver $Driver).Text | should be "Hey"
         }
@@ -121,8 +117,7 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
-
+ 
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
             $Element.Text.Contains("No results found") | Should be $true
@@ -172,7 +167,6 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
 
         It "should have data" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
@@ -195,8 +189,6 @@ Describe "Grid" {
             $header = $element[0]
             Invoke-SeClick $header
 
-            Start-Sleep 1
-
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
             $Element[0].Text | should be "3"
@@ -206,8 +198,6 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
             Invoke-SeClick $header
-
-            Start-Sleep 1
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
@@ -223,8 +213,6 @@ Describe "Grid" {
             Send-SeKeys -Element $Element[0] -Keys "2"
             Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
-
-            Sleep 1
 
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element.Length | Should be 6
@@ -319,7 +307,6 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
 
         It "should not page when NoPaging set" {
             $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Driver
@@ -397,8 +384,6 @@ Describe "Grid" {
             Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
 
-            Sleep 1
-
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0]
             $Element.Length | Should be 6
@@ -428,8 +413,7 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
-
+ 
         It "should have sorted correctly" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
@@ -459,7 +443,6 @@ Describe "Grid" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
 
         It "should have sorted correctly" {
             $previousText = ""
