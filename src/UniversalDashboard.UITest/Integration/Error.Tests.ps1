@@ -36,6 +36,8 @@ Describe "Error" {
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
+        Start-Sleep 2
+
         #Run some tests using selenium
         It "should show an error for chart" {
             $Target = Find-SeElement -Driver $Driver -Id "Chart"
