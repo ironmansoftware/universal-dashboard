@@ -13,7 +13,7 @@ Get-UDDashboard | Stop-UDDashboard
 Describe "Manifest" {
 
     It "should have correct version" {
-        (Get-Module UniversalDashboard).Version | Should be "2.0.0"
+        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.0.0"
     }
 
     It "should have correct exported commands" {
@@ -81,9 +81,6 @@ Describe "Manifest" {
         Get-Command 'Get-UDLicense' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Get-UDRestApi' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Get-UDTheme' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'Grant-UDJsonWebToken' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'New-UDAuthenticationMethod' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'New-UDAuthenticationResult' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDChart' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDCounter' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDDashboard' -ErrorAction SilentlyContinue | Should not be $null
@@ -97,8 +94,6 @@ Describe "Manifest" {
         Get-Command 'New-UDInputAction' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDInputField' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDLink' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'New-UDLoadingScreen' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'New-UDLoginPage' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDMonitor' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDPage' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDTheme' -ErrorAction SilentlyContinue | Should not be $null
