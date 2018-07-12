@@ -117,12 +117,16 @@ namespace UniversalDashboard
 					});
 				});
 
-			host = builder
-                .UseContentRoot(libraryDirectory)
+			builder = builder
                 .UseSetting("detailedErrors", "true")
 				.UseStartup<ServerStartup>()
-				.CaptureStartupErrors(true)
-				.Build();
+				.CaptureStartupErrors(true);
+
+			if (Directory.Exists(libraryDirectory)) {
+				builder.UseContentRoot(libraryDirectory);
+			}
+
+			host = builder.Build();
 
 			if (dashboardOptions.Wait)
 			{
