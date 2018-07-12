@@ -55,30 +55,4 @@ Describe "Dashboard" {
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
-
-    Context "Loading Screen"{
-         
-       $loadingScreen = New-UDLoadingScreen -BackgroundColor Green -TextColor Red -Text 'Helllooooo'
-       $dashboard = New-UDDashboard -Title "Test" -LoadingScreen $loadingScreen -Content {
-          
-           New-UDRow -Columns {
-                New-UDColumn -Size 12 -Endpoint {
-                    New-UDCard -Title $TitleVariable -Text (Get-ContentForCard) -Id "Card" 
-                }
-                New-UDColumn -Size 12 -Endpoint {
-                    New-UDCard -Title $TitleVariable -Text (Get-ContentForCard) -Id "Card2" 
-                }
-                New-UDColumn -Size 12 -Endpoint {
-                    New-UDCard -Title $TitleVariable -Text (Get-ContentForCard) -Id "Card3" 
-                }
-            }
-        }
-       $Server = Start-UDDashboard -Port $BrowserPort -Dashboard $dashboard
-       $Driver = Start-SeFirefox
-       Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-       
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server
-    }
-
 }
