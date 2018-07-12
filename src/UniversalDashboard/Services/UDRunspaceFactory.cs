@@ -101,11 +101,11 @@ namespace UniversalDashboard.Services
 			var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
 
 #if DEBUG 
-			var tempPath = Path.Combine(assemblyBasePath, "UniversalDashboard.Common.psd1");
-#else 
-			var tempPath = Path.Combine(assemblyBasePath, "..\\UniversalDashboard.Common.psd1");
+			var tempPath = Path.Combine(assemblyBasePath, "UniversalDashboard.Community.psd1");
+#else
+			var tempPath = Path.Combine(assemblyBasePath, "..\\UniversalDashboard.Community.psd1");
 #endif
-			var initialSessionState = InitialSessionState.CreateDefault();
+            var initialSessionState = InitialSessionState.CreateDefault();
 			initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
 			initialSessionState.ImportPSModule(new [] {tempPath});
 			var runspace = RunspaceFactory.CreateRunspace(new UDHost(), initialSessionState);
