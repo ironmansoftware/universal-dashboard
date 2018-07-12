@@ -16,7 +16,7 @@ function Start-SeFirefox {
     }
     else {
         $Driver = New-Object -TypeName "OpenQA.Selenium.Firefox.FirefoxDriver"
-        $Driver.Manage().Timeouts().ImplicitWait = [TimeSpan]::FromSeconds(10)
+        $Driver.Manage().Timeouts().ImplicitWait = [TimeSpan]::FromSeconds(30)
         $Driver
     }
     

@@ -35,7 +35,6 @@ Describe "Error" {
         #Open firefox
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 4
 
         #Run some tests using selenium
         It "should show an error for chart" {
@@ -72,7 +71,6 @@ Describe "Error" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should show error for whole page" {
             $Target = Find-SeElement -Driver $Driver -Id "Page"
