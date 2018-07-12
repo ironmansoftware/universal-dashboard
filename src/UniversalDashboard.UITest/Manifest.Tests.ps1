@@ -78,7 +78,6 @@ Describe "Manifest" {
         Get-Command 'Enable-UDLogging' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Get-UDDashboard' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Get-UDElement' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'Get-UDLicense' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Get-UDRestApi' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Get-UDTheme' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDChart' -ErrorAction SilentlyContinue | Should not be $null
@@ -100,7 +99,6 @@ Describe "Manifest" {
         Get-Command 'Remove-UDElement' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Send-UDToast' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Set-UDElement' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'Set-UDLicense' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Start-UDDashboard' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Start-UDRestApi' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Stop-UDDashboard' -ErrorAction SilentlyContinue | Should not be $null
