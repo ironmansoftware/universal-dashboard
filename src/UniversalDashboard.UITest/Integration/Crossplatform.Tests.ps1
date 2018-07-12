@@ -2,6 +2,11 @@ param(
     [Switch]$Release
 )
 
+if ($ENV:APPVEYOR) {
+    Write-Warning  "Cross platform tests do not work on AppVeyor."
+    return
+}
+
 Import-Module (Join-Path $PSScriptRoot "Docker/Docker.psm1") -Force
 
 $Root = $PSScriptRoot
