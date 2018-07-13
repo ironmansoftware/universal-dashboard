@@ -2,12 +2,16 @@ param([Switch]$Release)
 
 Import-Module "$PSScriptRoot\Selenium\Selenium.psm1" -Force 
 
+$ModulePath = ""
+
 if (-not $Release) {
     $BrowserPort = 10000
-    Import-Module "$PSScriptRoot\..\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
+    $ModulePath = "$PSScriptRoot\..\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
+    Import-Module $ModulePath
 } else {
     $BrowserPort = 10001
-    Import-Module "$PSScriptRoot\..\..\output\UniversalDashboard.Community.psd1"
+    $ModulePath = "$PSScriptRoot\..\..\output\UniversalDashboard.Community.psd1"
+    Import-Module $ModulePath
 }
 
 if (-not $Release) {
@@ -15,15 +19,17 @@ if (-not $Release) {
     return
 }
 
+$tempDashboard = Join-Path ([IO.Path]::GetTempPath()) "dashboard.ps1"
+
 Describe "Publish-UDDashboard" {
-    Stop-Service UniversalDashboard -ErrorAction SilentlyContinue
+    sc.exe stop UniversalDashboard
     sc.exe delete UniversalDashboard
-    $tempDashboard = Join-Path ([IO.Path]::GetTempPath()) "dashboard.ps1"
+    
     Remove-Item $tempDashboard -Force -ErrorAction SilentlyContinue
     $deploymentPath = Join-Path ([IO.Path]::GetTempPath()) "service"
 
     It "should publish a dashboard with just a dashboard file" {
-        "Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'Test' -Content {})" | Out-File $tempDashboard
+        "Import-Module '$ModulePath'; Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'Test' -Content {})" | Out-File $tempDashboard
 
         Publish-UDDashboard -DashboardFile $tempDashboard
 
@@ -32,12 +38,12 @@ Describe "Publish-UDDashboard" {
         (Invoke-WebRequest http://localhost:10000).StatusCode | Should be 200
     }
 
-    Stop-Service UniversalDashboard -ErrorAction SilentlyContinue
+    sc.exe stop UniversalDashboard
     sc.exe delete UniversalDashboard
     Remove-Item $tempDashboard -Force -ErrorAction SilentlyContinue
 
     It "should publish a dashboard with target path" {
-        "Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'Test' -Content {})" | Out-File $tempDashboard
+        "Import-Module '$ModulePath'; Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'Test' -Content {})" | Out-File $tempDashboard
 
         Publish-UDDashboard -DashboardFile $tempDashboard -TargetPath $deploymentPath
 
@@ -46,35 +52,37 @@ Describe "Publish-UDDashboard" {
         (Invoke-WebRequest http://localhost:10000).StatusCode | Should be 200
     }
 
-    Stop-Service UniversalDashboard -ErrorAction SilentlyContinue
+    sc.exe stop UniversalDashboard
     sc.exe delete UniversalDashboard
     Remove-Item $tempDashboard -Force -ErrorAction SilentlyContinue
     Remove-Item $deploymentPath -Force -ErrorAction SilentlyContinue -Recurse
 
     It "should delete service and recreate service" {
-        "Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'Test' -Content {})" | Out-File $tempDashboard
+        "Import-Module '$ModulePath'; Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'Test' -Content {})" | Out-File $tempDashboard
 
         $Error.Clear()
 
         Publish-UDDashboard -DashboardFile $tempDashboard
 
-        Start-Sleep 3
+        Start-Sleep 10
 
         Publish-UDDashboard -DashboardFile $tempDashboard
 
-        Start-Sleep 3
+        Start-Sleep 10
 
         (Invoke-WebRequest http://localhost:10000).StatusCode | Should be 200
         $Error.Length | Should be 1
+
+        Start-Sleep 10
     }
 
-    Stop-Service UniversalDashboard -ErrorAction SilentlyContinue
+    sc.exe stop UniversalDashboard
     sc.exe delete UniversalDashboard
     Remove-Item $tempDashboard -Force -ErrorAction SilentlyContinue
     Remove-Item $deploymentPath -Force -ErrorAction SilentlyContinue -Recurse
 
     It "should set service start type to manual" {
-        "Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'Test' -Content {})" | Out-File $tempDashboard
+        "Import-Module '$ModulePath'; Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'Test' -Content {})" | Out-File $tempDashboard
 
         $Error.Clear()
 

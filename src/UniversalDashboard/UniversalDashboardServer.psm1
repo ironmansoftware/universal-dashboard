@@ -1491,7 +1491,7 @@ function Publish-UDDashboard {
 	}
 	else 
 	{
-		$ModulePath = Split-Path (Get-Module UniversalDashboard).Path
+		$ModulePath = Split-Path (Get-Module UniversalDashboard.Community).Path
 		$TargetDashboardFile = [IO.Path]::Combine($ModulePath, "dashboard.ps1")
 	}
 
