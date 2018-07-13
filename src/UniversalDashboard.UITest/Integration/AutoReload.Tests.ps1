@@ -2,12 +2,16 @@ param([Switch]$Release)
 
 Import-Module "$PSScriptRoot\Selenium\Selenium.psm1" -Force 
 
+$ModulePath = ""
+
 if (-not $Release) {
     $BrowserPort = 10000
-    Import-Module "$PSScriptRoot\..\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
+    $ModulePath = "$PSScriptRoot\..\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
+    Import-Module $ModulePath
 } else {
     $BrowserPort = 10001
-    Import-Module "$PSScriptRoot\..\..\output\UniversalDashboard.Community.psd1"
+    $ModulePath = "$PSScriptRoot\..\..\output\UniversalDashboard.Community.psd1"
+    Import-Module $ModulePath
 }
 
 Get-UDDashboard | Stop-UDDashboard
@@ -17,6 +21,7 @@ Describe "Auto reload" {
         $tempFile = [System.IO.Path]::GetTempFileName() + ".ps1"
 
         {
+            Import-Module $ModulePath
             
             $dashboard = New-UDDashboard -Title "Test" -Content {
                 New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
@@ -25,7 +30,7 @@ Describe "Auto reload" {
             }
     
             $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -AutoReload
-        }.ToString() | Out-File $tempFile 
+        }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile 
 
         . $TempFile
 
@@ -34,6 +39,8 @@ Describe "Auto reload" {
 
         It "auto reloads" {
             {
+                Import-Module $ModulePath
+
                 $dashboard = New-UDDashboard -Title "Test 123" -Content {
                     New-UDCard -Title "Test" -Text "THIS IS AUTORELOADED" -Id "Card" -Links @(
                         New-UDLink -Text "My Link" -Url "http://www.google.com"
@@ -41,7 +48,7 @@ Describe "Auto reload" {
                 }
         
                 $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -AutoReload
-            }.ToString() | Out-File $tempFile -Force
+            }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile -Force
 
             Start-Sleep 5
 
@@ -60,12 +67,13 @@ Describe "Auto reload" {
         $tempFile = [System.IO.Path]::GetTempFileName() + ".ps1"
 
         {
+            Import-Module $ModulePath
             $Endpoint = New-UDEndpoint -Url "user" -Endpoint {
                 "2"
             }
 
             $Server = Start-UDRestApi -Port 10001 -Endpoint $Endpoint -AutoReload
-        }.ToString() | Out-File $tempFile 
+        }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile 
 
         . $TempFile
 
@@ -74,12 +82,13 @@ Describe "Auto reload" {
             Invoke-RestMethod http://localhost:10001/api/user | should be "2"
 
             {
+                Import-Module $ModulePath
                 $Endpoint = New-UDEndpoint -Url "user" -Endpoint {
                     "1"
                 }
 
                 $Server = Start-UDRestApi -Port 10001 -Endpoint $Endpoint -AutoReload
-            }.ToString() | Out-File $tempFile -Force
+            }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile -Force
 
             Start-Sleep 1
             Invoke-RestMethod http://localhost:10001/api/user | should be "1"
