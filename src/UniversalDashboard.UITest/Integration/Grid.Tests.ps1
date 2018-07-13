@@ -71,7 +71,7 @@ Describe "Grid" {
             $Button = Find-SeElement -LinkText "Hey" -Driver $Driver 
             Invoke-SeClick -Element $Button 
 
-            Start-Sleep -Seconds 1
+            Start-Sleep -Seconds 2
 
             (Find-SeElement -Id "Hey" -Driver $Driver).Text | should be "Hey"
         }
@@ -446,20 +446,17 @@ Describe "Grid" {
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
-        It "should have sorted correctly" {
+        It "should refresh" {
             $previousText = ""
 
-            1..10 | % {
-                Start-Sleep 2
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $text = $Element[2].text 
 
-                $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-                $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-                $text = $Element[2].Text
+            Start-Sleep 3
 
-                $previousText | Should not be $text
-
-                $previousText = $text
-            }            
+            $NewElement = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            (Find-SeElement -ClassName "griddle-cell" -Driver $NewElement[0])[2].Text | should not be $text     
         }
 
         Stop-SeDriver $Driver

@@ -69,6 +69,8 @@ Describe "Input" {
             $Element = Find-SeElement -Id "test9" -Driver $Driver
             $Element | Invoke-SeClick
 
+            Start-Sleep 1
+
             $Element = Find-SeElement -TagName "div" -Driver $Driver | Where { $_.Text -eq "20" }
             $Element | Invoke-SeClick
 
@@ -420,6 +422,8 @@ Describe "Input" {
             $Element = Find-SeElement -LinkText "Submit" -Driver $Driver
             Invoke-SeClick -Element $Element 
 
+            Start-Sleep 1
+
             $Element = Find-SeElement -Name "test" -Driver $Driver
             [string]::IsNullOrEmpty($Element.Text) | Should be $true
             $Element = Find-SeElement -Name "test2" -Driver $Driver
@@ -513,6 +517,8 @@ Describe "Input" {
         It "should have different content after click" {
             $Element = Find-SeElement -Name "Test" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "16"
+
+            Start-Sleep 1
 
             $Element = Find-SeElement -LinkText "Submit" -Driver $Driver
             Invoke-SeClick $Element

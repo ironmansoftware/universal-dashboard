@@ -137,7 +137,7 @@ Describe "Element" {
             }
         } 
    
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -AllowHttpForLogin
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
