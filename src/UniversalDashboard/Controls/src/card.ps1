@@ -30,9 +30,11 @@ function New-UDCard {
         [Parameter()]
         [ValidateSet('left', 'center', 'right')]
         [String]$TextAlignment = 'left',
+        [Parameter()]
         [ValidateSet('Small', 'Medium', 'Large')]
-        [String]$TextSize = 'Small'
-        
+        [String]$TextSize = 'Small',
+        [Parameter()]
+        [UniversalDashboard.Models.FontAwesomeIcons]$Watermark
     )
 
     $activatorClass = ''
@@ -66,19 +68,40 @@ function New-UDCard {
                 }
             }
 
+            if ($PSBoundParameters.Keys.Contains("Watermark")) {
+                New-UDElement -Tag "i" -Attributes @{
+                    className = "fa fa-" + $Watermark.ToString().Replace("_", "-")
+                    style = @{ 
+                        opacity = 0.05
+                        float= 'left'
+                        marginLeft = '70px'
+                        fontSize = '6em'
+                        position = 'absolute'
+                        top = '20px'
+                        color = $FontColor.HtmlColor
+                    }
+                }
+            }
+
             New-UDElement -Tag "div" -Attributes @{ className = "$TextAlignment-align" } -Content {
+
+                $ParameterSet = $PSCmdlet.ParameterSetName 
+
                 $TextContent = {
-                    if ($PSCmdlet.ParameterSetName -eq 'content') {
+                    if ($ParameterSet -eq 'content') {
                         $Content.Invoke()
                     } else {
-                        $Text
+                        $Text -split "`r`n" | ForEach-Object {
+                            $_
+                            New-UDElement -Tag "br"
+                        }
                     }
                 }
 
                 switch($TextSize) {
                     "Small" { $TextContent.Invoke() }
                     "Medium" { New-UDHeading -Size 5 -Content $TextContent }
-                    "Largin" { New-UDHeading -Size 3 -Text $TextContent }
+                    "Large" { New-UDHeading -Size 3 -Content $TextContent }
                 }
             }
         }
