@@ -46,9 +46,15 @@ Describe "Element" {
 
          It "has only 1 cached endpoint" {
              Find-SeElement -Driver $Driver -ClassName 'btn' | Invoke-SeClick
+
+             Start-Sleep 1
+
              $ChangerText = (Find-SeElement -Driver $Driver -Id "changer").Text
              $ChangerText | Should not be $null
              Find-SeElement -Driver $Driver -ClassName 'btn' | Invoke-SeClick
+
+             Start-Sleep 1
+
              (Find-SeElement -Driver $Driver -Id "changer").Text | should not be $ChangerText
              (Find-SeElement -Driver $Driver -Id "sessionInfo").Text | should be "1"
          }
@@ -145,19 +151,71 @@ Describe "Element" {
             $MessageBox = Find-SeElement -Driver $Driver -Id 'message'
             Send-SeKeys -Element $MessageBox -Keys "Hey"
 
+            Start-Sleep 1
+
             $btnSend = Find-SeElement -Driver $Driver -Id 'btnSend'
             Invoke-SeClick -Element $btnSend
+
+            Start-Sleep 1
+
             (Find-SeElement -Driver $Driver -Id 'chatMessage').Text | Should BeLike "*Hey"
         }
         
         It "should clear chat messages" {
             $MessageBox = Find-SeElement -Driver $Driver -Id 'message'
             Send-SeKeys -Element $MessageBox -Keys "Hey"
+
+            Start-Sleep 1
+
             $btnSend = Find-SeElement -Driver $Driver -Id 'btnSend'
             Invoke-SeClick -Element $btnSend
+
+            Start-Sleep 1
+
             $btnSend = Find-SeElement -Driver $Driver -Id 'btnClear'
             Invoke-SeClick -Element $btnSend
+
+            Start-Sleep 1
+
             (Find-SeElement -Driver $Driver -Id 'chatMessage').Text | Should Not BeLike "*Hey"
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
+    Context "Element in dynamic page" {
+
+        $HomePage= New-UDPage -url '/home' -Endpoint {
+            New-UDCard -Title 'Debug' -Content {
+                
+            }
+         
+        } 
+        $HomePage.Name = 'Home' # So it appears in the menu
+        
+        $HomePage2= New-UDPage -name 'home2' -Content {
+            New-UDCard -Title 'Debug' -Content {
+                New-UDButton -Text 'Restart' -OnClick { Set-UDElement -Id "Output" -Content {"Clicked"}}
+                New-UDHeading -Id "Output" -Text ""
+            }
+         
+        } 
+        
+        $Dashboard = New-UDDashboard -Title 'home' -Pages $HomePage,$HomePage2
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/home2"
+
+        Start-Sleep 2
+
+        It "Should work in dynamic page" {
+            Find-SeElement -LinkText "Restart" -Driver $Driver | Invoke-SeClick
+
+            Start-Sleep 1
+
+            (Find-SeElement -Id "Output" -Driver $Driver).Text | Should be "Clicked"
         }
 
         Stop-SeDriver $Driver
