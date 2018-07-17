@@ -59,7 +59,7 @@ namespace UniversalDashboard.Cmdlets
 #if DEBUG
             var tempPath = Path.Combine(assemblyBasePath, Constants.ModuleManifest);
 #else 
-			var tempPath = Path.Combine(assemblyBasePath, "..\\", Constants.ModuleManifest);
+			var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
 #endif
 
             // Cache dashboard

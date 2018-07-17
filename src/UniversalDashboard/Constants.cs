@@ -9,6 +9,6 @@ namespace UniversalDashboard {
         public static readonly string CachedDashboardPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UniversalDashboard", "dashboard.ps1");
         public static readonly string SessionId = "SessionId";
         public static readonly string SessionState = "SessionState";
-        public static readonly string ModuleManifest = "UniversalDashboard.Common.psd1";
+        public static readonly string ModuleManifest = "UniversalDashboard.Community.psd1";
     }
 }

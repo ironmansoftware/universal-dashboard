@@ -79,7 +79,7 @@ namespace UniversalDashboard.Services
 #if DEBUG 
 			var tempPath = Path.Combine(assemblyBasePath, Constants.ModuleManifest);
 #else
-			var tempPath = Path.Combine(assemblyBasePath, "..\\", Constants.ModuleManifest);
+			var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
 #endif
             var initialSessionState = InitialSessionState.CreateDefault();
 			initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
