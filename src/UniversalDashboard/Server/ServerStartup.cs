@@ -50,7 +50,7 @@ namespace UniversalDashboard
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddSingleton(ExecutionService.MemoryCache);
-            services.AddMvc().AddControllersAsServices();
+            services.AddMvc();
 			services.AddScoped<IFilterProvider, EncFilterProvider>();
 
             services.AddSession(options =>
@@ -59,11 +59,6 @@ namespace UniversalDashboard
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
-
-            foreach(var plugin in PluginRegistry.Instance.Plugins.Where(m => m.WebServerConfiguration != null))
-            {
-                plugin.WebServerConfiguration.ConfigureServices(dashboard, services);
-            }
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
@@ -87,11 +82,6 @@ namespace UniversalDashboard
 			app.UseWebSockets();
 
 			app.UseSession();
-
-            foreach (var plugin in PluginRegistry.Instance.Plugins.Where(m => m.WebServerConfiguration != null))
-            {
-                plugin.WebServerConfiguration.Configure(app, env, loggerFactory, lifetime);
-            }
 
             app.UseMvc();
 		}

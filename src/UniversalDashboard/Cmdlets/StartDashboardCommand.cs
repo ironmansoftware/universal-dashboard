@@ -12,7 +12,7 @@ using System.Reflection;
 namespace UniversalDashboard.Cmdlets
 {
     [Cmdlet(VerbsLifecycle.Start, "UDDashboard", DefaultParameterSetName = "Dashboard")]
-    public class StartDashboardCommand : PluggablePSCmdlet
+    public class StartDashboardCommand : PSCmdlet
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(StartDashboardCommand));
 
@@ -51,8 +51,6 @@ namespace UniversalDashboard.Cmdlets
 
 		[Parameter]
 		public string UpdateToken { get; set; }
-
-        protected override string CommandKey => "Start-UDDashboard";
 
         protected override void EndProcessing()
 	    {
@@ -140,9 +138,6 @@ namespace UniversalDashboard.Cmdlets
 			options.Password = CertificateFilePassword;
 			options.EndpointInitializationScript = Dashboard.InitializationScript;
 			options.UpdateToken = UpdateToken;
-
-            AddDynamicParameters(Dashboard);
-            ValidateModel(Dashboard);
 
             try
 		    {

@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace UniversalDashboard.Cmdlets
 {
     [Cmdlet(VerbsLifecycle.Start, "UDRestApi")]
-    public class StartRestApiCommand : PluggablePSCmdlet
+    public class StartRestApiCommand : PSCmdlet
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(StartDashboardCommand));
 
@@ -39,8 +39,6 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public SwitchParameter AutoReload { get; set; }
 
-        protected override string CommandKey => "Start-UDRestApi";
-
         protected override void EndProcessing()
 		{
 			Log.Info($"{Name} - {MyInvocation.ScriptName} - {AutoReload}");
@@ -60,9 +58,6 @@ namespace UniversalDashboard.Cmdlets
 			options.CertificateFile = CertificateFile;
 			options.Password = CertificateFilePassword;
 			options.EndpointInitializationScript = EndpointInitializationScript?.GenerateCallback("IS", SessionState);
-
-            AddDynamicParameters(options);
-            ValidateModel(options);
 
             try
             {

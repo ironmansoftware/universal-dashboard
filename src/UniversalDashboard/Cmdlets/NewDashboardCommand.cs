@@ -10,7 +10,7 @@ using UniversalDashboard.Models.Basics;
 namespace UniversalDashboard.Cmdlets
 {
     [Cmdlet(VerbsCommon.New, "UDDashboard")]
-	public class NewDashboardCommand : PluggablePSCmdlet
+	public class NewDashboardCommand : PSCmdlet
 	{
 		private readonly Logger Log = LogManager.GetLogger(nameof(NewDashboardCommand));
 
@@ -65,8 +65,6 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public SwitchParameter GeoLocation { get; set; }
 
-        protected override string CommandKey => "New-UDDashboard";
-
         protected override void EndProcessing()
 	    {
 			var dashboard = new Dashboard();
@@ -95,9 +93,6 @@ namespace UniversalDashboard.Cmdlets
 				defaultTheme.RenderedContent = themeService.Create(defaultTheme);
 				dashboard.Themes = new [] {defaultTheme};
 			}
-
-            AddDynamicParameters(dashboard);
-            ValidateModel(dashboard);
 
 		    if (ParameterSetName == "Content")
 		    {
