@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using UniversalDashboard.Interfaces.Models;
 using UniversalDashboard.Models.Basics;
 
 namespace UniversalDashboard.Models
 {
-	public class Dashboard : IDynamicModel
+	public class Dashboard
     {
 		[JsonProperty("id")]
 		public Guid Id { get; set;}
@@ -33,6 +32,5 @@ namespace UniversalDashboard.Models
 		[JsonProperty("geolocation")]
 		public bool GeoLocation { get; set; }
 		public string FilterText { get; set; }
-        public Dictionary<string, object> Properties { get; set; }
     }
 }

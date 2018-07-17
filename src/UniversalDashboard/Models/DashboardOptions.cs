@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UniversalDashboard.Models;
 using System.Security.Cryptography.X509Certificates;
 using System.Security;
-using UniversalDashboard.Interfaces.Models;
 
 namespace UniversalDashboard
 {
-    public class DashboardOptions : IDynamicModel {
+    public class DashboardOptions {
         public Dashboard Dashboard { get; set; }
         public IEnumerable<Endpoint> StaticEndpoints { get; set; } 
         public int Port { get; set; } 
@@ -18,6 +17,5 @@ namespace UniversalDashboard
         public Endpoint EndpointInitializationScript { get; set; }
         public string UpdateToken { get; set; }
         public Dictionary<Guid, string> ElementScripts { get; set; }
-        public Dictionary<string, object> Properties { get; set; }
     }
 }

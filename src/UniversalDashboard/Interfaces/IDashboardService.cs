@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using UniversalDashboard.Interfaces.Models;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Interfaces
 {
-    public interface IDashboardService : IDynamicModel
+    public interface IDashboardService 
     {
         void SetDashboard(Dashboard dashboard);
         void SetRestEndpoints(Endpoint[] endpoints);
