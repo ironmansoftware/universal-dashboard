@@ -9,7 +9,6 @@ Import-Module $ModulePath -Force
 Get-UDDashboard | Stop-UDDashboard
 
 Describe "Element" {
-
     Context "Session Endpoint Cache" {
 
         $homePage = New-UDPage -Name "Home" -Content {
@@ -181,13 +180,11 @@ Describe "Element" {
     }
 
     Context "Element in dynamic page" {
-
         $HomePage= New-UDPage -url '/home' -Endpoint {
             New-UDCard -Title 'Debug' -Content {
-                New-UDButton -Text 'Restart' -OnClick { Set-UDElement -Id "Output" -Content {"Clicked"}}
-                New-UDHeading -Id "Output" -Text ""
+                New-UDButton -Id "Button" -Text 'Restart' -OnClick { Set-UDElement -Id "Output1" -Content {"Clicked"}}
+                New-UDHeading -Id "Output1" -Text ""
             }
-         
         } 
         $HomePage.Name = 'Home' # So it appears in the menu
         
@@ -196,7 +193,6 @@ Describe "Element" {
                 New-UDButton -Text 'Restart' -OnClick { Set-UDElement -Id "Output" -Content {"Clicked"}}
                 New-UDHeading -Id "Output" -Text ""
             }
-         
         } 
         
         $Dashboard = New-UDDashboard -Title 'home' -Pages $HomePage,$HomePage2
@@ -208,14 +204,17 @@ Describe "Element" {
         Start-Sleep 2
 
         It "Should work in dynamic page" {
-            Find-SeElement -LinkText "Restart" -Driver $Driver | Invoke-SeClick
+            Find-SeElement -Id "Button" -Driver $Driver | Invoke-SeClick
 
             Start-Sleep 1
 
-            (Find-SeElement -Id "Output" -Driver $Driver).Text | Should be "Clicked"
+            (Find-SeElement -Id "Output1" -Driver $Driver).Text | Should be "Clicked"
         }
 
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
+
+
+
 }
