@@ -58,10 +58,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\UniversalDashboard.Common\UniversalDashboard.Common.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <None Update="Themes\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
