@@ -1,18 +1,10 @@
 param([Switch]$Release)
 
-Import-Module "$PSScriptRoot\Selenium\Selenium.psm1" -Force 
+Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+$ModulePath = Get-ModulePath -Release:$Release
+$BrowserPort = Get-BrowserPort -Release:$Release
 
-$ModulePath = ""
-
-if (-not $Release) {
-    $BrowserPort = 10000
-    $ModulePath = "$PSScriptRoot\..\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
-    Import-Module $ModulePath
-} else {
-    $BrowserPort = 10001
-    $ModulePath = "$PSScriptRoot\..\..\output\UniversalDashboard.Community.psd1"
-    Import-Module $ModulePath
-}
+Import-Module $ModulePath -Force
 
 if (-not $Release) {
     Write-Warning "Publish tests must run in a release build"

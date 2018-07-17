@@ -1,14 +1,11 @@
 param([Switch]$Release)
 
-Import-Module "$PSScriptRoot\Selenium\Selenium.psm1" -Force 
+Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+$ModulePath = Get-ModulePath -Release:$Release
+$BrowserPort = Get-BrowserPort -Release:$Release
 
-if (-not $Release) {
-    $BrowserPort = 10000
-    Import-Module "$PSScriptRoot\..\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
-} else {
-    $BrowserPort = 10001
-    Import-Module "$PSScriptRoot\..\..\output\UniversalDashboard.Community.psd1"
-}
+Import-Module $ModulePath -Force
+
 Get-UDDashboard | Stop-UDDashboard
 Describe "Table" {
 

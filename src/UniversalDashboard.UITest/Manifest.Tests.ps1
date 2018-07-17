@@ -1,14 +1,12 @@
 param([Switch]$Release)
 
-if (-not $Release) {
-    $BrowserPort = 10000
-    $ModulePath = "$PSScriptRoot\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
-    Import-Module $ModulePath -Force
-} else {
-    $BrowserPort = 10001
-    $ModulePath = "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
-    Import-Module $ModulePath
-}
+Import-Module "$PSScriptRoot\TestFramework.psm1" -Force
+
+$BrowserPort = Get-BrowserPort -Release:$Release
+$ModulePath = Get-ModulePath -Release:$Release
+
+Import-Module $ModulePath -Force
+
 Get-UDDashboard | Stop-UDDashboard
 Describe "Manifest" {
 

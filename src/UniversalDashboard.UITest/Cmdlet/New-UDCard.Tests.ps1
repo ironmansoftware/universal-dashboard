@@ -1,10 +1,8 @@
 param([Switch]$Release)
 
-if (-not $Release) {
-    Import-Module "$PSScriptRoot\..\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
-} else {
-    Import-Module "$PSScriptRoot\..\..\output\UniversalDashboard.Community.psd1"
-}
+Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+$ModulePath = Get-ModulePath -Release:$Release
+Import-Module $ModulePath -Force
 
 Describe "New-UDCard" {
     It "should set id" {
