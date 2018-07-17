@@ -184,7 +184,8 @@ Describe "Element" {
 
         $HomePage= New-UDPage -url '/home' -Endpoint {
             New-UDCard -Title 'Debug' -Content {
-                
+                New-UDButton -Text 'Restart' -OnClick { Set-UDElement -Id "Output" -Content {"Clicked"}}
+                New-UDHeading -Id "Output" -Text ""
             }
          
         } 
@@ -202,7 +203,7 @@ Describe "Element" {
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/home2"
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/home"
 
         Start-Sleep 2
 
