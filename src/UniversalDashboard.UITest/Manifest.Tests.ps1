@@ -95,7 +95,7 @@ Describe "Manifest" {
         Get-Command 'New-UDPage' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDTheme' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Remove-UDElement' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'Send-UDToast' -ErrorAction SilentlyContinue | Should not be $null
+        Get-Command 'Show-UDToast' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Set-UDElement' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Start-UDDashboard' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Start-UDRestApi' -ErrorAction SilentlyContinue | Should not be $null
@@ -105,8 +105,9 @@ Describe "Manifest" {
         Get-Command 'Invoke-UDRedirect' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Show-UDModal' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Hide-UDModal' -ErrorAction SilentlyContinue | Should not be $null
+        Get-Command 'Hide-UDToast' -ErrorAction SilentlyContinue | Should not be $null
 
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 90
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 91
     }
 
     It "should require .NET 4.7" -Skip  {
