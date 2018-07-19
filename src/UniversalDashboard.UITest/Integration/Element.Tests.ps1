@@ -9,6 +9,25 @@ Import-Module $ModulePath -Force
 Get-UDDashboard | Stop-UDDashboard
 
 Describe "Element" {
+
+
+    Context "Should work with attributes that start with on" {
+        $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
+            New-UDElement -Tag A -Id "element" -Attributes @{onclick = 'kaboom'} -Content {'IAMME'}
+        }
+
+         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+         $Driver = Start-SeFirefox
+         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+         It "should not show error" {
+            (Find-SeElement -Driver $Driver -Id 'element').Text | Should be "IAMME"
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
     Context "Session Endpoint Cache" {
 
         $homePage = New-UDPage -Name "Home" -Content {
