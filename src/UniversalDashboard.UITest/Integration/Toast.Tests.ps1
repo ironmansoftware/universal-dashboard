@@ -11,7 +11,13 @@ Describe "Toast" {
     Context "Show toasts" {
         $Dashboard = New-UdDashboard -Title "Making Toast" -Content {
             New-UDButton -Text "Standard" -Id "btnStandard" -OnClick {
-                Show-UDToast -Title "Hey" -Message "Hi" -Id "Standard" -Duration 5000 -Position "bottomLeft"
+                Show-UDToast -Title "Shipped!" -Message "You order has shipped!" -Id "Standard" -Duration 5000 -Position "bottomLeft" -Icon user
+            }
+
+            New-UDButton -Text "ShowToast HideToast" -Id "btnHide" -OnClick {
+                Show-UDToast -Title "Showing!" -Message "Hi!" -Id "Hide" -Duration 10000 -Position "bottomRight" -Icon user -TransitionIn flipInX
+                Start-Sleep 1
+                Hide-UDToast -Id "Hide"
             }
         } 
 
@@ -28,12 +34,22 @@ Describe "Toast" {
             $Element = Find-SeElement -Driver $Driver -Id 'Standard'
             $Text = $Element.Text
 
-            $Text.Contains("Hi") | Should be $true
-            $Text.Contains("Hey") | Should be $true
+            $Text.Contains("You order has shipped!") | Should be $true
+            $Text.Contains("Shipped!") | Should be $true
         }
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
+        It "should show hide toast" {
+            Find-SeElement -Driver $Driver -Id 'btnHide' | Invoke-SeClick
+
+            Start-Sleep -Seconds 3
+
+            $Element = Find-SeElement -Driver $Driver -Id 'Hide' 
+            $Text = $Element.Text
+            $Text | Should be $null
+        }
+
+       Stop-SeDriver $Driver
+       Stop-UDDashboard -Server $Server 
     }
 }
 

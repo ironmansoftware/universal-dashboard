@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 using System;
 using Microsoft.Extensions.Caching.Memory;
+using System.Drawing;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -22,20 +23,55 @@ namespace UniversalDashboard.Cmdlets
         [Parameter(Mandatory = true, Position = 0)]
 		public string Message { get; set; }
         [Parameter]
+        public DashboardColor MessageColor { get; set; }
+        [Parameter]
+        public string MessageSize { get; set; }
+        [Parameter]
         public int Duration { get; set; } = 1000;
         [Parameter]
         public string Title { get; set; }
-        
+        [Parameter]
+        public DashboardColor TitleColor { get; set; }
+        [Parameter]
+        public string TitleSize { get; set; }
         [Parameter]
         public string Id { get; set; } = Guid.NewGuid().ToString();
-
+        [Parameter]
+        public DashboardColor BackgroundColor { get; set; }
+        [Parameter]
+        [ValidateSet("light", "dark")]
+        public string Theme { get; set; }
+        [Parameter]
+        public FontAwesomeIcons Icon { get; set; }
+        [Parameter]
+        public DashboardColor IconColor { get; set; }
         [Parameter()]
         [ValidateSet("bottomRight", "bottomLeft", "topRight", "topLeft", "topCenter", "bottomCenter", "center")]
         public string Position { get; set; } 
-
         [Parameter]
-        public SwitchParameter CloseButton { get; set; }
-
+        public SwitchParameter HideCloseButton { get; set; }
+        [Parameter]
+        public SwitchParameter CloseOnClick { get; set; }
+        [Parameter]
+        public SwitchParameter CloseOnEscape { get; set; }
+        [Parameter]
+        public SwitchParameter ReplaceToast { get; set; }
+        [Parameter]
+        public SwitchParameter RightToLeft { get; set; }
+        [Parameter]
+        public SwitchParameter Balloon { get; set; }
+        [Parameter]
+        public SwitchParameter Overlay { get; set; }
+        [Parameter]
+        public SwitchParameter OverlayClose { get; set; }
+        [Parameter]
+        public DashboardColor OverlayColor { get; set; } = new DashboardColor(Color.FromArgb(153, 0, 0, 0));
+        [Parameter]
+        [ValidateSet("bounceInLeft", "bounceInRight", "bounceInUp", "bounceInDown", "fadeIn", "fadeInDown", "fadeInUp", "fadeInLeft", "fadeInRight", "flipInX")]
+        public string TransitionIn { get; set; } = "fadeInUp";
+        [Parameter]
+        [ValidateSet("bounceInLeft", "bounceInRight", "bounceInUp", "bounceInDown", "fadeIn", "fadeInDown", "fadeInUp", "fadeInLeft", "fadeInRight", "flipInX")]
+        public string TransitionOut { get; set; } = "fadeOut";
         protected override void EndProcessing()
         {
             try 
@@ -43,12 +79,30 @@ namespace UniversalDashboard.Cmdlets
                 var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
                 var connectionId = this.GetVariableValue("ConnectionId") as string;   
                 hub.ShowToast(connectionId, new {
-                    close = CloseButton.IsPresent,
+                    close = !HideCloseButton.IsPresent,
                     id = Id,
                     message = Message, 
+                    messageColor = MessageColor?.HtmlColor,
+                    messageSize = MessageSize,
                     title = Title,
+                    titleColor = TitleColor?.HtmlColor,
+                    titleSize = TitleSize,
                     timeout = Duration,
-                    position = Position
+                    position = Position,
+                    backgroundColor = BackgroundColor?.HtmlColor,
+                    theme = Theme,
+                    icon = Icon == FontAwesomeIcons.None ? "" : $"fa fa-{Icon.ToString().Replace("_", "-")}",
+                    iconColor = IconColor?.HtmlColor,
+                    replaceToast = ReplaceToast.IsPresent,
+                    rtl = RightToLeft.IsPresent,
+                    balloon = Balloon.IsPresent,
+                    overlay = Overlay.IsPresent,
+                    overlayClose = OverlayClose.IsPresent,
+                    overlayColor = OverlayColor?.HtmlColor,
+                    closeOnClick = CloseOnClick.IsPresent,
+                    CloseOnEscape = CloseOnEscape.IsPresent,
+                    transitionIn = TransitionIn,
+                    transitionOut = TransitionOut
                 }).Wait();
             }
             catch (Exception ex) {

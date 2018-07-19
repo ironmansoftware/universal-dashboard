@@ -5,9 +5,9 @@ const toaster = {
     show: (model) => {
         iziToast.show(model);
     },
-    hide: (model) => {
-        var toast = document.querySelector('.' + model.id);
-        iziToast.hide(model, toast);
+    hide: (id) => {
+        var toast = document.querySelector('#' + id);
+        iziToast.hide({}, toast);
     },
     info: (model) => {
         iziToast.info(model);

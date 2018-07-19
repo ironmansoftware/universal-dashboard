@@ -120,7 +120,8 @@ $manifestParameters = @{
 						"ConvertTo-JsonEx",
 						"Invoke-UDRedirect",
 						"Show-UDModal",
-						"Hide-UDModal"
+						"Hide-UDModal",
+						"Hide-UDToast"
 						)
 }
 
