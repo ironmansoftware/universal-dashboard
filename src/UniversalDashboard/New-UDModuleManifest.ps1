@@ -115,7 +115,7 @@ $manifestParameters = @{
 						"Clear-UDElement",
 						"Get-UDElement",
 						"New-UDEndpointSchedule",
-						"Send-UDToast",
+						"Show-UDToast",
 						"Sync-UDElement",
 						"ConvertTo-JsonEx",
 						"Invoke-UDRedirect",

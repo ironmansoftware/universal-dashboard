@@ -24,9 +24,9 @@ namespace UniversalDashboard
         {
             await hub.Clients.Client(clientId).InvokeAsync("closeModal");
         }
-        public static async Task SendToast(this IHubContext<DashboardHub> hub, string clientId, string toast, int duration)
+        public static async Task ShowToast(this IHubContext<DashboardHub> hub, string clientId, object toast)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("sendToast", toast, duration);
+            await hub.Clients.Client(clientId).InvokeAsync("showToast", toast);
         }
 
         public static async Task RequestState(this IHubContext<DashboardHub> hub, string clientId, string componentId, string requestId)

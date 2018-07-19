@@ -15,6 +15,7 @@ import {fetchGet} from './services/fetch-service.jsx';
 import PubSub from 'pubsub-js';
 import { HubConnection } from '@aspnet/signalr-client/dist/browser/signalr-clientES5-1.0.0-alpha2-final.min.js';
 import UdModal from './ud-modal.jsx';
+import toaster from './services/toaster';
 
 export default class UdDashboard extends React.Component {
     constructor() {
@@ -51,8 +52,8 @@ export default class UdDashboard extends React.Component {
             });
         });
 
-        connection.on('sendToast', (message, duration) => {
-            Materialize.toast(message, duration);
+        connection.on('showToast', (model) => {
+            toaster.show(model);
         });
 
         connection.on('requestState', (componentId, requestId) => {
