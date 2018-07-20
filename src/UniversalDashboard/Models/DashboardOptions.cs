@@ -17,5 +17,6 @@ namespace UniversalDashboard
         public Endpoint EndpointInitializationScript { get; set; }
         public string UpdateToken { get; set; }
         public Dictionary<Guid, string> ElementScripts { get; set; }
+        public PublishedFolder[] PublishedFolders { get; set; }
     }
 }

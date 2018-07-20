@@ -38,6 +38,8 @@ namespace UniversalDashboard.Cmdlets
 
 		[Parameter]
 		public SwitchParameter AutoReload { get; set; }
+		[Parameter]
+		public PublishedFolder[] PublishedFolder { get; set; }
 
         protected override void EndProcessing()
 		{
@@ -58,6 +60,7 @@ namespace UniversalDashboard.Cmdlets
 			options.CertificateFile = CertificateFile;
 			options.Password = CertificateFilePassword;
 			options.EndpointInitializationScript = EndpointInitializationScript?.GenerateCallback("IS", SessionState);
+			options.PublishedFolders = PublishedFolder;
 
             try
             {

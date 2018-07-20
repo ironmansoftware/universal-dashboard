@@ -9,6 +9,7 @@ namespace UniversalDashboard.Interfaces
         void SetDashboard(Dashboard dashboard);
         void SetRestEndpoints(Endpoint[] endpoints);
         Dashboard Dashboard { get; }
+        DashboardOptions DashboardOptions { get; }
         IUDRunspaceFactory RunspaceFactory { get; }
         Dictionary<int, string> ElementScripts { get; }
         string UpdateToken { get; set; }

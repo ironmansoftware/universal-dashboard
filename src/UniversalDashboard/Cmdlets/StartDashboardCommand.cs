@@ -52,6 +52,9 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public string UpdateToken { get; set; }
 
+		[Parameter]
+		public PublishedFolder[] PublishedFolder { get; set; }
+
         protected override void EndProcessing()
 	    {
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
@@ -138,6 +141,7 @@ namespace UniversalDashboard.Cmdlets
 			options.Password = CertificateFilePassword;
 			options.EndpointInitializationScript = Dashboard.InitializationScript;
 			options.UpdateToken = UpdateToken;
+			options.PublishedFolders = PublishedFolder;
 
             try
 		    {

@@ -39,9 +39,6 @@ namespace UniversalDashboard
 			var autoReloaderService = services.FirstOrDefault(m => m.ServiceType == typeof(AutoReloader));
 			_reloader = autoReloaderService?.ImplementationInstance as AutoReloader;
 
-			var dashboardService = services.FirstOrDefault(m => m.ServiceType == typeof(IDashboardService));
-			var dashboard = dashboardService?.ImplementationInstance as IDashboardService;
-
             services.AddResponseCompression();
 			services.AddSignalR();
             services.AddTransient<StateRequestService>();
@@ -72,6 +69,17 @@ namespace UniversalDashboard
 				RequestPath = new PathString(""),
 				EnableDirectoryBrowsing = true
 			});
+
+			var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
+
+			if (dashboardService?.DashboardOptions?.PublishedFolders != null) {
+				foreach(var publishedFolder in dashboardService.DashboardOptions.PublishedFolders) {
+					app.UseStaticFiles(new StaticFileOptions {
+						RequestPath = publishedFolder.RequestPath,
+						FileProvider = new PhysicalFileProvider(publishedFolder.Path)
+					});
+				}
+			}
 
 			app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 

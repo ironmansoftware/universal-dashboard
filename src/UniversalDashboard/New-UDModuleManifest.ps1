@@ -122,6 +122,7 @@ $manifestParameters = @{
 						"Show-UDModal",
 						"Hide-UDModal",
 						"Hide-UDToast"
+						"Publish-UDFolder"
 						)
 }
 
