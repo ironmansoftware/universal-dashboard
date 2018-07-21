@@ -123,6 +123,8 @@ $manifestParameters = @{
 						"Hide-UDModal",
 						"Hide-UDToast"
 						"Publish-UDFolder"
+						"New-UDTreeNode"
+						"New-UDTreeView"
 						)
 }
 
