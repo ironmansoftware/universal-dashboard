@@ -15,7 +15,7 @@ namespace UniversalDashboard.Controllers
 
 	public class DashboardController : Controller
     {
-		private readonly Dashboard _dashboard;
+		protected readonly Dashboard _dashboard;
 		private readonly IDashboardService _dashboardService;
 		private readonly IHubContext<DashboardHub> _hub;
 		private readonly Logger Log = LogManager.GetLogger(nameof(DashboardController));

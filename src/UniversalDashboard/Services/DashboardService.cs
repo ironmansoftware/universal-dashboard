@@ -9,28 +9,24 @@ namespace UniversalDashboard.Services
 {
 	public class DashboardService : IDashboardService
 	{
-		public DashboardService(Dashboard dashboard, Endpoint[] restEndpoints, string updateToken, string reloadToken, DashboardOptions dashboardOptions) {
+		public DashboardService(DashboardOptions dashboardOptions, string reloadToken) {
             EndpointService = new EndpointService();
-			SetDashboard(dashboard);
-            SetRestEndpoints(restEndpoints);
-            UpdateToken = updateToken;
+
+            if (dashboardOptions.Dashboard != null) 
+            {
+                SetDashboard(dashboardOptions.Dashboard);
+            }
+
+            SetRestEndpoints(dashboardOptions.StaticEndpoints?.ToArray());
+            SetRunspaceFactory(dashboardOptions.EndpointInitializationScript);
+
+            UpdateToken = dashboardOptions.UpdateToken;
 			ReloadToken = reloadToken;
             StartTime = DateTime.UtcNow;
             Properties = new Dictionary<string, object>();
             DashboardOptions = dashboardOptions;
         }
-
-		public DashboardService(Endpoint[] restEndpoints, Endpoint endpointInitializationScript, string updateToken, string reloadToken, DashboardOptions dashboardOptions) {
-            EndpointService = new EndpointService();
-            SetRestEndpoints(restEndpoints);
-			SetRunspaceFactory(endpointInitializationScript);
-			UpdateToken = updateToken;
-			ReloadToken = reloadToken;
-            StartTime = DateTime.UtcNow;
-            Properties = new Dictionary<string, object>();
-            DashboardOptions = dashboardOptions;
-        }
-
+        
         public Dashboard Dashboard { get; private set; }
         public DashboardOptions DashboardOptions { get; private set; }
 		public Dictionary<int, string> ElementScripts {get; private set;}
