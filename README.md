@@ -10,8 +10,16 @@ The Universal Dashboard project and module are licensed under the [GNU Lesser Ge
 
 ## Install
 
+To install Universal Dashboard, you can use the following PowerShell command. 
+
 ```
 Install-Module UniversalDashboard
+```
+
+To install Universal Dashboard Community Edition. you can use the following PowerShell command. 
+
+```
+Install-Module UniversalDashboard.Community
 ```
 
 ## Key Features
