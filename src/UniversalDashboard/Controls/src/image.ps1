@@ -3,8 +3,9 @@ function New-UDImage {
         [Parameter()]
         [String]$Id = (New-Guid),
         [Parameter()]
-        [Alias("Path")]
         [String]$Url,
+        [Parameter()]
+        [String]$Path,
         [Parameter()]
         [int]$Height,
         [Parameter()]
@@ -12,6 +13,21 @@ function New-UDImage {
         [Parameter()]
         [Hashtable]$Attributes = @{}
     )
+
+    if ($Path -ne $null) {
+        if (-not (Test-Path $Path)) {
+            throw "$Path does not exist."
+        }
+
+        $mimeType = 'data:image/png;base64, '
+        if ($Path.EndsWith('jpg') -or $Path.EndsWith('jpeg')) {
+            $mimeType = 'data:image/jpg;base64, '
+        }
+
+        $base64String = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($Path))
+
+        $Url = "$mimeType $base64String"
+    }
 
     $Attributes.src = $Url
     $Attributes.height = $Height
