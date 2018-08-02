@@ -7,6 +7,8 @@ function New-UDCard {
         [String]$Title,
         [Parameter(ParameterSetName = 'content')]
         [ScriptBlock]$Content,
+        [Parameter(ParameterSetName = 'endpoint')]
+        [ScriptBlock]$Endpoint,
         [Parameter()]
         [Parameter(ParameterSetName = 'text')]
         [string]$Text,
@@ -83,25 +85,27 @@ function New-UDCard {
                 }
             }
 
-            New-UDElement -Tag "div" -Attributes @{ className = "$TextAlignment-align" } -Content {
-
-                $ParameterSet = $PSCmdlet.ParameterSetName 
-
-                $TextContent = {
-                    if ($ParameterSet -eq 'content') {
-                        $Content.Invoke()
-                    } else {
-                        $Text -split "`r`n" | ForEach-Object {
-                            $_
-                            New-UDElement -Tag "br"
-                        }
+            $ParameterSet = $PSCmdlet.ParameterSetName 
+            if ($ParameterSet -eq 'endpoint') {
+                New-UDElement -Tag "div" -Attributes @{ className = "$TextAlignment-align" } -Endpoint $Endpoint
+            } else {
+                New-UDElement -Tag "div" -Attributes @{ className = "$TextAlignment-align" } -Content {
+                    $TextContent = {
+                        if ($ParameterSet -eq 'content') {
+                            $Content.Invoke()
+                        } elseif ($ParameterSet -eq 'text') {
+                            $Text -split "`r`n" | ForEach-Object {
+                                $_
+                                New-UDElement -Tag "br"
+                            }
+                        } 
                     }
-                }
-
-                switch($TextSize) {
-                    "Small" { $TextContent.Invoke() }
-                    "Medium" { New-UDHeading -Size 5 -Content $TextContent }
-                    "Large" { New-UDHeading -Size 3 -Content $TextContent }
+    
+                    switch($TextSize) {
+                        "Small" { $TextContent.Invoke() }
+                        "Medium" { New-UDHeading -Size 5 -Content $TextContent }
+                        "Large" { New-UDHeading -Size 3 -Content $TextContent }
+                    }
                 }
             }
         }

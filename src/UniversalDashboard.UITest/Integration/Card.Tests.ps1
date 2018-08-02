@@ -33,11 +33,35 @@ Describe "Card" {
         }
 
         It "should have link" {
-            Find-SeElement -LinkText "My Link" -Driver $Driver | Should not be $Null
+            $Element = Find-SeElement -Id "Card" -Driver $Driver
+            $Element.Text.Contains("My Link") | should be $true
         }
 
        Stop-SeDriver $Driver
        Stop-UDDashboard -Server $Server 
+    }
+
+        
+    Context "No text card" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDCard -Title "Test" -Id "Card" -Endpoint {
+                New-UDElement -Tag "div" -Content { "Endpoint Content" } 
+            }
+        }
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Start-Sleep 2
+
+        It "should have body text" {
+            $Element = Find-SeElement -Id "Card" -Driver $Driver
+            ($Element.Text).Contains("Endpoint Content") | should be $true
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
     }
     
     Context "No text card" {
