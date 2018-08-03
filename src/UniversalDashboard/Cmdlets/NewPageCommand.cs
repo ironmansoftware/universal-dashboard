@@ -11,13 +11,13 @@ namespace UniversalDashboard.Cmdlets
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(NewPageCommand));
 
-		[Parameter(Position = 0, Mandatory = true, ParameterSetName = "static")]
+		[Parameter(Position = 0, Mandatory = true, ParameterSetName = "name")]
 		public string Name { get; set; }
 	    [Parameter(Position = 1)]
 		public FontAwesomeIcons Icon { get; set; }
-	    [Parameter(Position = 2, Mandatory = true, ParameterSetName = "static")]
+	    [Parameter(Position = 2)]
 		public ScriptBlock Content { get; set; }
-		[Parameter(Position = 0, Mandatory = true, ParameterSetName = "dynamic")]
+		[Parameter(Position = 0, Mandatory = true, ParameterSetName = "url")]
 		public string Url { get; set; }
 
 		protected override void EndProcessing()
@@ -30,9 +30,13 @@ namespace UniversalDashboard.Cmdlets
 			page.AutoRefresh = AutoRefresh;
 			page.RefreshInterval = RefreshInterval;
 
+			if (Content != null && Endpoint != null) {
+				throw new Exception("Content and Endpoint cannot both be specified.");
+			}
+
 			try
 			{
-				if (ParameterSetName == "dynamic")
+				if (Endpoint != null)
 				{
                     if (!Url.StartsWith("/"))
                     {
