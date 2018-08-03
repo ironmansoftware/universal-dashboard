@@ -6,7 +6,7 @@ param(
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
 $version = "2.0.0"
-$prerelease = "-beta2"
+$prerelease = "-beta3"
 
 $ReleaseNotes = "
 	For release notes, see: https://adamdriscoll.gitbooks.io/powershell-universal-dashboard/content/v200.html
@@ -25,6 +25,7 @@ $manifestParameters = @{
 	ReleaseNotes = $ReleaseNotes
 	LicenseUri = "https://poshtools.com/universal-dashboard-license/"
 	ProjectUri = "https://poshtools.com/powershell-universal-dashboard/"
+	IconUri = 'https://raw.githubusercontent.com/ironmansoftware/universal-dashboard/master/images/logo.png'
 	PrivateData = $PrivateData
     DotNetFrameworkVersion = '4.7'
     PowerShellVersion = '5.0'
