@@ -11,6 +11,33 @@ Get-UDDashboard | Stop-UDDashboard
 
 Describe "New-UDPage" {
 
+    
+    Context "cycling" {
+
+        $Page1 = New-UDPage -Name "Home" -Content {
+            New-UDCard -Text "Home" -Id "Home"
+        }
+
+        $Page2 = New-UDPage -Url "/some/page" -Endpoint {
+            New-UDCard -Text "Some Page" -Id "Page"
+        }
+        
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2) -CyclePages -CyclePagesInterval 2
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Start-Sleep 2
+
+        It "should cycle dynamic pages" {
+            Find-SeElement -Id "Home" -Driver $Driver | Should not be $null
+            Start-Sleep 2
+            Find-SeElement -Id "Page" -Driver $Driver | Should not be $null
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
     Context "AutoReload" {
 
         $Page1 = New-UDPage -Name "Home" -Content {

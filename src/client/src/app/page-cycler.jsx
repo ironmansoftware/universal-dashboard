@@ -22,7 +22,14 @@ export default class PageCycler extends React.Component {
             currentPageIndex: currentPageIndex
         });
 
-        this.props.history.push("/" + this.props.pages[currentPageIndex].name.replace(" ", "-"))
+        if (this.props.pages[currentPageIndex].name == null) {
+            this.props.history.push(this.props.pages[currentPageIndex].url)
+        }
+        else {
+            this.props.history.push("/" + this.props.pages[currentPageIndex].name.replace(" ", "-"))
+        }
+
+        
     }
 
     render() {
