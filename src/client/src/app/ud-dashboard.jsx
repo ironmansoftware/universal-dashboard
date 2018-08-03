@@ -34,7 +34,7 @@ export default class UdDashboard extends React.Component {
         }
     }
 
-    connectWebSocket() {
+    connectWebSocket(sessionId) {
         let connection = new HubConnection(getApiPath() + '/dashboardhub');
 
         connection.on('reload', data => {
@@ -122,16 +122,12 @@ export default class UdDashboard extends React.Component {
             }
         }.bind(this));
 
-        connection.start();
-
-        this.connection = connection;
-        window.UniversalDashboard.webSocket = connection;
-    }
-
-    componentDidUpdate() {
-        if (this.connection != null) {
-            this.connection.invoke("setSessionId", this.state.sessionId);
-        }
+        var _this = this;
+        connection.start().then(x => {
+            _this.connection = connection;
+            window.UniversalDashboard.webSocket = connection;
+            connectionconnection.invoke("setSessionId", sessionId);
+        });
     }
 
     componentWillMount() {
