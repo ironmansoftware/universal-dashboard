@@ -20,12 +20,15 @@ namespace UniversalDashboard.Cmdlets
 		public string Id { get; set; }
         [Parameter]
 		public ScriptBlock Children  { get; set; }
+		[Parameter]
+		public FontAwesomeIcons Icon { get; set; }
 		protected override void EndProcessing()
 		{
 			WriteObject(new TreeNode {
 				Id = Id,
                 Name = Name, 
-                Children = Children?.Invoke().Select(m => m.BaseObject).Cast<TreeNode>()
+                Children = Children?.Invoke().Select(m => m.BaseObject).Cast<TreeNode>(),
+				Icon = Icon.ToString().Replace("_", "-")
             });
 		}
 	}

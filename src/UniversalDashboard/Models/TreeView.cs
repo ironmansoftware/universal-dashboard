@@ -8,10 +8,20 @@ namespace UniversalDashboard.Models
 {
     public class TreeView : Component
     {
-		[JsonProperty("type")]
-		public override string Type => "treeview";
+			[JsonProperty("type")]
+			public override string Type => "treeview";
 
-		[JsonProperty("node")]
-		public TreeNode Node { get; set; }
+			[JsonProperty("node")]
+			public TreeNode Node { get; set; }
+
+			[JsonProperty("backgroundColor")]
+			public string BackgroundColor { get; set; }
+
+			[JsonProperty("fontColor")]
+			public string FontColor { get; set; }
+			[JsonProperty("activeBackgroundColor")]
+			public string ActiveBackgroundColor { get; set; }
+			[JsonProperty("toggleColor")]
+			public string ToggleColor { get; set; }
     }
 }

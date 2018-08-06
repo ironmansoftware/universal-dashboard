@@ -14,5 +14,7 @@ namespace UniversalDashboard.Models
         public string Id { get; set; }
 		[JsonProperty("children")]
 		public IEnumerable<TreeNode> Children { get; set; }
+        [JsonProperty("icon")]
+        public string Icon { get; set; }
     }
 }
