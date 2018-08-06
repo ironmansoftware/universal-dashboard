@@ -9,16 +9,23 @@ Import-Module $ModulePath -Force
 Get-UDDashboard | Stop-UDDashboard
 Describe "TreeView" {
     Context "blank tree view" {
-        $Dashboard = New-UdDashboard -Title "Making Toast" -Content {
-            New-UDTreeView -Node (
-                New-UDTreeNode -Name "Root" -Children {
-                    New-UDTreeNode -Name "Child 1"
-                    New-UDTreeNode -Name "Child 2" -Children {
-                        New-UDTreeNode -Name "Nested"
-                    }
-                    New-UDTreeNode -Name "Child 3"
+        $Dashboard = New-UdDashboard -Title "Tree View" -Content {
+            $Root = New-UDTreeNode -Name 'FileSystem' -Id 'FileSystem'
+            New-UDTreeView -Node $Root -OnNodeClicked {
+                param($Body)
+
+                $Obj = $Body | ConvertFrom-Json
+
+                if ($Obj.NodeId -eq 'FileSystem') {
+                    Get-PSDrive -PSProvider FileSystem | ForEach-Object {
+                        New-UDTreeNode -Name $_.Root -Id $_.Root 
+                    }        
+                } else {
+                    Get-ChildItem -Path $Obj.NodeId | ForEach-Object {
+                        New-UDTreeNode -Name $_.Name -Id $_.FullName
+                    } | ConvertTo-JsonEx
                 }
-            )
+            }
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
@@ -28,8 +35,8 @@ Describe "TreeView" {
 
         #TODO: Write tests for tree view
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server
+        #Stop-SeDriver $Driver
+        #Stop-UDDashboard -Server $Server
     }
 }
 

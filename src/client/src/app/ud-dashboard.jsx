@@ -126,7 +126,7 @@ export default class UdDashboard extends React.Component {
         connection.start().then(x => {
             _this.connection = connection;
             window.UniversalDashboard.webSocket = connection;
-            connectionconnection.invoke("setSessionId", sessionId);
+            connection.invoke("setSessionId", sessionId);
         });
     }
 
@@ -187,7 +187,7 @@ export default class UdDashboard extends React.Component {
                 this.getLocation();
             }
 
-            this.connectWebSocket();
+            this.connectWebSocket(json.sessionId);
 
             this.setState({
                 dashboard: dashboard,

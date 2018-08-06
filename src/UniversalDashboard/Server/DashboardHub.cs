@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Fluent;
 using UniversalDashboard.Execution;
@@ -178,7 +179,9 @@ namespace UniversalDashboard
         }
 
         public Task ClientEvent(string componentId, string eventName, string eventData, string location) {
-            Log.Debug($"ClientEvent {componentId} {eventName} {eventData}");
+            Log.Debug($"ClientEvent {componentId} {eventName}");
+
+            
 
             var variables = new Dictionary<string, object>();
             var userName = Context.User?.Identity?.Name;
@@ -192,6 +195,7 @@ namespace UniversalDashboard
                 var locationObject = JsonConvert.DeserializeObject<Location>(location);
                 variables.Add("Location", locationObject);
 			}
+
 
             if (bool.TryParse(eventData, out bool data))
             {

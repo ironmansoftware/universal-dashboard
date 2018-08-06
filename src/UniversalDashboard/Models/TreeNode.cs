@@ -10,6 +10,8 @@ namespace UniversalDashboard.Models
     {   
         [JsonProperty("name")]
         public string Name { get; set; }
+        [JsonProperty("id")]
+        public string Id { get; set; }
 		[JsonProperty("children")]
 		public IEnumerable<TreeNode> Children { get; set; }
     }
