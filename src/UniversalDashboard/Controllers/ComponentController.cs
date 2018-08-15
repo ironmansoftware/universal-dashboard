@@ -22,7 +22,7 @@ using UniversalDashboard.Interfaces;
 
 namespace UniversalDashboard.Controllers
 {
-    public class ComponentController : UdController
+    public class ComponentController : Controller
     {
         private static readonly Logger Log = LogManager.GetLogger(nameof(ComponentController));
 
@@ -31,7 +31,7 @@ namespace UniversalDashboard.Controllers
         private readonly AutoReloader _autoReloader;
         private readonly IMemoryCache _memoryCache;
 
-        public ComponentController(IExecutionService executionService, IDashboardService dashboardService, IMemoryCache memoryCache, AutoReloader autoReloader): base(memoryCache)
+        public ComponentController(IExecutionService executionService, IDashboardService dashboardService, IMemoryCache memoryCache, AutoReloader autoReloader)
         {
             _executionService = executionService;
             _dashboardService = dashboardService;
@@ -46,7 +46,7 @@ namespace UniversalDashboard.Controllers
                     {"Request", Request},
                     {"Response", Response},
                     {"User", HttpContext?.User?.Identity?.Name},
-                    {"MemoryCache", MemoryCache}
+                    {"MemoryCache", _memoryCache}
                 };
 
                 try
@@ -70,7 +70,7 @@ namespace UniversalDashboard.Controllers
                 {
                     var sessionId = new Guid(sessionIdBytes);
                     executionContext.SessionId = sessionId.ToString();
-                    executionContext.ConnectionId = MemoryCache.Get(executionContext.SessionId) as string;
+                    executionContext.ConnectionId = _memoryCache.Get(executionContext.SessionId) as string;
                 }
 
                 var result = _executionService.ExecuteEndpoint(executionContext, endpoint);

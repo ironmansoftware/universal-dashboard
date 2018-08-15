@@ -12,9 +12,9 @@ using UniversalDashboard.Execution;
 using NLog;
 using NLog.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
-using UniversalDashboard.Utilities;
 using UniversalDashboard.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
+using UniversalDashboard.Controllers;
 
 namespace UniversalDashboard
 {
@@ -39,6 +39,8 @@ namespace UniversalDashboard
 			var autoReloaderService = services.FirstOrDefault(m => m.ServiceType == typeof(AutoReloader));
 			_reloader = autoReloaderService?.ImplementationInstance as AutoReloader;
 
+            var dashboardService = services.FirstOrDefault(m => m.ServiceType == typeof(IDashboardService)).ImplementationInstance as IDashboardService;
+
             services.AddResponseCompression();
 			services.AddSignalR();
             services.AddTransient<StateRequestService>();
@@ -47,8 +49,11 @@ namespace UniversalDashboard
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddSingleton(ExecutionService.MemoryCache);
-            services.AddMvc();
-			services.AddScoped<IFilterProvider, EncFilterProvider>();
+            services.AddMvc().ConfigureApplicationPartManager(m =>
+                m.FeatureProviders.Add(new DynamicControllerFeatureProvider(dashboardService)
+            ));
+
+            services.AddScoped<IFilterProvider, EncFilterProvider>();
 
             services.AddSession(options =>
             {
