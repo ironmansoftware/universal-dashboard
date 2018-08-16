@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Controller\ComponentController.Test.cs" />
+    <Compile Remove="Controller\**" />
+    <EmbeddedResource Remove="Controller\**" />
+    <None Remove="Controller\**" />
   </ItemGroup>
 
   <ItemGroup>
