@@ -7,7 +7,7 @@ $Dashboard = New-UDDashboard -Title Services -Content {
                     $BackgroundColor = "Green"
                 }
 
-                New-UDCard -Title $_.Name -Text $_.Status.ToString() -BackgroundColor $BackgroundColor
+                New-UDCard -Title $_.Name -Text $_.Status.ToString() -BackgroundColor $BackgroundColor -FontColor 'white'
             } 
         } 
     } -AutoRefresh -RefreshInterval 60
