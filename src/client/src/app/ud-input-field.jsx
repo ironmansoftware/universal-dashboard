@@ -56,8 +56,11 @@ export default class UdInputField extends React.Component {
     }
 
     componentDidMount() {
-        Materialize.updateTextFields();
-
+        if (Materialize && Materialize.updateTextFields)
+        {
+            Materialize.updateTextFields();
+        }
+        
         if (this.props.type === 'date') {
             this.setupDatePicker();
         } 
@@ -68,7 +71,10 @@ export default class UdInputField extends React.Component {
     }
 
     componentDidUpdate() {
-        Materialize.updateTextFields();
+        if (Materialize && Materialize.updateTextFields)
+        {
+            Materialize.updateTextFields();
+        }
 
         if (this.props.type === 'date') {
             this.setupDatePicker();
