@@ -46,11 +46,25 @@ namespace UniversalDashboard.Cmdlets
 					foreach(DictionaryEntry attribute in Attributes) {
 						var eventHandler = attribute.Value as ElementEventHandler;
 						if (eventHandler == null) {
-							var scriptBlock = attribute.Value as ScriptBlock;
-							if (scriptBlock == null) continue;
 
+                            Endpoint callback = null;
+
+							var scriptBlock = attribute.Value as ScriptBlock;
+							if (scriptBlock != null)
+                            {
+                                callback = GenerateCallback(Id + attribute.Key.ToString(), scriptBlock, null);
+                            }
+                            else
+                            {
+                                var psobject = attribute.Value as PSObject;
+                                callback = psobject?.BaseObject as Endpoint;
+
+                            }
+
+                            if (callback == null) continue;
+                            
 							eventHandler = new ElementEventHandler {
-								Callback = GenerateCallback(Id + attribute.Key.ToString(), scriptBlock),
+								Callback = callback,
 								Event = attribute.Key.ToString(),
 							};
 						}

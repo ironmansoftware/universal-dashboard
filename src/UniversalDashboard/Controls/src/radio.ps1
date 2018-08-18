@@ -9,7 +9,7 @@ function New-UDRadio {
         [Parameter()]
         [Switch]$Disabled,
         [Parameter()]
-        [ScriptBlock]$OnChange,
+        [object]$OnChange,
         [Parameter()]
         [string]$Group,
         [Parameter()]

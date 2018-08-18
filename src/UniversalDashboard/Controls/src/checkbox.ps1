@@ -11,7 +11,7 @@ function New-UDCheckbox {
         [Parameter()]
         [Switch]$Disabled,
         [Parameter()]
-        [ScriptBlock]$OnChange
+        [object]$OnChange
     )
 
     $Attributes = @{

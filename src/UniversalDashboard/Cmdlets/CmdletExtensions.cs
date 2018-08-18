@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Management.Automation.Language;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -12,7 +13,7 @@ namespace UniversalDashboard.Cmdlets
     {
         public static string[] SkippedVariables = new[] { "args", "input", "psboundparameters", "pscommandpath", "foreach", "myinvocation", "psscriptroot", "DefaultVIServer", "DefaultVIServers"  };
 
-        public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState)
+        public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
         {
             var logger = LogManager.GetLogger("CallbackCmdlet");
 
@@ -22,38 +23,44 @@ namespace UniversalDashboard.Cmdlets
 
             try
             {
-                var variables = sessionState.InvokeCommand.InvokeScript("Get-Variable")
-                                          .Select(m => m.BaseObject)
-                                          .OfType<PSVariable>()
-                                          .Where(m =>
-                                                 !SkippedVariables.Any(x => x.Equals(m.Name, StringComparison.OrdinalIgnoreCase)) &&
-                                                 m.GetType().Name != "SessionStateCapacityVariable" &&
-                                                 m.GetType().Name != "NullVariable" &&
-                                                 m.GetType().Name != "QuestionMarkVariable" &&
-                                                 !((m.Options & ScopedItemOptions.AllScope) == ScopedItemOptions.AllScope || (m.Options & ScopedItemOptions.Constant) == ScopedItemOptions.Constant || (m.Options & ScopedItemOptions.ReadOnly) == ScopedItemOptions.ReadOnly))
-                                          .Select(m => new KeyValuePair<string, object>(m.Name, sessionState.PSVariable.GetValue(m.Name)))
-                                          .ToArray();
-
-                // var property = sessionState.GetType().GetProperty("Internal", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                // var internalVariables = property.GetValue(sessionState, null);
-                // var variableTable = internalVariables.GetType().GetMethod("GetVariableTable", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                // var variableTableInstance = variableTable.Invoke(internalVariables, null);
-
                 callback.Variables = new Dictionary<string, object>();
-                foreach (var variable in variables)
+
+                var variables = endpoint.Ast.FindAll(x => x is VariableExpressionAst, true).Cast<VariableExpressionAst>().Select(m => m.VariablePath.ToString());
+
+                foreach(var variableName in variables)
                 {
-                    if (callback.Variables.ContainsKey(variable.Key)) {
-                        callback.Variables[variable.Key] = variable.Value;       
-                    } else {
-                        callback.Variables.Add(variable.Key, variable.Value);
+                    var variable = sessionState.InvokeCommand.InvokeScript($"Get-Variable -Name '{variableName}'").Select(m => m.BaseObject).OfType<PSVariable>().FirstOrDefault();
+                    if (variable != null)
+                    {
+                        callback.Variables.Add(variable.Name, sessionState.PSVariable.GetValue(variable.Name));
                     }
                 }
-                    
-                callback.Modules = sessionState.InvokeCommand.InvokeScript("Get-Module")
-                                                        .Select(m => m.BaseObject)
-                                                        .OfType<PSModuleInfo>()
-                                                        .Select(m => m.Path)
-                                                        .ToList();
+
+                //var variables = sessionState.InvokeCommand.InvokeScript("Get-Variable")
+                //                          .Select(m => m.BaseObject)
+                //                          .OfType<PSVariable>()
+                //                          .Where(m =>
+                //                                 !SkippedVariables.Any(x => x.Equals(m.Name, StringComparison.OrdinalIgnoreCase)) &&
+                //                                 m.GetType().Name != "SessionStateCapacityVariable" &&
+                //                                 m.GetType().Name != "NullVariable" &&
+                //                                 m.GetType().Name != "QuestionMarkVariable" &&
+                //                                 !((m.Options & ScopedItemOptions.AllScope) == ScopedItemOptions.AllScope || (m.Options & ScopedItemOptions.Constant) == ScopedItemOptions.Constant || (m.Options & ScopedItemOptions.ReadOnly) == ScopedItemOptions.ReadOnly))
+                //                          .Select(m => new KeyValuePair<string, object>(m.Name, sessionState.PSVariable.GetValue(m.Name)))
+                //                          .ToArray();
+
+                //
+
+                callback.ArgumentList = argumentList;
+
+                //
+                //foreach (var variable in variables)
+                //{
+                //    if (callback.Variables.ContainsKey(variable.Key)) {
+                //        callback.Variables[variable.Key] = variable.Value;       
+                //    } else {
+                //        callback.Variables.Add(variable.Key, variable.Value);
+                //    }
+                //}
             }
             catch (Exception ex)
             {

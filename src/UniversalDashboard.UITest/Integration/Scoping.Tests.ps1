@@ -12,13 +12,13 @@ $Global:MyVariable = "Test"
 
 Describe "Variable Scoping" {
     Context "Invoke-Command test" {
-
         Get-Process calc* | Stop-Process
         
         $Dashboard = New-UDDashboard -Title "Test" -Content {
-            $Name = "localhost"
-            New-UDButton -Text 'Patch' -Id 'button' -OnClick { Invoke-command -ComputerName $name -ScriptBlock { Start-Process calc }}
-            write-Host $Name
+            $Name = "calc"
+            New-UDButton -Text 'Patch' -Id 'button' -OnClick (
+                New-UDEndpoint -Endpoint { Start-Process $ArgumentList[0] } -ArgumentList $Name
+            )
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
@@ -36,14 +36,14 @@ Describe "Variable Scoping" {
 
         Get-Process calc* | Stop-Process
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard $Server
+       Stop-SeDriver $Driver
+       Stop-UDDashboard $Server
     }
 
     Context "Variable set global" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDElement -Tag "div" -Id "element" -Endpoint {
-                $Global:MyVariable
+                $MyVariable
             }
         }
 

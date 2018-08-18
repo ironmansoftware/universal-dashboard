@@ -29,7 +29,7 @@ function New-UDColumn {
         [ScriptBlock]$Content,
 
         [Parameter(ParameterSetName = "endpoint")]
-        [ScriptBlock]$Endpoint,
+        [object]$Endpoint,
         [Parameter(ParameterSetName = "endpoint")]
         [Switch]$AutoRefresh,
         [Parameter(ParameterSetName = "endpoint")]

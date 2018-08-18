@@ -55,12 +55,6 @@ namespace UniversalDashboard.Cmdlets.Inputs
 				callback.Variables = new Dictionary<string, object>();
 				foreach (var variable in variables)
 					callback.Variables.Add(variable.Key, variable.Value);
-
-				callback.Modules = SessionState.InvokeCommand.InvokeScript("Get-Module")
-														.Select(m => m.BaseObject)
-														.OfType<PSModuleInfo>()
-														.Select(m => m.Path)
-														.ToList();
 			}
 			catch (Exception ex)
 			{

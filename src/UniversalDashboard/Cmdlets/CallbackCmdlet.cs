@@ -1,8 +1,4 @@
-﻿using NLog;
-using UniversalDashboard.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using UniversalDashboard.Models;
 using System.Management.Automation;
 
 namespace UniversalDashboard.Cmdlets
@@ -12,7 +8,10 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public ScriptBlock Endpoint { get; set; }
 
-		[Parameter]
+        [Parameter]
+        public object[] ArgumentList { get; set; }
+
+        [Parameter]
 	    public SwitchParameter AutoRefresh { get; set; }
 
 	    [Parameter]
@@ -20,64 +19,12 @@ namespace UniversalDashboard.Cmdlets
 
         protected Endpoint GenerateCallback(string id)
         {
-            return Endpoint.GenerateCallback(id, SessionState);
+            return Endpoint.GenerateCallback(id, SessionState, ArgumentList);
         }
 
-        protected Endpoint GenerateCallback(string id, ScriptBlock endpoint)
+        protected Endpoint GenerateCallback(string id, ScriptBlock endpoint, object[] argumentList)
         {
-            return endpoint.GenerateCallback(id, SessionState);
+            return endpoint.GenerateCallback(id, SessionState, argumentList);
         }
     }
-
-	public class ColoredCallbackCmdlet : ColoredComponentCmdlet
-    {
-		[Parameter]
-		public ScriptBlock Endpoint { get; set; }
-
-		[Parameter]
-	    public SwitchParameter AutoRefresh { get; set; }
-
-	    [Parameter]
-	    public int RefreshInterval { get; set; } = 5;
-
-		protected Endpoint GenerateCallback()
-		{
-			var logger = LogManager.GetLogger("CallbackCmdlet");
-
-			var callback = new Endpoint();
-			callback.ScriptBlock = Endpoint;
-
-			try
-			{
-				var variables = SessionState.InvokeCommand.InvokeScript("Get-Variable")
-										  .Select(m => m.BaseObject)
-										  .OfType<PSVariable>()
-										  .Where(m =>
-												 !CmdletExtensions.SkippedVariables.Any(x => x.Equals(m.Name, StringComparison.OrdinalIgnoreCase)) &&
-												 m.GetType().Name != "SessionStateCapacityVariable" &&
-												 m.GetType().Name != "NullVariable" &&
-												 m.GetType().Name != "QuestionMarkVariable" &&
-												 !((m.Options & ScopedItemOptions.AllScope) == ScopedItemOptions.AllScope || (m.Options & ScopedItemOptions.Constant) == ScopedItemOptions.Constant || (m.Options & ScopedItemOptions.ReadOnly) == ScopedItemOptions.ReadOnly))
-										  .Select(m => new KeyValuePair<string, object>(m.Name, m.Value))
-										  .ToArray();
-
-				callback.Variables = new Dictionary<string, object>();
-				foreach (var variable in variables)
-					callback.Variables.Add(variable.Key, variable.Value);
-
-				callback.Modules = SessionState.InvokeCommand.InvokeScript("Get-Module")
-														.Select(m => m.BaseObject)
-														.OfType<PSModuleInfo>()
-														.Select(m => m.Path)
-														.ToList();
-			}
-			catch (Exception ex)
-			{
-				logger.Error(ex, "Failed to look up variables.");
-			}
-
-
-			return callback;
-		}
-	}
 }

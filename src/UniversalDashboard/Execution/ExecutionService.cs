@@ -90,6 +90,9 @@ namespace UniversalDashboard.Execution
                 using (var runspaceRef =  _runspace.GetRunspace())
                 {
                     Runspace.DefaultRunspace = runspaceRef.Runspace;
+
+                    
+
                     ps.Runspace = runspaceRef.Runspace;
 
                     if (endpoint.Variables != null)
@@ -104,15 +107,16 @@ namespace UniversalDashboard.Execution
                         SetVariables(ps.Runspace, context.Variables);
                     }
 
-                    SetVariable(ps.Runspace, "DashboardHub", _hubContext);
-                    SetVariable(ps.Runspace, "Cache", MemoryCache);
-                    SetVariable(ps.Runspace, "StateRequestService", _stateRequestService);
-                    SetVariable(ps.Runspace, "ConnectionId", context.ConnectionId);
-                    SetVariable(ps.Runspace, Constants.SessionId, context.SessionId);
+                    SetVariable(ps, "DashboardHub", _hubContext);
+                    SetVariable(ps, "Cache", MemoryCache);
+                    SetVariable(ps, "StateRequestService", _stateRequestService);
+                    SetVariable(ps, "ConnectionId", context.ConnectionId);
+                    SetVariable(ps, Constants.SessionId, context.SessionId);
+                    SetVariable(ps, "ArgumentList", context.Endpoint.ArgumentList?.ToList());
 
                     if (context.User != null)
                     {
-                        SetVariable(ps.Runspace, "ClaimsPrinciple", context.User);
+                        SetVariable(ps, "ClaimsPrinciple", context.User);
                     }
 
                     ps.AddStatement().AddScript(script);
@@ -262,14 +266,19 @@ namespace UniversalDashboard.Execution
 			}
 		}
 
-        private void SetVariable(Runspace runspace, string name, object value)
+        private void SetVariable(PowerShell powershell, string name, object value)
         {
             if (Log.IsDebugEnabled)
             {
                 Log.Debug($"{name} = {value}");
             }
 
-            runspace.SessionStateProxy.SetVariable(name, value);
+            powershell.AddStatement()
+                 .AddCommand("Set-Variable", true)
+                 .AddParameter("Name", name)
+                 .AddParameter("Value", value);
+
+            //runspace.SessionStateProxy.SetVariable(name, value);
         }
     }
 }

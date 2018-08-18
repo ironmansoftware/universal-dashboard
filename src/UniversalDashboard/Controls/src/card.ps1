@@ -8,7 +8,7 @@ function New-UDCard {
         [Parameter(ParameterSetName = 'content')]
         [ScriptBlock]$Content,
         [Parameter(ParameterSetName = 'endpoint')]
-        [ScriptBlock]$Endpoint,
+        [object]$Endpoint,
         [Parameter()]
         [Parameter(ParameterSetName = 'text')]
         [string]$Text,

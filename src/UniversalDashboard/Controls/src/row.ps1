@@ -6,7 +6,7 @@ function New-UDRow {
         [Parameter(ParameterSetName = "static", Position = 0)]
         [ScriptBlock]$Columns,
         [Parameter(ParameterSetName = "dynamic")]
-        [ScriptBlock]$Endpoint,
+        [object]$Endpoint,
         [Parameter(ParameterSetName = "dynamic")]
         [Switch]$AutoRefresh,
         [Parameter(ParameterSetName = "dynamic")]

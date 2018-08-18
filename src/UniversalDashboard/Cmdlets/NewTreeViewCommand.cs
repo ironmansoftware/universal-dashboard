@@ -20,7 +20,10 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public ScriptBlock OnNodeClicked { get; set; }
 
-		[Parameter]
+        [Parameter]
+        public object[] OnNodeClickedArgumentList { get; set; }
+
+        [Parameter]
 		public DashboardColor BackgroundColor { get; set; } = new DashboardColor(Color.White);
 
 		[Parameter]	
@@ -36,7 +39,7 @@ namespace UniversalDashboard.Cmdlets
 		{
 			WriteObject(new TreeView {
 				Id = Id,
-				Callback = GenerateCallback(Id, OnNodeClicked),
+				Callback = GenerateCallback(Id, OnNodeClicked, OnNodeClickedArgumentList),
                 Node = Node,
 				ToggleColor = ToggleColor?.HtmlColor,
 				BackgroundColor = BackgroundColor?.HtmlColor,

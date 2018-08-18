@@ -5,7 +5,7 @@ function New-UDButton {
         [Parameter()]
         $Text,
         [Parameter()]
-        [ScriptBlock]$OnClick,
+        [object]$OnClick,
         [Parameter()]
         [Switch]$Floating,
         [Parameter()]

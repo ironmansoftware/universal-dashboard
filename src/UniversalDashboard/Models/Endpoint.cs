@@ -5,9 +5,19 @@ namespace UniversalDashboard.Models
 {
     public class Endpoint
     {
+        public Endpoint()
+        {
+
+        }
+
+        public Endpoint(ScriptBlock scriptBlock)
+        {
+            ScriptBlock = scriptBlock;
+        }
+
 		public ScriptBlock ScriptBlock { get; set; }
 		public Dictionary<string, object> Variables { get; set; }
-        public List<string> Modules { get; set; }
+        public object[] ArgumentList { get; set; }
         public string Name { get; set; }
         public string Url { get; set; }
         public string Method { get; set; }

@@ -18,7 +18,7 @@ function New-UDTable {
 	    [Parameter()]
 		[UniversalDashboard.Models.Link[]] $Links,
 		[Parameter(Mandatory = $true)]
-		[ScriptBlock]$Endpoint,
+		[object]$Endpoint,
 		[Parameter()]
 		[Switch]$AutoRefresh,
 		[Parameter()]

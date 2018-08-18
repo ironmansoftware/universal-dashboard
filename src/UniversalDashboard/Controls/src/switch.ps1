@@ -9,7 +9,7 @@ function New-UDSwitch {
         [Parameter()]
         [Switch]$Disabled,
         [Parameter()]
-        [ScriptBlock]$OnChange,
+        [object]$OnChange,
         [Parameter()]
         [Switch]$On
     )

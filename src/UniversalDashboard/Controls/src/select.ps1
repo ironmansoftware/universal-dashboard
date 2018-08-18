@@ -13,7 +13,7 @@ function New-UDSelect {
         [Parameter()]
         [Switch]$Icons,
         [Parameter()]
-        [ScriptBlock]$OnChange
+        [object]$OnChange
     )
 
     Process {
