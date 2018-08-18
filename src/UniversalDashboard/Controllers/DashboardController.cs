@@ -49,7 +49,15 @@ namespace UniversalDashboard.Controllers
 			);
         }
 
-		[Authorize]
+        [Authorize]
+        [Route("/dashboard/{page}")]
+        public Page Index(string page)
+        {
+            Log.Debug($"Index - Page = {page}");
+            return _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
+        }
+
+        [Authorize]
 		[Route("/dashboard/theme")]
 	    public IActionResult Theme()
 	    {

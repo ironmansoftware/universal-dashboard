@@ -49,9 +49,7 @@ namespace UniversalDashboard
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddSingleton(ExecutionService.MemoryCache);
-            services.AddMvc().ConfigureApplicationPartManager(m =>
-                m.FeatureProviders.Add(new DynamicControllerFeatureProvider(dashboardService)
-            ));
+            services.AddMvc();
 
             services.AddScoped<IFilterProvider, EncFilterProvider>();
 
