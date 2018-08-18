@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@aspnet/signalr-client": "1.0.0-alpha2-final",
+    "babel-polyfill": "^6.26.0",
     "chart.js": "2.7.0",
     "create-react-class": "15.6.2",
     "font-awesome": "4.7.0",

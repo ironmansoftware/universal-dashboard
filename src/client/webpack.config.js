@@ -11,7 +11,7 @@ module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
 
   return {
-    entry: ['whatwg-fetch', APP_DIR + '/index.jsx'],
+    entry: ["babel-polyfill", 'whatwg-fetch', APP_DIR + '/index.jsx'],
     output: {
       path: BUILD_DIR,
       filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',

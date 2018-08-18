@@ -38,8 +38,6 @@ Describe "Api" {
         Stop-UDRestApi $Server
     }
 
-    Enable-UDLogging
-
     Context "Components" {
         $Server = Start-UDRestApi -Port 10001 -Endpoint @(
             New-UDEndpoint -Url "user" -Method "GET" -Endpoint {

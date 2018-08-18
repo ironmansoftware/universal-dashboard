@@ -38,6 +38,9 @@ namespace UniversalDashboard.Controllers
         }
 
         private static void DefinePageMethods(TypeBuilder typeBuilder, Dashboard dashboard) {
+
+            if (dashboard == null) return;
+
             Type[] ctorParams = new Type[] { typeof(string) };
 	        ConstructorInfo classCtorInfo = typeof(HttpGetAttribute).GetConstructor(ctorParams);
 

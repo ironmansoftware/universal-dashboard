@@ -9,6 +9,7 @@ import "font-awesome/css/font-awesome.min.css";
 import 'whatwg-fetch';
 import Promise from 'promise-polyfill'; 
 import thunk from 'redux-thunk';
+import "babel-polyfill";
 
 import './styles/site.css';
 import { UniversalDashboardService } from './services/universal-dashboard-service.jsx';
