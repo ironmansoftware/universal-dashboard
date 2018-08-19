@@ -18,8 +18,12 @@ namespace UniversalDashboard.Services
 	    {
 			var componentWriterFactory = new ComponentWriterFactory();
 
-			var parts = pages.SelectMany(m => m.Components).Select(x => WriteComponent(componentWriterFactory, x)).Where(m => m != null).ToArray();
-			parts = parts.Concat(pages.Select(m => WriteComponent(componentWriterFactory, m)).Where(m => m != null).ToArray()).ToArray();
+            var parts = new List<ComponentParts>();
+            foreach(var page in pages)
+            {
+                parts.AddRange(page.Components.Select(x => WriteComponent(componentWriterFactory, x, page)).Where(m => m != null));
+                parts.Add(WriteComponent(componentWriterFactory, page, page));
+            }
 
 			var componentParts = new ComponentParts();
 
@@ -37,11 +41,11 @@ namespace UniversalDashboard.Services
 			};
 	    }
 
-		public DashboardApp Build(IEnumerable<Component> components)
+		public DashboardApp Build(IEnumerable<Component> components, Page page)
 		{
 			var componentWriterFactory = new ComponentWriterFactory();
 
-			var parts = components.Select(x => WriteComponent(componentWriterFactory, x)).Where(m => m != null).ToArray();
+			var parts = components.Select(x => WriteComponent(componentWriterFactory, x, page)).Where(m => m != null).ToArray();
 
 			var componentParts = new ComponentParts();
 
@@ -57,9 +61,9 @@ namespace UniversalDashboard.Services
 			};
 		}
 
-	    private ComponentParts WriteComponent(ComponentWriterFactory factory, Component component)
+	    private ComponentParts WriteComponent(ComponentWriterFactory factory, Component component, Page page)
 	    {
-		    return factory.GetWriter(component).Write(component);
+		    return factory.GetWriter(component).Write(component, page);
 	    }
 	}
 

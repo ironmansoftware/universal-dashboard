@@ -8,7 +8,7 @@ namespace UniversalDashboard.Services
     public abstract class ComponentWriter
 	{
 		public abstract bool CanWrite(Component component);
-		public abstract ComponentParts Write(Component component);
+		public abstract ComponentParts Write(Component component, Page page);
 
 		public string GetResource(string resourcePath)
 		{

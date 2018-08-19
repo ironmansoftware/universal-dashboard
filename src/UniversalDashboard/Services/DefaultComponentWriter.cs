@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Services
 {
-	public class DefaultComponentWriter : ComponentWriter
+    public class DefaultComponentWriter : ComponentWriter
 	{
 		public override bool CanWrite(Component component)
 		{
 			return true;
 		}
 
-		public override ComponentParts Write(Component component)
+		public override ComponentParts Write(Component component, Page page)
 		{
             if (component.Callback == null)
             {
@@ -21,6 +18,7 @@ namespace UniversalDashboard.Services
             }
 
             component.Callback.Name = component.Id;
+            component.Callback.Page = page;
 
 			return new ComponentParts
 			{

@@ -24,6 +24,7 @@ namespace UniversalDashboard.Models
         public Part[] Parts { get; set; }
         public EndpointSchedule Schedule { get; set; }
         public string SessionId { get; set; }
+        internal Page Page { get; set; }
     }
 
     public class Part

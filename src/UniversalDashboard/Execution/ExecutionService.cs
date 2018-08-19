@@ -113,6 +113,7 @@ namespace UniversalDashboard.Execution
                     SetVariable(ps, "ConnectionId", context.ConnectionId);
                     SetVariable(ps, Constants.SessionId, context.SessionId);
                     SetVariable(ps, "ArgumentList", context.Endpoint.ArgumentList?.ToList());
+                    SetVariable(ps, Constants.UDPage, context.Endpoint.Page);
 
                     if (context.User != null)
                     {
@@ -165,7 +166,7 @@ namespace UniversalDashboard.Execution
                 return output.Where(m => m != null).Select(m => m.BaseObject);
             }
 
-            return FindComponents(output);
+            return FindComponents(output, endpoint.Page);
         }
 
         private string ReplaceIfNotReplaced(string script, string valueToReplace, string replacementValue)
@@ -217,7 +218,7 @@ namespace UniversalDashboard.Execution
             return script;
         }
 
-        private IEnumerable<object> FindComponents(Collection<PSObject> output) {
+        private IEnumerable<object> FindComponents(Collection<PSObject> output, Page page) {
 			var inputActionComponents = output.Select(m => m.BaseObject).OfType<InputAction>().Where(m => m.Type == InputAction.Content).SelectMany(m => m.Components);
 			var components = output.Select(m => m.BaseObject).OfType<Component>().ToArray();
 			var endpoints = inputActionComponents.Concat(components).ToArray();
@@ -227,11 +228,12 @@ namespace UniversalDashboard.Execution
 				Log.Debug("Endpoint returned new components: " + endpoints.Count());
 
 				var dashboardBuilder = new DashboardBuilder();
-				var app = dashboardBuilder.Build(endpoints);
+				var app = dashboardBuilder.Build(endpoints, page);
 
 				foreach (var newEndpoint in app.Endpoints)
 				{
 					if (newEndpoint.ScriptBlock == null || newEndpoint.Name == null) continue;
+                    newEndpoint.Page = page;
                     _dashboardService.EndpointService.Register(newEndpoint);
 				}
 

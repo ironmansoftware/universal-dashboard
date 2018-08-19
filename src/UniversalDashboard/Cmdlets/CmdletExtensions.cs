@@ -21,10 +21,11 @@ namespace UniversalDashboard.Cmdlets
             callback.Name = id;
             callback.ScriptBlock = endpoint;
 
+            callback.Variables = new Dictionary<string, object>();
+            callback.ArgumentList = argumentList;
+
             try
             {
-                callback.Variables = new Dictionary<string, object>();
-
                 var variables = endpoint.Ast.FindAll(x => x is VariableExpressionAst, true).Cast<VariableExpressionAst>().Select(m => m.VariablePath.ToString());
 
                 foreach(var variableName in variables)
@@ -35,32 +36,6 @@ namespace UniversalDashboard.Cmdlets
                         callback.Variables.Add(variable.Name, sessionState.PSVariable.GetValue(variable.Name));
                     }
                 }
-
-                //var variables = sessionState.InvokeCommand.InvokeScript("Get-Variable")
-                //                          .Select(m => m.BaseObject)
-                //                          .OfType<PSVariable>()
-                //                          .Where(m =>
-                //                                 !SkippedVariables.Any(x => x.Equals(m.Name, StringComparison.OrdinalIgnoreCase)) &&
-                //                                 m.GetType().Name != "SessionStateCapacityVariable" &&
-                //                                 m.GetType().Name != "NullVariable" &&
-                //                                 m.GetType().Name != "QuestionMarkVariable" &&
-                //                                 !((m.Options & ScopedItemOptions.AllScope) == ScopedItemOptions.AllScope || (m.Options & ScopedItemOptions.Constant) == ScopedItemOptions.Constant || (m.Options & ScopedItemOptions.ReadOnly) == ScopedItemOptions.ReadOnly))
-                //                          .Select(m => new KeyValuePair<string, object>(m.Name, sessionState.PSVariable.GetValue(m.Name)))
-                //                          .ToArray();
-
-                //
-
-                callback.ArgumentList = argumentList;
-
-                //
-                //foreach (var variable in variables)
-                //{
-                //    if (callback.Variables.ContainsKey(variable.Key)) {
-                //        callback.Variables[variable.Key] = variable.Value;       
-                //    } else {
-                //        callback.Variables.Add(variable.Key, variable.Value);
-                //    }
-                //}
             }
             catch (Exception ex)
             {
@@ -68,13 +43,14 @@ namespace UniversalDashboard.Cmdlets
             }
 
             callback.SessionId = sessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
+            callback.Page = sessionState.PSVariable.Get(Constants.UDPage)?.Value as Page;
 
             var dashboardService = sessionState.PSVariable.Get("DashboardService")?.Value as DashboardService;
             if (dashboardService != null)
             {
                 dashboardService.EndpointService.Register(callback);
             }
-            
+
             return callback;
         }
     }
