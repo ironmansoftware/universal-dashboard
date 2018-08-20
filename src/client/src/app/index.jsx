@@ -28,4 +28,4 @@ window.UniversalDashboard = UniversalDashboardService;
 
 const store = createStore(app, applyMiddleware(thunk));
 
-render(<Provider store={store}><div><ConnectedApp/></div></Provider>, document.getElementById('app'));
+render(<Provider store={store}><ConnectedApp/></Provider>, document.getElementById('app'));
