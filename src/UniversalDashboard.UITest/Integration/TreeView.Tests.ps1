@@ -65,8 +65,8 @@ Describe "TreeView" {
 
         #TODO: Write tests for tree view
 
-        #Stop-SeDriver $Driver
-        #Stop-UDDashboard -Server $Server
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server
     }
 }
 
