@@ -113,8 +113,6 @@ namespace UniversalDashboard
         public override async Task OnConnectedAsync()
         {
             await Task.FromResult(0);
-
-            await Clients.Client(Context.ConnectionId).InvokeAsync("getSessionId");
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)

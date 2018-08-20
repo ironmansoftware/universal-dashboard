@@ -40,11 +40,7 @@ export default class UdDashboard extends React.Component {
         connection.on('reload', data => {
             window.location.reload(true);
         });
-
-        connection.on('getSessionId', function(data) {
-            connection.invoke("setSessionId", this.state.sessionId)
-        }.bind(this));
-
+        
         connection.on('setState', (componentId, state) => {
             PubSub.publish(componentId, {
                 type: "setState",
