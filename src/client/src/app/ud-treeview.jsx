@@ -37,7 +37,7 @@ export default class UDTreeView extends React.Component {
             const iconStyle = {marginRight: '5px'};
         
             return (
-                <div style={style.base}>
+                <div style={style.base} id={node.id}>
                     <div style={style.title}>
                         <i className={iconClass} style={iconStyle}/>
         
@@ -53,6 +53,7 @@ export default class UDTreeView extends React.Component {
                     listStyle: 'none',
                     backgroundColor: this.props.backgroundColor,
                     margin: 0,
+                    marginTop: '5px',
                     padding: 0,
                     color: this.props.fontColor,
                     fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
