@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -39,7 +39,7 @@ The fill color of the bar.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -54,7 +54,7 @@ The color of the bar border.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 5
@@ -69,7 +69,7 @@ Which edge to skip drawing the border for.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: bottom, left, top, right
 
 Required: False
@@ -85,7 +85,7 @@ The stroke width of the bar in pixels.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -100,7 +100,7 @@ The property of the object to use as the y-Axis of the dataset.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -115,7 +115,7 @@ The fill colour of the bars when hovered.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 8
@@ -130,7 +130,7 @@ The stroke colour of the bars when hovered.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 9
@@ -145,7 +145,7 @@ The stroke width of the bars when hovered.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 10
@@ -160,7 +160,7 @@ The label for the dataset which appears in the legend and tooltips.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -175,7 +175,7 @@ The ID of the x axis to plot this dataset on. If not specified, this defaults to
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -190,7 +190,7 @@ The ID of the y axis to plot this dataset on. If not specified, this defaults to
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -213,4 +213,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

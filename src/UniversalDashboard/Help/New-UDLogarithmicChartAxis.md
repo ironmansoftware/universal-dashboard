@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -30,7 +30,7 @@ The ID is used to link datasets and scale axes together.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -45,7 +45,7 @@ User defined maximum number for the scale, overrides maximum value from data.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -60,7 +60,7 @@ User defined minimum number for the scale, overrides minimum value from data.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -75,7 +75,7 @@ If true, extra space is added to the both edges and the axis is scaled to fit in
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -90,7 +90,7 @@ Position of the axis in the chart.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: left, right, top, bottom
 
 Required: False
@@ -114,4 +114,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

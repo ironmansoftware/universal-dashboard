@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -16,8 +16,8 @@ Creates a live updating chart that shows a single type of data on a running time
 New-UDMonitor [-Type <ChartType>] -Title <String> [-DataPointHistory <Int32>] [-Options <Hashtable>]
  [-ChartBackgroundColor <DashboardColor[]>] [-ChartBorderColor <DashboardColor[]>]
  [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-BorderWidth <Int32>] [-Label <String[]>]
- [-Links <Link[]>] [-FilterFields <ScriptBlock>] [-Endpoint <ScriptBlock>] [-AutoRefresh]
- [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
+ [-Links <Link[]>] [-FilterFields <ScriptBlock>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>]
+ [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,13 +36,28 @@ Displays available memory in megabytes for the machine.
 
 ## PARAMETERS
 
+### -ArgumentList
+Arguments to pass to the endpoint. They will be available via the $ArgumentList variable.
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AutoRefresh
 Whether to auto refresh this component. This is on by default for this control. 
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -57,7 +72,7 @@ The background color of the component containing the chart.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -72,7 +87,7 @@ The border width for the chart.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -87,7 +102,7 @@ Background fill color of the chart.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +117,7 @@ Order color of the chart.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -117,7 +132,7 @@ The number of data points to keep in the history.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +147,7 @@ The endpoint definition for this chart. The endpoint should return a single data
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +162,7 @@ Input controls to adjust chart data. Use New-UDInputField to create fields for t
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -162,7 +177,7 @@ Font color
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -177,7 +192,7 @@ The HTML ID and endpoint ID for this component.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -192,7 +207,7 @@ A list of labels to use when defining multiple datasets. If this isn't specified
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -207,7 +222,7 @@ Links to display on the bottom of the monitor. Use New-UDLink to generate a link
 ```yaml
 Type: Link[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -220,7 +235,7 @@ Accept wildcard characters: False
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -235,7 +250,7 @@ The refresh interval for this control. This defaults to 5 seconds.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -250,7 +265,7 @@ The title of this chart.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -265,7 +280,7 @@ The type of chart to use.
 ```yaml
 Type: ChartType
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: Bar, Line, Area, Doughnut, Radar, Pie
 
 Required: False
@@ -289,4 +304,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -16,21 +16,24 @@ Starts a dashboard defined by New-UDDashboard.
 ```
 Start-UDDashboard [-Dashboard <Dashboard>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-AllowHttpForLogin] [<CommonParameters>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [<CommonParameters>]
 ```
 
 ### Content
 ```
 Start-UDDashboard [-Content <ScriptBlock>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-AllowHttpForLogin] [<CommonParameters>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [<CommonParameters>]
 ```
 
 ### DashboardFile
 ```
 Start-UDDashboard [-FilePath <String>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-AllowHttpForLogin] [<CommonParameters>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -66,28 +69,13 @@ Starts a new dashboard with the name "MyDashboard".
 
 ## PARAMETERS
 
-### -AllowHttpForLogin
-Allows for HTTP to be used with a LoginPage.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -AutoReload
 Reloads the dashboard automatically when changes are made to the script containing the dashboard. The dashboard must be saved as a file. 
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -102,7 +90,7 @@ The certificate to use encrypt HTTPS traffic. The webserver will listen on HTTPS
 ```yaml
 Type: X509Certificate2
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -117,7 +105,7 @@ The certificate file to use encrypt HTTPS traffic. The webserver will listen on 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -132,7 +120,7 @@ The certificate file password to use encrypt HTTPS traffic. The webserver will l
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -147,7 +135,7 @@ A ScriptBlock that calls New-UDDashboard.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: Content
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -162,7 +150,7 @@ The dashboard to start. This dashboard is created with New-UDDashboard.
 ```yaml
 Type: Dashboard
 Parameter Sets: Dashboard
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -177,7 +165,7 @@ An array of REST endpoints to expose with this dashboard. They can be generated 
 ```yaml
 Type: Endpoint[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -192,7 +180,7 @@ The path to a file that returns a dashboard. This file should return a dashboard
 ```yaml
 Type: String
 Parameter Sets: DashboardFile
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -207,7 +195,7 @@ Name of the dashboard.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -222,7 +210,22 @@ The port to use for the dashboard. Defaults to 80.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PublishedFolder
+A collection of published folders. You can generate these folders with Publish-UDFolder.
+
+```yaml
+Type: PublishedFolder[]
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -237,7 +240,7 @@ A token used to authenticate update requests.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -252,7 +255,7 @@ Blocks execution and waits for the web server to run.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -275,4 +278,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

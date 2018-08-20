@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -47,7 +47,7 @@ Content for the collection. This should be generated using calls to New-UDCollec
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -62,7 +62,7 @@ Header text for collection.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -77,7 +77,7 @@ The ID for this collection.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -92,7 +92,7 @@ Whether or not this collection contains links.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -115,4 +115,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

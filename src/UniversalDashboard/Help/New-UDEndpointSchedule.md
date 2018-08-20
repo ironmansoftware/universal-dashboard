@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -60,7 +60,7 @@ A CRON expression to run the schedule under.
 ```yaml
 Type: String
 Parameter Sets: Cron
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +75,7 @@ Switches the Every value to days.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: EveryDay
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -90,7 +90,7 @@ Number of time units.
 ```yaml
 Type: Int32
 Parameter Sets: EverySecond, EveryMinute, EveryHour, EveryDay
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -105,7 +105,7 @@ Switches the Every value to hours.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: EveryHour
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -120,7 +120,7 @@ Switches the Every value to minutes.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: EveryMinute
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -135,7 +135,7 @@ Switches the Every value to seconds.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: EverySecond
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -158,4 +158,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

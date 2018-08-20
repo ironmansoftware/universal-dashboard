@@ -1,34 +1,49 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: https://go.microsoft.com/fwlink/?LinkID=217032
 schema: 2.0.0
 ---
 
-# Disable-UDLogging
+# Hide-UDToast
 
 ## SYNOPSIS
-Disables logging for Universal Dashboard.
+Hides a toast message. 
 
 ## SYNTAX
 
 ```
-Disable-UDLogging [<CommonParameters>]
+Hide-UDToast [-Id] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Disables logging for Universal Dashboard.
+Hides a toast mesage. 
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> Disable-UDLogging
+```powershell
+PS C:\> Hide-UDToast -Id "ToastMessage"
 ```
 
-Disables logging for Universal Dashboard.
+Hides the toast message specified by the ID "ToastMessage"
 
 ## PARAMETERS
+
+### -Id
+The ID of the toast message to hide.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
@@ -40,7 +55,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS

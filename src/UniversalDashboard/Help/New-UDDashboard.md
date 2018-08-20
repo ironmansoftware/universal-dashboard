@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -17,9 +17,8 @@ Creates a new dashboard. The result of this cmdlet should be passed to Start-UDD
 New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <DashboardColor>]
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
  [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>] [-CyclePages]
- [-CyclePagesInterval <Int32>] [-LoginPage <LoginPage>] [-LoadingScreen <LoadingScreen>] [-Footer <Footer>]
- [-NavBarLogo <Element>] [-EndpointInitializationScript <ScriptBlock>] [-Theme <Theme>] [-GeoLocation]
- [<CommonParameters>]
+ [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
+ [-EndpointInitializationScript <ScriptBlock>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
 ```
 
 ### Pages
@@ -27,9 +26,8 @@ New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <Dashboar
 New-UDDashboard [-Title <String>] -Pages <Page[]> [-NavBarColor <DashboardColor>]
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
  [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>] [-CyclePages]
- [-CyclePagesInterval <Int32>] [-LoginPage <LoginPage>] [-LoadingScreen <LoadingScreen>] [-Footer <Footer>]
- [-NavBarLogo <Element>] [-EndpointInitializationScript <ScriptBlock>] [-Theme <Theme>] [-GeoLocation]
- [<CommonParameters>]
+ [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
+ [-EndpointInitializationScript <ScriptBlock>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -75,7 +73,7 @@ Background color.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +88,7 @@ Content of the dashboard.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: Content
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -105,7 +103,7 @@ Changes pages in the dashboard automatically.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +118,7 @@ The number of seconds to wait on each page before changing to the next page. Def
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +133,7 @@ A script block run to initialize all endpoints for the dashboard.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +148,7 @@ Font color.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -165,7 +163,7 @@ Configuration options for the footer. Use New-UDFooter to create the object for 
 ```yaml
 Type: Footer
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -182,37 +180,7 @@ latitude, longitude, heading and speed.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LoadingScreen
-Customization for the loading screen. Use New-UDLoadingScreen to customize the loading screen.
-
-```yaml
-Type: LoadingScreen
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LoginPage
-A login page for the dashboard. This enforces authentication for the dashboard. Use New-UDLoginPage to generate the login page.
-
-```yaml
-Type: LoginPage
-Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -242,7 +210,7 @@ Navigation bar and footer font color.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -257,7 +225,7 @@ A logo to use within the navbar. Use New-UDImage to create this logo.
 ```yaml
 Type: Element
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -272,7 +240,7 @@ Links to present on the dashboard. Use New-UDLink to create links.
 ```yaml
 Type: Link[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -287,7 +255,7 @@ An array of pages to display in a multi-page dashboard.
 ```yaml
 Type: Page[]
 Parameter Sets: Pages
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -302,7 +270,7 @@ Additional scripts to include with the dashboard. These scripts are not copied b
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -317,7 +285,7 @@ Additional stylesheets to include with the dashboard. These stylesheets are not 
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -332,7 +300,7 @@ The theme to use with this dashboard. This can be a predefined theme supplied by
 ```yaml
 Type: Theme
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -347,7 +315,7 @@ Title for the dashboard.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -370,4 +338,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

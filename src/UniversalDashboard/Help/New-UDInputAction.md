@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -58,7 +58,7 @@ Clears the input fields after a toast message.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: toast
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +73,7 @@ Specify one or more components (New-UDCard, New-UDChart, etc) to replace the inp
 ```yaml
 Type: Component[]
 Parameter Sets: content
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -88,7 +88,7 @@ The number of milliseconds to display the toast message.
 ```yaml
 Type: Int32
 Parameter Sets: toast
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -103,7 +103,7 @@ A local or remote URL to redirect to after processing input.
 ```yaml
 Type: String
 Parameter Sets: redirect
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -118,7 +118,7 @@ A message to toast the user with.
 ```yaml
 Type: String
 Parameter Sets: toast
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -141,4 +141,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

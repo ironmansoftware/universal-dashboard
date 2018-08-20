@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -15,7 +15,7 @@ Creates a new table of data within the dashboard.
 ```
 New-UDTable [[-Id] <String>] [[-Title] <String>] [-Headers] <String[]> [[-BackgroundColor] <DashboardColor>]
  [[-FontColor] <DashboardColor>] [[-Style] <String>] [[-DateTimeFormat] <String>] [[-Links] <Link[]>]
- [-Endpoint] <ScriptBlock> [-AutoRefresh] [[-RefreshInterval] <Int32>] [<CommonParameters>]
+ [-Endpoint] <Object> [-AutoRefresh] [[-RefreshInterval] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,7 +40,7 @@ Enabled auto refresh for this control.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -55,7 +55,7 @@ Background color of the table.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -70,7 +70,7 @@ The date time format for date time columns.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -79,14 +79,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
 ### -Endpoint
 The endpoint to call to retrieve data for the table. The endpoint should return data using the Out-UDTableData cmdlet.
 
 ```yaml
-Type: ScriptBlock
+Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 8
@@ -101,7 +100,7 @@ Font color within the table.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -116,7 +115,7 @@ Headers for columns in the table.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -131,7 +130,7 @@ The ID of the table. This is the HTML markup ID.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -146,7 +145,7 @@ Links to display on the bottom of the table. Use New-UDLink to generate a link.
 ```yaml
 Type: Link[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 7
@@ -161,7 +160,7 @@ The number of seconds between refreshes. The default is 5.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 9
@@ -176,7 +175,7 @@ Allows for changing the style of the table.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: bordered, striped, highlight, centered, responsive-table
 
 Required: False
@@ -192,7 +191,7 @@ Title for the section containing the table.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -215,4 +214,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

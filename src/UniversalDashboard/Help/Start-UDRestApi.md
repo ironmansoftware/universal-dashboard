@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -15,7 +15,7 @@ Starts a REST API server.
 ```
 Start-UDRestApi [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-Certificate <X509Certificate2>] [-CertificateFile <String>] [-CertificateFilePassword <SecureString>]
- [-EndpointInitializationScript <ScriptBlock>] [-AuthenticationMethod <AuthenticationMethod[]>] [-AutoReload]
+ [-EndpointInitializationScript <ScriptBlock>] [-AutoReload] [-PublishedFolder <PublishedFolder[]>]
  [<CommonParameters>]
 ```
 
@@ -38,29 +38,13 @@ Starts a new REST API with a "user" endpoint that returns Adam, Sarah and Bill a
 
 ## PARAMETERS
 
-### -AuthenticationMethod
-Authentication methods for the REST API. This supports forms and JWT. In both cases a JSON web token will be returned. Defining
-a JWT AuthenticationMethod will override the default settings for JWT.
-
-```yaml
-Type: AuthenticationMethod[]
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -AutoReload
 Whether to AutoReload this REST API on changes. 
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -75,7 +59,7 @@ Certificate for HTTPS.
 ```yaml
 Type: X509Certificate2
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +74,7 @@ Certificate file for HTTPS.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -105,7 +89,7 @@ Certificate file password for HTTPS.
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +104,7 @@ An array of endpoints created with New-UDEndpoint.
 ```yaml
 Type: Endpoint[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +119,7 @@ A script block run to initialize all endpoints for the dashboard.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -150,7 +134,7 @@ The name of the REST API server.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -165,7 +149,22 @@ The port the REST API server listens on.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PublishedFolder
+A collection of published folders. You can generate these folders with Publish-UDFolder.
+
+```yaml
+Type: PublishedFolder[]
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -180,7 +179,7 @@ This causes this cmdlet to block the terminal.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -203,4 +202,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -19,8 +19,7 @@ New-UDRow [-Id <String>] [[-Columns] <ScriptBlock>] [<CommonParameters>]
 
 ### dynamic
 ```
-New-UDRow [-Id <String>] [-Endpoint <ScriptBlock>] [-AutoRefresh] [-RefreshInterval <Int32>]
- [<CommonParameters>]
+New-UDRow [-Id <String>] [-Endpoint <Object>] [-AutoRefresh] [-RefreshInterval <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -71,7 +70,7 @@ Whether this row should autorefresh.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: dynamic
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -86,7 +85,7 @@ The columns to define for the row. These columns should be defined using New-UDC
 ```yaml
 Type: ScriptBlock
 Parameter Sets: static
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -99,9 +98,9 @@ Accept wildcard characters: False
 The endpoint to call when generating the content for this row. 
 
 ```yaml
-Type: ScriptBlock
+Type: Object
 Parameter Sets: dynamic
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -116,7 +115,7 @@ The ID of the row. This is the HTML markup ID.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -131,7 +130,7 @@ The number of seconds between refreshes.
 ```yaml
 Type: Int32
 Parameter Sets: dynamic
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -154,4 +153,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

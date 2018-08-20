@@ -5,35 +5,32 @@ online version: https://go.microsoft.com/fwlink/?LinkID=217032
 schema: 2.0.0
 ---
 
-# Invoke-UDRedirect
+# Publish-UDFolder
 
 ## SYNOPSIS
-Redirects a user to a URL. 
+Publishes a folder that will be available to download assets. 
 
 ## SYNTAX
 
 ```
-Invoke-UDRedirect -Url <String> [<CommonParameters>]
+Publish-UDFolder [-Path] <String> [-RequestPath] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Redirects a user to a URL. This cmdlet can be called from any endpoint.
+Publishes a folder that will be available to download assets. 
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> New-UDButton -Text "Redirect to Google" -OnClick {
-    Invoke-UDRedirect -Url "https://www.google.com"
-}
+```powershell
+PS C:\> Publish-UDFolder
 ```
 
-Redirects the user to Google.
 
 ## PARAMETERS
 
-### -Url
-The URL to redirect the user to. 
+### -Path
+Local path for the folder. 
 
 ```yaml
 Type: String
@@ -41,7 +38,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RequestPath
+The request path for the folder. 
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -57,7 +69,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS

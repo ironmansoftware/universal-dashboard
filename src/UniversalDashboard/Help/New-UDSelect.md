@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -14,7 +14,7 @@ Creates a select.
 
 ```
 New-UDSelect [[-Id] <String>] [[-Option] <ScriptBlock>] [-MultiSelect] [[-Label] <String>] [-BrowserDefault]
- [-Icons] [[-OnChange] <ScriptBlock>] [<CommonParameters>]
+ [-Icons] [[-OnChange] <Object>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -43,7 +43,7 @@ Whether to display the browser default select rather than the Materialize select
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +58,7 @@ Whether this select displays icons.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +73,7 @@ The ID of this select.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -88,7 +88,7 @@ The label to display within this select.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -103,7 +103,7 @@ Whether this is a multi-select.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -116,9 +116,9 @@ Accept wildcard characters: False
 A script block to invoke when this select changes. The selected value is available in the script block in the $EventData variable.
 
 ```yaml
-Type: ScriptBlock
+Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -133,7 +133,7 @@ Options to display in this select. This should be generated with the New-UDSelec
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -156,4 +156,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

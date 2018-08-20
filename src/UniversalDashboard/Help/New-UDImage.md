@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -13,7 +13,7 @@ Renders an image in the dashboard.
 ## SYNTAX
 
 ```
-New-UDImage [[-Id] <String>] [[-Url] <String>] [[-Height] <Int32>] [[-Width] <Int32>]
+New-UDImage [[-Id] <String>] [[-Url] <String>] [[-Path] <String>] [[-Height] <Int32>] [[-Width] <Int32>]
  [[-Attributes] <Hashtable>] [<CommonParameters>]
 ```
 
@@ -51,10 +51,10 @@ Inserts my_image.png from the local machine.
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -66,10 +66,10 @@ The height in pixels.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -81,10 +81,25 @@ The ID of the image.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Path
+The Path of the icon on the local file system. 
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -96,7 +111,7 @@ The URL of the image. This can be a base64 encoded data string.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Path
+Aliases:
 
 Required: False
 Position: 1
@@ -111,10 +126,10 @@ The width in pixels.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -134,4 +149,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

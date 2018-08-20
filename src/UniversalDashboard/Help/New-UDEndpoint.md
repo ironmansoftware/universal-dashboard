@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
-Module Name: UniversalDashboard
-online version: 
+Module Name: UniversalDashboard.Community
+online version:
 schema: 2.0.0
 ---
 
@@ -12,14 +12,21 @@ Creates a new REST API endpoint.
 
 ## SYNTAX
 
+### Generic (Default)
+```
+New-UDEndpoint -Endpoint <ScriptBlock> [-ArgumentList <Object[]>] [-Id <String>] [<CommonParameters>]
+```
+
 ### Rest
 ```
-New-UDEndpoint -Endpoint <ScriptBlock> -Url <String> [-Method <String>] [<CommonParameters>]
+New-UDEndpoint -Endpoint <ScriptBlock> [-ArgumentList <Object[]>] [-Id <String>] -Url <String>
+ [-Method <String>] [<CommonParameters>]
 ```
 
 ### Scheduled
 ```
-New-UDEndpoint -Endpoint <ScriptBlock> -Schedule <EndpointSchedule> [<CommonParameters>]
+New-UDEndpoint -Endpoint <ScriptBlock> [-ArgumentList <Object[]>] [-Id <String>] -Schedule <EndpointSchedule>
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -62,15 +69,45 @@ Creates a REST API endpoint that accepts a HTTP POST with a name parameter in th
 
 ## PARAMETERS
 
+### -ArgumentList
+Arguments to pass to the endpoint. They will be available via the $ArgumentList variable.
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Endpoint
 The script block endpoint that is invoked when the URL is called. This script block can provide a param block with arguments that will be passed in from the URL or the body of the request.
 
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Id
+The ID of ths endpoint.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -83,7 +120,7 @@ The HTTP method for this endpoint.
 ```yaml
 Type: String
 Parameter Sets: Rest
-Aliases: 
+Aliases:
 Accepted values: GET, POST, DELETE, PUT
 
 Required: False
@@ -99,7 +136,7 @@ Schedule to run this endpoint on. Use New-UDEndpointSchedule to create a schedul
 ```yaml
 Type: EndpointSchedule
 Parameter Sets: Scheduled
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -114,7 +151,7 @@ The URL for this endpoint. All URLs are automatically prefixed with "/api/". Any
 ```yaml
 Type: String
 Parameter Sets: Rest
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -137,4 +174,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

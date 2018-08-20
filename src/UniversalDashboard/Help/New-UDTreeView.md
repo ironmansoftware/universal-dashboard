@@ -1,37 +1,58 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: https://go.microsoft.com/fwlink/?LinkID=217032
 schema: 2.0.0
 ---
 
-# New-UDFooter
+# New-UDTreeView
 
 ## SYNOPSIS
-Configuration options for the footer.
+Creates a tree view control.
 
 ## SYNTAX
 
 ```
-New-UDFooter [-Links <Link[]>] [-Copyright <String>] [-BackgroundColor <DashboardColor>]
- [-FontColor <DashboardColor>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh]
+New-UDTreeView -Node <TreeNode> [-OnNodeClicked <ScriptBlock>] [-OnNodeClickedArgumentList <Object[]>]
+ [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-ActiveBackgroundColor <DashboardColor>]
+ [-ToggleColor <DashboardColor>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh]
  [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Configuration options for the footer. The options can be passed to the -Footer parameter of New-UDDashboard.
+Creates a tree view control.
 
 ## EXAMPLES
 
 ### Example 1
-```
-PS C:\> $footer = New-UDFooter -Copyright "Copyright Ironman Software, LLC"
-PS C:\> $dashboard = New-UDDashboard -Footer $footer
+```powershell
+PS C:\> New-UDTreeView -Node {
+    New-UDTreeNode -Name "Root Node" -Children {
+        New-UDTreeNode -Name "Child 1"
+        New-UDTreeNode -Name "Child 2"
+        New-UDTreeNode -Name "Child 3"
+    }
+}
 ```
 
-Sets the copyright text of the dashboard footer.
+Creates a tree view with 3 children nodes. 
 
 ## PARAMETERS
+
+### -ActiveBackgroundColor
+Background color of an active node. 
+
+```yaml
+Type: DashboardColor
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -ArgumentList
 Arguments to pass to the endpoint. They will be available via the $ArgumentList variable.
@@ -49,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -AutoRefresh
-Not used
+Whether this control auto refreshes. 
 
 ```yaml
 Type: SwitchParameter
@@ -64,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -BackgroundColor
-Background color of the footer. If not specified, will use the NavBarBackgrondColor set on New-UDDashboard.
+The background color of the tree view. 
 
 ```yaml
 Type: DashboardColor
@@ -78,23 +99,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Copyright
-Copyright text.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Endpoint
-Not used
+The endpoint to call when populating the contents of this control. 
 
 ```yaml
 Type: ScriptBlock
@@ -109,7 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -FontColor
-Font color of the footer. If not specified, will use the NavBarFontColor set on New-UDDashboard.
+The font color of the tree view. 
 
 ```yaml
 Type: DashboardColor
@@ -124,7 +130,7 @@ Accept wildcard characters: False
 ```
 
 ### -Id
-Not used
+The ID of this tree view. 
 
 ```yaml
 Type: String
@@ -138,11 +144,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Links
-Links to display in the footer. Use New-UDLink to generate a link. 
+### -Node
+The root node for this tree view. 
 
 ```yaml
-Type: Link[]
+Type: TreeNode
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OnNodeClicked
+Event handler for when a node is clicked. This can be either a ScriptBlock or the result of New-UDEndpoint. 
+
+```yaml
+Type: Object
 Parameter Sets: (All)
 Aliases:
 
@@ -154,10 +175,25 @@ Accept wildcard characters: False
 ```
 
 ### -RefreshInterval
-Not used
+The number of seconds between auto refreshes. 
 
 ```yaml
 Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ToggleColor
+The color for toggled nodes.
+
+```yaml
+Type: DashboardColor
 Parameter Sets: (All)
 Aliases:
 
@@ -178,7 +214,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
-
 ## NOTES
 
 ## RELATED LINKS
