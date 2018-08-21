@@ -29,6 +29,9 @@ Describe "EndpointInitializationScript" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Start-Sleep 3
+
         It "should load module from temp dir" {
             $Target = Find-SeElement -Driver $Driver -Id "Counter"
             $Target.Text | Should be "Counter`r`n10" 

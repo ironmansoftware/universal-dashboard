@@ -33,8 +33,7 @@ Describe "Card" {
         }
 
         It "should have link" {
-            $Element = Find-SeElement -Id "Card" -Driver $Driver
-            $Element.Text.Contains("My Link") | should be $true
+            Find-SeElement -LinkText "My Link" -Driver $Driver | Should not be $null
         }
 
        Stop-SeDriver $Driver
