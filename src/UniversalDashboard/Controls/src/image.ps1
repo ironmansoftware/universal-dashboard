@@ -14,7 +14,7 @@ function New-UDImage {
         [Hashtable]$Attributes = @{}
     )
 
-    if ($Path -ne $null) {
+    if (-not [String]::IsNullOrEmpty($Path)) {
         if (-not (Test-Path $Path)) {
             throw "$Path does not exist."
         }

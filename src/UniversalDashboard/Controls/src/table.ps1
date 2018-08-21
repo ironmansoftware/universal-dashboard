@@ -13,8 +13,6 @@ function New-UDTable {
 		[Parameter()]
 		[ValidateSet("bordered", "striped", "highlight", "centered", "responsive-table")]
 		[string]$Style,
-		[Parameter()]
-	    [string]$DateTimeFormat = "lll",
 	    [Parameter()]
 		[UniversalDashboard.Models.Link[]] $Links,
 		[Parameter(Mandatory = $true)]

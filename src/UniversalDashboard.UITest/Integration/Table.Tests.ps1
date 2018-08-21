@@ -110,8 +110,8 @@ Describe "Table" {
             $Element.Text.Contains("123456") | should be true
         }
 
-      Stop-SeDriver $Driver
-      Stop-UDDashboard -Server $Server 
+       Stop-SeDriver $Driver
+       Stop-UDDashboard -Server $Server 
     }
 
     Context "Element onClick in table" {
@@ -140,7 +140,7 @@ Describe "Table" {
             $Element = Find-SeElement -Id "btnTest" -Driver $Driver
             Invoke-SeClick -Element $Element 
 
-            Start-Sleep -Seconds 1
+            Start-Sleep -Seconds 3
 
             $Element = Find-SeElement -Id "spanTest" -Driver $Driver
             $Element.Text | Should be "THIS WORKED"

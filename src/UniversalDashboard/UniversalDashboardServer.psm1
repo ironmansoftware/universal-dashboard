@@ -241,7 +241,9 @@ function Out-UDTableData {
 		[Parameter(Mandatory = $true, ValueFromPipeline = $true)]
 		$Data,
 		[Parameter(Mandatory = $true)]
-		[string[]]$Property
+		[string[]]$Property,
+		[Parameter()]
+	    [string]$DateTimeFormat = "lll"
 	)
 
 	Process {
@@ -250,7 +252,7 @@ function Out-UDTableData {
 				New-UDElement -Tag 'td' -Content {
 					if ($Data.$itemProperty -is [System.DateTime]) {
 						$DateTimeComponent = New-Object -TypeName UniversalDashboard.Models.DateTimeComponent
-						$DateTimeComponent.DateTimeFormat = $dateTimeFormat
+						$DateTimeComponent.DateTimeFormat = $DateTimeFormat
 						$DateTimeComponent.Value = $Data.$itemProperty.ToString("O")
 						$DateTimeComponent
 					}

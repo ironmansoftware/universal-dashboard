@@ -26,7 +26,7 @@ Describe "Variable Scoping" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
-        It "should stop processes with click" {
+        It "should start processes with click" {
             Find-SeElement -Id "button" -Driver $Driver | Invoke-SeClick 
 
             Start-Sleep 5
@@ -105,9 +105,11 @@ Describe "Variable Scoping" {
             New-UDTable -Title "Processes" -Headers @("Stop") -Endpoint {
                 Get-Process Notepad* | ForEach-Object {
                     [PSCustomObject]@{
-                        Stop = New-UDButton -Id "btn$($_.Id)" -Text "Stop" -OnClick { 
-                            Stop-Process $_ 
-                        }
+                        Stop = New-UDButton -Id "btn$($_.Id)" -Text "Stop" -OnClick (
+                            New-UDEndpoint -Endpoint {
+                                Stop-Process $ArgumentList[0]
+                            } -ArgumentList $_
+                        ) 
                     }
                 } | Out-UDTableData -Property @("Stop")
             } 

@@ -36,9 +36,9 @@ Describe "DynamicDashboard" {
 
         Start-Sleep 2
 
-        It "should have title text" {
-            $Element = Find-SeElement -Id "Card" -Driver $Driver
-            $Element.Text.Split("`r`n")[0] | should be "Test"
+        It "should produced 30 items" {
+            $Element = Find-SeElement -ClassName "ud-monitor" -Driver $Driver
+            ($Element | Measure-Object).Count | should be 30
         }
 
        Stop-SeDriver $Driver
