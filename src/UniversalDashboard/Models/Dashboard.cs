@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Management.Automation.Runspaces;
 using Newtonsoft.Json;
 using UniversalDashboard.Models.Basics;
 
@@ -27,7 +28,7 @@ namespace UniversalDashboard.Models
 		public Footer Footer { get; set; }
 		public Element NavBarLogo { get; set; }
 		[JsonIgnore]
-		public Endpoint InitializationScript { get; set; }
+		public InitialSessionState EndpointInitialSessionState { get; set; }
 		public bool Demo { get; set; }
 		[JsonProperty("geolocation")]
 		public bool GeoLocation { get; set; }

@@ -4,6 +4,7 @@ using System;
 using System.Management.Automation;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using System.Management.Automation.Runspaces;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -34,7 +35,7 @@ namespace UniversalDashboard.Cmdlets
 		public SecureString CertificateFilePassword { get; set; }
 
 		[Parameter]
-		public ScriptBlock EndpointInitializationScript { get; set; }
+		public InitialSessionState EndpointInitialization { get; set; } = InitialSessionState.CreateDefault();
 
 		[Parameter]
 		public SwitchParameter AutoReload { get; set; }
@@ -59,7 +60,7 @@ namespace UniversalDashboard.Cmdlets
 			options.Certificate = Certificate;
 			options.CertificateFile = CertificateFile;
 			options.Password = CertificateFilePassword;
-			options.EndpointInitializationScript = EndpointInitializationScript?.GenerateCallback("IS", SessionState);
+			options.EndpointInitialSessionState = EndpointInitialization;
 			options.PublishedFolders = PublishedFolder;
 
             try

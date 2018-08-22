@@ -53,7 +53,7 @@ namespace UniversalDashboard.Services
 		private readonly Logger Log = LogManager.GetLogger("UDRunspaceFactory");
 		
 		private ObjectPool<Runspace> _runspacePool;
-		private Endpoint _initializationScript;
+		private InitialSessionState _initialSessionState;
 		private IDashboardService _dashboardService;
 
 		public IRunspaceReference GetRunspace() {
@@ -66,8 +66,8 @@ namespace UniversalDashboard.Services
 			_runspacePool.Free(runspace);
 		}
 
-		public UDRunspaceFactory(IDashboardService dashboardService, Endpoint initializationScript) {
-			_initializationScript = initializationScript;
+		public UDRunspaceFactory(IDashboardService dashboardService, InitialSessionState initialSessionState) {
+			_initialSessionState = initialSessionState;
 			_dashboardService = dashboardService;
 
 			_runspacePool = new ObjectPool<Runspace>(CreateRunspace);
@@ -81,44 +81,11 @@ namespace UniversalDashboard.Services
 #else
 			var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
 #endif
-            var initialSessionState = InitialSessionState.CreateDefault();
-			initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
-			initialSessionState.ImportPSModule(new [] {tempPath});
-			var runspace = RunspaceFactory.CreateRunspace(new UDHost(), initialSessionState);
+			_initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
+			_initialSessionState.ImportPSModule(new [] {tempPath});
+			var runspace = RunspaceFactory.CreateRunspace(new UDHost(), _initialSessionState);
 			runspace.Open();
-
-            if (_initializationScript != null) {
-				using(var powerShell = PowerShell.Create()) {
-					powerShell.Runspace = runspace;
-
-					try 
-					{
-						SetVariables(powerShell, _initializationScript.Variables);
-						powerShell.AddStatement().AddScript(_initializationScript.ScriptBlock.ToString());
-						powerShell.Invoke();
-					}
-					catch (Exception ex) {
-						Log.Error(ex, "Error running endpoint initialization script.");
-					}
-				}
-			}
-
 			return runspace;
-		}
-
-		private void SetVariables(PowerShell powerShell, Dictionary<string, object> variables) {
-			foreach (var variable in variables)
-			{
-				if (Log.IsDebugEnabled)
-				{
-					Log.Debug($"{variable.Key} = {variable.Value}");
-				}
-
-				powerShell.AddStatement()
-					.AddCommand("Set-Variable", true)
-					.AddParameter("Name", variable.Key)
-					.AddParameter("Value", variable.Value);
-			}
 		}
 
         #region IDisposable Support

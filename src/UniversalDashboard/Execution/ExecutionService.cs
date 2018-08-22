@@ -89,10 +89,8 @@ namespace UniversalDashboard.Execution
 			{
                 using (var runspaceRef =  _runspace.GetRunspace())
                 {
+                    runspaceRef.Runspace.ResetRunspaceState();
                     Runspace.DefaultRunspace = runspaceRef.Runspace;
-
-                    
-
                     ps.Runspace = runspaceRef.Runspace;
 
                     if (endpoint.Variables != null)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UniversalDashboard.Models;
 using System.Security.Cryptography.X509Certificates;
 using System.Security;
+using System.Management.Automation.Runspaces;
 
 namespace UniversalDashboard
 {
@@ -14,7 +15,7 @@ namespace UniversalDashboard
         public X509Certificate2 Certificate { get; set; }
         public string CertificateFile { get; set; } 
         public SecureString Password { get; set; }
-        public Endpoint EndpointInitializationScript { get; set; }
+        public InitialSessionState EndpointInitialSessionState { get; set; }
         public string UpdateToken { get; set; }
         public Dictionary<Guid, string> ElementScripts { get; set; }
         public PublishedFolder[] PublishedFolders { get; set; }

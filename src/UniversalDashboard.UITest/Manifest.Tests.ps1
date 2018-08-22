@@ -111,8 +111,9 @@ Describe "Manifest" {
         Get-Command 'New-UDTreeNode' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDFab' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDFabButton' -ErrorAction SilentlyContinue | Should not be $null
-
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 96
+        Get-Command 'New-UDEndpointInitialization' -ErrorAction SilentlyContinue | Should not be $null
+        
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 97
     }
 
     It "should require .NET 4.7" -Skip  {

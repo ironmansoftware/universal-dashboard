@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation.Runspaces;
 using UniversalDashboard.Execution;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
@@ -18,7 +19,7 @@ namespace UniversalDashboard.Services
             }
 
             SetRestEndpoints(dashboardOptions.StaticEndpoints?.ToArray());
-            SetRunspaceFactory(dashboardOptions.EndpointInitializationScript);
+            SetRunspaceFactory(dashboardOptions.EndpointInitialSessionState);
 
             UpdateToken = dashboardOptions.UpdateToken;
 			ReloadToken = reloadToken;
@@ -54,7 +55,7 @@ namespace UniversalDashboard.Services
                 EndpointService.Register(endpoint);
             }
 
-			SetRunspaceFactory(Dashboard.InitializationScript);
+			SetRunspaceFactory(Dashboard.EndpointInitialSessionState);
         }
 
         public void SetRestEndpoints(Endpoint[] endpoints)
@@ -67,11 +68,11 @@ namespace UniversalDashboard.Services
             }
         }
 
-		public void SetRunspaceFactory(Endpoint initializationScript) {
+		public void SetRunspaceFactory(InitialSessionState initialSessionState) {
 			if (RunspaceFactory != null)
 				RunspaceFactory.Dispose();
 
-			RunspaceFactory = new UDRunspaceFactory(this, initializationScript);
+			RunspaceFactory = new UDRunspaceFactory(this, initialSessionState);
 		}
     }
 }

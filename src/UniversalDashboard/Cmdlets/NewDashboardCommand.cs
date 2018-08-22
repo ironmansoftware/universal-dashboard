@@ -6,6 +6,7 @@ using System;
 using UniversalDashboard.Services;
 using System.Linq;
 using UniversalDashboard.Models.Basics;
+using System.Management.Automation.Runspaces;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -57,7 +58,7 @@ namespace UniversalDashboard.Cmdlets
 		public Element NavBarLogo {get;set;}
 
 		[Parameter]
-		public ScriptBlock EndpointInitializationScript { get; set; }
+		public InitialSessionState EndpointInitialization { get; set; } = InitialSessionState.CreateDefault();
 
 		[Parameter]
 		public Theme Theme { get; set; }
@@ -80,7 +81,7 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.CyclePagesInterval = CyclePagesInterval;
 			dashboard.Footer = Footer;
 			dashboard.NavBarLogo = NavBarLogo;
-			dashboard.InitializationScript = EndpointInitializationScript?.GenerateCallback("IS", SessionState);
+			dashboard.EndpointInitialSessionState = EndpointInitialization;
 			dashboard.GeoLocation = GeoLocation;
            
             if (Theme != null) {

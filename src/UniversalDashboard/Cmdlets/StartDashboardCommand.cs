@@ -139,7 +139,7 @@ namespace UniversalDashboard.Cmdlets
 			options.Wait = Wait;
 			options.CertificateFile = CertificateFile;
 			options.Password = CertificateFilePassword;
-			options.EndpointInitializationScript = Dashboard.InitializationScript;
+			options.EndpointInitialSessionState = Dashboard.EndpointInitialSessionState;
 			options.UpdateToken = UpdateToken;
 			options.PublishedFolders = PublishedFolder;
 
