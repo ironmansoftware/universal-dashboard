@@ -128,7 +128,7 @@ Accept wildcard characters: False
 ```
 
 ### -EndpointInitialization
-{{Fill EndpointInitialization Description}}
+The initial session state for endpoints of this dashboard. Use New-UDEndpointInitialization to create an object for this parameter.
 
 ```yaml
 Type: InitialSessionState
