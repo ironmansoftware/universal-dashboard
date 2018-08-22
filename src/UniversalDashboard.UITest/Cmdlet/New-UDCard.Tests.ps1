@@ -14,13 +14,13 @@ Describe "New-UDCard" {
     }
 
     It "should set card class" {
-        (New-UDCard).Attributes.className | Should be "card "
+        (New-UDCard).Attributes.className | Should be "card  ud-card"
     }
 
     It "should set card size class" {
-        (New-UDCard -Size small).Attributes.className | Should be "card small"
-        (New-UDCard -Size medium).Attributes.className | Should be "card medium"
-        (New-UDCard -Size large).Attributes.className | Should be "card large"
+        (New-UDCard -Size small).Attributes.className | Should be "card small ud-card"
+        (New-UDCard -Size medium).Attributes.className | Should be "card medium ud-card"
+        (New-UDCard -Size large).Attributes.className | Should be "card large ud-card"
     }
 
     It "should set title" {
