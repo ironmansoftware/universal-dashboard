@@ -109,8 +109,10 @@ Describe "Manifest" {
         Get-Command 'Publish-UDFolder' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDTreeView' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDTreeNode' -ErrorAction SilentlyContinue | Should not be $null
+        Get-Command 'New-UDFab' -ErrorAction SilentlyContinue | Should not be $null
+        Get-Command 'New-UDFabButton' -ErrorAction SilentlyContinue | Should not be $null
 
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 94
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 96
     }
 
     It "should require .NET 4.7" -Skip  {
