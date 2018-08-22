@@ -26,7 +26,6 @@ Publishes a folder that will be available to download assets.
 PS C:\> Publish-UDFolder
 ```
 
-
 ## PARAMETERS
 
 ### -Path

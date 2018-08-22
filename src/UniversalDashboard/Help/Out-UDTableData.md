@@ -13,7 +13,7 @@ Outputs data as a table.
 ## SYNTAX
 
 ```
-Out-UDTableData [-Data] <Object> [-Property] <String[]> [<CommonParameters>]
+Out-UDTableData [-Data] <Object> [-Property] <String[]> [[-DateTimeFormat] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -DateTimeFormat
+The DateTime format for cells in this table. 
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

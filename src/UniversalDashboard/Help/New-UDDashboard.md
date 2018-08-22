@@ -18,7 +18,7 @@ New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <Dashboar
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
  [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>] [-CyclePages]
  [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
- [-EndpointInitializationScript <ScriptBlock>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
+ [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
 ```
 
 ### Pages
@@ -27,7 +27,7 @@ New-UDDashboard [-Title <String>] -Pages <Page[]> [-NavBarColor <DashboardColor>
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
  [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>] [-CyclePages]
  [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
- [-EndpointInitializationScript <ScriptBlock>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
+ [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -127,11 +127,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -EndpointInitializationScript
-A script block run to initialize all endpoints for the dashboard. 
+### -EndpointInitialization
+{{Fill EndpointInitialization Description}}
 
 ```yaml
-Type: ScriptBlock
+Type: InitialSessionState
 Parameter Sets: (All)
 Aliases:
 

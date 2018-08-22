@@ -226,7 +226,6 @@ Accept wildcard characters: False
 
 ### -OverlayClose
 
-
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)

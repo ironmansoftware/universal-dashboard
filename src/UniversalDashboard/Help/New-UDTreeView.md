@@ -13,10 +13,10 @@ Creates a tree view control.
 ## SYNTAX
 
 ```
-New-UDTreeView -Node <TreeNode> [-OnNodeClicked <ScriptBlock>] [-OnNodeClickedArgumentList <Object[]>]
- [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-ActiveBackgroundColor <DashboardColor>]
- [-ToggleColor <DashboardColor>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh]
- [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
+New-UDTreeView -Node <TreeNode> [-OnNodeClicked <Object>] [-BackgroundColor <DashboardColor>]
+ [-FontColor <DashboardColor>] [-ActiveBackgroundColor <DashboardColor>] [-ToggleColor <DashboardColor>]
+ [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION

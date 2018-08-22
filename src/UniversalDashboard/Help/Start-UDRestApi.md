@@ -15,7 +15,7 @@ Starts a REST API server.
 ```
 Start-UDRestApi [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-Certificate <X509Certificate2>] [-CertificateFile <String>] [-CertificateFilePassword <SecureString>]
- [-EndpointInitializationScript <ScriptBlock>] [-AutoReload] [-PublishedFolder <PublishedFolder[]>]
+ [-EndpointInitialization <InitialSessionState>] [-AutoReload] [-PublishedFolder <PublishedFolder[]>]
  [<CommonParameters>]
 ```
 
@@ -113,11 +113,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -EndpointInitializationScript
-A script block run to initialize all endpoints for the dashboard. 
+### -EndpointInitialization
+The initial session state for endpoints of this dashboard. Use New-UDEndpointInitialization to create an object for this parameter.
 
 ```yaml
-Type: ScriptBlock
+Type: InitialSessionState
 Parameter Sets: (All)
 Aliases:
 

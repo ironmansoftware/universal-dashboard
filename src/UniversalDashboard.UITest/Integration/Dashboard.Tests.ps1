@@ -10,6 +10,14 @@ Get-UDDashboard | Stop-UDDashboard
 
 Describe "Dashboard" {
     Context "Initialization Script" {
+
+        $TitleVariable = "Title"
+        function Get-ContentForCard {
+            "Body"
+        }
+
+        $Init = New-UDEndpointInitialization -Variable "TitleVariable" -Function "Get-ContentForCard"
+
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDRow -Columns {
                 New-UDColumn -Size 12 -Endpoint {
@@ -22,12 +30,7 @@ Describe "Dashboard" {
                     New-UDCard -Title $TitleVariable -Text (Get-ContentForCard) -Id "Card3" 
                 }
             } 
-        } -EndpointInitializationScript {
-            $TitleVariable = "Title"
-            function Get-ContentForCard {
-                "Body"
-            }
-        } -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+        } -EndpointInitialization $Init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox

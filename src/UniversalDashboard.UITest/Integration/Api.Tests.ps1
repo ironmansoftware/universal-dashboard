@@ -39,6 +39,11 @@ Describe "Api" {
     }
 
     Context "Components" {
+
+        $Variable = @("Some text")
+        
+        $Init = New-UDEndpointInitialization -Variable "Variable"
+
         $Server = Start-UDRestApi -Port 10001 -Endpoint @(
             New-UDEndpoint -Url "user" -Method "GET" -Endpoint {
                 @("Adam", "Bill", "Frank") | ConvertTo-Json
@@ -89,9 +94,7 @@ Describe "Api" {
                 
                 $rechercheId
             }
-        ) -EndpointInitializationScript {
-            $Variable = @("Some text")
-        } 
+        ) -EndpointInitialization $Init
 
         It "should work with nested routes" {
             Invoke-RestMethod -Uri 'http://localhost:10001/api/recherches/1' -Method DELETE | Should be "1"

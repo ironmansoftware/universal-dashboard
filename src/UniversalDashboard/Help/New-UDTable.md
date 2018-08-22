@@ -14,8 +14,8 @@ Creates a new table of data within the dashboard.
 
 ```
 New-UDTable [[-Id] <String>] [[-Title] <String>] [-Headers] <String[]> [[-BackgroundColor] <DashboardColor>]
- [[-FontColor] <DashboardColor>] [[-Style] <String>] [[-DateTimeFormat] <String>] [[-Links] <Link[]>]
- [-Endpoint] <Object> [-AutoRefresh] [[-RefreshInterval] <Int32>] [<CommonParameters>]
+ [[-FontColor] <DashboardColor>] [[-Style] <String>] [[-Links] <Link[]>] [-Endpoint] <Object> [-AutoRefresh]
+ [[-RefreshInterval] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -64,21 +64,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DateTimeFormat
-The date time format for date time columns.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Endpoint
 The endpoint to call to retrieve data for the table. The endpoint should return data using the Out-UDTableData cmdlet.
 
@@ -88,7 +73,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 8
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -148,7 +133,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -163,7 +148,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

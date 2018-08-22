@@ -7,7 +7,7 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
-Describe "EndpointInitializationScript" {
+Describe "EndpointInitialization" {
     Context "Variables" {
 
         function Get-Stuff {
