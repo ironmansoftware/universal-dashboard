@@ -47,7 +47,7 @@ $help = Join-Path $outputDirectory "en-US"
 $client = Join-Path $outputDirectory "client"
 $poshud = Join-Path $outputDirectory "poshud"
 
-New-Item -ItemType Directory net471
+New-Item -ItemType Directory $net471
 New-Item -ItemType Directory $netstandard20
 New-Item -ItemType Directory $help
 New-Item -ItemType Directory $client
