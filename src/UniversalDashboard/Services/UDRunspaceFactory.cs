@@ -75,17 +75,13 @@ namespace UniversalDashboard.Services
 
 		private Runspace CreateRunspace() {
 			var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
-
-#if DEBUG 
-			var tempPath = Path.Combine(assemblyBasePath, Constants.ModuleManifest);
-#else
-			var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
-#endif
+            var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
 			_initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
 			_initialSessionState.ImportPSModule(new [] {tempPath});
 			var runspace = RunspaceFactory.CreateRunspace(new UDHost(), _initialSessionState);
 			runspace.Open();
-			return runspace;
+
+            return runspace;
 		}
 
         #region IDisposable Support

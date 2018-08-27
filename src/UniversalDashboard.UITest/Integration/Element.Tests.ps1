@@ -9,8 +9,6 @@ Import-Module $ModulePath -Force
 Get-UDDashboard | Stop-UDDashboard
 
 Describe "Element" {
-
-
     Context "Should work with attributes that start with on" {
         $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
             New-UDElement -Tag A -Id "element" -Attributes @{onclick = 'kaboom'} -Content {'IAMME'}

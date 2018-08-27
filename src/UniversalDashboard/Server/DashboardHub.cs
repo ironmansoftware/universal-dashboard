@@ -19,78 +19,78 @@ namespace UniversalDashboard
     {
         public static async Task ShowModal(this IHubContext<DashboardHub> hub, string clientId, Modal modal)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("showModal", modal);
+            await hub.Clients.Client(clientId).SendAsync("showModal", modal);
         }
         public static async Task CloseModal(this IHubContext<DashboardHub> hub, string clientId)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("closeModal");
+            await hub.Clients.Client(clientId).SendAsync("closeModal");
         }
         public static async Task ShowToast(this IHubContext<DashboardHub> hub, string clientId, object toast)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("showToast", toast);
+            await hub.Clients.Client(clientId).SendAsync("showToast", toast);
         }
         public static async Task HideToast(this IHubContext<DashboardHub> hub, string clientId, string id)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("hideToast", id);
+            await hub.Clients.Client(clientId).SendAsync("hideToast", id);
         }
         public static async Task RequestState(this IHubContext<DashboardHub> hub, string clientId, string componentId, string requestId)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("requestState", componentId, requestId);
+            await hub.Clients.Client(clientId).SendAsync("requestState", componentId, requestId);
         }
 
         public static async Task Redirect(this IHubContext<DashboardHub> hub, string clientId, string url)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("redirect", url);
+            await hub.Clients.Client(clientId).SendAsync("redirect", url);
         }
 
         public static async Task SetState(this IHubContext<DashboardHub> hub, string componentId, Element state)
         {
-            await hub.Clients.All.InvokeAsync("setState", componentId, state);
+            await hub.Clients.All.SendAsync("setState", componentId, state);
         }
 
         public static async  Task SetState(this IHubContext<DashboardHub> hub, string clientId, string componentId, Element state)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("setState", componentId, state);
+            await hub.Clients.Client(clientId).SendAsync("setState", componentId, state);
         }
 
         public static async Task AddElement(this IHubContext<DashboardHub> hub, string parentComponentId, object[] element)
         {
-            await hub.Clients.All.InvokeAsync("addElement", parentComponentId, element);
+            await hub.Clients.All.SendAsync("addElement", parentComponentId, element);
         }
 
         public static async  Task AddElement(this IHubContext<DashboardHub> hub, string clientId, string parentComponentId, object[] element)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("addElement", parentComponentId, element);
+            await hub.Clients.Client(clientId).SendAsync("addElement", parentComponentId, element);
         }
 
         public static async Task RemoveElement(this IHubContext<DashboardHub> hub, string clientId, string componentId)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("removeElement", componentId);
+            await hub.Clients.Client(clientId).SendAsync("removeElement", componentId);
         }
 
         public static async Task RemoveElement(this IHubContext<DashboardHub> hub, string componentId)
         {
-            await hub.Clients.All.InvokeAsync("removeElement", componentId);
+            await hub.Clients.All.SendAsync("removeElement", componentId);
         }
 
         public static async Task ClearElement(this IHubContext<DashboardHub> hub, string clientId, string componentId)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("clearElement", componentId);
+            await hub.Clients.Client(clientId).SendAsync("clearElement", componentId);
         }
 
         public static async Task ClearElement(this IHubContext<DashboardHub> hub, string componentId)
         {
-            await hub.Clients.All.InvokeAsync("clearElement", componentId);
+            await hub.Clients.All.SendAsync("clearElement", componentId);
         }
 
         public static async Task SyncElement(this IHubContext<DashboardHub> hub, string clientId, string componentId)
         {
-            await hub.Clients.Client(clientId).InvokeAsync("syncElement", componentId);
+            await hub.Clients.Client(clientId).SendAsync("syncElement", componentId);
         }
 
         public static async Task SyncElement(this IHubContext<DashboardHub> hub, string componentId)
         {
-            await hub.Clients.All.InvokeAsync("syncElement", componentId);
+            await hub.Clients.All.SendAsync("syncElement", componentId);
         }
     }
 
@@ -151,7 +151,7 @@ namespace UniversalDashboard
         {
             Log.Debug($"Reload()");
 
-            return Clients.All.InvokeAsync("reload");
+            return Clients.All.SendAsync("reload");
         }
 
         public async Task RequestStateResponse(string requestId, Element state)

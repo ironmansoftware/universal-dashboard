@@ -58,7 +58,7 @@ namespace UniversalDashboard.Cmdlets
 		public Element NavBarLogo {get;set;}
 
 		[Parameter]
-		public InitialSessionState EndpointInitialization { get; set; } = InitialSessionState.CreateDefault();
+		public InitialSessionState EndpointInitialization { get; set; } = InitialSessionState.CreateDefault2();
 
 		[Parameter]
 		public Theme Theme { get; set; }

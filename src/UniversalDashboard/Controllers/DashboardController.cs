@@ -78,7 +78,7 @@ namespace UniversalDashboard.Controllers
 				return StatusCode(403);
 			}
 
-			await _hub.Clients.All.InvokeAsync("reload");
+			await _hub.Clients.All.SendAsync("reload");
 
 			return Ok();
 		}
@@ -116,7 +116,7 @@ namespace UniversalDashboard.Controllers
 
 					_dashboardService.SetDashboard(dashboard);
 					System.IO.File.WriteAllText(Constants.CachedDashboardPath, dashboardScript);
-					await _hub.Clients.All.InvokeAsync("reload");
+					await _hub.Clients.All.SendAsync("reload");
 				}
 			}
 			catch 

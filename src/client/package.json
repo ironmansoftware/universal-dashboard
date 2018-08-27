@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aspnet/signalr-client": "1.0.0-alpha2-final",
+    "@aspnet/signalr": "1.0.3",
     "babel-polyfill": "^6.26.0",
     "chart.js": "2.7.0",
     "create-react-class": "15.6.2",
@@ -37,6 +37,7 @@
     "react-router-dom": "4.3.1",
     "react-treebeard": "^2.1.0",
     "redux-thunk": "2.3.0",
+    "tslib": "^1.9.3",
     "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {

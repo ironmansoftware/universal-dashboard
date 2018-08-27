@@ -113,7 +113,8 @@ namespace UniversalDashboard
 
 			builder = builder
                 .UseSetting("detailedErrors", "true")
-				.UseStartup<ServerStartup>()
+                .UseLibuv()
+                .UseStartup<ServerStartup>()
 				.CaptureStartupErrors(true);
 
 			if (Directory.Exists(libraryDirectory)) {

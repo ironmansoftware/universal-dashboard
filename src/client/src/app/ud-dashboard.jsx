@@ -13,7 +13,7 @@ import PageCycler from './page-cycler.jsx';
 import ErrorCard from './error-card.jsx';
 import {fetchGet} from './services/fetch-service.jsx';
 import PubSub from 'pubsub-js';
-import { HubConnection } from '@aspnet/signalr-client/dist/browser/signalr-clientES5-1.0.0-alpha2-final.min.js';
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import UdModal from './ud-modal.jsx';
 import toaster from './services/toaster';
 
@@ -35,7 +35,11 @@ export default class UdDashboard extends React.Component {
     }
 
     connectWebSocket(sessionId) {
-        let connection = new HubConnection(getApiPath() + '/dashboardhub');
+
+        let connection = new HubConnectionBuilder()
+            .withUrl(getApiPath() + '/dashboardhub')
+            .configureLogging(LogLevel.Information)
+            .build();
 
         connection.on('reload', data => {
             window.location.reload(true);

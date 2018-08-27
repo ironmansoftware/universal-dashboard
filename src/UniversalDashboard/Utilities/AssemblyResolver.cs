@@ -14,26 +14,21 @@ namespace UniversalDashboard.Utilities
 
             try
             {
-                if (assemblyNameString.StartsWith("UniversalDashboard"))
+                if (assemblyNameString.Contains("UniversalDashboard")) return null;
+
+                var assemblyBasePath = Path.GetDirectoryName(typeof(AssemblyResolver).Assembly.Location);
+
+                var assemblyPath = Path.Combine(
+                            assemblyBasePath,
+                            assemblyNameString + ".dll");
+
+                if (File.Exists(assemblyPath))
                 {
-                    return typeof(AssemblyResolver).GetType().GetTypeInfo().Assembly;
+                    return Assembly.LoadFrom(assemblyPath);
                 }
                 else
                 {
-                    var assemblyBasePath = Path.GetDirectoryName(typeof(AssemblyResolver).Assembly.Location);
-
-                    var assemblyPath = Path.Combine(
-                                assemblyBasePath,
-                                assemblyNameString + ".dll");
-
-                    if (File.Exists(assemblyPath))
-                    {
-                        return Assembly.LoadFrom(assemblyPath);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return null;
                 }
             }
             catch (Exception e)

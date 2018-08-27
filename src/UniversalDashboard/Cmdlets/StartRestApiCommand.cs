@@ -35,7 +35,7 @@ namespace UniversalDashboard.Cmdlets
 		public SecureString CertificateFilePassword { get; set; }
 
 		[Parameter]
-		public InitialSessionState EndpointInitialization { get; set; } = InitialSessionState.CreateDefault();
+		public InitialSessionState EndpointInitialization { get; set; } = InitialSessionState.CreateDefault2();
 
 		[Parameter]
 		public SwitchParameter AutoReload { get; set; }

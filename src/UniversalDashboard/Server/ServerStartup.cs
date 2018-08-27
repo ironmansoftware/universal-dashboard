@@ -25,7 +25,7 @@ namespace UniversalDashboard
 		public IConfigurationRoot Configuration { get; }
 		private AutoReloader _reloader;
 
-        public ServerStartup(IHostingEnvironment env)
+        public ServerStartup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
 		{
 			var builder =
 				new ConfigurationBuilder()
@@ -61,7 +61,7 @@ namespace UniversalDashboard
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IApplicationLifetime lifetime)
+        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, ILoggerFactory loggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime lifetime)
 		{
 			loggerFactory.AddNLog();
 			app.UseResponseCompression();
@@ -88,7 +88,7 @@ namespace UniversalDashboard
 
 			app.UseSignalR(routes =>
             {
-                routes.MapHub<DashboardHub>("dashboardhub");
+                routes.MapHub<DashboardHub>("/dashboardhub");
             });
 			app.UseWebSockets();
 
