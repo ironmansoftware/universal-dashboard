@@ -237,7 +237,7 @@ namespace UniversalDashboard.Execution
 
 				if (app.ElementScripts != null) {
 					foreach(var elementScript in app.ElementScripts) {
-						if (_dashboardService.ElementScripts.ContainsKey(elementScript.Key))
+						if (!_dashboardService.ElementScripts.ContainsKey(elementScript.Key))
 						{
 							Log.Debug("Found new element script: " + elementScript.Value);
 							_dashboardService.ElementScripts.Add(elementScript.Key, elementScript.Value);

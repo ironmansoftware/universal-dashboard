@@ -15,6 +15,8 @@ namespace UniversalDashboard.Cmdlets
 
         public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
         {
+            if (endpoint == null) return null;
+
             var logger = LogManager.GetLogger("CallbackCmdlet");
 
             var callback = new Endpoint();

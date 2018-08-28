@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using UniversalDashboard.Services;
 using UniversalDashboard.Interfaces;
+using UniversalDashboard.Utilities;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -105,7 +106,7 @@ namespace UniversalDashboard.Cmdlets
 
 				var dashboardService = GetVariableValue("DashboardService") as IDashboardService;
 				if (dashboardService != null) {
-					var id = path.GetHashCode();
+					var id = path.ToGuid();
 					if (!dashboardService.ElementScripts.ContainsKey(id)) {
 						Log.Debug("Adding element script: " + path);
 						dashboardService.ElementScripts.Add(id, path);

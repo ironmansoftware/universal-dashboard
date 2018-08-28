@@ -11,7 +11,7 @@ namespace UniversalDashboard.Interfaces
         Dashboard Dashboard { get; }
         DashboardOptions DashboardOptions { get; }
         IUDRunspaceFactory RunspaceFactory { get; }
-        Dictionary<int, string> ElementScripts { get; }
+        Dictionary<Guid, string> ElementScripts { get; }
         string UpdateToken { get; set; }
         string ReloadToken { get; set; }
         DateTime StartTime { get; }

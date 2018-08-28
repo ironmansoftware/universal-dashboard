@@ -2,6 +2,7 @@
 using UniversalDashboard.Models;
 using System.IO;
 using System.Reflection;
+using System;
 
 namespace UniversalDashboard.Services
 {
@@ -28,7 +29,7 @@ namespace UniversalDashboard.Services
 		public List<string> ScriptIncludes { get; set; } = new List<string>();
 		public List<string> StylesheetIncludes { get; set; } = new List<string>();
 		public List<Endpoint> Endpoints { get; set; } = new List<Endpoint>();
-		public Dictionary<int, string> ElementScripts { get; set; } = new Dictionary<int, string>();
+		public Dictionary<Guid, string> ElementScripts { get; set; } = new Dictionary<Guid, string>();
 
 		public void Combine(ComponentParts parts)
 		{
@@ -39,8 +40,8 @@ namespace UniversalDashboard.Services
 			Endpoints.AddRange(parts.Endpoints);
 
 			foreach(var script in parts.ElementScripts) {
-				if (!ElementScripts.ContainsKey(script.Value.GetHashCode()))
-					ElementScripts.Add(script.Value.GetHashCode(), script.Value);
+				if (!ElementScripts.ContainsKey(script.Key))
+					ElementScripts.Add(script.Key, script.Value);
 			}
 		} 
 	}

@@ -71,6 +71,6 @@ namespace UniversalDashboard.Services
 	{
 		public string Client { get; set; }
 		public IEnumerable<Endpoint> Endpoints { get; set; }
-		public Dictionary<int, string> ElementScripts { get; set; }
+		public Dictionary<Guid, string> ElementScripts { get; set; }
 	}
 }

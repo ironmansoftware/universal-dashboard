@@ -106,9 +106,18 @@ class UDElementContent extends React.Component {
         }
         else 
         {
-            this.setState({
-                loading: false
-            })
+            if (this.props.js) {
+                $.getScript(getApiPath() + "/js/" + this.props.js, function() {
+                    this.setState({
+                        loading: false
+                    })
+                }.bind(this));
+            }
+            else {
+                this.setState({
+                    loading: false
+                })
+            }
         }
     }
 
@@ -248,6 +257,10 @@ class UDElementContent extends React.Component {
 
         if (this.state.loading) {
             return <div></div>
+        }
+
+        if (this.props.js) {
+            return React.createElement(eval(this.props.moduleName + "." + this.props.componentName), this.props.props);
         }
 
         var children = null;

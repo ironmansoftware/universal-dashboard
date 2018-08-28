@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Newtonsoft.Json;
 using System.Linq;
+using System;
+using UniversalDashboard.Utilities;
 
 namespace UniversalDashboard.Models.Basics
 {
@@ -21,7 +23,7 @@ namespace UniversalDashboard.Models.Basics
         [JsonIgnore]
 		public string JavaScriptPath { get; set; }
         [JsonProperty("js", NullValueHandling = NullValueHandling.Ignore)]
-        public int? JavaScriptId => JavaScriptPath?.GetHashCode();
+        public Guid? JavaScriptId => JavaScriptPath?.ToGuid();
         [JsonProperty("componentName", NullValueHandling = NullValueHandling.Ignore)]
         public string ComponentName { get; set; }
         [JsonProperty("moduleName", NullValueHandling = NullValueHandling.Ignore)]

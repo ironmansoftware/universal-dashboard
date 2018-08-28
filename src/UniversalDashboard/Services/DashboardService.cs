@@ -30,7 +30,7 @@ namespace UniversalDashboard.Services
         
         public Dashboard Dashboard { get; private set; }
         public DashboardOptions DashboardOptions { get; private set; }
-		public Dictionary<int, string> ElementScripts {get; private set;}
+		public Dictionary<Guid, string> ElementScripts {get; private set;}
         public IUDRunspaceFactory RunspaceFactory {get;private set;}
 		public string UpdateToken {get;set;}
 		public string ReloadToken {get;set;}
