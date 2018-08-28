@@ -180,42 +180,6 @@ namespace UniversalDashboard.Execution
             return script;
         }
 
-        private string SetupSharedData(PowerShell ps, string script, ExecutionContext context, out bool hasGetSharedData)
-        {
-            bool hasPublishSharedData = script.Contains("Publish-UDSharedData");
-            hasGetSharedData = script.Contains("Get-UDSharedData");
-
-            if (hasPublishSharedData || hasGetSharedData)
-            {
-                ps.AddStatement()
-                 .AddCommand("Set-Variable", true)
-                 .AddParameter("Name", "MemoryCacheUdShared")
-                 .AddParameter("Value", MemoryCache);
-            }
-
-            if (hasPublishSharedData)
-            {
-                script = ReplaceIfNotReplaced(script, "Publish-UDSharedData ", "Publish-UDSharedData -MemoryCache $MemoryCacheUdShared ");
-            }
-
-            if (hasGetSharedData)
-            {
-                ps.AddStatement()
-                 .AddCommand("Set-Variable", true)
-                 .AddParameter("Name", "ExecutionContextUdShared")
-                 .AddParameter("Value", context);
-
-                ps.AddStatement()
-                 .AddCommand("Set-Variable", true)
-                 .AddParameter("Name", "ExecutionServiceUdShared")
-                 .AddParameter("Value", this);
-
-                script = ReplaceIfNotReplaced(script, "Get-UDSharedData ", "Get-UDSharedData -ExecutionContext $ExecutionContextUdShared -ExecutionService $ExecutionServiceUdShared -MemoryCache $MemoryCacheUdShared ");
-            }
-
-            return script;
-        }
-
         private IEnumerable<object> FindComponents(Collection<PSObject> output, Page page) {
 			var inputActionComponents = output.Select(m => m.BaseObject).OfType<InputAction>().Where(m => m.Type == InputAction.Content).SelectMany(m => m.Components);
 			var components = output.Select(m => m.BaseObject).OfType<Component>().ToArray();
