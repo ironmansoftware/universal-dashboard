@@ -12,7 +12,7 @@ function Find-Object {
             if ($results.length -gt 0) {
                 $InputObject
             }
-            
+
         }
 }
 
@@ -53,7 +53,7 @@ function New-UDLayout {
 		[Parameter()]
 		$ColumnSize = 12,
 		[Parameter()]
-		$Content 
+		$Content
 	)
 }
 function Write-UDLog {
@@ -95,10 +95,10 @@ function Out-UDMonitorData {
 		$Timestamp = [DateTime]::UtcNow
 		$dataSets = @()
 		foreach($item in $Items) {
-			$dataSets += @{ 
+			$dataSets += @{
 				x = $Timestamp
 				y = $item
-			} 
+			}
 		}
 		$dataSets | ConvertTo-Json
 	}
@@ -108,9 +108,9 @@ function Out-UDChartData {
 	[CmdletBinding()]
     param(
 		[Parameter(ValueFromPipeline = $true)]
-		$Data, 
+		$Data,
 		[Parameter()]
-		[string]$DataProperty, 
+		[string]$DataProperty,
 		[Parameter()]
 		[string]$LabelProperty,
 		[Parameter()]
@@ -126,7 +126,7 @@ function Out-UDChartData {
 		[Parameter()]
 		[UniversalDashboard.Models.DashboardColor[]]$HoverBorderColor = @("#FF7B210C")
 	)
-	
+
     Begin {
         New-Variable -Name Items -Value @()
     }
@@ -145,7 +145,7 @@ function Out-UDChartData {
 			}
 		}
 		else {
-			$datasets += 
+			$datasets +=
 				@{
 					label = $DatasetLabel
 					backgroundColor = $BackgroundColor.HtmlColor
@@ -212,7 +212,7 @@ function Out-UDGridData {
 		$Data,
 		[int]$TotalItems = 0
 	)
-	
+
     Begin {
         New-Variable -Name Items -Value @()
     }
@@ -256,7 +256,7 @@ function Out-UDTableData {
 						$DateTimeComponent.Value = $Data.$itemProperty.ToString("O")
 						$DateTimeComponent
 					}
-					else 
+					else
 					{
 						$Data.$itemProperty
 					}
@@ -311,7 +311,7 @@ function Get-UDCookie {
 	)
 
 	if ($Name) {
-		$Request.Cookies | Where-Object Key -match $Name 
+		$Request.Cookies | Where-Object Key -match $Name
 	} else {
 		$Request.Cookies
 	}
@@ -391,7 +391,7 @@ function New-UDChartLegendOptions {
 	$obj = @{}
 
 	if ($PSBoundParameters.ContainsKey("Hide")) {
-		$obj["show"] = $false
+		$obj["display"] = $false
 	}
 
 	if ($PSBoundParameters.ContainsKey("Position")) {
@@ -406,8 +406,8 @@ function New-UDChartLegendOptions {
 		$obj["reverse"] = $Reverse
 	}
 
-	$labelOptions = $PSBoundParameters.GetEnumerator() | Where-Object 'Name' -match "Label"
-	if ($labelOptions.Length -gt 0) {
+    $labelOptions = $PSBoundParameters | Where-Object {$_.Keys -match "Label*"}
+    if ($labelOptions.Count -gt 0) {
 		$obj["labels"] = @{}
 
 		if ($PSBoundParameters.ContainsKey("LabelBoxWidth")) {
@@ -477,7 +477,7 @@ function New-UDChartTitleOptions {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDTitleOptions")
-	
+
 	$obj
 }
 
@@ -549,7 +549,7 @@ function New-UDChartTooltipOptions {
 	)
 
 	$obj = @{}
-	
+
 	foreach($parameter in $PSBoundParameters.GetEnumerator())
 	{
 		$propertyName = [Char]::ToLowerInvariant($parameter.Key[0]) + $parameter.Key.Substring(1)
@@ -562,7 +562,7 @@ function New-UDChartTooltipOptions {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDTooltipOptions")
-	
+
 	$obj
 }
 
@@ -587,7 +587,7 @@ function New-UDLineChartOptions {
 	)
 
 	$obj = @{}
-	
+
 	if ($PSBoundParameters.ContainsKey("LayoutOptions")) {
 		$obj["layout"] = $LayoutOptions
 	}
@@ -627,7 +627,7 @@ function New-UDLineChartOptions {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDLineChartOptions")
-	
+
 	$obj
 }
 
@@ -656,7 +656,7 @@ function New-UDBarChartOptions {
 	)
 
 	$obj = @{}
-	
+
 	if ($PSBoundParameters.ContainsKey("LayoutOptions")) {
 		$obj["layout"] = $LayoutOptions
 	}
@@ -712,7 +712,7 @@ function New-UDBarChartOptions {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDBarChartOptions")
-	
+
 	$obj
 }
 
@@ -743,7 +743,7 @@ function New-UDDoughnutChartOptions {
 	)
 
 	$obj = @{}
-	
+
 	if ($PSBoundParameters.ContainsKey("LayoutOptions")) {
 		$obj["layout"] = $LayoutOptions
 	}
@@ -783,7 +783,7 @@ function New-UDDoughnutChartOptions {
 	}
 
 	$animation = @{}
-	
+
 	if ($PSBoundParameters.ContainsKey("AnimateRotate")) {
 		$animation["animateRotate"] = $AnimateRotate
 	}
@@ -797,7 +797,7 @@ function New-UDDoughnutChartOptions {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDDoughnutChartOptions")
-	
+
 	$obj
 }
 
@@ -823,9 +823,9 @@ function New-UDPolarChartOptions {
 		[bool]$AnimateScale
 	)
 
-	
+
 	$obj = @{}
-	
+
 	if ($PSBoundParameters.ContainsKey("LayoutOptions")) {
 		$obj["layout"] = $LayoutOptions
 	}
@@ -875,7 +875,7 @@ function New-UDPolarChartOptions {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDPolarChartOptions")
-	
+
 	$obj
 }
 
@@ -907,7 +907,7 @@ function New-UDLinearChartAxis {
 	$obj = @{
 		type = "linear"
 	}
-	
+
 	if ($PSBoundParameters.ContainsKey("Position")) {
 		$obj["position"] = $Position
 	}
@@ -915,11 +915,11 @@ function New-UDLinearChartAxis {
 	if ($PSBoundParameters.ContainsKey("Offset")) {
 		$obj["offset"] = $Offset
 	}
-		
+
 	if ($PSBoundParameters.ContainsKey("Id")) {
 		$obj["id"] = $Id
 	}
-		
+
 	if ($PSBoundParameters.ContainsKey("Position")) {
 		$obj["position"] = $Position
 	}
@@ -929,7 +929,7 @@ function New-UDLinearChartAxis {
 	if ($PSBoundParameters.ContainsKey("BeginAtZero")) {
 		$ticks["beginAtZero"] = $BeginAtZero
 	}
-	
+
 	if ($PSBoundParameters.ContainsKey("Minimum")) {
 		$ticks["min"] = $Minimum
 	}
@@ -983,7 +983,7 @@ function New-UDCategoryChartAxis {
 	$obj = @{
 		type = "category"
 	}
-	
+
 	if ($PSBoundParameters.ContainsKey("Position")) {
 		$obj["position"] = $Position
 	}
@@ -991,11 +991,11 @@ function New-UDCategoryChartAxis {
 	if ($PSBoundParameters.ContainsKey("Offset")) {
 		$obj["offset"] = $Offset
 	}
-		
+
 	if ($PSBoundParameters.ContainsKey("Id")) {
 		$obj["id"] = $Id
 	}
-		
+
 	if ($PSBoundParameters.ContainsKey("Position")) {
 		$obj["position"] = $Position
 	}
@@ -1041,7 +1041,7 @@ function New-UDLogarithmicChartAxis {
 	$obj = @{
 		type = "logarithmic"
 	}
-	
+
 	if ($PSBoundParameters.ContainsKey("Position")) {
 		$obj["position"] = $Position
 	}
@@ -1049,11 +1049,11 @@ function New-UDLogarithmicChartAxis {
 	if ($PSBoundParameters.ContainsKey("Offset")) {
 		$obj["offset"] = $Offset
 	}
-		
+
 	if ($PSBoundParameters.ContainsKey("Id")) {
 		$obj["id"] = $Id
 	}
-		
+
 	if ($PSBoundParameters.ContainsKey("Position")) {
 		$obj["position"] = $Position
 	}
@@ -1199,7 +1199,7 @@ function New-UDLineChartDataset {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDLineChartDataset")
-	
+
 	$obj
 }
 
@@ -1246,7 +1246,7 @@ function New-UDBarChartDataset {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDBarChartDataset")
-	
+
 	$obj
 }
 
@@ -1311,7 +1311,7 @@ function New-UDRadarChartDataset {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDRadarChartDataset")
-	
+
 	$obj
 }
 
@@ -1351,7 +1351,7 @@ function New-UDDoughnutChartDataset {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDDonutChartDataset")
-	
+
 	$obj
 }
 
@@ -1391,7 +1391,7 @@ function New-UDPolarChartDataset {
 	}
 
 	$obj.psobject.TypeNames.Insert(0,"UDPolarChartDataset")
-	
+
 	$obj
 }
 
@@ -1487,11 +1487,11 @@ function Publish-UDDashboard {
 		Get-ChildItem $SourcePath | ForEach-Object {
 			Copy-Item $_.FullName $TargetPath -Recurse -Force
 		}
-		
+
 		$DashboardFileName = Split-Path $DashboardFile -Leaf
 		$TargetDashboardFile = Join-Path $TargetPath $DashboardFileName
 	}
-	else 
+	else
 	{
 		$ModulePath = Split-Path (Get-Module UniversalDashboard.Community).Path
 		$TargetDashboardFile = [IO.Path]::Combine($ModulePath, "dashboard.ps1")
