@@ -29,9 +29,15 @@ function New-UDImage {
         $Url = "$mimeType $base64String"
     }
 
-    $Attributes.src = $Url
-    $Attributes.height = $Height
-    $Attributes.width = $Width
-    
+    if ($PSBoundParameters.ContainsKey('Url')) {
+        $Attributes.'src' = $Url
+    }
+    if ($PSBoundParameters.ContainsKey('Height')) {
+        $Attributes.'height' = $Height
+    }
+    if ($PSBoundParameters.ContainsKey('Width')) {
+        $Attributes.'width' = $Width
+    }
+
     New-UDElement -Tag 'img' -Attributes $Attributes
 }
