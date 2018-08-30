@@ -9,6 +9,5 @@ if ($PSEdition -eq "Core") {
 	Import-Module -Name "$PSScriptRoot/net471/UniversalDashboard.dll" | Out-Null
 }
 
-Import-Module -Name "$PSScriptRoot/net471/UniversalDashboard.dll" 
 Import-Module (Join-Path $PSScriptRoot "UniversalDashboardServer.psm1")
 Import-Module (Join-Path $PSScriptRoot "UniversalDashboard.Controls.psm1")
