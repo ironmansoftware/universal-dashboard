@@ -51,7 +51,7 @@ Describe "Cookies" {
             $Element = Find-SeElement -Name "Value" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Adam"
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -LinkText "SUBMIT" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -60,7 +60,7 @@ Describe "Cookies" {
         }
 
         It "should get cookie" {
-            $Button = Find-SeElement -LinkText "SetCookie" -Driver $Driver
+            $Button = Find-SeElement -LinkText "SETCOOKIE" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -76,10 +76,10 @@ Describe "Cookies" {
             $Element = Find-SeElement -Name "Value" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Adam"
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -LinkText "SUBMIT" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
-            $Button = Find-SeElement -LinkText "Remove Cookie" -Driver $Driver
+            $Button = Find-SeElement -LinkText "REMOVE COOKIE" -Driver $Driver
             Invoke-SeClick -Element $Button 
             
             Start-Sleep 1

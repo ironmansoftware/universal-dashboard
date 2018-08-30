@@ -33,7 +33,7 @@ Describe "Card" {
         }
 
         It "should have link" {
-            Find-SeElement -LinkText "My Link" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "MY LINK" -Driver $Driver | Should not be $null
         }
 
        Stop-SeDriver $Driver

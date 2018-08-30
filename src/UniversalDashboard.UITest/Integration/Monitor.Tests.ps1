@@ -61,7 +61,7 @@ Describe "Monitor" {
         }
 
         It "should have link" {
-            Find-SeElement -LinkText "Hey" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "HEY" -Driver $Driver | Should not be $null
         }
 
        Stop-SeDriver $Driver

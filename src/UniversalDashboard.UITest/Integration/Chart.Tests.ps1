@@ -78,7 +78,7 @@ Describe "Chart" {
         }
 
         It "should have chart" {
-            Find-SeElement -LinkText "My Link" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "MY LINK" -Driver $Driver | Should not be $null
         }
 
        Stop-SeDriver $Driver

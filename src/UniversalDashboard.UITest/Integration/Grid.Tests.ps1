@@ -65,7 +65,7 @@ Describe "Grid" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should click button" {
-            $Button = Find-SeElement -LinkText "Hey" -Driver $Driver 
+            $Button = Find-SeElement -LinkText "HEY" -Driver $Driver 
             Invoke-SeClick -Element $Button 
 
             Start-Sleep -Seconds 5
@@ -75,11 +75,11 @@ Describe "Grid" {
 
 
         It "should have link" {
-            Find-SeElement -LinkText "This is text" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "THIS IS TEXT" -Driver $Driver | Should not be $null
         }
 
         It "should have link in footer" {
-            Find-SeElement -LinkText "Other link" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "OTHER LINK" -Driver $Driver | Should not be $null
         }
 
         It "should format date correctly" {
