@@ -6,10 +6,10 @@ param(
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
 $version = "2.0.0"
-$prerelease = "-beta3"
+#$prerelease = "-beta3"
 
 $ReleaseNotes = "
-	For release notes, see: https://adamdriscoll.gitbooks.io/powershell-universal-dashboard/content/v200.html
+	For release notes, see: https://docs.universaldashboard.io/updates/v2.0.0
 "
 
 $manifestParameters = @{
