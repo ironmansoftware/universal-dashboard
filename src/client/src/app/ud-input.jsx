@@ -140,7 +140,7 @@ export default class Input extends React.Component {
 
                         <Row>
                             <Col s={12} className="right-align">
-                                <a href="#!" className="btn" onClick={this.onSubmit.bind(this)}>{this.props.submitText}</a>
+                                <a href="#!"id={`btn${this.props.id}`} className="btn" onClick={this.onSubmit.bind(this)}>{this.props.submitText}</a>
                             </Col>
                         </Row>
                     </div>

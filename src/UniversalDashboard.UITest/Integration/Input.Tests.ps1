@@ -70,7 +70,7 @@ Describe "Input" {
             $Element = Find-SeElement -TagName "div" -Driver $Driver | Where { $_.Text -eq "20" }
             $Element | Invoke-SeClick
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -85,7 +85,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "test6" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Hello!!!!!!!!!!!!!!!!!!!!!!!!!"
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -100,7 +100,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "test5" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Hello"
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -115,7 +115,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "test" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Hello"
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -130,7 +130,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "test2" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -141,7 +141,7 @@ Describe "Input" {
         }
 
         It "should selected default value" {
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -159,7 +159,7 @@ Describe "Input" {
             $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 1 -First 1
             Invoke-SeClick -Element $Element
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -174,7 +174,7 @@ Describe "Input" {
             $Element = Find-SeElement -TagName "label" -Driver $Driver | Where { (Get-SeElementAttribute $_ -Attribute "for") -eq 'MyTestValue2' }
             Invoke-SeClick -Element $Element
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -188,7 +188,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "test7" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -223,8 +223,8 @@ Describe "Input" {
 
             Sleep 5
 
-            $Element = Find-SeElement -LinkText "Submit" -Driver $Driver
-            Invoke-SeClick $Element
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick $Button
 
             Sleep 2
         }
@@ -277,7 +277,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "Textbox" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Hello"
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -302,7 +302,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "Checkbox" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -316,7 +316,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "Checkbox2" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -333,7 +333,7 @@ Describe "Input" {
             $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 1 -First 1
             Invoke-SeClick -Element $Element
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -351,7 +351,7 @@ Describe "Input" {
             $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 2 -First 1
             Invoke-SeClick -Element $Element
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -377,9 +377,9 @@ Describe "Input" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have different submit text" {
-            $Element = Find-SeElement -LinkText "Insert" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
 
-            $Element | Should not be $null
+            $Button | Should not be $null
         }
 
         Stop-SeDriver $Driver
@@ -415,8 +415,8 @@ Describe "Input" {
             $Element = Find-SeElement -Name "test2" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
-            $Element = Find-SeElement -LinkText "Submit" -Driver $Driver
-            Invoke-SeClick -Element $Element 
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
 
@@ -444,7 +444,7 @@ Describe "Input" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have different submit text" {
-            $Element = Find-SeElement -LinkText "Insert" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Element 
 
             Start-Sleep 2
@@ -482,7 +482,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "PageNumber" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "6"
 
-            $Button = Find-SeElement -LinkText "Submit" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
 
             $Element = Find-SeElement -Id "PageCard" -Driver $Driver
@@ -516,8 +516,8 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Element = Find-SeElement -LinkText "Submit" -Driver $Driver
-            Invoke-SeClick $Element
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick $Button
 
             Sleep 2
 
