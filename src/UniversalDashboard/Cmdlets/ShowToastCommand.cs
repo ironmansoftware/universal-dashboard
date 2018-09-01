@@ -29,7 +29,7 @@ namespace UniversalDashboard.Cmdlets
         [Parameter]
         public int Duration { get; set; } = 1000;
         [Parameter]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
         [Parameter]
         public DashboardColor TitleColor { get; set; }
         [Parameter]
@@ -47,7 +47,7 @@ namespace UniversalDashboard.Cmdlets
         public DashboardColor IconColor { get; set; }
         [Parameter()]
         [ValidateSet("bottomRight", "bottomLeft", "topRight", "topLeft", "topCenter", "bottomCenter", "center")]
-        public string Position { get; set; } 
+        public string Position { get; set; } = "topRight";
         [Parameter]
         public SwitchParameter HideCloseButton { get; set; }
         [Parameter]
