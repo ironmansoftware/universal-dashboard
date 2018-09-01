@@ -82,7 +82,7 @@ export default class UdModal extends React.Component {
 
         return (
             <div className={className} ref={modal => this.modal = modal} style={{color: this.state.fontColor, backgroundColor: this.state.backgroundColor}}>
-              <div class="modal-content">
+              <div className="modal-content">
                 {header}
                 {content}
               </div>

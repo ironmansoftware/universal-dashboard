@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using UniversalDashboard.Interfaces;
+using UniversalDashboard.Models.Basics;
 
 namespace UniversalDashboard.Controllers
 {
@@ -30,13 +31,15 @@ namespace UniversalDashboard.Controllers
         private readonly IDashboardService _dashboardService;
         private readonly AutoReloader _autoReloader;
         private readonly IMemoryCache _memoryCache;
+        private readonly StateRequestService _stateRequestService;
 
-        public ComponentController(IExecutionService executionService, IDashboardService dashboardService, IMemoryCache memoryCache, AutoReloader autoReloader)
+        public ComponentController(IExecutionService executionService, IDashboardService dashboardService, IMemoryCache memoryCache, AutoReloader autoReloader, StateRequestService stateRequestService)
         {
             _executionService = executionService;
             _dashboardService = dashboardService;
             _autoReloader = autoReloader;
             _memoryCache = memoryCache;
+            _stateRequestService = stateRequestService;
         }
 
         private IActionResult RunScript(Endpoint endpoint, Dictionary<string, object> parameters = null)
@@ -395,6 +398,15 @@ namespace UniversalDashboard.Controllers
 
 			return StatusCode(404);
 		}
+
+        [HttpPost]
+        [Route("/component/element/sessionState/{requestId}")]
+        [Authorize]
+        public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]Element element)
+        {
+            _stateRequestService.Set(requestId, element);
+            return Ok();
+        }
 
         private void SetQueryStringValues(Dictionary<string, object> variables)
         {

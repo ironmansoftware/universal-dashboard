@@ -1,7 +1,7 @@
 import React from 'react';
 import renderComponent from './services/render-service.jsx';
 import PubSub from 'pubsub-js';
-import {fetchGet} from './services/fetch-service.jsx';
+import {fetchGet, fetchPost} from './services/fetch-service.jsx';
 import {getApiPath} from 'config';
 import ReactInterval from 'react-interval';
 import ErrorCard from './error-card.jsx';
@@ -187,11 +187,7 @@ class UDElementContent extends React.Component {
             this.setState(event.state);
         }
         else if (event.type === "requestState") {
-            PubSub.publish('element-event', {
-                type: "requestStateResponse",
-                state: this.state,
-                requestId: event.requestId
-            });
+            fetchPost(`/component/element/sessionState/${event.requestId}`, this.state);
         } else if (event.type === "removeElement") {
             this.setState({
                 hidden: true
