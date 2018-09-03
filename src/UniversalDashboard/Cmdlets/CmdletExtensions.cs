@@ -35,7 +35,8 @@ namespace UniversalDashboard.Cmdlets
                     var variable = sessionState.InvokeCommand.InvokeScript($"Get-Variable -Name '{variableName}' -ErrorAction SilentlyContinue").Select(m => m.BaseObject).OfType<PSVariable>().FirstOrDefault();
                     if (variable != null && !variable.Options.HasFlag(ScopedItemOptions.Constant) && !variable.Options.HasFlag(ScopedItemOptions.ReadOnly))
                     {
-                        callback.Variables.Add(variable.Name, sessionState.PSVariable.GetValue(variable.Name));
+                        if (!callback.Variables.ContainsKey(variable.Name))
+                            callback.Variables.Add(variable.Name, sessionState.PSVariable.GetValue(variable.Name));
                     }
                 }
             }

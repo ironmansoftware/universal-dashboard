@@ -50,6 +50,7 @@ namespace UniversalDashboard
 			services.AddDirectoryBrowser();
 			services.AddSingleton(ExecutionService.MemoryCache);
             services.AddMvc();
+            services.AddDirectoryBrowser();
 
             services.AddScoped<IFilterProvider, EncFilterProvider>();
 
@@ -66,21 +67,23 @@ namespace UniversalDashboard
 			loggerFactory.AddNLog();
 			app.UseResponseCompression();
 			app.UseStatusCodePagesWithReExecute("/redirect/{0}");
-			app.UseFileServer(new FileServerOptions()
+			app.UseStaticFiles(new StaticFileOptions()
 			{
 				FileProvider = new PhysicalFileProvider(env.ContentRootPath),
 				RequestPath = new PathString(""),
-				EnableDirectoryBrowsing = true
+                ServeUnknownFileTypes = true
 			});
 
 			var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
 
 			if (dashboardService?.DashboardOptions?.PublishedFolders != null) {
 				foreach(var publishedFolder in dashboardService.DashboardOptions.PublishedFolders) {
-					app.UseStaticFiles(new StaticFileOptions {
+					app.UseStaticFiles(new StaticFileOptions
+                    {
 						RequestPath = publishedFolder.RequestPath,
-						FileProvider = new PhysicalFileProvider(publishedFolder.Path)
-					});
+						FileProvider = new PhysicalFileProvider(publishedFolder.Path),
+                        ServeUnknownFileTypes = true
+                    });
 				}
 			}
 
