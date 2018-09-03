@@ -50,7 +50,6 @@ namespace UniversalDashboard
 			services.AddDirectoryBrowser();
 			services.AddSingleton(ExecutionService.MemoryCache);
             services.AddMvc();
-            services.AddDirectoryBrowser();
 
             services.AddScoped<IFilterProvider, EncFilterProvider>();
 
