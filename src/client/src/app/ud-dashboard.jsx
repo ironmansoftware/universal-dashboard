@@ -114,7 +114,7 @@ export default class UdDashboard extends React.Component {
             }
 
             if (data.type === "clientEvent") {
-                connection.invoke("clientEvent", data.componentId, data.eventName, data.eventData, this.state.location)
+                connection.invoke("clientEvent", data.eventId, data.eventName, data.eventData, this.state.location)
             }
 
             if (data.type === "unregisterEvent") {

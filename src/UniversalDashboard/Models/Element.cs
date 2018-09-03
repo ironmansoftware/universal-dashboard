@@ -46,6 +46,10 @@ namespace UniversalDashboard.Models.Basics
     public class ElementEventHandler {
         [JsonProperty("event")]
         public string Event { get; set; }
+
+        [JsonProperty("id")]
+        public string Id => Callback?.Name;
+
         [JsonIgnore]
         public Endpoint Callback { get; set; }
         [JsonProperty("debounce")]

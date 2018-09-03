@@ -159,9 +159,12 @@ class UDElementContent extends React.Component {
 
         for(var i = 0; i < this.state.events.length; i++) {
             if (this.state.events[i].event === 'onChange') {
+
+                var event = this.state.events[i].event;
+
                 PubSub.publish('element-event', {
                     type: "clientEvent",
-                    componentId: this.props.id,
+                    componentId: event.id,
                     eventName: 'onChange',
                     eventData: val
                 });
@@ -174,7 +177,7 @@ class UDElementContent extends React.Component {
             for(var i = 0; i < this.state.events.length; i++) {
                 PubSub.publish('element-event', {
                     type: "unregisterEvent",
-                    eventId: this.props.id + this.state.events[i].event
+                    eventId: this.state.events[i].event.id
                 });
             }
         }
@@ -213,8 +216,8 @@ class UDElementContent extends React.Component {
         }
     }
 
-    onUserEvent(eventName, e) {
-
+    onUserEvent(event, e) {
+        var eventName = event.event;
         var val = null;
         if (this.state.tag === 'select') {
             val = this.refs.element[this.refs.element.selectedIndex].value
@@ -232,7 +235,7 @@ class UDElementContent extends React.Component {
 
         PubSub.publish('element-event', {
             type: "clientEvent",
-            componentId: this.props.id,
+            eventId: event.id,
             eventName: eventName,
             eventData: val
         });
@@ -283,7 +286,7 @@ class UDElementContent extends React.Component {
         if (this.state.events != null) {
             this.state.events.map(function(event) {
                 attributes[event.event] = function(e) {
-                    this.onUserEvent(event.event, e);
+                    this.onUserEvent(event, e);
                 }.bind(this);
                 return null;
             }.bind(this));

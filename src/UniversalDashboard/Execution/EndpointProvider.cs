@@ -15,6 +15,11 @@ namespace UniversalDashboard.Execution
         private readonly List<Endpoint> _scheduledEndpoints;
         private static readonly Logger logger = LogManager.GetLogger("EndpointService");
 
+        private Dictionary<string, object> _sessionLocks = new Dictionary<string, object>();
+
+        private readonly object sessionLock = new object();
+
+
         public EndpointService() 
         {
             _endpointCache = new MemoryCache(new MemoryCacheOptions());
@@ -26,12 +31,21 @@ namespace UniversalDashboard.Execution
 
         public void StartSession(string sessionId)
         {
-            _endpointCache.Set(Constants.SessionState + sessionId, new SessionState());
+            lock(sessionLock)
+            {
+                if (_sessionLocks.ContainsKey(sessionId)) return;
+                _endpointCache.Set(Constants.SessionState + sessionId, new SessionState());
+                _sessionLocks.Add(sessionId, new object());
+            }   
         }
 
         public void EndSession(string sessionId)
         {
-            _endpointCache.Remove(Constants.SessionState + sessionId);
+            lock(sessionLock)
+            {
+                _endpointCache.Remove(Constants.SessionState + sessionId);
+                _sessionLocks.Remove(sessionId);
+            }
         }
 
         public void Register(Endpoint callback)
@@ -57,9 +71,17 @@ namespace UniversalDashboard.Execution
                 }
                 else
                 {
-                    if (_endpointCache.TryGetValue(Constants.SessionState + callback.SessionId, out SessionState sessionState))
+                    lock(sessionLock)
                     {
-                        lock (sessionState.SyncRoot)
+                        if (!_sessionLocks.ContainsKey(callback.SessionId))
+                        {
+                            StartSession(callback.SessionId);
+                        }
+                    }
+
+                    lock(_sessionLocks[callback.SessionId])
+                    {
+                        if (_endpointCache.TryGetValue(Constants.SessionState + callback.SessionId, out SessionState sessionState))
                         {
                             sessionState.Endpoints.Add(callback);
                             _endpointCache.Set(Constants.SessionState + callback.SessionId, sessionState);

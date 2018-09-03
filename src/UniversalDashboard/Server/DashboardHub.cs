@@ -99,7 +99,7 @@ namespace UniversalDashboard
         private readonly StateRequestService _stateRequestService;
         private readonly IMemoryCache _memoryCache;
         private readonly IDashboardService _dashboardService;
-        private readonly Logger _logger = LogManager.GetLogger(nameof(DashboardHub));
+        private static readonly Logger _logger = LogManager.GetLogger(nameof(DashboardHub));
 
         public DashboardHub(IExecutionService executionService, IMemoryCache memoryCache, StateRequestService stateRequestService, IDashboardService dashboardService) {
             Log.Debug("DashboardHub constructor");
@@ -176,8 +176,8 @@ namespace UniversalDashboard
             }
         }
 
-        public Task ClientEvent(string componentId, string eventName, string eventData, string location) {
-            Log.Debug($"ClientEvent {componentId} {eventName}");
+        public Task ClientEvent(string eventId, string eventName, string eventData, string location) {
+            _logger.Debug($"ClientEvent {eventId} {eventName}");
 
             
 
@@ -210,11 +210,11 @@ namespace UniversalDashboard
             {
                 _memoryCache.TryGetValue(Context.ConnectionId, out string sessionId);
 
-                var endpoint = _dashboardService.EndpointService.Get(componentId + eventName, sessionId);
+                var endpoint = _dashboardService.EndpointService.Get(eventId, sessionId);
                 if (endpoint == null)
                 {
-                    Log.Warn($"Endpoint {componentId + eventName} not found.");
-                    throw new Exception($"Endpoint {componentId + eventName} not found.");
+                    _logger.Warn($"Endpoint {eventId} not found.");
+                    throw new Exception($"Endpoint {eventId} not found.");
                 }
 
                 var executionContext = new ExecutionContext(endpoint, variables, new Dictionary<string, object>(), Context.User);
@@ -235,11 +235,10 @@ namespace UniversalDashboard
             }
             catch (Exception ex)
             {
-                Log.Warn($"Failed to execute endpoint. " + ex.Message);
-                throw;
+                _logger.Warn($"Failed to execute endpoint. " + ex.Message);
             }
 
-
+            return Task.CompletedTask;
         }
     }
 }

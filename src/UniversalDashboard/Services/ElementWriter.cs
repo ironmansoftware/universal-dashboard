@@ -33,7 +33,6 @@ namespace UniversalDashboard.Services
                 foreach(var eventHandler in element.Events) {
                     var endpoint = eventHandler.Callback;
                     endpoint.Page = page;
-                    endpoint.Name = element.Id + eventHandler.Event;
                     endpoints.Add(endpoint);
                 }
             }
