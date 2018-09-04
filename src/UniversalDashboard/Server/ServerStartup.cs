@@ -63,6 +63,14 @@ namespace UniversalDashboard
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, ILoggerFactory loggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime lifetime)
 		{
+			var provider = new Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider();
+			// Add new mappings
+			provider.Mappings[".ps1"] 	= "text/plain";
+			provider.Mappings[".psm1"] 	= "text/plain";
+			provider.Mappings[".psd1"] 	= "text/plain";
+			provider.Mappings[".log"] 	= "text/plain";
+			provider.Mappings[".yml"] 	= "text/plain";
+
 			loggerFactory.AddNLog();
 			app.UseResponseCompression();
 			app.UseStatusCodePagesWithReExecute("/redirect/{0}");
@@ -70,7 +78,8 @@ namespace UniversalDashboard
 			{
 				FileProvider = new PhysicalFileProvider(env.ContentRootPath),
 				RequestPath = new PathString(""),
-                ServeUnknownFileTypes = true
+                ServeUnknownFileTypes = true,
+				ContentTypeProvider = provider
 			});
 
 			var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
@@ -81,7 +90,8 @@ namespace UniversalDashboard
                     {
 						RequestPath = publishedFolder.RequestPath,
 						FileProvider = new PhysicalFileProvider(publishedFolder.Path),
-                        ServeUnknownFileTypes = true
+                        ServeUnknownFileTypes = true,
+						ContentTypeProvider = provider
                     });
 				}
 			}
