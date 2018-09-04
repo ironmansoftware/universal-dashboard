@@ -28,15 +28,15 @@ Describe "PublishedFolders" {
         )
 
         It "should publish folder" {
-            (Invoke-WebRequest http://localhost:10001/temp/myFile.txt).Content | Should be "Test`r`n"
+            (Invoke-WebRequest http://localhost:10001/temp/myFile.txt -ContentType "application/text").Content | Should be "Test`r`n"
         }
 
         It "should publish folder (log)" {
-            (Invoke-WebRequest http://localhost:10001/temp/myFile.log).Content | Should be "Test2`r`n"
+            [System.Text.Encoding]::ASCII.GetString((Invoke-WebRequest http://localhost:10001/temp/myFile.log -ContentType "application/text").Content) | Should be "Test2`r`n"
         }
 
         It "should publish folder (ps1)" {
-            (Invoke-WebRequest http://localhost:10001/temp/myFile.ps1).Content | Should be "Test3`r`n"
+            [System.Text.Encoding]::ASCII.GetString((Invoke-WebRequest http://localhost:10001/temp/myFile.ps1 -ContentType "application/text").Content) | Should be "Test3`r`n"
         }
 
         Stop-UDRestApi $Server
@@ -65,15 +65,15 @@ Describe "PublishedFolders" {
         )
 
         It "should publish folder" {
-            (Invoke-WebRequest http://localhost:10001/temp/myFile.txt).Content | Should be "Test`r`n"
+            (Invoke-WebRequest http://localhost:10001/temp/myFile.txt -ContentType "application/text").Content | Should be "Test`r`n"
         }
 
         It "should publish folder (log)" {
-            (Invoke-WebRequest http://localhost:10001/temp/myFile.log).Content | Should be "Test2`r`n"
+            [System.Text.Encoding]::ASCII.GetString((Invoke-WebRequest http://localhost:10001/temp/myFile.log -ContentType "application/text").Content) | Should be "Test2`r`n"
         }
 
         It "should publish folder (ps1)" {
-            (Invoke-WebRequest http://localhost:10001/temp/myFile.ps1).Content | Should be "Test3`r`n"
+            [System.Text.Encoding]::ASCII.GetString((Invoke-WebRequest http://localhost:10001/temp/myFile.ps1 -ContentType "application/text").Content) | Should be "Test3`r`n"
         }
 
         Stop-UDDashboard $Server
