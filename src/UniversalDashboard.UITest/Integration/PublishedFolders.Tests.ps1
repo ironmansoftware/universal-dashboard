@@ -51,11 +51,11 @@ Describe "PublishedFolders" {
 
         $TempFile2 = Join-Path $TempPath "myFile.log"
 
-        "Test" | Out-File $TempFile2 -Force -Encoding ascii
+        "Test2" | Out-File $TempFile2 -Force -Encoding ascii
 
         $TempFile3 = Join-Path $TempPath "myFile.ps1"
 
-        "Test" | Out-File $TempFile3 -Force -Encoding ascii
+        "Test3" | Out-File $TempFile3 -Force -Encoding ascii
 
 
         $Server = Start-UDDashboard -Port 10001 -PublishedFolder @(
