@@ -1,9 +1,9 @@
-# param([Switch]$Release)
+param([Switch]$Release)
 
-# Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
-# $ModulePath = Get-ModulePath -Release:$Release
+Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+$ModulePath = Get-ModulePath -Release:$Release
 
-# Import-Module $ModulePath -Force
+Import-Module $ModulePath -Force
 
 Get-UDRestApi | Stop-UDRestApi
 Get-UDDashboard | Stop-UDDashboard
@@ -17,7 +17,6 @@ Describe "PublishedFolders" {
 
             "Test" | Out-File $TempFile -Force -Encoding ascii
 
-    
             $Server = Start-UDRestApi -Port 10001 -PublishedFolder @(
                 Publish-UDFolder -Path $TempPath -RequestPath "/temp"
             )
