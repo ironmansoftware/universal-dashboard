@@ -17,6 +17,7 @@ import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 import UdModal from './ud-modal.jsx';
 import toaster from './services/toaster';
 
+
 export default class UdDashboard extends React.Component {
     constructor() {
         super();
@@ -177,6 +178,12 @@ export default class UdDashboard extends React.Component {
 
             document.title = dashboard.title;
 
+            if(dashboard.fontIconStyle == 'FontAwesome'){
+                require("font-awesome/css/font-awesome.min.css");
+            }else {
+                require("line-awesome/css/line-awesome.min.css");
+            }
+            
             if (dashboard.stylesheets)
                 dashboard.stylesheets.map(this.loadStylesheet.bind(this));
 
