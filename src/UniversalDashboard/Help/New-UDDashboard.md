@@ -16,8 +16,8 @@ Creates a new dashboard. The result of this cmdlet should be passed to Start-UDD
 ```
 New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <DashboardColor>]
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
- [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>] [-CyclePages]
- [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
+ [-FontIconStyle <String>] [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>]
+ [-CyclePages] [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
  [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
 ```
 
@@ -25,8 +25,8 @@ New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <Dashboar
 ```
 New-UDDashboard [-Title <String>] -Pages <Page[]> [-NavBarColor <DashboardColor>]
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
- [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>] [-CyclePages]
- [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
+ [-FontIconStyle <String>] [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>]
+ [-CyclePages] [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
  [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
 ```
 
@@ -153,6 +153,22 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FontIconStyle
+Choose the style of the icons, filled or line.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+Accepted values: FontAwesome, LineAwesome
+
+Required: False
+Position: Named
+Default value: FontAwesome
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
