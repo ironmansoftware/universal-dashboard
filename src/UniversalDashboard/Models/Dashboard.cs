@@ -17,6 +17,7 @@ namespace UniversalDashboard.Models
 	    public string NavBarFontColor { get; set; }
 	    public string BackgroundColor { get; set; }
 	    public string FontColor { get; set; }
+	    public string FontIconStyle { get; set; }
 		public IEnumerable<Link> NavbarLinks { get; set; }
 		public string[] Scripts { get; set; }
 		public string[] Stylesheets { get; set; }

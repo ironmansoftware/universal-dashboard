@@ -37,6 +37,10 @@ namespace UniversalDashboard.Cmdlets
 	    [Parameter]
 	    public DashboardColor FontColor { get; set; }
 
+	    [Parameter]
+		[ValidateSet("FontAwesome","LineAwesome")]
+	    public string FontIconStyle { get; set; } = "FontAwesome";
+
         [Parameter]
 		public Link[] NavbarLinks { get; set; }
 
@@ -83,6 +87,7 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.NavBarLogo = NavBarLogo;
 			dashboard.EndpointInitialSessionState = EndpointInitialization;
 			dashboard.GeoLocation = GeoLocation;
+			dashboard.FontIconStyle = FontIconStyle;
            
             if (Theme != null) {
 				var themeService = new ThemeService();
