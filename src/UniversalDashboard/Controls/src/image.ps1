@@ -1,10 +1,11 @@
 function New-UDImage {
+    [CmdletBinding(DefaultParameterSetName = 'url')]
     param(
         [Parameter()]
         [String]$Id = (New-Guid),
-        [Parameter()]
+        [Parameter(ParameterSetName = 'url')]
         [String]$Url,
-        [Parameter()]
+        [Parameter(ParameterSetName = 'path')]
         [String]$Path,
         [Parameter()]
         [int]$Height,
@@ -14,23 +15,26 @@ function New-UDImage {
         [Hashtable]$Attributes = @{}
     )
 
-    if (-not [String]::IsNullOrEmpty($Path)) {
-        if (-not (Test-Path $Path)) {
-            throw "$Path does not exist."
+    switch ($PSCmdlet.ParameterSetName) {
+        'path' {
+            if (-not [String]::IsNullOrEmpty($Path)) {
+                if (-not (Test-Path $Path)) {
+                    throw "$Path does not exist."
+                }
+        
+                $mimeType = 'data:image/png;base64, '
+                if ($Path.EndsWith('jpg') -or $Path.EndsWith('jpeg')) {
+                    $mimeType = 'data:image/jpg;base64, '
+                }
+        
+                $base64String = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($Path))
+        
+                $Attributes.'src' = "$mimeType $base64String"
+            }
         }
-
-        $mimeType = 'data:image/png;base64, '
-        if ($Path.EndsWith('jpg') -or $Path.EndsWith('jpeg')) {
-            $mimeType = 'data:image/jpg;base64, '
+        'url' {
+            $Attributes.'src' = $Url
         }
-
-        $base64String = [Convert]::ToBase64String([System.IO.File]::ReadAllBytes($Path))
-
-        $Url = "$mimeType $base64String"
-    }
-
-    if ($PSBoundParameters.ContainsKey('Url')) {
-        $Attributes.'src' = $Url
     }
     if ($PSBoundParameters.ContainsKey('Height')) {
         $Attributes.'height' = $Height
