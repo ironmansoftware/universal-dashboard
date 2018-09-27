@@ -70,11 +70,15 @@ Describe "New-UDPage" {
     Context "multi-page" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
-            New-UDCard -Text "Home"
+            New-UDCard -Text "Home" -id 'home-page'
         }
 
         $Page2 = New-UDPage -Name "Page with spaces" -Content {
             New-UDCard -Text "Page with spaces" -Id "page-with-spaces"
+        }
+
+        $Page3 = New-UDPage -Name "Test" -Content {
+            New-UDCard -Text "TestPage" -Id "Test-Page"
         }
         
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
@@ -101,6 +105,17 @@ Describe "New-UDPage" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/page-with-spaces"
             Start-Sleep 3
             Find-SeElement -Id "page-with-spaces" -Driver $Driver | Should not be $null
+        }
+
+        it "should redirect to home page when dashboard title was clicked" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            Start-Sleep 1
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Test"
+            Start-Sleep 3
+            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
+            Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
+            Start-Sleep 3
+            (Find-SeElement -Id 'home-page' -Driver $Driver).text | Should be 'Home'
         }
 
         Stop-SeDriver $Driver
