@@ -27,7 +27,7 @@ export default class UdNavbar extends React.Component {
         return <nav style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">
                     <UdNavigation pages={this.props.pages} togglePaused={this.props.togglePaused} showPauseToggle={this.props.showPauseToggle}/>
                    
-                    <a href="#!" style={{paddingLeft: '10px', fontSize: '2.1rem'}}>
+                    <a href={"/" + this.props.pages[0].name} style={{paddingLeft: '10px', fontSize: '2.1rem'}}>
                         {logo}  <span>{this.props.text}</span>
                     </a>
                     {
