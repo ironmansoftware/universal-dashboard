@@ -12,9 +12,16 @@ Renders an image in the dashboard.
 
 ## SYNTAX
 
+### url (Default)
 ```
-New-UDImage [[-Id] <String>] [[-Url] <String>] [[-Path] <String>] [[-Height] <Int32>] [[-Width] <Int32>]
- [[-Attributes] <Hashtable>] [<CommonParameters>]
+New-UDImage [-Id <String>] [-Url <String>] [-Height <Int32>] [-Width <Int32>] [-Attributes <Hashtable>]
+ [<CommonParameters>]
+```
+
+### path
+```
+New-UDImage [-Id <String>] [-Path <String>] [-Height <Int32>] [-Width <Int32>] [-Attributes <Hashtable>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,7 +61,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -69,7 +76,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -84,7 +91,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -95,11 +102,11 @@ The Path of the icon on the local file system.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: path
 Aliases:
 
 Required: False
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -110,11 +117,11 @@ The URL of the image. This can be a base64 encoded data string.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: url
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -129,7 +136,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
