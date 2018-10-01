@@ -15,6 +15,9 @@ namespace UniversalDashboard.Models
 		public string Name { get; set; }
 		[JsonProperty("url")]
 		public string Url { get; set; }
+
+		[JsonProperty("defaultHomePage")]
+		public Boolean DefaultHomePage { get; set; }
 		[JsonProperty("icon")]
 		public string Icon { get; set; }
 		[JsonProperty("components")]
