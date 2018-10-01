@@ -58,7 +58,7 @@ Describe "New-UDPage" {
         It "should navigate to page with spaces" {
             $ElementText = (Find-SeElement -Id "page-with-spaces" -Driver $Driver).Text
 
-            Start-Sleep 2
+            Start-Sleep 3
 
             (Find-SeElement -Id "page-with-spaces" -Driver $Driver).Text | Should not be $ElementText
         }
