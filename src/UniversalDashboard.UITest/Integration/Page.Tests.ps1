@@ -141,20 +141,20 @@ Describe "New-UDPage" {
 
         it "First page should be the one with DefualtHomePage parameter set to true" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-            Start-Sleep 1
-            (Find-SeElement -Id 'Test-page' -Driver $Driver).text | Should be 'TestPage'
+            Start-Sleep 3
+            (Find-SeElement -Id 'Test-Page' -Driver $Driver).text | Should be 'TestPage'
         }
 
         it "should redirect to home page when dashboard title was clicked" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
             Start-Sleep 1
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Home"
-            $HomePageText = (Find-SeElement -Id 'Home-Page' -Driver $Driver).text
+            $HomePageText = (Find-SeElement -Id 'home-page' -Driver $Driver).text
             Start-Sleep 3
             $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
             Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
             Start-Sleep 3
-            (Find-SeElement -Id 'Test-page' -Driver $Driver).text | Should not be $HomePageText
+            (Find-SeElement -Id 'Test-Page' -Driver $Driver).text | Should not be $HomePageText
         }
 
         Stop-SeDriver $Driver
