@@ -81,7 +81,7 @@ Describe "New-UDPage" {
             New-UDCard -Text "TestPage" -Id "Test-Page"
         }
         
-        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3)
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
@@ -122,6 +122,45 @@ Describe "New-UDPage" {
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
+
+    Context "Page with DefaultHomePage parameter" {
+
+        $Page1 = New-UDPage -Name "Home" -Content {
+            New-UDCard -Text "Home" -id 'home-page'
+        }
+
+        $Page2 = New-UDPage -Name "Test" -DefaultHomePage -Content {
+            New-UDCard -Text "TestPage" -Id "Test-Page"
+        }
+        
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Start-Sleep 2
+
+        it "First page should be the one with DefualtHomePage parameter set to true" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            Start-Sleep 1
+            (Find-SeElement -Id 'Test-page' -Driver $Driver).text | Should be 'TestPage'
+        }
+
+        it "should redirect to home page when dashboard title was clicked" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            Start-Sleep 1
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Home"
+            $HomePageText = (Find-SeElement -Id 'Home-Page' -Driver $Driver).text
+            Start-Sleep 3
+            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
+            Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
+            Start-Sleep 3
+            (Find-SeElement -Id 'Test-page' -Driver $Driver).text | Should not be $HomePageText
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
 
     Context "single page with hyphen" {
 
