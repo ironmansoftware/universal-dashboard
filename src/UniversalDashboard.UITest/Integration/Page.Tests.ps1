@@ -58,7 +58,7 @@ Describe "New-UDPage" {
         It "should navigate to page with spaces" {
             $ElementText = (Find-SeElement -Id "page-with-spaces" -Driver $Driver).Text
 
-            Start-Sleep 2
+            Start-Sleep 3
 
             (Find-SeElement -Id "page-with-spaces" -Driver $Driver).Text | Should not be $ElementText
         }
@@ -70,14 +70,18 @@ Describe "New-UDPage" {
     Context "multi-page" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
-            New-UDCard -Text "Home"
+            New-UDCard -Text "Home" -id 'home-page'
         }
 
         $Page2 = New-UDPage -Name "Page with spaces" -Content {
             New-UDCard -Text "Page with spaces" -Id "page-with-spaces"
         }
+
+        $Page3 = New-UDPage -Name "Test" -Content {
+            New-UDCard -Text "TestPage" -Id "Test-Page"
+        }
         
-        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3)
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
@@ -103,9 +107,60 @@ Describe "New-UDPage" {
             Find-SeElement -Id "page-with-spaces" -Driver $Driver | Should not be $null
         }
 
+        it "should redirect to home page when dashboard title was clicked" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            Start-Sleep 1
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Test"
+            $TestPageText = (Find-SeElement -Id 'Test-Page' -Driver $Driver).text
+            Start-Sleep 3
+            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
+            Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
+            Start-Sleep 3
+            (Find-SeElement -Id 'home-page' -Driver $Driver).text | Should not be $TestPageText
+        }
+
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
+
+    Context "Page with DefaultHomePage parameter" {
+
+        $Page1 = New-UDPage -Name "Home" -Content {
+            New-UDCard -Text "Home" -id 'home-page'
+        }
+
+        $Page2 = New-UDPage -Name "Test" -DefaultHomePage -Content {
+            New-UDCard -Text "TestPage" -Id "Test-Page"
+        }
+        
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Start-Sleep 2
+
+        it "First page should be the one with DefualtHomePage parameter set to true" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            Start-Sleep 3
+            (Find-SeElement -Id 'Test-Page' -Driver $Driver).text | Should be 'TestPage'
+        }
+
+        it "should redirect to home page when dashboard title was clicked" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            Start-Sleep 1
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Home"
+            $HomePageText = (Find-SeElement -Id 'home-page' -Driver $Driver).text
+            Start-Sleep 3
+            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
+            Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
+            Start-Sleep 3
+            (Find-SeElement -Id 'Test-Page' -Driver $Driver).text | Should not be $HomePageText
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
 
     Context "single page with hyphen" {
 

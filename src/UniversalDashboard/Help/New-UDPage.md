@@ -14,14 +14,16 @@ Creates a new page in the dashboard.
 
 ### name
 ```
-New-UDPage [-Name] <String> [[-Icon] <FontAwesomeIcons>] [[-Content] <ScriptBlock>] [-Endpoint <ScriptBlock>]
- [-ArgumentList <Object[]>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
+New-UDPage [-Name] <String> [[-Icon] <FontAwesomeIcons>] [[-Content] <ScriptBlock>] [-DefaultHomePage]
+ [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>]
+ [<CommonParameters>]
 ```
 
 ### url
 ```
-New-UDPage [[-Icon] <FontAwesomeIcons>] [[-Content] <ScriptBlock>] [-Url] <String> [-Endpoint <ScriptBlock>]
- [-ArgumentList <Object[]>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
+New-UDPage [[-Icon] <FontAwesomeIcons>] [[-Content] <ScriptBlock>] [-Url] <String> [-DefaultHomePage]
+ [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -58,6 +60,17 @@ PS C:\> $Dashboard = New-UDDashboard -Color "blue" -Pages @($Page1, $Page2)
 ```
 
 Creates a multi-page dashboard. The will show a navigation pane on the left side of the dashboard to navigate to different pages. The URL for the cards page is /cards-page/:username. The :username portion of the URL can be replaced with any string. The variable $username will be available in the endpoint that generates the page.
+
+### Example 4
+```
+PS C:\> $Page1 = New-UDPage -Name "Home" -Content { New-Chart... }
+PS C:\> $Page2 = New-UDPage -Name "Demo" -DefaultHomePage -Content { New-Chart... }
+
+PS C:\> $Dashboard = New-UDDashboard -Color "blue" -Pages @($Page1, $Page2)
+```
+
+Creates a multi-page dashboard. The will show a navigation pane on the left side of the dashboard to navigate to different pages. The default home page will be Demo and NOT home.
+The dashboard title will also be linked to the default home page.
 
 ## PARAMETERS
 
@@ -101,6 +114,21 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultHomePage
+Set the default home page for the dashboard and Set the dashboard title bar as link to the home page.  
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

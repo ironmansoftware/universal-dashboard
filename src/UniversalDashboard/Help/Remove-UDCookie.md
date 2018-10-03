@@ -49,7 +49,6 @@ Accept wildcard characters: False
 
 ### -DateTimeFormat
 
-
 ```yaml
 Type: String
 Parameter Sets: (All)

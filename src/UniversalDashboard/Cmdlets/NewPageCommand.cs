@@ -20,6 +20,9 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter(Position = 0, Mandatory = true, ParameterSetName = "url")]
 		public string Url { get; set; }
 
+		[Parameter(Position = 3)]
+		public SwitchParameter DefaultHomePage { get; set; }
+
 		protected override void EndProcessing()
 		{
 			var page = new Page();
@@ -27,6 +30,7 @@ namespace UniversalDashboard.Cmdlets
 			page.Url = Url;
 			page.Icon = FontAwesomeIconsExtensions.GetIconName(Icon);
 			page.Id = Id;
+			page.DefaultHomePage = DefaultHomePage;
 			page.AutoRefresh = AutoRefresh;
 			page.RefreshInterval = RefreshInterval;
 

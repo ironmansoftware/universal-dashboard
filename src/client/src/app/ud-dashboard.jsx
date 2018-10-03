@@ -235,20 +235,31 @@ export default class UdDashboard extends React.Component {
         } 
     }
 
-    redirectToHomePage() {
-        if (this.state.dashboard.pages[0].url != null && this.state.dashboard.pages[0].url.indexOf(":") === -1) {
-            var url = this.state.dashboard.pages[0].url;
-            if (url.indexOf("/") !== 0) {
-                url = "/" + url
-            }
+    getDefaultHomePage(){
+        return this.state.dashboard.pages.find(function(page){
+            return page.defaultHomePage === true;
+        });
+    }
 
-            return <Redirect to={url}/>
+    redirectToHomePage() {
+
+        var defaultHomePage = this.getDefaultHomePage();
+        
+        if(defaultHomePage == null){
+            defaultHomePage = this.state.dashboard.pages[0];
         }
-        else if (this.state.dashboard.pages[0].name == null) {
+
+        if(defaultHomePage != null && defaultHomePage.url == null){
+            return <Redirect to={`/${defaultHomePage.name.replace(/ /g,"-")}`}/>
+        }
+        else if (defaultHomePage.url != null && defaultHomePage.url.indexOf(":") === -1) {
+            return <Redirect to={defaultHomePage.url}/>
+        }
+        else if (defaultHomePage.name == null) {
             return <ErrorCard message="Your first page needs to be a static page or a dynamic page without a variable in the URL." />
         }
         else {
-            return <Redirect to={`/${this.state.dashboard.pages[0].name.replace(/ /g, "-")}`}/>
+            return <Redirect to={`/${defaultHomePage.name.replace(/ /g,"-")}`}/>
         }
     }
 

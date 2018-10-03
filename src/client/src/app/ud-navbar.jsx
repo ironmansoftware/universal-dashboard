@@ -11,6 +11,12 @@ export default class UdNavbar extends React.Component {
         }.bind(this));
     }
 
+    homePage() {
+        return this.props.pages.find(function(page){
+            return page.defaultHomePage === true;
+        });
+    }
+
     render() {
         var links = null;
         if (this.props.links) {
@@ -24,10 +30,15 @@ export default class UdNavbar extends React.Component {
             logo = <img id={this.props.logo.id} src={this.props.logo.url} height={this.props.logo.height} width={this.props.logo.width} style={{paddingLeft: '10px', verticalAlign: "middle"}}/>
         }
 
+        var dPage = this.homePage();
+        if(dPage == null){
+            dPage = this.props.pages[0];
+        }
+
         return <nav style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">
                     <UdNavigation pages={this.props.pages} togglePaused={this.props.togglePaused} showPauseToggle={this.props.showPauseToggle}/>
                    
-                    <a href="#!" style={{paddingLeft: '10px', fontSize: '2.1rem'}}>
+                    <a href={`/${dPage.name}`} style={{paddingLeft: '10px', fontSize: '2.1rem'}}>
                         {logo}  <span>{this.props.text}</span>
                     </a>
                     {
