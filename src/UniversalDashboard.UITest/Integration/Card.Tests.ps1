@@ -114,6 +114,12 @@ Describe "Card" {
     }
 
     Context "Card With Small Text" {
+        $tempDir = [System.IO.Path]::GetTempPath()
+        $tempFile = Join-Path $tempDir "output.txt"
+
+        if ((Test-path $tempFile)) {
+            Remove-Item $tempFile -Force
+        }
 
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Text "Small Text" -Id "Card-Small-Text" -TextSize Small
@@ -133,6 +139,12 @@ Describe "Card" {
     }
 
     Context "Card With Medium Text" {
+        $tempDir = [System.IO.Path]::GetTempPath()
+        $tempFile = Join-Path $tempDir "output.txt"
+
+        if ((Test-path $tempFile)) {
+            Remove-Item $tempFile -Force
+        }
 
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Text "Medium Text" -Id "Card-Medium-Text" -TextSize Medium
@@ -157,6 +169,12 @@ Describe "Card" {
     }
 
     Context "Card With Large Text" {
+        $tempDir = [System.IO.Path]::GetTempPath()
+        $tempFile = Join-Path $tempDir "output.txt"
+
+        if ((Test-path $tempFile)) {
+            Remove-Item $tempFile -Force
+        }
 
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Text "Large Text" -Id "Card-Large-Text" -TextSize Large
