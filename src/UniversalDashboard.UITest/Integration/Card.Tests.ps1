@@ -125,7 +125,7 @@ Describe "Card" {
 
         $Element = Find-SeElement -Id "Card-Small-Text" -Driver $Driver
         It "should have text of Small Text" {
-            $Element.Text | should be 'Small Text'
+            ($Element.Text -split "`r`n")[1] | should be 'Small Text'
         }
 
         Stop-SeDriver $Driver
