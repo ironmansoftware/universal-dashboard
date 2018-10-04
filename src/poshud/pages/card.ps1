@@ -48,6 +48,32 @@ New-UDPage -Name "Card" -Icon clone -Content {
                     "Here is some more information about this product that is only revealed once clicked on."
                 } -RevealTitle 'Reveal Title' -Size 'small'
             }
+
+            New-UDHeading -Size 3 -Text "Text Size" -Color $Colors.FontColor
+
+            New-UDParagraph -Content {
+                "Here is a card with text size of Small"
+            } -Color $Colors.FontColor
+
+            New-UDElementExample -Example {
+                New-UDCard -Text 'Small Text Size' -TextSize Small
+            }
+
+            New-UDParagraph -Content {
+                "Here is a card with text size of Medium"
+            } -Color $Colors.FontColor
+
+            New-UDElementExample -Example {
+                New-UDCard -Text 'Medium Text Size' -TextSize Medium
+            }
+
+            New-UDParagraph -Content {
+                "Here is a card with text size of Large"
+            } -Color $Colors.FontColor
+
+            New-UDElementExample -Example {
+                New-UDCard -Text 'Large Text Size' -TextSize Large
+            }
         }
     }
 }

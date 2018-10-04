@@ -103,8 +103,8 @@ function New-UDCard {
     
                     switch($TextSize) {
                         "Small" { $TextContent.Invoke() }
-                        "Medium" { New-UDHeading -Size 5 -Content $TextContent }
-                        "Large" { New-UDHeading -Size 3 -Content $TextContent }
+                        "Medium" { New-UDElement -Tag 'h5' -Content {$TextContent.Invoke()}}
+                        "Large" { New-UDElement -Tag 'h3' -Content {$TextContent.Invoke()} }
                     }
                 }
             }
