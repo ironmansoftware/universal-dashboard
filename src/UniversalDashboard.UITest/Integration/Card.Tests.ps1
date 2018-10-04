@@ -113,6 +113,64 @@ Describe "Card" {
        Stop-UDDashboard -Server $Server 
     }
 
+    Context "Text Size" {
+        $tempDir = [System.IO.Path]::GetTempPath()
+        $tempFile = Join-Path $tempDir "output.txt"
+
+        if ((Test-path $tempFile)) {
+            Remove-Item $tempFile -Force
+        }
+
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDCard -Title "Test" -Text "Small Text" -Id "Card-Small-Text" -TextSize Small
+            New-UDCard -Title "Test" -Text "Medium Text" -Id "Card-Medium-Text" -TextSize Medium
+            New-UDCard -Title "Test" -Text "Large Text" -Id "Card-Large-Text" -TextSize Large
+        }
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Context "Small Text" {
+
+            $Element = Find-SeElement -Id "Card-Small-Text" -Driver $Driver
+            It "should have text of Small Text" {
+                $Element.Text | should be 'Small Text'
+            }
+        }
+
+        Context "Medium Text" {
+
+            $Element = Find-SeElement -Id "Card-Medium-Text" -Driver $Driver
+            $CardContent = Find-SeElement -Element $Element -TagName 'h5'
+
+            It "should have html H5 tag" {
+                $CardContent.TagName | should be 'h5'
+            }
+
+            It "should have text of Medium Text" {
+                $CardContent.Text | should be 'Medium Text'
+            }
+        }
+
+        Context "Large Text" {
+
+            $Element = Find-SeElement -Id "Card-Large-Text" -Driver $Driver
+            $CardContent = Find-SeElement -Element $Element -TagName 'h3'
+
+            It "should have html H3 tag" {
+                $CardContent.TagName | should be 'h3'
+            }
+
+            It "should have text of Large Text" {
+                $CardContent.Text | should be 'Large Text'
+            }
+        }
+
+       Stop-SeDriver $Driver
+       Stop-UDDashboard -Server $Server 
+    }
+
     Context "Custom Card" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Text "My text`r`nNew Line" -Id "Card" -TextAlignment Center -TextSize Medium -Watermark user
