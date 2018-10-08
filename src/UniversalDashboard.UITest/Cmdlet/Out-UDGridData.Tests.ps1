@@ -46,4 +46,19 @@ Describe "Out-UDGridData" {
 
         $GridData.data[0].Element.Type | Should be 'element'
     }
+
+    It "shouldn't serialize past depth" {
+        $Data = @(
+            [PSCustomObject]@{
+                Value1 = [PSCustomObject]@{
+                    Value2 = [PSCustomObject]@{
+                        Value3 = "Test"
+                    }
+                }
+            }
+        )
+
+        $GridData = $Data | Out-UDGridData -Depth 2 | ConvertFrom-Json
+        $GridData.data[0].Value1.Value2.Value3 | should be $null
+    }
 }

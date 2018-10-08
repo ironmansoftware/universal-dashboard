@@ -210,7 +210,9 @@ function Out-UDGridData {
     param(
 		[Parameter(ValueFromPipeline = $true)]
 		$Data,
-		[int]$TotalItems = 0
+		[int]$TotalItems = 0,
+		[Parameter()]
+		[int]$Depth = 10
 	)
 
     Begin {
@@ -231,7 +233,7 @@ function Out-UDGridData {
 			recordsTotal = $TotalItems
 			recordsFiltered = $Items.Length
 			draw = $drawId
-		} | ConvertTo-JsonEx -Depth 10
+		} | ConvertTo-JsonEx -Depth $Depth
 	}
 }
 
