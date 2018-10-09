@@ -23,7 +23,7 @@ export default class UdInputField extends React.Component {
         var comp = this;
 
         $(this.datetime).pickadate({
-            selectYears: 15,
+            selectYears: 100,
             clearText: this.props.clearText,
             okText: this.props.okText,
             cancelText: this.props.cancelText,
@@ -33,7 +33,7 @@ export default class UdInputField extends React.Component {
                 var val = this.get('select', 'dd-mm-yyyy');
                 comp.onTextFieldChange({name: comp.props.name},  {target: {value: val}});
                 // auto close on select
-                this.close();
+                //this.close();
             }
         })
     }
