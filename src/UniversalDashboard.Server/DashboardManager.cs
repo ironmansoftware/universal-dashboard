@@ -17,7 +17,7 @@ namespace UniversalDashboard
 
 			using(var powerShell = PowerShell.Create())
 			{
-                var modulePath = Path.Combine(assemblyBasePath, "..\\UniversalDashboard.psd1");
+                var modulePath = Path.Combine(assemblyBasePath, "..\\UniversalDashboard.Community.psd1");
 
                 powerShell.AddStatement().AddScript("Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process");
                 powerShell.AddStatement().AddScript($"Import-Module '{modulePath}'");
