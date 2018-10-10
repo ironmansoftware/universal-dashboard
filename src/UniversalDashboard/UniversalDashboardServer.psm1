@@ -1515,7 +1515,10 @@ function Publish-UDDashboard {
 		}
 
 		Write-Verbose "Creating service UniversalDashboard"
-		sc.exe create UniversalDashboard DisplayName="PowerShell Universal Dashboard" binPath="$TargetPath\net471\UniversalDashboard.Server.exe --run-as-service" start="$ServiceStart"
+
+		$binPath = [System.IO.Path]::Combine($TargetPath, "net471", "UniversalDashboard.Server.exe")
+
+		sc.exe create UniversalDashboard DisplayName="PowerShell Universal Dashboard" binPath="$binPath --run-as-service" start="$ServiceStart"
 
 		Write-Verbose "Starting service UniversalDashboard"
 		sc.exe start UniversalDashboard
