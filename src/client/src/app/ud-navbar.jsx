@@ -44,7 +44,7 @@ export default class UdNavbar extends React.Component {
                     {
                         this.props.authenticated ?
                         <a href="#!" onClick={this.signOut.bind(this)} className="right" style={{paddingRight: '10px'}} id="signoutLink"><span>Sign Out</span></a> :
-                        <div/>
+                        <React.Fragment/>
                     }
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                         {links}
