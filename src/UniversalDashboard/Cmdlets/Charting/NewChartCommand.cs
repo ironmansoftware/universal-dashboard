@@ -21,6 +21,10 @@ namespace UniversalDashboard.Cmdlets.Charting
 		public string Title { get; set; }
 		[Parameter]
 		public Hashtable Options { get; set; }
+		[Parameter]
+		public string Width { get; set; }
+		[Parameter]
+		public string Height { get; set; }
 
 		[Parameter]
 		public DashboardColor BackgroundColor { get; set; }
@@ -42,6 +46,8 @@ namespace UniversalDashboard.Cmdlets.Charting
 				ChartType = Type,
 				Callback = GenerateCallback(Id),
 				Options = Options,
+				Width = Width,
+				Height = Height,
 				AutoRefresh = AutoRefresh,
 				RefreshInterval = RefreshInterval,
 				BackgroundColor = BackgroundColor?.HtmlColor,
