@@ -68,7 +68,9 @@ export default class UdChart extends React.Component {
                         errorMessage: json.error.message
                     })
                 } else {
-                    this.setState({chartData: json});
+                    this.setState({
+                        chartData: json
+                    });
                 }
             }.bind(this));
     }
@@ -79,15 +81,15 @@ export default class UdChart extends React.Component {
     }
     
     renderArea() {
-        return <Polar data={this.state.chartData} options={this.props.options}/>
+            return <Polar data={this.state.chartData} options={this.props.options}/>
     }
 
     renderDoughnut() {
-        return <Doughnut data={this.state.chartData} options={this.props.options}/>
+            return <Doughnut data={this.state.chartData} options={this.props.options}/>
     }
 
     renderBar() {
-        return <Bar data={this.state.chartData} options={this.props.options}/>
+        return <Bar  data={this.state.chartData} options={this.props.options}/>
     }
 
     renderLine() {
@@ -117,6 +119,40 @@ export default class UdChart extends React.Component {
             fields = <Row>{fields}</Row>
         }
         
+        if(this.props.width !== null && this.props.height !== null){
+            var cardStyle = {
+                background:this.props.backgroundColor,
+                color:this.props.fontColor,
+                width:this.props.width,
+                height:this.props.height,
+                marginBottom:'3rem'
+            }
+            this.props.options = {
+                maintainAspectRatio: false,
+                layout:{
+                    padding:{
+                        bottom:25
+                    }
+                }
+            }
+
+        }
+        else if(this.props.width !== null && this.props.height === null){
+            var cardStyle = {
+                background:this.props.backgroundColor,
+                color:this.props.fontColor,
+                width:this.props.width,
+            }
+        }
+        else if(this.props.width === null && this.props.height !== null){
+            return [<ErrorCard message={'Width property is missing'} key={this.props.id} id={this.props.id} title={this.props.title}/>, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>]
+        }
+        else{
+            var cardStyle = {
+                background:this.props.backgroundColor,
+                color:this.props.fontColor,
+            }
+        }
 
         var chart = null;
         if (this.state.chartData != null) {
@@ -158,14 +194,14 @@ export default class UdChart extends React.Component {
             </div>
         }
 
-        return <div className="card ud-chart" key={this.props.id} id={this.props.id} style={{background: this.props.backgroundColor, color: this.props.fontColor}}>
-                    <div className="card-content">
+        return <div className="card ud-chart" key={this.props.id} id={this.props.id} style={{background:cardStyle.background,color:cardStyle.color,marginBottom:cardStyle.marginBottom}}>
+                    <div className="card-content" style={{width:cardStyle.width,height:cardStyle.height}}>
                         <span className="card-title">{this.props.title}</span>
                         {chart}
                         {fields}
                         <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
                     </div>
-                    {actions}
+                        {actions}
                 </div>
     }
 }

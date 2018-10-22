@@ -38,6 +38,10 @@ namespace UniversalDashboard.Cmdlets.Charting
 		[Parameter]
 		public DashboardColor BackgroundColor { get; set; }
 		[Parameter]
+		public string Width { get; set; }
+		[Parameter]
+		public string Height { get; set; }
+		[Parameter]
 		public DashboardColor FontColor { get; set; }
 		[Parameter]
 		public int BorderWidth { get; set; } = 1;
@@ -56,6 +60,8 @@ namespace UniversalDashboard.Cmdlets.Charting
 				ChartType = Type,
 				Callback = GenerateCallback(Id),
 				Options = Options,
+				Width = Width,
+				Height = Height,
 				Live = true,
 				Labels = Label != null ? Label : new [] {Title},
 				ChartBorderColor = ChartBorderColor?.Select(m => m.HtmlColor).ToArray(),
