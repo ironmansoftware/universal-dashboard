@@ -14,6 +14,7 @@ import UdRow from './../ud-row.jsx';
 import ErrorCard from './../error-card.jsx';
 import DateTime from './../basics/datetime.jsx';
 import UDTreeView from './../ud-treeview.jsx';
+import UDImageCarousel from './../ud-image-carousel.jsx';
 
 export default function renderComponent(component, history) {
     if (!component) return null;
@@ -63,5 +64,7 @@ export default function renderComponent(component, history) {
             return <UdRow {...component} key={component.id} history={history}/>;
         case "treeview":
             return <UDTreeView {...component} key={component.id} history={history}/>;
+        case "imageCarousel":
+            return <UDImageCarousel {...component} key={component.id}/>;
     }
 }
