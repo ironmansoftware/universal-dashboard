@@ -19,3 +19,5 @@ function Get-BrowserPort {
         10001
     }
 }
+
+Enable-UDLogging
