@@ -1,15 +1,6 @@
-﻿using UniversalDashboard;
-using UniversalDashboard.Services;
-using System;
-using System.IO;
-using System.Management.Automation;
-using System.Management.Automation.Runspaces;
-using System.Reflection;
+﻿using System;
 using System.Linq;
-using UniversalDashboard.Models;
 using DasMulli.Win32.ServiceUtils;
-using System.Diagnostics;
-using System.Threading;
 
 namespace UniversalDashboard
 {
@@ -19,6 +10,8 @@ namespace UniversalDashboard
 
         static void Main(string[] args)
         {
+            Server.LoadPlatformSpecificDependencies();
+
             if (args.Contains(RunAsServiceFlag))
 			{
 				var service = new UniversalDashboardService();

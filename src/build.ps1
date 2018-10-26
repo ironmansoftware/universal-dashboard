@@ -23,12 +23,8 @@ if ($powerShellGet.Version -lt ([Version]'1.6.0')) {
   
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f netstandard2.0
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard.Server\UniversalDashboard.Server.csproj" -f netstandard2.0 
-
-& dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f net471
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard.Server\UniversalDashboard.Server.csproj" -f net471
-
 Push-Location "$PSScriptRoot\client"
-
 Start-Process npm -ArgumentList "install" -Wait
 
 & npm run build
@@ -41,36 +37,32 @@ if ((Test-Path $outputDirectory)) {
 
 New-Item -ItemType Directory $outputDirectory
 
-$net471 = Join-Path $outputDirectory "net471"
-$netstandard20 = Join-Path $outputDirectory "netstandard2.0"
+$bin = Join-Path $outputDirectory "bin"
 $help = Join-Path $outputDirectory "en-US"
 $client = Join-Path $outputDirectory "client"
 $poshud = Join-Path $outputDirectory "poshud"
 
-New-Item -ItemType Directory $net471
-New-Item -ItemType Directory $netstandard20
+New-Item -ItemType Directory $bin
 New-Item -ItemType Directory $help
 New-Item -ItemType Directory $client
 
-Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\netstandard2.0\publish\*" $netstandard20 -Recurse
-Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net471\publish\*" $net471 -Recurse
-
+Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\netstandard2.0\publish\*" $bin -Recurse
 Copy-Item "$PSScriptRoot\client\src\public\*" $client -Recurse
 
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\UniversalDashboard.Server.dll" $netstandard20
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\UniversalDashboard.Server.deps.json" $netstandard20
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\DasMulli.Win32.ServiceUtils.dll" $netstandard20
-
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net471\publish\UniversalDashboard.Server.exe" $net471
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net471\publish\DasMulli.Win32.ServiceUtils.dll" $net471
-
+Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\UniversalDashboard.Server.dll" $bin
+Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\UniversalDashboard.Server.deps.json" $bin
+Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\DasMulli.Win32.ServiceUtils.dll" $bin
+Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net471\publish\UniversalDashboard.Server.exe" $bin
+Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net471\publish\DasMulli.Win32.ServiceUtils.dll" $bin
 Copy-Item "$PSScriptRoot\web.config" $outputDirectory
 Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboard.psm1" $outputDirectory
 Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboardServer.psm1" $outputDirectory
-Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net471\UniversalDashboard.Controls.psm1" $outputDirectory
+Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\netstandard2.0\UniversalDashboard.Controls.psm1" $outputDirectory
 Copy-Item "$PSScriptRoot\poshud" $poshud -Recurse -Container
 
-. "$PSScriptRoot\CorFlags.exe" /32BITREQ-  "$outputDirectory\net471\UniversalDashboard.Server.exe" 
+Remove-Item "$bin\Microsoft.Win32.Registry.dll" -Force
+
+. "$PSScriptRoot\CorFlags.exe" /32BITREQ-  "$bin\UniversalDashboard.Server.exe" 
 
 . (Join-Path $PSScriptRoot 'UniversalDashboard\New-UDModuleManifest.ps1') -outputDirectory $outputDirectory
 

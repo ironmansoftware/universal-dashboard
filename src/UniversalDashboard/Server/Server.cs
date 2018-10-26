@@ -18,12 +18,15 @@ using System.Runtime.Loader;
 using UniversalDashboard.Execution;
 using UniversalDashboard.Utilities;
 using UniversalDashboard.Interfaces;
+using NLog;
 
 namespace UniversalDashboard
 {
 	public class Server
 	{
-		public Server(string name, string fileName, bool autoReload, PSHost host, int port)
+        private static readonly Logger Logger = LogManager.GetLogger(nameof(Server));
+
+        public Server(string name, string fileName, bool autoReload, PSHost host, int port)
 		{
 			if (string.IsNullOrEmpty(name))
 			{
@@ -82,10 +85,9 @@ namespace UniversalDashboard
 			var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
 			var libraryDirectory = Path.Combine(assemblyBasePath, "..", "client");
 
-			var calc = new CustomAssemblyLoadContext();
-			calc.LoadNativeLibraries();
+            LoadPlatformSpecificDependencies();
 
-			var builder = new WebHostBuilder()
+            var builder = new WebHostBuilder()
 				.ConfigureServices((y) =>
 				{
 					var dashboardService = new DashboardService(dashboardOptions, _reloadKey);
@@ -113,7 +115,6 @@ namespace UniversalDashboard
 
 			builder = builder
                 .UseSetting("detailedErrors", "true")
-                .UseLibuv()
                 .UseStartup<ServerStartup>()
 				.CaptureStartupErrors(true);
 
@@ -163,7 +164,54 @@ namespace UniversalDashboard
 				Marshal.ZeroFreeGlobalAllocUnicode(valuePtr);
 			}
 		}
-	}
+
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
+        public static void LoadPlatformSpecificDependencies()
+        {
+            string assemblyPath = string.Empty;
+            if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                assemblyPath = Path.Combine(AssemblyDirectory, "runtimes", "win", "lib", "netstandard2.0");
+            }
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+            {
+                assemblyPath = Path.Combine(AssemblyDirectory, "runtimes", "osx", "lib", "netstandard1.6");
+            }
+            else if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                assemblyPath = Path.Combine(AssemblyDirectory, "runtimes", "unix", "lib", "netstandard2.0");
+            }
+            else
+            {
+                Logger.Warn("Unknown platform.");
+            }
+
+            if (!string.IsNullOrEmpty(assemblyPath))
+            {
+                foreach(var assembly in Directory.GetFiles(assemblyPath))
+                {
+                    try
+                    {
+                        Assembly.LoadFrom(assembly);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Error(ex, $"Failed to load assembly: {assembly}");
+                    }
+                }
+            }
+        }
+    }
 
 
 }
