@@ -11,7 +11,7 @@ namespace UniversalDashboard.Cmdlets
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(NewLinkCommand));
 
-		[Parameter(Mandatory = true)]
+		[Parameter()]
 		public string Text { get; set; }
 	    [Parameter(Mandatory = true)]
 		public string Url { get; set; }

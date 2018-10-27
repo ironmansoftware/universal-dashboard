@@ -1,8 +1,8 @@
 
 New-UDPage -Name "Card" -Icon clone -Content {
     New-UDRow -Columns {
-        New-UDColumn -Size 2 -Content {}
-        New-UDColumn -Size 10 -Content {
+        New-UDColumn -Size 3 -Content {}
+        New-UDColumn -Size 6  -Content {
             New-UDHeading -Size 1 -Text "Cards" -Color $Colors.FontColor
 
             New-UDParagraph -Content {

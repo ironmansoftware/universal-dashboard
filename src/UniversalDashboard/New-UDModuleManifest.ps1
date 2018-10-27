@@ -128,6 +128,8 @@ $manifestParameters = @{
 						"Publish-UDFolder"
 						"New-UDTreeNode"
 						"New-UDTreeView"
+						"New-UDImageCarousel"
+						"New-UDImageCarouselItem"
 						"New-UDEndpointInitialization"
 						)
 }

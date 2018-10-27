@@ -13,8 +13,8 @@ Creates a new chart.
 ## SYNTAX
 
 ```
-New-UDChart [-Labels <String[]>] [-Type <ChartType>] [-Title <String>] [-Options <Hashtable>]
- [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Links <Link[]>]
+New-UDChart [-Labels <String[]>] [-Type <ChartType>] [-Title <String>] [-Options <Hashtable>] [-Width <String>]
+ [-Height <String>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Links <Link[]>]
  [-FilterFields <ScriptBlock>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh]
  [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
@@ -140,6 +140,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Height
+Set monitor custom height, you can use px,vw,%
+You can NOT use this parameter without width parameter.
+If you do you will get an error.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Id
 The ID of the chart. This ID is set on the HTML markup and is also used to identify the endpoint. 
 
@@ -238,6 +255,22 @@ Type: ChartType
 Parameter Sets: (All)
 Aliases:
 Accepted values: Bar, Line, Area, Doughnut, Radar, Pie
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Width
+Set monitor custom width, you can use px,vw,%
+You can use only width without the height parameter.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named

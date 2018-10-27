@@ -15,9 +15,10 @@ Creates a live updating chart that shows a single type of data on a running time
 ```
 New-UDMonitor [-Type <ChartType>] -Title <String> [-DataPointHistory <Int32>] [-Options <Hashtable>]
  [-ChartBackgroundColor <DashboardColor[]>] [-ChartBorderColor <DashboardColor[]>]
- [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-BorderWidth <Int32>] [-Label <String[]>]
- [-Links <Link[]>] [-FilterFields <ScriptBlock>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>]
- [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
+ [-BackgroundColor <DashboardColor>] [-Width <String>] [-Height <String>] [-FontColor <DashboardColor>]
+ [-BorderWidth <Int32>] [-Label <String[]>] [-Links <Link[]>] [-FilterFields <ScriptBlock>]
+ [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -186,6 +187,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Height
+Set monitor custom height, you can use px,vw,%
+You can NOT use this parameter without width parameter.
+If you do you will get an error.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Id
 The HTML ID and endpoint ID for this component.
 
@@ -282,6 +300,22 @@ Type: ChartType
 Parameter Sets: (All)
 Aliases:
 Accepted values: Bar, Line, Area, Doughnut, Radar, Pie
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Width
+Set monitor custom width, you can use px,vw,%
+You can use only width without the height parameter.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named

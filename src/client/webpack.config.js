@@ -19,10 +19,10 @@ module.exports = (env) => {
       publicPath: "/"
     },
     module : {
-      loaders : [
+      rules : [
         { test: /\.css$/, loader: "style-loader!css-loader" },
         { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'},
-        { test: /\.(eot|ttf|woff2?|otf|svg)$/, loaders: ['file-loader'] }
+        { test: /\.(eot|ttf|woff2?|otf|svg)$/, loader:'file-loader' }
       ]
     },
     resolve: {
@@ -32,17 +32,19 @@ module.exports = (env) => {
       extensions: ['.json', '.js', '.jsx']
     },
     plugins: [
-      new HtmlWebpackPlugin({
-        template: path.resolve(SRC_DIR, 'index.html'),
-        chunksSortMode: 'dependency'
-      })
-    ].concat(!isDev?[    new UglifyJSPlugin({
-        compress: {
-          warnings: false
-        },
-        sourceMap: true
-      })]:[])
-      ,
+            new HtmlWebpackPlugin({
+              template: path.resolve(SRC_DIR, 'index.html'),
+              chunksSortMode: 'dependency'
+            }),
+            new UglifyJSPlugin({
+              uglifyOptions:{
+                compress: {
+                  warnings: false
+                },
+                sourceMap: true
+              }
+            })
+    ],
     devtool: 'source-map',
     devServer: {
       historyApiFallback: true,
