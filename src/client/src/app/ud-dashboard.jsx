@@ -115,7 +115,13 @@ export default class UdDashboard extends React.Component {
             }
 
             if (data.type === "clientEvent") {
-                connection.invoke("clientEvent", data.eventId, data.eventName, data.eventData, this.state.location)
+                connection.invoke("clientEvent", data.eventId, data.eventName, data.eventData, this.state.location).catch(function(e) {
+                    toaster.show({
+                        message: e.message,
+                        icon: 'fa fa-times-circle',
+                        iconColor: '#FF0000'
+                    });
+                });
             }
 
             if (data.type === "unregisterEvent") {
