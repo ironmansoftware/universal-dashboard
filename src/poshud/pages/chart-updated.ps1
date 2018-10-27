@@ -1,4 +1,4 @@
-New-UDPage -Name demo -Content {
+New-UDPage -Name 'Chart.v2' -Content {
 
     # Main Chart full width custom height.
     new-udrow -Columns {
@@ -75,5 +75,4 @@ New-UDPage -Name demo -Content {
             ) -FontColor '#ffffff'
         }
     }
-
 }
