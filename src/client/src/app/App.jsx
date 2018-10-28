@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { actions } from './actions';
+const UdDashboard = React.lazy(() => import('./ud-dashboard.jsx'));
 
 import {
     BrowserRouter as Router,
@@ -24,16 +25,14 @@ class App extends React.Component {
             }
         })
 
-        return import('./ud-dashboard.jsx').then(({ default: UdDashboard }) => {
-            return (<Router>
-                <div className="ud-dashboard">
-                    <Route path={/^(?!.*(\/login))(?!.*(\/license)).*$/} component={UdDashboard} />
-                    {routes}
-                    {/* <Route path="/login" component={Login} />
-                    <Route path="/signin" component={Login} /> */}
-                </div>
-            </Router> )
-        })
+        return (<Router>
+            <div className="ud-dashboard">
+                <Route path={/^(?!.*(\/login))(?!.*(\/license)).*$/} component={UdDashboard} />
+                {routes}
+                {/* <Route path="/login" component={Login} />
+                <Route path="/signin" component={Login} /> */}
+            </div>
+        </Router> )
   }
 }
 

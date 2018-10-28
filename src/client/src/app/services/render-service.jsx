@@ -1,4 +1,20 @@
 import React from 'react';
+const UdCard = React.lazy(() => import( './../ud-card.jsx'));
+const UdChart = React.lazy(() => import( './../ud-chart.jsx'));
+const UdColumn = React.lazy(() => import('./../ud-column.jsx'));
+const UdCounter = React.lazy(() => import( './../ud-counter.jsx'));
+const UdElement = React.lazy(() => import( './../ud-element.jsx'));
+const UdGrid = React.lazy(() => import('./../ud-grid.jsx'));
+const UdHtml = React.lazy(() => import('./../ud-html.jsx'));
+const UdLink = React.lazy(() => import('./../ud-link.jsx')) ;
+const UdInput = React.lazy(() => import( './../ud-input.jsx'));
+const UdMonitor = React.lazy(() => import('./../ud-monitor.jsx')) ;
+const UdNavbar = React.lazy(() => import('./../ud-navbar.jsx'));
+const UdRow = React.lazy(() => import('./../ud-row.jsx')) ;
+const ErrorCard = React.lazy(() => import('./../error-card.jsx')) ;
+const DateTime = React.lazy(() => import('./../basics/datetime.jsx')) ;
+const UDTreeView = React.lazy(() => import('./../ud-treeview.jsx')) ;
+const UDImageCarousel = React.lazy(() => import('./../ud-image-carousel.jsx'));
 
 export default function renderComponent(component, history) {
     if (!component) return null;
@@ -17,68 +33,36 @@ export default function renderComponent(component, history) {
 
     switch(component.type) {
         case "card":   
-            return import('./../ud-card.jsx').then(({ default: UdCard }) => {
-                return <UdCard {...component} key={component.id} />;
-            })
+            return <UdCard {...component} key={component.id} />;
         case "chart":
-            return import('./../ud-chart.jsx').then(({ default: UdChart }) => {
-                return <UdChart {...component} key={component.id}/>;
-            })
+            return <UdChart {...component} key={component.id}/>;
         case "column":
-            return import('./../ud-column.jsx').then(({ default: UdColumn }) => {
-                return <UdColumn {...component} key={component.id} history={history} />;
-            })
+            return <UdColumn {...component} key={component.id} history={history} />;
         case "counter":
-            return import('./../ud-counter.jsx').then(({ default: UdCounter }) => {
-                return <UdCounter {...component} key={component.id}/>;
-            })
+            return <UdCounter {...component} key={component.id}/>;
         case "datetime":
-            return import('./../basics/datetime.jsx').then(({ default: DateTime }) => {
-                return <DateTime {...component} key={component.id}/>;
-            })
+            return <DateTime {...component} key={component.id}/>;
         case "element":
-            return import('./../ud-element.jsx').then(({ default: UdElement }) => {
-                return <UdElement {...component} key={component.id} history={history} />;
-            })
+            return <UdElement {...component} key={component.id} history={history}/>;
         case "error":
-            return import('./../error-card.jsx').then(({ default: ErrorCard }) => {
-                return <ErrorCard {...component} key={component.id}/>;
-            })
-        case "link":
-            return import('./../ud-link.jsx').then(({ default: UdLink }) => {
-                return <UdLink {...component} key={component.id}/>;
-            })
+            return <ErrorCard {...component} key={component.id}/>;
         case "grid":
-            return import('./../ud-grid.jsx').then(({ default: UdGrid }) => {
-                return <UdGrid {...component} key={component.id}/>;
-            })
+            return <UdGrid {...component} key={component.id}/>;
         case "rawHtml":
-            return import('./../ud-html.jsx').then(({ default: UdHtml }) => {
-                return <UdHtml {...component} key={component.id}/>;
-            })
+            return <UdHtml {...component} key={component.id}/>;
+        case "link":
+            return <UdLink {...component} key={component.id}/>;
         case "input":
-            return import('./../ud-input.jsx').then(({ default: UdInput }) => {
-                return <UdInput {...component} key={component.id} history={history}/>;
-            })
+            return <UdInput {...component} key={component.id} history={history}/>;
         case "Monitor":
-            return import('./../ud-monitor.jsx').then(({ default: UdMonitor }) => {
-                return <UdMonitor {...component} key={component.id}/>;
-            })
+            return <UdMonitor {...component} key={component.id}/>;
         case "navbar":
-            return import('./../ud-navbar.jsx').then(({ default: UdNavbar }) => {
-                return <UdNavbar {...component} key={component.id}/>;
-            })
+            return <UdNavbar {...component} key={component.id}/>;
         case "row":
-            return import('./../ud-row.jsx').then(({ default: UdRow }) => {
-                return <UdRow {...component} key={component.id} history={history}/>;
-            })
+            return <UdRow {...component} key={component.id} history={history}/>;
         case "treeview":
-            return import('./../ud-treeview.jsx').then(({ default: UDTreeView }) => {
-                return <UDTreeView {...component} key={component.id} history={history}/>;
-            })
+            return <UDTreeView {...component} key={component.id} history={history}/>;
         case "imageCarousel":
-            return import('./../ud-image-carousel.jsx').then(({ default: UDImageCarousel }) => {
-                return <UDImageCarousel {...component} key={component.id} history={history}/>;
-            })
+            return <UDImageCarousel {...component} key={component.id}/>;
     }
 }
