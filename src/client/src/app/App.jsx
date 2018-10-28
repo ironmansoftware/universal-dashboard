@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { actions } from './actions';
-import UdDashboard from './ud-dashboard.jsx'
+
 import {
     BrowserRouter as Router,
     Route
@@ -24,7 +24,8 @@ class App extends React.Component {
             }
         })
 
-        return (<Router>
+        return import('./ud-dashboard.jsx').then(({ default: UdDashboard }) => {
+            return (<Router>
                 <div className="ud-dashboard">
                     <Route path={/^(?!.*(\/login))(?!.*(\/license)).*$/} component={UdDashboard} />
                     {routes}
@@ -32,7 +33,7 @@ class App extends React.Component {
                     <Route path="/signin" component={Login} /> */}
                 </div>
             </Router> )
-        
+        })
   }
 }
 

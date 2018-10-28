@@ -10,31 +10,12 @@ var APP_DIR = path.resolve(__dirname, 'src/app');
 module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
 
-  var plugins = [
-    new HtmlWebpackPlugin({
-      template: path.resolve(SRC_DIR, 'index.html'),
-      chunksSortMode: 'dependency'
-    })
-  ];
-
-  if (!isDev) {
-    plugins.push(
-      new UglifyJSPlugin({
-        uglifyOptions:{
-          compress: {
-            warnings: false
-          },
-          sourceMap: true
-        }
-      })
-    )
-  }
-
   return {
     entry: ["babel-polyfill", 'whatwg-fetch', APP_DIR + '/index.jsx'],
     output: {
       path: BUILD_DIR,
       filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
+      chunkFilename: '[name].bundle.js',
       sourceMapFilename: 'bundle.map',
       publicPath: "/"
     },
@@ -51,7 +32,21 @@ module.exports = (env) => {
             },
       extensions: ['.json', '.js', '.jsx']
     },
-    plugins: plugins,
+    optimization: {
+      minimizer: [new UglifyJSPlugin({
+        parallel: true,
+        sourceMap: true,
+        uglifyOptions:{
+          compress: {
+            warnings: false
+          },
+          
+        }})]
+    },
+    plugins: [new HtmlWebpackPlugin({
+      template: path.resolve(SRC_DIR, 'index.html'),
+      chunksSortMode: 'none'
+    })],
     devtool: 'source-map',
     devServer: {
       historyApiFallback: true,
