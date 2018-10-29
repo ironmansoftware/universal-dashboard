@@ -9,6 +9,28 @@ Import-Module $ModulePath -Force
 Get-UDDashboard | Stop-UDDashboard
 
 Describe "Element" {
+
+    Context "ArgumentList" {
+        $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
+            $Patch = 'comp1'
+            New-UDButton -Id 'button' -Text $Patch -OnClick (New-UDEndpoint -Endpoint { Set-UDElement -Id "output" -Content { $ArgumentList[0] } } -ArgumentList $Patch )
+            New-UDElement -Id 'output' -Tag 'div' -Content { }
+        }
+
+         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+         $Driver = Start-SeFirefox
+         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+         It "should use an endpoint" {
+            Find-SeElement -Driver $Driver -Id 'button' | Invoke-SeClick
+            Start-Sleep -Seconds 1
+            (Find-SeElement -Drive $Driver -Id 'output').Text | should be "comp1"
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
     Context "Should work with attributes that start with on" {
         $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
             New-UDElement -Tag A -Id "element" -Attributes @{onclick = 'kaboom'} -Content {'IAMME'}
