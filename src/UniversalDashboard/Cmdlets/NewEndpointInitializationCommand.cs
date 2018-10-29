@@ -7,6 +7,8 @@ using UniversalDashboard.Services;
 using System.Linq;
 using UniversalDashboard.Models.Basics;
 using System.Management.Automation.Runspaces;
+using System.Collections.Generic;
+using System.IO;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -30,7 +32,22 @@ namespace UniversalDashboard.Cmdlets
             }
 
             if (Module != null) {
-                initialSessionState.ImportPSModule(Module);
+
+                var resolvedModules = new List<string>();
+                foreach(var module in Module)
+                {
+                    if (Path.IsPathRooted(module))
+                    {
+                        resolvedModules.Add(module);
+                    }
+                    else
+                    {
+                        var resolvedPath = Path.Combine(MyInvocation.PSScriptRoot, module);
+                        resolvedModules.Add(resolvedPath);
+                    }
+                }
+
+                initialSessionState.ImportPSModule(resolvedModules.ToArray());
             }
 
             if (Function != null) {
