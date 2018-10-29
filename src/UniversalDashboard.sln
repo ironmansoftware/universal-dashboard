@@ -10,11 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A666D7E6-4A88-482A-B2AC-885457D2B5FD}"
 	ProjectSection(SolutionItems) = preProject
 		build.ps1 = build.ps1
-		new-markdown-help.ps1 = new-markdown-help.ps1
-		process-runtimes-json.ps1 = process-runtimes-json.ps1
-		UniversalDashboard.psm1 = UniversalDashboard.psm1
-		UniversalDashboardServer.psm1 = UniversalDashboardServer.psm1
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Server", "..\..\universal-dashboard-enterprise\src\UniversalDashboard.Server\UniversalDashboard.Server.csproj", "{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,10 +28,10 @@ Global
 		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A6E2F1A-410A-46DA-8B37-D21F01789A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A6E2F1A-410A-46DA-8B37-D21F01789A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A6E2F1A-410A-46DA-8B37-D21F01789A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A6E2F1A-410A-46DA-8B37-D21F01789A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
