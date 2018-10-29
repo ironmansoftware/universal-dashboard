@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A666D7E6
 		build.ps1 = build.ps1
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Server", "..\..\universal-dashboard-enterprise\src\UniversalDashboard.Server\UniversalDashboard.Server.csproj", "{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Server", "UniversalDashboard.Server\UniversalDashboard.Server.csproj", "{ECA5AC7B-9166-470A-B99C-234241794D3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,10 +28,10 @@ Global
 		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08412C9A-7ADD-4D7A-AFC6-68D64F044A07}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DECB89E-1E5F-4526-94F4-E70B686BD5E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECA5AC7B-9166-470A-B99C-234241794D3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ECA5AC7B-9166-470A-B99C-234241794D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ECA5AC7B-9166-470A-B99C-234241794D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ECA5AC7B-9166-470A-B99C-234241794D3E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
