@@ -217,13 +217,19 @@ class UDElementContent extends React.Component {
     }
 
     onUserEvent(event, e) {
-        var eventName = event.event;
+        var eventName = null;
         var val = null;
         if (this.state.tag === 'select') {
             val = this.refs.element[this.refs.element.selectedIndex].value
+            for(var i = 0; i < this.state.events.length; i++) {
+                if (this.state.events[i].event === 'onChange') {
+                    event = this.state.events[i];
+                }
+            }
             eventName = 'onChange'
         }
         else {
+            eventName = event.event;
             val = e.target.value;
             if (val != null && val.checked != null) {
                 val = e.target.checked;
