@@ -1,4 +1,4 @@
-param([Switch]$Release)
+﻿param([Switch]$Release)
 
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
@@ -21,6 +21,8 @@ Describe "Card" {
             New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
             )
+
+            New-UDCard -Title "ÆØÅ" -Text "Test" -Id "nordic"
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
@@ -36,11 +38,15 @@ Describe "Card" {
             Find-SeElement -LinkText "MY LINK" -Driver $Driver | Should not be $null
         }
 
+        It "should show nordic chars correctly" {
+            $Element = Find-SeElement -Id "nordic" -Driver $Driver
+            $Element.Text.Split("`r`n")[0] | should be "ÆØÅ"
+        }
+
        Stop-SeDriver $Driver
        Stop-UDDashboard -Server $Server 
     }
-
-        
+ 
     Context "No text card" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Id "Card" -Endpoint {
