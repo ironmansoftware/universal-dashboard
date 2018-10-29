@@ -29,6 +29,7 @@ namespace UniversalDashboard.Controllers
 
 		[Authorize]
 		[Route("/dashboard")]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Index()
         {
 			Log.Debug("Index");
@@ -51,6 +52,7 @@ namespace UniversalDashboard.Controllers
 
         [Authorize]
         [Route("/dashboard/{page}")]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public Page Index(string page)
         {
             Log.Debug($"Index - Page = {page}");
@@ -59,7 +61,8 @@ namespace UniversalDashboard.Controllers
 
         [Authorize]
 		[Route("/dashboard/theme")]
-	    public IActionResult Theme()
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public IActionResult Theme()
 	    {
 			return new ContentResult()
             {
