@@ -23,8 +23,8 @@ Describe "New-UDLink" {
         Start-Sleep 2
 
         It "should open link in new tab" {
-            Find-SeElement -Driver $Driver -LinkText "GOOGLE" | Get-SeElementAttribute -Attribute "target" | Should be "_blank"
-            Find-SeElement -Driver $Driver -LinkText "BOOGLE" | Get-SeElementAttribute -Attribute "target" | Should be "_self"
+            Find-SeElement -Driver $Driver -LinkText "Google" | Get-SeElementAttribute -Attribute "target" | Should be "_blank"
+            Find-SeElement -Driver $Driver -LinkText "Boogle" | Get-SeElementAttribute -Attribute "target" | Should be "_self"
         }
 
         It "should have color" {

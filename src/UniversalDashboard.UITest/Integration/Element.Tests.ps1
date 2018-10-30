@@ -13,8 +13,12 @@ Describe "Element" {
     Context "ArgumentList" {
         $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
             $Patch = 'comp1'
-            New-UDButton -Id 'button' -Text $Patch -OnClick (New-UDEndpoint -Endpoint { Set-UDElement -Id "output" -Content { $ArgumentList[0] } } -ArgumentList $Patch )
-            New-UDElement -Id 'output' -Tag 'div' -Content { }
+            New-UDButton -Id 'button' -Text $Patch -OnClick (New-UDEndpoint -Endpoint { 
+                Add-UDElement -ParentId 'parent' -Content {
+                    New-UDElement -Id "output" -Tag 'div' -Content { $ArgumentList[0] }
+                }
+            } -ArgumentList $Patch )
+            New-UDElement -Id 'parent' -Tag 'div' -Content { }
         }
 
          $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
@@ -23,7 +27,6 @@ Describe "Element" {
 
          It "should use an endpoint" {
             Find-SeElement -Driver $Driver -Id 'button' | Invoke-SeClick
-            Start-Sleep -Seconds 1
             (Find-SeElement -Drive $Driver -Id 'output').Text | should be "comp1"
         }
 
