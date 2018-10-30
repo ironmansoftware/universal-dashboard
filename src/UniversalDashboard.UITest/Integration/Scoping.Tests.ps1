@@ -12,13 +12,18 @@ $Global:MyVariable = "Test"
 
 Describe "Variable Scoping" {
     Context "Invoke-Command test" {
-        Get-Process calc* | Stop-Process
-        
         $Dashboard = New-UDDashboard -Title "Test" -Content {
-            $Name = "calc"
             New-UDButton -Text 'Patch' -Id 'button' -OnClick (
-                New-UDEndpoint -Endpoint { Start-Process $ArgumentList[0] } -ArgumentList $Name
+                New-UDEndpoint -Endpoint { 
+                    Add-UDElement -ParentId 'output' -Content {
+                        New-UDElement -Id 'child' -Tag 'div' -Content { 'child'}
+                    }
+                 } -ArgumentList $Name
             )
+
+            New-UDElement -Tag 'div' -Id "output" -Content {
+                
+            }
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
@@ -28,13 +33,8 @@ Describe "Variable Scoping" {
 
         It "should start processes with click" {
             Find-SeElement -Id "button" -Driver $Driver | Invoke-SeClick 
-
-            Start-Sleep 5
-
-            (Get-Process Calc* | Measure-Object).Count | Should be 1
+            (Find-SeElement -Id 'child' -Driver $Driver).Text | should be "child"
         }
-
-        Get-Process calc* | Stop-Process
 
        Stop-SeDriver $Driver
        Stop-UDDashboard $Server

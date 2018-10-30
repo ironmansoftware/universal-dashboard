@@ -75,7 +75,7 @@ Describe "Grid" {
 
 
         It "should have link" {
-            Find-SeElement -LinkText "THIS IS TEXT" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "This is text" -Driver $Driver | Should not be $null
         }
 
         It "should have link in footer" {

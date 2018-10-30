@@ -101,8 +101,8 @@ Describe "Table" {
             Find-SeElement -LinkText "This is text" -Driver $Driver | Should not be $null
         }
 
-        It "has link in fotter" {
-            Find-SeElement -LinkText "Other Link" -Driver $Driver | Should not be $null
+        It "has link in footer" {
+            Find-SeElement -LinkText "OTHER LINK" -Driver $Driver | Should not be $null
         }
 
         It "has Id in column for single item table" {

@@ -423,7 +423,7 @@ Describe "Input" {
             $Element = Find-SeElement -Name "test" -Driver $Driver
             [string]::IsNullOrEmpty($Element.Text) | Should be $true
             $Element = Find-SeElement -Name "test2" -Driver $Driver
-            $Element.Selected | Should be $null
+            $Element.Selected | Should be $False
         }
 
         Stop-SeDriver $Driver
@@ -445,7 +445,7 @@ Describe "Input" {
 
         It "should have different submit text" {
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
-            Invoke-SeClick -Element $Element 
+            Invoke-SeClick -Element $Button 
 
             Start-Sleep 2
 
