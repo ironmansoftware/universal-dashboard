@@ -18,7 +18,9 @@ Describe "Checkbox" {
                     $Val = "Checked"
                 }
 
-                Set-UDElement -Id "output" -Content { $val }
+                Add-UDElement -ParentId 'output' -Content {
+                    New-UDElement -Id 'child' -Tag 'div' -Content { $val }
+                }
             }
 
             New-UDElement -Id "output" -Tag "div" -Content { }
@@ -33,7 +35,7 @@ Describe "Checkbox" {
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
             Start-Sleep 1
  
-            (Find-SeElement -Driver $Driver -Id 'output').Text | should be "Checked"
+            (Find-SeElement -Driver $Driver -Id 'child').Text | should be "Checked"
         }
 
        Stop-SeDriver $Driver
