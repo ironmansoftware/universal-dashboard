@@ -9,7 +9,7 @@ $version = "2.1.0"
 #$prerelease = "-beta3"
 
 $ReleaseNotes = "
-	For release notes, see: https://docs.universaldashboard.io/updates/v2.0.1
+	For release notes, see: https://docs.universaldashboard.io/updates/v2.1.0
 "
 
 $manifestParameters = @{
