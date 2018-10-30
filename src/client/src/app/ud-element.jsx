@@ -160,11 +160,11 @@ class UDElementContent extends React.Component {
         for(var i = 0; i < this.state.events.length; i++) {
             if (this.state.events[i].event === 'onChange') {
 
-                var event = this.state.events[i].event;
+                var event = this.state.events[i];
 
                 PubSub.publish('element-event', {
                     type: "clientEvent",
-                    componentId: event.id,
+                    eventId: event.id,
                     eventName: 'onChange',
                     eventData: val
                 });
@@ -177,7 +177,7 @@ class UDElementContent extends React.Component {
             for(var i = 0; i < this.state.events.length; i++) {
                 PubSub.publish('element-event', {
                     type: "unregisterEvent",
-                    eventId: this.state.events[i].event.id
+                    eventId: this.state.events[i].id
                 });
             }
         }
