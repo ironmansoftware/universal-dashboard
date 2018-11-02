@@ -1,20 +1,24 @@
-import React from 'react';
-import UdCard from './../ud-card.jsx';
-import UdChart from './../ud-chart.jsx';
+import React,{Suspense} from 'react';
 import UdColumn from './../ud-column.jsx';
-import UdCounter from './../ud-counter.jsx';
-import UdElement from './../ud-element.jsx';
-import UdGrid from './../ud-grid.jsx';
-import UdHtml from './../ud-html.jsx';
-import UdLink from './../ud-link.jsx';
-import UdInput from './../ud-input.jsx';
-import UdMonitor from './../ud-monitor.jsx';
 import UdNavbar from './../ud-navbar.jsx';
 import UdRow from './../ud-row.jsx';
-import ErrorCard from './../error-card.jsx';
-import DateTime from './../basics/datetime.jsx';
-import UDTreeView from './../ud-treeview.jsx';
-import UDImageCarousel from './../ud-image-carousel.jsx';
+
+
+const UdCardComponent = React.lazy(() => import('./../ud-card.jsx' /* webpackChunkName: "ud-card" */))
+const UdChartComponent = React.lazy(() => import('./../ud-chart.jsx' /* webpackChunkName: "ud-chart" */))
+const UdMonitorComponent = React.lazy(() => import('./../ud-monitor.jsx' /* webpackChunkName: "ud-monitor" */))
+const UdLinkComponent = React.lazy(() => import('./../ud-link.jsx' /* webpackChunkName: "ud-link" */))
+const UdErrorCardComponent = React.lazy(() => import('./../error-card.jsx' /* webpackChunkName: "ud-error-card" */))
+const UdTreeViewComponent = React.lazy(() => import('./../ud-treeview.jsx' /* webpackChunkName: "ud-tree-view" */))
+const UdInputComponent = React.lazy(() => import('./../ud-input.jsx' /* webpackChunkName: "ud-input" */))
+const UdCounterComponent = React.lazy(() => import('./../ud-counter.jsx' /* webpackChunkName: "ud-counter" */))
+const UdHtmlComponent = React.lazy(() => import('./../ud-html.jsx' /* webpackChunkName: "ud-html" */))
+const UdGridComponent = React.lazy(() => import('./../ud-grid.jsx' /* webpackChunkName: "ud-grid" */))
+const UdDateTimeComponent = React.lazy(() => import('./../basics/datetime.jsx' /* webpackChunkName: "ud-date-time" */))
+const UdElementComponent = React.lazy(() => import('./../ud-element.jsx' /* webpackChunkName: "ud-element" */))
+const UdImageCarouselComponent = React.lazy(() => import( './../ud-image-carousel.jsx' /* webpackChunkName: "ud-image-carousel" */))
+        
+
 
 export default function renderComponent(component, history) {
     if (!component) return null;
@@ -32,39 +36,79 @@ export default function renderComponent(component, history) {
     }
 
     switch(component.type) {
-        case "card":   
-            return <UdCard {...component} key={component.id} />;
+
+        case "card":  
+            return <Suspense fallback={<div>Loading...</div>}>
+                <UdCardComponent {...component} key={component.id}/>
+            </Suspense>
+
         case "chart":
-            return <UdChart {...component} key={component.id}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                <UdChartComponent {...component} key={component.id}/>
+            </Suspense>
+            
         case "column":
-            return <UdColumn {...component} key={component.id} history={history} />;
+            return <UdColumn {...component} key={component.id} history={history} />
+
         case "counter":
-            return <UdCounter {...component} key={component.id}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdCounterComponent {...component} key={component.id}/>
+                    </Suspense>
+
         case "datetime":
-            return <DateTime {...component} key={component.id}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdDateTimeComponent {...component} key={component.id}/>
+                    </Suspense>
+
         case "element":
-            return <UdElement {...component} key={component.id} history={history}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdElementComponent {...component} key={component.id} history={history}/>
+                    </Suspense>
+
         case "error":
-            return <ErrorCard {...component} key={component.id}/>;
+            return  <Suspense fallback={<div>Loading...</div>}>
+                <UdErrorCardComponent {...component} key={component.id}/>
+            </Suspense>
+
         case "link":
-            return <UdLink {...component} key={component.id}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdLinkComponent {...component} key={component.id}/>
+                    </Suspense>
+
         case "grid":
-            return <UdGrid {...component} key={component.id}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdGridComponent {...component} key={component.id}/>
+                    </Suspense>
+
         case "rawHtml":
-            return <UdHtml {...component} key={component.id}/>;
-        case "link":
-            return <UdLink {...component} key={component.id}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdHtmlComponent {...component} key={component.id}/>
+                    </Suspense>
+
         case "input":
-            return <UdInput {...component} key={component.id} history={history}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                <UdInputComponent {...component} key={component.id} history={history}/>
+            </Suspense>
+
         case "Monitor":
-            return <UdMonitor {...component} key={component.id}/>;
+            return  <Suspense fallback={<div>Loading...</div>}>
+                <UdMonitorComponent {...component} key={component.id}/>
+            </Suspense>
+
         case "navbar":
-            return <UdNavbar {...component} key={component.id}/>;
+            return <UdNavbar {...component} key={component.id}/>
+
         case "row":
-            return <UdRow {...component} key={component.id} history={history}/>;
+            return <UdRow {...component} key={component.id} history={history}/>
+
         case "treeview":
-            return <UDTreeView {...component} key={component.id} history={history}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                <UdTreeViewComponent {...component} key={component.id} history={history}/>
+            </Suspense>
+            
         case "imageCarousel":
-            return <UDImageCarousel {...component} key={component.id}/>;
+            return <Suspense fallback={<div>Loading...</div>}>
+                <UdImageCarouselComponent {...component} key={component.id}/>
+            </Suspense>
     }
 }

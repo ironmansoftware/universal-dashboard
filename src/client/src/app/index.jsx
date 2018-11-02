@@ -1,16 +1,14 @@
-require('./polyfills.js');
+import '@babel/polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 import $ from "jquery";
-import Materialize from "materialize-css"
-import "highlight.js/styles/agate.css";
-import "materialize-css/dist/css/materialize.min.css";
+import Materialize from "materialize-css";
+import("materialize-css/dist/css/materialize.min.css" /* webpackChunkName: "materialize-css" */)
 import 'whatwg-fetch';
 import Promise from 'promise-polyfill'; 
 import thunk from 'redux-thunk';
-import "babel-polyfill";
 
-import './styles/site.css';
+import('./styles/site.css' /* webpackChunkName: "ud-site-css" */);
 import { UniversalDashboardService } from './services/universal-dashboard-service.jsx';
 import ConnectedApp from './App';
 

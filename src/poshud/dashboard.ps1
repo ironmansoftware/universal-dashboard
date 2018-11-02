@@ -33,7 +33,7 @@ function New-UDElementExample {
                     color = $ScriptColors.FontColor
                     fontFamily = '"SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace'
                 }
-                width = "100%"
+                width = "80vw"
             }
         }
     }
@@ -143,4 +143,4 @@ Get-ChildItem (Join-Path $PSScriptRoot "pages") -Exclude "home.ps1" | ForEach-Ob
     $Pages += . $_.FullName
 }
 
-New-UDDashboard -NavbarLinks $NavBarLinks -Title "PowerShell Universal Dashboard" -NavBarColor '#FF1c1c1c' -NavBarFontColor "#FF55b3ff" -BackgroundColor "#FF333333" -FontColor "#FFFFFFF" -Pages $Pages -Footer $Footer -FontIconStyle FontAwesome
+New-UDDashboard -NavbarLinks $NavBarLinks -Title "PowerShell Universal Dashboard" -NavBarColor '#FF1c1c1c' -NavBarFontColor "#FF55b3ff" -BackgroundColor "#FF333333" -FontColor "#FFFFFFF" -Pages $Pages -Footer $Footer -FontIconStyle LineAwesome

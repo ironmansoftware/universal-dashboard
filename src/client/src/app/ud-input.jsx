@@ -1,9 +1,10 @@
-import React from 'react';
+import React,{Suspense} from 'react';
 import {Input as RInput, Row, Col, Preloader} from 'react-materialize';
 import {fetchPost} from './services/fetch-service.jsx';
 import renderComponent from './services/render-service.jsx';
-import UdLink from './ud-link.jsx';
 import UdInputField from './ud-input-field.jsx';
+
+const UdLinkComponent = React.lazy(() => import('./ud-link.jsx' /* webpackChunkName: "ud-link" */))
 
 export default class Input extends React.Component {
 
@@ -126,7 +127,9 @@ export default class Input extends React.Component {
         var actions = null 
         if (this.props.links) {
             var links = this.props.links.map(function(x, i) {
-                return <UdLink {...x} key={x.url} />
+                return <Suspense fallback={<div>Loading...</div>}>
+                    <UdLinkComponent {...x} key={x.url} />
+                </Suspense>
             });
             actions = <div className="card-action">
                 {links}

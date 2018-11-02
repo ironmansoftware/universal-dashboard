@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'src/public');
 var SRC_DIR = path.resolve(__dirname, 'src');
@@ -11,7 +11,10 @@ module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
 
   return {
-    entry: ["babel-polyfill", 'whatwg-fetch', APP_DIR + '/index.jsx'],
+    entry:{
+      // whatwg:'whatwg-fetch', 
+      index: APP_DIR + '/index.jsx',
+    },
     output: {
       path: BUILD_DIR,
       filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
@@ -34,17 +37,37 @@ module.exports = (env) => {
     plugins: [
             new HtmlWebpackPlugin({
               template: path.resolve(SRC_DIR, 'index.html'),
-              chunksSortMode: 'dependency'
+              chunksSortMode: 'none'
             }),
             new UglifyJSPlugin({
               uglifyOptions:{
                 compress: {
                   warnings: false
                 },
-                sourceMap: true
+                parallel: true,
+                sourceMap: false
               }
             })
     ],
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          commons: {
+            test: /[\\/]node_modules[\\/](font-awesome|line-awesome|react-materialize|materialize-css)[\\/]/,
+            name: 'commons',
+            chunks: 'initial',
+          },
+          vendor:{
+            test: /[\\/]node_modules[\\/](react|react-dom|jquery|react-redux|pubsub-js|whatwg-fetch|highlight.js)[\\/]/,
+            name: 'vendor',
+            chunks: 'initial',
+          }
+        }
+      },
+      // runtimeChunk:{
+      //   name:'manifest'
+      // }
+    },
     devtool: 'source-map',
     devServer: {
       historyApiFallback: true,
