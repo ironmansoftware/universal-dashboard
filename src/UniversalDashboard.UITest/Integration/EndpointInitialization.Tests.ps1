@@ -24,7 +24,7 @@ Describe "EndpointInitialization" {
             }
         }.ToString() | Out-File -FilePath $tempModule
 
-        $Initialization = New-UDEndpointInitialization -Module @('PnpDevice',$tempModule, ".\TestModule.psm1") -Variable "SomeVar" -Function 'Get-Stuff'
+        $Initialization = New-UDEndpointInitialization -Module @($tempModule, ".\TestModule.psm1") -Variable "SomeVar" -Function 'Get-Stuff'
 
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDCounter -Title "Counter" -Id "Counter" -Endpoint {
@@ -41,12 +41,6 @@ Describe "EndpointInitialization" {
 
             New-UDElement -tag "div" -Id "othermodule" -Endpoint {
                 Get-TheMeaningOfLife
-            }
-
-            New-UDElement -tag "div" -Id "psmodulepath" -Endpoint {
-                $pnp = Get-PnpDevice | select -First 1
-                $pnp.CreationClassName
-              
             }
 
         } -EndpointInitialization $Initialization
@@ -75,11 +69,6 @@ Describe "EndpointInitialization" {
         It "should load module from relative path" {
             $Target = Find-SeElement -Driver $Driver -Id "othermodule"
             $Target.Text | Should be "42" 
-        }
-
-        It "should load module by name frmo psmodule path" {
-            $Target = Find-SeElement -Driver $Driver -Id "psmodulepath"
-            $Target.Text | Should be "Win32_PnPEntity"
         }
 
         Remove-Item $tempModule -Force
