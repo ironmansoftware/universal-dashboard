@@ -40,24 +40,24 @@ module.exports = (env) => {
               template: path.resolve(SRC_DIR, 'index.html'),
               chunksSortMode: 'none'
             }),
-            new UglifyJSPlugin({
-              uglifyOptions:{
-                compress: {
-                  warnings: false
-                },
-                parallel: true,
-                sourceMap: true
-              }
-            })
+            // new UglifyJSPlugin({
+            //   uglifyOptions:{
+            //     compress: {
+            //       warnings: true
+            //     },
+            //     parallel: true,
+            //     sourceMap: true
+            //   }
+            // })
     ],
     optimization: {
       splitChunks: {
         cacheGroups: {
-          commons: {
-            test: /[\\/]node_modules[\\/](font-awesome|line-awesome)[\\/]/,
-            name: 'commons',
-            chunks: 'initial',
-          },
+          // commons: {
+          //   test: /[\\/]node_modules[\\/](font-awesome|line-awesome|react-interval)[\\/]/,
+          //   name: 'commons',
+          //   chunks: 'initial',
+          // },
           vendor:{
             test: /[\\/]node_modules[\\/]/,
             name: 'vendor',
