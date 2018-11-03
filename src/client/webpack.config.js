@@ -13,7 +13,7 @@ module.exports = (env) => {
   return {
     entry:{
       // whatwg:'whatwg-fetch', 
-      index: APP_DIR + '/index.jsx',
+      main: APP_DIR + '/index.jsx',
     },
     output: {
       path: BUILD_DIR,
@@ -45,28 +45,20 @@ module.exports = (env) => {
                   warnings: false
                 },
                 parallel: true,
-                sourceMap: false
+                sourceMap: true
               }
             })
     ],
     optimization: {
       splitChunks: {
         cacheGroups: {
-          commons: {
-            test: /[\\/]node_modules[\\/](font-awesome|line-awesome|react-materialize|materialize-css)[\\/]/,
-            name: 'commons',
-            chunks: 'initial',
-          },
           vendor:{
-            test: /[\\/]node_modules[\\/](react|react-dom|jquery|react-redux|pubsub-js|whatwg-fetch|highlight.js)[\\/]/,
+            test: /[\\/]node_modules[\\/]/,
             name: 'vendor',
             chunks: 'initial',
           }
         }
       },
-      // runtimeChunk:{
-      //   name:'manifest'
-      // }
     },
     devtool: 'source-map',
     devServer: {
