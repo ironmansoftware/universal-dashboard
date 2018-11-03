@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'src/public');
 var SRC_DIR = path.resolve(__dirname, 'src');
@@ -38,15 +37,6 @@ module.exports = (env) => {
             new HtmlWebpackPlugin({
               template: path.resolve(SRC_DIR, 'index.html'),
               chunksSortMode: 'none'
-            }),
-            new UglifyJSPlugin({
-              uglifyOptions:{
-                compress: {
-                  warnings: false
-                },
-                parallel: true,
-                sourceMap: true
-              }
             })
     ],
     optimization: {
