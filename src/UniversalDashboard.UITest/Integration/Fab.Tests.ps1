@@ -15,11 +15,17 @@ Describe "Fab" {
             New-UDElement -Id "Output" -Tag "div"
 
             New-UdFab -Id "main" -Icon "plus" -Size "large" -ButtonColor "red" -onClick {
-                Set-UDElement -Id "Output" -Content { "Main" }
+
+                Add-UDElement -ParentId 'Output' -Content {
+                    New-UDElement -Tag 'div' -Id 'MainOutput' -Content { 'Main '}
+                }
             } -Content {
                 New-UDFabButton -ButtonColor "green" -Icon "edit" -size "small"
                 New-UDFabButton -Id "btn" -ButtonColor "yellow" -Icon "trash" -size "large" -onClick {
-                    Set-UDElement -Id "Output" -Content { "Child" }
+
+                    Add-UDElement -ParentId 'Output' -Content {
+                        New-UDElement -Tag 'div' -Id 'ChildOutput' -Content { 'Child '}
+                    }
                 }
             }
         }
@@ -32,22 +38,18 @@ Describe "Fab" {
             $Element = Find-SeElement -Driver $Driver -Id 'main'
             $Element | Invoke-SeClick
 
-            Start-Sleep 2
-
-            $Element = Find-SeElement -Driver $Driver -Id 'Output'
+            $Element = Find-SeElement -Driver $Driver -Id 'MainOutput'
             $Element.Text | should be "main"
 
             $Element = Find-SeElement -Driver $Driver -Id 'btn'
             $Element | Invoke-SeClick
 
-            Start-Sleep 2
-
-            $Element = Find-SeElement -Driver $Driver -Id 'Output'
+            $Element = Find-SeElement -Driver $Driver -Id 'ChildOutput'
             $Element.Text | should be "Child"
         }
 
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
     }
 
 }

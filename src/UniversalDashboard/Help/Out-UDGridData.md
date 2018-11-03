@@ -13,7 +13,7 @@ Outputs data in a format that the jQuery DataTables grid will support.
 ## SYNTAX
 
 ```
-Out-UDGridData [[-Data] <Object>] [[-TotalItems] <Int32> [-Depth] <Int32>]]  [<CommonParameters>]
+Out-UDGridData [[-Data] <Object>] [[-TotalItems] <Int32>] [[-Depth] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,19 +47,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -TotalItems
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Depth
 The maximum object depth to serialize.
 
@@ -70,6 +57,19 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TotalItems
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

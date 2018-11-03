@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFrameworks>net471;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
     <ApplicationIcon />
     <StartupObject />
     <UserSecretsId>bb012ad5-1680-4d35-b8ce-9439c394fefa</UserSecretsId>

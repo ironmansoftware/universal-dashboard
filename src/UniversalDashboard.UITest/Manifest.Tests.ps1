@@ -11,7 +11,7 @@ Get-UDDashboard | Stop-UDDashboard
 Describe "Manifest" {
 
     It "should have correct version" {
-        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.0.1"
+        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.1.0"
     }
 
     It "should have correct exported commands" {
@@ -111,9 +111,11 @@ Describe "Manifest" {
         Get-Command 'New-UDTreeNode' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDFab' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDFabButton' -ErrorAction SilentlyContinue | Should not be $null
+        Get-Command 'New-UDImageCarousel' -ErrorAction SilentlyContinue | Should not be $null
+        Get-Command 'New-UDImageCarouselItem' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDEndpointInitialization' -ErrorAction SilentlyContinue | Should not be $null
         
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 97
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 99
     }
 
     It "should require .NET 4.7" -Skip  {

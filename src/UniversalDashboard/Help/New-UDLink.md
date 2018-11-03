@@ -13,7 +13,7 @@ Creates an HTML link.
 ## SYNTAX
 
 ```
-New-UDLink -Text <String> -Url <String> [-Icon <FontAwesomeIcons>] [-OpenInNewWindow]
+New-UDLink [-Text <String>] -Url <String> [-Icon <FontAwesomeIcons>] [-OpenInNewWindow]
  [-FontColor <DashboardColor>] [<CommonParameters>]
 ```
 
@@ -85,7 +85,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

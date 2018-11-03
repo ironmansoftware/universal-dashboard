@@ -1,4 +1,4 @@
-param([Switch]$Release)
+﻿param([Switch]$Release)
 
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
@@ -21,6 +21,28 @@ Describe "Card" {
             New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
             )
+
+            New-UDCard -Title "ÆØÅ" -Text "Test" -Id "nordic"
+
+            New-UDCard -Title "Test" -Id "EndpointCard" -Endpoint {
+                New-UDElement -Tag "div" -Content { "Endpoint Content" } 
+            }
+
+            New-UDCard -Title "Test" -Id "NoTextCard"
+
+            New-UDCard -Title "Test" -Text "My text`r`nNew Line" -Id "MultiLineCard"
+
+            New-UDCard -Title "Test" -Text "Small Text" -Id "Card-Small-Text" -TextSize Small
+
+            New-UDCard -Title "Test" -Text "Medium Text" -Id "Card-Medium-Text" -TextSize Medium
+
+            New-UDCard -Title "Test" -Text "Large Text" -Id "Card-Large-Text" -TextSize Large
+
+            New-UDCard -Title "Test" -Content {
+                New-UDElement -Tag "span" -Attributes @{id = "spanTest"} -Content {
+                    "This is some custom content"
+                }
+            }
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
@@ -36,123 +58,31 @@ Describe "Card" {
             Find-SeElement -LinkText "MY LINK" -Driver $Driver | Should not be $null
         }
 
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
-    }
-
-        
-    Context "No text card" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCard -Title "Test" -Id "Card" -Endpoint {
-                New-UDElement -Tag "div" -Content { "Endpoint Content" } 
-            }
+        It "should show nordic chars correctly" {
+            $Element = Find-SeElement -Id "nordic" -Driver $Driver
+            $Element.Text.Split("`r`n")[0] | should be "ÆØÅ"
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        Start-Sleep 2
-
-        It "should have body text" {
-            $Element = Find-SeElement -Id "Card" -Driver $Driver
+        It "should load content from endpoint" {
+            $Element = Find-SeElement -Id "EndpointCard" -Driver $Driver
             ($Element.Text).Contains("Endpoint Content") | should be $true
         }
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
-    }
-    
-    Context "No text card" {
-        $tempDir = [System.IO.Path]::GetTempPath()
-        $tempFile = Join-Path $tempDir "output.txt"
-
-        if ((Test-path $tempFile)) {
-            Remove-Item $tempFile -Force
-        }
-
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCard -Title "Test" -Id "Card"
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
         It "should have title text" {
-            $Element = Find-SeElement -Id "Card" -Driver $Driver
+            $Element = Find-SeElement -Id "NoTextCard" -Driver $Driver
             $Element.Text | should be "Test"
         }
 
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
-    }
-
-    Context "Multi-line Card" {
-        $tempDir = [System.IO.Path]::GetTempPath()
-        $tempFile = Join-Path $tempDir "output.txt"
-
-        if ((Test-path $tempFile)) {
-            Remove-Item $tempFile -Force
-        }
-
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCard -Title "Test" -Text "My text`r`nNew Line" -Id "Card"
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
         It "should support new line in card" {
-            $Element = Find-SeElement -Id "Card" -Driver $Driver
+            $Element = Find-SeElement -Id "MultiLineCard" -Driver $Driver
             $Br = Find-SeElement -Tag "br" -Element $Element
             $Br | should not be $null
         }
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
-    }
 
-    Context "Card With Small Text" {
-        $tempDir = [System.IO.Path]::GetTempPath()
-        $tempFile = Join-Path $tempDir "output.txt"
-
-        if ((Test-path $tempFile)) {
-            Remove-Item $tempFile -Force
-        }
-
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCard -Title "Test" -Text "Small Text" -Id "Card-Small-Text" -TextSize Small
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        $Element = Find-SeElement -Id "Card-Small-Text" -Driver $Driver
         It "should have text of Small Text" {
+            $Element = Find-SeElement -Id "Card-Small-Text" -Driver $Driver
             ($Element.Text -split "`r`n")[1] | should be 'Small Text'
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
-    }
-
-    Context "Card With Medium Text" {
-        $tempDir = [System.IO.Path]::GetTempPath()
-        $tempFile = Join-Path $tempDir "output.txt"
-
-        if ((Test-path $tempFile)) {
-            Remove-Item $tempFile -Force
-        }
-
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCard -Title "Test" -Text "Medium Text" -Id "Card-Medium-Text" -TextSize Medium
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         $Element = Find-SeElement -Id "Card-Medium-Text" -Driver $Driver
         $CardContent = Find-SeElement -Element $Element -TagName 'h5'
@@ -164,26 +94,6 @@ Describe "Card" {
         It "should have text of Medium Text" {
             $CardContent.Text | should be 'Medium Text'
         }
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
-    }
-
-    Context "Card With Large Text" {
-        $tempDir = [System.IO.Path]::GetTempPath()
-        $tempFile = Join-Path $tempDir "output.txt"
-
-        if ((Test-path $tempFile)) {
-            Remove-Item $tempFile -Force
-        }
-
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCard -Title "Test" -Text "Large Text" -Id "Card-Large-Text" -TextSize Large
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
 
         $Element = Find-SeElement -Id "Card-Large-Text" -Driver $Driver
         $CardContent = Find-SeElement -Element $Element -TagName 'h3'
@@ -196,41 +106,6 @@ Describe "Card" {
             $CardContent.Text | should be 'Large Text'
         }
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
-    }
-    
-
-    Context "Custom Card" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCard -Title "Test" -Text "My text`r`nNew Line" -Id "Card" -TextAlignment Center -TextSize Medium -Watermark user
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        It "should support new line in card" {
-        
-        }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
-    }
-
-    Context "Card with content" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCard -Title "Test" -Content {
-                New-UDElement -Tag "span" -Attributes @{id = "spanTest"} -Content {
-                    "This is some custom content"
-                }
-            }
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
         It "should have custom content" {
             $Element = Find-SeElement -Id "spanTest" -Driver $Driver
             $Element.Text | should be "This is some custom content"
@@ -239,5 +114,4 @@ Describe "Card" {
        Stop-SeDriver $Driver
        Stop-UDDashboard -Server $Server 
     }
-
 }

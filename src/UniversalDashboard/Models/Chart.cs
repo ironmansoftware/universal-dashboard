@@ -14,6 +14,10 @@ namespace UniversalDashboard.Models
 		public string Title { get; set; }
 		[JsonProperty("options")]
 		public Hashtable Options { get; set; }
+		[JsonProperty("width")]
+		public string Width { get; set; }
+		[JsonProperty("height")]
+		public string Height { get; set; }
 		[JsonProperty("live")]
 		public bool Live { get; set; }
 		[JsonProperty("dataPointRetention")]

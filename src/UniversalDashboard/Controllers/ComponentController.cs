@@ -115,6 +115,7 @@ namespace UniversalDashboard.Controllers
 
         [Route("/component/element/{id}")]
         [Authorize]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Element(string id)
         {
             var variables = new Dictionary<string, object>();
@@ -178,7 +179,8 @@ namespace UniversalDashboard.Controllers
 
 		[Route("/component/datatable/{id}")]
 		[Authorize]
-		public IActionResult DataTable(string id, int draw, int start, int length, string sortColumn, bool sortAscending, string filterText)
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public IActionResult DataTable(string id, int draw, int start, int length, string sortColumn, bool sortAscending, string filterText)
 		{
 			Log.Debug($"Grid - id = {id}, skip = {start}, take = {length}, sortColumn = {sortColumn}, sortAscending = {sortAscending}, filterText = {filterText}");
 

@@ -25,6 +25,8 @@ namespace UniversalDashboard.Controllers
 
 				return StatusCode(statusCode);
 			}
+
+            Response.StatusCode = 200;
 			return PhysicalFile(filePath, "text/html");
 		}
 	}

@@ -10,6 +10,26 @@ var APP_DIR = path.resolve(__dirname, 'src/app');
 module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
 
+  var plugins = [
+    new HtmlWebpackPlugin({
+      template: path.resolve(SRC_DIR, 'index.html'),
+      chunksSortMode: 'dependency'
+    })
+  ];
+
+  if (!isDev) {
+    plugins.push(
+      new UglifyJSPlugin({
+        uglifyOptions:{
+          compress: {
+            warnings: false
+          },
+          sourceMap: true
+        }
+      })
+    )
+  }
+
   return {
     entry: ["babel-polyfill", 'whatwg-fetch', APP_DIR + '/index.jsx'],
     output: {
@@ -19,10 +39,10 @@ module.exports = (env) => {
       publicPath: "/"
     },
     module : {
-      loaders : [
+      rules : [
         { test: /\.css$/, loader: "style-loader!css-loader" },
         { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'},
-        { test: /\.(eot|ttf|woff2?|otf|svg)$/, loaders: ['file-loader'] }
+        { test: /\.(eot|ttf|woff2?|otf|svg)$/, loader:'file-loader' }
       ]
     },
     resolve: {
@@ -31,18 +51,7 @@ module.exports = (env) => {
             },
       extensions: ['.json', '.js', '.jsx']
     },
-    plugins: [
-      new HtmlWebpackPlugin({
-        template: path.resolve(SRC_DIR, 'index.html'),
-        chunksSortMode: 'dependency'
-      })
-    ].concat(!isDev?[    new UglifyJSPlugin({
-        compress: {
-          warnings: false
-        },
-        sourceMap: true
-      })]:[])
-      ,
+    plugins: plugins,
     devtool: 'source-map',
     devServer: {
       historyApiFallback: true,
@@ -51,7 +60,7 @@ module.exports = (env) => {
       compress:true,
       publicPath: '/',
       stats: "minimal"
-    },
+    }
   };
 }
 

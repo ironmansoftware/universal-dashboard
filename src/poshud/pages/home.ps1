@@ -55,7 +55,7 @@ New-UDPage -Name "Home" -Icon home -Content {
         New-UDColumn -Size 4 {
             New-UDRow {
                 New-UDColumn -Size 12 {
-                    New-UDCard @Colors -Title "Written in PowerShell" -Text "Develop both the front-end interface and backend endpoints in the same PowerShell script. Host dashboards right from the console or in Azure\IIS."  -Links @(New-UDLink -Text "View this dashboard's PowerShell Script" -Url "https://github.com/ironmansoftware/poshud")
+                    New-UDCard @Colors -Title "Written in PowerShell" -Text "Develop both the front-end interface and backend endpoints in the same PowerShell script. Host dashboards right from the console or in Azure\IIS."  -Links @(New-UDLink -Text "View this dashboard's PowerShell Script" -Url "https://github.com/ironmansoftware/universal-dashboard/tree/master/src/poshud")
                 }
             }
             New-UDRow {

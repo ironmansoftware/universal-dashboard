@@ -160,11 +160,11 @@ class UDElementContent extends React.Component {
         for(var i = 0; i < this.state.events.length; i++) {
             if (this.state.events[i].event === 'onChange') {
 
-                var event = this.state.events[i].event;
+                var event = this.state.events[i];
 
                 PubSub.publish('element-event', {
                     type: "clientEvent",
-                    componentId: event.id,
+                    eventId: event.id,
                     eventName: 'onChange',
                     eventData: val
                 });
@@ -177,7 +177,7 @@ class UDElementContent extends React.Component {
             for(var i = 0; i < this.state.events.length; i++) {
                 PubSub.publish('element-event', {
                     type: "unregisterEvent",
-                    eventId: this.state.events[i].event.id
+                    eventId: this.state.events[i].id
                 });
             }
         }
@@ -217,13 +217,19 @@ class UDElementContent extends React.Component {
     }
 
     onUserEvent(event, e) {
-        var eventName = event.event;
+        var eventName = null;
         var val = null;
         if (this.state.tag === 'select') {
             val = this.refs.element[this.refs.element.selectedIndex].value
+            for(var i = 0; i < this.state.events.length; i++) {
+                if (this.state.events[i].event === 'onChange') {
+                    event = this.state.events[i];
+                }
+            }
             eventName = 'onChange'
         }
         else {
+            eventName = event.event;
             val = e.target.value;
             if (val != null && val.checked != null) {
                 val = e.target.checked;
