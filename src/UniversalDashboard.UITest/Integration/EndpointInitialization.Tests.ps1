@@ -44,7 +44,9 @@ Describe "EndpointInitialization" {
             }
 
             New-UDElement -tag "div" -Id "psmodulepath" -Endpoint {
-                (Get-PnpDevice)[0].CreationClassName
+                $pnp = Get-PnpDevice | select -First 1
+                $pnp.CreationClassName
+              
             }
 
         } -EndpointInitialization $Initialization
