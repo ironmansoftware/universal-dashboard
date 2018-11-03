@@ -48,7 +48,7 @@ Describe "Dashboard" {
         }
 
         It "should load javascript" {
-            (Find-SeElement -TagName "script" -Driver $Driver ).GetAttribute("src") | should -BeLike "*bundle.js" 
+            (Find-SeElement -TagName "script" -Driver $Driver ).GetAttribute("src") | should BeLike "*bundle.js" 
         }
 
         Stop-SeDriver $Driver
