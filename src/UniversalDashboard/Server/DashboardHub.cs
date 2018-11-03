@@ -225,20 +225,21 @@ namespace UniversalDashboard
                 {
                     try
                     {
+                        
                         _executionService.ExecuteEndpoint(executionContext, endpoint);
                     }
                     catch (Exception ex)
                     {
                         _logger.Error("Failed to execute action. " + ex.Message);
+                        throw;
                     }
                 });
             }
             catch (Exception ex)
             {
                 _logger.Warn($"Failed to execute endpoint. " + ex.Message);
+                throw;
             }
-
-            return Task.CompletedTask;
         }
     }
 }

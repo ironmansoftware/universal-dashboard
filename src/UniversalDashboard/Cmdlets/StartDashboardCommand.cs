@@ -58,12 +58,7 @@ namespace UniversalDashboard.Cmdlets
         protected override void EndProcessing()
 	    {
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
-
-#if DEBUG
-            var tempPath = Path.Combine(assemblyBasePath, Constants.ModuleManifest);
-#else 
-			var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
-#endif
+            var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
 
             // Cache dashboard
             if (Content == null && Dashboard == null && FilePath == null && File.Exists(Constants.CachedDashboardPath)) {

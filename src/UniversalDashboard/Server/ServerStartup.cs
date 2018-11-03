@@ -42,7 +42,10 @@ namespace UniversalDashboard
             var dashboardService = services.FirstOrDefault(m => m.ServiceType == typeof(IDashboardService)).ImplementationInstance as IDashboardService;
 
             services.AddResponseCompression();
-			services.AddSignalR();
+			services.AddSignalR(hubOptions =>
+            {
+                hubOptions.EnableDetailedErrors = true;
+            });
             services.AddTransient<StateRequestService>();
             services.AddSingleton<IHostedService, ScheduledEndpointManager>();
             services.AddTransient<IExecutionService, ExecutionService>();

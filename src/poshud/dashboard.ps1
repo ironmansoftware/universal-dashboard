@@ -14,7 +14,7 @@ $ScriptColors = @{
 }
 
 $NavBarLinks = @((New-UDLink -Text "Buy Universal Dashboard" -Url "https://ironmansoftware.com/universal-dashboard/" -Icon heart_o),
-                 (New-UDLink -Text "Documentation" -Url "https://www.gitbook.com/book/adamdriscoll/powershell-universal-dashboard/details" -Icon book))
+                 (New-UDLink -Text "Documentation" -Url "https://docs.universaldashboard.io" -Icon book))
 
 function New-UDElementExample {
     param(

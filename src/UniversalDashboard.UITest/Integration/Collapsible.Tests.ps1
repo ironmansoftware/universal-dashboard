@@ -79,8 +79,8 @@ Describe "Collapsible" {
         }
 
         It "should have colors for collapsible item" {
-            Find-SeElement -Id "Collapsible2-Second-header" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(255, 255, 255); color: rgb(0, 0, 0);" 
-            Find-SeElement -Id "Collapsible2-Second" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(31, 77, 255); color: rgb(255, 255, 255);" 
+            Find-SeElement -Id "Collapsible2-Second-header" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(76, 255, 110); color: rgb(152, 255, 63);" 
+            Find-SeElement -Id "Collapsible2-Second" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(76, 255, 110); color: rgb(152, 255, 63);" 
         }
 
         It "should change icon on click" {
