@@ -28,11 +28,9 @@ export default class UdImageCarousel extends React.Component {
     onCarouselButtonClick(props){
         let currentButtonParentId = props.id
         let activeSlideHref = $(`#${currentButtonParentId} .carousel-item.active`)[0].attributes.href.value
-        console.log(activeSlideHref)
         this.setState({
             slideUrlLink:activeSlideHref
         })
-        console.log(props)
     }
 
     render(){

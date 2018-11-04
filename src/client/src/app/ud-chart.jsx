@@ -1,12 +1,13 @@
-import React from 'react';
+import React,{Suspense} from 'react';
 import {Row, Col} from 'react-materialize';
 import {Doughnut, Bar, Line, Polar, Radar, Pie} from 'react-chartjs-2';
 import {fetchGet} from './services/fetch-service.jsx';
 import ReactInterval from 'react-interval';
-import ErrorCard from './error-card.jsx'
-import UdLink from './ud-link.jsx';
 import UdInputField from './ud-input-field.jsx';
 import PubSub from 'pubsub-js';
+
+const UdLinkComponent = React.lazy(() => import('./ud-link.jsx' /* webpackChunkName: "ud-link" */))
+const UdErrorCardComponent = React.lazy(() => import('./error-card.jsx' /* webpackChunkName: "ud-error-card" */))
 
 export default class UdChart extends React.Component {
     constructor(props) {
@@ -106,7 +107,11 @@ export default class UdChart extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return [<ErrorCard message={this.state.errorMessage} key={this.props.id} id={this.props.id} title={this.props.title}/>, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>]
+            return [
+                <Suspense fallback={<div>Loading...</div>}>
+                    <UdErrorCardComponent message={this.state.errorMessage} key={this.props.id} id={this.props.id} title={this.props.title}/>, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
+                </Suspense>
+                ]
         }
 
         var fields = null;
@@ -145,7 +150,12 @@ export default class UdChart extends React.Component {
             }
         }
         else if(this.props.width === null && this.props.height !== null){
-            return [<ErrorCard message={'Width property is missing'} key={this.props.id} id={this.props.id} title={this.props.title}/>, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>]
+            return [
+                <Suspense fallback={<div>Loading...</div>}>
+                    <UdErrorCardComponent message={'Width property is missing'} key={this.props.id} id={this.props.id} title={this.props.title}/>, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
+                </Suspense>
+            ]
+
         }
         else{
             var cardStyle = {
@@ -187,8 +197,10 @@ export default class UdChart extends React.Component {
         var actions = null 
         if (this.props.links) {
             var links = this.props.links.map(function(x, i) {
-                return <UdLink {...x} key={x.url} />
-            });
+                return <Suspense fallback={<div>Loading...</div>}>
+                    <UdLinkComponent {...x} key={x.url} />
+                </Suspense>
+            })
             actions = <div className="card-action">
                 {links}
             </div>

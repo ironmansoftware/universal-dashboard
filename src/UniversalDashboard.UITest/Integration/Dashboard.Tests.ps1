@@ -48,7 +48,7 @@ Describe "Dashboard" {
         }
 
         It "should load javascript" {
-            (Find-SeElement -TagName "script" -Driver $Driver ).GetAttribute("src") | should be "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+            (Find-SeElement -TagName "script" -Driver $Driver ).GetAttribute("src") | should be 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js'
         }
 
         Stop-SeDriver $Driver

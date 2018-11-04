@@ -62,7 +62,8 @@ Describe "Font Icons" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         it "should have font-family of LineAwesome" {
-            ((Find-SeElement -Driver $driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:LineAwesome" | Should be $true
+            $font = (Find-SeElement -Driver $driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:LineAwesome" 
+            $font.count | Should be 1
         }
 
         Stop-SeDriver $Driver

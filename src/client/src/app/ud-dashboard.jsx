@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Suspense} from 'react';
 
 import {
     Route,
@@ -8,14 +8,15 @@ import {getApiPath} from 'config';
 import UdPage from './ud-page.jsx';
 import UdNavbar from './ud-navbar.jsx';
 import UdFooter from './ud-footer.jsx';
-import Loading from './ud-loading.jsx';
-import PageCycler from './page-cycler.jsx';
-import ErrorCard from './error-card.jsx';
 import {fetchGet} from './services/fetch-service.jsx';
 import PubSub from 'pubsub-js';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
-import UdModal from './ud-modal.jsx';
-import toaster from './services/toaster';
+
+const UdLoadingComponent = React.lazy(() => import('./ud-loading.jsx' /* webpackChunkName: "ud-loading" */))
+const UdPageCyclerComponent = React.lazy(() => import('./page-cycler.jsx' /* webpackChunkName: "ud-page-cycler" */))
+const UdModalComponent = React.lazy(() => import('./ud-modal.jsx' /* webpackChunkName: "ud-modal" */))
+const UdToastComponent = React.lazy(() => import('./services/toaster' /* webpackChunkName: "ud-toaster" */))
+const UdErrorCardComponent = React.lazy(() => import('./error-card.jsx' /* webpackChunkName: "ud-error-card" */))
 
 
 export default class UdDashboard extends React.Component {
@@ -54,11 +55,11 @@ export default class UdDashboard extends React.Component {
         });
 
         connection.on('showToast', (model) => {
-            toaster.show(model);
+            UdToastComponent.show(model);
         });
 
         connection.on('hideToast', (id) => {
-            toaster.hide(id);
+            UdToastComponent.hide(id);
         });
 
         connection.on('requestState', (componentId, requestId) => {
@@ -185,9 +186,9 @@ export default class UdDashboard extends React.Component {
             document.title = dashboard.title;
 
             if(dashboard.fontIconStyle == 'FontAwesome'){
-                require("font-awesome/css/font-awesome.min.css");
+                import("font-awesome/css/font-awesome.min.css" /* webpackChunkName: "font-awesome" */);
             }else {
-                require("line-awesome/css/line-awesome.min.css");
+                import("line-awesome/css/line-awesome.min.css" /* webpackChunkName: "line-awesome" */);
             }
             
             if (dashboard.stylesheets)
@@ -262,7 +263,9 @@ export default class UdDashboard extends React.Component {
             return <Redirect to={defaultHomePage.url}/>
         }
         else if (defaultHomePage.name == null) {
-            return <ErrorCard message="Your first page needs to be a static page or a dynamic page without a variable in the URL." />
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdErrorCardComponent message="Your first page needs to be a static page or a dynamic page without a variable in the URL." />
+                    </Suspense>
         }
         else {
             return <Redirect to={`/${defaultHomePage.name.replace(/ /g,"-")}`}/>
@@ -271,11 +274,15 @@ export default class UdDashboard extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return <ErrorCard message={this.state.error.message} location={this.state.error.stackTrace} />
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdErrorCardComponent message={this.state.error.message} location={this.state.error.stackTrace} />
+                    </Suspense>
         }
 
         if (this.state.loading) {
-            return <Loading />
+            return <Suspense fallback={<div>Loading...</div>}>
+                        <UdLoadingComponent />
+                    </Suspense>
         }
 
         var dynamicPages = this.state.dashboard.pages.map(function(x) {
@@ -311,10 +318,14 @@ export default class UdDashboard extends React.Component {
                     {dynamicPages}
                     <Route exact path="/" render={this.redirectToHomePage.bind(this)}/>
                 </main>,
-                <UdModal />,
+                <Suspense fallback={<div>Loading...</div>}>
+                    <UdModalComponent />
+                </Suspense>,
                 <UdFooter backgroundColor={this.state.dashboard.navBarColor} fontColor={this.state.dashboard.navBarFontColor} footer={this.state.dashboard.footer} demo={this.state.dashboard.demo} />,
                 <Route path="/" render={function (x) {
-                    return <PageCycler history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />;
+                    return <Suspense fallback={<div>Loading...</div>}>
+                        <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />;
+                    </Suspense>
                     }.bind(this)}/>
                 ]
     }

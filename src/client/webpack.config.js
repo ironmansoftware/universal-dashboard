@@ -1,7 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 
 var BUILD_DIR = path.resolve(__dirname, 'src/public');
 var SRC_DIR = path.resolve(__dirname, 'src');
@@ -10,28 +9,11 @@ var APP_DIR = path.resolve(__dirname, 'src/app');
 module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
 
-  var plugins = [
-    new HtmlWebpackPlugin({
-      template: path.resolve(SRC_DIR, 'index.html'),
-      chunksSortMode: 'dependency'
-    })
-  ];
-
-  if (!isDev) {
-    plugins.push(
-      new UglifyJSPlugin({
-        uglifyOptions:{
-          compress: {
-            warnings: false
-          },
-          sourceMap: true
-        }
-      })
-    )
-  }
-
   return {
-    entry: ["babel-polyfill", 'whatwg-fetch', APP_DIR + '/index.jsx'],
+    entry:{
+      // whatwg:'whatwg-fetch', 
+      main: APP_DIR + '/index.jsx',
+    },
     output: {
       path: BUILD_DIR,
       filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
@@ -51,7 +33,23 @@ module.exports = (env) => {
             },
       extensions: ['.json', '.js', '.jsx']
     },
-    plugins: plugins,
+    plugins: [
+            new HtmlWebpackPlugin({
+              template: path.resolve(SRC_DIR, 'index.html'),
+              chunksSortMode: 'none'
+            })
+    ],
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendor:{
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendor',
+            chunks: 'initial',
+          }
+        }
+      },
+    },
     devtool: 'source-map',
     devServer: {
       historyApiFallback: true,
@@ -60,7 +58,7 @@ module.exports = (env) => {
       compress:true,
       publicPath: '/',
       stats: "minimal"
-    }
+    },
   };
 }
 

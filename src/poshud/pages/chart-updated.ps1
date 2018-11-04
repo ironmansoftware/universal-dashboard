@@ -1,4 +1,4 @@
-New-UDPage -Name 'Chart.v2' -Content {
+New-UDPage -Name 'Chart.v2' -Icon barcode -Content {
 
     # Main Chart full width custom height.
     new-udrow -Columns {
@@ -69,7 +69,7 @@ New-UDPage -Name 'Chart.v2' -Content {
         }
         New-UDColumn -Content {
             New-UDMonitor -Title "Downloads per second" -Type Line  -Endpoint {
-                Get-Random -Minimum 0 -Maximum 10 | Out-UDMonitorData
+                Get-Random -Minimum 0 -Maximum 10 | Out-UDMonitorData 
             } -DataPointHistory 20 -RefreshInterval 5 -Width 50vw -Height 300px -ChartBackgroundColor "#0277bd" -ChartBorderColor "#03a9f4" -BackgroundColor "#252525" -Links @(
                 New-UDLink -Icon github_alt -Url 'https://github.com' 
             ) -FontColor '#ffffff'

@@ -1,14 +1,15 @@
-import React from 'react';
-import UdIcon from './ud-icon.jsx';
-import UdLink from './ud-link.jsx';
-var hljs = require("highlight.js")
+import React,{Suspense} from 'react';
 import TextSize from './basics/text-size.jsx';
 import renderComponent from './services/render-service.jsx';
 import PubSub from 'pubsub-js';
+import hljs from 'highlight.js';
 
+const UdLinkComponent = React.lazy(() => import('./ud-link.jsx' /* webpackChunkName: "ud-link" */))
+const UdIconComponent = React.lazy(() => import('./ud-icon.jsx' /* webpackChunkName: "ud-icon" */))
+// const hljs = React.lazy(() => import('highlight.js' /* webpackChunkName: "highlight.js" */))
 export default class UdCard extends React.Component {
     componentDidMount() {
-        hljs.initHighlightingOnLoad();
+        hljs.initHighlightingOnLoad()
     }
 
     componentWillMount() {
@@ -26,8 +27,10 @@ export default class UdCard extends React.Component {
         var actions = null 
         if (this.props.links) {
             var links = this.props.links.map(function(x, i) {
-                return <UdLink {...x} key={x.url} />
-            });
+                return <Suspense fallback={<div>Loading...</div>}>
+                    <UdLinkComponent {...x} key={x.url} />
+                </Suspense>
+            })
             actions = <div className="card-action">
                 {links}
             </div>
@@ -35,6 +38,9 @@ export default class UdCard extends React.Component {
 
         var highlight = null;
         if (this.props.language) {
+            // <Suspense fallback={<div>Loading...</div>}>
+            //     {hljs.initHighlightingOnLoad()}
+            // </Suspense>
             highlight = <pre className={this.props.language}>{this.props.text}</pre>
         } else if (this.props.text != null) {
             highlight = this.props.text.split('\r\n').map(function(line) {
@@ -56,7 +62,9 @@ export default class UdCard extends React.Component {
                 em = "4em";
             }
 
-            icon = <UdIcon icon={this.props.icon} style={{opacity: 0.05, float:'left', marginLeft: '70px', fontSize: em, position:'absolute', top: '20px', color: this.props.fontColor}}/>
+            icon = <Suspense fallback={<div>Loading...</div>}>
+                        <UdIconComponent icon={this.props.icon} style={{opacity: 0.05, float:'left', marginLeft: '70px', fontSize: em, position:'absolute', top: '20px', color: this.props.fontColor}}/>
+                </Suspense>
         }
 
         highlight = <div className={`${this.props.textAlignment}-align`}>
