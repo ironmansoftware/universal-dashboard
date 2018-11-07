@@ -289,7 +289,7 @@ class UDElementContent extends React.Component {
             attributes.id = this.props.id;
         }
 
-        if (this.state.events != null) {
+        if (this.state.events != null && this.state.events.map) {
             this.state.events.map(function(event) {
                 attributes[event.event] = function(e) {
                     this.onUserEvent(event, e);

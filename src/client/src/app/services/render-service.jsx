@@ -38,12 +38,12 @@ export default function renderComponent(component, history) {
     switch(component.type) {
 
         case "card":  
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                 <UdCardComponent {...component} key={component.id}/>
             </Suspense>
 
         case "chart":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                 <UdChartComponent {...component} key={component.id}/>
             </Suspense>
             
@@ -51,32 +51,32 @@ export default function renderComponent(component, history) {
             return <UdColumn {...component} key={component.id} history={history} />
 
         case "counter":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                         <UdCounterComponent {...component} key={component.id}/>
                     </Suspense>
 
         case "datetime":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                         <UdDateTimeComponent {...component} key={component.id}/>
                     </Suspense>
 
         case "element":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                         <UdElementComponent {...component} key={component.id} history={history}/>
                     </Suspense>
 
         case "error":
-            return  <Suspense fallback={<div>Loading...</div>}>
+            return  <Suspense fallback={<div></div>}>
                 <UdErrorCardComponent {...component} key={component.id}/>
             </Suspense>
 
         case "link":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                         <UdLinkComponent {...component} key={component.id}/>
                     </Suspense>
 
         case "grid":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                         <UdGridComponent {...component} key={component.id}/>
                     </Suspense>
 
@@ -86,12 +86,12 @@ export default function renderComponent(component, history) {
                     </Suspense>
 
         case "input":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                 <UdInputComponent {...component} key={component.id} history={history}/>
             </Suspense>
 
         case "Monitor":
-            return  <Suspense fallback={<div>Loading...</div>}>
+            return  <Suspense fallback={<div></div>}>
                 <UdMonitorComponent {...component} key={component.id}/>
             </Suspense>
 
@@ -102,12 +102,12 @@ export default function renderComponent(component, history) {
             return <UdRow {...component} key={component.id} history={history}/>
 
         case "treeview":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                 <UdTreeViewComponent {...component} key={component.id} history={history}/>
             </Suspense>
             
         case "imageCarousel":
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                 <UdImageCarouselComponent {...component} key={component.id}/>
             </Suspense>
     }

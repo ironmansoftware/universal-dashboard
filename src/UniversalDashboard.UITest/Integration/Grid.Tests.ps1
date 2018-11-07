@@ -21,6 +21,14 @@ Describe "Grid" {
 
                 "Has" | Out-UDGridData 
             } 
+
+            New-UDGrid -Title "Service Grid with filter" -Id "Grid3" -Headers @("Name", "DisplayName", "Status") -Properties @("Name", "DisplayName", "Status") -Endpoint {
+                Get-Service bits  | Select Name, DisplayName,
+                @{
+                    Name       = "Status"
+                    Expression = {New-UDElement -Tag div -Attributes @{ className = "red white-text" } -Content { $_.status.tostring() }}
+                } | Out-UDGridData
+            } 
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
@@ -35,6 +43,11 @@ Describe "Grid" {
         It "should not shown an error with invalid output" {
             $Element = Find-SeElement -Id "Grid2" -Driver $Driver
             $Element.Text.Contains("No results found") | Should be $true
+        }
+
+        It "should be able to nest new-udelement in grid" {
+            $Element = Find-SeElement -Id "Grid3" -Driver $Driver
+            $Element.Text.Contains("Stopped") | Should be $true
         }
 
         Stop-SeDriver $Driver
