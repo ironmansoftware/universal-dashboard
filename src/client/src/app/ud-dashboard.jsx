@@ -263,7 +263,7 @@ export default class UdDashboard extends React.Component {
             return <Redirect to={defaultHomePage.url}/>
         }
         else if (defaultHomePage.name == null) {
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                         <UdErrorCardComponent message="Your first page needs to be a static page or a dynamic page without a variable in the URL." />
                     </Suspense>
         }
@@ -274,13 +274,13 @@ export default class UdDashboard extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                         <UdErrorCardComponent message={this.state.error.message} location={this.state.error.stackTrace} />
                     </Suspense>
         }
 
         if (this.state.loading) {
-            return <Suspense fallback={<div>Loading...</div>}>
+            return <Suspense fallback={<div></div>}>
                         <UdLoadingComponent />
                     </Suspense>
         }
@@ -318,12 +318,12 @@ export default class UdDashboard extends React.Component {
                     {dynamicPages}
                     <Route exact path="/" render={this.redirectToHomePage.bind(this)}/>
                 </main>,
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<div></div>}>
                     <UdModalComponent />
                 </Suspense>,
                 <UdFooter backgroundColor={this.state.dashboard.navBarColor} fontColor={this.state.dashboard.navBarFontColor} footer={this.state.dashboard.footer} demo={this.state.dashboard.demo} />,
                 <Route path="/" render={function (x) {
-                    return <Suspense fallback={<div>Loading...</div>}>
+                    return <Suspense fallback={<div></div>}>
                         <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />;
                     </Suspense>
                     }.bind(this)}/>
