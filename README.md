@@ -96,5 +96,6 @@ When building your dashboard in debug mode, make sure to use the port 10001. The
 - [Licensing](https://ironmansoftware.com/universal-dashboard)
 - [Live Preview](https://poshud.com/)
 - [YouTube Videos](https://www.youtube.com/playlist?list=PL-0mHH7DlSiSZ4ozleNTUSXNkF6dlySVz)
+- [Forums](https://forums.universaldashboard.io/)
 
 
