@@ -50,7 +50,7 @@ Describe "Variable Scoping" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
 
         It "should return global variable" {
-            (Invoke-RestMethod http://localhost:10001/component/element/element) | should be "Test"
+            (Invoke-RestMethod http://localhost:10001/api/internal/component/element/element) | should be "Test"
         }
 
         Stop-UDDashboard $Server
@@ -69,7 +69,7 @@ Describe "Variable Scoping" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
 
         It "should return local variable" {
-            (Invoke-RestMethod http://localhost:10001/component/element/element) | should be "localVariable"
+            (Invoke-RestMethod http://localhost:10001/api/internal/component/element/element) | should be "localVariable"
         }
 
         Stop-UDDashboard $Server
@@ -89,7 +89,7 @@ Describe "Variable Scoping" {
 
         It "should return loop variable" {
             1..5 | ForEach-Object {
-                (Invoke-RestMethod "http://localhost:10001/component/element/element$_") | should be $_
+                (Invoke-RestMethod "http://localhost:10001/api/internal/component/element/element$_") | should be $_
             }
             
         }
