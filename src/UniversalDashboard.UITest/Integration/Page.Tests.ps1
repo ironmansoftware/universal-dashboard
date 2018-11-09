@@ -80,8 +80,16 @@ Describe "New-UDPage" {
         $Page3 = New-UDPage -Name "Test" -Content {
             New-UDCard -Text "TestPage" -Id "Test-Page"
         }
+
+        $Page4 = New-UDPage -Url "/level/:test" -Endpoint {
+            New-UDCard -Text "Level 1" -Id "Level1"
+        }
+
+        $Page5 = New-UDPage -Url "/level/level2/:test" -Endpoint {
+            New-UDCard -Text "Level 2" -Id "Level2"
+        }
         
-        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3)
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3, $Page5, $Page4)
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
@@ -117,6 +125,18 @@ Describe "New-UDPage" {
             Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
             Start-Sleep 3
             (Find-SeElement -Id 'home-page' -Driver $Driver).text | Should not be $TestPageText
+        }
+
+        it "should have level 1 but not level 2" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/level/1"
+            Find-SeElement -Id 'Level1' -Driver $Driver | Should not be $null
+            Find-SeElement -Id 'Level2' -Driver $Driver | Should be $null
+        }
+
+        it "should have level 2 but not level 1" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/level/level2/1"
+            Find-SeElement -Id 'Level1' -Driver $Driver | Should be $null
+            Find-SeElement -Id 'Level2' -Driver $Driver | Should not be $null
         }
 
         Stop-SeDriver $Driver

@@ -2,7 +2,8 @@ import React,{Suspense} from 'react';
 
 import {
     Route,
-    Redirect
+    Redirect,
+    Switch
 } from 'react-router-dom'
 import {getApiPath} from 'config';
 import UdPage from './ud-page.jsx';
@@ -289,7 +290,7 @@ export default class UdDashboard extends React.Component {
             if (x.url === null) return null;
 
             return <Route path={x.url} render={props => (
-                <UdPage id={x.id} dynamic={true} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval}/>
+                <UdPage id={x.id} dynamic={true} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
             )} />
         })
 
@@ -297,7 +298,7 @@ export default class UdDashboard extends React.Component {
             if (x.url !== null) return null;
 
             return <Route path={'/' + x.name.replace(/ /g, "-")} render={props => (
-                <UdPage dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval}/>
+                <UdPage dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
             )} />
         })
 
@@ -314,9 +315,11 @@ export default class UdDashboard extends React.Component {
                         authenticated={this.state.authenticated}
                         />,
                 <main style={{background: this.state.dashboard.backgroundColor, color: this.state.dashboard.fontColor}}>
-                    {staticPages}
-                    {dynamicPages}
-                    <Route exact path="/" render={this.redirectToHomePage.bind(this)}/>
+                    <Switch>
+                        {staticPages}
+                        {dynamicPages}
+                        <Route exact path="/" render={this.redirectToHomePage.bind(this)} />
+                    </Switch>
                 </main>,
                 <Suspense fallback={<div></div>}>
                     <UdModalComponent />
