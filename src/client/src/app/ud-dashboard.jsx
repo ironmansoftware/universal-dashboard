@@ -177,9 +177,9 @@ export default class UdDashboard extends React.Component {
     }
 
     loadData() {
-        this.loadStylesheet(getApiPath() + "/dashboard/theme");
+        this.loadStylesheet(getApiPath() + "/api/internal/dashboard/theme");
         
-        fetchGet("/dashboard", function(json) {
+        fetchGet("/api/internal/dashboard", function(json) {
 
             var dashboard = json.dashboard;
 

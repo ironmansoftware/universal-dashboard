@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using UniversalDashboard.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using UniversalDashboard.Controllers;
+using System.IO;
 
 namespace UniversalDashboard
 {
@@ -76,7 +77,23 @@ namespace UniversalDashboard
 
 			loggerFactory.AddNLog();
 			app.UseResponseCompression();
-			app.UseStatusCodePagesWithReExecute("/redirect/{0}");
+            app.UseStatusCodePages(async context => {
+
+                if (context.HttpContext.Response.StatusCode == 404 && !context.HttpContext.Request.Path.StartsWithSegments("/api"))
+                {
+                    var response = context.HttpContext.Response;
+                    response.StatusCode = 200;
+                    var filePath = env.ContentRootPath + "/index.html";
+                    response.ContentType = "text/html; charset=utf-8";
+                    var file = File.ReadAllText(filePath);
+                    await response.WriteAsync(file);
+                }
+                else
+                {
+                    await context.Next(context.HttpContext);
+                }
+            });
+			
 			app.UseStaticFiles(new StaticFileOptions()
 			{
 				FileProvider = new PhysicalFileProvider(env.ContentRootPath),

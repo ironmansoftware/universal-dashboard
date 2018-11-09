@@ -36,7 +36,7 @@ export default class Loading extends React.Component {
     }
 
     loadData() {        
-        fetchGet("/dashboard/loadingoptions", function(json){
+        fetchGet("/api/internal/dashboard/loadingoptions", function(json){
             if(this.state.cancelData){
                 return;
             }

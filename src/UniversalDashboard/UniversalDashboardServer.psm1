@@ -1421,7 +1421,7 @@ function Update-UDDashboard {
 			$Body = Get-Content $FilePath -Raw
 		}
 
-		Invoke-RestMethod -Uri "$Url/api/dashboard" -Headers @{ "x-ud-update-token" = $UpdateToken } -Body $Body -Method Post
+		Invoke-RestMethod -Uri "$Url/api/internal/dashboard" -Headers @{ "x-ud-update-token" = $UpdateToken } -Body $Body -Method Post
 	}
 }
 

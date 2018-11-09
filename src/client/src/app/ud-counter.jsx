@@ -24,7 +24,7 @@ export default class UdCounter extends React.Component {
             return;
         }
 
-        fetchGet(`/component/element/${this.props.id}`,function(json){
+        fetchGet(`/api/internal/component/element/${this.props.id}`,function(json){
             if (json.error) {
                 this.setState({
                     hasError: true, 

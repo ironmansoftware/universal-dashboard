@@ -29,7 +29,7 @@ export default class UdRow extends React.Component {
     }
     
     loadData(){
-        fetchGet(`/component/element/${this.props.id}`,function(data){
+        fetchGet(`/api/internal/component/element/${this.props.id}`,function(data){
                 if (data.error) {
                     this.setState({
                         hasError: true, 

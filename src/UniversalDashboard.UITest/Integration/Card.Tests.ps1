@@ -111,7 +111,7 @@ Describe "Card" {
             $Element.Text | should be "This is some custom content"
         }
 
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
     }
 }

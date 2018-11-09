@@ -23,6 +23,7 @@ using UniversalDashboard.Models.Basics;
 
 namespace UniversalDashboard.Controllers
 {
+    [Route("api/internal/component")]
     public class ComponentController : Controller
     {
         private static readonly Logger Log = LogManager.GetLogger(nameof(ComponentController));
@@ -113,7 +114,7 @@ namespace UniversalDashboard.Controllers
             }
         }
 
-        [Route("/component/element/{id}")]
+        [Route("element/{id}")]
         [Authorize]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Element(string id)
@@ -148,7 +149,7 @@ namespace UniversalDashboard.Controllers
         }
 
         [HttpPost]
-        [Route("/component/element/{id}")]
+        [Route("element/{id}")]
         [Authorize]
         public IActionResult ElementPost(string id)
         {
@@ -177,7 +178,7 @@ namespace UniversalDashboard.Controllers
             return RunScript(endpoint, variables);
         }
 
-		[Route("/component/datatable/{id}")]
+		[Route("datatable/{id}")]
 		[Authorize]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult DataTable(string id, int draw, int start, int length, string sortColumn, bool sortAscending, string filterText)
@@ -206,7 +207,7 @@ namespace UniversalDashboard.Controllers
 		}
 
 		[HttpPost]
-		[Route("/component/input/{id}")]
+		[Route("input/{id}")]
 		[Authorize]
 		public IActionResult Input(string id)
 		{
@@ -402,7 +403,7 @@ namespace UniversalDashboard.Controllers
 		}
 
         [HttpPost]
-        [Route("/component/element/sessionState/{requestId}")]
+        [Route("element/sessionState/{requestId}")]
         [Authorize]
         public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]Element element)
         {

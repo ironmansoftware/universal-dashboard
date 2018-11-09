@@ -12,6 +12,7 @@ using UniversalDashboard.Interfaces;
 
 namespace UniversalDashboard.Controllers
 {
+	[Route("api/internal/dashboard")]
 
 	public class DashboardController : Controller
     {
@@ -28,7 +29,7 @@ namespace UniversalDashboard.Controllers
 		}
 
 		[Authorize]
-		[Route("/dashboard")]
+		[HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Index()
         {
@@ -51,7 +52,7 @@ namespace UniversalDashboard.Controllers
         }
 
         [Authorize]
-        [Route("/dashboard/{page}")]
+        [Route("{page}")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public Page Index(string page)
         {
@@ -60,7 +61,7 @@ namespace UniversalDashboard.Controllers
         }
 
         [Authorize]
-		[Route("/dashboard/theme")]
+		[Route("theme")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Theme()
 	    {
@@ -71,7 +72,7 @@ namespace UniversalDashboard.Controllers
             };
 	    }
 
-        [Route("/api/dashboard/reload")]
+        [Route("reload")]
 		public async Task<IActionResult> Reload() {
 			if (_dashboardService.ReloadToken == null) {
 				return StatusCode(403);
@@ -87,7 +88,6 @@ namespace UniversalDashboard.Controllers
 		}
 
 		[HttpPost]
-		[Route("/api/dashboard")]
 		public async Task<IActionResult> Post() {
 			if (_dashboardService.UpdateToken == null) {
 				return StatusCode(403);
