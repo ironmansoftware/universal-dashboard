@@ -66,3 +66,40 @@ export const fetchPost = function(url, data, success) {
         console.log(e)
     });
 }
+
+export const fetchPostRaw = function(url, data, success) {
+    if (!success) {
+        success = () => {}
+    }
+
+    fetch(getApiPath() + url, {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'text/plain'
+        },
+        body: data,
+        credentials: 'include'
+      })
+      .then(function(response){
+        var next = true;
+        window.UniversalDashboard.plugins.forEach(plugin => {
+            if (plugin.responseMiddleware == null || !next) return;
+            next = plugin.responseMiddleware(response, history);
+        });
+
+        if (!next) {
+            return;
+        }
+
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(response.statusText);
+        }
+    })
+    .then(success)
+    .catch(function(e) {
+        console.log(e)
+    });
+}
