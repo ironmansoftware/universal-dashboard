@@ -60,7 +60,7 @@ export default class UdMonitor extends React.Component {
             queryString = queryString.substr(0, queryString.length - 1);
         }
 
-        fetchGet(`/component/element/${this.props.id}${queryString}`,function(data){
+        fetchGet(`/api/internal/component/element/${this.props.id}${queryString}`,function(data){
                 if (!this.refs.chart) return;
 
                 if (data.error) {

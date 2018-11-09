@@ -163,6 +163,10 @@ Describe "Api" {
             $project.Project.name | should be 'test'
         }
 
+        It "returns a 404 for a missing method" {
+            { Invoke-WebRequest -Uri http://localhost:10001/api/somecrap -Method GET } | Should throw
+        }
+
         Stop-UDRestApi $Server
     }
 

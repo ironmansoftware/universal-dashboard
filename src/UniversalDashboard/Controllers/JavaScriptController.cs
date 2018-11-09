@@ -5,6 +5,7 @@ using UniversalDashboard.Interfaces;
 
 namespace PowerShellProTools.UniversalDashboard.Controllers
 {
+    [Route("api/internal/javascript")]
     public class JavaScriptController : Controller
     {
         private readonly Logger Log = LogManager.GetLogger(nameof(JavaScriptController));
@@ -15,7 +16,7 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
             _dashboardService = dashboardService;
         }
 
-        [Route("/js/{id}")]
+        [Route("js/{id}")]
         public IActionResult Index(Guid id)
         {
             if (!_dashboardService.ElementScripts.ContainsKey(id))

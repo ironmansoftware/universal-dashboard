@@ -62,7 +62,7 @@ export default class UdChart extends React.Component {
             queryString = queryString.substr(0, queryString.length - 1);
         }
 
-        fetchGet(`/component/element/${this.props.id}${queryString}`, function(json){
+        fetchGet(`/api/internal/component/element/${this.props.id}${queryString}`, function(json){
                 if (json.error) {
                     this.setState({
                         hasError: true, 

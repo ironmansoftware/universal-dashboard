@@ -38,7 +38,7 @@ export default class Input extends React.Component {
             loading: true
         })
         
-        fetchPost(`/component/input/${this.props.id}`, this.state.fields, res => {
+        fetchPost(`/api/internal/component/input/${this.props.id}`, this.state.fields, res => {
                 if (res.error) {
                     Materialize.toast(res.error.message, 2000);
                     return;

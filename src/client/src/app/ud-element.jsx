@@ -79,7 +79,7 @@ class UDElementContent extends React.Component {
 
     loadData()
     { 
-        fetchGet("/component/element/" + this.props.id, function(data) {
+        fetchGet("/api/internal/component/element/" + this.props.id, function(data) {
             if (data.error) {
                 this.setState({
                     hasError: true, 
@@ -190,7 +190,7 @@ class UDElementContent extends React.Component {
             this.setState(event.state);
         }
         else if (event.type === "requestState") {
-            fetchPost(`/component/element/sessionState/${event.requestId}`, this.state);
+            fetchPost(`/api/internal/component/element/sessionState/${event.requestId}`, this.state);
         } else if (event.type === "removeElement") {
             this.setState({
                 hidden: true

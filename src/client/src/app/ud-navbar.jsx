@@ -6,7 +6,7 @@ import {fetchGet} from './services/fetch-service.jsx';
 export default class UdNavbar extends React.Component {
 
     signOut() {
-        fetchGet("/signout", function() {
+        fetchGet("/api/internal/signout", function() {
             this.props.history.push("/login");
         }.bind(this));
     }

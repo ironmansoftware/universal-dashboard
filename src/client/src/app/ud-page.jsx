@@ -33,7 +33,7 @@ export default class UdPage extends React.Component {
     }
 
     loadStaticPage() {
-        fetchGet(`/dashboard/${this.props.name}`, function(json){
+        fetchGet(`/api/internal/dashboard/${this.props.name}`, function(json){
             if (json.error) {
                 this.setState({
                     errorMessage: json.error.message,
@@ -67,7 +67,7 @@ export default class UdPage extends React.Component {
             .map(k => esc(k) + '=' + esc(queryParams[k]))
             .join('&');
     
-        fetchGet(`/component/element/${this.props.id}?${query}`, function(json){
+        fetchGet(`/api/internal/component/element/${this.props.id}?${query}`, function(json){
             if (json.error) {
                 this.setState({
                     errorMessage: json.error.message,
