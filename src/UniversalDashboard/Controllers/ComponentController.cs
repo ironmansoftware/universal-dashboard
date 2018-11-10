@@ -416,7 +416,7 @@ namespace UniversalDashboard.Controllers
         [Authorize]
         public IActionResult RunTerminalCommand() {
 
-            if (!_dashboardService.Dashboard.Design) return {
+            if (!_dashboardService.Dashboard.Design) {
                 NotFound();
             }
 
