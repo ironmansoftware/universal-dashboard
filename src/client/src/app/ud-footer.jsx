@@ -34,7 +34,5 @@ export default class UdFooter extends React.Component {
                 </div>
             </footer>
         }
-
-
     }
 }

@@ -12,7 +12,7 @@ export default class UDTerminal extends React.Component {
                 fetchPostRaw(`/api/internal/component/terminal`, text, res => {
                     print(res);
                  });
-              }} />
+              }} watchConsoleLogging={false} promptSymbol={"UD >"} hideTopBar={true} allowTabs={false} startState={'maximised'}/>
         )
     }
 }

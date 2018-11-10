@@ -11,12 +11,10 @@ Get-UDDashboard | Stop-UDDashboard
 Describe "Select" {
     Context "onSelect" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDTerminal
-
             New-UDElement -Tag 'div' -Id 'parent'
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Design
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
        #Stop-SeDriver $Driver
