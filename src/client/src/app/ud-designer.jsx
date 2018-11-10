@@ -24,7 +24,7 @@ export default class UDDesigner extends React.Component {
         return (
             [
                 <div className="fixed-action-btn">
-                    <a className="btn-floating btn-large red" onClick={this.toggleTerminal.bind(this)}>
+                    <a className="btn-floating btn-large red" onClick={this.toggleTerminal.bind(this)} id='btnDesignTerminal'>
                         <i className="large fa fa-terminal"></i>
                     </a>
                 </div>,
