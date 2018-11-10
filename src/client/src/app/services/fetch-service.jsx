@@ -93,7 +93,7 @@ export const fetchPostRaw = function(url, data, success) {
         }
 
         if (response.status === 200) {
-            return response.json();
+            return response.text();
         } else {
             throw new Error(response.statusText);
         }
