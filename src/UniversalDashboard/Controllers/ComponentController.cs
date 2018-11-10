@@ -416,6 +416,10 @@ namespace UniversalDashboard.Controllers
         [Authorize]
         public IActionResult RunTerminalCommand() {
 
+            if (!_dashboardService.Dashboard.Design) return {
+                NotFound();
+            }
+
             Endpoint endpoint;
             using (var streamReader = new StreamReader(Request.Body))
             {

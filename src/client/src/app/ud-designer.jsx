@@ -1,4 +1,5 @@
 import React,{Suspense} from 'react';
+import UdIcon from './ud-icon.jsx';
 const UdTerminal = React.lazy(() => import( './ud-terminal.jsx' /* webpackChunkName: "ud-terminal" */))
 
 export default class UDDesigner extends React.Component {
@@ -29,7 +30,7 @@ export default class UDDesigner extends React.Component {
                 </div>,
                 <div ref={modal => this.modal = modal} className="modal bottom-sheet">
                     <div className="modal-content">
-                        <h4>UD Terminal</h4>
+                        <h4><UdIcon icon={'terminal'}/>  Design Terminal</h4>
                         <Suspense fallback={<div/>}><UdTerminal /> </Suspense>
                     </div>
                 </div>
