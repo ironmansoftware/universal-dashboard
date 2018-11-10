@@ -3,8 +3,12 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-pool:
-  vmImage: 'vs2017-win2016'
+jobs:
+
+- job: 'ParallelBuildAndTesting'
+  pool: 'Hosted VS2017'
+  strategy:
+    parallel: 5
 
 steps:
 - powershell: .\src\build.ps1 -Configuration Release
@@ -21,7 +25,11 @@ steps:
     testResultsFiles: '**/*TEST-*.xml' 
     searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
     #mergeTestResults: false # Optional
-    testRunTitle: '/test-results/test-suite.Attributes["name"].Value'
+    testRunTitle: test-results/test-case.Attributes["name"].Value
     #buildPlatform: # Optional
     #buildConfiguration: # Optional
     publishRunAttachments: true # Optional
+
+- powershell: Compress-Archive -Path .\src\output -DestinationPath '$(System.DefaultWorkingDirectory)\output.zip' -Force
+  displayName: Create OutPut Zip File
+  errorActionPreference: continue
