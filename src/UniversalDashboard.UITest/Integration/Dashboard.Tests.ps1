@@ -8,6 +8,8 @@ Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
 
+Enable-UDLogging -FilePath .\log.txt
+
 Describe "Dashboard" {
     Context "Initialization Script" {
 
@@ -85,3 +87,5 @@ Describe "Dashboard" {
         Stop-UDDashboard -Server $Server 
     }
 }
+
+Push-AppveyorArtifact .\log.txt
