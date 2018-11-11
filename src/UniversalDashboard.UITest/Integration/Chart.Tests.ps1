@@ -33,8 +33,8 @@ Describe "Chart" {
                     New-UDChartDataset -DataProperty "MP4" -Label "MP4" -BackgroundColor "#8014558C" -HoverBackgroundColor "#8014558C"
                 ) 
             } -FilterFields {
-                New-UDInputField -Type "textbox" -Name "Text" -Placeholder 'Test Stuff'
-                New-UDInputField -Type "select" -Name "Select" -Placeholder 'Test Other Stuff' -Values @("Test", "Test2", "Test3")
+                New-UDInputField -Type "textbox" -Name "Text" -Placeholder "Test Stuff"
+                New-UDInputField -Type "select" -Name "Select" -Placeholder "Test Other Stuff" -Values @("Test", "Test2", "Test3")
             }
         }))') -SessionVariable ss -ContentType 'text/plain'
 

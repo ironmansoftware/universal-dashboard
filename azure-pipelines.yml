@@ -8,7 +8,7 @@ jobs:
 - job: 'ParallelBuildAndTesting'
   pool: 'Hosted VS2017'
   strategy:
-    parallel: 2
+    parallel: 1
 
   steps:
     - powershell: .\src\build.ps1 -Configuration Release
@@ -30,7 +30,7 @@ jobs:
         #buildConfiguration: # Optional
         publishRunAttachments: true # Optional
 
-    - powershell: Compress-Archive -Path .\src\output -DestinationPath $(Build.ArtifactStagingDirectory) -Force
+    - powershell: Compress-Archive -Path .\src\output -DestinationPath D:\a\1\a\ -Force
       displayName: Create OutPut Zip File
       errorActionPreference: continue
 

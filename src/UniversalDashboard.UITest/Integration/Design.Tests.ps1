@@ -10,7 +10,7 @@ Describe "Design" {
     Context "Design Terminal" {
         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "Test" -Content {
-            New-UDElement -Tag 'div' -Id 'parent'
+            New-UDElement -Tag "div" -Id "parent"
         }))') -SessionVariable ss -ContentType 'text/plain'
 
         $Cache:Driver.navigate().refresh()

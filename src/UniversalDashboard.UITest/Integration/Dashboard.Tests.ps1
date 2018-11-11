@@ -9,14 +9,14 @@ Import-Module $ModulePath -Force
 Describe "Dashboard" {
     Context "Initialization Script" {
 
-        $TitleVariable = "Title"
-        function Get-ContentForCard {
-            "Body"
-        }
-
-        $Init = New-UDEndpointInitialization -Variable "TitleVariable" -Function "Get-ContentForCard"
-
         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+           
+            $TitleVariable = "Title"
+            function Get-ContentForCard {
+                "Body"
+            }    
+            $Init = New-UDEndpointInitialization -Variable "TitleVariable" -Function "Get-ContentForCard"
+    
             New-UDDashboard -Title "Test" -Content {
             New-UDRow -Columns {
                 New-UDColumn -Size 12 -Endpoint {
