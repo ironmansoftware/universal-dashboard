@@ -8,7 +8,7 @@ jobs:
 - job: 'ParallelBuildAndTesting'
   pool: 'Hosted VS2017'
   strategy:
-    parallel: 3
+    parallel: 2
 
   steps:
     - powershell: .\src\build.ps1 -Configuration Release
