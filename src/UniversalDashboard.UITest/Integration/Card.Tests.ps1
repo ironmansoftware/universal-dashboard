@@ -6,7 +6,6 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
 
 Describe "Card" {
     Context "Simple Card" {
@@ -17,7 +16,8 @@ Describe "Card" {
             Remove-Item $tempFile -Force
         }
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10006/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((    
+            New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
             )
@@ -43,48 +43,47 @@ Describe "Card" {
                     "This is some custom content"
                 }
             }
-        }
+        }))') -SessionVariable ss -ContentType 'text/plain'
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
+
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "Card" -Driver $Driver
+            $Element = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $Element.Text.Split("`r`n")[0] | should be "Test"
         }
 
         It "should have link" {
-            Find-SeElement -LinkText "MY LINK" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "MY LINK" -Driver $Cache:Driver | Should not be $null
         }
 
         It "should show nordic chars correctly" {
-            $Element = Find-SeElement -Id "nordic" -Driver $Driver
+            $Element = Find-SeElement -Id "nordic" -Driver $Cache:Driver
             $Element.Text.Split("`r`n")[0] | should be "ÆØÅ"
         }
 
         It "should load content from endpoint" {
-            $Element = Find-SeElement -Id "EndpointCard" -Driver $Driver
+            $Element = Find-SeElement -Id "EndpointCard" -Driver $Cache:Driver
             ($Element.Text).Contains("Endpoint Content") | should be $true
         }
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "NoTextCard" -Driver $Driver
+            $Element = Find-SeElement -Id "NoTextCard" -Driver $Cache:Driver
             $Element.Text | should be "Test"
         }
 
         It "should support new line in card" {
-            $Element = Find-SeElement -Id "MultiLineCard" -Driver $Driver
+            $Element = Find-SeElement -Id "MultiLineCard" -Driver $Cache:Driver
             $Br = Find-SeElement -Tag "br" -Element $Element
             $Br | should not be $null
         }
 
         It "should have text of Small Text" {
-            $Element = Find-SeElement -Id "Card-Small-Text" -Driver $Driver
+            $Element = Find-SeElement -Id "Card-Small-Text" -Driver $Cache:Driver
             ($Element.Text -split "`r`n")[1] | should be 'Small Text'
         }
 
-        $Element = Find-SeElement -Id "Card-Medium-Text" -Driver $Driver
+        $Element = Find-SeElement -Id "Card-Medium-Text" -Driver $Cache:Driver
         $CardContent = Find-SeElement -Element $Element -TagName 'h5'
 
         It "should have html H5 tag" {
@@ -95,7 +94,7 @@ Describe "Card" {
             $CardContent.Text | should be 'Medium Text'
         }
 
-        $Element = Find-SeElement -Id "Card-Large-Text" -Driver $Driver
+        $Element = Find-SeElement -Id "Card-Large-Text" -Driver $Cache:Driver
         $CardContent = Find-SeElement -Element $Element -TagName 'h3'
 
         It "should have html H3 tag" {
@@ -107,11 +106,11 @@ Describe "Card" {
         }
 
         It "should have custom content" {
-            $Element = Find-SeElement -Id "spanTest" -Driver $Driver
+            $Element = Find-SeElement -Id "spanTest" -Driver $Cache:Driver
             $Element.Text | should be "This is some custom content"
         }
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
+        # Stop-SeDriver $Cache:Driver
+        # Stop-UDDashboard -Server $Server 
     }
 }

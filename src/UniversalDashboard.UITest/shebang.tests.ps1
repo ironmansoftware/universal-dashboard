@@ -1,4 +1,4 @@
-param([Switch]$Release, [Switch]$Integration)
+param([Switch]$Release, [Switch]$Integration, [Switch]$Speed)
 
 $Pester = Import-Module Pester  -PassThru -ErrorAction Ignore
 if ($Pester -eq $null) {
@@ -35,10 +35,18 @@ function Invoke-PesterTest {
     }
 }
 
+src\UniversalDashboard.UITest\InitDashboardTest.ps1
+
+if($Speed){
+    Invoke-PesterTest -FileName SpeedTests.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Card.Tests.ps1 -Subfolder "Integration" -Release:$Release
+}
+
 #Unit
 Get-ChildItem (Join-Path $PSScriptRoot "Cmdlet") | ForEach-Object {
     Invoke-PesterTest -FileName ($_.Name) -Subfolder "Cmdlet" -Release:$Release
 }
+
 
 if (-not $Integration) {
     return

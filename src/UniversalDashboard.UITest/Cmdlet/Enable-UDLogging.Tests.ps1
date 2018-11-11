@@ -4,7 +4,11 @@ Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
 Import-Module $ModulePath -Force
 
+Get-UDDashboard | Stop-UDDashboard
+
 Describe "Enable-UDLogging" {
+
+    Start-UDDashboard -Port 10001 -Content { New-UDDashboard -Title "Test" -Content {} }
 
     $tempFile = [IO.Path]::GetTempFileName()
 

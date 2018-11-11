@@ -8,8 +8,11 @@ Import-Module $ModulePath -Force
 
 # Get-UDDashboard | Stop-UDDashboard
 
-Describe "Speed Tests Card" {
-    # Start-UDDashboard -Port 10001 -Content {} 
+Describe "Speed Tests Card" -Tag 'speed' {
+
+    # Start-UDDashboard -Port 10006 -Content {
+    #     New-UDDashboard -Title 'Speed Test' -Content {}
+    # } -Design
 
 
     Context "Simple Card" {
@@ -20,7 +23,8 @@ Describe "Speed Tests Card" {
             Remove-Item $tempFile -Force
         }
 
-        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10006/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((    
+        New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
             )
@@ -46,49 +50,52 @@ Describe "Speed Tests Card" {
                     "This is some custom content"
                 }
             }
-        }
+        }))') -SessionVariable ss -ContentType 'text/plain'
 
+        # $Cache:Driver = Start-SeFirefox
+        
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        # Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:10006"
+
+        $Cache:Driver.navigate().refresh()
 
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "Card" -Driver $Driver
+            $Element = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $Element.Text.Split("`r`n")[0] | should be "Test"
         }
 
         It "should have link" {
-            Find-SeElement -LinkText "MY LINK" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "MY LINK" -Driver $Cache:Driver | Should not be $null
         }
 
         It "should show nordic chars correctly" {
-            $Element = Find-SeElement -Id "nordic" -Driver $Driver
+            $Element = Find-SeElement -Id "nordic" -Driver $Cache:Driver
             $Element.Text.Split("`r`n")[0] | should be "ÆØÅ"
         }
 
         It "should load content from endpoint" {
-            $Element = Find-SeElement -Id "EndpointCard" -Driver $Driver
+            $Element = Find-SeElement -Id "EndpointCard" -Driver $Cache:Driver
             ($Element.Text).Contains("Endpoint Content") | should be $true
         }
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "NoTextCard" -Driver $Driver
+            $Element = Find-SeElement -Id "NoTextCard" -Driver $Cache:Driver
             $Element.Text | should be "Test"
         }
 
         It "should support new line in card" {
-            $Element = Find-SeElement -Id "MultiLineCard" -Driver $Driver
+            $Element = Find-SeElement -Id "MultiLineCard" -Driver $Cache:Driver
             $Br = Find-SeElement -Tag "br" -Element $Element
             $Br | should not be $null
         }
 
         It "should have text of Small Text" {
-            $Element = Find-SeElement -Id "Card-Small-Text" -Driver $Driver
+            $Element = Find-SeElement -Id "Card-Small-Text" -Driver $Cache:Driver
             ($Element.Text -split "`r`n")[1] | should be 'Small Text'
         }
 
-        $Element = Find-SeElement -Id "Card-Medium-Text" -Driver $Driver
+        $Element = Find-SeElement -Id "Card-Medium-Text" -Driver $Cache:Driver
         $CardContent = Find-SeElement -Element $Element -TagName 'h5'
 
         It "should have html H5 tag" {
@@ -99,7 +106,7 @@ Describe "Speed Tests Card" {
             $CardContent.Text | should be 'Medium Text'
         }
 
-        $Element = Find-SeElement -Id "Card-Large-Text" -Driver $Driver
+        $Element = Find-SeElement -Id "Card-Large-Text" -Driver $Cache:Driver
         $CardContent = Find-SeElement -Element $Element -TagName 'h3'
 
         It "should have html H3 tag" {
@@ -111,19 +118,21 @@ Describe "Speed Tests Card" {
         }
 
         It "should have custom content" {
-            $Element = Find-SeElement -Id "spanTest" -Driver $Driver
+            $Element = Find-SeElement -Id "spanTest" -Driver $Cache:Driver
             $Element.Text | should be "This is some custom content"
         }
 
-        # Stop-SeDriver $Driver
+        # Stop-SeDriver $Cache:Driver
         # Stop-UDDashboard -Server $Server 
     }
 }
 
-Describe "Speed Tests Monitor" {
+Describe "Speed Tests Monitor" -Tag 'speed' {
 
     Context "Filter fields" {
-        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
+
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10006/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDMonitor -Title "Monitor" -Id "Monitor" -ChartBackgroundColor "#80962F23" -ChartBorderColor "#80962F23" -Type Line -EndPoint {
                 param($Text, $Select) 
 
@@ -136,71 +145,77 @@ Describe "Speed Tests Monitor" {
                 }
 
             } -FilterFields {
-                New-UDInputField -Type "textbox" -Name "Text" -Placeholder 'Test Stuff'
-                New-UDInputField -Type "select" -Name "Select" -Placeholder 'Test Other Stuff' -Values @("Test", "Test2", "Test3")
+                New-UDInputField -Type "textbox" -Name "Text" -Placeholder "Test Stuff"
+                New-UDInputField -Type "select" -Name "Select" -Placeholder "Test Other Stuff" -Values @("Test", "Test2", "Test3")
             }
-        }
+        }))') -SessionVariable ss -ContentType 'text/plain'
+
+
+        $Cache:Driver.navigate().refresh()
 
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        # $Driver = Start-SeFirefox
-        # Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        # $Cache:Driver = Start-SeFirefox
+        # Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should filter" {
-            $Element = Find-SeElement -Name "Text" -Driver $Driver
+            $Element = Find-SeElement -Name "Text" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "Test"
         }
 
-    #    Stop-SeDriver $Driver
+    #    Stop-SeDriver $Cache:Driver
     #    Stop-UDDashboard -Server $Server 
     }
 
     Context "Single-dataset" {
-        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10006/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDMonitor -Title "Monitor" -Id "Monitor" -ChartBackgroundColor "#80962F23" -ChartBorderColor "#80962F23" -Type Line -EndPoint {
                 Get-Random | Out-UDMonitorData
             } -Links @(
                 New-UDLink -Text "Hey" -Url "http://www.google.com"
             )
-        }
+        }))') -SessionVariable ss -ContentType 'text/plain'
+
+        $Cache:Driver.navigate().refresh()
 
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        # $Driver = Start-SeFirefox
-        # Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        # $Cache:Driver = Start-SeFirefox
+        # Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should have Monitor" {
-            Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "Monitor" -Driver $Cache:Driver | Should not be $null
         }
 
         It "should have link" {
-            Find-SeElement -LinkText "HEY" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "HEY" -Driver $Cache:Driver | Should not be $null
         }
 
-    #    Stop-SeDriver $Driver
+    #    Stop-SeDriver $Cache:Driver
     #    Stop-UDDashboard -Server $Server 
     }
 
     Context "Multi-dataset" {
-        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10006/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDMonitor -Title "Monitor" -Id "Monitor" -ChartBackgroundColor @("#80962F23", "#8014558C") -ChartBorderColor @("#80962F23", "#8014558C") -Label @("Virutal Memory", "Physical Memory") -Type Line -EndPoint {
                 Out-UDMonitorData -Data @(
                     Get-Random
                     Get-Random
                 )
             }
-        }
+        }))') -SessionVariable ss -ContentType 'text/plain'
+
+        $Cache:Driver.navigate().refresh()
 
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        # $Driver = Start-SeFirefox
-        # Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        # $Cache:Driver = Start-SeFirefox
+        # Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should have Monitor" {
-            Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "Monitor" -Driver $Cache:Driver | Should not be $null
         }
 
-    #    Stop-SeDriver $Driver
+    #    Stop-SeDriver $Cache:Driver
     #    Stop-UDDashboard -Server $Server 
     }
 
@@ -210,27 +225,29 @@ Describe "Speed Tests Monitor" {
             New-UDLinearChartAxis -Maximum 150 -Minimum 5
         ) 
 
-        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10006/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDMonitor -Title "Monitor" -Id "Monitor" -ChartBackgroundColor @("#80962F23", "#8014558C") -ChartBorderColor @("#80962F23", "#8014558C") -Label @("Virutal Memory", "Physical Memory") -Type Line -EndPoint {
                 Out-UDMonitorData -Data @(
                     Get-Random
                     Get-Random
                 )
             } -Options $options
-        }
+        }))') -SessionVariable ss -ContentType 'text/plain'
+
+        $Cache:Driver.navigate().refresh()
 
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        # $Driver = Start-SeFirefox
-        # Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        # $Cache:Driver = Start-SeFirefox
+        # Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should have Monitor" {
-            Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "Monitor" -Driver $Cache:Driver | Should not be $null
         }
 
         
 
-        Stop-SeDriver $Driver
+        # Stop-SeDriver $Cache:Driver
         # Stop-UDDashboard -Server $Server 
     }
 

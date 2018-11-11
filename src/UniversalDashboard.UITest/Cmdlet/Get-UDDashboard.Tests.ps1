@@ -24,4 +24,6 @@ Describe "Get-UDDashboard" {
         Start-UDDashboard -Name "test" -Port 10004 -Content { New-UDDashboard -Title "Test" -Content {} }
         Get-UDDashboard -Name "test" | should not be $null
     }
+
+    Get-UDDashboard | Stop-UDDashboard
 }
