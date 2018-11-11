@@ -26,6 +26,8 @@ Describe "Cache" {
             }
         }))') -SessionVariable ss -ContentType 'text/plain'
 
+        $Cache:Driver.navigate().refresh()
+
         It "Should work with XML" {
             (Find-SeElement -Id "Counter" -Driver $Cache:Driver).Text | Should be "3"
         }

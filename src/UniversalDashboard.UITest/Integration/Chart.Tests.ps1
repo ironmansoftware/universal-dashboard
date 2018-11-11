@@ -97,7 +97,9 @@ Describe "Chart" {
 
         $Cache:Driver.navigate().refresh()
 
-        $charts = Find-SeElement -Driver $Cache:driver -ClassName 'ud-chart'
+        Start-Sleep 2
+        
+        $charts = Find-SeElement -Driver $Cache:Driver -ClassName 'ud-chart'
         $chartContent = $charts.FindElementByClassName('card-content')
         $chartStyle = Get-SeElementAttribute -Element $chartContent -Attribute 'style'
 

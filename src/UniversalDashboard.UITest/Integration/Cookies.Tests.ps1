@@ -22,7 +22,7 @@ Describe "Cookies" {
                 $Cookie = Get-UDCookie -Name "Test"
 
                 New-UDInputAction -Content @(
-                    New-UDHTML -Markup "<span class="myCookieValue">$($Cookie.Value)</span>"
+                    New-UDHTML -Markup "<span class=myCookieValue>$($Cookie.Value)</span>"
                 )
             }
             New-UDInput -Id "RemoveCookie" -SubmitText "Remove Cookie" -Endpoint {
