@@ -98,6 +98,8 @@ export default class UdInputField extends React.Component {
         if (this.props.type === 'time') {
             this.setupTimePicker();
         } 
+
+        $('.tooltipped').tooltip();
     }
 
     render() {
@@ -107,24 +109,34 @@ export default class UdInputField extends React.Component {
             value: this.props.value,
             placeholder: this.props.placeholder,
             validOptions: this.props.validOptions,
+            validating: this.props.validating,
             validationError: this.props.validationError,
             validationEndpoint: this.props.validationEndpoint
         }
 
         if (field.type === 'textbox' || field.type === 'password') {
             var type = field.type == 'textbox' ? 'text' : 'password';
-            var className = field.validationError ? 'validate invalid' : 'validate';
+
+            var validationIcon = null;
+            if (this.props.validating) {
+                validationIcon = <i className='fa fa-circle-o-notch fa-spin fa-fw tooltipped prefix' data-tooltip="Validating..."></i>
+            }
+            else if (this.props.validationError != null) {
+                validationIcon = <i className='fa fa-times-circle tooltipped red-text prefix' data-tooltip={this.props.validationError}></i>
+            }
 
             var textfield = null;
             if (this.props.debounceTimeout == null) {
-                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)} className={className}/>
+
+                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)}/>
             } else {
                 textfield = <DebounceInput id={field.name} name={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} debounceTimeout={this.props.debounceTimeout}/>
             }
 
             return <div className="input-field">
+                        {validationIcon}
                         {textfield}
-                        <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}} data-error={field.validationError}>{field.placeholder ? field.placeholder[0] : field.name}</label>
+                        <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>
                     </div>
         }
 

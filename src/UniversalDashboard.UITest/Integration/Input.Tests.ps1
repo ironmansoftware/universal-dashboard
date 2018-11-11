@@ -16,7 +16,7 @@ Describe "Input" {
                 New-UDColumn -Endpoint {
                     New-UDInput -Title 'Test' -Endpoint {
                         param(
-                            [ValidateLength(10, 12)]
+                            [ValidatePattern('.*Rules.*')]
                             $String
                         )
         
