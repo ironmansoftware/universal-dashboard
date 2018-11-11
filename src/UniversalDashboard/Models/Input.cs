@@ -51,6 +51,8 @@ namespace UniversalDashboard.Models
         public string CancelText { get; set; }
         [JsonProperty("clearText")]
         public string ClearText { get; set; }
+        [JsonProperty("validationEndpoint")]
+        public string ValidationEndpoint { get; set; }
     }
 
 	public static class FieldTypes

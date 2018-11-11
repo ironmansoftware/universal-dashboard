@@ -75,7 +75,10 @@ namespace UniversalDashboard.Cmdlets.Inputs
 				var parameterAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "Parameter");
 				var validateSetAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "ValidateSet");
 				var stringConstant = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("HelpMessage", StringComparison.OrdinalIgnoreCase))?.Argument as StringConstantExpressionAst;
-				
+
+                var endpoint = new Endpoint(ScriptBlock.Create($"function Validate({parameter.ToString()}){{}}"));
+                endpoint.Name = Guid.NewGuid().ToString();
+                
 				var field = new Field();
 				var placeholder = stringConstant?.Value;
 				if (placeholder != null)
