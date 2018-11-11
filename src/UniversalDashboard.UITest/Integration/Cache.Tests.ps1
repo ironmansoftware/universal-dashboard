@@ -28,6 +28,8 @@ Describe "Cache" {
 
         $Cache:Driver.navigate().refresh()
 
+        Start-Sleep 2
+        
         It "Should work with XML" {
             (Find-SeElement -Id "Counter" -Driver $Cache:Driver).Text | Should be "3"
         }
