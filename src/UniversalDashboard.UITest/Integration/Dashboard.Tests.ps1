@@ -63,6 +63,8 @@ Describe "Dashboard" {
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -UpdateToken "UpdateToken"
 
+        Start-Sleep 1
+
         Update-UDDashboard -UpdateToken "UpdateToken" -Url "http://localhost:10001" -Content {
             New-UDDashboard -Title "Test" -Content {
                 New-UDElement -Tag 'div' -Id 'test'       
@@ -78,5 +80,8 @@ Describe "Dashboard" {
         It "updates the dashboard" {
             Find-SeElement -Driver $Driver -Id 'test' | Should not be $null
         }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
     }
 }
