@@ -19,3 +19,11 @@ function Get-BrowserPort {
         10001
     }
 }
+
+function Push-NewDashboard {
+    param(
+        $Dashboard
+    )
+    $BrowserPort = Get-BrowserPort -Release:$Release
+    Invoke-RestMethod -Method Post -Uri "http://localhost:$BrowserPort/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard(($Dashboard))') -SessionVariable ss -ContentType 'text/plain'
+}

@@ -6,10 +6,10 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
-Start-UDDashboard -Port 10001 -Content {} 
+# Get-UDDashboard | Stop-UDDashboard
 
 Describe "Speed Tests Card" {
+    # Start-UDDashboard -Port 10001 -Content {} 
 
 
     Context "Simple Card" {
@@ -20,7 +20,7 @@ Describe "Speed Tests Card" {
             Remove-Item $tempFile -Force
         }
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
             )
@@ -52,7 +52,6 @@ Describe "Speed Tests Card" {
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
-        Invoke-RestMethod -Method Post -Uri http://localhost:$BrowserPort/api/internal/component/terminal -Body ('$dashboardservice.setDashboard(($Dashboard))') -SessionVariable ss -ContentType 'text/plain'
 
         It "should have title text" {
             $Element = Find-SeElement -Id "Card" -Driver $Driver
@@ -124,7 +123,7 @@ Describe "Speed Tests Card" {
 Describe "Speed Tests Monitor" {
 
     Context "Filter fields" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
             New-UDMonitor -Title "Monitor" -Id "Monitor" -ChartBackgroundColor "#80962F23" -ChartBorderColor "#80962F23" -Type Line -EndPoint {
                 param($Text, $Select) 
 
@@ -142,12 +141,10 @@ Describe "Speed Tests Monitor" {
             }
         }
 
-        Invoke-RestMethod -Method Post -Uri http://localhost:$BrowserPort/api/internal/component/terminal -Body ('$dashboardservice.setDashboard(($Dashboard))') -SessionVariable ss -ContentType 'text/plain'
-
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         # $Driver = Start-SeFirefox
         # Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        # Start-Sleep 2
+        Start-Sleep 2
 
         It "should filter" {
             $Element = Find-SeElement -Name "Text" -Driver $Driver
@@ -159,15 +156,13 @@ Describe "Speed Tests Monitor" {
     }
 
     Context "Single-dataset" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
             New-UDMonitor -Title "Monitor" -Id "Monitor" -ChartBackgroundColor "#80962F23" -ChartBorderColor "#80962F23" -Type Line -EndPoint {
                 Get-Random | Out-UDMonitorData
             } -Links @(
                 New-UDLink -Text "Hey" -Url "http://www.google.com"
             )
         }
-
-        Invoke-RestMethod -Method Post -Uri http://localhost:$BrowserPort/api/internal/component/terminal -Body ('$dashboardservice.setDashboard(($Dashboard))') -SessionVariable ss -ContentType 'text/plain'
 
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         # $Driver = Start-SeFirefox
@@ -187,7 +182,7 @@ Describe "Speed Tests Monitor" {
     }
 
     Context "Multi-dataset" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
             New-UDMonitor -Title "Monitor" -Id "Monitor" -ChartBackgroundColor @("#80962F23", "#8014558C") -ChartBorderColor @("#80962F23", "#8014558C") -Label @("Virutal Memory", "Physical Memory") -Type Line -EndPoint {
                 Out-UDMonitorData -Data @(
                     Get-Random
@@ -195,7 +190,6 @@ Describe "Speed Tests Monitor" {
                 )
             }
         }
-        Invoke-RestMethod -Method Post -Uri http://localhost:$BrowserPort/api/internal/component/terminal -Body ('$dashboardservice.setDashboard(($Dashboard))') -SessionVariable ss -ContentType 'text/plain'
 
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         # $Driver = Start-SeFirefox
@@ -216,7 +210,7 @@ Describe "Speed Tests Monitor" {
             New-UDLinearChartAxis -Maximum 150 -Minimum 5
         ) 
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Push-NewDashboard -Dashboard New-UDDashboard -Title "Test" -Content {
             New-UDMonitor -Title "Monitor" -Id "Monitor" -ChartBackgroundColor @("#80962F23", "#8014558C") -ChartBorderColor @("#80962F23", "#8014558C") -Label @("Virutal Memory", "Physical Memory") -Type Line -EndPoint {
                 Out-UDMonitorData -Data @(
                     Get-Random
@@ -224,7 +218,6 @@ Describe "Speed Tests Monitor" {
                 )
             } -Options $options
         }
-        Invoke-RestMethod -Method Post -Uri http://localhost:$BrowserPort/api/internal/component/terminal -Body ('$dashboardservice.setDashboard(($Dashboard))') -SessionVariable ss -ContentType 'text/plain'
 
         # $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         # $Driver = Start-SeFirefox
@@ -243,4 +236,3 @@ Describe "Speed Tests Monitor" {
 
 }
 
-Get-UDDashboard | Stop-UDDashboard
