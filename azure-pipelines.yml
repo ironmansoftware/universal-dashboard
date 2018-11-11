@@ -15,7 +15,7 @@ jobs:
       displayName: Start Building The Module
       errorActionPreference: continue
 
-    - powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration
+    - powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration -Speed
       displayName: Start Integration Tests
       errorActionPreference: continue
 
