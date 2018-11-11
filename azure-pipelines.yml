@@ -11,7 +11,7 @@ jobs:
     parallel: 1
 
   steps:
-    - powershell: .\src\build.ps1 -Configuration Release
+    - powershell: .\src\build.ps1 -Configuration Release -NoHelp
       displayName: Start Building The Module
       errorActionPreference: continue
 
@@ -30,7 +30,8 @@ jobs:
         #buildConfiguration: # Optional
         publishRunAttachments: true # Optional
 
-    - powershell: Compress-Archive -Path .\src\output -DestinationPath D:\a\1\a\ -Force
+    - powershell: |
+        Compress-Archive -Path .\src\output -DestinationPath .\src\output.zip -Force -verbose
       displayName: Create OutPut Zip File
       errorActionPreference: continue
 
@@ -38,5 +39,5 @@ jobs:
     - task: PublishPipelineArtifact@0
       inputs:
         artifactName: 'UniversalDashboard'
-        targetPath: $(Build.ArtifactStagingDirectory)
+        targetPath: .\src\output.zip
 
