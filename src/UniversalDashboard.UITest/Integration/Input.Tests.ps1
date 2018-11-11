@@ -10,6 +10,31 @@ Get-UDDashboard | Stop-UDDashboard
 
 Describe "Input" {
 
+    Context "Validation" {
+        $dashboard = New-UDDashboard -Title "Validation" -Content {
+            New-UDRow -Endpoint {
+                New-UDColumn -Endpoint {
+                    New-UDInput -Title 'Test' -Endpoint {
+                        param(
+                            [ValidateLength(10, 12)]
+                            $String
+                        )
+        
+                        
+                    }
+                }
+               
+            }
+           
+        }
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+
+
+    }
+
+    return
+
     Context "Custom input" {
         $tempDir = [System.IO.Path]::GetTempPath()
         $tempFile = Join-Path $tempDir "output.txt"

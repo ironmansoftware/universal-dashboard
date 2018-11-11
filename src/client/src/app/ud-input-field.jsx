@@ -1,6 +1,7 @@
 import React from 'react';
 import {Input as RInput, Row, Col, Preloader} from 'react-materialize';
 import {DebounceInput} from 'react-debounce-input';
+import { fetchPost } from './services/fetch-service';
 
 export default class UdInputField extends React.Component {
     onSelectChanged(field, e) {
@@ -17,6 +18,20 @@ export default class UdInputField extends React.Component {
 
     onCheckboxChanged(field, e) {
         this.props.onValueChanged(field.name, e.target.checked);
+    }
+
+    onValidateField(field, e) {
+        this.props.onValidating(field.name);
+
+        fetchPost(`/api/internal/component/input/validate/${field.validationEndpoint}/${field.name}`, e.target.value, function(result) {
+            if (result.error != null) {
+                this.props.onValidateComplete(field.name, result.error.message);
+            }
+            else 
+            {
+                this.props.onValidateComplete(field.name);
+            }
+        }.bind(this))
     }
 
     setupDatePicker() {
@@ -91,22 +106,25 @@ export default class UdInputField extends React.Component {
             type: this.props.type,
             value: this.props.value,
             placeholder: this.props.placeholder,
-            validOptions: this.props.validOptions
+            validOptions: this.props.validOptions,
+            validationError: this.props.validationError,
+            validationEndpoint: this.props.validationEndpoint
         }
 
         if (field.type === 'textbox' || field.type === 'password') {
             var type = field.type == 'textbox' ? 'text' : 'password';
+            var className = field.validationError ? 'validate invalid' : 'validate';
 
             var textfield = null;
             if (this.props.debounceTimeout == null) {
-                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value}/>
+                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)} className={className}/>
             } else {
                 textfield = <DebounceInput id={field.name} name={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} debounceTimeout={this.props.debounceTimeout}/>
             }
 
             return <div className="input-field">
                         {textfield}
-                        <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>
+                        <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}} data-error={field.validationError}>{field.placeholder ? field.placeholder[0] : field.name}</label>
                     </div>
         }
 
@@ -127,7 +145,7 @@ export default class UdInputField extends React.Component {
         if (field.type === 'date') {
             return [
                 <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>,
-                <input type="text"  className="datepicker" id={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} ref={datetime => this.datetime = datetime}/>
+                <input type="text" className="datepicker" id={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} ref={datetime => this.datetime = datetime}/>
             ]
         }
 
