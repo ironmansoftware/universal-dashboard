@@ -113,9 +113,10 @@ Describe "Manifest" {
         Get-Command 'New-UDFabButton' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDImageCarousel' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDImageCarouselItem' -ErrorAction SilentlyContinue | Should not be $null
+        Get-Command 'New-UDTerminal' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDEndpointInitialization' -ErrorAction SilentlyContinue | Should not be $null
         
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 99
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 100
     }
 
     It "should require .NET 4.7" -Skip  {
