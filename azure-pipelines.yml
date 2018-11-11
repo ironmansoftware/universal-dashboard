@@ -40,7 +40,6 @@ jobs:
           PathtoPublish: .\src\output.zip 
           ArtifactName: UniversalDashboard
           publishLocation: Container
-      errorActionPreference: continue
 
     # Publish Pipeline Artifact
     - task: PublishPipelineArtifact@0
