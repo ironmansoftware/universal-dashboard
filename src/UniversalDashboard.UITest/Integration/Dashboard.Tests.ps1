@@ -8,7 +8,7 @@ Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
 
-Enable-UDLogging -FilePath .\log.txt
+Enable-UDLogging -FilePath (Join-Path $PSScriptRoot 'log.txt')
 
 Describe "Dashboard" {
     Context "Initialization Script" {
@@ -88,4 +88,4 @@ Describe "Dashboard" {
     }
 }
 
-Push-AppveyorArtifact .\log.txt
+Push-AppveyorArtifact (Join-Path $PSScriptRoot 'log.txt')
