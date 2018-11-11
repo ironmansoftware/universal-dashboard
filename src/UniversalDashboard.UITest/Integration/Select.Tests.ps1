@@ -23,20 +23,20 @@ Describe "Select" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should select item" {
-            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Driver | Select-Object -First 1
+            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Cache:Driver | Select-Object -First 1
             Invoke-SeClick -Element $Element
             
             $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 0 -First 1
             Invoke-SeClick -Element $Element
 
-            (Find-SeElement -Driver $Driver -Id 'output').Text | should be "1"
+            (Find-SeElement -Driver $Cache:Driver -Id 'output').Text | should be "1"
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 }

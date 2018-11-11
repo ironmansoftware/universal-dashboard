@@ -25,23 +25,23 @@ Describe "Sync-UDElement" {
         } 
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should update number in background" {
-            $Element = Find-SeElement -Driver $Driver -Id 'Counter'
+            $Element = Find-SeElement -Driver $Cache:Driver -Id 'Counter'
             $Text = $Element.Text
 
-            $Element = Find-SeElement -Driver $Driver -Id 'Button'
+            $Element = Find-SeElement -Driver $Cache:Driver -Id 'Button'
             Invoke-SeClick -Element $Element
 
             Start-Sleep 2
 
-            (Find-SeElement -Driver $Driver -Id 'Counter').Text | Should not be $Text
+            (Find-SeElement -Driver $Cache:Driver -Id 'Counter').Text | Should not be $Text
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 }

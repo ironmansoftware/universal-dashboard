@@ -33,20 +33,20 @@ Describe "Show-UDModal" {
         } 
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 5
 
         It "should open and close modal" {
-            Find-SeElement -Driver $Driver -Id "Click" | Invoke-SeClick
+            Find-SeElement -Driver $Cache:Driver -Id "Click" | Invoke-SeClick
 
             Start-Sleep 3
 
-            (Find-SeElement -Driver $driver -Id "Heading").Text | Should be "Heading"
-            Find-SeElement -Driver $Driver -Id "Close" | Invoke-SeClick
+            (Find-SeElement -Driver $Cache:Driver -Id "Heading").Text | Should be "Heading"
+            Find-SeElement -Driver $Cache:Driver -Id "Close" | Invoke-SeClick
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 }

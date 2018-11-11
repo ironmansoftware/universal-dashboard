@@ -26,20 +26,20 @@ Describe "TreeView" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should expand dynamically" {
             1..5 | % {
-                $Element = Find-SeElement -Id $_ -Driver $Driver 
+                $Element = Find-SeElement -Id $_ -Driver $Cache:Driver 
                 $Element | Should not be $null
                 Invoke-SeClick $Element
                 Start-Sleep 1
             }
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server
     }
 }

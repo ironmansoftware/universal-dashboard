@@ -16,7 +16,7 @@ Describe "Card" {
             Remove-Item $tempFile -Force
         }
 
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10006/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((    
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((    
             New-UDDashboard -Title "Test" -Content {
             New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
@@ -110,7 +110,5 @@ Describe "Card" {
             $Element.Text | should be "This is some custom content"
         }
 
-        # Stop-SeDriver $Cache:Driver
-        # Stop-UDDashboard -Server $Server 
     }
 }

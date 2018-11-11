@@ -6,10 +6,10 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
 Describe "Chart" {
     Context "Multi-dataset" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
 
             $Options = New-UDLineChartOptions -LayoutOptions (
                 New-UDChartLayoutOptions -Padding 15
@@ -35,18 +35,13 @@ Describe "Chart" {
                     New-UDLineChartDataset -DataProperty "MP4" -Label "MP4" -BackgroundColor "#8014558C" -PointBackgroundColor "#8014558C" -PointStyle @("triangle", "star")
                 ) 
             } -Options $Options
-        } 
+        }))') -SessionVariable ss -ContentType 'text/plain'
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         It "should have chart" {
-            Find-SeElement -Id "Chart" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "Chart" -Driver $Cache:Driver | Should not be $null
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
 }

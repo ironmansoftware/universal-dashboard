@@ -47,11 +47,11 @@ Describe "New-UDImageCarousel" {
         
         $dashboard = New-UDDashboard -Title "Test Carousel" -Pages $Page1
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Carousel"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort/Carousel"
         Start-Sleep 2
 
-        $carousel = Find-SeElement -Driver $driver -Id 'carousel-demo
+        $carousel = Find-SeElement -Driver $Cache:Driver -Id 'carousel-demo
         '
         it "Should have image carousel component" {
             $carousel -eq $null | Should be $false
@@ -68,7 +68,7 @@ Describe "New-UDImageCarousel" {
         it "Should have custom height Size" {
             $carousel.Size.Height | should be 750
         }
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 

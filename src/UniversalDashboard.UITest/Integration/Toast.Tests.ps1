@@ -22,16 +22,16 @@ Describe "Toast" {
         } 
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should show standard toast" {
-            Find-SeElement -Driver $Driver -Id 'btnStandard' | Invoke-SeClick
+            Find-SeElement -Driver $Cache:Driver -Id 'btnStandard' | Invoke-SeClick
 
             Start-Sleep 1
 
-            $Element = Find-SeElement -Driver $Driver -Id 'Standard'
+            $Element = Find-SeElement -Driver $Cache:Driver -Id 'Standard'
             $Text = $Element.Text
 
             $Text.Contains("You order has shipped!") | Should be $true
@@ -39,16 +39,16 @@ Describe "Toast" {
         }
 
         It "should show hide toast" {
-            Find-SeElement -Driver $Driver -Id 'btnHide' | Invoke-SeClick
+            Find-SeElement -Driver $Cache:Driver -Id 'btnHide' | Invoke-SeClick
 
             Start-Sleep -Seconds 3
 
-            $Element = Find-SeElement -Driver $Driver -Id 'Hide' 
+            $Element = Find-SeElement -Driver $Cache:Driver -Id 'Hide' 
             $Text = $Element.Text
             $Text | Should be $null
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 }

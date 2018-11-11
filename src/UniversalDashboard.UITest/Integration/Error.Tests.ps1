@@ -30,33 +30,33 @@ Describe "Error" {
         
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         #Open firefox
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 2
 
         #Run some tests using selenium
         It "should show an error for chart" {
-            $Target = Find-SeElement -Driver $Driver -Id "Chart"
+            $Target = Find-SeElement -Driver $Cache:Driver -Id "Chart"
             $Target.Text | Should be "Chart`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
 
         It "should show an error for monitor" {
-            $Target = Find-SeElement -Driver $Driver -Id "Monitor"
+            $Target = Find-SeElement -Driver $Cache:Driver -Id "Monitor"
             $Target.Text | Should be "Monitor`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
 
         It "should show an error for counter" {
-            $Target = Find-SeElement -Driver $Driver -Id "Counter"
+            $Target = Find-SeElement -Driver $Cache:Driver -Id "Counter"
             $Target.Text | Should be "Counter`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
 
         It "should show an error for grid" {
-            $Target = Find-SeElement -Driver $Driver -Id "Grid"
+            $Target = Find-SeElement -Driver $Cache:Driver -Id "Grid"
             $Target.Text | Should be "Grid`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -68,15 +68,15 @@ Describe "Error" {
         )
         
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should show error for whole page" {
-            $Target = Find-SeElement -Driver $Driver -Id "Page"
+            $Target = Find-SeElement -Driver $Cache:Driver -Id "Page"
             $Target.Text | Should be "An error occurred on this page`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 }

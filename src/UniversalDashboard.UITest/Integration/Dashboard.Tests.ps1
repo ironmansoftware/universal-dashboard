@@ -6,8 +6,6 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
-
 Describe "Dashboard" {
     Context "Initialization Script" {
 
@@ -18,7 +16,8 @@ Describe "Dashboard" {
 
         $Init = New-UDEndpointInitialization -Variable "TitleVariable" -Function "Get-ContentForCard"
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDRow -Columns {
                 New-UDColumn -Size 12 -Endpoint {
                     New-UDCard -Title $TitleVariable -Text (Get-ContentForCard) -Id "Card" 
@@ -31,29 +30,25 @@ Describe "Dashboard" {
                 }
             } 
         } -EndpointInitialization $Init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+        ))') -SessionVariable ss -ContentType 'text/plain'
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "Card" -Driver $Driver
+            $Element = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $Element.Text.Split("`r`n")[0] | should be "Title"
 
-            $Element = Find-SeElement -Id "Card2" -Driver $Driver
+            $Element = Find-SeElement -Id "Card2" -Driver $Cache:Driver
             $Element.Text.Split("`r`n")[0] | should be "Title"
 
-            $Element = Find-SeElement -Id "Card3" -Driver $Driver
+            $Element = Find-SeElement -Id "Card3" -Driver $Cache:Driver
             $Element.Text.Split("`r`n")[0] | should be "Title"
         }
 
         It "should load javascript" {
-            $Item = (Find-SeElement -TagName "script" -Driver $Driver ).GetAttribute("src") | Where { $_ -eq 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js' } 
+            $Item = (Find-SeElement -TagName "script" -Driver $Cache:Driver ).GetAttribute("src") | Where { $_ -eq 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js' } 
             $Item | Should not be $null
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Update dashboard" {
@@ -61,22 +56,18 @@ Describe "Dashboard" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
         } 
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -UpdateToken "UpdateToken"
+        $Server = Start-UDDashboard -Port 10005 -Name 'D5' -Dashboard $dashboard -UpdateToken "UpdateToken"
 
-        Update-UDDashboard -UpdateToken "UpdateToken" -Url "http://localhost:10001" -Content {
+        Update-UDDashboard -UpdateToken "UpdateToken" -Url "http://localhost:10005" -Content {
             New-UDDashboard -Title "Test" -Content {
                 New-UDElement -Tag 'div' -Id 'test'       
             }
         }
 
-
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        Start-Sleep 1
-
         It "updates the dashboard" {
-            Find-SeElement -Driver $Driver -Id 'test' | Should not be $null
+            Find-SeElement -Driver $Cache:Driver -Id 'test' | Should not be $null
         }
+
+        Stop-UDDashboard -Name 'D5'
     }
 }

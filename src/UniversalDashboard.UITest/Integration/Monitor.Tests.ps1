@@ -29,16 +29,16 @@ Describe "Monitor" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should filter" {
-            $Element = Find-SeElement -Name "Text" -Driver $Driver
+            $Element = Find-SeElement -Name "Text" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "Test"
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -52,19 +52,19 @@ Describe "Monitor" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should have Monitor" {
-            Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "Monitor" -Driver $Cache:Driver | Should not be $null
         }
 
         It "should have link" {
-            Find-SeElement -LinkText "HEY" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "HEY" -Driver $Cache:Driver | Should not be $null
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -79,15 +79,15 @@ Describe "Monitor" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should have Monitor" {
-            Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "Monitor" -Driver $Cache:Driver | Should not be $null
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -107,17 +107,17 @@ Describe "Monitor" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should have Monitor" {
-            Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "Monitor" -Driver $Cache:Driver | Should not be $null
         }
 
         
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 

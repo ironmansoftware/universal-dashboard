@@ -19,14 +19,14 @@ Describe "Font Icons" {
         } -FontIconStyle FontAwesome
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         it "should have font-family of FontAwesome" {
-            ((Find-SeElement -Driver $driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
+            ((Find-SeElement -Driver $Cache:Driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -39,14 +39,14 @@ Describe "Font Icons" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         it "should have font-family of FontAwesome" {
-            ((Find-SeElement -Driver $driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
+            ((Find-SeElement -Driver $Cache:Driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -58,15 +58,15 @@ Describe "Font Icons" {
         } -FontIconStyle LineAwesome
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         it "should have font-family of LineAwesome" {
-            $font = (Find-SeElement -Driver $driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:LineAwesome" 
+            $font = (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:LineAwesome" 
             $font.count | Should be 1
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 }

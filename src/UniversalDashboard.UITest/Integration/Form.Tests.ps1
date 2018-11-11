@@ -27,15 +27,15 @@ Describe "Forms" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "txtBox" -Driver $Driver
+            $Element = Find-SeElement -Id "txtBox" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys 'hey'
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 }

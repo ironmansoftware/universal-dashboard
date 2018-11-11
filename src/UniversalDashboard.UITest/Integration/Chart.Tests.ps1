@@ -6,11 +6,11 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
 Describe "Chart" {
 
     Context "filter controls" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDChart -Title "Chart" -Id "Chart" -Type Line -EndPoint {
                 param($Text, $Select) 
 
@@ -36,23 +36,19 @@ Describe "Chart" {
                 New-UDInputField -Type "textbox" -Name "Text" -Placeholder 'Test Stuff'
                 New-UDInputField -Type "select" -Name "Select" -Placeholder 'Test Other Stuff' -Values @("Test", "Test2", "Test3")
             }
-        } 
+        }))') -SessionVariable ss -ContentType 'text/plain'
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         It "Changes the chart with a filter" {
-            $Element = Find-SeElement -Name "Text" -Driver $Driver
+            $Element = Find-SeElement -Name "Text" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "Test"
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Multi-dataset" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDChart -Title "Chart" -Id "Chart" -Type Line -EndPoint {
                 $data = @(
                     [PSCustomObject]@{"Day" = 1; Jpg = "10"; MP4= "30"}
@@ -67,26 +63,22 @@ Describe "Chart" {
             } -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
             )
-        } 
+        }))') -SessionVariable ss -ContentType 'text/plain'
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         It "should have chart" {
-            Find-SeElement -Id "Chart" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "Chart" -Driver $Cache:Driver | Should not be $null
         }
 
         It "should have chart" {
-            Find-SeElement -LinkText "MY LINK" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "MY LINK" -Driver $Cache:Driver | Should not be $null
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "Custom Size" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDChart -Title "Chart" -Id "Chart" -Type Line -EndPoint {
                 $data = @(
                     [PSCustomObject]@{"Day" = 1; Jpg = "10"; MP4= "30"}
@@ -101,13 +93,11 @@ Describe "Chart" {
             } -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
             ) -Width 30vw -Height 300px
-        } 
+        }))') -SessionVariable ss -ContentType 'text/plain' 
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
-        $charts = Find-SeElement -Driver $driver -ClassName 'ud-chart'
+        $charts = Find-SeElement -Driver $Cache:driver -ClassName 'ud-chart'
         $chartContent = $charts.FindElementByClassName('card-content')
         $chartStyle = Get-SeElementAttribute -Element $chartContent -Attribute 'style'
 
@@ -118,10 +108,5 @@ Describe "Chart" {
         It "should have custom height size" {
             (($chartStyle -split ';') -split 'height:')[2].trim() | Should be '300px'
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
-
-
 }

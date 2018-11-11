@@ -31,17 +31,17 @@ Describe "DynamicDashboard" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 2
 
         It "should produced 30 items" {
-            $Element = Find-SeElement -ClassName "ud-monitor" -Driver $Driver
+            $Element = Find-SeElement -ClassName "ud-monitor" -Driver $Cache:Driver
             ($Element | Measure-Object).Count | should be 30
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 }

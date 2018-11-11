@@ -75,22 +75,22 @@ Describe "Formatting" {
         
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         #Open firefox
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "Should not change value" {
-            $Card = Find-SeElement -Id "Card" -Driver $Driver
+            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
 
             Start-Sleep 2
 
-            $Card = Find-SeElement -Id "Card" -Driver $Driver
+            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText2 = $Card.Text
 
             $CardText | Should be $CardText2
         }
         
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -106,22 +106,22 @@ Describe "Formatting" {
         
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         #Open firefox
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "Should change value" {
-            $Card = Find-SeElement -Id "Card" -Driver $Driver
+            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
 
             Start-Sleep 3
 
-            $Card = Find-SeElement -Id "Card" -Driver $Driver
+            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText2 = $Card.Text
 
             $CardText | Should not be $CardText2
         }
         
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -137,22 +137,22 @@ Describe "Formatting" {
         
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         #Open firefox
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "Should not change value" {
-            $Card = Find-SeElement -Id "Card" -Driver $Driver
+            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
 
             Start-Sleep 2
 
-            $Card = Find-SeElement -Id "Card" -Driver $Driver
+            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText2 = $Card.Text
 
             $CardText | Should be $CardText2
         }
         
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -168,22 +168,22 @@ Describe "Formatting" {
         
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         #Open firefox
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "Should change value" {
-            $Card = Find-SeElement -Id "Card" -Driver $Driver
+            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
 
             Start-Sleep 3
 
-            $Card = Find-SeElement -Id "Card" -Driver $Driver
+            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText2 = $Card.Text
 
             $CardText | Should not be $CardText2
         }
         
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 

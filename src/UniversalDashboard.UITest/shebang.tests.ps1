@@ -35,33 +35,46 @@ function Invoke-PesterTest {
     }
 }
 
-src\UniversalDashboard.UITest\InitDashboardTest.ps1
+src\UniversalDashboard.UITest\Setup.ps1
 
 if($Speed){
-    Invoke-PesterTest -FileName SpeedTests.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Api.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName AutoReload.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Cache.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Card.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Chart.Options.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Chart.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Checkbox.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Collapsible.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Cookies.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Counter.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Crossplatform.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Dashboard.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Design.Tests.ps1 -Subfolder "Integration" -Release:$Release
 }
 
 #Unit
-Get-ChildItem (Join-Path $PSScriptRoot "Cmdlet") | ForEach-Object {
-    Invoke-PesterTest -FileName ($_.Name) -Subfolder "Cmdlet" -Release:$Release
-}
+# Get-ChildItem (Join-Path $PSScriptRoot "Cmdlet") | ForEach-Object {
+#     Invoke-PesterTest -FileName ($_.Name) -Subfolder "Cmdlet" -Release:$Release
+# }
 
 
-if (-not $Integration) {
-    return
-}
+# if (-not $Integration) {
+#     return
+# }
 
-#Integration
-Get-ChildItem (Join-Path $PSScriptRoot "Integration") | ForEach-Object {
-    Invoke-PesterTest -FileName ($_.Name) -Subfolder "Integration" -Release:$Release
-}
+# #Integration
+# Get-ChildItem (Join-Path $PSScriptRoot "Integration") | ForEach-Object {
+#     Invoke-PesterTest -FileName ($_.Name) -Subfolder "Integration" -Release:$Release
+# }
 
 Invoke-PesterTest -FileName Manifest.Tests.ps1 -Release:$Release
 
 
 Get-Process firefox -ErrorAction SilentlyContinue | Stop-Process
 Stop-Service -Name UniversalDashboard -ErrorAction SilentlyContinue
+
+src\UniversalDashboard.UITest\RemoveSetup.ps1
 
 if ($null -ne $env:APPVEYOR_JOB_ID) {
     Get-ChildItem $OutputPath | ForEach-Object {

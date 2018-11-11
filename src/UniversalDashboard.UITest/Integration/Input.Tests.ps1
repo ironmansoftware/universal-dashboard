@@ -57,20 +57,20 @@ Describe "Input" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should select date" {
 
-            $Element = Find-SeElement -Id "test9" -Driver $Driver
+            $Element = Find-SeElement -Id "test9" -Driver $Cache:Driver
             $Element | Invoke-SeClick
 
             Start-Sleep 1
 
-            $Element = Find-SeElement -TagName "div" -Driver $Driver | Where { $_.Text -eq "20" }
+            $Element = Find-SeElement -TagName "div" -Driver $Cache:Driver | Where { $_.Text -eq "20" }
             $Element | Invoke-SeClick
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -82,10 +82,10 @@ Describe "Input" {
         }
 
         It "should submit textarea" {
-            $Element = Find-SeElement -Name "test6" -Driver $Driver
+            $Element = Find-SeElement -Name "test6" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "Hello!!!!!!!!!!!!!!!!!!!!!!!!!"
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -97,10 +97,10 @@ Describe "Input" {
         }
 
         It "should submit password" {
-            $Element = Find-SeElement -Name "test5" -Driver $Driver
+            $Element = Find-SeElement -Name "test5" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "Hello"
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -112,10 +112,10 @@ Describe "Input" {
         }
 
         It "should submit text" {
-            $Element = Find-SeElement -Name "test" -Driver $Driver
+            $Element = Find-SeElement -Name "test" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "Hello"
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -127,10 +127,10 @@ Describe "Input" {
         }
 
         It "should output bool" {
-            $Element = Find-SeElement -Name "test2" -Driver $Driver
-            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            $Element = Find-SeElement -Name "test2" -Driver $Cache:Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Cache:Driver
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -141,7 +141,7 @@ Describe "Input" {
         }
 
         It "should selected default value" {
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -153,13 +153,13 @@ Describe "Input" {
 
 
         It "should selected value" {
-            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Driver | Select -First 1
+            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Cache:Driver | Select -First 1
             Invoke-SeClick -Element $Element
 
             $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 1 -First 1
             Invoke-SeClick -Element $Element
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -171,10 +171,10 @@ Describe "Input" {
 
         
         It "should select radio button" {
-            $Element = Find-SeElement -TagName "label" -Driver $Driver | Where { (Get-SeElementAttribute $_ -Attribute "for") -eq 'MyTestValue2' }
+            $Element = Find-SeElement -TagName "label" -Driver $Cache:Driver | Where { (Get-SeElementAttribute $_ -Attribute "for") -eq 'MyTestValue2' }
             Invoke-SeClick -Element $Element
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -185,10 +185,10 @@ Describe "Input" {
         }
 
         It "should switch the switch" {
-            $Element = Find-SeElement -Name "test7" -Driver $Driver
-            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            $Element = Find-SeElement -Name "test7" -Driver $Cache:Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Cache:Driver
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -199,7 +199,7 @@ Describe "Input" {
         }
 
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
     
@@ -216,20 +216,20 @@ Describe "Input" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should not clear monitor after input" {
 
             Sleep 5
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick $Button
 
             Sleep 2
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -270,14 +270,14 @@ Describe "Input" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should output text" {
-            $Element = Find-SeElement -Name "Textbox" -Driver $Driver
+            $Element = Find-SeElement -Name "Textbox" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "Hello"
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
 
             Invoke-SeClick -Element $Button 
 
@@ -289,20 +289,20 @@ Describe "Input" {
         }
 
         It "should have friendly label for textbox" {
-            $Element = Find-SeElement -Id "Textboxlabel" -Driver $Driver
+            $Element = Find-SeElement -Id "Textboxlabel" -Driver $Cache:Driver
             $Element.Text | Should be "My Textbox"
         }
 
         It "should have friendly label for checkbox" {
-            $Element = Find-SeElement -Id "Checkboxlabel" -Driver $Driver
+            $Element = Find-SeElement -Id "Checkboxlabel" -Driver $Cache:Driver
             $Element.Text | Should be "My Checkbox"
         }
         
         It "should output bool" {
-            $Element = Find-SeElement -Name "Checkbox" -Driver $Driver
-            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            $Element = Find-SeElement -Name "Checkbox" -Driver $Cache:Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Cache:Driver
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -313,10 +313,10 @@ Describe "Input" {
         }
 
         It "should output switch" {
-            $Element = Find-SeElement -Name "Checkbox2" -Driver $Driver
-            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            $Element = Find-SeElement -Name "Checkbox2" -Driver $Cache:Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Cache:Driver
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -327,13 +327,13 @@ Describe "Input" {
         }
 
         It "should output day of week" {
-            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Driver | Select -First 1
+            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Cache:Driver | Select -First 1
             Invoke-SeClick -Element $Element
 
             $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 1 -First 1
             Invoke-SeClick -Element $Element
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -345,13 +345,13 @@ Describe "Input" {
 
         It "should output vals" {
             return
-            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Driver | Select -Skip 1 -First 1
+            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Cache:Driver | Select -Skip 1 -First 1
             Invoke-SeClick -Element $Element
 
             $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 2 -First 1
             Invoke-SeClick -Element $Element
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
@@ -361,7 +361,7 @@ Describe "Input" {
             $Output.Vals | Should be "Apple"
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -373,16 +373,16 @@ Describe "Input" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should have different submit text" {
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
 
             $Button | Should not be $null
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -405,28 +405,28 @@ Describe "Input" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "have cleared input on toast" {
-            $Element = Find-SeElement -Name "test" -Driver $Driver
+            $Element = Find-SeElement -Name "test" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "Hello"
 
-            $Element = Find-SeElement -Name "test2" -Driver $Driver
-            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            $Element = Find-SeElement -Name "test2" -Driver $Cache:Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Cache:Driver
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 1
 
-            $Element = Find-SeElement -Name "test" -Driver $Driver
+            $Element = Find-SeElement -Name "test" -Driver $Cache:Driver
             [string]::IsNullOrEmpty($Element.Text) | Should be $true
-            $Element = Find-SeElement -Name "test2" -Driver $Driver
+            $Element = Find-SeElement -Name "test2" -Driver $Cache:Driver
             $Element.Selected | Should be $False
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
     
@@ -440,19 +440,19 @@ Describe "Input" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should have different submit text" {
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
             Start-Sleep 2
 
-            $Driver.Url.ToLower().COntains("https://www.google.com") | Should be $true 
+            $Cache:Driver.Url.ToLower().COntains("https://www.google.com") | Should be $true 
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -475,21 +475,21 @@ Describe "Input" {
         )
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should redirect to correct page" {
-            $Element = Find-SeElement -Name "PageNumber" -Driver $Driver
+            $Element = Find-SeElement -Name "PageNumber" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "6"
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick -Element $Button 
 
-            $Element = Find-SeElement -Id "PageCard" -Driver $Driver
+            $Element = Find-SeElement -Id "PageCard" -Driver $Cache:Driver
             $Element.Text | Should be "Page 6"
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -507,25 +507,25 @@ Describe "Input" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should have different content after click" {
-            $Element = Find-SeElement -Name "Test" -Driver $Driver
+            $Element = Find-SeElement -Name "Test" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys "16"
 
             Start-Sleep 1
 
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            $Button = Find-SeElement -Id "btnForm" -Driver $Cache:Driver
             Invoke-SeClick $Button
 
             Sleep 2
 
-            $Target = Find-SeElement -Id "Sixteen" -Driver $Driver
+            $Target = Find-SeElement -Id "Sixteen" -Driver $Cache:Driver
             $Target.Text | Should be "Sixteen`r`n16"
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 

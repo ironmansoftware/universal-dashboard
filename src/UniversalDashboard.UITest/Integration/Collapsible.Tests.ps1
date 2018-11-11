@@ -1,6 +1,6 @@
 param([Switch]$Release)
 
-Import-Module "$PSScriptRoot\Selenium\Selenium.psm1" -Force 
+# Import-Module "$PSScriptRoot\Selenium\Selenium.psm1" -Force 
 
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
@@ -8,11 +8,10 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
-
 Describe "Collapsible" {
     Context "Simple Collapsible" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDCollapsible -Id "Collapsible" -Items {
                 New-UDCollapsibleItem -Id "First" -Title "First" -Icon user -Content {
                     New-UDCard -Title "First"
@@ -47,49 +46,44 @@ Describe "Collapsible" {
 
                 } -Active
             }
-        }
+        }))') -SessionVariable ss -ContentType 'text/plain'
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "First-header" -Driver $Driver
+            $Element = Find-SeElement -Id "First-header" -Driver $Cache:Driver
             $Element.Text| should be "First"
         }
 
         It "should have body text" {
-            $Element = Find-SeElement -Id "First-body" -Driver $Driver
+            $Element = Find-SeElement -Id "First-body" -Driver $Cache:Driver
             $Element.Text| should be "First"
         }
 
         It "should have active class" {
-            Find-SeElement -Id "First-header" -Driver $Driver | Get-SeElementAttribute -Attribute "class" | Should be "collapsible-header active"
+            Find-SeElement -Id "First-header" -Driver $Cache:Driver | Get-SeElementAttribute -Attribute "class" | Should be "collapsible-header active"
         }
 
         It "should have title text for endpoint" {
             Start-Sleep 1
 
-            $Element = Find-SeElement -Id "First-Endpoint-header" -Driver $Driver
+            $Element = Find-SeElement -Id "First-Endpoint-header" -Driver $Cache:Driver
             $Element.Text | should be "First"
         }
 
         It "should have colors for collapsible" {
-            Find-SeElement -Id "Collapsible2" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(73, 69, 255); color: rgb(169, 56, 255);" 
+            Find-SeElement -Id "Collapsible2" -Driver $Cache:Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(73, 69, 255); color: rgb(169, 56, 255);" 
         }
 
         It "should have colors for collapsible item" {
-            Find-SeElement -Id "Collapsible2-Second-header" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(76, 255, 110); color: rgb(152, 255, 63);" 
-            Find-SeElement -Id "Collapsible2-Second" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(76, 255, 110); color: rgb(152, 255, 63);" 
+            Find-SeElement -Id "Collapsible2-Second-header" -Driver $Cache:Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(76, 255, 110); color: rgb(152, 255, 63);" 
+            Find-SeElement -Id "Collapsible2-Second" -Driver $Cache:Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(76, 255, 110); color: rgb(152, 255, 63);" 
         }
 
         It "should change icon on click" {
-            Find-SeElement -Id "ChangeMyIcon-icon" -Driver $Driver | Get-SeElementAttribute -Attribute "className" | Should be "fa fa-line-chart  " 
-            Find-SeElement -Id "changeIcon" -Driver $Driver | Invoke-SeClick
-            Find-SeElement -Id "ChangeMyIcon-icon" -Driver $Driver | Get-SeElementAttribute -Attribute "className" | Should be "fa fa-user" 
+            Find-SeElement -Id "ChangeMyIcon-icon" -Driver $Cache:Driver | Get-SeElementAttribute -Attribute "className" | Should be "fa fa-line-chart  " 
+            Find-SeElement -Id "changeIcon" -Driver $Cache:Driver | Invoke-SeClick
+            Find-SeElement -Id "ChangeMyIcon-icon" -Driver $Cache:Driver | Get-SeElementAttribute -Attribute "className" | Should be "fa fa-user" 
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 }

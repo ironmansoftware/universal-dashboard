@@ -27,16 +27,16 @@ Describe "Variable Scoping" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should start processes with click" {
-            Find-SeElement -Id "button" -Driver $Driver | Invoke-SeClick 
-            (Find-SeElement -Id 'child' -Driver $Driver).Text | should be "child"
+            Find-SeElement -Id "button" -Driver $Cache:Driver | Invoke-SeClick 
+            (Find-SeElement -Id 'child' -Driver $Cache:Driver).Text | should be "child"
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard $Server
     }
 
@@ -116,30 +116,30 @@ Describe "Variable Scoping" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should stop processes with click" {
             Get-Process Notepad* | % {
-                Find-SeElement -Id "btn$($_.Id)" -Driver $Driver | Invoke-SeClick 
+                Find-SeElement -Id "btn$($_.Id)" -Driver $Cache:Driver | Invoke-SeClick 
             }
 
             (Get-Process Notepad* | Measure-Object).Count | Should be 0
 
             1..5 | % { Start-Process Notepad }
 
-            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
             Start-Sleep 2
 
             Get-Process Notepad* | % {
-                Find-SeElement -Id "btn$($_.Id)" -Driver $Driver | Invoke-SeClick 
+                Find-SeElement -Id "btn$($_.Id)" -Driver $Cache:Driver | Invoke-SeClick 
             }
 
             (Get-Process Notepad* | Measure-Object).Count | Should be 0
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard $Server
     }
 

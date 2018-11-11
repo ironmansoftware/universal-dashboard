@@ -31,24 +31,24 @@ Describe "Fab" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should handle clicks" {
-            $Element = Find-SeElement -Driver $Driver -Id 'main'
+            $Element = Find-SeElement -Driver $Cache:Driver -Id 'main'
             $Element | Invoke-SeClick
 
-            $Element = Find-SeElement -Driver $Driver -Id 'MainOutput'
+            $Element = Find-SeElement -Driver $Cache:Driver -Id 'MainOutput'
             $Element.Text | should be "main"
 
-            $Element = Find-SeElement -Driver $Driver -Id 'btn'
+            $Element = Find-SeElement -Driver $Cache:Driver -Id 'btn'
             $Element | Invoke-SeClick
 
-            $Element = Find-SeElement -Driver $Driver -Id 'ChildOutput'
+            $Element = Find-SeElement -Driver $Cache:Driver -Id 'ChildOutput'
             $Element.Text | should be "Child"
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 

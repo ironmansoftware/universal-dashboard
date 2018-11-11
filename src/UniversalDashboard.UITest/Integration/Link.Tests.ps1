@@ -18,20 +18,20 @@ Describe "New-UDLink" {
         )
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should open link in new tab" {
-            Find-SeElement -Driver $Driver -LinkText "Google" | Get-SeElementAttribute -Attribute "target" | Should be "_blank"
-            Find-SeElement -Driver $Driver -LinkText "Boogle" | Get-SeElementAttribute -Attribute "target" | Should be "_self"
+            Find-SeElement -Driver $Cache:Driver -LinkText "Google" | Get-SeElementAttribute -Attribute "target" | Should be "_blank"
+            Find-SeElement -Driver $Cache:Driver -LinkText "Boogle" | Get-SeElementAttribute -Attribute "target" | Should be "_self"
         }
 
         It "should have color" {
-            Find-SeElement -Driver $Driver -LinkText "MICROSOFT" | Get-SeElementAttribute -Attribute "style" | Should be "color: rgb(255, 83, 13);"
+            Find-SeElement -Driver $Cache:Driver -LinkText "MICROSOFT" | Get-SeElementAttribute -Attribute "style" | Should be "color: rgb(255, 83, 13);"
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 }

@@ -32,25 +32,25 @@ Describe "Grid" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should not shown an error with no data" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element.Text.Contains("No results found") | Should be $true
         }
 
         It "should not shown an error with invalid output" {
-            $Element = Find-SeElement -Id "Grid2" -Driver $Driver
+            $Element = Find-SeElement -Id "Grid2" -Driver $Cache:Driver
             $Element.Text.Contains("No results found") | Should be $true
         }
 
         It "should be able to nest new-udelement in grid" {
-            $Element = Find-SeElement -Id "Grid3" -Driver $Driver
+            $Element = Find-SeElement -Id "Grid3" -Driver $Cache:Driver
             $Element.Text.Contains("Stopped") | Should be $true
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -74,40 +74,40 @@ Describe "Grid" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should click button" {
-            $Button = Find-SeElement -LinkText "HEY" -Driver $Driver 
+            $Button = Find-SeElement -LinkText "HEY" -Driver $Cache:Driver 
             Invoke-SeClick -Element $Button 
 
             Start-Sleep -Seconds 5
 
-            (Find-SeElement -Id "Hey" -Driver $Driver).Text | should be "Hey"
+            (Find-SeElement -Id "Hey" -Driver $Cache:Driver).Text | should be "Hey"
         }
 
 
         It "should have link" {
-            Find-SeElement -LinkText "This is text" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "This is text" -Driver $Cache:Driver | Should not be $null
         }
 
         It "should have link in footer" {
-            Find-SeElement -LinkText "OTHER LINK" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "OTHER LINK" -Driver $Cache:Driver | Should not be $null
         }
 
         It "should format date correctly" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element[5].Text | Should BeLike "Dec 2, 2007*"
         }
 
         It "should format bool correctly" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element[7].Text | Should Be 'true'
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -127,15 +127,15 @@ Describe "Grid" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
  
         It "should not shown an error with no data" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element.Text.Contains("No results found") | Should be $true
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -177,11 +177,11 @@ Describe "Grid" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should have data" {
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element.Length | Should be 3
             $Element[0].Text | should be "1"
@@ -191,27 +191,27 @@ Describe "Grid" {
 
         It "should sort data" {
             
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
             $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
             $Element[0].Text | should be "1"
 
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Cache:Driver
             $header = $element[0]
             Invoke-SeClick $header
 
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
             $Element[0].Text | should be "3"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
             $Element[0].Text | should be "3"
             
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Cache:Driver
             $header = $element[0]
             Invoke-SeClick $header
 
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
             $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
@@ -220,17 +220,17 @@ Describe "Grid" {
 
         It "should filter data" {
             
-            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Cache:Driver
 
             Send-SeKeys -Element $Element[0] -Keys "2"
             Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
 
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element.Length | Should be 6
         }
         
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
     
@@ -317,23 +317,23 @@ Describe "Grid" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should not page when NoPaging set" {
-            $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Driver
+            $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
             $Element.Length | Should be 18
         }
 
         It "should set page size" {
-            $Element = Find-SeElement -Id "PageSizeGrid" -Driver $Driver
+            $Element = Find-SeElement -Id "PageSizeGrid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
             $Element.Length | Should be 5
         }
 
         It "should headings" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Element[0]
             $Element.Length | Should be 3
             $Element[0].Text.Contains('day') | should be $true
@@ -342,7 +342,7 @@ Describe "Grid" {
         }
 
         It "should have data" {
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element.Length | Should be 3
             $Element[0].Text | should be "1"
@@ -352,27 +352,27 @@ Describe "Grid" {
 
         It "should sort data" {
             
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
             $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
             $Element[0].Text | should be "1"
 
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Cache:Driver
             $header = $element[0]
             Invoke-SeClick $header
 
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
             $Element[0].Text | should be "3"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
             $Element[0].Text | should be "3"
             
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Cache:Driver
             $header = $element[0]
             Invoke-SeClick $header
 
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
             $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
@@ -380,7 +380,7 @@ Describe "Grid" {
         }
 
         It "should have data in single item grid" {
-            $Element = Find-SeElement -Id "SingleItemGrid" -Driver $Driver
+            $Element = Find-SeElement -Id "SingleItemGrid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element.Length | Should be 3
             $Element[0].Text | should be "1"
@@ -390,18 +390,18 @@ Describe "Grid" {
 
         It "should filter data" {
             
-            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Cache:Driver
 
             Send-SeKeys -Element $Element[0] -Keys "2"
             Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
 
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0]
             $Element.Length | Should be 6
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -423,21 +423,21 @@ Describe "Grid" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
  
         It "should have sorted correctly" {
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element[1].Text | should be "30"
             
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[1] 
             $Element[1].Text | should be "20"
         }
 
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 
@@ -453,23 +453,23 @@ Describe "Grid" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
 
         It "should refresh" {
             $previousText = ""
 
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $text = $Element[2].text 
 
             Start-Sleep 3
 
-            $NewElement = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $NewElement = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             (Find-SeElement -ClassName "griddle-cell" -Driver $NewElement[0])[2].Text | should not be $text     
         }
 
-        Stop-SeDriver $Driver
+        Stop-SeDriver $Cache:Driver
         Stop-UDDashboard -Server $Server 
     }
 }

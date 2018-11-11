@@ -19,24 +19,17 @@ Describe "Cache" {
         "<data><xpath></xpath><xpath></xpath><xpath></xpath></data>" | Out-File $TempFile
         $cache:data = [xml](Get-Content $TempFile)
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDCounter -Id "Counter" -Endpoint {
                 ($Cache:data.SelectNodes("//data/xpath")).Count 
             }
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        Start-Sleep 1
+        }))') -SessionVariable ss -ContentType 'text/plain'
 
         It "Should work with XML" {
-            (Find-SeElement -Id "Counter" -Driver $Driver).Text | Should be "3"
+            (Find-SeElement -Id "Counter" -Driver $Cache:Driver).Text | Should be "3"
         }
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
         Remove-Item $TempFile
     }
 }

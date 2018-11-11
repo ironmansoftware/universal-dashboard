@@ -5,25 +5,23 @@ $ModulePath = Get-ModulePath -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDRestApi | Stop-UDRestApi
-Get-UDDashboard | Stop-UDDashboard
 Describe "Api" {
     Context "Special Characters" {
-        $Server = Start-UDRestApi -Port 10001 -Endpoint @(
+        $Server = Start-UDRestApi -Port 10005 -Endpoint @(
             New-UDEndpoint -Url "/recherches" -Method "GET" -Endpoint {
                 'éèù' | ConvertTo-Json
             }
         ) 
 
         It "doesn't mess up the characters" {
-            (Invoke-RestMethod http://localhost:10001/api/recherches) | Should be "éèù"
+            (Invoke-RestMethod http://localhost:10005/api/recherches) | Should be "éèù"
         }
 
         Stop-UDRestApi $Server
     }
 
     Context "Performance" {
-        $Server = Start-UDRestApi -Port 10001 -Endpoint @(
+        $Server = Start-UDRestApi -Port 10005 -Endpoint @(
             New-UDEndpoint -Url "user" -Method "GET" -Endpoint {
                 @("Adam", "Bill", "Frank") | ConvertTo-Json
             }
@@ -31,7 +29,7 @@ Describe "Api" {
 
         It "Is fast" {
             (Measure-Command -Expression { 
-                1..100 | % { Invoke-RestMethod http://localhost:10001/api/user  }
+                1..100 | % { Invoke-RestMethod http://localhost:10005/api/user  }
             }).TotalSeconds | Should BeLessThan 15
         }
 
@@ -44,7 +42,7 @@ Describe "Api" {
         
         $Init = New-UDEndpointInitialization -Variable "Variable"
 
-        $Server = Start-UDRestApi -Port 10001 -Endpoint @(
+        $Server = Start-UDRestApi -Port 10005 -Endpoint @(
             New-UDEndpoint -Url "user" -Method "GET" -Endpoint {
                 @("Adam", "Bill", "Frank") | ConvertTo-Json
             }
@@ -97,29 +95,29 @@ Describe "Api" {
         ) -EndpointInitialization $Init
 
         It "should work with nested routes" {
-            Invoke-RestMethod -Uri 'http://localhost:10001/api/recherches/1' -Method DELETE | Should be "1"
-            Invoke-RestMethod -Uri 'http://localhost:10001/api/recherches/2/activate' -Method DELETE | Should be "2"
+            Invoke-RestMethod -Uri 'http://localhost:10005/api/recherches/1' -Method DELETE | Should be "1"
+            Invoke-RestMethod -Uri 'http://localhost:10005/api/recherches/2/activate' -Method DELETE | Should be "2"
         }
 
         It "should process int correctly" {
-            Invoke-RestMethod -Uri 'http://localhost:10001/api/inttest' -Method POST -Body {value=2} | Should be "2"
+            Invoke-RestMethod -Uri 'http://localhost:10005/api/inttest' -Method POST -Body {value=2} | Should be "2"
         }
 
         It "returns users from the get endpoint" {
-            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user 
+            $users = Invoke-RestMethod -Uri http://localhost:10005/api/user 
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
         }
 
         It "returns variable from the get endpoint" {
-            $variables = Invoke-RestMethod -Uri http://localhost:10001/api/variable
+            $variables = Invoke-RestMethod -Uri http://localhost:10005/api/variable
             $variables | Should be "Some text"
         }
 
         
         It "returns users from the get endpoint with variable" {
-            $users = Invoke-RestMethod -Uri 'http://localhost:10001/api/user/1'
+            $users = Invoke-RestMethod -Uri 'http://localhost:10005/api/user/1'
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
@@ -127,14 +125,14 @@ Describe "Api" {
         }
         
         It "returns users from the delete endpoint" {
-            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method DELETE
+            $users = Invoke-RestMethod -Uri http://localhost:10005/api/user -Method DELETE
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
         }
 
         It "returns users from the post endpoint" {
-            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method POST -Body @{Test="xyz"}
+            $users = Invoke-RestMethod -Uri http://localhost:10005/api/user -Method POST -Body @{Test="xyz"}
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
@@ -142,7 +140,7 @@ Describe "Api" {
         }
 
         It "returns users from the put endpoint" -Skip {
-            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method PUT -Body @{Test="xyz"}
+            $users = Invoke-RestMethod -Uri http://localhost:10005/api/user -Method PUT -Body @{Test="xyz"}
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
@@ -150,7 +148,7 @@ Describe "Api" {
         }
 
         It "returns users from query string" {
-            $users = Invoke-RestMethod -Uri http://localhost:10001/api/querystring?Test=xyz -Method POST 
+            $users = Invoke-RestMethod -Uri http://localhost:10005/api/querystring?Test=xyz -Method POST 
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
@@ -158,13 +156,13 @@ Describe "Api" {
         }
 
         It "returns xml" {
-            $project = Invoke-RestMethod -Uri http://localhost:10001/api/project -Method GET -ContentType "application/xml"
+            $project = Invoke-RestMethod -Uri http://localhost:10005/api/project -Method GET -ContentType "application/xml"
             $project 
             $project.Project.name | should be 'test'
         }
 
         It "returns a 404 for a missing method" {
-            { Invoke-WebRequest -Uri http://localhost:10001/api/somecrap -Method GET } | Should throw
+            { Invoke-WebRequest -Uri http://localhost:10005/api/somecrap -Method GET } | Should throw
         }
 
         Stop-UDRestApi $Server
@@ -190,7 +188,6 @@ Describe "Api" {
             $result = Invoke-RestMethod -Uri 'http://localhost:1001/api/SpireonEvents' -Method POST -Body $json #-ContentType 'application/json'
             $result | Should Be '@{Arguments=script.ps1; FilePath=code}'
         }
-        $Server| Stop-UDDashboard
         
         Stop-UDRestApi $Server
     }

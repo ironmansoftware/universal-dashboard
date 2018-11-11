@@ -17,16 +17,16 @@ Describe "Table" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "has an error" {
-            $Element = Find-SeElement -Id "Table" -Driver $Driver
+            $Element = Find-SeElement -Id "Table" -Driver $Cache:Driver
             $Element.Text.Contains("Error") | should be true
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -44,22 +44,22 @@ Describe "Table" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "auto reloads" {
-            $Element = Find-SeElement -Id "Table" -Driver $Driver
+            $Element = Find-SeElement -Id "Table" -Driver $Cache:Driver
             $Text = $Element.Text
 
             Start-Sleep 2 
 
-            $Element = Find-SeElement -Id "Table" -Driver $Driver
+            $Element = Find-SeElement -Id "Table" -Driver $Cache:Driver
             $Element.Text | should not be $text
 
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -83,34 +83,34 @@ Describe "Table" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 5
 
         It "has Id in column" {
-            $Element = Find-SeElement -Id "Table" -Driver $Driver
+            $Element = Find-SeElement -Id "Table" -Driver $Cache:Driver
             $Element.Text.Contains("123456") | should be true
         }
 
         It "has formatted DateTime correctly in column" {
-            $Element = Find-SeElement -Id "Table" -Driver $Driver
+            $Element = Find-SeElement -Id "Table" -Driver $Cache:Driver
             $Element.Text.Contains("Dec 2, 2007") | should be true
         }
 
         It "has link in table" {
-            Find-SeElement -LinkText "This is text" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "This is text" -Driver $Cache:Driver | Should not be $null
         }
 
         It "has link in footer" {
-            Find-SeElement -LinkText "OTHER LINK" -Driver $Driver | Should not be $null
+            Find-SeElement -LinkText "OTHER LINK" -Driver $Cache:Driver | Should not be $null
         }
 
         It "has Id in column for single item table" {
-            $Element = Find-SeElement -Id "SingleItemTable" -Driver $Driver
+            $Element = Find-SeElement -Id "SingleItemTable" -Driver $Cache:Driver
             $Element.Text.Contains("123456") | should be true
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -132,21 +132,21 @@ Describe "Table" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "element changes on click" {
-            $Element = Find-SeElement -Id "btnTest" -Driver $Driver
+            $Element = Find-SeElement -Id "btnTest" -Driver $Cache:Driver
             Invoke-SeClick -Element $Element 
 
             Start-Sleep -Seconds 3
 
-            $Element = Find-SeElement -Id "spanTest" -Driver $Driver
+            $Element = Find-SeElement -Id "spanTest" -Driver $Cache:Driver
             $Element.Text | Should be "THIS WORKED"
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
@@ -162,22 +162,22 @@ Describe "Table" {
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         
         It "has no error" {
-            $Element = Find-SeElement -Id "Table" -Driver $Driver
+            $Element = Find-SeElement -Id "Table" -Driver $Cache:Driver
             $Element.Text.Contains("An error occurred in this component") | should not be true
         }
 
         It "has no error for blank column" {
-            $Element = Find-SeElement -Id "Table2" -Driver $Driver
+            $Element = Find-SeElement -Id "Table2" -Driver $Cache:Driver
             $Element.Text.Contains("An error occurred in this component") | should not be true
         }
 
-       Stop-SeDriver $Driver
+       Stop-SeDriver $Cache:Driver
        Stop-UDDashboard -Server $Server 
     }
 
