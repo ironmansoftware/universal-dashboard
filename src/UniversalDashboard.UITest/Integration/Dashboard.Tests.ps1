@@ -10,7 +10,6 @@ Describe "Dashboard" {
     Context "Initialization Script" {
 
         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
-           
             $TitleVariable = "Title"
             function Get-ContentForCard {
                 "Body"

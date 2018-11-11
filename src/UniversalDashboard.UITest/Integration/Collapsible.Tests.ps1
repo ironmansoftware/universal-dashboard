@@ -40,7 +40,7 @@ Describe "Collapsible" {
 
                     New-UDButton -Text "Change Icon" -Id "changeIcon" -OnClick {
                         Set-UDElement -Id "ChangeMyIcon-icon" -Attributes @{
-                            className = 'fa fa-user'
+                            className = "fa fa-user"
                         }
                     }
 

@@ -35,9 +35,16 @@ jobs:
       displayName: Create OutPut Zip File
       errorActionPreference: continue
 
+    - task: PublishBuildArtifacts@1
+      displayName: Publish Artifact
+      inputs:
+          PathtoPublish: .\src\output.zip 
+          ArtifactName: OutPut
+          publishLocation: Container
+
     # Publish Pipeline Artifact
     - task: PublishPipelineArtifact@0
       inputs:
         artifactName: 'UniversalDashboard'
-        targetPath: .\src\output.zip
+        targetPath: .\src\output
 
