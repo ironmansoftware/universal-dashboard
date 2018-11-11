@@ -6,29 +6,31 @@
 jobs:
 
 - job: 'ParallelBuildAndTesting'
-  pool: 'Hosted VS2017'
+  pool: 
+    vmImage: 'Hosted VS2017'
   strategy:
-    parallel: 5
+    parallel: 3
 
-- powershell: .\src\build.ps1 -Configuration Release
-  displayName: Start Building The Module
-  errorActionPreference: continue
+  steps:
+    - powershell: .\src\build.ps1 -Configuration Release
+      displayName: Start Building The Module
+      errorActionPreference: continue
 
-- powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration
-  displayName: Start Integration Tests
-  errorActionPreference: continue
+    - powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration
+      displayName: Start Integration Tests
+      errorActionPreference: continue
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'NUnit' # Options: JUnit, NUnit, VSTest, xUnit
-    testResultsFiles: '**/*TEST-*.xml' 
-    searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
-    #mergeTestResults: false # Optional
-    testRunTitle: test-results/test-case.Attributes["name"].Value
-    #buildPlatform: # Optional
-    #buildConfiguration: # Optional
-    publishRunAttachments: true # Optional
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'NUnit' # Options: JUnit, NUnit, VSTest, xUnit
+        testResultsFiles: '**/*TEST-*.xml' 
+        searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
+        #mergeTestResults: false # Optional
+        testRunTitle: test-results/test-case.Attributes["name"].Value
+        #buildPlatform: # Optional
+        #buildConfiguration: # Optional
+        publishRunAttachments: true # Optional
 
-- powershell: Compress-Archive -Path .\src\output -DestinationPath '$(System.DefaultWorkingDirectory)\output.zip' -Force
-  displayName: Create OutPut Zip File
-  errorActionPreference: continue
+    - powershell: Compress-Archive -Path .\src\output -DestinationPath '$(System.DefaultWorkingDirectory)\output.zip' -Force
+      displayName: Create OutPut Zip File
+      errorActionPreference: continue
