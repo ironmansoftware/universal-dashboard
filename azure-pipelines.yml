@@ -35,7 +35,7 @@ jobs:
       errorActionPreference: continue
 
     - task: PublishBuildArtifacts@1
-      display: Publish Artifact
+      displayName: Publish Artifact
       inputs:
           PathtoPublish: '$(Build.ArtifactStagingDirectory)'
           ArtifactName: UniversalDashboard
