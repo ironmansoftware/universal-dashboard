@@ -39,3 +39,4 @@ jobs:
       inputs:
         artifactName: 'UniversalDashboard'
         targetPath: $(Build.ArtifactStagingDirectory)
+
