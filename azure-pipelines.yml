@@ -30,16 +30,17 @@ jobs:
         #buildConfiguration: # Optional
         publishRunAttachments: true # Optional
 
-    - powershell: Compress-Archive -Path src/output -DestinationPath /src -Force
+    - powershell: Compress-Archive -Path .\src\output -DestinationPath .\src -Force
       displayName: Create OutPut Zip File
       errorActionPreference: continue
 
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
       inputs:
-          PathtoPublish: src/output.zip 
+          PathtoPublish: .\src\output.zip 
           ArtifactName: UniversalDashboard
           publishLocation: Container
+      errorActionPreference: continue
 
     # Publish Pipeline Artifact
     - task: PublishPipelineArtifact@0
