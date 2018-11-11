@@ -25,7 +25,7 @@ namespace UniversalDashboard.Models
 		public bool CyclePages { get; set; }
 		public int CyclePagesInterval { get; set; }
 		public string Error { get; set; }
-		public bool Designer { get; set; }
+		public bool Design { get; set; }
 		public Footer Footer { get; set; }
 		public Element NavBarLogo { get; set; }
 		[JsonIgnore]

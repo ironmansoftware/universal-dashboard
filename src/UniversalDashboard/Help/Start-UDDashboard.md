@@ -16,7 +16,7 @@ Starts a dashboard defined by New-UDDashboard.
 ```
 Start-UDDashboard [-Dashboard <Dashboard>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>] [-Design]
  [<CommonParameters>]
 ```
 
@@ -24,7 +24,7 @@ Start-UDDashboard [-Dashboard <Dashboard>] [-Endpoint <Endpoint[]>] [-Name <Stri
 ```
 Start-UDDashboard [-Content <ScriptBlock>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>] [-Design]
  [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ Start-UDDashboard [-Content <ScriptBlock>] [-Endpoint <Endpoint[]>] [-Name <Stri
 ```
 Start-UDDashboard [-FilePath <String>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>] [-Design]
  [<CommonParameters>]
 ```
 
@@ -158,6 +158,22 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Design
+Puts the dashboard in design mode. This will enable the design console. 
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ### -Endpoint
 An array of REST endpoints to expose with this dashboard. They can be generated with New-UDEndpoint.

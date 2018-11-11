@@ -33,7 +33,7 @@ export default class PageCycler extends React.Component {
     }
 
     render() {
-        return <ReactInterval timeout={this.props.cyclePagesInterval * 1000} enabled={this.props.cyclePages} callback={this.cyclePage.bind(this)}/>;
+        return <ReactInterval timeout={this.props.cyclePagesInterval * 1000} enabled={this.props.cyclePages} callback={this.cyclePage.bind(this)}/>
     }
 }
 

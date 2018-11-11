@@ -16,9 +16,10 @@ import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 const UdLoadingComponent = React.lazy(() => import('./ud-loading.jsx' /* webpackChunkName: "ud-loading" */))
 const UdPageCyclerComponent = React.lazy(() => import('./page-cycler.jsx' /* webpackChunkName: "ud-page-cycler" */))
 const UdModalComponent = React.lazy(() => import('./ud-modal.jsx' /* webpackChunkName: "ud-modal" */))
-const UdToastComponent = React.lazy(() => import('./services/toaster' /* webpackChunkName: "ud-toaster" */))
 const UdErrorCardComponent = React.lazy(() => import('./error-card.jsx' /* webpackChunkName: "ud-error-card" */))
 
+import toaster from './services/toaster';
+import UDDesigner from './ud-designer';
 
 export default class UdDashboard extends React.Component {
     constructor() {
@@ -33,7 +34,8 @@ export default class UdDashboard extends React.Component {
             loading: true,
             location: null,
             authenticated: false,
-            sessionId: ''
+            sessionId: '',
+            design: false
         }
     }
 
@@ -56,11 +58,11 @@ export default class UdDashboard extends React.Component {
         });
 
         connection.on('showToast', (model) => {
-            UdToastComponent.show(model);
+            toaster.show(model);
         });
 
         connection.on('hideToast', (id) => {
-            UdToastComponent.hide(id);
+            toaster.hide(id);
         });
 
         connection.on('requestState', (componentId, requestId) => {
@@ -208,7 +210,8 @@ export default class UdDashboard extends React.Component {
                 dashboard: dashboard,
                 loading: false,
                 sessionId:  json.sessionId,
-                authenticated: json.authenticated
+                authenticated: json.authenticated,
+                design: dashboard.design
             });
 
         }.bind(this), this.props.history);
@@ -327,9 +330,10 @@ export default class UdDashboard extends React.Component {
                 <UdFooter backgroundColor={this.state.dashboard.navBarColor} fontColor={this.state.dashboard.navBarFontColor} footer={this.state.dashboard.footer} demo={this.state.dashboard.demo} />,
                 <Route path="/" render={function (x) {
                     return <Suspense fallback={<div></div>}>
-                        <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />;
+                        <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />
                     </Suspense>
-                    }.bind(this)}/>
+                    }.bind(this)}/>,
+                this.state.design ? <UDDesigner/> : <span/>
                 ]
     }
 }
