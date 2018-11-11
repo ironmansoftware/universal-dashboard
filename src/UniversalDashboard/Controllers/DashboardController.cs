@@ -115,27 +115,33 @@ namespace UniversalDashboard.Controllers
 
 			try 
 			{
-				using(var powershell = PowerShell.Create()) {
-					powershell.AddScript(dashboardScript);
-					var dashboard = powershell.Invoke().FirstOrDefault()?.BaseObject as Dashboard;
-
-                    if (powershell.HadErrors)
+                using(var runspaceRef = _dashboardService.RunspaceFactory.GetRunspace())
+                {
+                    using (var powershell = PowerShell.Create())
                     {
-                        foreach(var error in powershell.Streams.Error)
+                        powershell.Runspace = runspaceRef.Runspace;
+                        powershell.AddScript(dashboardScript);
+                        var dashboard = powershell.Invoke().FirstOrDefault()?.BaseObject as Dashboard;
+
+                        if (powershell.HadErrors)
                         {
-                            Log.Warn("Failed to update dashboard. " + error.ToString());
+                            foreach (var error in powershell.Streams.Error)
+                            {
+                                Log.Warn("Failed to update dashboard. " + error.ToString());
+                            }
                         }
+
+                        if (dashboard == null)
+                        {
+                            return StatusCode(400);
+                        }
+
+                        _dashboardService.SetDashboard(dashboard);
+                        System.IO.File.WriteAllText(Constants.CachedDashboardPath, dashboardScript);
+                        await _hub.Clients.All.SendAsync("reload");
+
+                        Log.Debug("Successfully updated dashboard.");
                     }
-
-					if (dashboard == null) {
-						return StatusCode(400);
-					}
-
-					_dashboardService.SetDashboard(dashboard);
-					System.IO.File.WriteAllText(Constants.CachedDashboardPath, dashboardScript);
-					await _hub.Clients.All.SendAsync("reload");
-
-                    Log.Debug("Successfully updated dashboard.");
                 }
 			}
 			catch (Exception ex) 
