@@ -2,71 +2,57 @@ param([Switch]$Release)
 
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
 
 Describe "Font Icons" {
     Context "Font Awesome Icons" {
 
-        $Dashboard = New-UDDashboard -Title "Font Awesome Icons - Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Font Awesome Icons - Test" -Content {
 
             New-UDIcon -Icon github -Size 3x
 
         } -FontIconStyle FontAwesome
+        ))') -SessionVariable ss -ContentType "text/plain"
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Cache:Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         it "should have font-family of FontAwesome" {
             ((Find-SeElement -Driver $Cache:Driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
         }
-
-        Stop-SeDriver $Cache:Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Font Awesome Icons - As default parameter value" {
 
-        $Dashboard = New-UDDashboard -Title "Font Awesome Icons - Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Font Awesome Icons - Test" -Content {
 
             New-UDIcon -Icon github -Size 3x
 
-        }
+        }))') -SessionVariable ss -ContentType "text/plain"
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Cache:Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         it "should have font-family of FontAwesome" {
             ((Find-SeElement -Driver $Cache:Driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
         }
-
-        Stop-SeDriver $Cache:Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Line Awesome Icons" {
-        $Dashboard = New-UDDashboard -Title "Icons8 Line Awesome Icons - Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Icons8 Line Awesome Icons - Test" -Content {
 
             New-UDIcon -Icon github -Size 3x
 
         } -FontIconStyle LineAwesome
+        ))') -SessionVariable ss -ContentType "text/plain"
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Cache:Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         it "should have font-family of LineAwesome" {
             $font = (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:LineAwesome" 
             $font.count | Should be 1
         }
-
-        Stop-SeDriver $Cache:Driver
-        Stop-UDDashboard -Server $Server 
     }
 }

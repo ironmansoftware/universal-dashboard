@@ -6,7 +6,6 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
 Describe "EndpointInitialization" {
     Context "Variables" {
 
@@ -45,34 +44,32 @@ Describe "EndpointInitialization" {
 
         } -EndpointInitialization $Initialization
         
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Cache:Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
-
-        Start-Sleep 3
+        $Server = Start-UDDashboard -Port 10005 -Dashboard $dashboard 
+        $TempDriver = Start-SeFirefox
+        Enter-SeUrl -Driver $TempDriver -Url "http://localhost:1005"
 
         It "should load module from temp dir" {
-            $Target = Find-SeElement -Driver $Cache:Driver -Id "Counter"
+            $Target = Find-SeElement -Driver $TempDriver -Id "Counter"
             $Target.Text | Should be "Counter`r`n10" 
         }
 
         It "should have variable defined" {
-            $Target = Find-SeElement -Driver $Cache:Driver -Id "variable"
+            $Target = Find-SeElement -Driver $TempDriver -Id "variable"
             $Target.Text | Should be "This is a value" 
         }
 
         It "should have function defined" {
-            $Target = Find-SeElement -Driver $Cache:Driver -Id "function"
+            $Target = Find-SeElement -Driver $TempDriver -Id "function"
             $Target.Text | Should be "999" 
         }
 
         It "should load module from relative path" {
-            $Target = Find-SeElement -Driver $Cache:Driver -Id "othermodule"
+            $Target = Find-SeElement -Driver $TempDriver -Id "othermodule"
             $Target.Text | Should be "42" 
         }
 
         Remove-Item $tempModule -Force
-        Stop-SeDriver $Cache:Driver
+        Stop-SeDriver $TempDriver
         Stop-UDDashboard -Server $Server 
     }
 }

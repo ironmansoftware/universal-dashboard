@@ -6,11 +6,11 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
 Describe "Error" {
     Context "Components" {
         #Create a dashboard to test
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDChart -Title "Chart" -Id "Chart" -Endpoint {
                 New-UDTest 
             }
@@ -26,14 +26,9 @@ Describe "Error" {
             New-UDGrid -Title "Grid" -Id "Grid" -Headers @("None") -Properties @("None") -Endpoint {
                 New-UDTest 
             }
-        }
+        }))') -SessionVariable ss -ContentType "text/plain"
         
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        #Open firefox
-        $Cache:Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
-
-        Start-Sleep 2
+        $Cache:Driver.navigate().refresh()
 
         #Run some tests using selenium
         It "should show an error for chart" {
@@ -55,28 +50,21 @@ Describe "Error" {
             $Target = Find-SeElement -Driver $Cache:Driver -Id "Grid"
             $Target.Text | Should be "Grid`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
-
-        Stop-SeDriver $Cache:Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Page" {
-        $dashboard = New-UDDashboard -Title "Test" -Pages @(
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Pages @(
             New-UDPage -Id "Page" -Name "Home" -Content {
                 New-UDTest
             }
-        )
+        )))') -SessionVariable ss -ContentType "text/plain"
         
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Cache:Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         It "should show error for whole page" {
             $Target = Find-SeElement -Driver $Cache:Driver -Id "Page"
             $Target.Text | Should be "An error occurred on this page`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
-
-        Stop-SeDriver $Cache:Driver
-        Stop-UDDashboard -Server $Server 
     }
 }
