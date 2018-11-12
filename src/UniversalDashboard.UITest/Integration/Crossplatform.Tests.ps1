@@ -7,6 +7,9 @@ if ($ENV:APPVEYOR) {
     return
 }
 
+Write-Warning  "Cross platform tests do not work for now on azure pipeline."
+return
+
 Import-Module (Join-Path $PSScriptRoot "Docker/Docker.psm1") -Force
 
 $Root = $PSScriptRoot

@@ -9,7 +9,7 @@ Import-Module $ModulePath -Force
 Describe "Element" {
 
     Context "ArgumentList" {
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ("$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
             $Patch = "comp1"
             New-UDButton -Id "button" -Text $Patch -OnClick (New-UDEndpoint -Endpoint { 
@@ -32,7 +32,7 @@ Describe "Element" {
         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ("$dashboardservice.setDashboard((
             New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
             New-UDElement -Tag A -Id "element" -Attributes @{onclick = "kaboom"} -Content {"IAMME"}
-        }))") -SessionVariable ss -ContentType "text/plain"
+        }))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
@@ -43,7 +43,7 @@ Describe "Element" {
 
     Context "Session Endpoint Cache" {
 
-         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ("$dashboardservice.setDashboard((
+         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages @(New-UDPage -Name "Home" -Content {
                 New-UDRow -Columns {
                    New-UDColumn -Endpoint {
@@ -65,7 +65,7 @@ Describe "Element" {
                     $SessionState.Endpoints.Count
                 } -AutoRefresh -RefreshInterval 1
              })
-        ))") -SessionVariable ss -ContentType "text/plain"
+        ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
@@ -83,7 +83,7 @@ Describe "Element" {
 
     Context "Heading" {
 
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ("$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages @(
             New-UDPage -Name "Home" -Content {
                 New-UDRow -Columns {
@@ -92,7 +92,7 @@ Describe "Element" {
                    }
                 }
              } 
-        )))") -SessionVariable ss -ContentType "text/plain"
+        )))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
@@ -103,12 +103,12 @@ Describe "Element" {
 
     Context "Endpoint" {
 
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ("$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
             New-UDElement -Tag "div" -Id "testElement" -Endpoint {
                 New-UDElement -Tag "span" -Content { "Hey!" }
             }
-        }))") -SessionVariable ss -ContentType "text/plain"
+        }))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
@@ -118,7 +118,7 @@ Describe "Element" {
     }
 
     Context "Events" {
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ("$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
             New-UDRow -Columns { 
                 New-UDColumn -Size 12 -Content {
@@ -153,7 +153,7 @@ Describe "Element" {
                     }
                 }
             }
-        }))") -SessionVariable ss -ContentType "text/plain"
+        }))') -SessionVariable ss -ContentType "text/plain"
    
         $Cache:Driver.navigate().refresh()
 
