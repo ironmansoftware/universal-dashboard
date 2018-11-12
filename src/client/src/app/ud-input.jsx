@@ -14,7 +14,8 @@ export default class Input extends React.Component {
         this.state = {
             fields: props.fields,
             newContent: [],
-            loading: false
+            loading: false,
+            canSubmit: !props.validate
         }
     }
 
@@ -47,17 +48,24 @@ export default class Input extends React.Component {
     }
     
     onValidateComplete(fieldName, errorMessage) {
+        var valid = true;
+
         var fields = this.state.fields.map(function(x) {
             if (x.name === fieldName) {
                 x.validating = false;
                 x.validationError = errorMessage;
             }
 
+            if (x.validationError) {
+                valid = false;
+            }
+
             return x;
         }.bind(this));
 
         this.setState({
-            fields: fields
+            fields: fields,
+            canSubmit: valid
         });
     }
 
@@ -150,7 +158,7 @@ export default class Input extends React.Component {
         }
 
         var fields = this.state.fields.map(x => {
-            return <UdInputField key={x.name} {...x} fontColor={this.props.fontColor} onValueChanged={this.onValueChanged.bind(this)} onValidating={this.onValidating.bind(this)} onValidateComplete={this.onValidateComplete.bind(this)}/>
+            return <UdInputField validate={this.props.validate} key={x.name} {...x} fontColor={this.props.fontColor} onValueChanged={this.onValueChanged.bind(this)} onValidating={this.onValidating.bind(this)} onValidateComplete={this.onValidateComplete.bind(this)}/>
         });
 
         var actions = null 
@@ -165,6 +173,11 @@ export default class Input extends React.Component {
             </div>
         }
 
+        var submit = <a href="#!"id={`btn${this.props.id}`} className="btn" onClick={this.onSubmit.bind(this)}>{this.props.submitText}</a>;
+        if (!this.state.canSubmit) {
+            submit = <a href="#!"id={`btn${this.props.id}`} className="btn disabled">{this.props.submitText}</a>;
+        }
+
         return <div className="card ud-input" key={this.props.id} style={{background: this.props.backgroundColor, color: this.props.fontColor}}>
                     <div className="card-content" >
                         <span className="card-title">{this.props.title}</span>
@@ -172,7 +185,7 @@ export default class Input extends React.Component {
 
                         <Row>
                             <Col s={12} className="right-align">
-                                <a href="#!"id={`btn${this.props.id}`} className="btn" onClick={this.onSubmit.bind(this)}>{this.props.submitText}</a>
+                                {submit}
                             </Col>
                         </Row>
                     </div>

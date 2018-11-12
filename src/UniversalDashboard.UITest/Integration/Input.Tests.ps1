@@ -16,12 +16,13 @@ Describe "Input" {
                 New-UDColumn -Endpoint {
                     New-UDInput -Title 'Test' -Endpoint {
                         param(
+                            [Parameter(Mandatory)]
                             [ValidatePattern('.*Rules.*')]
                             $String
                         )
         
                         
-                    }
+                    } -Validate
                 }
                
             }

@@ -20,6 +20,9 @@ namespace UniversalDashboard.Models
 		public string BackgroundColor { get; set; }
 		[JsonProperty("fontColor")]
 		public string FontColor { get; set; }
+
+        [JsonProperty("validate")]
+        public bool Validate { get; set; }
 	}
 
 	public class Field

@@ -32,6 +32,9 @@ namespace UniversalDashboard.Cmdlets.Inputs
 		[Parameter()]
 		public ScriptBlock Content { get; set; }
 
+        [Parameter]
+        public SwitchParameter Validate { get; set; }
+
 		protected Endpoint GenerateCallback()
 		{
 			var logger = LogManager.GetLogger("NewInputCommand");
@@ -74,16 +77,21 @@ namespace UniversalDashboard.Cmdlets.Inputs
 			{
 				var parameterAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "Parameter");
 				var validateSetAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "ValidateSet");
-				var stringConstant = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("HelpMessage", StringComparison.OrdinalIgnoreCase))?.Argument as StringConstantExpressionAst;
+                var stringConstant = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("HelpMessage", StringComparison.OrdinalIgnoreCase))?.Argument as StringConstantExpressionAst;
+                var mandatoryProperty = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("Mandatory", StringComparison.OrdinalIgnoreCase))?.Argument;
+                var isMandatory = (bool?)mandatoryProperty?.SafeGetValue() == true;
 
-                var endpoint = new Endpoint(ScriptBlock.Create($"param({parameter.ToString()})"));
-                endpoint.Name = Guid.NewGuid().ToString();
-                endpoint.SessionId = SessionId;
-                DashboardService.EndpointService.Register(endpoint);
+                var field = new Field();
+                field.Required = isMandatory;
 
-				var field = new Field();
-
-                field.ValidationEndpoint = endpoint.Name;
+                if (Validate)
+                {
+                    var endpoint = new Endpoint(ScriptBlock.Create($"param({parameter.ToString()})"));
+                    endpoint.Name = Guid.NewGuid().ToString();
+                    endpoint.SessionId = SessionId;
+                    DashboardService.EndpointService.Register(endpoint);
+                    field.ValidationEndpoint = endpoint.Name;
+                }
 
 				var placeholder = stringConstant?.Value;
 				if (placeholder != null)
@@ -137,7 +145,8 @@ namespace UniversalDashboard.Cmdlets.Inputs
 				BackgroundColor = BackgroundColor?.HtmlColor,
 				FontColor = FontColor?.HtmlColor,
 				SubmitText = SubmitText,
-				Fields = new Field[0]
+				Fields = new Field[0],
+                Validate = Validate
 			};
 
 			if (Content == null) 
