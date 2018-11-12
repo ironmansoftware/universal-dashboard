@@ -9,17 +9,10 @@ Import-Module $ModulePath -Force
 Describe "DynamicDashboard" {
     Context "Should work" {
        
-        $Colors = @{
-            BackgroundColor = "#12A5EC"
-            FontColor       = "#FFFFFFFF"
-        }
-
-        $Grids = 1..30
-
         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
-            New-UDDashboard -NavbarLinks $NavBarLinks -Title "For Loop Example" -NavBarColor "#011721" -NavBarFontColor "#CCEDFD" -BackgroundColor "#66C7F6" -FontColor "#011721" -Content {
+            New-UDDashboard -Title "For Loop Example" -NavBarColor "#011721" -NavBarFontColor "#CCEDFD" -BackgroundColor "#66C7F6" -FontColor "#011721" -Content {
             New-UDRow {
-                foreach ($Dataset in $Grids) {
+                foreach ($Dataset in 1..30) {
                     New-UDColumn -Size 1 {
                          New-UDMonitor -Title $Dataset -RefreshInterval 1 -Endpoint {
                              $Dataset | Out-UDMonitorData
