@@ -32,7 +32,13 @@ export default class UdInputField extends React.Component {
 
         fetchPost(`/api/internal/component/input/validate/${field.validationEndpoint}/${field.name}`, e.target.value, function(result) {
             if (result.error != null) {
-                this.props.onValidateComplete(field.name, result.error.message);
+
+                var message = this.props.validationErrorMessage;
+                if (!message || message === "") {
+                    message = result.error.message;
+                }
+
+                this.props.onValidateComplete(field.name, message);
             }
             else 
             {

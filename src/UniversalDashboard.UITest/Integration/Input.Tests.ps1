@@ -17,6 +17,7 @@ Describe "Input" {
                     New-UDInput -Title 'Test' -Endpoint {
                         param(
                             [Parameter(Mandatory)]
+                            [UniversalDashboard.ValidationErrorMessage("Hi")]
                             [ValidatePattern('.*Rules.*')]
                             $String
                         )

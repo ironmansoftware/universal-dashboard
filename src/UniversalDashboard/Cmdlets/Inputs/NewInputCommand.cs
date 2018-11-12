@@ -77,6 +77,9 @@ namespace UniversalDashboard.Cmdlets.Inputs
 			{
 				var parameterAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "Parameter");
 				var validateSetAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "ValidateSet");
+                var validateErrorMessageAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name.Equals("UniversalDashboard.ValidationErrorMessage", StringComparison.OrdinalIgnoreCase));
+
+                var validateErrorMessage = validateErrorMessageAttribute?.PositionalArguments.FirstOrDefault() as StringConstantExpressionAst;
                 var stringConstant = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("HelpMessage", StringComparison.OrdinalIgnoreCase))?.Argument as StringConstantExpressionAst;
                 var mandatoryProperty = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("Mandatory", StringComparison.OrdinalIgnoreCase))?.Argument;
                 var isMandatory = (bool?)mandatoryProperty?.SafeGetValue() == true;
@@ -91,6 +94,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
                     endpoint.SessionId = SessionId;
                     DashboardService.EndpointService.Register(endpoint);
                     field.ValidationEndpoint = endpoint.Name;
+                    field.ValidationErrorMessage = validateErrorMessage?.Value;
                 }
 
 				var placeholder = stringConstant?.Value;
