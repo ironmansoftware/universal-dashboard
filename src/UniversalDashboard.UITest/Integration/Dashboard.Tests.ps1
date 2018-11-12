@@ -9,51 +9,50 @@ Import-Module $ModulePath -Force
 Describe "Dashboard" {
     Context "Initialization Script" {
 
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
-            $TitleVariable = "Title"
-            function Get-ContentForCard {
-                "Body"
-            }    
-            $Init = New-UDEndpointInitialization -Variable "TitleVariable" -Function "Get-ContentForCard"
-    
-            New-UDDashboard -Title "Test" -Content {
-            New-UDRow -Columns {
-                New-UDColumn -Size 12 -Endpoint {
-                    New-UDCard -Title $TitleVariable -Text (Get-ContentForCard) -Id "Card" 
-                }
-                New-UDColumn -Size 12 -Endpoint {
-                    New-UDCard -Title $TitleVariable -Text (Get-ContentForCard) -Id "Card2" 
-                }
-                New-UDColumn -Size 12 -Endpoint {
-                    New-UDCard -Title $TitleVariable -Text (Get-ContentForCard) -Id "Card3" 
-                }
-            } 
-        } -EndpointInitialization $Init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
-        ))') -SessionVariable ss -ContentType 'text/plain'
+        function Get-ContentForCard{"Body"}
+        $init = New-UDEndpointInitialization -Function "Get-ContentForCard"
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+                New-UDRow -Columns {
+                    New-UDColumn -Size 12 -Endpoint {
+                        New-UDCard -Title Title -Text (Get-ContentForCard) -Id "Card" 
+                    }
+                    New-UDColumn -Size 12 -Endpoint {
+                        New-UDCard -Title Title -Text (Get-ContentForCard) -Id "Card2" 
+                    }
+                    New-UDColumn -Size 12 -Endpoint {
+                        New-UDCard -Title Title -Text (Get-ContentForCard) -Id "Card3" 
+                    }
+                } 
+            } -EndpointInitialization $init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
 
-        $Cache:Driver.navigate().refresh()
+        Start-UDDashboard -Dashboard $dashboard -Port 10005 -Name 'D5Init'
+        $TempDriver = Start-SeFirefox
+        Enter-SeUrl -Driver $TempDriver -Url "http://localhost:10005"
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "Card" -Driver $Cache:Driver
+            $Element = Find-SeElement -Id "Card" -Driver $TempDriver
             $Element.Text.Split("`r`n")[0] | should be "Title"
 
-            $Element = Find-SeElement -Id "Card2" -Driver $Cache:Driver
+            $Element = Find-SeElement -Id "Card2" -Driver $TempDriver
             $Element.Text.Split("`r`n")[0] | should be "Title"
 
-            $Element = Find-SeElement -Id "Card3" -Driver $Cache:Driver
+            $Element = Find-SeElement -Id "Card3" -Driver $TempDriver
             $Element.Text.Split("`r`n")[0] | should be "Title"
         }
 
         It "should load javascript" {
-            $Item = (Find-SeElement -TagName "script" -Driver $Cache:Driver ).GetAttribute("src") | Where { $_ -eq 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js' } 
-            $Item | Should not be $null
+            [bool]((Find-SeElement -TagName "script" -Driver $TempDriver ).GetAttribute("src") -match 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js') | Should -Be $true        
         }
+
+        Stop-SeDriver -Driver $TempDriver
+        Stop-UDDashboard -Name 'D5Init'
     }
 
     Context "Update dashboard" {
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-        } 
+        $dashboard = New-UDDashboard -Title "Test" -Content {} 
+        $TempDriver = Start-SeFirefox
+        Enter-SeUrl -Driver $TempDriver -Url "http://localhost:10005"
 
         $Server = Start-UDDashboard -Port 10005 -Name 'D5' -Dashboard $dashboard -UpdateToken "UpdateToken"
 
@@ -64,9 +63,10 @@ Describe "Dashboard" {
         }
 
         It "updates the dashboard" {
-            Find-SeElement -Driver $Cache:Driver -Id 'test' | Should not be $null
+            Find-SeElement -Driver $TempDriver -Id 'test' | Should not be $null
         }
 
+        Stop-SeDriver -Driver $TempDriver
         Stop-UDDashboard -Name 'D5'
     }
 }

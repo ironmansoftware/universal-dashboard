@@ -15,8 +15,8 @@ export default class UDTerminal extends React.Component {
                     });
                 }} 
                 watchConsoleLogging={true} 
-                promptSymbol={"UD >"} 
-                hideTopBar={false} 
+                promptSymbol={"UDPS >"} 
+                hideTopBar={true} 
                 allowTabs={true} 
                 startState={'maximised'} 
                 backgroundColor='#07387e'

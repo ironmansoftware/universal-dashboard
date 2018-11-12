@@ -170,17 +170,16 @@ Describe "Element" {
         }
         
         It "should clear chat messages" {
-            $MessageBox = Find-SeElement -Driver $Cache:Driver -Id "message"
-            Send-SeKeys -Element $MessageBox -Keys "Hey"
+                $MessageBox = Find-SeElement -Driver $Cache:Driver -Id "message"
+                Send-SeKeys -Element $MessageBox -Keys "Hey"
 
+                $btnSend = Find-SeElement -Driver $Cache:Driver -Id "btnSend"
+                Invoke-SeClick -Element $btnSend
 
-            $btnSend = Find-SeElement -Driver $Cache:Driver -Id "btnSend"
-            Invoke-SeClick -Element $btnSend
+                $btnSend = Find-SeElement -Driver $Cache:Driver -Id "btnClear"
+                Invoke-SeClick -Element $btnSend
 
-            $btnSend = Find-SeElement -Driver $Cache:Driver -Id "btnClear"
-            Invoke-SeClick -Element $btnSend
-
-            (Find-SeElement -Driver $Cache:Driver -Id "chatMessage").Text | Should Not BeLike "*Hey"
+                (Find-SeElement -Driver $Cache:Driver -Id "chatroom").GetProperty('childElementCount') | Should -Be 0
         }
     }
 
