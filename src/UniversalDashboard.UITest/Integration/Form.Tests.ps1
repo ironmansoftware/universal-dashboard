@@ -2,15 +2,12 @@ param([Switch]$Release)
 
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
 Describe "Forms" {
     Context "Forms" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            New-UDDashboard -Title "Test" -Content {
             New-UDTextbox -Label "Click me" -Id "txtBox"
             New-UDSelect -Label "Select me" -Id "select" -Option {
                 New-UDSelectOption -Name "test1" -Value 1
@@ -24,18 +21,13 @@ Describe "Forms" {
             New-UDCounter -Title "Select" -Id "SelectValue" -Endpoint {
                 $Cache:SelectData 
             } -AutoRefresh -RefreshInterval 1
-        }
+        }))') -SessionVariable ss -ContentType "text/plain"
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Cache:Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Cache:Driver -Url "http://localhost:$BrowserPort"
+        $Cache:Driver.navigate().refresh()
 
         It "should have title text" {
             $Element = Find-SeElement -Id "txtBox" -Driver $Cache:Driver
             Send-SeKeys -Element $Element -Keys 'hey'
         }
-
-        Stop-SeDriver $Cache:Driver
-        Stop-UDDashboard -Server $Server 
     }
 }
