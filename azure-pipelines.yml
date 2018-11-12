@@ -39,12 +39,6 @@ jobs:
       displayName: Publish Artifact
       inputs:
           PathtoPublish: .\src\UniversalDashboard.Community.2.1.0.zip
-          ArtifactName: OutPut
+          ArtifactName: UniversalDashboard.Community.2.1.0
           publishLocation: Container
-
-    # Publish Pipeline Artifact
-    - task: PublishPipelineArtifact@0
-      inputs:
-        artifactName: 'UniversalDashboard'
-        targetPath: .\src\UniversalDashboard.Community.2.1.0.zip
 
