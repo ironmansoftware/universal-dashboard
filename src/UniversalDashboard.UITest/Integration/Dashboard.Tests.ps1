@@ -41,7 +41,7 @@ Describe "Dashboard" {
         }
 
         It "should load javascript" {
-            [bool]((Find-SeElement -TagName "script" -Driver $TempDriver ).GetAttribute("src") -match 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js') | Should -Be $true        
+            [bool]((Find-SeElement -TagName "script" -Driver $TempDriver ).GetAttribute("src") -match 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js') | Should Be $true        
         }
 
         Stop-SeDriver -Driver $TempDriver

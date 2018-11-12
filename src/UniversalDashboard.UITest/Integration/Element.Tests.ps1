@@ -179,7 +179,7 @@ Describe "Element" {
                 $btnSend = Find-SeElement -Driver $Cache:Driver -Id "btnClear"
                 Invoke-SeClick -Element $btnSend
 
-                (Find-SeElement -Driver $Cache:Driver -Id "chatroom").GetProperty('childElementCount') | Should -Be 0
+                (Find-SeElement -Driver $Cache:Driver -Id "chatroom").GetProperty('childElementCount') | Should Be 0
         }
     }
 
