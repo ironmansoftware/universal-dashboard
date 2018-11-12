@@ -53,7 +53,12 @@ if($Speed){
     Invoke-PesterTest -FileName Design.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName DynamicDashboard.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Element.Tests.ps1 -Subfolder "Integration" -Release:$Release
-
+    Invoke-PesterTest -FileName EndpointInitialization.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Error.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Fab.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName FontIcon.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Form.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Formatting.Tests.ps1 -Subfolder "Integration" -Release:$Release
 }
 
 #Unit
