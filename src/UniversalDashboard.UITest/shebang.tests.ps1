@@ -59,6 +59,29 @@ if($Speed){
     Invoke-PesterTest -FileName FontIcon.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Form.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Formatting.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Grid.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Https.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Image.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName ImageCarousel.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Input.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Link.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Modal.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Monitor.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Page.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName PublishDashboard.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName PublishedFolders.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Redirect.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName ScheduledEndpoint.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Scoping.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Select.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName SpeedTests.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName SyncElement.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Table.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName TestModule.psm1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Theme.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Toast.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName TreeView.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName webconfig.tests.ps1 -Subfolder "Integration" -Release:$Release
 }
 
 #Unit
