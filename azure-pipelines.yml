@@ -31,14 +31,14 @@ jobs:
         publishRunAttachments: true # Optional
 
     - powershell: |
-        Compress-Archive -Path .\src\output -DestinationPath .\src\output.zip -Force -verbose
+        Compress-Archive -Path .\src\output -DestinationPath .\src\UniversalDashboard.Community.2.1.0.zip -Force -verbose
       displayName: Create OutPut Zip File
       errorActionPreference: continue
 
     - task: PublishBuildArtifacts@1
       displayName: Publish Artifact
       inputs:
-          PathtoPublish: .\src\output.zip 
+          PathtoPublish: .\src\UniversalDashboard.Community.2.1.0.zip
           ArtifactName: OutPut
           publishLocation: Container
 
@@ -46,5 +46,5 @@ jobs:
     - task: PublishPipelineArtifact@0
       inputs:
         artifactName: 'UniversalDashboard'
-        targetPath: .\src\output
+        targetPath: .\src\UniversalDashboard.Community.2.1.0.zip
 
