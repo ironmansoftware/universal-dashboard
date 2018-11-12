@@ -18,7 +18,7 @@ Describe "Element" {
                 }
             } -ArgumentList $Patch )
             New-UDElement -Id "parent" -Tag "div" -Content { }
-        }))") -SessionVariable ss -ContentType "text/plain"
+        }))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
@@ -29,11 +29,12 @@ Describe "Element" {
     }
 
     Context "Should work with attributes that start with on" {
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ("$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
-            New-UDElement -Tag A -Id "element" -Attributes @{onclick = "kaboom"} -Content {"IAMME"}
+            New-UDElement -Tag "a" -Id "element" -Attributes @{onclick = "kaboom"} -Content {"IAMME"}
         }))') -SessionVariable ss -ContentType "text/plain"
 
+        
         $Cache:Driver.navigate().refresh()
 
          It "should not show error" {
@@ -44,7 +45,8 @@ Describe "Element" {
     Context "Session Endpoint Cache" {
 
          Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
-            New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages @(New-UDPage -Name "Home" -Content {
+            New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages @(
+                New-UDPage -Name "Home" -Content {
                 New-UDRow -Columns {
                    New-UDColumn -Endpoint {
                       New-UDButton -Text "Click me" -OnClick {
@@ -134,7 +136,7 @@ Describe "Element" {
                     New-UDButton -Text "Send" -Id "btnSend" -onClick {
                         $message = New-UDElement -Id "chatMessage" -Tag "li" -Attributes @{ className = "collection-item" } -Content {
                             $txtMessage = Get-UDElement -Id "message" 
-                            $(Get-Date) $User : $($txtMessage.Attributes["value"])
+                            "$(Get-Date) $User : $($txtMessage.Attributes["value"])"
                         }
                         
                         Set-UDElement -Id "message" -Attributes @{ 
@@ -184,31 +186,29 @@ Describe "Element" {
 
     Context "Element in dynamic page" {
         
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((            
             New-UDDashboard -Title "home" -Pages @(
-            $HomePage= New-UDPage -url "/home" -Endpoint {
-                New-UDCard -Title "Debug" -Content {
-                    New-UDButton -Id "Button" -Text "Restart" -OnClick { Set-UDElement -Id "Output1" -Content {"Clicked"}}
-                    New-UDHeading -Id "Output1" -Text ""
-                }
-            } 
-            $HomePage.Name = "Home" # So it appears in the menu
+                New-UDPage -url "/home" -Endpoint {
+                    New-UDCard -Title "Debug" -Content {
+                        New-UDButton -Id "Button" -Text "Restart" -OnClick { Set-UDElement -Id "Output1" -Content {"Clicked"}}
+                        New-UDHeading -Id "Output1" -Text ""
+                    }
+                } -OutVariable HomePage
             
-            $HomePage2= New-UDPage -name "home2" -Content {
-                New-UDCard -Title "Debug" -Content {
-                    New-UDButton -Text "Restart" -OnClick { Set-UDElement -Id "Output" -Content {"Clicked"}}
-                    New-UDHeading -Id "Output" -Text ""
-                }
-            }
-    
+                $HomePage[0].Name = "Home"
+                New-UDPage -name "home2" -Content {
+                    New-UDCard -Title "Debug" -Content {
+                        New-UDButton -Text "Restart" -OnClick { Set-UDElement -Id "Output" -Content {"Clicked"}}
+                        New-UDHeading -Id "Output" -Text ""
+                    }
+                } -OutVariable HomePage2
+
         )))') -SessionVariable ss -ContentType 'text/plain'
 
         $Cache:Driver.navigate().refresh()
 
         It "Should work in dynamic page" {
             Find-SeElement -Id "Button" -Driver $Cache:Driver | Invoke-SeClick
-
-            Start-Sleep 1
 
             (Find-SeElement -Id "Output1" -Driver $Cache:Driver).Text | Should be "Clicked"
         }
