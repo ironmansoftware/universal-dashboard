@@ -43,10 +43,10 @@ Describe "EndpointInitialization" {
             }
 
         } -EndpointInitialization $Initialization
-        
+        Stop-UDDashboard -Port 10005
         $Server = Start-UDDashboard -Port 10005 -Dashboard $dashboard 
         $TempDriver = Start-SeFirefox
-        Enter-SeUrl -Driver $TempDriver -Url "http://localhost:1005"
+        Enter-SeUrl -Driver $TempDriver -Url "http://localhost:10005"
 
         It "should load module from temp dir" {
             $Target = Find-SeElement -Driver $TempDriver -Id "Counter"
