@@ -7,41 +7,35 @@ Import-Module $ModulePath -Force
 Describe "New-UDImageCarousel" {
 
     Context "Image Carousel With Slides" {
-
-        $Page1 = New-UDPage -Name "Carousel" -Content {
-
-            $FirstSlide = @{
-                backgroundRepeat = "no-repeat"
-                BackgroundImage = "https://stmed.net/sites/default/files/lady-deadpool-wallpapers-27626-5413437.jpg"
-                BackgroundColor  = "transparent"
-                BackgroundSize = "cover"
-                BackgroundPosition = "0% 0%"
-                Url  = "https://universaldashboard.io/"
-            }
-            $SecondSlide = @{
-                BackgroundColor  = "transparent"
-                BackgroundSize = "cover"
-                BackgroundPosition = "0% 0%"
-                Url  = "images/thor_-ragnarok-wallpapers-30137-2449291.jpg"
-                BackgroundImage  = "images/thor_-ragnarok-wallpapers-30137-2449291.jpg"
-            }
-            $ThirdSlide = @{
-                BackgroundColor  = "transparent"
-                BackgroundSize = "cover"
-                BackgroundPosition = "0% 0%"
-                Url  = "https://stmed.net/sites/default/files/ultimate-spider-man-wallpapers-27724-2035627.jpg"
-                BackgroundImage  = "https://stmed.net/sites/default/files/ultimate-spider-man-wallpapers-27724-2035627.jpg"
-            }
-            New-UDImageCarousel -Id "carousel-demo" -Items {
-                New-UDImageCarouselItem @FirstSlide
-                New-UDImageCarouselItem @SecondSlide
-                New-UDImageCarouselItem @ThirdSlide
-            }  -Height 750px -FullWidth -ShowIndecators -AutoCycle -Speed 8000 -ButtonText "Button" -FixButton
-        
-        }
         
         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
-            New-UDDashboard -Title "Test Carousel" -Pages $Page1
+            New-UDDashboard -Title "Test Carousel" -Pages (New-UDPage -Name "Home" -Content {
+
+                $FirstSlide = @{
+                    backgroundRepeat = "no-repeat"
+                    BackgroundImage = "https://stmed.net/sites/default/files/lady-deadpool-wallpapers-27626-5413437.jpg"
+                    BackgroundColor  = "transparent"
+                    BackgroundSize = "cover"
+                    BackgroundPosition = "0% 0%"
+                    Url  = "https://universaldashboard.io/"
+                }
+                $SecondSlide = @{
+                    BackgroundColor  = "blue"
+                }
+                $ThirdSlide = @{
+                    BackgroundColor  = "transparent"
+                    BackgroundSize = "cover"
+                    BackgroundPosition = "0% 0%"
+                    Url  = "https://stmed.net/sites/default/files/ultimate-spider-man-wallpapers-27724-2035627.jpg"
+                    BackgroundImage  = "https://stmed.net/sites/default/files/ultimate-spider-man-wallpapers-27724-2035627.jpg"
+                }
+                New-UDImageCarousel -Id "carousel-demo" -Items {
+                    New-UDImageCarouselItem @FirstSlide
+                    New-UDImageCarouselItem @SecondSlide
+                    New-UDImageCarouselItem @ThirdSlide
+                }  -Height 750px -FullWidth -ShowIndecators -ButtonText "Button" -FixButton
+            
+            })
         ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
