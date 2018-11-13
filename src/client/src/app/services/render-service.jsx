@@ -17,8 +17,7 @@ const UdGridComponent = React.lazy(() => import('./../ud-grid.jsx' /* webpackChu
 const UdDateTimeComponent = React.lazy(() => import('./../basics/datetime.jsx' /* webpackChunkName: "ud-date-time" */))
 const UdElementComponent = React.lazy(() => import('./../ud-element.jsx' /* webpackChunkName: "ud-element" */))
 const UdImageCarouselComponent = React.lazy(() => import( './../ud-image-carousel.jsx' /* webpackChunkName: "ud-image-carousel" */))
-        
-
+const UdTerminal = React.lazy(() => import( './../ud-terminal.jsx' /* webpackChunkName: "ud-terminal" */))
 
 export default function renderComponent(component, history) {
     if (!component) return null;
@@ -109,6 +108,11 @@ export default function renderComponent(component, history) {
         case "imageCarousel":
             return <Suspense fallback={<div></div>}>
                 <UdImageCarouselComponent {...component} key={component.id}/>
+            </Suspense>
+
+        case "terminal":
+            return <Suspense fallback={<div></div>}>
+                <UdTerminal {...component} key={component.id}/>
             </Suspense>
     }
 }

@@ -48,7 +48,37 @@ Describe "Dashboard" {
         }
 
         It "should load javascript" {
-            (Find-SeElement -TagName "script" -Driver $Driver ).GetAttribute("src") | should be 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js'
+            $Item = (Find-SeElement -TagName "script" -Driver $Driver ).GetAttribute("src") | Where { $_ -eq 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js' } 
+            $Item | Should not be $null
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
+    Context "Update dashboard" {
+
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+        } 
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -UpdateToken "UpdateToken"
+
+        Start-Sleep 1
+
+        Update-UDDashboard -UpdateToken "UpdateToken" -Url "http://localhost:10001" -Content {
+            New-UDDashboard -Title "Test" -Content {
+                New-UDElement -Tag 'div' -Id 'test'       
+            }
+        }
+
+
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Start-Sleep 1
+
+        It "updates the dashboard" {
+            Find-SeElement -Driver $Driver -Id 'test' | Should not be $null
         }
 
         Stop-SeDriver $Driver

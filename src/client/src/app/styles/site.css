@@ -47,3 +47,12 @@ input[type=password]:focus {
 td {
     padding: 5px 5px !important;
 }
+
+.terminal-base {
+    min-height: 0px !important;
+}
+
+.jLRkOo {
+    margin-top: 20px !important;
+    margin-left: 10px !important;
+}

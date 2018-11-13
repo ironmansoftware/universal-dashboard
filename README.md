@@ -1,5 +1,8 @@
 # Universal Dashboard 
 
+[Documentation](https://docs.universaldashboard.io) | [Licensing](https://marketplace.universaldashboard.io/Pricing) | [Live Preview](https://poshud.com/) | [YouTube Videos](https://www.youtube.com/playlist?list=PL-0mHH7DlSiSZ4ozleNTUSXNkF6dlySVz) | [Forums](https://forums.universaldashboard.io/)
+
+
 Create beautiful websites and dashboards using only PowerShell
 
 ![](/images/splash.png)
@@ -90,12 +93,5 @@ npm run dev
 
 When building your dashboard in debug mode, make sure to use the port 10001. The Webpack dev server will listen on port 10000. If you open the dashboard in your browser, use the 10000 port. See the integration tests for examples. 
 
-## Resources 
-
-- [Documentation](https://docs.universaldashboard.io)
-- [Licensing](https://ironmansoftware.com/universal-dashboard)
-- [Live Preview](https://poshud.com/)
-- [YouTube Videos](https://www.youtube.com/playlist?list=PL-0mHH7DlSiSZ4ozleNTUSXNkF6dlySVz)
-- [Forums](https://forums.universaldashboard.io/)
 
 
