@@ -61,8 +61,8 @@ if($Speed){
     Invoke-PesterTest -FileName Formatting.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Grid.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Https.Tests.ps1 -Subfolder "Integration" -Release:$Release
-    # Invoke-PesterTest -FileName Image.Tests.ps1 -Subfolder "Integration" -Release:$Release
-    # Invoke-PesterTest -FileName ImageCarousel.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName Image.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    Invoke-PesterTest -FileName ImageCarousel.Tests.ps1 -Subfolder "Integration" -Release:$Release
     # Invoke-PesterTest -FileName Input.Tests.ps1 -Subfolder "Integration" -Release:$Release
     # Invoke-PesterTest -FileName Link.Tests.ps1 -Subfolder "Integration" -Release:$Release
     # Invoke-PesterTest -FileName Modal.Tests.ps1 -Subfolder "Integration" -Release:$Release
