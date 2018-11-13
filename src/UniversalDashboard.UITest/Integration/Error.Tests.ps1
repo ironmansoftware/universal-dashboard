@@ -33,7 +33,7 @@ Describe "Error" {
         #Run some tests using selenium
         It "should show an error for chart" {
             $Target = Find-SeElement -Driver $Cache:Driver -Id "Chart"
-            $Target.Text | Should be "Chart`r`n The term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again."
+            $Target.Text | Should be "Chart`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again."
         }
 
         It "should show an error for monitor" {
@@ -43,14 +43,12 @@ Describe "Error" {
 
         It "should show an error for counter" {
             $Target = Find-SeElement -Driver $Cache:Driver -Id "Counter"
-            $Target.Text | Should be "Counter
-            The term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
+            $Target.Text | Should be "Counter`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
 
         It "should show an error for grid" {
             $Target = Find-SeElement -Driver $Cache:Driver -Id "Grid"
-            $Target.Text | Should be "Grid
-            The term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
+            $Target.Text | Should be "Grid`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
     }
 
@@ -59,7 +57,7 @@ Describe "Error" {
             New-UDDashboard -Title "Test" -Pages @(
             New-UDPage -Id "Page" -Name "Home" -Content {
                 New-UDTest
-            }
+            } -EA Ignore
         )))') -SessionVariable ss -ContentType "text/plain"
         
         $Cache:Driver.navigate().refresh()
