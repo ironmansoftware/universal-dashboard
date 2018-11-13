@@ -24,7 +24,7 @@ Describe "Grid" {
                     Get-Service bits | Select Name, DisplayName,
                     @{
                         Name       = "Status"
-                        Expression = {New-UDElement -Tag div -Attributes @{ className = "green white-text" } -Content { $_.status.tostring() }}
+                        Expression = {New-UDElement -Tag div -Attributes @{ className = "red white-text" } -Content { $_.status.tostring() }}
                     } | Out-UDGridData
                 } 
             }
@@ -44,7 +44,7 @@ Describe "Grid" {
 
         It "should be able to nest new-udelement in grid" {
             $Element = Find-SeElement -Id "Grid3" -Driver $Cache:Driver
-            $Element.Text.Contains("Running") | Should be $true
+            $Element.Text.Contains("Stopped") | Should be $true
         }
     }
 
