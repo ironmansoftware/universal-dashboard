@@ -19,7 +19,8 @@ Describe "Font Icons" {
         $Cache:Driver.navigate().refresh()
 
         it "should have font-family of FontAwesome" {
-            ((Find-SeElement -Driver $Cache:Driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
+            $font = (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" 
+            $font.count | Should be 1
         }
     }
 
@@ -35,7 +36,8 @@ Describe "Font Icons" {
         $Cache:Driver.navigate().refresh()
 
         it "should have font-family of FontAwesome" {
-            ((Find-SeElement -Driver $Cache:Driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
+            $font = (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" 
+            $font.count | Should be 1
         }
     }
 
