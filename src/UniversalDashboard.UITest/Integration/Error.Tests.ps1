@@ -33,12 +33,12 @@ Describe "Error" {
         #Run some tests using selenium
         It "should show an error for chart" {
             $Target = Find-SeElement -Driver $Cache:Driver -Id "Chart"
-            $Target.Text | Should be "Chart`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
+            $Target.Text | Should be "Chart\n The term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again."
         }
 
         It "should show an error for monitor" {
             $Target = Find-SeElement -Driver $Cache:Driver -Id "Monitor"
-            $Target.Text | Should be "Monitor`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
+            $Target.Text | Should be "Monitor\n The term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
 
         It "should show an error for counter" {
