@@ -113,16 +113,15 @@ Describe "Grid" {
 
                 $data | Out-UDGridData 
             } 
-        }
+        }))') -SessionVariable ss -ContentType "text/plain"
  
+        $Cache:Driver.navigate().refresh()
+
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element.Text.Contains("No results found") | Should be $true
         }
-    }))') -SessionVariable ss -ContentType "text/plain"
-
-    $Cache:Driver.navigate().refresh()
-
+    
     Context "server side processing" {
             Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "Test" -Content {New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
