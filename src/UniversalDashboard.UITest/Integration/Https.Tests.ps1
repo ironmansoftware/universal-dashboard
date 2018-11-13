@@ -5,38 +5,33 @@ $ModulePath = Get-ModulePath -Release:$Release
 
 Import-Module $ModulePath -Force
 
-Get-UDDashboard | Stop-UDDashboard
-
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 Describe "Https" {
     $CertPassword = ConvertTo-SecureString -AsPlainText -Force -String "ud"
 
     Context "From store" {
-
+        Stop-UDDashboard -Port 10005
         Import-PfxCertificate -Password $CertPassword -FilePath (Join-Path $PSScriptRoot '..\Assets\certificate.pfx') -CertStoreLocation Cert:\CurrentUser\My
+        $Cert = Get-ChildItem Cert:\currentuser\my\D8B484EAEF02D50F6E1FB064A129BE5BE33DEADE
+        Start-UDDashboard -Port 10005 -Name 'DCert5' -Certificate $Cert
 
         It "should serve HTTPS" {
-            $Cert = Get-ChildItem Cert:\currentuser\my\D8B484EAEF02D50F6E1FB064A129BE5BE33DEADE
-            $Dashboard = Start-UDDashboard -Port 10001 -Certificate $Cert
-
-            $Request = Invoke-WebRequest https://localhost:10001/dashboard
+            $Request = Invoke-WebRequest httpS://localhost:10005/api/internal/dashboard
             $Request.StatusCode | Should be 200
-
-            Stop-UDDashboard -Server $Dashboard
         }
-    }
 
-    Get-UDDashboard | Stop-UDDashboard
+        Stop-UDDashboard -Name 'DCert5'
+    }
 
     Context "From file" {
         It "should serve HTTPS" {
-            $Dashboard = Start-UDDashboard -Port 10001 -CertificateFile (Join-Path $PSScriptRoot '..\Assets\certificate.pfx') -CertificateFilePassword $CertPassword
+            Start-UDDashboard -Port 10005 -Name 'DCert5' -CertificateFile (Join-Path $PSScriptRoot '..\Assets\certificate.pfx') -CertificateFilePassword $CertPassword
 
-            $Request = Invoke-WebRequest https://localhost:10001/dashboard
+            $Request = Invoke-WebRequest httpS://localhost:10005/api/internal/dashboard
             $Request.StatusCode | Should be 200
 
-            Stop-UDDashboard -Server $Dashboard
+            Stop-UDDashboard -Name 'DCert5'
         }
     }
 }
