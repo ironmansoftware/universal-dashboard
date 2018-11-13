@@ -121,6 +121,7 @@ Describe "Grid" {
             $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element.Text.Contains("No results found") | Should be $true
         }
+    }
     
     Context "server side processing" {
             Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
@@ -432,11 +433,8 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $text = $Element[2].text 
 
-            Start-Sleep 3
-
             $NewElement = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             (Find-SeElement -ClassName "griddle-cell" -Driver $NewElement[0])[2].Text | should not be $text     
         }
     }
-}
 }
