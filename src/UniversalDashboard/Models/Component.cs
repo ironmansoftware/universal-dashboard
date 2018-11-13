@@ -17,6 +17,9 @@ namespace UniversalDashboard.Models
 		[JsonProperty("error", NullValueHandling = NullValueHandling.Ignore)]
 		public Error Error { get; set; }
 
+        [JsonIgnore]
+        public Endpoint[] ChildEndpoints { get; set; }
+
 		[JsonProperty("hasCallback")]
 		public bool HasCallback => Callback?.ScriptBlock != null;
 

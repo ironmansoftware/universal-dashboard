@@ -12,27 +12,38 @@ Describe "Input" {
 
     Context "Validation" {
         $dashboard = New-UDDashboard -Title "Validation" -Content {
-            New-UDRow -Endpoint {
+            New-UDRow -Columns {
                 New-UDColumn -Endpoint {
-                    New-UDInput -Title 'Test' -Endpoint {
+                    New-UDInput -Id 'input' -Title 'Test' -Endpoint {
                         param(
                             [Parameter(Mandatory)]
-                            [UniversalDashboard.ValidationErrorMessage("Hi")]
+                            [UniversalDashboard.ValidationErrorMessage("The email address you entered is invalid.")]
                             [ValidatePattern('.*Rules.*')]
-                            $String
+                            $EmailAddress
                         )
         
-                        
                     } -Validate
                 }
                
             }
-           
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
+        It "should validate with custom error message" {
+            $Element = Find-UDElement -Id 'EmailAddress' -Driver $Driver
+            Send-SeKeys -Element $Element -Keys 'a'
+            $Element = Find-UDElement -Id 'input' -Driver $Driver
+            Invoke-SeClick -Element $Element 
 
+            (Find-UDElement -ClassName 'fa-times-circle' -Driver $Driver)['data-tooltip'] | should be 'The email address you entered is invalid.'
+        }
+
+        
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
     }
 
     return

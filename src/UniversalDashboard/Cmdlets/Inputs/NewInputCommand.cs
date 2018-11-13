@@ -34,41 +34,10 @@ namespace UniversalDashboard.Cmdlets.Inputs
 
         [Parameter]
         public SwitchParameter Validate { get; set; }
+        [Parameter]
+        public object[] ArgumentList { get; set; }
 
-		protected Endpoint GenerateCallback()
-		{
-			var logger = LogManager.GetLogger("NewInputCommand");
-
-			var callback = new Endpoint();
-			callback.ScriptBlock = Endpoint;
-
-			try
-			{
-				var variables = SessionState.InvokeCommand.InvokeScript("Get-Variable")
-										  .Select(m => m.BaseObject)
-										  .OfType<PSVariable>()
-										  .Where(m => m.GetType().Name != "LocalVariable" &&
-												 m.GetType().Name != "SessionStateCapacityVariable" &&
-												 m.GetType().Name != "NullVariable" &&
-												 m.GetType().Name != "QuestionMarkVariable" &&
-												 !((m.Options & ScopedItemOptions.AllScope) == ScopedItemOptions.AllScope || (m.Options & ScopedItemOptions.Constant) == ScopedItemOptions.Constant || (m.Options & ScopedItemOptions.ReadOnly) == ScopedItemOptions.ReadOnly))
-										  .Select(m => new KeyValuePair<string, object>(m.Name, SessionState.PSVariable.GetValue(m.Name)))
-										  .ToArray();
-
-				callback.Variables = new Dictionary<string, object>();
-				foreach (var variable in variables)
-					callback.Variables.Add(variable.Key, variable.Value);
-			}
-			catch (Exception ex)
-			{
-				logger.Error(ex, "Failed to look up variables.");
-			}
-
-
-			return callback;
-		}
-
-		private IEnumerable<Field> GetFieldsFromParamBlock() {
+        private IEnumerable<Field> GetFieldsFromParamBlock() {
 
 			var paramBlock = (ParamBlockAst)Endpoint.Ast.Find(m => m is ParamBlockAst, false);
 
@@ -92,7 +61,13 @@ namespace UniversalDashboard.Cmdlets.Inputs
                     var endpoint = new Endpoint(ScriptBlock.Create($"param({parameter.ToString()})"));
                     endpoint.Name = Guid.NewGuid().ToString();
                     endpoint.SessionId = SessionId;
-                    DashboardService.EndpointService.Register(endpoint);
+
+                    if (DashboardService != null)
+                    {
+                        DashboardService.EndpointService.Register(endpoint);
+                    }
+
+                    field.Endpoint = endpoint;
                     field.ValidationEndpoint = endpoint.Name;
                     field.ValidationErrorMessage = validateErrorMessage?.Value;
                 }
@@ -144,7 +119,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
 			var input = new Input
 			{
 				Id = Id,
-				Callback = GenerateCallback(),
+				Callback = Endpoint.GenerateCallback(Id, SessionState, ArgumentList),
 				Title = Title,
 				BackgroundColor = BackgroundColor?.HtmlColor,
 				FontColor = FontColor?.HtmlColor,
@@ -162,6 +137,8 @@ namespace UniversalDashboard.Cmdlets.Inputs
 				var fields = Content.Invoke().Select(m => m.BaseObject).OfType<Field>().ToArray();
 				input.Fields = fields;
 			}
+
+            input.ChildEndpoints = input.Fields?.Select(m => m.Endpoint).ToArray();
 
 			Log.Debug(JsonConvert.SerializeObject(input));
 
