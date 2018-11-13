@@ -46,18 +46,17 @@ namespace UniversalDashboard.Cmdlets.Inputs
 			{
 				var parameterAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "Parameter");
 				var validateSetAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "ValidateSet");
-                var validateErrorMessageAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name.Equals("UniversalDashboard.ValidationErrorMessage", StringComparison.OrdinalIgnoreCase));
-
-                var validateErrorMessage = validateErrorMessageAttribute?.PositionalArguments.FirstOrDefault() as StringConstantExpressionAst;
                 var stringConstant = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("HelpMessage", StringComparison.OrdinalIgnoreCase))?.Argument as StringConstantExpressionAst;
-                var mandatoryProperty = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("Mandatory", StringComparison.OrdinalIgnoreCase))?.Argument;
-                var isMandatory = (bool?)mandatoryProperty?.SafeGetValue() == true;
-
+                
                 var field = new Field();
-                field.Required = isMandatory;
-
+                
                 if (Validate)
                 {
+                    var validateErrorMessageAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name.Equals("UniversalDashboard.ValidationErrorMessage", StringComparison.OrdinalIgnoreCase));
+                    var validateErrorMessage = validateErrorMessageAttribute?.PositionalArguments.FirstOrDefault() as StringConstantExpressionAst;
+                    var mandatoryProperty = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("Mandatory", StringComparison.OrdinalIgnoreCase))?.Argument;
+                    var isMandatory = (bool?)mandatoryProperty?.SafeGetValue() == true;
+
                     var endpoint = new Endpoint(ScriptBlock.Create($"param({parameter.ToString()})"));
                     endpoint.Name = Guid.NewGuid().ToString();
                     endpoint.SessionId = SessionId;
@@ -67,6 +66,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
                         DashboardService.EndpointService.Register(endpoint);
                     }
 
+                    field.Required = isMandatory;
                     field.Endpoint = endpoint;
                     field.ValidationEndpoint = endpoint.Name;
                     field.ValidationErrorMessage = validateErrorMessage?.Value;
@@ -138,7 +138,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
 				input.Fields = fields;
 			}
 
-            input.ChildEndpoints = input.Fields?.Select(m => m.Endpoint).ToArray();
+            input.ChildEndpoints = input.Fields?.Select(m => m.Endpoint).Where(m => m != null).ToArray();
 
 			Log.Debug(JsonConvert.SerializeObject(input));
 

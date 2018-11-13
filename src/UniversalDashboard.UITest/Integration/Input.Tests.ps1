@@ -14,39 +14,100 @@ Describe "Input" {
         $dashboard = New-UDDashboard -Title "Validation" -Content {
             New-UDRow -Columns {
                 New-UDColumn -Endpoint {
-                    New-UDInput -Id 'input' -Title 'Test' -Endpoint {
+                    New-UDInput -Title 'Test' -Endpoint {
                         param(
                             [Parameter(Mandatory)]
                             [UniversalDashboard.ValidationErrorMessage("The email address you entered is invalid.")]
                             [ValidatePattern('.*Rules.*')]
-                            $EmailAddress
+                            $EmailAddress,
+                            [Parameter(Mandatory)]
+                            $SomeOtherField
                         )
         
                     } -Validate
                 }
                
             }
+
+            New-UDInput -Id 'content' -Title 'Test2' -Endpoint {
+                param(
+                    [Parameter(Mandatory)]
+                    [UniversalDashboard.ValidationErrorMessage("The email address you entered is invalid.")]
+                    [ValidatePattern('.*Rules.*')]
+                    $EmailAddress2,
+                    [Parameter(Mandatory)]
+                    $SomeOtherItem2
+                )
+
+            } -Validate
         }
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
-        It "should validate with custom error message" {
-            $Element = Find-UDElement -Id 'EmailAddress' -Driver $Driver
+        It "should validate with custom error message (Endpoint)" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
             Send-SeKeys -Element $Element -Keys 'a'
-            $Element = Find-UDElement -Id 'input' -Driver $Driver
+            $Element = Find-SeElement -Id 'SomeOtherField' -Driver $Driver
             Invoke-SeClick -Element $Element 
 
-            (Find-UDElement -ClassName 'fa-times-circle' -Driver $Driver)['data-tooltip'] | should be 'The email address you entered is invalid.'
+            (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'The email address you entered is invalid.'
+        }
+
+        It "should give error about required field (Endpoint)" {
+
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            $Element = Find-SeElement -Id 'SomeOtherField' -Driver $Driver
+            Invoke-SeClick -Element $Element 
+            $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
+            Invoke-SeClick -Element $Element 
+
+            (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'SomeOtherField is required.'
+        }
+
+        It "should validate with custom error message (Content)" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            
+            $Element = Find-SeElement -Id 'EmailAddress2' -Driver $Driver
+            Send-SeKeys -Element $Element -Keys 'a'
+            $Element = Find-SeElement -Id 'SomeOtherItem2' -Driver $Driver
+            Invoke-SeClick -Element $Element 
+
+            (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'The email address you entered is invalid.'
+        }
+
+        It "should give error about required field (Content)" {
+
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            $Element = Find-SeElement -Id 'SomeOtherItem2' -Driver $Driver
+            Invoke-SeClick -Element $Element 
+            $Element = Find-SeElement -Id 'EmailAddress2' -Driver $Driver
+            Invoke-SeClick -Element $Element 
+
+            (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'SomeOtherItem2 is required.'
+        }
+
+        It "should enable submit if success" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            $Element = Find-SeElement -Id 'EmailAddress2' -Driver $Driver
+            Send-SeKeys -Element $Element -Keys 'Rules'
+            $Element = Find-SeElement -Id 'SomeOtherItem2' -Driver $Driver
+            Send-SeKeys -Element $Element -Keys 'Rules'
+
+            Start-Sleep 1
+
+            Find-SeElement -Driver $Driver -Id "btncontent" |  Get-SeElementAttribute -Attribute 'class' | Should be 'btn'
         }
 
         
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
-
-    return
 
     Context "Custom input" {
         $tempDir = [System.IO.Path]::GetTempPath()
