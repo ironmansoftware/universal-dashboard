@@ -48,7 +48,7 @@ if($Speed){
     Invoke-PesterTest -FileName Collapsible.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Cookies.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Counter.Tests.ps1 -Subfolder "Integration" -Release:$Release
-    Invoke-PesterTest -FileName Crossplatform.Tests.ps1 -Subfolder "Integration" -Release:$Release
+    # Invoke-PesterTest -FileName Crossplatform.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Dashboard.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName Design.Tests.ps1 -Subfolder "Integration" -Release:$Release
     Invoke-PesterTest -FileName DynamicDashboard.Tests.ps1 -Subfolder "Integration" -Release:$Release
