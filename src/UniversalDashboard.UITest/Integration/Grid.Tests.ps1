@@ -4,29 +4,31 @@ Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
 Import-Module $ModulePath -Force
 Describe "Grid" {
+
     Context "no data" {
-            Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+            
             New-UDDashboard -Title "Test" -Content {
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-                $data = @()
+                New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                    $data = @()
+                    $data | Out-UDGridData 
+                } 
 
-                $data | Out-UDGridData 
-            } 
+                New-UDGrid -Title "Grid" -Id "Grid2" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                    $data = @()
+                    "Has" | Out-UDGridData 
+                } 
 
-            New-UDGrid -Title "Grid" -Id "Grid2" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-                $data = @()
-
-                "Has" | Out-UDGridData 
-            } 
-
-            New-UDGrid -Title "Service Grid with filter" -Id "Grid3" -Headers @("Name", "DisplayName", "Status") -Properties @("Name", "DisplayName", "Status") -Endpoint {
-                Get-Service bits  | Select Name, DisplayName,
-                @{
-                    Name       = "Status"
-                    Expression = {New-UDElement -Tag div -Attributes @{ className = "red white-text" } -Content { $_.status.tostring() }}
-                } | Out-UDGridData
-            } 
-        }))') -SessionVariable ss -ContentType "text/plain"
+                New-UDGrid -Title "Service Grid with filter" -Id "Grid3" -Headers @("Name", "DisplayName", "Status") -Properties @("Name", "DisplayName", "Status") -Endpoint {
+                    Get-Service | select -First 1 |  ? {$_.status -eq "stopped"}  | Select Name, DisplayName,
+                    @{
+                        Name       = "Status"
+                        Expression = {New-UDElement -Tag div -Attributes @{ className = "red white-text" } -Content { $_.status.tostring() }}
+                    } | Out-UDGridData
+                } 
+            }
+        ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
@@ -47,36 +49,31 @@ Describe "Grid" {
     }
 
     Context "Custom Columns" {
-            Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "Test" -Content {
-
-            $Variable = "Test"
-
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
-                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
+                $Variable = "Test"
+                New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+                    $data = @(
+                        [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
+                        [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
+                        [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
+                    )
+                    $data | Out-UDGridData 
+                } -Links @(
+                    (New-UDLink -Text "Other link" -Url "http://www.google.com")
                 )
-
-                $data | Out-UDGridData 
-            } -Links @(
-                (New-UDLink -Text "Other link" -Url "http://www.google.com")
-            )
-            New-UDElement -Id "Hey" -Tag "div"
-        }))') -SessionVariable ss -ContentType "text/plain"
+                New-UDElement -Id "Hey" -Tag "div"
+            }
+        ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
         It "should click button" {
             $Button = Find-SeElement -LinkText "HEY" -Driver $Cache:Driver 
             Invoke-SeClick -Element $Button 
-
-            Start-Sleep -Seconds 5
-
             (Find-SeElement -Id "Hey" -Driver $Cache:Driver).Text | should be "Hey"
         }
-
 
         It "should have link" {
             Find-SeElement -LinkText "This is text" -Driver $Cache:Driver | Should not be $null
@@ -100,20 +97,20 @@ Describe "Grid" {
     }
 
     Context "throws" {
-            Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "Test" -Content {
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-                try {
-                    throw "WTF"
-                    $data = @()
-                }
-                catch {
+                New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                    try {
+                        throw "WTF"
+                        $data = @()
+                    }
+                    catch {
 
-                }
-
-                $data | Out-UDGridData 
-            } 
-        }))') -SessionVariable ss -ContentType "text/plain"
+                    }
+                    $data | Out-UDGridData 
+                } 
+            }
+        ))') -SessionVariable ss -ContentType "text/plain"
  
         $Cache:Driver.navigate().refresh()
 
@@ -124,7 +121,7 @@ Describe "Grid" {
     }
     
     Context "server side processing" {
-            Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "Test" -Content {New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
                 $data = @(
                     [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
@@ -159,7 +156,8 @@ Describe "Grid" {
 
                 $data | Out-UDGridData -TotalItems $total
             } 
-        }))') -SessionVariable ss -ContentType "text/plain"
+            }
+        ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
@@ -204,9 +202,7 @@ Describe "Grid" {
         It "should filter data" {
             
             $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Cache:Driver
-
             Send-SeKeys -Element $Element[0] -Keys "2"
-            Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
 
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
@@ -215,7 +211,7 @@ Describe "Grid" {
     }
     
     Context "Grid" {
-            Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
                 $data = @(
@@ -295,7 +291,8 @@ Describe "Grid" {
 
                 $data | Out-UDGridData 
             } -PageSize 5
-        }))') -SessionVariable ss -ContentType "text/plain"
+            }
+        ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
@@ -368,13 +365,9 @@ Describe "Grid" {
         }
 
         It "should filter data" {
-            
             $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Cache:Driver
-
             Send-SeKeys -Element $Element[0] -Keys "2"
-            Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
-
             $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0]
             $Element.Length | Should be 6
@@ -384,7 +377,7 @@ Describe "Grid" {
 
     
     Context "default sort" {
-            Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
             New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
                 $data = @(
@@ -397,7 +390,8 @@ Describe "Grid" {
             } -Links @(
                 (New-UDLink -Text "Other link" -Url "http://www.google.com")
             )
-        }))') -SessionVariable ss -ContentType "text/plain"
+            }
+        ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
  
@@ -405,7 +399,6 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element[1].Text | should be "30"
-            
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[1] 
             $Element[1].Text | should be "20"
@@ -414,25 +407,22 @@ Describe "Grid" {
 
     Context "refresh" {
         Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
-        New-UDDashboard -Title "Test" -Content {
-        New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-            $data = @(
-                [PSCustomObject]@{"hour" = [DateTime]::Now.Hour; "minute" = [DateTime]::Now.Minute; "second" = [DateTime]::Now.Second;}
-            )
-
-            $data | Out-UDGridData 
-        } 
-        }))') -SessionVariable ss -ContentType "text/plain"
+            New-UDDashboard -Title "Test" -Content {
+            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                $data = @(
+                    [PSCustomObject]@{"hour" = [DateTime]::Now.Hour; "minute" = [DateTime]::Now.Minute; "second" = [DateTime]::Now.Second;}
+                )
+                $data | Out-UDGridData 
+            } 
+            }
+        ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
 
         It "should refresh" {
-            $previousText = ""
-
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $text = $Element[2].text 
-
             $NewElement = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             (Find-SeElement -ClassName "griddle-cell" -Driver $NewElement[0])[2].Text | should not be $text     
         }
