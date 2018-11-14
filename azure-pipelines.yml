@@ -19,6 +19,10 @@ jobs:
       displayName: Start Integration Tests
       errorActionPreference: continue
 
+    - powershell: invoke-pester .\src\UniversalDashboard.UITest\Integration -CodeCoverage @(".\src\output\UniversalDashboard.psm1",".\src\output\UniversalDashboardServer.psm1",".\src\output\UniversalDashboard.Controls.psm1") -CodeCoverageOutputFile .\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml
+      displayName: Start Code Coverage Tests
+      errorActionPreference: continue
+
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'NUnit' # Options: JUnit, NUnit, VSTest, xUnit
