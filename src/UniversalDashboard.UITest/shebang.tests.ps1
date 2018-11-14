@@ -86,6 +86,8 @@ if($Speed){
     # Invoke-PesterTest -FileName webconfig.tests.ps1 -Subfolder "Integration" -Release:$Release
 }
 
+invoke-pester .\src\UniversalDashboard.UITest\Integration -CodeCoverage @(".\src\output\UniversalDashboard.psm1",".\src\output\UniversalDashboardServer.psm1",".\src\output\UniversalDashboard.Controls.psm1") -CodeCoverageOutputFile '.\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml'
+
 #Unit
 # Get-ChildItem (Join-Path $PSScriptRoot "Cmdlet") | ForEach-Object {
 #     Invoke-PesterTest -FileName ($_.Name) -Subfolder "Cmdlet" -Release:$Release

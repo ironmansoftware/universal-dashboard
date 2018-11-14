@@ -31,10 +31,6 @@ jobs:
         #buildConfiguration: # Optional
         publishRunAttachments: true # Optional
 
-    - powershell: invoke-pester .\src\UniversalDashboard.UITest\Integration -CodeCoverage @(".\src\output\UniversalDashboard.psm1",".\src\output\UniversalDashboardServer.psm1",".\src\output\UniversalDashboard.Controls.psm1") -CodeCoverageOutputFile .\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml
-      displayName: Start Code Coverage Tests
-      errorActionPreference: continue
-
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: JaCoCo # Options: cobertura, jaCoCo
