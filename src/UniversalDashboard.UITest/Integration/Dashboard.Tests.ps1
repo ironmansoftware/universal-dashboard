@@ -54,15 +54,9 @@ Describe "Dashboard" {
         $TempDriver = Start-SeFirefox
         Enter-SeUrl -Driver $TempDriver -Url "http://localhost:10005"
 
-        $Server = Start-UDDashboard -Port 10005 -Name 'D5' -Dashboard $dashboard -UpdateToken "UpdateToken"
+        Start-UDDashboard -Port 10005 -Name 'D5' -Dashboard $dashboard -UpdateToken "UpdateToken"
 
-<<<<<<< HEAD
         Update-UDDashboard -UpdateToken "UpdateToken" -Url "http://localhost:10005" -Content {
-=======
-        Start-Sleep 1
-
-        Update-UDDashboard -UpdateToken "UpdateToken" -Url "http://localhost:10001" -Content {
->>>>>>> 9c36d039b213638e88602bad9f85f48302740b47
             New-UDDashboard -Title "Test" -Content {
                 New-UDElement -Tag 'div' -Id 'test'       
             }
@@ -72,12 +66,7 @@ Describe "Dashboard" {
             Find-SeElement -Driver $TempDriver -Id 'test' | Should not be $null
         }
 
-<<<<<<< HEAD
         Stop-SeDriver -Driver $TempDriver
         Stop-UDDashboard -Name 'D5'
-=======
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
->>>>>>> 9c36d039b213638e88602bad9f85f48302740b47
     }
 }
