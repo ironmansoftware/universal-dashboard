@@ -45,7 +45,7 @@ Describe "Theme" {
         $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
         
         It "should generate the correct theme" {
-            $Theme = Invoke-WebRequest http://localhost:10001/dashboard/theme -WebSession $ud
+            $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content | Should be ".ud-card {`r`n`tcolor : #999999;`r`n`tbackground-color : #123123;`r`n}`r`n"
         }
@@ -69,7 +69,7 @@ Describe "Theme" {
         $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
 
         It "should generate the correct theme" {
-            $Theme = Invoke-WebRequest http://localhost:10001/dashboard/theme -WebSession $ud
+            $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content | Should be ".ud-card {`r`n`tbackground-color : #123123;`r`n`tcolor : #999999;`r`n}`r`n"
         }
@@ -93,7 +93,7 @@ Describe "Theme" {
         $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
         
         It "should generate the correct theme" {
-            $Theme = Invoke-WebRequest http://localhost:10001/dashboard/theme -WebSession $ud
+            $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content | Should be ".ud-dashboard {`r`n`tbackground-color : #234234;`r`n`tcolor : #959595;`r`n}`r`n.ud-table {`r`n`tbackground-color : #123123;`r`n}`r`n"
         }
@@ -133,7 +133,7 @@ Describe "Theme" {
         $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
         
         It "should generate the correct theme" {
-            $Theme = Invoke-WebRequest http://localhost:10001/dashboard/theme -WebSession $ud
+            $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content | Should not be $null
         }
@@ -150,7 +150,7 @@ Describe "Theme" {
         $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
         
         It "should generate the correct theme" {
-            $Theme = Invoke-WebRequest http://localhost:10001/dashboard/theme -WebSession $ud
+            $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content | Should not be $null
         }
