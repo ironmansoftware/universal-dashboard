@@ -137,7 +137,16 @@ namespace UniversalDashboard.Controllers
                         }
 
                         _dashboardService.SetDashboard(dashboard);
-                        System.IO.File.WriteAllText(Constants.CachedDashboardPath, dashboardScript);
+
+                        try 
+                        {
+                            System.IO.File.WriteAllText(Constants.CachedDashboardPath, dashboardScript);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Warn(ex, "Failed to cache dashboard.");
+                        }
+
                         await _hub.Clients.All.SendAsync("reload");
 
                         Log.Debug("Successfully updated dashboard.");
