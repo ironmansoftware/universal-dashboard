@@ -1,6 +1,7 @@
 import React from 'react';
 import {Input as RInput, Row, Col, Preloader} from 'react-materialize';
 import {DebounceInput} from 'react-debounce-input';
+import { fetchPost } from './services/fetch-service';
 
 export default class UdInputField extends React.Component {
     onSelectChanged(field, e) {
@@ -17,6 +18,33 @@ export default class UdInputField extends React.Component {
 
     onCheckboxChanged(field, e) {
         this.props.onValueChanged(field.name, e.target.checked);
+    }
+
+    onValidateField(field, e) {
+        if (!this.props.validate) return;
+
+        if (this.props.required && (!e.target.value || e.target.value === "")) {
+            this.props.onValidateComplete(field.name, `${field.name} is required.`);
+            return;
+        }
+
+        this.props.onValidating(field.name);
+
+        fetchPost(`/api/internal/component/input/validate/${field.validationEndpoint}/${field.name}`, e.target.value, function(result) {
+            if (result.error != null) {
+
+                var message = this.props.validationErrorMessage;
+                if (!message || message === "") {
+                    message = result.error.message;
+                }
+
+                this.props.onValidateComplete(field.name, message);
+            }
+            else 
+            {
+                this.props.onValidateComplete(field.name);
+            }
+        }.bind(this))
     }
 
     setupDatePicker() {
@@ -83,6 +111,8 @@ export default class UdInputField extends React.Component {
         if (this.props.type === 'time') {
             this.setupTimePicker();
         } 
+
+        $('.tooltipped').tooltip();
     }
 
     render() {
@@ -91,20 +121,33 @@ export default class UdInputField extends React.Component {
             type: this.props.type,
             value: this.props.value,
             placeholder: this.props.placeholder,
-            validOptions: this.props.validOptions
+            validOptions: this.props.validOptions,
+            validating: this.props.validating,
+            validationError: this.props.validationError,
+            validationEndpoint: this.props.validationEndpoint
         }
 
         if (field.type === 'textbox' || field.type === 'password') {
             var type = field.type == 'textbox' ? 'text' : 'password';
 
+            var validationIcon = null;
+            if (this.props.validating) {
+                validationIcon = <i className='fa fa-circle-o-notch fa-spin fa-fw tooltipped prefix' data-tooltip="Validating..."></i>
+            }
+            else if (this.props.validationError != null) {
+                validationIcon = <i className='fa fa-times-circle tooltipped red-text prefix' data-tooltip={this.props.validationError}></i>
+            }
+
             var textfield = null;
             if (this.props.debounceTimeout == null) {
-                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value}/>
+
+                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)}/>
             } else {
                 textfield = <DebounceInput id={field.name} name={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} debounceTimeout={this.props.debounceTimeout}/>
             }
 
             return <div className="input-field">
+                        {validationIcon}
                         {textfield}
                         <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>
                     </div>
@@ -127,7 +170,7 @@ export default class UdInputField extends React.Component {
         if (field.type === 'date') {
             return [
                 <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>,
-                <input type="text"  className="datepicker" id={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} ref={datetime => this.datetime = datetime}/>
+                <input type="text" className="datepicker" id={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} ref={datetime => this.datetime = datetime}/>
             ]
         }
 

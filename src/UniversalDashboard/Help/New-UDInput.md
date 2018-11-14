@@ -14,8 +14,8 @@ Creates an input card on the dashboard to accept user input.
 
 ```
 New-UDInput [-Title <String>] [-SubmitText <String>] [-BackgroundColor <DashboardColor>]
- [-FontColor <DashboardColor>] -Endpoint <ScriptBlock> [-Content <ScriptBlock>] [-Id <String>]
- [<CommonParameters>]
+ [-FontColor <DashboardColor>] -Endpoint <ScriptBlock> [-Content <ScriptBlock>] [-Validate]
+ [-ArgumentList <Object[]>] [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -42,6 +42,21 @@ PS C:\> New-UDInput -Title "User Information" -Endpoint {
 Accepts user input and sends the data to another server. The endpoint then returns a toast message to the client.
 
 ## PARAMETERS
+
+### -ArgumentList
+Arguments to pass to the Endpoint parameter. They are available via the $ArgumentList variable within the endpoint. 
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -BackgroundColor
 The background color of the card.
@@ -138,6 +153,21 @@ The title of the input card.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Validate
+Whether or not to enforce client side validation via ValidationAttributes.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 

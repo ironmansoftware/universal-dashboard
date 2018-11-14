@@ -20,10 +20,20 @@ namespace UniversalDashboard.Services
             component.Callback.Name = component.Id;
             component.Callback.Page = page;
 
-			return new ComponentParts
+            var endpoints = new List<Endpoint> { component.Callback };
+            if (component.ChildEndpoints != null)
+            {
+                foreach(var endpoint in component.ChildEndpoints)
+                {
+                    endpoint.Page = page;
+                    endpoints.Add(endpoint);
+                }
+            }
+
+            return new ComponentParts
 			{
-				Endpoints = new List<Endpoint> { component.Callback }
-			};
+				Endpoints = endpoints
+            };
 		}
 	}
 }
