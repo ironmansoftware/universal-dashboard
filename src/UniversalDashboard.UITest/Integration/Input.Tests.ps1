@@ -69,7 +69,9 @@ Describe "Input" {
                     [ValidatePattern('.*Rules.*')]
                     $EmailAddress2,
                     [Parameter(Mandatory)]
-                    $SomeOtherItem2
+                    $SomeOtherItem2,
+                    [Parameter]
+                    $NotRequired
                 )
 
             } -Validate
