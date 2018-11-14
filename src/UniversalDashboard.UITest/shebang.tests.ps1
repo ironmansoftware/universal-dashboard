@@ -1,5 +1,7 @@
 param([Switch]$Release, [Switch]$Integration, [Switch]$Speed)
 
+Install-Module -Name 'Pester' -SkipPublisherCheck -Scope CurrentUser -Force -AcceptLicense -ErrorAction SilentlyContinue
+
 $Pester = Import-Module Pester  -PassThru -ErrorAction Ignore
 if ($Pester -eq $null) {
 	Install-Module Pester -Scope CurrentUser -Force
@@ -103,7 +105,9 @@ Invoke-PesterTest -FileName Manifest.Tests.ps1 -Release:$Release
 
 
 Get-Process firefox -ErrorAction SilentlyContinue | Stop-Process
+
 src\UniversalDashboard.UITest\RemoveSetup.ps1
+
 Stop-Service -Name UniversalDashboard -ErrorAction SilentlyContinue
 
 
