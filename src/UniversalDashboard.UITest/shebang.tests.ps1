@@ -24,6 +24,7 @@ $OutputPath = "$PSScriptRoot\test-results"
 
 Remove-Item $OutputPath -Recurse -ErrorAction SilentlyContinue -Force
 New-Item -Path $OutputPath -ItemType Directory
+New-Item -Path "$OutputPath\code" -ItemType Directory
 
 Stop-Service UniversalDashboard -Force -ErrorAction SilentlyContinue
 
@@ -86,7 +87,6 @@ if($Speed){
     # Invoke-PesterTest -FileName webconfig.tests.ps1 -Subfolder "Integration" -Release:$Release
 }
 
-invoke-pester .\src\UniversalDashboard.UITest\Integration -CodeCoverage @(".\src\output\UniversalDashboard.psm1",".\src\output\UniversalDashboardServer.psm1",".\src\output\UniversalDashboard.Controls.psm1") -CodeCoverageOutputFile '.\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml'
 
 #Unit
 # Get-ChildItem (Join-Path $PSScriptRoot "Cmdlet") | ForEach-Object {
@@ -104,6 +104,7 @@ invoke-pester .\src\UniversalDashboard.UITest\Integration -CodeCoverage @(".\src
 # }
 
 Invoke-PesterTest -FileName Manifest.Tests.ps1 -Release:$Release
+invoke-pester .\src\UniversalDashboard.UITest\Integration -CodeCoverage @(".\src\output\UniversalDashboard.psm1",".\src\output\UniversalDashboardServer.psm1",".\src\output\UniversalDashboard.Controls.psm1") -CodeCoverageOutputFile '.\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml'
 
 
 Get-Process firefox -ErrorAction SilentlyContinue | Stop-Process

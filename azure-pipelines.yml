@@ -34,7 +34,7 @@ jobs:
     - task: PublishCodeCoverageResults@1
       inputs:
         codeCoverageTool: JaCoCo # Options: cobertura, jaCoCo
-        summaryFileLocation: .\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml
+        summaryFileLocation: src/UniversalDashboard.UITest/test-results/code/Test-CodeCoverageOutput.xml
         #reportDirectory: # Optional
         #additionalCodeCoverageFiles: # Optional
         failIfCoverageEmpty: false # Optional
