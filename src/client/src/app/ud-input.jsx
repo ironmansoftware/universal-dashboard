@@ -3,6 +3,7 @@ import {Input as RInput, Row, Col, Preloader} from 'react-materialize';
 import {fetchPost} from './services/fetch-service.jsx';
 import renderComponent from './services/render-service.jsx';
 import UdInputField from './ud-input-field.jsx';
+import toaster from './services/toaster';
 
 const UdLinkComponent = React.lazy(() => import('./ud-link.jsx' /* webpackChunkName: "ud-link" */))
 
@@ -77,7 +78,13 @@ export default class Input extends React.Component {
         
         fetchPost(`/api/internal/component/input/${this.props.id}`, this.state.fields, res => {
                 if (res.error) {
-                    Materialize.toast(res.error.message, 2000);
+
+                    toaster.error({message: res.error.message})
+
+                    this.setState({
+                        loading: false
+                    })
+    
                     return;
                 }
 

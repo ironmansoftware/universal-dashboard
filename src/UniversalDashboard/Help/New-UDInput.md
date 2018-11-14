@@ -44,7 +44,7 @@ Accepts user input and sends the data to another server. The endpoint then retur
 ## PARAMETERS
 
 ### -ArgumentList
-{{Fill ArgumentList Description}}
+Arguments to pass to the Endpoint parameter. They are available via the $ArgumentList variable within the endpoint. 
 
 ```yaml
 Type: Object[]
@@ -164,7 +164,7 @@ Accept wildcard characters: False
 ```
 
 ### -Validate
-{{Fill Validate Description}}
+Whether or not to enforce client side validation via ValidationAttributes.
 
 ```yaml
 Type: SwitchParameter

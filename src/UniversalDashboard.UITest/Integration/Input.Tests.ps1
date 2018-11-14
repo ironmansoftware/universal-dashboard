@@ -9,6 +9,40 @@ Import-Module $ModulePath -Force
 Get-UDDashboard | Stop-UDDashboard
 
 Describe "Input" {
+
+    Context "should return the error is there is an error" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
+                param($Test)
+
+                throw "Noooooooooooo!"
+            }
+        }
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Start-Sleep 1
+
+        It "should have shown error" {
+            $Element = Find-SeElement -Name "Test" -Driver $Driver
+            Send-SeKeys -Element $Element -Keys "16"
+
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick $Button
+
+            Start-Sleep 1
+
+            (Find-SeElement -ClassName 'iziToast-message' -Driver $Driver).Text | should be "Noooooooooooo!"
+            
+            
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
     Context "Validation" {
         $dashboard = New-UDDashboard -Title "Validation" -Content {
             New-UDRow -Columns {
@@ -594,5 +628,6 @@ Describe "Input" {
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
+
 
 }
