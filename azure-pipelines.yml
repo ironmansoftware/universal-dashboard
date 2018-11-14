@@ -19,9 +19,6 @@ jobs:
       displayName: Start Integration Tests
       errorActionPreference: continue
 
-    - powershell: invoke-pester .\src\UniversalDashboard.UITest\Integration -CodeCoverage @(".\src\output\UniversalDashboard.psm1",".\src\output\UniversalDashboardServer.psm1",".\src\output\UniversalDashboard.Controls.psm1") -CodeCoverageOutputFile .\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml
-      displayName: Start Code Coverage Tests
-      errorActionPreference: continue
 
     - task: PublishTestResults@2
       inputs:
@@ -34,6 +31,18 @@ jobs:
         #buildConfiguration: # Optional
         publishRunAttachments: true # Optional
 
+    - powershell: invoke-pester .\src\UniversalDashboard.UITest\Integration -CodeCoverage @(".\src\output\UniversalDashboard.psm1",".\src\output\UniversalDashboardServer.psm1",".\src\output\UniversalDashboard.Controls.psm1") -CodeCoverageOutputFile .\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml
+      displayName: Start Code Coverage Tests
+      errorActionPreference: continue
+
+    - task: PublishCodeCoverageResults@1
+      inputs:
+        codeCoverageTool: JaCoCo # Options: cobertura, jaCoCo
+        summaryFileLocation: .\src\UniversalDashboard.UITest\test-results\Test-CodeCoverageOutput.xml
+        #reportDirectory: # Optional
+        #additionalCodeCoverageFiles: # Optional
+        failIfCoverageEmpty: false # Optional
+    
     - powershell: |
         Compress-Archive -Path .\src\output -DestinationPath .\src\UniversalDashboard.Community.2.1.0.zip -Force -verbose
       displayName: Create OutPut Zip File
