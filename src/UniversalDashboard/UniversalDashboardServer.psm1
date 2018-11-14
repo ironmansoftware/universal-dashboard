@@ -1,3 +1,5 @@
+
+
 function Find-Object {
     param(
         [Parameter(ValueFromPipeline=$true, Mandatory)]
@@ -1523,4 +1525,11 @@ function Publish-UDDashboard {
 		Write-Verbose "Starting service UniversalDashboard"
 		sc.exe start UniversalDashboard
 	}
+}
+
+class ValidationErrorMessage : Attribute {
+    ValidationErrorMessage([string]$Message) {
+        $this.Message = $Message
+    }
+    [string]$Message
 }

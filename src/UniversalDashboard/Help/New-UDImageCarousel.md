@@ -28,8 +28,7 @@ PS C:\> New-UDImageCarousel -Items {
                 New-UDImageCarouselItem  @Slide1
                 New-UDImageCarouselItem  @Slide2
                 New-UDImageCarouselItem  @Slide3
-        }  -Height 650px -FullWidth -FixButton -ButtonText 'GO TO..' -ShowIndecators 
-
+        }  -Height 650px -FullWidth -FixButton -ButtonText 'GO TO..' -ShowIndecators
 ```
 
 Create new image carousel with 3 slides and with fixed button on every slide.
@@ -187,8 +186,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

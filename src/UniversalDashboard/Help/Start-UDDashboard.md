@@ -16,24 +16,24 @@ Starts a dashboard defined by New-UDDashboard.
 ```
 Start-UDDashboard [-Dashboard <Dashboard>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>] [-Design]
- [<CommonParameters>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [-Design] [<CommonParameters>]
 ```
 
 ### Content
 ```
 Start-UDDashboard [-Content <ScriptBlock>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>] [-Design]
- [<CommonParameters>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [-Design] [<CommonParameters>]
 ```
 
 ### DashboardFile
 ```
 Start-UDDashboard [-FilePath <String>] [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-AutoReload] [-Certificate <X509Certificate2>] [-CertificateFile <String>]
- [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>] [-Design]
- [<CommonParameters>]
+ [-CertificateFilePassword <SecureString>] [-UpdateToken <String>] [-PublishedFolder <PublishedFolder[]>]
+ [-Design] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -173,7 +173,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
 
 ### -Endpoint
 An array of REST endpoints to expose with this dashboard. They can be generated with New-UDEndpoint.

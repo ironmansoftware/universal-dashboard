@@ -20,6 +20,9 @@ namespace UniversalDashboard.Models
 		public string BackgroundColor { get; set; }
 		[JsonProperty("fontColor")]
 		public string FontColor { get; set; }
+
+        [JsonProperty("validate")]
+        public bool Validate { get; set; }
 	}
 
 	public class Field
@@ -51,6 +54,12 @@ namespace UniversalDashboard.Models
         public string CancelText { get; set; }
         [JsonProperty("clearText")]
         public string ClearText { get; set; }
+        [JsonProperty("validationEndpoint")]
+        public string ValidationEndpoint { get; set; }
+        [JsonProperty("validationErrorMessage")]
+        public string ValidationErrorMessage { get; set; }
+        [JsonIgnore]
+        public Endpoint Endpoint { get; set; }
     }
 
 	public static class FieldTypes

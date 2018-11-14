@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Threading.Tasks;
+using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Cmdlets
@@ -11,7 +9,23 @@ namespace UniversalDashboard.Cmdlets
     {
 		[Parameter]
 		public string Id { get; set; } = Guid.NewGuid().ToString();
-	}
+
+        internal IDashboardService DashboardService
+        {
+            get
+            {
+                return SessionState.PSVariable.Get(Constants.DashboardService)?.Value as IDashboardService;
+            }
+        }
+
+        internal string SessionId
+        {
+            get
+            {
+                return SessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
+            }
+        }
+    }
 
 	public class ColoredComponentCmdlet : ComponentCmdlet {
 		[Parameter]

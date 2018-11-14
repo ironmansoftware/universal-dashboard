@@ -42,7 +42,7 @@ namespace UniversalDashboard.Cmdlets
 
             callback.SessionId = SessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
 
-            var dashboardService = SessionState.PSVariable.Get("DashboardService")?.Value as DashboardService;
+            var dashboardService = SessionState.PSVariable.Get(Constants.DashboardService)?.Value as DashboardService;
             if (dashboardService != null)
             {
                 dashboardService.EndpointService.Register(callback);

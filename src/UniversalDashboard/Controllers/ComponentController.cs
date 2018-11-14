@@ -259,7 +259,31 @@ namespace UniversalDashboard.Controllers
             return RunScript(endpoint, variables);
         }
 
-		[HttpGet]
+        [HttpPost]
+        [Route("input/validate/{fieldId}/{fieldName}")]
+        [Authorize]
+        public IActionResult ValidateField([FromRoute]string fieldId, [FromRoute]string fieldName, [FromBody]object value)
+        {
+            Log.Debug($"Validate Field - id = {fieldId}, value = {value}");
+
+            var endpoint = _dashboardService.EndpointService.Get(fieldId, SessionId);
+
+            if (endpoint == null)
+            {
+                Log.Warn($"Endpoint {fieldId} not found.");
+                return NotFound();
+            }
+
+            var parameters = new Dictionary<string, object>
+            {
+                { fieldName, value }
+            };
+
+            return RunScript(endpoint, parameters);
+        }
+
+
+        [HttpGet]
 		[Route("/api/{*parts}")]
 		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public IActionResult GetEndpoint()

@@ -90,11 +90,15 @@ namespace UniversalDashboard.Controllers
 		[HttpPost]
 		public async Task<IActionResult> Post() {
 			if (_dashboardService.UpdateToken == null) {
+                Log.Warn("No update token specified. Dashboard will not accept Update-UDDashboard.");
+
 				return StatusCode(403);
 			}
 
 			if (!HttpContext.Request.Headers.ContainsKey("x-ud-update-token") || HttpContext.Request.Headers["x-ud-update-token"].FirstOrDefault() != _dashboardService.UpdateToken) {
-				return StatusCode(403);
+                Log.Warn("Invalid update token specified while attempting to update dashboard.");
+
+                return StatusCode(403);
 			}
 
 			string dashboardScript;
@@ -104,26 +108,55 @@ namespace UniversalDashboard.Controllers
 			}
 
 			if (String.IsNullOrEmpty(dashboardScript)) {
-				return StatusCode(400);
+                Log.Warn("Failed to update dashboard. Dashboard script was null.");
+
+                return StatusCode(400);
 			}
 
 			try 
 			{
-				using(var powershell = PowerShell.Create()) {
-					powershell.AddScript(dashboardScript);
-					var dashboard = powershell.Invoke().FirstOrDefault()?.BaseObject as Dashboard;
+                using(var runspaceRef = _dashboardService.RunspaceFactory.GetRunspace())
+                {
+                    using (var powershell = PowerShell.Create())
+                    {
+                        powershell.Runspace = runspaceRef.Runspace;
+                        powershell.AddScript(dashboardScript);
+                        var dashboard = powershell.Invoke().FirstOrDefault()?.BaseObject as Dashboard;
 
-					if (dashboard == null) {
-						return StatusCode(400);
-					}
+                        if (powershell.HadErrors)
+                        {
+                            foreach (var error in powershell.Streams.Error)
+                            {
+                                Log.Warn("Failed to update dashboard. " + error.ToString());
+                            }
+                        }
 
-					_dashboardService.SetDashboard(dashboard);
-					System.IO.File.WriteAllText(Constants.CachedDashboardPath, dashboardScript);
-					await _hub.Clients.All.SendAsync("reload");
-				}
+                        if (dashboard == null)
+                        {
+                            return StatusCode(400);
+                        }
+
+                        _dashboardService.SetDashboard(dashboard);
+
+                        try 
+                        {
+                            System.IO.File.WriteAllText(Constants.CachedDashboardPath, dashboardScript);
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Warn(ex, "Failed to cache dashboard.");
+                        }
+
+                        await _hub.Clients.All.SendAsync("reload");
+
+                        Log.Debug("Successfully updated dashboard.");
+                    }
+                }
 			}
-			catch 
+			catch (Exception ex) 
 			{
+                Log.Warn(ex, "Failed to update dashboard.");
+
 				return StatusCode(400);
 			}
 
