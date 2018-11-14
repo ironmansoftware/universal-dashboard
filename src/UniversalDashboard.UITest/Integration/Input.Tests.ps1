@@ -9,7 +9,6 @@ Import-Module $ModulePath -Force
 Get-UDDashboard | Stop-UDDashboard
 
 Describe "Input" {
-
     Context "Validation" {
         $dashboard = New-UDDashboard -Title "Validation" -Content {
             New-UDRow -Columns {
@@ -110,13 +109,6 @@ Describe "Input" {
     }
 
     Context "Custom input" {
-        $tempDir = [System.IO.Path]::GetTempPath()
-        $tempFile = Join-Path $tempDir "output.txt"
-
-        if ((Test-path $tempFile)) {
-            Remove-Item $tempFile -Force
-        }
-
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Content {
                 New-UDInputField -Type 'textbox' -Name 'test' -Placeholder 'Test testbox' -DefaultValue "Test"
@@ -133,14 +125,7 @@ Describe "Input" {
             } -Endpoint {
                 param($Test, $Test2, $Test3, $Test4, $Test5, $Test6, $Test7, $Test8, $Test9, $Test10)
 
-                $tempDir = [System.IO.Path]::GetTempPath()
-                $tempFile = Join-Path $tempDir "output.txt"
-
-                if ((Test-path $tempFile)) {
-                    Remove-Item $tempFile -Force
-                }
-
-                [PSCustomObject]@{
+                $Cache:Output = [PSCustomObject]@{
                     test = $test
                     test2 = $test2 
                     test3 = $test3
@@ -151,7 +136,7 @@ Describe "Input" {
                     test8 = $test8
                     test9 = $test9
                    # test10 = $test10
-                } | ConvertTo-Json | Out-File -FilePath $tempFile
+                } 
             } 
         }
 
@@ -175,9 +160,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test9 | Should be ((Get-Date).ToString("20-MM-yyyy"))
+            $Cache:Output.test9 | Should be ((Get-Date).ToString("20-MM-yyyy"))
         }
 
         It "should submit textarea" {
@@ -190,9 +173,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test6 | Should be "Hello!!!!!!!!!!!!!!!!!!!!!!!!!"
+            $Cache:Output.test6 | Should be "Hello!!!!!!!!!!!!!!!!!!!!!!!!!"
         }
 
         It "should submit password" {
@@ -205,9 +186,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test5 | Should be "Hello"
+            $Cache:Output.test5 | Should be "Hello"
         }
 
         It "should submit text" {
@@ -220,9 +199,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test | Should be "TestHello"
+            $Cache:Output.test | Should be "TestHello"
         }
 
         It "should output bool" {
@@ -234,9 +211,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test2 | Should be "true"
+            $Cache:Output.test2 | Should be "true"
         }
 
         It "should selected default value" {
@@ -245,9 +220,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test3 | Should be "Test"
+            $Cache:Output.test3 | Should be "Test"
         }
 
 
@@ -263,9 +236,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test3 | Should be "Test2"
+            $Cache:Output.test3 | Should be "Test2"
         }
 
         
@@ -278,9 +249,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test4 | Should be "MyTestValue2"
+            $Cache:Output.test4 | Should be "MyTestValue2"
         }
 
         It "should switch the switch" {
@@ -292,16 +261,14 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.test7 | Should be "true"
+            $Cache:Output.test7 | Should be "true"
         }
 
 
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
-    
+
     Context "input and monitor" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
@@ -609,16 +576,16 @@ Describe "Input" {
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
+        Start-Sleep 1
+
         It "should have different content after click" {
             $Element = Find-SeElement -Name "Test" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "16"
 
-            Start-Sleep 1
-
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick $Button
-
-            Sleep 2
+            
+            Start-Sleep 2
 
             $Target = Find-SeElement -Id "Sixteen" -Driver $Driver
             $Target.Text | Should be "Sixteen`r`n16"
@@ -627,8 +594,5 @@ Describe "Input" {
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
-
-
-
 
 }
