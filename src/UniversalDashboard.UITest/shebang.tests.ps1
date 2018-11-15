@@ -29,6 +29,12 @@ New-Item -Path $OutputPath -ItemType Directory
 # Create folder to hold pester code coverage report.
 New-Item -Path "$OutputPath\CodeCoverage" -ItemType Directory
 
+# Create folder to hold pester code coverage report.
+New-Item -Path "$OutputPath\Unit" -ItemType Directory
+
+# Create folder to hold pester code coverage report.
+New-Item -Path "$OutputPath\Integration" -ItemType Directory
+
 # Custom function that invoke pester with parameters.
 function Invoke-PesterTest { #DevSkim: ignore DS104456 
     param(
@@ -37,7 +43,7 @@ function Invoke-PesterTest { #DevSkim: ignore DS104456
         $Release
     ) 
     if ($Subfolder) {
-        Invoke-Pester -Script @{ Path = "$PSScriptRoot\$SubFolder\$FileName"; Parameters = @{Release = $Release}} -OutputFile (Join-Path $OutputPath "TEST-$Subfolder-$FileName.xml") -OutputFormat NUnitXml #DevSkim: ignore DS104456 
+        Invoke-Pester -Script @{ Path = "$PSScriptRoot\$SubFolder\$FileName"; Parameters = @{Release = $Release}} -OutputFile (Join-Path "$OutputPath\$Subfolder" "TEST-$Subfolder-$FileName.xml") -OutputFormat NUnitXml #DevSkim: ignore DS104456 
     } else {
         Invoke-Pester -Script @{ Path = "$PSScriptRoot\$FileName"; Parameters = @{Release = $Release}} -OutputFile (Join-Path $OutputPath "TEST-$FileName.xml") -OutputFormat NUnitXml #DevSkim: ignore DS104456 
     }
@@ -98,20 +104,20 @@ if($Integration){
 # Unit Tests
 if($Unit)
 {
-    Invoke-PesterTest -FileName Enable-UDLogging.Tests.ps1   -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName Get-UDDashboard.Tests.ps1    -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName New-UDButton.Tests.ps1       -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName New-UDCard.Tests.ps1         -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName New-UDCounter.Tests.ps1      -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName New-UDDashboard.Tests.ps1    -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName New-UDElement.Tests.ps1      -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName New-UDEndpoint.Tests.ps1     -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName New-UDImage.Tests.ps1        -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName NewUDInput.Tests.ps1         -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName Out-UDGridData.Tests.ps1     -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName Start-UDDashboard.Tests.ps1  -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName Write-UDLog.Tests.ps1        -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456
-    Invoke-PesterTest -FileName Manifest.Tests.ps1           -Subfolder "Cmdlet" -Release:$Release #DevSkim: ignore DS104456 
+    Invoke-PesterTest -FileName Enable-UDLogging.Tests.ps1   -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName Get-UDDashboard.Tests.ps1    -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName New-UDButton.Tests.ps1       -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName New-UDCard.Tests.ps1         -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName New-UDCounter.Tests.ps1      -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName New-UDDashboard.Tests.ps1    -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName New-UDElement.Tests.ps1      -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName New-UDEndpoint.Tests.ps1     -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName New-UDImage.Tests.ps1        -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName NewUDInput.Tests.ps1         -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName Out-UDGridData.Tests.ps1     -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName Start-UDDashboard.Tests.ps1  -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName Write-UDLog.Tests.ps1        -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456
+    Invoke-PesterTest -FileName Manifest.Tests.ps1           -Subfolder "Unit" -Release:$Release #DevSkim: ignore DS104456 
 }
 
 
