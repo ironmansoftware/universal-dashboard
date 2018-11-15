@@ -9,8 +9,8 @@ var APP_DIR = path.resolve(__dirname, 'src/app');
 
 module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
-
   return {
+    mode: 'production',
     entry:{
       // whatwg:'whatwg-fetch', 
       main: APP_DIR + '/index.jsx',
