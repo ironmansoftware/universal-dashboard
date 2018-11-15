@@ -6,7 +6,7 @@
 jobs:
 
 - job: 'ParallelBuildAndTesting'
-  pool: 'Hosted VS2017'
+  pool: 'Default'
   strategy:
     parallel: 1
 
