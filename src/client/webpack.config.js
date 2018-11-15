@@ -9,8 +9,8 @@ var APP_DIR = path.resolve(__dirname, 'src/app');
 
 module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
-  mode: 'production',
   return {
+    mode: 'production',
     entry:{
       // whatwg:'whatwg-fetch', 
       main: APP_DIR + '/index.jsx',
@@ -41,7 +41,8 @@ module.exports = (env) => {
             }),
             new UglifyJsPlugin({
               cache:true,
-              parallel: true
+              parallel: true,
+              sourceMap: true
             })
     ],
     optimization: {
@@ -55,7 +56,7 @@ module.exports = (env) => {
         }
       },
     },
-    devtool: 'source-map',
+    devtool: false,
     devServer: {
       historyApiFallback: true,
       port: 10000,
