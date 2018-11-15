@@ -6,7 +6,7 @@
 jobs:
 
 - job: 'ParallelBuildAndTesting'
-  pool: 'Default'
+  pool: 'Universal-Dashboard-BuildServer'
   strategy:
     parallel: 1
 
