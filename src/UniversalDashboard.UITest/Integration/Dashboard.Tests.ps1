@@ -23,9 +23,9 @@ Describe "Dashboard" {
                         New-UDCard -Title Title -Text (Get-ContentForCard) -Id "Card3" 
                     }
                 } 
-            } -UpdateToken 'udtoken123' -EndpointInitialization $init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+            } -EndpointInitialization $init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
 
-        Start-UDDashboard -Dashboard $dashboard -Port 10005 -Name 'D5Init'
+        Start-UDDashboard -Dashboard $dashboard -Port 10005 -Name 'D5Init' -UpdateToken 'udtoken123'
         $TempDriver = Start-SeFirefox
         Enter-SeUrl -Driver $TempDriver -Url "http://localhost:10005"
 
