@@ -23,7 +23,7 @@ Describe "Dashboard" {
                         New-UDCard -Title Title -Text (Get-ContentForCard) -Id "Card3" 
                     }
                 } 
-            } -EndpointInitialization $init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
+            } -UpdateToken 'udtoken123' -EndpointInitialization $init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
 
         Start-UDDashboard -Dashboard $dashboard -Port 10005 -Name 'D5Init'
         $TempDriver = Start-SeFirefox
@@ -44,19 +44,11 @@ Describe "Dashboard" {
             [bool]((Find-SeElement -TagName "script" -Driver $TempDriver ).GetAttribute("src") -match 'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js') | Should Be $true        
         }
 
-        Stop-SeDriver -Driver $TempDriver
-        Stop-UDDashboard -Name 'D5Init'
     }
 
     Context "Update dashboard" {
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {} 
-        $TempDriver = Start-SeFirefox
-        Enter-SeUrl -Driver $TempDriver -Url "http://localhost:10005"
-
-        Start-UDDashboard -Port 10005 -Name 'D5' -Dashboard $dashboard -UpdateToken "UpdateToken"
-
-        Update-UDDashboard -UpdateToken "UpdateToken" -Url "http://localhost:10005" -Content {
+        Update-UDDashboard -UpdateToken "udtoken123" -Url "http://localhost:10005" -Content {
             New-UDDashboard -Title "Test" -Content {
                 New-UDElement -Tag 'div' -Id 'test'       
             }
@@ -67,6 +59,6 @@ Describe "Dashboard" {
         }
 
         Stop-SeDriver -Driver $TempDriver
-        Stop-UDDashboard -Name 'D5'
+        Stop-UDDashboard -Name 'D5Init'
     }
 }

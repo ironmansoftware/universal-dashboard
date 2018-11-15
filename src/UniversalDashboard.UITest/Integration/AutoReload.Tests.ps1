@@ -44,6 +44,8 @@ Describe "Auto reload" {
 
             }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile -Force
 
+            . $TempFile
+
             $Cache:Driver.navigate().refresh()
 
             (Find-SeElement -Driver $Cache:Driver -Id "Card").Text | Should BeLike "*THIS IS AUTORELOADED*"
