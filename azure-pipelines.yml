@@ -12,11 +12,15 @@ jobs:
 
   steps:
     - powershell: .\src\build.ps1 -Configuration Release -NoHelp
-      displayName: Start Building The Module
+      displayName: Build The Module
       errorActionPreference: continue
 
-    - powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration -Speed
-      displayName: Start Integration Tests
+    - powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Unit
+      displayName: Pester Unit Tests
+      errorActionPreference: continue
+
+    - powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration
+      displayName: Pester Integration Tests
       errorActionPreference: continue
 
 
@@ -31,13 +35,13 @@ jobs:
         #buildConfiguration: # Optional
         publishRunAttachments: true # Optional
 
-    - task: PublishCodeCoverageResults@1
-      inputs:
-        codeCoverageTool: JaCoCo # Options: cobertura, jaCoCo
-        summaryFileLocation: src/UniversalDashboard.UITest/test-results/code/Test-CodeCoverageOutput.xml
-        #reportDirectory: # Optional
-        #additionalCodeCoverageFiles: # Optional
-        failIfCoverageEmpty: false # Optional
+    # - task: PublishCodeCoverageResults@1
+    #   inputs:
+    #     codeCoverageTool: JaCoCo # Options: cobertura, jaCoCo
+    #     summaryFileLocation: src/UniversalDashboard.UITest/test-results/code/Test-CodeCoverageOutput.xml
+    #     #reportDirectory: # Optional
+    #     #additionalCodeCoverageFiles: # Optional
+    #     failIfCoverageEmpty: false # Optional
     
     - powershell: |
         Compress-Archive -Path .\src\output -DestinationPath .\src\UniversalDashboard.Community.2.1.0.zip -Force -verbose
