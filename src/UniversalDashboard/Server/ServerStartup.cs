@@ -59,7 +59,7 @@ namespace UniversalDashboard
 
             services.AddSession(options =>
             {
-                options.IdleTimeout = dashboardService.Dashboard.IdleTimeout;
+                options.IdleTimeout = TimeSpan.FromMinutes(25);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
