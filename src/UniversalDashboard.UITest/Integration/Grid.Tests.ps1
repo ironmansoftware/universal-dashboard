@@ -21,7 +21,7 @@ Describe "Grid" {
                 } 
 
                 New-UDGrid -Title "Service Grid with filter" -Id "Grid3" -Headers @("Name", "DisplayName", "Status") -Properties @("Name", "DisplayName", "Status") -Endpoint {
-                    Get-Service | select -First 1 |  ? {$_.status -eq "Running"}  | Select Name, DisplayName,
+                    Get-Service -Name RpcSs | Select Name, DisplayName,
                     @{
                         Name       = "Status"
                         Expression = {New-UDElement -Tag div -Attributes @{ className = "green white-text" } -Content { $_.status.tostring() }}
