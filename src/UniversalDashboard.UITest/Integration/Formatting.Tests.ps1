@@ -73,14 +73,16 @@ Describe "Formatting" {
             }
         }
         
+        Start-Sleep 1
+
         It "Should not change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
 
-            Start-Sleep 2
+            Start-Sleep 1
 
-            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
-            $CardText2 = $Card.Text
+            $Card2 = Find-SeElement -Id "Card" -Driver $Cache:Driver
+            $CardText2 = $Card2.Text
 
             $CardText | Should be $CardText2
         }
@@ -97,13 +99,13 @@ Describe "Formatting" {
                 }
             }
         }
-        
+                
         It "Should change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
 
-            $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
-            $CardText2 = $Card.Text
+            $Card2 = Find-SeElement -Id "Card" -Driver $Cache:Driver
+            $CardText2 = $Card2.Text
 
             $CardText | Should not be $CardText2
         }
@@ -120,9 +122,9 @@ Describe "Formatting" {
                 }
             }
         }
-        
-        $Cache:Driver.navigate().refresh()
-        
+                
+        Start-Sleep 1
+
         It "Should not change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
@@ -145,7 +147,7 @@ Describe "Formatting" {
                 }
             }
         }
-                
+             
         It "Should change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
