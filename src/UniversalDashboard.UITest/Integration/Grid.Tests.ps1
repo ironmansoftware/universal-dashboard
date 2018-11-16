@@ -7,7 +7,7 @@ Describe "Grid" {
 
     Context "no data" {
 
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             
             New-UDDashboard -Title "Test" -Content {
                 New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
@@ -24,13 +24,13 @@ Describe "Grid" {
                     Get-Service bits | Select Name, DisplayName,
                     @{
                         Name       = "Status"
-                        Expression = {New-UDElement -Tag div -Attributes @{ className = "red white-text" } -Content { $_.status.tostring() }}
+                        Expression = {New-UDElement -Tag div -Attributes @{ className = "green white-text" } -Content { $_.status.tostring() }}
                     } | Out-UDGridData
                 } 
             }
-        ))') -SessionVariable ss -ContentType "text/plain"
+        }
 
-        $Cache:Driver.navigate().refresh()
+        Start-Sleep 1
 
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
@@ -44,13 +44,13 @@ Describe "Grid" {
 
         It "should be able to nest new-udelement in grid" {
             $Element = Find-SeElement -Id "Grid3" -Driver $Cache:Driver
-            $Element.Text.Contains("Stopped") | Should be $true
+            $Element.Text.Contains("Running") | Should be $true
         }
     }
 
     Context "Custom Columns" {
 
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
                 $Variable = "Test"
                 New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
@@ -65,9 +65,9 @@ Describe "Grid" {
                 )
                 New-UDElement -Id "Hey" -Tag "div"
             }
-        ))') -SessionVariable ss -ContentType "text/plain"
+        }
 
-        $Cache:Driver.navigate().refresh()
+        Start-Sleep 1
 
         It "should click button" {
             $Button = Find-SeElement -LinkText "HEY" -Driver $Cache:Driver 
@@ -97,7 +97,7 @@ Describe "Grid" {
     }
 
     Context "throws" {
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
                 New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
                     try {
@@ -110,9 +110,9 @@ Describe "Grid" {
                     $data | Out-UDGridData 
                 } 
             }
-        ))') -SessionVariable ss -ContentType "text/plain"
- 
-        $Cache:Driver.navigate().refresh()
+        } 
+        
+        Start-Sleep 1
 
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Cache:Driver
@@ -121,7 +121,7 @@ Describe "Grid" {
     }
     
     Context "server side processing" {
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
                 $data = @(
                     [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
@@ -157,9 +157,9 @@ Describe "Grid" {
                 $data | Out-UDGridData -TotalItems $total
             } 
             }
-        ))') -SessionVariable ss -ContentType "text/plain"
+        }
 
-        $Cache:Driver.navigate().refresh()
+        Start-Sleep 1
 
         It "should have data" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
@@ -205,13 +205,15 @@ Describe "Grid" {
             Send-SeKeys -Element $Element[0] -Keys "2"
             Send-SeKeys -Element $Element[0] -Keys "0"
 
+            Start-Sleep 1
+            
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element.Length | Should be 6
         }
     }
     
     Context "Grid" {
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
                 $data = @(
@@ -292,10 +294,9 @@ Describe "Grid" {
                 $data | Out-UDGridData 
             } -PageSize 5
             }
-        ))') -SessionVariable ss -ContentType "text/plain"
-
-        $Cache:Driver.navigate().refresh()
-
+        }
+        
+        
         It "should not page when NoPaging set" {
             $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Cache:Driver
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
@@ -377,23 +378,23 @@ Describe "Grid" {
 
     
     Context "default sort" {
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "200"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                    $data = @(
+                        [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
+                        [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "200"}
+                        [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    )
+
+                    $data | Out-UDGridData 
+                } -Links @(
+                    (New-UDLink -Text "Other link" -Url "http://www.google.com")
                 )
-
-                $data | Out-UDGridData 
-            } -Links @(
-                (New-UDLink -Text "Other link" -Url "http://www.google.com")
-            )
             }
-        ))') -SessionVariable ss -ContentType "text/plain"
+        }
 
-        $Cache:Driver.navigate().refresh()
+        Start-Sleep 1
  
         It "should have sorted correctly" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
@@ -406,25 +407,31 @@ Describe "Grid" {
     }
 
     Context "refresh" {
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"hour" = [DateTime]::Now.Hour; "minute" = [DateTime]::Now.Minute; "second" = [DateTime]::Now.Second;}
-                )
-                $data | Out-UDGridData 
-            } 
+                New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                    $data = @(
+                        [PSCustomObject]@{"hour" = [DateTime]::Now.Hour; "minute" = [DateTime]::Now.Minute; "second" = [DateTime]::Now.Second;}
+                    )
+                    $data | Out-UDGridData 
+                } 
             }
-        ))') -SessionVariable ss -ContentType "text/plain"
+        }
 
-        $Cache:Driver.navigate().refresh()
+        Start-Sleep 1.5
 
         It "should refresh" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-            $text = $Element[2].text 
+            $Element = Find-SeElement -ClassName "griddle-cell" -Element $Element[0] 
+            $Elementtext = $Element[2].text 
+
+            Start-Sleep 1
+
             $NewElement = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
-            (Find-SeElement -ClassName "griddle-cell" -Driver $NewElement[0])[2].Text | should not be $text     
+            $NewElement = Find-SeElement -ClassName "griddle-cell" -Element $NewElement[0] 
+            $NewElementText = $NewElement[2].Text
+            
+            $NewElementText | should not be $Elementtext     
         }
     }
 }
