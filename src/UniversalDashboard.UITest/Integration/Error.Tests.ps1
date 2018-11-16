@@ -9,27 +9,28 @@ Import-Module $ModulePath -Force
 Describe "Error" {
     Context "Components" {
         #Create a dashboard to test
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
+            
             New-UDDashboard -Title "Test" -Content {
-            New-UDChart -Title "Chart" -Id "Chart" -Endpoint {
-                New-UDTest 
-            }
+                New-UDChart -Title "Chart" -Id "Chart" -Endpoint {
+                    New-UDTest 
+                }
 
-            New-UDMonitor -Title "Monitor" -Id "Monitor" -Endpoint {
-                New-UDTest 
-            }
+                New-UDMonitor -Title "Monitor" -Id "Monitor" -Endpoint {
+                    New-UDTest 
+                }
 
-            New-UDCounter -Title "Counter" -Id "Counter" -Endpoint {
-                New-UDTest 
-            }
+                New-UDCounter -Title "Counter" -Id "Counter" -Endpoint {
+                    New-UDTest 
+                }
 
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("None") -Properties @("None") -Endpoint {
-                New-UDTest 
+                New-UDGrid -Title "Grid" -Id "Grid" -Headers @("None") -Properties @("None") -Endpoint {
+                    New-UDTest 
+                }
             }
-        }))') -SessionVariable ss -ContentType "text/plain"
+        }
         
-        $Cache:Driver.navigate().refresh()
-
+        Start-Sleep 1.5
         #Run some tests using selenium
         It "should show an error for chart" {
             $Target = Find-SeElement -Driver $Cache:Driver -Id "Chart"
