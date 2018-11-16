@@ -63,17 +63,16 @@ Describe "Formatting" {
 
     Context "Static Columns"{
         #Create a dashboard to test
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
-            New-UDRow -Columns {
-                New-UDColumn -Size 6 -Content {
-                    New-UDCard -Id "Card" -Title ((Get-Date).ToString())
+                New-UDRow -Columns {
+                    New-UDColumn -Size 6 -Content {
+                        New-UDCard -Id "Card" -Title ((Get-Date).ToString())
+                    }
                 }
             }
-        }))') -SessionVariable ss -ContentType "text/plain"
+        }
         
-        $Cache:Driver.navigate().refresh()
-
         It "Should not change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
@@ -89,17 +88,16 @@ Describe "Formatting" {
 
     Context "Dynamic Columns" {
         #Create a dashboard to test
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
-            New-UDRow -Columns {
-                New-UDColumn -AutoRefresh -RefreshInterval 1 -Size 6 -Endpoint {
-                    New-UDCard -Id "Card" -Title ((Get-Date).ToString()) 
+                New-UDRow -Columns {
+                    New-UDColumn -AutoRefresh -RefreshInterval 1 -Size 6 -Endpoint {
+                        New-UDCard -Id "Card" -Title ((Get-Date).ToString()) 
+                    }
                 }
             }
-        }))') -SessionVariable ss -ContentType "text/plain"
+        }
         
-        $Cache:Driver.navigate().refresh()
-
         It "Should change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
@@ -113,14 +111,15 @@ Describe "Formatting" {
 
     Context "Static Row"{
         #Create a dashboard to test
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
-            New-UDRow -Columns {
-                New-UDColumn -Size 6 -Content {
-                    New-UDCard -Id "Card" -Title ((Get-Date).ToString())
+                New-UDRow -Columns {
+                    New-UDColumn -Size 6 -Content {
+                        New-UDCard -Id "Card" -Title ((Get-Date).ToString())
+                    }
                 }
             }
-        }))') -SessionVariable ss -ContentType "text/plain"
+        }
         
         $Cache:Driver.navigate().refresh()
         
@@ -137,22 +136,19 @@ Describe "Formatting" {
 
     Context "Dynamic Row" {
         #Create a dashboard to test
-        Invoke-RestMethod -Method Post -Uri "http://localhost:10001/api/internal/component/terminal" -Body ('$dashboardservice.setDashboard((
+        Update-UDDashboard -UrL "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             New-UDDashboard -Title "Test" -Content {
-            New-UDRow -AutoRefresh -RefreshInterval 1 -Endpoint {
-                New-UDColumn -Size 6 -Content {
-                    New-UDCard -Id "Card" -Title ((Get-Date).ToString())
+                New-UDRow -AutoRefresh -RefreshInterval 1 -Endpoint {
+                    New-UDColumn -Size 6 -Content {
+                        New-UDCard -Id "Card" -Title ((Get-Date).ToString())
+                    }
                 }
             }
-        }))') -SessionVariable ss -ContentType "text/plain"
-        
-        $Cache:Driver.navigate().refresh()
-        
+        }
+                
         It "Should change value" {
             $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText = $Card.Text
-
-            Start-Sleep 3
 
             $Card = Find-SeElement -Id "Card" -Driver $Cache:Driver
             $CardText2 = $Card.Text
