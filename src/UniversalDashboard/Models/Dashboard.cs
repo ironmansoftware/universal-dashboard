@@ -34,5 +34,7 @@ namespace UniversalDashboard.Models
 		[JsonProperty("geolocation")]
 		public bool GeoLocation { get; set; }
 		public string FilterText { get; set; }
+		[JsonIgnore]
+		public TimeSpan IdleTimeout { get; set; }
     }
 }

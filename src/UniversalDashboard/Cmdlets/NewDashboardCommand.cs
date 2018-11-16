@@ -70,6 +70,9 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public SwitchParameter GeoLocation { get; set; }
 
+		[Parameter]
+		public TimeSpan IdleTimeout { get; set; } = TimeSpan.FromMinutes(25);
+
         protected override void EndProcessing()
 	    {
 			var dashboard = new Dashboard();
@@ -88,7 +91,8 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.EndpointInitialSessionState = EndpointInitialization;
 			dashboard.GeoLocation = GeoLocation;
 			dashboard.FontIconStyle = FontIconStyle;
-           
+			dashboard.IdleTimeout = IdleTimeout;
+
             if (Theme != null) {
 				var themeService = new ThemeService();
 				Theme.RenderedContent = themeService.Create(Theme);

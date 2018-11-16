@@ -18,7 +18,8 @@ New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <Dashboar
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
  [-FontIconStyle <String>] [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>]
  [-CyclePages] [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
- [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
+ [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [-IdleTimeout <TimeSpan>]
+ [<CommonParameters>]
 ```
 
 ### Pages
@@ -27,7 +28,8 @@ New-UDDashboard [-Title <String>] -Pages <Page[]> [-NavBarColor <DashboardColor>
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
  [-FontIconStyle <String>] [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>]
  [-CyclePages] [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
- [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [<CommonParameters>]
+ [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [-IdleTimeout <TimeSpan>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -195,6 +197,21 @@ latitude, longitude, heading and speed.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IdleTimeout
+The amount of time a session can be idle before it times out. This defaults to 25 minutes. 
+
+```yaml
+Type: TimeSpan
 Parameter Sets: (All)
 Aliases:
 
