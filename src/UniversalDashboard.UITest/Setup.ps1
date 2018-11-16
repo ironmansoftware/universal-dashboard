@@ -1,7 +1,7 @@
 Write-Host "Starting Test Dashboard"
 Start-UDDashboard -Port 10001 -Name 'Dashboard_For_Tests' -Content {
     New-UDDashboard -Title 'Speed Test' -Content {}
-} -Design
+} -Design -UpdateToken 'TestDashboard'
 
 Write-Host "Import Selenium Module"
 Import-Module "$PSScriptRoot\Integration\Selenium\Selenium.psm1" -Force 
