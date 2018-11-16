@@ -13,7 +13,7 @@ Describe "Font Icons" {
 
             New-UDIcon -Icon github -Size 3x
 
-        } -FontIconStyle LineAwesome
+        } -FontIconStyle FontAwesome
         ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
@@ -21,7 +21,7 @@ Describe "Font Icons" {
         Start-Sleep 1
 
         it "should have font-family of FontAwesome" {
-            [bool](Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should -BeTrue
+            (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should -BeTrue
         }
     }
 
@@ -40,7 +40,7 @@ Describe "Font Icons" {
         Start-Sleep 1
 
         it "should have font-family of FontAwesome" {
-            [bool](Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should -BeTrue
+            (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should -BeTrue
         }
     }
 
@@ -56,8 +56,7 @@ Describe "Font Icons" {
         $Cache:Driver.navigate().refresh()
 
         it "should have font-family of LineAwesome" {
-            $font = (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:LineAwesome" 
-            $font.count | Should be 1
+            (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:LineAwesome" | Should -BeTrue
         }
     }
 }
