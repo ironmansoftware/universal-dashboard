@@ -16,12 +16,10 @@ Describe "Font Icons" {
         } -FontIconStyle FontAwesome
         ))') -SessionVariable ss -ContentType "text/plain"
 
-        $Cache:Driver.navigate().refresh()
-        
-        Start-Sleep 1
-
+        Start-Sleep 2
+            
         it "should have font-family of FontAwesome" {
-            (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should -BeTrue
+            (Find-SeElement -Driver $Cache:Driver -TagName 'style')[-1].GetAttribute('textContent') -match 'FontAwesome'  | Should -BeTrue      
         }
     }
 
@@ -30,17 +28,16 @@ Describe "Font Icons" {
         Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TestDashboard' -Content {
             
                 New-UDDashboard -Title "Font Awesome Icons - Test" -Content {
-
-                New-UDIcon -Icon github -Size 3x
+                    New-UDPage -Name Home -Icon home -Content {
+                        New-UDIcon -Icon github -Size 3x
+                    }
             }
         }
 
-        $Cache:Driver.navigate().refresh()
-        
-        Start-Sleep 1
+        Start-Sleep 2
 
         it "should have font-family of FontAwesome" {
-            (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should -BeTrue
+            (Find-SeElement -Driver $Cache:Driver -TagName 'style')[-1].GetAttribute('textContent') -match 'FontAwesome' | Should -BeTrue
         }
     }
 
