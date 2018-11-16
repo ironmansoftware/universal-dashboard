@@ -21,7 +21,7 @@ Describe "Grid" {
                 } 
 
                 New-UDGrid -Title "Service Grid with filter" -Id "Grid3" -Headers @("Name", "DisplayName", "Status") -Properties @("Name", "DisplayName", "Status") -Endpoint {
-                    Get-Service bits | Select Name, DisplayName,
+                    Get-Service | select -First 1 |  ? {$_.status -eq "Running"}  | Select Name, DisplayName,
                     @{
                         Name       = "Status"
                         Expression = {New-UDElement -Tag div -Attributes @{ className = "green white-text" } -Content { $_.status.tostring() }}
@@ -206,7 +206,7 @@ Describe "Grid" {
             Send-SeKeys -Element $Element[0] -Keys "0"
 
             Start-Sleep 1
-            
+
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Cache:Driver
             $Element.Length | Should be 6
         }
