@@ -15,6 +15,7 @@ New-UDPage -Name "Button" -Icon plus_circle -Content {
                 New-UDButton -Text "Button" 
                 New-UDButton -Text "Button" -Icon cloud -IconAlignment left
                 New-UDButton -Text "Button" -Icon cloud -IconAlignment right
+                New-UDButton -Text "Button" -Icon cloud -IconAlignment right -Disabled
             }
             
             New-UDHeading -Size 3 -Text "Floating" -Color $Colors.FontColor

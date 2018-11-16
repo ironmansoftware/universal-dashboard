@@ -21,6 +21,10 @@ Describe "New-UDButton" {
         (New-UDButton -Floating).Attributes.className | Should be "btn-floating"
     }
 
+    It "should have a disabled class" {
+        (New-UDButton -Disabled).Attributes.className | Should be "btn disabled"
+    }
+
     It "should have text" {
         (New-UDButton -Text 'Button').Content | Should be "Button"
     }

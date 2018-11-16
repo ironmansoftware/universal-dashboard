@@ -11,6 +11,8 @@ function New-UDButton {
         [Parameter()]
         [Switch]$Flat,
         [Parameter()]
+        [Switch]$disabled,
+        [Parameter()]
         [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
         [Parameter()]
         [ValidateSet('left', 'right')]
@@ -18,6 +20,7 @@ function New-UDButton {
     )
 
     $btnClass = 'btn'
+    
     if ($Floating) {
         $btnClass = 'btn-floating'
     }
@@ -25,6 +28,11 @@ function New-UDButton {
     if ($Flat) {
         $btnClass = 'btn-flat'
     }
+
+    if ($Disabled) {
+        $btnClass += ' disabled'
+    }
+    
 
     New-UDElement -Id $Id -Tag "a" -Attributes @{
         className = "$btnClass"
