@@ -189,9 +189,9 @@ export default class UdDashboard extends React.Component {
             document.title = dashboard.title;
 
             if(dashboard.fontIconStyle == 'FontAwesome'){
-                import("font-awesome/css/font-awesome.min.css" /* webpackChunkName: "font-awesome" */);
+                require("font-awesome/css/font-awesome.min.css")
             }else {
-                import("line-awesome/css/line-awesome.min.css" /* webpackChunkName: "line-awesome" */);
+                require("line-awesome/css/line-awesome.min.css")
             }
             
             if (dashboard.stylesheets)
