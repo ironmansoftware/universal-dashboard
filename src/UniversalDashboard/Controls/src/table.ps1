@@ -20,7 +20,9 @@ function New-UDTable {
 		[Parameter()]
 		[Switch]$AutoRefresh,
 		[Parameter()]
-		[int]$RefreshInterval = 5
+		[int]$RefreshInterval = 5,
+		[Parameter()]
+		[object[]]$ArgumentList
 	)
 
 	$Actions = $null
@@ -51,7 +53,7 @@ function New-UDTable {
 						}
 					}
 				}
-				New-UDElement -Tag 'tbody' -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval
+				New-UDElement -Tag 'tbody' -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -ArgumentList $ArgumentList
 			} -Attributes @{ className = $Style }
 		}
 		$Actions
