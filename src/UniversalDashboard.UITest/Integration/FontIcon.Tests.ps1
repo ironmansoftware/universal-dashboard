@@ -16,12 +16,12 @@ Describe "Font Icons" {
         } -FontIconStyle FontAwesome
         ))') -SessionVariable ss -ContentType "text/plain"
 
-        Start-Sleep 1
         $Cache:Driver.navigate().refresh()
+        
+        Start-Sleep 1
 
         it "should have font-family of FontAwesome" {
-            $font = (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" 
-            $font.count | Should be 1
+            [bool](Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should -BeTrue
         }
     }
 
@@ -34,11 +34,13 @@ Describe "Font Icons" {
 
         }
         ))') -SessionVariable ss -ContentType "text/plain"
-        Start-Sleep 1
+        
         $Cache:Driver.navigate().refresh()
+        
+        Start-Sleep 2
 
         it "should have font-family of FontAwesome" {
-            $font = (Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" 
+            [bool](Find-SeElement -Driver $Cache:Driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should -BeTrue
             $font.count | Should be 1
         }
     }
