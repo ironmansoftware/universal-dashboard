@@ -13,7 +13,7 @@ Describe "Font Icons" {
 
             New-UDIcon -Icon github -Size 3x
 
-        } -FontIconStyle FontAwesome
+        } -FontIconStyle LineAwesome
         ))') -SessionVariable ss -ContentType "text/plain"
 
         $Cache:Driver.navigate().refresh()
