@@ -16,6 +16,7 @@ Describe "Font Icons" {
         } -FontIconStyle FontAwesome
         ))') -SessionVariable ss -ContentType "text/plain"
 
+        Start-Sleep 1
         $Cache:Driver.navigate().refresh()
 
         it "should have font-family of FontAwesome" {
@@ -31,8 +32,9 @@ Describe "Font Icons" {
 
             New-UDIcon -Icon github -Size 3x
 
-        }))') -SessionVariable ss -ContentType "text/plain"
-
+        }
+        ))') -SessionVariable ss -ContentType "text/plain"
+        Start-Sleep 1
         $Cache:Driver.navigate().refresh()
 
         it "should have font-family of FontAwesome" {
