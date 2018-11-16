@@ -13,7 +13,7 @@ Creates a button.
 ## SYNTAX
 
 ```
-New-UDButton [[-Id] <String>] [[-Text] <Object>] [[-OnClick] <Object>] [-Floating] [-Flat]
+New-UDButton [[-Id] <String>] [[-Text] <Object>] [[-OnClick] <Object>] [-Floating] [-Flat] [-disabled]
  [[-Icon] <FontAwesomeIcons>] [[-IconAlignment] <String>] [<CommonParameters>]
 ```
 
@@ -135,6 +135,21 @@ Aliases:
 
 Required: False
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -disabled
+Disable the button
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
