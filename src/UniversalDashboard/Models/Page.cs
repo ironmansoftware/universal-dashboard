@@ -22,5 +22,8 @@ namespace UniversalDashboard.Models
 		public string Icon { get; set; }
 		[JsonProperty("components")]
 		public List<Component> Components { get; set; } = new List<Component>();
+
+		[JsonProperty("dynamic")]
+		public bool Dynamic { get; set; }
     }
 }

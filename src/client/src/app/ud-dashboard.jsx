@@ -290,7 +290,7 @@ export default class UdDashboard extends React.Component {
         }
 
         var dynamicPages = this.state.dashboard.pages.map(function(x) {
-            if (x.url === null) return null;
+            if (x.dynamic) return null;
 
             return <Route path={x.url} render={props => (
                 <UdPage id={x.id} dynamic={true} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
@@ -298,7 +298,7 @@ export default class UdDashboard extends React.Component {
         })
 
         var staticPages = this.state.dashboard.pages.map(function(x) {
-            if (x.url !== null) return null;
+            if (!x.dynamic) return null;
 
             return <Route path={'/' + x.name.replace(/ /g, "-")} render={props => (
                 <UdPage dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>

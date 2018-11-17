@@ -8,7 +8,6 @@ Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
 Describe "Table" {
-
     Context "Error in table" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDTable -Title "Top GitHub Issues" -Id "Table" -Headers @("Id", "Title", "Description", "Comments", "Date") -Endpoint {

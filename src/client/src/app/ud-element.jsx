@@ -182,6 +182,13 @@ class UDElementContent extends React.Component {
             }
         }
 
+        if (this.props.hasCallback) {
+            PubSub.publish('element-event', {
+                type: "unregisterEvent",
+                eventId: this.props.id
+            });
+        }
+
         PubSub.unsubscribe(this.pubSubToken);
     }
 
@@ -313,7 +320,7 @@ class UDElementContent extends React.Component {
         }
 
         attributes.ref = 'element';
-        attributes.key = this.props.id;
+        attributes.key = this.props.key;
 
         this.element = React.createElement(this.state.tag, attributes, children);
 

@@ -15,14 +15,16 @@ function New-UDTable {
 		[string]$Style,
 	    [Parameter()]
 		[UniversalDashboard.Models.Link[]] $Links,
-		[Parameter(Mandatory = $true)]
+		[Parameter(Mandatory = $true, ParameterSetName = 'endpoint')]
 		[object]$Endpoint,
-		[Parameter()]
+		[Parameter(ParameterSetName = 'endpoint')]
 		[Switch]$AutoRefresh,
-		[Parameter()]
+		[Parameter(ParameterSetName = 'endpoint')]
 		[int]$RefreshInterval = 5,
 		[Parameter()]
-		[object[]]$ArgumentList
+		[object[]]$ArgumentList,
+		[Parameter(ParameterSetName = 'content')]
+		[ScriptBlock]$Content
 	)
 
 	$Actions = $null
@@ -53,7 +55,15 @@ function New-UDTable {
 						}
 					}
 				}
-				New-UDElement -Tag 'tbody' -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -ArgumentList $ArgumentList
+
+				if ($Content -ne $null) {
+					New-UDElement -Tag 'tbody' -Content $Content
+				}
+				else {
+					New-UDElement -Tag 'tbody' -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -ArgumentList $ArgumentList
+				}
+
+				
 			} -Attributes @{ className = $Style }
 		}
 		$Actions
