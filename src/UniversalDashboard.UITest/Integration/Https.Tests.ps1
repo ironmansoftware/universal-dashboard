@@ -9,15 +9,25 @@ Get-UDDashboard | Stop-UDDashboard
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-Describe "Https" {
-    $CertPassword = ConvertTo-SecureString -AsPlainText -Force -String "ud"
+Add-Type @"
+    using System.Net;
+    using System.Security.Cryptography.X509Certificates;
+    public class TrustAllCertsPolicy : ICertificatePolicy {
+        public bool CheckValidationResult(
+             ServicePoint srvPoint, X509Certificate certificate,
+             WebRequest request, int certificateProblem) {
+            return true;
+        }
+    }
+"@
+[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
+$Cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -DnsName localhost
+
+Describe "Https" {
     Context "From store" {
 
-        Import-PfxCertificate -Password $CertPassword -FilePath (Join-Path $PSScriptRoot '..\Assets\certificate.pfx') -CertStoreLocation Cert:\CurrentUser\My
-
         It "should serve HTTPS" {
-            $Cert = Get-ChildItem Cert:\currentuser\my\D8B484EAEF02D50F6E1FB064A129BE5BE33DEADE
             $Dashboard = Start-UDDashboard -Port 10001 -Certificate $Cert
 
             $Request = Invoke-WebRequest https://localhost:10001/dashboard
@@ -30,13 +40,21 @@ Describe "Https" {
     Get-UDDashboard | Stop-UDDashboard
 
     Context "From file" {
-        It "should serve HTTPS" {
-            $Dashboard = Start-UDDashboard -Port 10001 -CertificateFile (Join-Path $PSScriptRoot '..\Assets\certificate.pfx') -CertificateFilePassword $CertPassword
+        It "should serve HTTPS" {''
+
+            $CertPath = [System.IO.Path]::GetTempFileName() + ".pfx"
+            $CertPassword = ConvertTo-SecureString -String "WeakPassword" -AsPlainText -Force
+
+            Export-PfxCertificate -Cert $Cert -Password $CertPassword -Force -FilePath $CertPath
+
+            $Dashboard = Start-UDDashboard -Port 10001 -CertificateFile $CertPath -CertificateFilePassword $CertPassword
 
             $Request = Invoke-WebRequest https://localhost:10001/dashboard
             $Request.StatusCode | Should be 200
 
             Stop-UDDashboard -Server $Dashboard
+
+            Remove-Item $CertPath -Force
         }
     }
 }
