@@ -55,7 +55,7 @@ namespace UniversalDashboard.Cmdlets
 
 				var fileTarget = new FileTarget();
 				fileTarget.FileName = resolvedPath;
-				fileTarget.Layout = @"${date:format=HH\:mm\:ss} ${logger} ${message}";
+				fileTarget.Layout = @"${date:format=HH\:mm\:ss} [${level}] ${logger} ${message}";
 				config.AddTarget("file", fileTarget);
 
 				var rule2 = new LoggingRule("*", level, fileTarget);
@@ -65,7 +65,7 @@ namespace UniversalDashboard.Cmdlets
 			if (string.IsNullOrEmpty(FilePath) || Console)
 			{
 				var consoleTarget = new ColoredConsoleTarget();
-				consoleTarget.Layout = @"${date:format=HH\:mm\:ss} ${logger} ${message}";
+				consoleTarget.Layout = @"${date:format=HH\:mm\:ss} [${level}] ${logger} ${message}";
 				config.AddTarget("console", consoleTarget);
 
 				var rule1 = new LoggingRule("*", level, consoleTarget);
