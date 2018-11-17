@@ -12,10 +12,18 @@ Creates a new table of data within the dashboard.
 
 ## SYNTAX
 
+### endpoint
 ```
-New-UDTable [[-Id] <String>] [[-Title] <String>] [-Headers] <String[]> [[-BackgroundColor] <DashboardColor>]
- [[-FontColor] <DashboardColor>] [[-Style] <String>] [[-Links] <Link[]>] [-Endpoint] <Object> [-AutoRefresh]
- [[-RefreshInterval] <Int32>] [<CommonParameters>]
+New-UDTable [-Id <String>] [-Title <String>] -Headers <String[]> [-BackgroundColor <DashboardColor>]
+ [-FontColor <DashboardColor>] [-Style <String>] [-Links <Link[]>] -Endpoint <Object> [-AutoRefresh]
+ [-RefreshInterval <Int32>] [-ArgumentList <Object[]>] [<CommonParameters>]
+```
+
+### content
+```
+New-UDTable [-Id <String>] [-Title <String>] -Headers <String[]> [-BackgroundColor <DashboardColor>]
+ [-FontColor <DashboardColor>] [-Style <String>] [-Links <Link[]>] [-ArgumentList <Object[]>]
+ [-Content <ScriptBlock>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -34,12 +42,27 @@ Creates a new table with the process IDs of chrome running on the system.
 
 ## PARAMETERS
 
+### -ArgumentList
+Pass arguments to Endpoints. 
+
+```yaml
+Type: Object[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AutoRefresh
 Enabled auto refresh for this control.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: endpoint
 Aliases:
 
 Required: False
@@ -58,7 +81,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Content
+Static content for this table. 
+
+```yaml
+Type: ScriptBlock
+Parameter Sets: content
+Aliases:
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -69,11 +107,11 @@ The endpoint to call to retrieve data for the table. The endpoint should return 
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: endpoint
 Aliases:
 
 Required: True
-Position: 7
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -88,7 +126,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -103,7 +141,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -118,7 +156,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 0
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -133,7 +171,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -144,11 +182,11 @@ The number of seconds between refreshes. The default is 5.
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: endpoint
 Aliases:
 
 Required: False
-Position: 8
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -164,7 +202,7 @@ Aliases:
 Accepted values: bordered, striped, highlight, centered, responsive-table
 
 Required: False
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -179,7 +217,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

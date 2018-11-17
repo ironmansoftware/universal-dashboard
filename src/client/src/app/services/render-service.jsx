@@ -61,7 +61,7 @@ export default function renderComponent(component, history) {
 
         case "element":
             return <Suspense fallback={<div></div>}>
-                        <UdElementComponent {...component} key={component.id} history={history}/>
+                        <UdElementComponent {...component} key={component.key} history={history}/>
                     </Suspense>
 
         case "error":

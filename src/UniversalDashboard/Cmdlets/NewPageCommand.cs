@@ -42,12 +42,13 @@ namespace UniversalDashboard.Cmdlets
 			{
 				if (Endpoint != null)
 				{
-                    if (!Url.StartsWith("/"))
+                    if (Url != null && !Url.StartsWith("/"))
                     {
                         Url = "/" + Url;
                     }
 
 					page.Callback = GenerateCallback(Id);
+					page.Dynamic = true;
 				}
 				else
 				{
@@ -61,6 +62,8 @@ namespace UniversalDashboard.Cmdlets
 							page.Components.Add(dashboardComponent);
 						}
 					}
+
+					page.Dynamic = false;
 				}
 			}
 			catch (Exception ex)

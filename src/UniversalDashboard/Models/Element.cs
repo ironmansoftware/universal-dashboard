@@ -32,6 +32,15 @@ namespace UniversalDashboard.Models.Basics
         [JsonProperty("type")]
         public override string Type => "element";
 
+        [JsonProperty("key")]
+        public string Key
+        {
+            get
+            {
+                return Guid.NewGuid().ToString();
+            }
+        }
+
         public override string ToString()
         {
             if (string.IsNullOrEmpty(Tag))

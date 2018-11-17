@@ -65,6 +65,7 @@ Describe "Card" {
 
         It "should load content from endpoint" {
             $Element = Find-SeElement -Id "EndpointCard" -Driver $Driver
+            Start-Sleep 1
             ($Element.Text).Contains("Endpoint Content") | should be $true
         }
 
