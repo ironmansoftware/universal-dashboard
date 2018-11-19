@@ -47,7 +47,7 @@ Describe "Theme" {
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
-            $Theme.Content | Should be ".ud-card {`r`n`tcolor : #999999;`r`n`tbackground-color : #123123;`r`n}`r`n"
+            $Theme.Content | Should be ".ud-card {`r`n`tcolor : #999999 !important;`r`n`tbackground-color : #123123 !important;`r`n}`r`n"
         }
 
        Stop-UDDashboard -Server $Server 
@@ -71,7 +71,7 @@ Describe "Theme" {
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
-            $Theme.Content | Should be ".ud-card {`r`n`tbackground-color : #123123;`r`n`tcolor : #999999;`r`n}`r`n"
+            $Theme.Content | Should be ".ud-card {`r`n`tbackground-color : #123123 !important;`r`n`tcolor : #999999 !important;`r`n}`r`n"
         }
 
        Stop-UDDashboard -Server $Server 
@@ -95,7 +95,7 @@ Describe "Theme" {
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
-            $Theme.Content | Should be ".ud-dashboard {`r`n`tbackground-color : #234234;`r`n`tcolor : #959595;`r`n}`r`n.ud-table {`r`n`tbackground-color : #123123;`r`n}`r`n"
+            $Theme.Content | Should be ".ud-dashboard {`r`n`tbackground-color : #234234 !important;`r`n`tcolor : #959595 !important;`r`n}`r`n.ud-table {`r`n`tbackground-color : #123123 !important;`r`n}`r`n"
         }
 
        Stop-UDDashboard -Server $Server 
