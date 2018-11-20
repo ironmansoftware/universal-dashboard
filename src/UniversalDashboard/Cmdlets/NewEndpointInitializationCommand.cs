@@ -53,6 +53,11 @@ namespace UniversalDashboard.Cmdlets
             if (Function != null) {
                 foreach(var function in Function) {
                     var functionInfo = SessionState.InvokeCommand.GetCommand(function, CommandTypes.Function);
+                    if (functionInfo == null)
+                    {
+                        WriteWarning($"Function '{function}' was not found.");
+                        continue;
+                    }
 
                     initialSessionState.Commands.Add(new SessionStateFunctionEntry(function, functionInfo.Definition));
                 }
