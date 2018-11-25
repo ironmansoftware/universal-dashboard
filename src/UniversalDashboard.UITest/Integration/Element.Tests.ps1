@@ -10,6 +10,73 @@ Get-UDDashboard | Stop-UDDashboard
 
 Describe "Element" {
 
+    Context "OnLoad" {
+        $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
+            New-UDElement -OnLoad "document.getElementById('parent').innerText = 'hi!';" -Content {
+                New-UDElement -Tag 'div' -Content {
+                
+                } -Primitive -Attributes @{
+                   id = 'parent'
+                   style = @{
+                       color = 'white'
+                       backgroundColor = 'black'
+                       height = '100px'
+                       width = '100px'
+                   }
+               }
+            }
+        }
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should have parent and child" {
+            Find-SeElement -Driver $Driver -Id 'parent' | Should not be $null
+            Find-SeElement -Driver $Driver -Id 'child' | Should not be $null
+        }
+
+       # Stop-SeDriver $Driver
+       # Stop-UDDashboard -Server $Server 
+    }
+
+    return
+
+
+    Context "Primitive" {
+        $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
+            New-UDElement -Tag 'div' -Content {
+                New-UDElement -Tag 'div' -Attributes @{
+                    id = 'child'
+                    style = @{
+                        backgroundColor = 'blue'
+                        height = '50px'
+                        width = '50px'
+                    }
+                }
+             } -Primitive -Attributes @{
+                id = 'parent'
+                style = @{
+                    backgroundColor = 'black'
+                    height = '100px'
+                    width = '100px'
+                }
+            }
+        }
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should have parent and child" {
+            Find-SeElement -Driver $Driver -Id 'parent' | Should not be $null
+            Find-SeElement -Driver $Driver -Id 'child' | Should not be $null
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
     Context "ArgumentList" {
         $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
             $Patch = 'comp1'

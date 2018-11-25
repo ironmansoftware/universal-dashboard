@@ -114,5 +114,17 @@ export default function renderComponent(component, history) {
             return <Suspense fallback={<div></div>}>
                 <UdTerminal {...component} key={component.id}/>
             </Suspense>
+
+        case "primitive":
+            var children = null;    
+            if (component.content) {
+                children = component.content.map(function(x) {
+                    if (x.type != null) {
+                        return renderComponent(x, history);
+                    } 
+                    return x;
+                });
+            }
+            return React.createElement(component.tag, component.attributes, children)
     }
 }

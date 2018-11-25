@@ -131,6 +131,10 @@ class UDElementContent extends React.Component {
         if (this.state.tag === 'select') {
             $(this.refs.element).material_select(this.onUserEvent.bind(this));
         }
+
+        if (this.props.onLoad) {
+            eval(this.props.onLoad);
+        }
     }
 
     componentDidUpdate() {

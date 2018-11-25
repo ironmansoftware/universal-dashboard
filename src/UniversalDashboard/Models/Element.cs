@@ -30,7 +30,7 @@ namespace UniversalDashboard.Models.Basics
         public string ModuleName { get; set; }
 
         [JsonProperty("type")]
-        public override string Type => "element";
+        public override string Type => Primitive ? "primitive" : "element";
 
         [JsonProperty("key")]
         public string Key
@@ -40,6 +40,11 @@ namespace UniversalDashboard.Models.Basics
                 return Guid.NewGuid().ToString();
             }
         }
+
+        internal bool Primitive { get; set; }
+
+        [JsonProperty("onLoad")]
+        public string OnLoad { get; set; }
 
         public override string ToString()
         {

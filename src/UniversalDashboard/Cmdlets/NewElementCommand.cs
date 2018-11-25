@@ -24,16 +24,23 @@ namespace UniversalDashboard.Cmdlets
         [Parameter(ParameterSetName = "HTML")]
         public Hashtable Attributes { get; set; }
         [Parameter(ParameterSetName = "HTML")]
-		public ScriptBlock Content { get; set; }
-		[Parameter(Mandatory = true, ParameterSetName = "JS")]
-		public string JavaScriptPath { get; set; }
 		[Parameter(ParameterSetName = "JS")]
+		public ScriptBlock Content { get; set; }
+		[Parameter(Mandatory = true, ParameterSetName = "CustomReactElement")]
+		public string JavaScriptPath { get; set; }
+		[Parameter(ParameterSetName = "CustomReactElement")]
 		public string ComponentName { get; set; } = "default";
-		[Parameter(Mandatory = true, ParameterSetName = "JS")]
+		[Parameter(Mandatory = true, ParameterSetName = "CustomReactElement")]
 		public string ModuleName { get; set; }
 
-		[Parameter(ParameterSetName = "JS")]
+		[Parameter(ParameterSetName = "CustomReactElement")]
 		public Hashtable Properties { get; set; }
+
+		[Parameter(ParameterSetName = "HTML")]
+		public SwitchParameter Primitive { get; set; }
+
+		[Parameter(ParameterSetName = "JS")]
+		public string OnLoad { get; set; }
 
         protected override void EndProcessing()
 		{
@@ -87,14 +94,27 @@ namespace UniversalDashboard.Cmdlets
 					Content = Content?.Invoke().Where(m => m != null).Select(m => m.BaseObject).ToArray(),
 					Callback = GenerateCallback(Id),
                     AutoRefresh = AutoRefresh,
-                    RefreshInterval = RefreshInterval
+                    RefreshInterval = RefreshInterval,
+					Primitive = Primitive
+				};
+
+				Log.Debug(JsonConvert.SerializeObject(element));
+
+				WriteObject(element);
+			} else if (ParameterSetName == "JS") {
+				var element = new Element
+				{
+					Id = Id,
+					Tag = "span",
+					Content = Content?.Invoke().Where(m => m != null).Select(m => m.BaseObject).ToArray(),
+					OnLoad = OnLoad
 				};
 
 				Log.Debug(JsonConvert.SerializeObject(element));
 
 				WriteObject(element);
 			} else {
-				Log.Debug("JS");
+				Log.Debug("CustomReactElement");
 
 				var path = GetUnresolvedProviderPathFromPSPath(JavaScriptPath);
 
