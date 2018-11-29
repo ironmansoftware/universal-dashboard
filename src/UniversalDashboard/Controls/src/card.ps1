@@ -36,7 +36,9 @@ function New-UDCard {
         [ValidateSet('Small', 'Medium', 'Large')]
         [String]$TextSize = 'Small',
         [Parameter()]
-        [UniversalDashboard.Models.FontAwesomeIcons]$Watermark
+        [UniversalDashboard.Models.FontAwesomeIcons]$Watermark,
+        [Parameter()]
+        [Switch]$Horizontal
     )
 
     $activatorClass = ''
@@ -54,7 +56,12 @@ function New-UDCard {
         color = $FontColor.HtmlColor
     }
 
-    New-UDElement -Tag "div" -Id $Id -Attributes @{ className = "card $sizeClass ud-card"; style = $style  } -Content {
+    $cardClass = "card $sizeClass ud-card"
+    if ($Horizontal) {
+        $cardClass = "card $sizeClass horizontal ud-card"
+    }
+     
+    New-UDElement -Tag "div" -Id $Id -Attributes @{ className = $cardClass; style = $style  } -Content {
         if ($Image -ne $null) {
             New-UDElement -Tag 'div' -Attributes @{ className = "card-image waves-effect waves-block waves-light" } -Content {
                 $Image
