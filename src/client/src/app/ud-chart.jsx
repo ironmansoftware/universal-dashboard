@@ -132,7 +132,7 @@ export default class UdChart extends React.Component {
                 height:this.props.height,
                 marginBottom:'3rem'
             }
-            this.props.options = {
+            var options = {
                 maintainAspectRatio: false,
                 layout:{
                     padding:{
@@ -140,6 +140,8 @@ export default class UdChart extends React.Component {
                     }
                 }
             }
+
+            this.props.options = {...options, ...this.props.options}
 
         }
         else if(this.props.width !== null && this.props.height === null){
