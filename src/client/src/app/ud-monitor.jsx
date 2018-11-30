@@ -71,7 +71,7 @@ export default class UdMonitor extends React.Component {
                     return;
                 }
 
-                var chart = this.refs.chart.chart_instance;
+                var chart = this.refs.chart.chartInstance;
 
                 if (chart == null) {
                     console.log("Missing chart reference! " + JSON.stringify(data));
