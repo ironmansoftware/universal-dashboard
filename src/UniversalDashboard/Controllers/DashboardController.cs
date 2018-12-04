@@ -9,6 +9,7 @@ using System.IO;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
+using System.Reflection;
 
 namespace UniversalDashboard.Controllers
 {
@@ -60,14 +61,20 @@ namespace UniversalDashboard.Controllers
             return _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
         }
 
-        [Authorize]
 		[Route("theme")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Theme()
 	    {
+            var materializeCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "styles", "materialize.min.css");
+            var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "styles", "site.css");
+
+            var css = System.IO.File.ReadAllText(materializeCss);
+            css += System.IO.File.ReadAllText(siteCss);
+            css += _dashboard?.Themes?.FirstOrDefault()?.RenderedContent;
+
 			return new ContentResult()
             {
-                Content = _dashboard?.Themes?.FirstOrDefault()?.RenderedContent,
+                Content = css,
                 ContentType = "text/css",
             };
 	    }

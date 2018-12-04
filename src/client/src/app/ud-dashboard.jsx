@@ -180,8 +180,6 @@ export default class UdDashboard extends React.Component {
     }
 
     loadData() {
-        this.loadStylesheet(getApiPath() + "/api/internal/dashboard/theme");
-        
         fetchGet("/api/internal/dashboard", function(json) {
 
             var dashboard = json.dashboard;
