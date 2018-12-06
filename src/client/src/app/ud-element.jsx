@@ -6,6 +6,8 @@ import {getApiPath} from 'config';
 import ReactInterval from 'react-interval';
 import ErrorCard from './error-card.jsx';
 
+import * as MaterialUI from 'material-ui';
+
 export default class UdElement extends React.Component {
     constructor() {
         super();
@@ -322,7 +324,19 @@ class UDElementContent extends React.Component {
         attributes.ref = 'element';
         attributes.key = this.props.key;
 
-        this.element = React.createElement(this.state.tag, attributes, children);
+        if (this.state.tag.startsWith('MU-')) 
+        {
+            var tag = this.state.tag.slice(3)
+            this.element = React.createElement(MaterialUI[tag], attributes, children);
+        }
+        else 
+        {
+            this.element = React.createElement(this.state.tag, attributes, children);
+        }
+
+        
+
+
 
     return [this.element, 
             <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>];

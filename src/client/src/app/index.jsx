@@ -12,6 +12,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import app from './reducers'
 import {getApiPath} from 'config';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 // To add to window
 if (!window.Promise) {
@@ -29,4 +30,4 @@ styles.media = 'screen';
 styles.href = getApiPath() + "/api/internal/dashboard/theme";
 document.getElementsByTagName('head')[0].appendChild(styles);
 
-render(<Provider store={store}><ConnectedApp/></Provider>, document.getElementById('app'));
+render(<Provider store={store}><MuiThemeProvider><ConnectedApp/></MuiThemeProvider></Provider>, document.getElementById('app'));
