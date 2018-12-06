@@ -25,6 +25,8 @@ namespace UniversalDashboard.Cmdlets
         public Hashtable Attributes { get; set; }
         [Parameter(ParameterSetName = "HTML")]
 		public ScriptBlock Content { get; set; }
+		[Parameter(ParameterSetName = "HTML")]
+		public string OnMount { get; set; }
 		[Parameter(Mandatory = true, ParameterSetName = "JS")]
 		public string JavaScriptPath { get; set; }
 		[Parameter(ParameterSetName = "JS")]
@@ -87,7 +89,8 @@ namespace UniversalDashboard.Cmdlets
 					Content = Content?.Invoke().Where(m => m != null).Select(m => m.BaseObject).ToArray(),
 					Callback = GenerateCallback(Id),
                     AutoRefresh = AutoRefresh,
-                    RefreshInterval = RefreshInterval
+                    RefreshInterval = RefreshInterval,
+					OnMount = OnMount
 				};
 
 				Log.Debug(JsonConvert.SerializeObject(element));

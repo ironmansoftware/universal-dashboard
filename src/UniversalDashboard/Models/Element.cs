@@ -41,6 +41,9 @@ namespace UniversalDashboard.Models.Basics
             }
         }
 
+        [JsonProperty("onMount")]
+        public string OnMount {get;set;}
+
         public override string ToString()
         {
             if (string.IsNullOrEmpty(Tag))
