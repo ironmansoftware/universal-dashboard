@@ -1,6 +1,6 @@
 import React,{Suspense} from 'react';
 import {Row, Col} from 'react-materialize';
-import {Doughnut, Bar, Line, Polar, Radar, Pie} from 'react-chartjs-2';
+import {Doughnut, Bar, Line, Polar, Radar, Pie, HorizontalBar} from 'react-chartjs-2';
 import {fetchGet} from './services/fetch-service.jsx';
 import ReactInterval from 'react-interval';
 import UdInputField from './ud-input-field.jsx';
@@ -114,6 +114,10 @@ export default class UdChart extends React.Component {
         return <Pie data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
     }
 
+    renderHorizontalBar() {
+        return <HorizontalBar data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
+    }
+
     render() {
         if (this.state.hasError) {
             return [
@@ -201,6 +205,10 @@ export default class UdChart extends React.Component {
                 // Pie
                 case 5:
                 chart = this.renderPie();
+                    break;
+                // Horizontal Bar
+                case 6:
+                chart = this.renderHorizontalBar();
                     break;
             }
         }

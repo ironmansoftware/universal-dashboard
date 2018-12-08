@@ -49,6 +49,7 @@ namespace UniversalDashboard.Models
 		Area,
 		Doughnut,
 		Radar,
-		Pie
+		Pie,
+        HorizontalBar
 	}
 }
