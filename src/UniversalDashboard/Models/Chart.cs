@@ -38,6 +38,8 @@ namespace UniversalDashboard.Models
 		public Link[] Links { get;set;}
 		[JsonProperty("filterFields")]
 		public Field[] FilterFields { get; set; }
+		[JsonIgnore]
+		public Endpoint OnClick {get;set;}
 	}
 
 	public enum ChartType
