@@ -35,6 +35,9 @@ namespace UniversalDashboard.Cmdlets.Charting
 		[Parameter]
 
 		public ScriptBlock FilterFields { get; set; }
+		
+		[Parameter]
+		public object OnClick {get;set;}
 
 		protected override void EndProcessing()
 		{
@@ -55,6 +58,21 @@ namespace UniversalDashboard.Cmdlets.Charting
 				Links = Links,
 				FilterFields = FilterFields?.Invoke().Select(m => m.BaseObject).OfType<Field>().ToArray()
 			};
+
+			Endpoint callback = null;
+
+			var scriptBlock = OnClick as ScriptBlock;
+			if (scriptBlock != null)
+			{
+				callback = GenerateCallback(Id + "onClick", scriptBlock, null);
+			}
+			else
+			{
+				var psobject = OnClick as PSObject;
+				callback = psobject?.BaseObject as Endpoint;
+			}
+
+            chart.ChildEndpoints = new[] { callback };
 
 			Log.Debug(JsonConvert.SerializeObject(chart));
 

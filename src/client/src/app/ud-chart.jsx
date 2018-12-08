@@ -1,6 +1,6 @@
 import React,{Suspense} from 'react';
 import {Row, Col} from 'react-materialize';
-import {Doughnut, Bar, Line, Polar, Radar, Pie} from 'react-chartjs-2';
+import {Doughnut, Bar, Line, Polar, Radar, Pie, HorizontalBar} from 'react-chartjs-2';
 import {fetchGet} from './services/fetch-service.jsx';
 import ReactInterval from 'react-interval';
 import UdInputField from './ud-input-field.jsx';
@@ -25,6 +25,15 @@ export default class UdChart extends React.Component {
         if (event.type === "syncElement") {
             this.loadData();
         }
+    }
+
+    onChartClicked(elements) {
+        PubSub.publish('element-event', {
+            type: "clientEvent",
+            eventId: this.props.id + "onClick",
+            eventName: 'onClick',
+            eventData: JSON.stringify(elements.map(x => x._view))
+        });
     }
 
     componentWillUnmount() {
@@ -82,27 +91,31 @@ export default class UdChart extends React.Component {
     }
     
     renderArea() {
-            return <Polar data={this.state.chartData} options={this.props.options}/>
+            return <Polar data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
     }
 
     renderDoughnut() {
-            return <Doughnut data={this.state.chartData} options={this.props.options}/>
+            return <Doughnut data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
     }
 
     renderBar() {
-        return <Bar  data={this.state.chartData} options={this.props.options}/>
+        return <Bar  data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
     }
 
     renderLine() {
-        return <Line data={this.state.chartData} options={this.props.options}/>
+        return <Line data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
     }
 
     renderRadar() {
-        return <Radar data={this.state.chartData} options={this.props.options}/>
+        return <Radar data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
     }
 
     renderPie() {
-        return <Pie data={this.state.chartData} options={this.props.options}/>
+        return <Pie data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
+    }
+
+    renderHorizontalBar() {
+        return <HorizontalBar data={this.state.chartData} options={this.props.options} onElementsClick={this.onChartClicked.bind(this)}/>
     }
 
     render() {
@@ -192,6 +205,10 @@ export default class UdChart extends React.Component {
                 // Pie
                 case 5:
                 chart = this.renderPie();
+                    break;
+                // Horizontal Bar
+                case 6:
+                chart = this.renderHorizontalBar();
                     break;
             }
         }
