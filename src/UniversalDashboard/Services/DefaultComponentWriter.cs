@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Services
@@ -23,7 +24,7 @@ namespace UniversalDashboard.Services
             var endpoints = new List<Endpoint> { component.Callback };
             if (component.ChildEndpoints != null)
             {
-                foreach(var endpoint in component.ChildEndpoints)
+                foreach(var endpoint in component.ChildEndpoints.Where(m => m != null))
                 {
                     endpoint.Page = page;
                     endpoints.Add(endpoint);
