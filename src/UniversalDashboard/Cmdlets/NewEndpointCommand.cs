@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Management.Automation;
+using System.Text.RegularExpressions;
 using UniversalDashboard.Models;
 using UniversalDashboard.Services;
 
@@ -21,6 +22,9 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter(Mandatory = true, ParameterSetName = "Rest")]
 		public string Url { get; set; }
 
+        [Parameter(ParameterSetName = "Rest")]
+        public SwitchParameter EvaluateUrlAsRegex { get; set; }
+
 		[Parameter(ParameterSetName = "Rest")]
 		[ValidateSet("GET", "POST", "DELETE", "PUT")]
 		public string Method { get; set; } = "GET";
@@ -39,6 +43,10 @@ namespace UniversalDashboard.Cmdlets
                 Schedule = Schedule,
                 ArgumentList = ArgumentList
 		    };
+
+            if (EvaluateUrlAsRegex) {
+                callback.UrlRegEx = new Regex(Url);
+            }
 
             callback.SessionId = SessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
 

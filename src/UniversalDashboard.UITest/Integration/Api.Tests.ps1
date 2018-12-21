@@ -94,6 +94,11 @@ Describe "Api" {
                 
                 $rechercheId
             }
+            New-UDEndpoint -Url "nodes\(agent=(?<name>[0-9]*)\)" -Method "GET" -Endpoint {
+                param($name)
+                
+                $name
+            } -EvaluateUrlAsRegex
         ) -EndpointInitialization $Init
 
         It "should work with nested routes" {
@@ -165,6 +170,10 @@ Describe "Api" {
 
         It "returns a 404 for a missing method" {
             { Invoke-WebRequest -Uri http://localhost:10001/api/somecrap -Method GET } | Should throw
+        }
+
+        It "returns value of regex" {
+            Invoke-RestMethod -Uri 'http://localhost:10001/api/nodes(agent=1234)' -Method GET | Should be 1234
         }
 
         Stop-UDRestApi $Server
