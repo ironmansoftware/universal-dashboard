@@ -17,6 +17,11 @@ namespace UniversalDashboard
 {
     public static class DashboardHubContextExtensions
     {
+        public static async Task UpdateElement(this IHubContext<DashboardHub> hub, string clientId, string componentId, object props)
+        {
+            await hub.Clients.Client(clientId).SendAsync("updateComponent", componentId, props);
+        }
+
         public static async Task ShowModal(this IHubContext<DashboardHub> hub, string clientId, Modal modal)
         {
             await hub.Clients.Client(clientId).SendAsync("showModal", modal);

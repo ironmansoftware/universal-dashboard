@@ -5,8 +5,9 @@ import {fetchGet, fetchPost} from './services/fetch-service.jsx';
 import {getApiPath} from 'config';
 import ReactInterval from 'react-interval';
 import ErrorCard from './error-card.jsx';
+import { withUpdateSubscription } from './update-subscription.jsx';
 
-export default class UdElement extends React.Component {
+class UdElement extends React.Component {
     constructor() {
         super();
 
@@ -332,3 +333,5 @@ class UDElementContent extends React.Component {
             <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>];
     }
 }
+
+export default UdElement = withUpdateSubscription(UdElement);

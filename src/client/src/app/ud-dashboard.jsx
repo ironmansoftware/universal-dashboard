@@ -113,6 +113,14 @@ export default class UdDashboard extends React.Component {
             window.location.href = url;
         });
 
+        connection.on('update', (componentId, props) => {
+            PubSub.publish(componentId, {
+                type: "update",
+                componentId: componentId,
+                props: props
+            });
+        });
+
         PubSub.subscribe('element-event', function(e, data) {
             if (data.type === "requestStateResponse") {
                 connection.invoke("requestStateResponse", data.requestId, data.state)
