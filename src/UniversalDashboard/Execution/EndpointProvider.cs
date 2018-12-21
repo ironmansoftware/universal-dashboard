@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NLog;
 using UniversalDashboard.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace UniversalDashboard.Execution
 {
@@ -91,10 +92,12 @@ namespace UniversalDashboard.Execution
             }
             else
             {
-                callback.Parts = callback.Url.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Select(m => new Part(m, m.StartsWith(":"))).ToArray();
+                if (callback.UrlRegEx == null) {
+                    callback.Parts = callback.Url.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Select(m => new Part(m, m.StartsWith(":"))).ToArray();
 
-                if (callback.Parts.GroupBy(m => m.Value).Any(m => m.Count() > 1))
-                    throw new Exception("Duplicate variable name in URL.");
+                    if (callback.Parts.GroupBy(m => m.Value).Any(m => m.Count() > 1))
+                        throw new Exception("Duplicate variable name in URL.");
+                }
 
                 _restEndpoints.Add(callback);
             }
@@ -162,6 +165,31 @@ namespace UniversalDashboard.Execution
             foreach(var endpoint in _restEndpoints.Where(m => m.Method.Equals(method, StringComparison.OrdinalIgnoreCase)))
             {
                 Dictionary<string, object> variables = new Dictionary<string, object>();
+
+                if (endpoint.UrlRegEx != null) {
+                    var matches = endpoint.UrlRegEx.Matches(url);
+                    if (matches != null && matches.Count != 0) {
+                        foreach(Match match in matches) {
+                            for (int i = 1; i < match.Groups.Count; i++)
+                            {
+                                var group = match.Groups[i];
+                                string name = endpoint.UrlRegEx.GroupNameFromNumber(i);
+
+                                if (matchedVariables.ContainsKey(name))
+                                {
+                                    matchedVariables[name] = group.Value;
+                                }
+                                else
+                                {
+                                    matchedVariables.Add(name, group.Value);
+                                }
+                            }
+                        }
+                        
+                        return endpoint;
+                    }
+                }
+
                 if (IsMatch(endpoint, url, variables))
                 {
                     foreach(var kvp in variables)

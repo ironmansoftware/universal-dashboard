@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
+using System.Text.RegularExpressions;
 
 namespace UniversalDashboard.Models
 {
@@ -25,6 +26,7 @@ namespace UniversalDashboard.Models
         public EndpointSchedule Schedule { get; set; }
         public string SessionId { get; set; }
         internal Page Page { get; set; }
+        public Regex UrlRegEx { get; set; }
     }
 
     public class Part
