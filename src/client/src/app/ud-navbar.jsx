@@ -27,7 +27,7 @@ export default class UdNavbar extends React.Component {
 
         var logo = null;
         if (this.props.logo) {
-            logo = <img id={this.props.logo.id} src={this.props.logo.url} height={this.props.logo.height} width={this.props.logo.width} style={{paddingLeft: '10px', verticalAlign: "middle"}}/>
+            logo = <img id={this.props.logo.attributes.id} src={this.props.logo.attributes.src} height={this.props.logo.attributes.height} width={this.props.logo.attributes.width} style={{paddingLeft: '10px', verticalAlign: "middle"}}/>
         }
 
         var dPage = this.homePage();

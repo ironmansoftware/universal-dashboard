@@ -70,7 +70,8 @@ export default class Input extends React.Component {
         });
     }
 
-    onSubmit() {
+    onSubmit(e) {
+        e.preventDefault();
 
         this.setState({
             loading: true
