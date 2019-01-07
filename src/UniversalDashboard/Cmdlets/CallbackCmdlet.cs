@@ -17,6 +17,9 @@ namespace UniversalDashboard.Cmdlets
 	    [Parameter]
 	    public int RefreshInterval { get; set; } = 5;
 
+        [Parameter]
+        public ViewModelBinding ViewModelBinding { get; set; }
+
         protected Endpoint GenerateCallback(string id)
         {
             return Endpoint.GenerateCallback(id, SessionState, ArgumentList);

@@ -73,6 +73,8 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public TimeSpan IdleTimeout { get; set; } = TimeSpan.FromMinutes(25);
 
+        public ViewModel[] ViewModel { get; set; }
+
         protected override void EndProcessing()
 	    {
 			var dashboard = new Dashboard();
@@ -92,6 +94,7 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.GeoLocation = GeoLocation;
 			dashboard.FontIconStyle = FontIconStyle;
 			dashboard.IdleTimeout = IdleTimeout;
+            dashboard.ViewModels = ViewModel;
 
             if (Theme != null) {
 				var themeService = new ThemeService();

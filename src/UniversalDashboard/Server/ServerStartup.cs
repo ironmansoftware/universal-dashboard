@@ -14,8 +14,9 @@ using NLog.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using UniversalDashboard.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
-using UniversalDashboard.Controllers;
 using System.IO;
+using DotNetify;
+using UniversalDashboard.Models;
 
 namespace UniversalDashboard
 {
@@ -53,6 +54,7 @@ namespace UniversalDashboard
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddSingleton(ExecutionService.MemoryCache);
+			services.AddDotNetify();
             services.AddMvc();
 
             services.AddScoped<IFilterProvider, EncFilterProvider>();
@@ -121,6 +123,18 @@ namespace UniversalDashboard
 			app.UseSignalR(routes =>
             {
                 routes.MapHub<DashboardHub>("/dashboardhub");
+				routes.MapDotNetifyHub();
+            });
+			app.UseDotNetify(config =>
+            {
+                foreach(var viewModel in dashboardService.Dashboard?.ViewModels)
+                {
+                    config.Register(viewModel.Name, _ =>
+                    {
+                        var executionService = app.ApplicationServices.GetService(typeof(IExecutionService)) as IExecutionService;
+                        return new ViewModel(executionService, viewModel.Members);
+                    });
+                }
             });
 			app.UseWebSockets();
 

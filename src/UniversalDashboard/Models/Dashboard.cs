@@ -36,5 +36,6 @@ namespace UniversalDashboard.Models
 		public string FilterText { get; set; }
 		[JsonIgnore]
 		public TimeSpan IdleTimeout { get; set; }
+        public IEnumerable<ViewModel> ViewModels { get; set; }
     }
 }
