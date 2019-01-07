@@ -40,6 +40,8 @@ namespace UniversalDashboard.Models
 		public Field[] FilterFields { get; set; }
 		[JsonIgnore]
 		public Endpoint OnClick {get;set;}
+        [JsonProperty("clickable")]
+        public bool Clickable { get; set; }
 	}
 
 	public enum ChartType

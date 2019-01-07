@@ -28,6 +28,11 @@ export default class UdChart extends React.Component {
     }
 
     onChartClicked(elements) {
+
+        if (!this.props.clickable) {
+            return;
+        }
+
         PubSub.publish('element-event', {
             type: "clientEvent",
             eventId: this.props.id + "onClick",
