@@ -72,9 +72,9 @@ namespace UniversalDashboard.Cmdlets.Charting
 				callback = psobject?.BaseObject as Endpoint;
 			}
 
+            chart.Clickable = callback != null;
             chart.ChildEndpoints = new[] { callback };
-
-			Log.Debug(JsonConvert.SerializeObject(chart));
+            Log.Debug(JsonConvert.SerializeObject(chart));
 
 			WriteObject(chart);
 		}
