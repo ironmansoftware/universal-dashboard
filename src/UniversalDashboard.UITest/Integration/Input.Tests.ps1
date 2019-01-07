@@ -483,6 +483,8 @@ Describe "Input" {
             }
         }
 
+        Start-Sleep 1
+
         It "should have different submit text" {
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
@@ -538,7 +540,7 @@ Describe "Input" {
                     New-UDInputAction -Content @(
                         New-UDCounter -Title Sixteen -Id "Sixteen" -Endpoint {
                             $txtTest
-                        }
+                        } 
                     )
                 }
             }
