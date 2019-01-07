@@ -2,7 +2,7 @@ import React,{Suspense} from 'react';
 import UdColumn from './../ud-column.jsx';
 import UdNavbar from './../ud-navbar.jsx';
 import UdRow from './../ud-row.jsx';
-
+import ViewModelBinding from '../viewModelBinding.jsx';
 
 const UdCardComponent = React.lazy(() => import('./../ud-card.jsx' /* webpackChunkName: "ud-card" */))
 const UdChartComponent = React.lazy(() => import('./../ud-chart.jsx' /* webpackChunkName: "ud-chart" */))
@@ -18,6 +18,9 @@ const UdDateTimeComponent = React.lazy(() => import('./../basics/datetime.jsx' /
 const UdElementComponent = React.lazy(() => import('./../ud-element.jsx' /* webpackChunkName: "ud-element" */))
 const UdImageCarouselComponent = React.lazy(() => import( './../ud-image-carousel.jsx' /* webpackChunkName: "ud-image-carousel" */))
 const UdTerminal = React.lazy(() => import( './../ud-terminal.jsx' /* webpackChunkName: "ud-terminal" */))
+
+// Material UI
+const UdChip = React.lazy(() => import( '../material-ui/chip' /* webpackChunkName: "ud-muChip" */))
 
 export default function renderComponent(component, history) {
     if (!component) return null;
@@ -38,7 +41,7 @@ export default function renderComponent(component, history) {
 
         case "card":  
             return <Suspense fallback={<div></div>}>
-                <UdCardComponent {...component} key={component.id}/>
+                <ViewModelBinding element={UdCardComponent} {...component} key={component.id} />
             </Suspense>
 
         case "chart":
@@ -114,5 +117,12 @@ export default function renderComponent(component, history) {
             return <Suspense fallback={<div></div>}>
                 <UdTerminal {...component} key={component.id}/>
             </Suspense>
+
+        // material-ui
+
+        case "muChip":
+            return <Suspense fallback={<div></div>}>
+                    <ViewModelBinding element={UdChip} {...component} key={component.id} />
+                </Suspense>
     }
 }

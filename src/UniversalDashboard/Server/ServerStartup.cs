@@ -105,8 +105,9 @@ namespace UniversalDashboard
 			});
 
 			var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
+            var executionService = app.ApplicationServices.GetService(typeof(IExecutionService)) as IExecutionService;
 
-			if (dashboardService?.DashboardOptions?.PublishedFolders != null) {
+            if (dashboardService?.DashboardOptions?.PublishedFolders != null) {
 				foreach(var publishedFolder in dashboardService.DashboardOptions.PublishedFolders) {
 					app.UseStaticFiles(new StaticFileOptions
                     {
@@ -131,8 +132,7 @@ namespace UniversalDashboard
                 {
                     config.Register(viewModel.Name, _ =>
                     {
-                        var executionService = app.ApplicationServices.GetService(typeof(IExecutionService)) as IExecutionService;
-                        return new ViewModel(executionService, viewModel.Members);
+                       return new ViewModel(executionService, viewModel.Members);
                     });
                 }
             });

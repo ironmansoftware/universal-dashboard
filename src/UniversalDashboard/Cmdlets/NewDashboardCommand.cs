@@ -73,6 +73,7 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public TimeSpan IdleTimeout { get; set; } = TimeSpan.FromMinutes(25);
 
+        [Parameter]
         public ViewModel[] ViewModel { get; set; }
 
         protected override void EndProcessing()

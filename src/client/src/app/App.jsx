@@ -6,6 +6,10 @@ import {
     BrowserRouter as Router,
     Route
 } from 'react-router-dom'
+import dotnetify from 'dotnetify';
+import { getApiPath } from './development';
+
+dotnetify.hubServerUrl = getApiPath();
 
 class App extends React.Component {
 

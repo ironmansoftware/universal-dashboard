@@ -130,7 +130,10 @@ $manifestParameters = @{
 						"New-UDTreeView"
 						"New-UDImageCarousel"
 						"New-UDImageCarouselItem"
-						"New-UDEndpointInitialization"
+						"New-UDEndpointInitialization",
+						"New-UDViewModel"
+						"New-UDViewModelBinding"
+						"New-UDChip"
 						)
 }
 

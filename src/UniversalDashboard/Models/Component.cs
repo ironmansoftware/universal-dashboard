@@ -23,7 +23,10 @@ namespace UniversalDashboard.Models
 		[JsonProperty("hasCallback")]
 		public bool HasCallback => Callback?.ScriptBlock != null;
 
-		public string ToJson() {
+        [JsonProperty("viewModelBinding")]
+        public ViewModelBinding ViewModelBinding { get; set; }
+
+        public string ToJson() {
 			return JsonConvert.SerializeObject(this);
 		}
     }
