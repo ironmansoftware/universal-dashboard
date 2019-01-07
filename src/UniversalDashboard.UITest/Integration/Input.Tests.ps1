@@ -7,21 +7,22 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
+$Server = Start-UDDashboard -Port 10001 -Dashboard (New-UDDashboard -Title "Test" -Content {}) -UpdateToken 'TEST'
+$Driver = Start-SeFirefox
+Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
 Describe "Input" {
 
     Context "should return the error is there is an error" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
-                param($Test)
-
-                throw "Noooooooooooo!"
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Test" -Content {
+                New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
+                    param($Test)
+    
+                    throw "Noooooooooooo!"
+                }
             }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 1
 
@@ -34,51 +35,45 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            (Find-SeElement -ClassName 'iziToast-message' -Driver $Driver).Text | should be "Noooooooooooo!"
-            
-            
+            (Find-SeElement -ClassName 'iziToast-message' -Driver $Driver).Text | should be "Noooooooooooo!"   
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Validation" {
-        $dashboard = New-UDDashboard -Title "Validation" -Content {
-            New-UDRow -Columns {
-                New-UDColumn -Endpoint {
-                    New-UDInput -Title 'Test' -Endpoint {
-                        param(
-                            [Parameter(Mandatory)]
-                            [UniversalDashboard.ValidationErrorMessage("The email address you entered is invalid.")]
-                            [ValidatePattern('.*Rules.*')]
-                            $EmailAddress,
-                            [Parameter(Mandatory)]
-                            $SomeOtherField
-                        )
-        
-                    } -Validate
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Validation" -Content {
+                New-UDRow -Columns {
+                    New-UDColumn -Endpoint {
+                        New-UDInput -Title 'Test' -Endpoint {
+                            param(
+                                [Parameter(Mandatory)]
+                                [UniversalDashboard.ValidationErrorMessage("The email address you entered is invalid.")]
+                                [ValidatePattern('.*Rules.*')]
+                                $EmailAddress,
+                                [Parameter(Mandatory)]
+                                $SomeOtherField
+                            )
+            
+                        } -Validate
+                    }
+                
                 }
-               
+
+                New-UDInput -Id 'content' -Title 'Test2' -Endpoint {
+                    param(
+                        [Parameter(Mandatory)]
+                        [UniversalDashboard.ValidationErrorMessage("The email address you entered is invalid.")]
+                        [ValidatePattern('.*Rules.*')]
+                        $EmailAddress2,
+                        [Parameter(Mandatory)]
+                        $SomeOtherItem2,
+                        [Parameter]
+                        $NotRequired
+                    )
+
+                } -Validate
             }
-
-            New-UDInput -Id 'content' -Title 'Test2' -Endpoint {
-                param(
-                    [Parameter(Mandatory)]
-                    [UniversalDashboard.ValidationErrorMessage("The email address you entered is invalid.")]
-                    [ValidatePattern('.*Rules.*')]
-                    $EmailAddress2,
-                    [Parameter(Mandatory)]
-                    $SomeOtherItem2,
-                    [Parameter]
-                    $NotRequired
-                )
-
-            } -Validate
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
 
         It "should validate with custom error message (Endpoint)" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
@@ -138,47 +133,41 @@ Describe "Input" {
 
             Find-SeElement -Driver $Driver -Id "btncontent" |  Get-SeElementAttribute -Attribute 'class' | Should be 'btn'
         }
-
-        
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Custom input" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDInput -Title "Simple Form" -Id "Form" -Content {
-                New-UDInputField -Type 'textbox' -Name 'test' -Placeholder 'Test testbox' -DefaultValue "Test"
-                New-UDInputField -Type 'checkbox' -Name 'test2' -Placeholder 'checkbox'
-                New-UDInputField -Type 'select' -Name 'test3' -Placeholder 'select' -Values @("Test", "Test2", "Test3") -DefaultValue "Test"
-                New-UDInputField -Type 'radioButtons' -Name 'test4' -Placeholder @("My Test Value", "My Test Value 2", "My Test Value 3") -Values @("MyTestValue", "MyTestValue2", "MyTestValue3")
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Test" -Content {
+                New-UDInput -Title "Simple Form" -Id "Form" -Content {
+                    New-UDInputField -Type 'textbox' -Name 'test' -Placeholder 'Test testbox' -DefaultValue "Test"
+                    New-UDInputField -Type 'checkbox' -Name 'test2' -Placeholder 'checkbox'
+                    New-UDInputField -Type 'select' -Name 'test3' -Placeholder 'select' -Values @("Test", "Test2", "Test3") -DefaultValue "Test"
+                    New-UDInputField -Type 'radioButtons' -Name 'test4' -Placeholder @("My Test Value", "My Test Value 2", "My Test Value 3") -Values @("MyTestValue", "MyTestValue2", "MyTestValue3")
 
-                New-UDInputField -Type 'password' -Name 'test5' -Placeholder 'Password'
-                New-UDInputField -Type 'textarea' -Name 'test6' -Placeholder 'Big Box o Text'
-                New-UDInputField -Type 'switch' -Name 'test7' -Placeholder @("Yes", "No")
-                New-UDInputField -Type 'select' -Name 'test8' -Placeholder 'select'
-                New-UDInputField -Type 'date' -Name 'test9' -Placeholder 'My Time' 
-                #New-UDInputField -Type 'time' -Name 'test10' -Placeholder 'My Date' 
-            } -Endpoint {
-                param($Test, $Test2, $Test3, $Test4, $Test5, $Test6, $Test7, $Test8, $Test9, $Test10)
+                    New-UDInputField -Type 'password' -Name 'test5' -Placeholder 'Password'
+                    New-UDInputField -Type 'textarea' -Name 'test6' -Placeholder 'Big Box o Text'
+                    New-UDInputField -Type 'switch' -Name 'test7' -Placeholder @("Yes", "No")
+                    New-UDInputField -Type 'select' -Name 'test8' -Placeholder 'select'
+                    New-UDInputField -Type 'date' -Name 'test9' -Placeholder 'My Time' 
+                    #New-UDInputField -Type 'time' -Name 'test10' -Placeholder 'My Date' 
+                } -Endpoint {
+                    param($Test, $Test2, $Test3, $Test4, $Test5, $Test6, $Test7, $Test8, $Test9, $Test10)
 
-                $Cache:Output = [PSCustomObject]@{
-                    test = $test
-                    test2 = $test2 
-                    test3 = $test3
-                    test4 = $test4
-                    test5 = $test5
-                    test6 = $test6
-                    test7 = $test7
-                    test8 = $test8
-                    test9 = $test9
-                   # test10 = $test10
+                    $Cache:Output = [PSCustomObject]@{
+                        test = $test
+                        test2 = $test2 
+                        test3 = $test3
+                        test4 = $test4
+                        test5 = $test5
+                        test6 = $test6
+                        test7 = $test7
+                        test8 = $test8
+                        test9 = $test9
+                    # test10 = $test10
+                    } 
                 } 
-            } 
+            }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should select date" {
 
@@ -299,40 +288,6 @@ Describe "Input" {
 
             $Cache:Output.test7 | Should be "true"
         }
-
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
-    }
-
-    Context "input and monitor" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
-                param()
-
-                New-UDInputAction -Toast "Test"
-            }
-            New-UDMonitor -Title "test" -RefreshInterval 1 -Endpoint {
-                Get-Random -Maximum 10 -Minimum 1 | Out-UDMonitorData
-            }
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        It "should not clear monitor after input" {
-
-            Sleep 5
-
-            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
-            Invoke-SeClick $Button
-
-            Sleep 2
-        }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Simple Form" {
@@ -343,38 +298,36 @@ Describe "Input" {
             Remove-Item $tempFile -Force
         }
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
-                param(
-                    [Parameter(HelpMessage = "My Textbox")][string]$Textbox, 
-                    [Parameter(HelpMessage = "My Checkbox")][bool]$Checkbox, 
-                    [Switch]$Checkbox2, 
-                    [Parameter(HelpMessage = "Day of the week")]
-                    [System.DayOfWeek]$DayOfWeek,
-                    [Parameter(HelpMessage = "Favorite Fruit")]
-                    [ValidateSet("Banana", "Apple", "Grape")]$Fruit)
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Test" -Content {
+                New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
+                    param(
+                        [Parameter(HelpMessage = "My Textbox")][string]$Textbox, 
+                        [Parameter(HelpMessage = "My Checkbox")][bool]$Checkbox, 
+                        [Switch]$Checkbox2, 
+                        [Parameter(HelpMessage = "Day of the week")]
+                        [System.DayOfWeek]$DayOfWeek,
+                        [Parameter(HelpMessage = "Favorite Fruit")]
+                        [ValidateSet("Banana", "Apple", "Grape")]$Fruit)
 
-                $tempDir = [System.IO.Path]::GetTempPath()
-                $tempFile = Join-Path $tempDir "output.txt"
+                    $tempDir = [System.IO.Path]::GetTempPath()
+                    $tempFile = Join-Path $tempDir "output.txt"
 
-                if ((Test-path $tempFile)) {
-                    Remove-Item $tempFile -Force
+                    if ((Test-path $tempFile)) {
+                        Remove-Item $tempFile -Force
+                    }
+
+                    [PSCustomObject]@{
+                        Textbox = $Textbox
+                        Checkbox = $Checkbox 
+                        Checkbox2 = [bool]$Checkbox2
+                        DayOfWeek = $DayOfWeek
+                        Vals = $Vals
+                    } | ConvertTo-Json | Out-File -FilePath $tempFile
                 }
-
-                [PSCustomObject]@{
-                    Textbox = $Textbox
-                    Checkbox = $Checkbox 
-                    Checkbox2 = [bool]$Checkbox2
-                    DayOfWeek = $DayOfWeek
-                    Vals = $Vals
-                } | ConvertTo-Json | Out-File -FilePath $tempFile
             }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
+        
         It "should output text" {
             $Element = Find-SeElement -Name "Textbox" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Hello"
@@ -462,53 +415,43 @@ Describe "Input" {
 
             $Output.Vals | Should be "Apple"
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "Different submit text" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDInput -Title "Simple Form" -Id "Form" -SubmitText "Insert" -Endpoint {
-                param($Test)
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Test" -Content {
+                New-UDInput -Title "Simple Form" -Id "Form" -SubmitText "Insert" -Endpoint {
+                    param($Test)
+                }
             }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have different submit text" {
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
 
             $Button | Should not be $null
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "clear input on toast" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDInput -Title "Simple Form" -Id "Form" -Content {
-                New-UDInputField -Type 'textbox' -Name 'test' -Placeholder 'Test testbox' -DefaultValue "Test"
-                New-UDInputField -Type 'checkbox' -Name 'test2' -Placeholder 'checkbox'
-                New-UDInputField -Type 'select' -Name 'test3' -Placeholder 'select' -Values @("Test", "Test2", "Test3") -DefaultValue "Test"
-                New-UDInputField -Type 'radioButtons' -Name 'test4' -Placeholder @("My Test Value", "My Test Value 2", "My Test Value 3") -Values @("MyTestValue", "MyTestValue2", "MyTestValue3")
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Test" -Content {
+                New-UDInput -Title "Simple Form" -Id "Form" -Content {
+                    New-UDInputField -Type 'textbox' -Name 'test' -Placeholder 'Test testbox' -DefaultValue "Test"
+                    New-UDInputField -Type 'checkbox' -Name 'test2' -Placeholder 'checkbox'
+                    New-UDInputField -Type 'select' -Name 'test3' -Placeholder 'select' -Values @("Test", "Test2", "Test3") -DefaultValue "Test"
+                    New-UDInputField -Type 'radioButtons' -Name 'test4' -Placeholder @("My Test Value", "My Test Value 2", "My Test Value 3") -Values @("MyTestValue", "MyTestValue2", "MyTestValue3")
 
-                New-UDInputField -Type 'password' -Name 'test5' -Placeholder 'Password'
-                New-UDInputField -Type 'textarea' -Name 'test6' -Placeholder 'Big Box o Text'
-                New-UDInputField -Type 'switch' -Name 'test7' -Placeholder @("Yes", "No")
-            } -Endpoint {
-                param($Test, $Test2, $Test3, $Test4, $Test5, $Test6, $Test7)
+                    New-UDInputField -Type 'password' -Name 'test5' -Placeholder 'Password'
+                    New-UDInputField -Type 'textarea' -Name 'test6' -Placeholder 'Big Box o Text'
+                    New-UDInputField -Type 'switch' -Name 'test7' -Placeholder @("Yes", "No")
+                } -Endpoint {
+                    param($Test, $Test2, $Test3, $Test4, $Test5, $Test6, $Test7)
 
-                New-UDInputAction -Toast "Test" -ClearInput
-            } 
+                    New-UDInputAction -Toast "Test" -ClearInput
+                } 
+            }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "have cleared input on toast" {
             $Element = Find-SeElement -Name "test" -Driver $Driver
@@ -527,23 +470,18 @@ Describe "Input" {
             $Element = Find-SeElement -Name "test2" -Driver $Driver
             $Element.Selected | Should be $False
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
     
     Context "redirect to google" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDInput -Title "Simple Form" -Id "Form" -SubmitText "Insert" -Endpoint {
-                param($Test)
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Test" -Content {
+                New-UDInput -Title "Simple Form" -Id "Form" -SubmitText "Insert" -Endpoint {
+                    param($Test)
 
-                New-UDInputAction -RedirectUrl "https://www.google.com"
+                    New-UDInputAction -RedirectUrl "https://www.google.com"
+                }
             }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have different submit text" {
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
@@ -553,32 +491,29 @@ Describe "Input" {
 
             $Driver.Url.ToLower().COntains("https://www.google.com") | Should be $true 
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
+        
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
     }
 
     Context "Redirect after input" {
-        $dashboard = New-UDDashboard -Title "Test" -Pages @(
-            New-UDPage -Name Home -Content {
-                New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
-                    param($PageNumber)
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Test" -Pages @(
+                New-UDPage -Name Home -Content {
+                    New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
+                        param($PageNumber)
 
-                    New-UDInputAction -RedirectUrl "/myPage/$PageNumber"
+                        New-UDInputAction -RedirectUrl "/myPage/$PageNumber"
+                    }
                 }
-            }
-            New-UDPage -Url "/myPage/:number" -Endpoint {
-                param($number)
+                New-UDPage -Url "/myPage/:number" -Endpoint {
+                    param($number)
 
-                New-UDLayout -Columns 3 -Content {
-                    New-UDCard -Title "Page $number" -Id "PageCard"
+                    New-UDLayout -Columns 3 -Content {
+                        New-UDCard -Title "Page $number" -Id "PageCard"
+                    }
                 }
-            }
-        )
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+            )
+        }
 
         It "should redirect to correct page" {
             $Element = Find-SeElement -Name "PageNumber" -Driver $Driver
@@ -591,31 +526,28 @@ Describe "Input" {
             $Element.Text | Should be "Page 6"
         }
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
     }
 
     Context "Different content" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
-                param($Test)
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken 'TEST' -Content {
+            New-UDDashboard -Title "Test" -Content {
+                New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
+                    param($txtTest)
 
-                New-UDInputAction -Content @(
-                    New-UDCounter -Title Sixteen -Id "Sixteen" -Endpoint {
-                        $Test
-                    }
-                )
+                    New-UDInputAction -Content @(
+                        New-UDCounter -Title Sixteen -Id "Sixteen" -Endpoint {
+                            $txtTest
+                        }
+                    )
+                }
             }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 1
 
         It "should have different content after click" {
-            $Element = Find-SeElement -Name "Test" -Driver $Driver
+            $Element = Find-SeElement -Id "txtTest" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "16"
 
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
@@ -626,10 +558,8 @@ Describe "Input" {
             $Target = Find-SeElement -Id "Sixteen" -Driver $Driver
             $Target.Text | Should be "Sixteen`r`n16"
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
-
+    Stop-SeDriver $Driver
+    Stop-UDDashboard -Server $Server 
 }
