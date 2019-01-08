@@ -9,9 +9,29 @@ const styles = theme => ({
 });
 
 export class UdCheckbox extends React.Component{
+
+    constructor(props) {
+        super(props);
+
+        this.state = props;
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (this.props.checked !== newProps.checked) {
+            this.setState({
+                checked: newProps.checked
+            })
+        }
+    }
+
     handleChange = (e, checked) => {
 
+        this.setState({
+            checked
+        })
+
         if (this.props.onChange) {
+
             this.props.onChange(checked);
         } else {
             // PubSub.publish('element-event', {
@@ -27,11 +47,12 @@ export class UdCheckbox extends React.Component{
         const { classes } = this.props;
 
         var checkbox =  <Checkbox 
-            checked={this.props.checked}
+            checked={this.state.checked}
             color={this.props.color}
             disabled={this.props.disabled}  
             disableRipple={this.props.disableRipple}
             id={this.props.id}
+            value="test"
             indeterminate={this.props.indeterminate}
             onChange={this.handleChange.bind(this)}
         />
