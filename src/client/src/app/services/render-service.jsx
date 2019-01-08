@@ -20,6 +20,7 @@ const UdImageCarouselComponent = React.lazy(() => import( './../ud-image-carouse
 const UdTerminal = React.lazy(() => import( './../ud-terminal.jsx' /* webpackChunkName: "ud-terminal" */))
 
 // Material UI
+const UdCheckbox= React.lazy(() => import( '../material-ui/checkbox' /* webpackChunkName: "ud-muCheckbox" */))
 const UdChip = React.lazy(() => import( '../material-ui/chip' /* webpackChunkName: "ud-muChip" */))
 const UdTextField= React.lazy(() => import( '../material-ui/textfield' /* webpackChunkName: "ud-muTextField" */))
 
@@ -129,6 +130,11 @@ export default function renderComponent(component, history) {
         case "muTextField":
             return <Suspense fallback={<div></div>}>
                         <ViewModelBinding element={UdTextField} {...component} key={component.id} />
+                </Suspense>
+        
+        case "muCheckbox":
+            return <Suspense fallback={<div></div>}>
+                        <ViewModelBinding element={UdCheckbox} {...component} key={component.id} />
                 </Suspense>
     }
 }

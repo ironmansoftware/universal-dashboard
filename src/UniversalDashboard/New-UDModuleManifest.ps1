@@ -77,7 +77,6 @@ $manifestParameters = @{
 		"New-UDCollection",
 		"New-UDCollectionItem",
 		"New-UDSpan", 
-		"New-UDCheckbox", 
 		"Write-UDLog",
 		"New-UDButton",
 		"New-UDSwitch",
@@ -134,6 +133,7 @@ $manifestParameters = @{
 						"New-UDViewModel"
 						"New-UDChip"
 						"New-UDTextField"
+						"New-UDCheckbox"
 						)
 }
 
