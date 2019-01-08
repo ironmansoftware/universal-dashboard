@@ -14,12 +14,18 @@ export default class ViewModelBinding extends React.Component {
                             for(var propertyName in this.props.viewModelBinding.boundProperties) {
 
                                 var value = context[this.props.viewModelBinding.boundProperties[propertyName]];
-                                if (value == null)
-                                {
-                                    value = this.props.viewModelBinding.boundProperties[propertyName];
+                                if (propertyName.endsWith("_endpoint")) {
+                                    var handlerName = this.props.viewModelBinding.boundProperties[propertyName];
+                                    propertyName = propertyName.replace('_endpoint', '');
+                                    componentProps[propertyName] = () => {
+                                        var state = {}
+                                        state[handlerName] = true;
+                                        context.dispatchState(state);
+                                    }
                                 }
-
-                                componentProps[propertyName] = value;
+                                else {
+                                    componentProps[propertyName] = value;    
+                                }
                             }
 
                             return React.createElement(this.props.element, componentProps);

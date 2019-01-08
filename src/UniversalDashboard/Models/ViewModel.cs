@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using DotNetify;
 using UniversalDashboard.Execution;
@@ -46,7 +45,7 @@ namespace UniversalDashboard.Models
             {
                 if (item.Value is PSObject psobject && psobject.BaseObject is Endpoint endpoint)
                 {
-                    AddProperty(item.Key.ToString(), new Action(() => ExecuteEndpoint(endpoint)));
+                    AddProperty(item.Key.ToString(), new Action<bool>(_ => ExecuteEndpoint(endpoint)));
                 }
                 else
                 {

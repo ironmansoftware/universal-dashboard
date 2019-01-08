@@ -2,23 +2,22 @@
 using NLog;
 using UniversalDashboard.Models;
 using System.Management.Automation;
-using System.Linq;
-using System.Collections.ObjectModel;
-using System;
-using System.Collections;
+using UniversalDashboard.Utilities;
 
 namespace UniversalDashboard.Cmdlets
 {
     [Cmdlet(VerbsCommon.New, "UDChip", DefaultParameterSetName = "Icon")]
-    public class NewChipCommand : ComponentCmdlet, IDynamicParameters
+    public class NewChipCommand : BindableComponentCmdlet
     {
         [Parameter(Position = 0)]
         public string Label { get; set; }
 
         [Parameter(Position = 8)]
+        [Endpoint]
         public ScriptBlock OnDelete { get; set; }
 
         [Parameter(Position = 7)]
+        [Endpoint]
         public ScriptBlock OnClick { get; set; }
 
         [Parameter(Position = 1, ParameterSetName = "Icon")]
@@ -64,44 +63,11 @@ namespace UniversalDashboard.Cmdlets
             chip.Delete = Delete;
             chip.Avatar = Avatar;
             chip.AvatarType = AvatarType;
-
-            var hashtable = new Hashtable();
-            foreach(var boundParameter in MyInvocation.BoundParameters)
-            {
-                if (boundParameter.Key.EndsWith("Binding"))
-                {
-                    var key = boundParameter.Key.Replace("Binding", string.Empty);
-                    key = char.ToLowerInvariant(key[0]) + key.Substring(1);
-                    hashtable.Add(key, boundParameter.Value);
-                }
-            }
-
-            if (hashtable.Count > 0)
-            {
-                chip.ViewModelBinding = new ViewModelBinding("root", hashtable);
-            }
-
+            chip.ViewModelBinding = GetViewModelBinding();
 
             Log.Debug(JsonConvert.SerializeObject(chip));
 
             WriteObject(chip);
-        }
-
-        public object GetDynamicParameters()
-        {
-            var parameters = this.GetType().GetProperties().Where(m => m.GetCustomAttributes(typeof(ParameterAttribute), false).Any());
-
-            var parameterDictionary = new RuntimeDefinedParameterDictionary();
-            foreach(var parameter in parameters)
-            {
-                var bindingParameter = new ParameterAttribute();
-                var attributeCollection = new Collection<Attribute>();
-                attributeCollection.Add(bindingParameter);
-                var runtimeDefinedParameter = new RuntimeDefinedParameter(parameter.Name + "Binding", typeof(string), attributeCollection);
-                parameterDictionary.Add(parameter.Name + "Binding", runtimeDefinedParameter);
-            }
-
-            return parameterDictionary;
         }
     }
 }
