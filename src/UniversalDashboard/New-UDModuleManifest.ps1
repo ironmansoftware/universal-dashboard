@@ -133,6 +133,7 @@ $manifestParameters = @{
 						"New-UDEndpointInitialization",
 						"New-UDViewModel"
 						"New-UDChip"
+						"New-UDTextField"
 						)
 }
 

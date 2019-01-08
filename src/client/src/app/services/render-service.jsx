@@ -21,6 +21,7 @@ const UdTerminal = React.lazy(() => import( './../ud-terminal.jsx' /* webpackChu
 
 // Material UI
 const UdChip = React.lazy(() => import( '../material-ui/chip' /* webpackChunkName: "ud-muChip" */))
+const UdTextField= React.lazy(() => import( '../material-ui/textfield' /* webpackChunkName: "ud-muTextField" */))
 
 export default function renderComponent(component, history) {
     if (!component) return null;
@@ -123,6 +124,11 @@ export default function renderComponent(component, history) {
         case "muChip":
             return <Suspense fallback={<div></div>}>
                         <ViewModelBinding element={UdChip} {...component} key={component.id} />
+                </Suspense>
+
+        case "muTextField":
+            return <Suspense fallback={<div></div>}>
+                        <ViewModelBinding element={UdTextField} {...component} key={component.id} />
                 </Suspense>
     }
 }

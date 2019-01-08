@@ -23,14 +23,7 @@ namespace UniversalDashboard.Models
 
             foreach (DictionaryEntry item in members)
             {
-                if (item.Value is Endpoint endpoint)
-                {
-                    AddProperty(item.Key.ToString(), new Action(() => ExecuteEndpoint(endpoint)));
-                }
-                else
-                {
-                    AddProperty(item.Key.ToString(), item.Value);
-                }
+                AddProperty(item.Key.ToString(), item.Value);
             }
         }
 
@@ -45,7 +38,7 @@ namespace UniversalDashboard.Models
             {
                 if (item.Value is PSObject psobject && psobject.BaseObject is Endpoint endpoint)
                 {
-                    AddProperty(item.Key.ToString(), new Action<bool>(_ => ExecuteEndpoint(endpoint)));
+                    AddProperty(item.Key.ToString(), new Action<string>(value => ExecuteEndpoint(value, endpoint)));
                 }
                 else
                 {
@@ -68,12 +61,13 @@ namespace UniversalDashboard.Models
             return Get<object>(name);
         }
 
-        private void ExecuteEndpoint(Endpoint endpoint)
+        private void ExecuteEndpoint(string value, Endpoint endpoint)
         {
             var variables = new Dictionary<string, object>();
             var parameters = new Dictionary<string, object>();
             var executionContext = new ExecutionContext(endpoint, variables, parameters, null);
             executionContext.Variables.Add("this", _this);
+            executionContext.Variables.Add("EventData", value);
             _executionService.ExecuteEndpoint(executionContext, endpoint);
         }
     }
