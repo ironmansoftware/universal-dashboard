@@ -122,7 +122,7 @@ export default function renderComponent(component, history) {
 
         case "muChip":
             return <Suspense fallback={<div></div>}>
-                    <ViewModelBinding element={UdChip} {...component} key={component.id} />
+                        <ViewModelBinding element={UdChip} {...component} key={component.id} />
                 </Suspense>
     }
 }

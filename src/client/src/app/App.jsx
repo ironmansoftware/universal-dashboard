@@ -28,15 +28,16 @@ class App extends React.Component {
             }
         })
 
-        return (<Router>
+        return (
+            <Router>
                 <div className="ud-dashboard">
                     <Route path={/^(?!.*(\/login))(?!.*(\/license)).*$/} component={UdDashboard} />
                     {routes}
                     {/* <Route path="/login" component={Login} />
                     <Route path="/signin" component={Login} /> */}
                 </div>
-            </Router> )
-        
+            </Router>
+        )
   }
 }
 

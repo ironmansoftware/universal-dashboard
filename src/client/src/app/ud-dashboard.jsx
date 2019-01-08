@@ -20,6 +20,7 @@ const UdErrorCardComponent = React.lazy(() => import('./error-card.jsx' /* webpa
 
 import toaster from './services/toaster';
 import UDDesigner from './ud-designer';
+import { DashboardViewModel } from './dashboard-context.jsx';
 
 export default class UdDashboard extends React.Component {
     constructor() {
@@ -37,6 +38,8 @@ export default class UdDashboard extends React.Component {
             sessionId: '',
             design: false
         }
+
+
     }
 
     connectWebSocket(sessionId) {
@@ -303,8 +306,9 @@ export default class UdDashboard extends React.Component {
             )} />
         })
 
-        return [
-                <UdNavbar backgroundColor={this.state.dashboard.navBarColor} 
+        return (
+                <DashboardViewModel>
+                        <UdNavbar backgroundColor={this.state.dashboard.navBarColor} 
                         fontColor={this.state.dashboard.navBarFontColor} 
                         text={this.state.dashboard.title} 
                         links={this.state.dashboard.navbarLinks}
@@ -314,24 +318,25 @@ export default class UdDashboard extends React.Component {
                         showPauseToggle={this.state.dashboard.cyclePages}
                         history={this.props.history}
                         authenticated={this.state.authenticated}
-                        />,
-                <main style={{background: this.state.dashboard.backgroundColor, color: this.state.dashboard.fontColor}}>
-                    <Switch>
-                        {staticPages}
-                        {dynamicPages}
-                        <Route exact path="/" render={this.redirectToHomePage.bind(this)} />
-                    </Switch>
-                </main>,
-                <Suspense fallback={<div></div>}>
-                    <UdModalComponent />
-                </Suspense>,
-                <UdFooter backgroundColor={this.state.dashboard.navBarColor} fontColor={this.state.dashboard.navBarFontColor} footer={this.state.dashboard.footer} demo={this.state.dashboard.demo} />,
-                <Route path="/" render={function (x) {
-                    return <Suspense fallback={<div></div>}>
-                        <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />
-                    </Suspense>
-                    }.bind(this)}/>,
-                this.state.design ? <UDDesigner/> : <span/>
-                ]
+                        />
+                        <main style={{background: this.state.dashboard.backgroundColor, color: this.state.dashboard.fontColor}}>
+                            <Switch>
+                                {staticPages}
+                                {dynamicPages}
+                                <Route exact path="/" render={this.redirectToHomePage.bind(this)} />
+                            </Switch>
+                        </main>
+                        <Suspense fallback={<div></div>}>
+                            <UdModalComponent />
+                        </Suspense>
+                        <UdFooter backgroundColor={this.state.dashboard.navBarColor} fontColor={this.state.dashboard.navBarFontColor} footer={this.state.dashboard.footer} demo={this.state.dashboard.demo} />
+                        <Route path="/" render={function (x) {
+                            return <Suspense fallback={<div></div>}>
+                                <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />
+                            </Suspense>
+                            }.bind(this)}/>
+                        { this.state.design ? <UDDesigner/> : <span/> }
+                </DashboardViewModel>
+        )
     }
 }

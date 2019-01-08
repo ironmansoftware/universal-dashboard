@@ -128,13 +128,10 @@ namespace UniversalDashboard
             });
 			app.UseDotNetify(config =>
             {
-                foreach(var viewModel in dashboardService.Dashboard?.ViewModels)
+                config.Register("root", _ =>
                 {
-                    config.Register(viewModel.Name, _ =>
-                    {
-                       return new ViewModel(executionService, viewModel.Members);
-                    });
-                }
+                    return new ViewModel(executionService, dashboardService.Dashboard?.ViewModels.First().Members);
+                });
             });
 			app.UseWebSockets();
 

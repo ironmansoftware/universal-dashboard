@@ -20,7 +20,6 @@ const styles = theme => ({
 
 
 export class UdChip extends React.Component{
-
     handleDelete = () => {
 
         PubSub.publish('element-event', {
@@ -33,12 +32,19 @@ export class UdChip extends React.Component{
       
     handleClick = () => {
 
-        PubSub.publish('element-event', {
-            type: "clientEvent",
-            eventId: this.props.id + 'onClick',
-            eventName: '',
-            eventData: ''
-        });
+        if (this.props.onClick) {
+
+            var state = {}
+            state[this.props.onClick] = true;
+            this.props.dispatchState(state);
+        } else {
+            PubSub.publish('element-event', {
+                type: "clientEvent",
+                eventId: this.props.id + 'onClick',
+                eventName: '',
+                eventData: ''
+            });
+        }
     }
 
     render(){
