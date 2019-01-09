@@ -323,7 +323,7 @@ class UDElementContent extends React.Component {
         }
 
         if (this.state.tag === "input") {
-            if (attributes.type === "text") {
+            if (attributes.type === "text" || attributes.type === "password") {
                 attributes.onChange = this.onTextboxChanged.bind(this);
             }
 
