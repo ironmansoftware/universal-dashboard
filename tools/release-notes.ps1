@@ -15,7 +15,7 @@ $Markdown += [Environment]::NewLine
 
 foreach($Enhancement in $Enhancements) {
     $Markdown += [Environment]::NewLine
-    $Markdown +="## ($($Enhancement.title))[$($Enhancement.html_url)]"
+    $Markdown +="- [$($Enhancement.title)]($($Enhancement.html_url))"
 }
 
 $Markdown += [Environment]::NewLine
@@ -25,7 +25,7 @@ $Markdown += "# Bug Fixes"
 
 foreach($Bug in $Bugs) {
     $Markdown += [Environment]::NewLine
-    $Markdown +="## ($($Bug.title))[$($Bug.html_url)] - Reported by @($($Bug.user.login))[$($Bug.user.html_url)]"
+    $Markdown +="- [$($Bug.title)]($($Bug.html_url)) - Reported by [$($Bug.user.login)]($($Bug.user.html_url))"
 }
 
 $Markdown
