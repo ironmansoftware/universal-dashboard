@@ -231,7 +231,20 @@ class UDElementContent extends React.Component {
         var eventName = null;
         var val = null;
         if (this.state.tag === 'select') {
-            val = this.refs.element[this.refs.element.selectedIndex].value
+
+            val = new Array();
+            for(var item in  this.refs.element.selectedOptions) {
+                if (isNaN(item)) continue;
+                var value = this.refs.element.selectedOptions[item].value;
+                val.push(value);
+            }
+
+            if (val.length === 1) {
+                val = val[0]
+            }
+
+            val = JSON.stringify(val);
+
             for(var i = 0; i < this.state.events.length; i++) {
                 if (this.state.events[i].event === 'onChange') {
                     event = this.state.events[i];
