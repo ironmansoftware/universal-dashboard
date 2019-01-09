@@ -115,6 +115,10 @@ export default class UdInputField extends React.Component {
         $('.tooltipped').tooltip();
     }
 
+    onKeyDown(e) {
+        if (e.keyCode == 13) { this.props.onEnter(e); }
+    }
+
     render() {
         var field = {
             name: this.props.name,
@@ -141,9 +145,9 @@ export default class UdInputField extends React.Component {
             var textfield = null;
             if (this.props.debounceTimeout == null) {
 
-                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)}/>
+                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)} onKeyDown={this.onKeyDown.bind(this)}/>
             } else {
-                textfield = <DebounceInput id={field.name} name={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} debounceTimeout={this.props.debounceTimeout}/>
+                textfield = <DebounceInput id={field.name} name={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} debounceTimeout={this.props.debounceTimeout}  onKeyDown={this.onKeyDown.bind(this)}/>
             }
 
             return <div className="input-field">
@@ -155,7 +159,7 @@ export default class UdInputField extends React.Component {
 
         if (field.type === 'textarea') {
             return <div className="input-field">
-                        <textarea className="materialize-textarea" id={field.name} name={field.name} type="textarea" onChange={e => this.onTextFieldChange(field, e) } value={field.value}/>
+                        <textarea className="materialize-textarea" id={field.name} name={field.name} type="textarea" onChange={e => this.onTextFieldChange(field, e) } value={field.value}  onKeyDown={this.onKeyDown.bind(this)}/>
                         <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>
                     </div>
         }

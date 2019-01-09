@@ -73,6 +73,8 @@ export default class Input extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
+        if (!this.state.canSubmit) return;
+
         this.setState({
             loading: true
         })
@@ -166,7 +168,7 @@ export default class Input extends React.Component {
         }
 
         var fields = this.state.fields.map(x => {
-            return <UdInputField validate={this.props.validate} key={x.name} {...x} fontColor={this.props.fontColor} onValueChanged={this.onValueChanged.bind(this)} onValidating={this.onValidating.bind(this)} onValidateComplete={this.onValidateComplete.bind(this)}/>
+            return <UdInputField validate={this.props.validate} key={x.name} {...x} fontColor={this.props.fontColor} onValueChanged={this.onValueChanged.bind(this)} onValidating={this.onValidating.bind(this)} onValidateComplete={this.onValidateComplete.bind(this)} onEnter={this.onSubmit.bind(this)}/>
         });
 
         var actions = null 
