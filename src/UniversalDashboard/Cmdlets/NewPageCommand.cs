@@ -47,6 +47,11 @@ namespace UniversalDashboard.Cmdlets
                         Url = "/" + Url;
                     }
 
+                    if (Url == null && Name != null)
+                    {
+                        page.Url = "/" + Name;
+                    }
+
 					page.Callback = GenerateCallback(Id);
 					page.Dynamic = true;
 				}

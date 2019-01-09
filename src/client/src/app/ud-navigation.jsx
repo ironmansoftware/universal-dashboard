@@ -34,10 +34,6 @@ export default class UdNavigation extends React.Component {
 
             if (x.name == null) return null;
 
-            if (i === 0) {
-                return <li key={x.name}><Link to={"/"}><UdIcon icon={x.icon}/> {x.name}</Link></li>;
-            }
-
             return <li key={x.name}><Link to={"/" + x.name.replace(/ /g, "-")}><UdIcon icon={x.icon}/> {x.name}</Link></li>;
         })
 
