@@ -112,8 +112,13 @@ export default class UdDashboard extends React.Component {
             PubSub.publish("modal.close", {});
         });
 
-        connection.on('redirect', (url) => {
-            window.location.href = url;
+        connection.on('redirect', (url, newWindow) => {
+            if (newWindow) {
+                window.open(url);
+            }
+            else {
+                window.location.href = url;
+            }
         });
 
         PubSub.subscribe('element-event', function(e, data) {
