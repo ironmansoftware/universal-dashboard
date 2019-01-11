@@ -38,9 +38,9 @@ namespace UniversalDashboard
             await hub.Clients.Client(clientId).SendAsync("requestState", componentId, requestId);
         }
 
-        public static async Task Redirect(this IHubContext<DashboardHub> hub, string clientId, string url)
+        public static async Task Redirect(this IHubContext<DashboardHub> hub, string clientId, string url, bool newWindow)
         {
-            await hub.Clients.Client(clientId).SendAsync("redirect", url);
+            await hub.Clients.Client(clientId).SendAsync("redirect", url, newWindow);
         }
 
         public static async Task SetState(this IHubContext<DashboardHub> hub, string componentId, Element state)
