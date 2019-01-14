@@ -62,6 +62,7 @@ Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandar
 Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\DasMulli.Win32.ServiceUtils.dll" $netstandard20
 
 Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net472\publish\UniversalDashboard.Server.exe" $net472
+Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net472\publish\UniversalDashboard.Server.exe.config" $net472
 Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net472\publish\DasMulli.Win32.ServiceUtils.dll" $net472
 
 Copy-Item "$PSScriptRoot\web.config" $outputDirectory
