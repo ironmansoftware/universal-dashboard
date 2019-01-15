@@ -264,7 +264,7 @@ export default class UdDashboard extends React.Component {
         }
 
         if(defaultHomePage != null && defaultHomePage.url == null){
-            return <Redirect to={`/${defaultHomePage.name.replace(/ /g,"-")}`}/>
+            return <Redirect to={window.baseUrl + `/${defaultHomePage.name.replace(/ /g,"-")}`}/>
         }
         else if (defaultHomePage.url != null && defaultHomePage.url.indexOf(":") === -1) {
             return <Redirect to={defaultHomePage.url}/>
@@ -275,7 +275,7 @@ export default class UdDashboard extends React.Component {
                     </Suspense>
         }
         else {
-            return <Redirect to={`/${defaultHomePage.name.replace(/ /g,"-")}`}/>
+            return <Redirect to={window.baseUrl + `/${defaultHomePage.name.replace(/ /g,"-")}`}/>
         }
     }
 
@@ -295,7 +295,7 @@ export default class UdDashboard extends React.Component {
         var dynamicPages = this.state.dashboard.pages.map(function(x) {
             if (!x.dynamic) return null;
 
-            return <Route path={x.url} render={props => (
+            return <Route path={window.baseUrl + x.url} render={props => (
                 <UdPage id={x.id} dynamic={true} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
             )} />
         })
@@ -303,7 +303,7 @@ export default class UdDashboard extends React.Component {
         var staticPages = this.state.dashboard.pages.map(function(x) {
             if (x.dynamic) return null;
 
-            return <Route path={'/' + x.name.replace(/ /g, "-")} render={props => (
+            return <Route path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
                 <UdPage dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
             )} />
         })

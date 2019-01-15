@@ -22,18 +22,6 @@ const UdTerminal = React.lazy(() => import( './../ud-terminal.jsx' /* webpackChu
 export default function renderComponent(component, history) {
     if (!component) return null;
 
-    var pluginComponent = null;
-    window.UniversalDashboard.plugins.some(plugin => {
-        if (plugin.components == null) return false;
-
-        pluginComponent = plugin.components.find(component.type === component.type);
-        return pluginComponent != null;
-    });
-
-    if (pluginComponent != null) {
-        return React.createElement(pluginComponent, component);
-    }
-
     switch(component.type) {
 
         case "card":  
