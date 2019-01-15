@@ -116,6 +116,7 @@ namespace UniversalDashboard.Execution
                     if (context.User != null)
                     {
                         SetVariable(ps, "ClaimsPrinciple", context.User);
+                        SetVariable(ps, "ClaimsPrincipal", context.User);
                     }
 
                     ps.AddStatement().AddScript(script);
