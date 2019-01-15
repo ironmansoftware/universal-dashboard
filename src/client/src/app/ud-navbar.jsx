@@ -37,7 +37,7 @@ export default class UdNavbar extends React.Component {
 
         var href = dPage.name;
         if (href != null) {
-            href = `/${dPage.name.replace(/ /g, "-")}`;
+            href = window.baseUrl + `/${dPage.name.replace(/ /g, "-")}`;
         }
 
         return <nav style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">

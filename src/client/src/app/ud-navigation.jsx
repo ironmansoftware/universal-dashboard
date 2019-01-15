@@ -34,7 +34,7 @@ export default class UdNavigation extends React.Component {
 
             if (x.name == null) return null;
 
-            return <li key={x.name}><Link to={"/" + x.name.replace(/ /g, "-")}><UdIcon icon={x.icon}/> {x.name}</Link></li>;
+            return <li key={x.name}><Link to={window.baseUrl + "/" + x.name.replace(/ /g, "-")}><UdIcon icon={x.icon}/> {x.name}</Link></li>;
         })
 
         var pauseToggle = null;
