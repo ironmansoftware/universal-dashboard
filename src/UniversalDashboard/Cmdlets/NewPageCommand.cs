@@ -68,6 +68,7 @@ namespace UniversalDashboard.Cmdlets
 						}
 					}
 
+                    page.Name = page.Name.TrimStart('/');
 					page.Dynamic = false;
 				}
 			}

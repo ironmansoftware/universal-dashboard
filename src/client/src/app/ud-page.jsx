@@ -33,7 +33,7 @@ export default class UdPage extends React.Component {
     }
 
     loadStaticPage() {
-        fetchGet(`/api/internal/dashboard/${this.props.name}`, function(json){
+        fetchGet(`/api/internal/dashboard/page/${this.props.name}`, function(json){
             if (json.error) {
                 this.setState({
                     errorMessage: json.error.message,

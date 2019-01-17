@@ -52,6 +52,7 @@ module.exports = (env) => {
     },
     devtool: 'source-map',
     devServer: {
+      disableHostCheck: true,
       historyApiFallback: true,
       port: 10000,
       // hot: true,
