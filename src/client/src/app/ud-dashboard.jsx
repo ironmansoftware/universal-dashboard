@@ -303,7 +303,7 @@ export default class UdDashboard extends React.Component {
         var staticPages = this.state.dashboard.pages.map(function(x) {
             if (x.dynamic) return null;
 
-            return <Route path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
+            return <Route exact path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
                 <UdPage dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
             )} />
         })

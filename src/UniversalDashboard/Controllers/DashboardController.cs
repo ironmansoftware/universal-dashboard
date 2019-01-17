@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
 using System.Reflection;
+using Microsoft.AspNetCore.Routing;
 
 namespace UniversalDashboard.Controllers
 {
@@ -53,10 +54,12 @@ namespace UniversalDashboard.Controllers
         }
 
         [Authorize]
-        [Route("{page}")]
+        [Route("page/{*page}")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public Page Index(string page)
+        public Page Page()
         {
+            var page = HttpContext.GetRouteValue("page") as string;
+
             Log.Debug($"Index - Page = {page}");
             return _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
         }
