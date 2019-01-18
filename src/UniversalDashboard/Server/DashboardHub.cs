@@ -194,7 +194,6 @@ namespace UniversalDashboard
                 variables.Add("Location", locationObject);
 			}
 
-
             if (bool.TryParse(eventData, out bool data))
             {
                 variables.Add("EventData", data);

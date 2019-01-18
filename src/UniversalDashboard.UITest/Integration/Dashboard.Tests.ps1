@@ -9,6 +9,154 @@ Import-Module $ModulePath -Force
 Get-UDDashboard | Stop-UDDashboard
 
 Describe "Dashboard" {
+
+    Context "Navigation" {
+        $Page1 = New-UDPage -Name "Page Name" -Content { New-UDCard -Id 'page-1' }
+        $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
+
+        $Navigation = New-UDSideNav -Content {
+            New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon group
+            New-UDSideNavItem -Text "My Second Page" -PageName "Page Name 2" -Icon User
+            New-UDSideNavItem -Text "Google" -Url 'https://www.google.com' -Icon Users
+        }
+        
+        $Dashboard = New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -UpdateToken "TEST"
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It 'should navigate custom navigation' {
+            $Element = Find-SeElement -ClassName "menu-button" -Driver $Driver
+            Invoke-SeClick $Element
+
+            Start-Sleep 1
+
+            $Element = Find-SeElement -LinkText "My First Page" -Driver $Driver
+            Invoke-SeClick $Element
+
+            Start-Sleep 1
+
+            Find-SeElement -Id "page-1" -Driver $Driver | Should not be $null
+        }
+
+        It 'should use a fixed menu' {
+            Update-UDDashboard -UpdateToken "TEST" -Url "http://localhost:10001" -Content {
+                $Page1 = New-UDPage -Name "Page Name" -Content { New-UDCard -Id 'page-1' }
+                $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
+        
+                $Navigation = New-UDSideNav -Content {
+                    New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon group
+                    New-UDSideNavItem -Text "My Second Page" -PageName "Page Name 2" -Icon User
+                    New-UDSideNavItem -Text "Google" -Url 'https://www.google.com' -Icon Users
+                } -Fixed
+                
+                New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
+            }
+
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            Find-SeElement -Id "page-1" -Driver $Driver | Should not be $null
+            
+            $Element = Find-SeElement -LinkText "My Second Page" -Driver $Driver
+            Invoke-SeClick $Element
+
+            Start-Sleep 1
+
+            Find-SeElement -Id "page-2" -Driver $Driver | Should not be $null
+        }
+
+        It 'should hide the menu' {
+            Update-UDDashboard -UpdateToken "TEST" -Url "http://localhost:10001" -Content {
+                $Page1 = New-UDPage -Name "Page Name" -Content { New-UDCard -Id 'page-1' }
+                $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
+        
+                $Navigation = New-UDSideNav -None
+                
+                New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
+            }
+
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            Find-SeElement -ClassName "menu-button" -Driver $Driver | Should be $null
+        }
+
+        It 'should create nested items' {
+            Update-UDDashboard -UpdateToken "TEST" -Url "http://localhost:10001" -Content {
+                $Page1 = New-UDPage -Name "Page Name" -Content { New-UDCard -Id 'page-1' }
+                $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
+        
+                $Navigation = New-UDSideNav -Content {
+                    New-UDSideNavItem -Text "Section" -Children {
+                        New-UDSideNavItem -Text "My Second Page" -PageName "Page Name 2" -Icon User
+                        New-UDSideNavItem -Text "Google" -Url 'https://www.google.com' -Icon Users
+                    }
+                } -Fixed
+                
+                New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
+            }
+
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            $Element = Find-SeElement -LinkText "Section" -Driver $Driver
+            Invoke-SeClick $Element
+
+            Start-Sleep 1
+
+            $Element = Find-SeElement -LinkText "My Second Page" -Driver $Driver
+            Invoke-SeClick $Element
+
+            Start-Sleep 1
+
+            Find-SeElement -id 'page-2' -Driver $Driver | Should not be $null
+        }
+
+        It 'should have subheader and divider' {
+            Update-UDDashboard -UpdateToken "TEST" -Url "http://localhost:10001" -Content {
+                $Page1 = New-UDPage -Name "Page Name" -Content { New-UDCard -Id 'page-1' }
+                $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
+        
+                $Navigation = New-UDSideNav -Content {
+                    New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon group
+                    New-UDSideNavItem -Subheader -Text "Subheader"
+                    New-UDSideNavItem -Text "My Second Page" -PageName "Page Name 2" -Icon User
+                    New-UDSideNavItem -Divider
+                    New-UDSideNavItem -Text "Google" -Url 'https://www.google.com' -Icon Users
+                } -Fixed
+                
+                New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
+            }
+
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            Find-SeElement -ClassName "subheader" -Driver $Driver | Should not be $null
+            Find-SeElement -ClassName "divider" -Driver $Driver | Should not be $null
+        }
+
+        It 'should load items from endpoint' {
+            Update-UDDashboard -UpdateToken "TEST" -Url "http://localhost:10001" -Content {
+                $Page1 = New-UDPage -Name "Page Name" -Content { New-UDCard -Id 'page-1' }
+                $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
+        
+                $Navigation = New-UDSideNav -Endpoint {
+                    New-UDSideNavItem -Text "My First Page" -OnClick { Show-UDModal -Content { New-UDCard -Id "ModalCard" } } -Icon group
+                } -Fixed
+                
+                New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
+            }
+
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+            $Element = Find-SeElement -LinkText "My First Page" -Driver $Driver 
+            Invoke-SeClick $Element
+
+            Find-SeElement -Id "ModalCard" -Driver $Driver | Should not be $null
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
     Context "Initialization Script" {
 
         $TitleVariable = "Title"

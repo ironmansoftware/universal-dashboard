@@ -13,6 +13,27 @@ namespace UniversalDashboard.Cmdlets
     {
         public static string[] SkippedVariables = new[] { "args", "input", "psboundparameters", "pscommandpath", "foreach", "myinvocation", "psscriptroot", "DefaultVIServer", "DefaultVIServers"  };
 
+        public static Endpoint TryGenerateEndpoint(this object obj, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+
+            if (obj is Endpoint endpoint)
+            {
+                endpoint.Name = id;
+                return endpoint;
+            }
+
+            if (obj is ScriptBlock scriptBlock)
+            {
+                return GenerateCallback(scriptBlock, id, sessionState);
+            }
+
+            throw new Exception($"Expected UDEndpoint or ScriptBlock but got {obj.GetType()}");
+        }
+
         public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
         {
             if (endpoint == null) return null;

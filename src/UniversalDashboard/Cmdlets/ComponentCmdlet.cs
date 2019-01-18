@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
@@ -24,6 +26,16 @@ namespace UniversalDashboard.Cmdlets
             {
                 return SessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
             }
+        }
+
+        protected IEnumerable<T> GetItemsFromScriptBlock<T>(ScriptBlock scriptBlock)
+        {
+            if (scriptBlock == null)
+            {
+                return null;
+            }
+
+            return scriptBlock.Invoke().Select(m => m.BaseObject).Cast<T>();
         }
     }
 

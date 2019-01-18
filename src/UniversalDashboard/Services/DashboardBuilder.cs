@@ -10,12 +10,9 @@ namespace UniversalDashboard.Services
     {
 		private static readonly Logger Log = LogManager.GetLogger(nameof(DashboardBuilder));
 		public DashboardApp Build(Dashboard dashboard)
-		{
-			return Build(dashboard.Pages);
-		}
-
-		public DashboardApp Build(IEnumerable<Page> pages)
 	    {
+            var pages = dashboard.Pages;
+
 			var componentWriterFactory = new ComponentWriterFactory();
 
             var parts = new List<ComponentParts>();
@@ -33,6 +30,19 @@ namespace UniversalDashboard.Services
 			foreach(var endpoint in componentParts.Endpoints) {
 				Log.Debug("Adding endpoint: " + endpoint.Url);
 			}
+
+            if (dashboard.Navigation != null)
+            {
+                if (dashboard.Navigation.HasCallback)
+                {
+                    componentParts.Endpoints.Add(dashboard.Navigation.Callback);
+                }
+
+                if (dashboard.Navigation.ChildEndpoints != null)
+                {
+                    componentParts.Endpoints.AddRange(dashboard.Navigation.ChildEndpoints);
+                }
+            }
 
 			return new DashboardApp
 			{

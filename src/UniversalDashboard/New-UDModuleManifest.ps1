@@ -131,6 +131,8 @@ $manifestParameters = @{
 						"New-UDImageCarousel"
 						"New-UDImageCarouselItem"
 						"New-UDEndpointInitialization"
+						"New-UDSideNav"
+						"New-UDSideNavItem"
 						)
 }
 
