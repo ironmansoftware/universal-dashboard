@@ -36,5 +36,7 @@ namespace UniversalDashboard.Models
 		public string FilterText { get; set; }
 		[JsonIgnore]
 		public TimeSpan IdleTimeout { get; set; }
+        [JsonProperty("navigation")]
+        public SideNav Navigation { get; set; }
     }
 }

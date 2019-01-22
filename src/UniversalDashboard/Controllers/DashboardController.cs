@@ -75,6 +75,29 @@ namespace UniversalDashboard.Controllers
             css += System.IO.File.ReadAllText(siteCss);
             css += _dashboard?.Themes?.FirstOrDefault()?.RenderedContent;
 
+            if (_dashboard?.Navigation != null)
+            {
+                css += Environment.NewLine;
+                css += $@"side-nav {{
+                            width: {_dashboard.Navigation.Width}px;
+                        }}";
+            }
+
+            if (_dashboard?.Navigation?.Fixed == true)
+            {
+                css += Environment.NewLine;
+                css += $@"
+                        header, main, footer {{
+                          padding-left: {_dashboard.Navigation.Width}px;
+                        }}
+
+                        @media only screen and (max-width : 992px) {{
+                          header, main, footer {{
+                            padding-left: 0;
+                          }}
+                        }}";
+            }
+
 			return new ContentResult()
             {
                 Content = css,

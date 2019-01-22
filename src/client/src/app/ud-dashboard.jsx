@@ -309,17 +309,20 @@ export default class UdDashboard extends React.Component {
         })
 
         return [
-                <UdNavbar backgroundColor={this.state.dashboard.navBarColor} 
-                        fontColor={this.state.dashboard.navBarFontColor} 
-                        text={this.state.dashboard.title} 
-                        links={this.state.dashboard.navbarLinks}
-                        logo={this.state.dashboard.navBarLogo}
-                        pages={this.state.dashboard.pages}
-                        togglePaused={this.togglePausePageCycle.bind(this)} 
-                        showPauseToggle={this.state.dashboard.cyclePages}
-                        history={this.props.history}
-                        authenticated={this.state.authenticated}
-                        />,
+                <header>
+                    <UdNavbar backgroundColor={this.state.dashboard.navBarColor} 
+                            fontColor={this.state.dashboard.navBarFontColor} 
+                            text={this.state.dashboard.title} 
+                            links={this.state.dashboard.navbarLinks}
+                            logo={this.state.dashboard.navBarLogo}
+                            pages={this.state.dashboard.pages}
+                            togglePaused={this.togglePausePageCycle.bind(this)} 
+                            showPauseToggle={this.state.dashboard.cyclePages}
+                            history={this.props.history}
+                            authenticated={this.state.authenticated}
+                            navigation={this.state.dashboard.navigation}
+                            />
+                </header>,
                 <main style={{background: this.state.dashboard.backgroundColor, color: this.state.dashboard.fontColor}}>
                     <Switch>
                         {staticPages}
