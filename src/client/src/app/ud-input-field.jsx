@@ -4,6 +4,15 @@ import {DebounceInput} from 'react-debounce-input';
 import { fetchPost } from './services/fetch-service';
 
 export default class UdInputField extends React.Component {
+
+    constructor() {
+        super();
+
+        this.state = {
+            file: ''
+        }
+    }
+
     onSelectChanged(field, e) {
         this.props.onValueChanged(field.name, e.target.value);
     }
@@ -18,6 +27,24 @@ export default class UdInputField extends React.Component {
 
     onCheckboxChanged(field, e) {
         this.props.onValueChanged(field.name, e.target.checked);
+    }
+
+    onFileChanged(field, e) {
+        var file = e.target;
+        var fileContent = "";
+        var reader = new FileReader();
+        
+        var _this = this;
+        reader.onload = function (e) {
+            fileContent = reader.result;
+            _this.props.onValueChanged(field.name, fileContent);
+        }
+        reader.readAsText(file.files[0]);
+
+        var file = e.target.files[0].name;
+        this.setState({ file: file });
+        
+        
     }
 
     onValidateField(field, e) {
@@ -235,5 +262,22 @@ export default class UdInputField extends React.Component {
 
             return options;
         }
+
+        if (field.type == 'file') {
+            var self = this;
+            
+            return (
+                <div className="file-field input-field">
+                    <div className="btn">
+                        <span>{field.placeholder ? field.placeholder[0] : field.name}</span>
+                        <input type="file" onChange={e => self.onFileChanged(field, e) } />
+                    </div>
+                    <div className="file-path-wrapper">
+                        <input className="file-path validate" type="text" value={this.state.file} />
+                    </div>
+                </div>
+            )
+        }
+
     }
 }
