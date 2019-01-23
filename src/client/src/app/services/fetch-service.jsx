@@ -35,16 +35,6 @@ export const fetchPost = function(url, data, success) {
         credentials: 'include'
       })
       .then(function(response){
-        var next = true;
-        window.UniversalDashboard.plugins.forEach(plugin => {
-            if (plugin.responseMiddleware == null || !next) return;
-            next = plugin.responseMiddleware(response, history);
-        });
-
-        if (!next) {
-            return;
-        }
-
         if (response.status === 200) {
             return response.json();
         } else {
@@ -72,16 +62,6 @@ export const fetchPostRaw = function(url, data, success) {
         credentials: 'include'
       })
       .then(function(response){
-        var next = true;
-        window.UniversalDashboard.plugins.forEach(plugin => {
-            if (plugin.responseMiddleware == null || !next) return;
-            next = plugin.responseMiddleware(response, history);
-        });
-
-        if (!next) {
-            return;
-        }
-
         if (response.status === 200) {
             return response.text();
         } else {
