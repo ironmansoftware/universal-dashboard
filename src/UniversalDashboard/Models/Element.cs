@@ -15,7 +15,7 @@ namespace UniversalDashboard.Models.Basics
         [JsonProperty("attributes", NullValueHandling = NullValueHandling.Ignore)]
         public Hashtable Attributes { get; set; }
         [JsonProperty("props", NullValueHandling = NullValueHandling.Ignore)]
-        public Hashtable Properties { get; set; }
+        public object Properties { get; set; }
         [JsonProperty("events", NullValueHandling = NullValueHandling.Ignore)]
         public ElementEventHandler[] Events { get; set; }
         [JsonProperty("content", NullValueHandling = NullValueHandling.Ignore)]
