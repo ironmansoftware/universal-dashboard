@@ -16,7 +16,7 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
             _dashboardService = dashboardService;
         }
 
-        [Route("js/{id}")]
+        [Route("{id}")]
         public IActionResult Index(Guid id)
         {
             if (!_dashboardService.ElementScripts.ContainsKey(id))

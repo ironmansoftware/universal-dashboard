@@ -5,16 +5,6 @@ export const fetchGet = function(url, success, history) {
         credentials: 'include'
     })
     .then(function(response){
-        var next = true;
-        window.UniversalDashboard.plugins.forEach(plugin => {
-            if (plugin.responseMiddleware == null || !next) return;
-            next = plugin.responseMiddleware(response, history);
-        });
-
-        if (!next) {
-            return;
-        }
-
         if (response.status === 401 && history) {
             history.push("/login");
             throw new Error('Redirecting to login');

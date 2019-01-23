@@ -107,7 +107,7 @@ class UDElementContent extends React.Component {
         else 
         {
             if (this.props.js) {
-                $.getScript(getApiPath() + "/js/" + this.props.js, function() {
+                $.getScript(getApiPath() + "/api/internal/javascript/" + this.props.js, function() {
                     this.setState({
                         loading: false
                     })
@@ -289,7 +289,10 @@ class UDElementContent extends React.Component {
         }
 
         if (this.props.js) {
-            return React.createElement(eval(this.props.moduleName + "." + this.props.componentName), this.props.props);
+            return renderComponent({
+                type: this.props.componentName,
+                ...this.props.props
+            }, this.props.history)
         }
 
         var children = null;
