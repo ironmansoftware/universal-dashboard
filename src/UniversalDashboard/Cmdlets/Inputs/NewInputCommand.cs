@@ -61,10 +61,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
                     endpoint.Name = Guid.NewGuid().ToString();
                     endpoint.SessionId = SessionId;
 
-                    if (DashboardService != null)
-                    {
-                        DashboardService.EndpointService.Register(endpoint);
-                    }
+                    Execution.EndpointService.Instance.Register(endpoint);
 
                     field.Required = isMandatory;
                     field.Endpoint = endpoint;
@@ -137,8 +134,6 @@ namespace UniversalDashboard.Cmdlets.Inputs
 				var fields = Content.Invoke().Select(m => m.BaseObject).OfType<Field>().ToArray();
 				input.Fields = fields;
 			}
-
-            input.ChildEndpoints = input.Fields?.Select(m => m.Endpoint).Where(m => m != null).ToArray();
 
 			Log.Debug(JsonConvert.SerializeObject(input));
 

@@ -34,10 +34,6 @@ namespace UniversalDashboard.Cmdlets
             };
 
             sideNav.Content = GetItemsFromScriptBlock<SideNavItem>(Content)?.ToArray();
-            if (sideNav.Content != null)
-            {
-                sideNav.ChildEndpoints = sideNav.Content.Where(m => m.HasCallback).Select(m => m.Callback).ToArray();
-            }
 
             WriteObject(sideNav);
         }

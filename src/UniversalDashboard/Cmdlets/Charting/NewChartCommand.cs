@@ -1,7 +1,6 @@
 ﻿using System.Management.Automation;
 using UniversalDashboard.Models;
 using System.Collections;
-using System.Drawing;
 using Newtonsoft.Json;
 using NLog;
 using System.Linq;
@@ -73,7 +72,6 @@ namespace UniversalDashboard.Cmdlets.Charting
 			}
 
             chart.Clickable = callback != null;
-            chart.ChildEndpoints = new[] { callback };
             Log.Debug(JsonConvert.SerializeObject(chart));
 
 			WriteObject(chart);

@@ -1,11 +1,11 @@
 ﻿using NLog;
 using UniversalDashboard.Models;
-using UniversalDashboard.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
+using UniversalDashboard.Execution;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -69,11 +69,7 @@ namespace UniversalDashboard.Cmdlets
             callback.SessionId = sessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
             callback.Page = sessionState.PSVariable.Get(Constants.UDPage)?.Value as Page;
 
-            var dashboardService = sessionState.PSVariable.Get("DashboardService")?.Value as DashboardService;
-            if (dashboardService != null)
-            {
-                dashboardService.EndpointService.Register(callback);
-            }
+            EndpointService.Instance.Register(callback);
 
             return callback;
         }

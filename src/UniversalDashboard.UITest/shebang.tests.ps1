@@ -6,13 +6,7 @@ if ($Pester -eq $null) {
 	Import-Module Pester -Force
 }
 
-
 if (-not $Release) {
-    Copy-Item "$PSScriptRoot\..\UniversalDashboard\bin\debug\net462\UniversalDashboard.Community.psd1" "$PSScriptRoot\..\UniversalDashboard\bin\debug\"
-    Copy-Item "$PSScriptRoot\..\UniversalDashboard\bin\debug\net462\UniversalDashboard.psm1" "$PSScriptRoot\..\UniversalDashboard\bin\debug\"
-    Copy-Item "$PSScriptRoot\..\UniversalDashboard\bin\debug\net462\UniversalDashboardServer.psm1" "$PSScriptRoot\..\UniversalDashboard\bin\debug\"
-    Copy-Item "$PSScriptRoot\..\UniversalDashboard\bin\debug\net462\UniversalDashboard.Controls.psm1" "$PSScriptRoot\..\UniversalDashboard\bin\debug\"
-
     Import-Module "$PSScriptRoot\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
 } else {
     Import-Module "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
