@@ -242,8 +242,9 @@ class UDElementContent extends React.Component {
             if (val.length === 1) {
                 val = val[0]
             }
-
-            val = JSON.stringify(val);
+            else {
+                val = JSON.stringify(val);
+            }
 
             for(var i = 0; i < this.state.events.length; i++) {
                 if (this.state.events[i].event === 'onChange') {
