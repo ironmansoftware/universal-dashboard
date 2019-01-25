@@ -25,7 +25,7 @@ Create slide for image carousel component, it support image url that host on the
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> $Slide3 = @{
             BackgroundImage = 'https://stmed.net/sites/default/files/ultimate-spider-man-wallpapers-27724-2035627.jpg'
             BackgroundRepeat = 'no-repeat'
@@ -49,7 +49,7 @@ Set slide background color
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -64,7 +64,7 @@ Set the url for the image it can be web like or local folder
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -80,7 +80,7 @@ It should be in %
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -96,7 +96,7 @@ The options are repeat or no-repeat
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -112,7 +112,7 @@ Options are auto,cover,contain
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -127,7 +127,7 @@ Set the color for the title and text parameters
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -142,7 +142,7 @@ Set id for the carousel component, if not specified the value will be auto gener
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -157,7 +157,7 @@ Add text as sub title for the slide
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -173,7 +173,7 @@ options are left,center,right
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -188,7 +188,7 @@ Set the title text for the slide
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -204,7 +204,7 @@ options are left,center,right
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -219,7 +219,7 @@ Set the url that will be invoke when the button is click
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -238,6 +238,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS
+

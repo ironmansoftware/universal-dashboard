@@ -22,7 +22,7 @@ Hides a toast mesage.
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> Hide-UDToast -Id "ToastMessage"
 ```
 
@@ -36,7 +36,7 @@ The ID of the toast message to hide.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 0
@@ -55,6 +55,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS
+

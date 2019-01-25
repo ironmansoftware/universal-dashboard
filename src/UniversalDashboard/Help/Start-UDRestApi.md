@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -44,7 +44,7 @@ Whether to AutoReload this REST API on changes.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -59,7 +59,7 @@ Certificate for HTTPS.
 ```yaml
 Type: X509Certificate2
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -74,7 +74,7 @@ Certificate file for HTTPS.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -89,7 +89,7 @@ Certificate file password for HTTPS.
 ```yaml
 Type: SecureString
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -104,7 +104,7 @@ An array of endpoints created with New-UDEndpoint.
 ```yaml
 Type: Endpoint[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -119,7 +119,7 @@ The initial session state for endpoints of this dashboard. Use New-UDEndpointIni
 ```yaml
 Type: InitialSessionState
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -134,7 +134,7 @@ The name of the REST API server.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -149,7 +149,7 @@ The port the REST API server listens on.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -164,7 +164,7 @@ A collection of published folders. You can generate these folders with Publish-U
 ```yaml
 Type: PublishedFolder[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -179,7 +179,7 @@ This causes this cmdlet to block the terminal.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -202,3 +202,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

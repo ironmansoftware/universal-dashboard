@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -37,7 +37,7 @@ Whether this switch is disabled.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -52,7 +52,7 @@ The ID of this switch.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 0
@@ -67,7 +67,7 @@ The text displayed when this switch is in the off position.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 2
@@ -82,7 +82,7 @@ Whether this switch is on.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -97,7 +97,7 @@ OnChange script block handler for this control.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 3
@@ -112,7 +112,7 @@ The text displayed when this switch is in the on position.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 1
@@ -135,3 +135,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

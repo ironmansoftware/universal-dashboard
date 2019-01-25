@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -15,8 +15,8 @@ Creates a new chart.
 ```
 New-UDChart [-Labels <String[]>] [-Type <ChartType>] [-Title <String>] [-Options <Hashtable>] [-Width <String>]
  [-Height <String>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Links <Link[]>]
- [-FilterFields <ScriptBlock>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh]
- [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
+ [-FilterFields <ScriptBlock>] [-OnClick <Object>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>]
+ [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -55,7 +55,7 @@ Arguments to pass to to the endpoint.
 ```yaml
 Type: Object[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -70,7 +70,7 @@ Enables auto refresh for this component.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -85,7 +85,7 @@ Background color of the chart control.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -101,7 +101,7 @@ to return correctly from the endpoint.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -116,7 +116,7 @@ Input controls to adjust chart data. Use New-UDInputField to create fields for t
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -131,7 +131,7 @@ Font color of the chart control.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -148,7 +148,7 @@ If you do you will get an error.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -163,7 +163,7 @@ The ID of the chart. This ID is set on the HTML markup and is also used to ident
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -178,7 +178,7 @@ Specifies labels to be used for the chart data. This is used instead of the Labe
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -193,7 +193,22 @@ Links to display on the bottom of the chart. Use New-UDLink to generate a link.
 ```yaml
 Type: Link[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OnClick
+{{Fill OnClick Description}}
+
+```yaml
+Type: Object
+Parameter Sets: (All)
+Aliases: 
 
 Required: False
 Position: Named
@@ -208,7 +223,7 @@ ChartJS options to pass. This is a hashtable of options and should match the for
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -223,7 +238,7 @@ The number of seconds between auto refreshes. This defauts to 5 seconds.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -238,7 +253,7 @@ The title of the section containing the chart.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -253,8 +268,8 @@ The type of chart to display.
 ```yaml
 Type: ChartType
 Parameter Sets: (All)
-Aliases:
-Accepted values: Bar, Line, Area, Doughnut, Radar, Pie
+Aliases: 
+Accepted values: Bar, Line, Area, Doughnut, Radar, Pie, HorizontalBar
 
 Required: False
 Position: Named
@@ -270,7 +285,7 @@ You can use only width without the height parameter.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -293,3 +308,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

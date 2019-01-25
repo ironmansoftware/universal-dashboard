@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -30,7 +30,7 @@ PS C:\>
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 1
@@ -43,7 +43,7 @@ Accept wildcard characters: False
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: 0
@@ -66,3 +66,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
