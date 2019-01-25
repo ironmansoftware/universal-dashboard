@@ -107,15 +107,8 @@ namespace UniversalDashboard.Cmdlets
 					}
 				}
 
-				var dashboardService = GetVariableValue("DashboardService") as IDashboardService;
-				if (dashboardService != null) {
-					var id = path.ToGuid();
-					if (!dashboardService.ElementScripts.ContainsKey(id)) {
-						Log.Debug("Adding element script: " + path);
-						dashboardService.ElementScripts.Add(id, path);
-					}
-				}
-				
+                AssetService.Instance.RegisterScript(path);
+
 				var element = new Element
 				{
 					Id = Id,

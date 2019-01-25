@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Cmdlets
@@ -11,14 +10,6 @@ namespace UniversalDashboard.Cmdlets
     {
 		[Parameter]
 		public string Id { get; set; } = Guid.NewGuid().ToString();
-
-        internal IDashboardService DashboardService
-        {
-            get
-            {
-                return SessionState.PSVariable.Get(Constants.DashboardService)?.Value as IDashboardService;
-            }
-        }
 
         internal string SessionId
         {

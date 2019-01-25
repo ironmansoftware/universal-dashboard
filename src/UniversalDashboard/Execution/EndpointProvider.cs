@@ -20,8 +20,22 @@ namespace UniversalDashboard.Execution
 
         private readonly object sessionLock = new object();
 
+        private static IEndpointService _instance;
 
-        public EndpointService() 
+        public static IEndpointService Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new EndpointService();
+                }
+
+                return _instance;
+            }
+        }
+
+        private EndpointService() 
         {
             _endpointCache = new MemoryCache(new MemoryCacheOptions());
             _restEndpoints = new List<Endpoint>();

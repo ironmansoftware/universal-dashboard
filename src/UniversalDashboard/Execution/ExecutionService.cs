@@ -185,38 +185,11 @@ namespace UniversalDashboard.Execution
 
         private IEnumerable<object> FindComponents(Collection<PSObject> output, Page page) {
 			var inputActionComponents = output.Select(m => m.BaseObject).OfType<InputAction>().Where(m => m.Type == InputAction.Content).SelectMany(m => m.Components);
-			var components = output.Select(m => m.BaseObject).OfType<Component>().ToArray();
-			var endpoints = inputActionComponents.Concat(components).ToArray();
 
-			if (endpoints.Any())
-			{
-				Log.Debug("Endpoint returned new components: " + endpoints.Count());
-
-				var dashboardBuilder = new DashboardBuilder();
-				var app = dashboardBuilder.Build(endpoints, page);
-
-				foreach (var newEndpoint in app.Endpoints)
-				{
-					if (newEndpoint.ScriptBlock == null || newEndpoint.Name == null) continue;
-                    newEndpoint.Page = page;
-                    _dashboardService.EndpointService.Register(newEndpoint);
-				}
-
-				if (app.ElementScripts != null) {
-					foreach(var elementScript in app.ElementScripts) {
-						if (!_dashboardService.ElementScripts.ContainsKey(elementScript.Key))
-						{
-							Log.Debug("Found new element script: " + elementScript.Value);
-							_dashboardService.ElementScripts.Add(elementScript.Key, elementScript.Value);
-						}
-					}
-				}
-			}
-
-			if (components.Any())
-			{
-				return components;
-			}
+            if (inputActionComponents.Any())
+            {
+                return inputActionComponents;
+            }
 
 			return output.Select(m => m.BaseObject).ToArray();
 		}
@@ -244,8 +217,6 @@ namespace UniversalDashboard.Execution
                  .AddCommand("Set-Variable", true)
                  .AddParameter("Name", name)
                  .AddParameter("Value", value);
-
-            //runspace.SessionStateProxy.SetVariable(name, value);
         }
     }
 }
