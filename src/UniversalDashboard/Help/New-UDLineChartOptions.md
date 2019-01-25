@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -31,7 +31,7 @@ Layout options for this chart. Use New-UDChartLayoutOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 0
@@ -46,7 +46,7 @@ Legend options for this chart. Use New-UDChartLegendOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 1
@@ -61,7 +61,7 @@ If false, the lines between points are not drawn.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 6
@@ -76,7 +76,7 @@ If false, NaN data causes a break in the line.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 7
@@ -91,7 +91,7 @@ Title options for this chart. Use New-UDChartTitleOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 2
@@ -106,7 +106,7 @@ Tooltip options for this chart. Use New-UDChartTooltipOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 3
@@ -121,7 +121,7 @@ The x-Axis for this chart. Use New-UDCategoryChartAxis, New-UDLinearChartAxis or
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 4
@@ -136,7 +136,7 @@ The y-Axis for this chart. Use New-UDCategoryChartAxis, New-UDLinearChartAxis or
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 5
@@ -159,3 +159,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

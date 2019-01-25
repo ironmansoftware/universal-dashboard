@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -48,7 +48,7 @@ Pass arguments to Endpoints.
 ```yaml
 Type: Object[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -63,7 +63,7 @@ Enabled auto refresh for this control.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: endpoint
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -78,7 +78,7 @@ Background color of the table.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -93,7 +93,7 @@ Static content for this table.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: content
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -108,7 +108,7 @@ The endpoint to call to retrieve data for the table. The endpoint should return 
 ```yaml
 Type: Object
 Parameter Sets: endpoint
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -123,7 +123,7 @@ Font color within the table.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -138,7 +138,7 @@ Headers for columns in the table.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -153,7 +153,7 @@ The ID of the table. This is the HTML markup ID.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -168,7 +168,7 @@ Links to display on the bottom of the table. Use New-UDLink to generate a link.
 ```yaml
 Type: Link[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -183,7 +183,7 @@ The number of seconds between refreshes. The default is 5.
 ```yaml
 Type: Int32
 Parameter Sets: endpoint
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -198,7 +198,7 @@ Allows for changing the style of the table.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 Accepted values: bordered, striped, highlight, centered, responsive-table
 
 Required: False
@@ -214,7 +214,7 @@ Title for the section containing the table.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -237,3 +237,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+
