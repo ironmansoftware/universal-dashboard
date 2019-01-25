@@ -26,9 +26,11 @@ export default class CustomCell extends React.Component {
                 return <span>{moment2.format(this.props.dateTimeFormat)}</span>;
             }
         } else if (y.type && validComponents.indexOf(y.type) !== -1) {
+            y.preventUnregister = true;
             return renderComponent(y);
         }
         else if (y.type) {
+            y.preventUnregister = true;
             return renderComponent(y);
         }else if (typeof(y) === "boolean"){            
             y = y.toString();

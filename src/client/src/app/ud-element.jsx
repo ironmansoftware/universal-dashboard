@@ -177,20 +177,22 @@ class UDElementContent extends React.Component {
     }
 
     componentWillUnmount() {
-        if (this.state.events != null) {
-            for(var i = 0; i < this.state.events.length; i++) {
+        if (!this.props.preventUnregister) {
+            if (this.state.events != null) {
+                for(var i = 0; i < this.state.events.length; i++) {
+                    PubSub.publish('element-event', {
+                        type: "unregisterEvent",
+                        eventId: this.state.events[i].id
+                    });
+                }
+            }
+    
+            if (this.props.hasCallback) {
                 PubSub.publish('element-event', {
                     type: "unregisterEvent",
-                    eventId: this.state.events[i].id
+                    eventId: this.props.id
                 });
             }
-        }
-
-        if (this.props.hasCallback) {
-            PubSub.publish('element-event', {
-                type: "unregisterEvent",
-                eventId: this.props.id
-            });
         }
 
         PubSub.unsubscribe(this.pubSubToken);
