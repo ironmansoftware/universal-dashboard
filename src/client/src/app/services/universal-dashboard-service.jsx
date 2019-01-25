@@ -1,7 +1,7 @@
 import React from 'react';
 import { fetchGet, fetchPost } from './fetch-service.jsx';
 import { internalRenderComponent } from './render-service.jsx';
-import LazyElement from './../basics/lazy-element.';
+import LazyElement from './../basics/lazy-element.jsx';
 
 export const UniversalDashboardService = {
     components: [],
