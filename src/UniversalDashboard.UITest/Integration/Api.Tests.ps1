@@ -101,6 +101,10 @@ Describe "Api" {
             } -EvaluateUrlAsRegex
         ) -EndpointInitialization $Init
 
+        New-UDEndpoint -Url "/afterstartup" -Method "GET" -Endpoint {
+            "After Startup"
+        }
+
         It "should work with nested routes" {
             Invoke-RestMethod -Uri 'http://localhost:10001/api/recherches/1' -Method DELETE | Should be "1"
             Invoke-RestMethod -Uri 'http://localhost:10001/api/recherches/2/activate' -Method DELETE | Should be "2"
@@ -174,6 +178,10 @@ Describe "Api" {
 
         It "returns value of regex" {
             Invoke-RestMethod -Uri 'http://localhost:10001/api/nodes(agent=1234)' -Method GET | Should be 1234
+        }
+
+        It "should add endpoints after startup" {
+            Invoke-RestMethod -Uri 'http://localhost:10001/api/afterstartup' -Method GET | Should be "After Startup"
         }
 
         Stop-UDRestApi $Server
