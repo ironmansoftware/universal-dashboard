@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections;
 using System.Collections.Generic;
 using UniversalDashboard.Utilities;
 
@@ -34,6 +35,13 @@ namespace UniversalDashboard.Models
             Type = properties["type"].ToString();
             Id = properties["id"].ToString();
             Properties = properties;
+        }
+
+        public GenericComponent(Hashtable properties)
+        {
+            Type = properties["type"].ToString();
+            Id = properties["id"].ToString();
+            Properties = properties.ToDictionary() as Dictionary<string, object>;
         }
 
         public Dictionary<string, object> Properties { get; set; }

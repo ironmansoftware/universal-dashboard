@@ -36,10 +36,10 @@ export function internalRenderComponent(component, history) {
         case "column":
             return <UdColumn {...component} key={component.id} history={history} />
 
-        case "counter":
-            return <Suspense fallback={<div></div>}>
-                        <UdCounterComponent {...component} key={component.id}/>
-                    </Suspense>
+        // case "counter":
+        //     return <Suspense fallback={<div></div>}>
+        //                 <UdCounterComponent {...component} key={component.id}/>
+        //             </Suspense>
 
         case "datetime":
             return <Suspense fallback={<div></div>}>

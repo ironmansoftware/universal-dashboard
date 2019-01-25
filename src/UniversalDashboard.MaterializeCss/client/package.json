@@ -1,0 +1,32 @@
+{
+  "name": "ud-materialize",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -p --env production",
+    "dev": "webpack -p --env development"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "16.6.0",
+    "font-awesome": "4.7.0",
+    "materialize-css": "0.100.2",
+    "react-interval": "^2.0.1",
+    "react-materialize": "1.1.0",
+    "numeral": "2.0.6"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "uglifyjs-webpack-plugin": "0.4.6",
+    "webpack": "^3.6.0",
+    "style-loader": "0.23.1",
+    "file-loader": "2.0.0",
+    "css-loader": "^0.28.7"
+  }
+}

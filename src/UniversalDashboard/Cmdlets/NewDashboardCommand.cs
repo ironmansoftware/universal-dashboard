@@ -8,6 +8,7 @@ using System.Linq;
 using UniversalDashboard.Models.Basics;
 using System.Management.Automation.Runspaces;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -129,6 +130,11 @@ namespace UniversalDashboard.Cmdlets
                         if (component.BaseObject is Dictionary<string, object> dictionary)
                         {
                             page.Components.Add(new GenericComponent(dictionary));
+                        }
+
+						if (component.BaseObject is Hashtable hashtable)
+                        {
+                            page.Components.Add(new GenericComponent(hashtable));
                         }
                     }
 				}
