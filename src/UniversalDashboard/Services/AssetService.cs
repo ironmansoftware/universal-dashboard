@@ -29,13 +29,15 @@ namespace UniversalDashboard.Services
             _styleSheets = new Dictionary<Guid, string>();
         }
 
-        public void RegisterScript(string script)
+        public Guid RegisterScript(string script)
         {
             var id = script.ToGuid();
             if (!_scripts.ContainsKey(id))
             {
                 _scripts.Add(id, script);
             }
+
+            return id;
         }
 
         public string GetScript(Guid id)

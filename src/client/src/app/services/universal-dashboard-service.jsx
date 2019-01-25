@@ -1,6 +1,7 @@
 import React from 'react';
 import { fetchGet, fetchPost } from './fetch-service.jsx';
 import { internalRenderComponent } from './render-service.jsx';
+import LazyElement from './../basics/lazy-element.';
 
 export const UniversalDashboardService = {
     components: [],
@@ -16,14 +17,16 @@ export const UniversalDashboardService = {
     subscribe: PubSub.subscribe,
     unsubsribe: PubSub.unsubscribe,
     publish: PubSub.publishSync,
-    renderComponent: function(component, history) {
+    renderComponent: function(component, history, dynamicallyLoaded) {
         var existingComponent = this.components.find(x => x.type === component.type);
-        if (existingComponent) {
+        if (existingComponent != null) {
             return React.createElement(existingComponent.component, {
-                ...component,
+                ...component.properties,
                 key: component.id, 
                 history
             });
+        } else if (component.properties.isPlugin && !dynamicallyLoaded) {
+            return <LazyElement component={component} key={component.id} history={history}/>
         }
         
         return internalRenderComponent(component, history);

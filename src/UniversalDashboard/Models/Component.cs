@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace UniversalDashboard.Models
 {
@@ -23,5 +24,19 @@ namespace UniversalDashboard.Models
 		public string ToJson() {
 			return JsonConvert.SerializeObject(this);
 		}
+    }
+
+    public class GenericComponent : Component
+    {
+        public GenericComponent(Dictionary<string, object> properties)
+        {
+            Type = properties["type"].ToString();
+            Id = properties["id"].ToString();
+            Properties = properties;
+        }
+
+        public Dictionary<string, object> Properties { get; set; }
+
+        public override string Type { get; }
     }
 }
