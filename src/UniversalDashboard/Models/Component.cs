@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using UniversalDashboard.Utilities;
 
 namespace UniversalDashboard.Models
 {
@@ -25,7 +26,7 @@ namespace UniversalDashboard.Models
 			return JsonConvert.SerializeObject(this);
 		}
     }
-
+    [JsonConverter(typeof(GenericComponentJsonConvert))]
     public class GenericComponent : Component
     {
         public GenericComponent(Dictionary<string, object> properties)

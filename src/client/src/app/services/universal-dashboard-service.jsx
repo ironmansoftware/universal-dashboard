@@ -21,11 +21,11 @@ export const UniversalDashboardService = {
         var existingComponent = this.components.find(x => x.type === component.type);
         if (existingComponent != null) {
             return React.createElement(existingComponent.component, {
-                ...component.properties,
+                ...component,
                 key: component.id, 
                 history
             });
-        } else if (component.properties.isPlugin && !dynamicallyLoaded) {
+        } else if (component.isPlugin && !dynamicallyLoaded) {
             return <LazyElement component={component} key={component.id} history={history}/>
         }
         

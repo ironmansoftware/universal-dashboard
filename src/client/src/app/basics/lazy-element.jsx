@@ -11,7 +11,7 @@ export default class LazyElement extends React.Component {
         }
     }
     componentWillMount() {
-        $.getScript(getApiPath() + "/api/internal/javascript/" + this.props.component.properties.assetId, function() {
+        $.getScript(getApiPath() + "/api/internal/javascript/" + this.props.component.assetId, function() {
             this.setState({loading:false})
         }.bind(this));
     }
