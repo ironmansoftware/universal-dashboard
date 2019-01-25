@@ -7,6 +7,7 @@ using UniversalDashboard.Services;
 using System.Linq;
 using UniversalDashboard.Models.Basics;
 using System.Management.Automation.Runspaces;
+using System.Collections.Generic;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -120,12 +121,16 @@ namespace UniversalDashboard.Cmdlets
 
 					foreach (var component in components)
 					{
-						var dashboardComponent = component.BaseObject as Component;
-						if (dashboardComponent != null)
+						if (component.BaseObject is Component dashboardComponent)
 						{
 							page.Components.Add(dashboardComponent);
 						}
-					}
+
+                        if (component.BaseObject is Dictionary<string, object> dictionary)
+                        {
+                            page.Components.Add(new GenericComponent(dictionary));
+                        }
+                    }
 				}
 				catch (Exception ex)
 				{
