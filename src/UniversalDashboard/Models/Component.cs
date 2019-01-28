@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UniversalDashboard.Utilities;
 
@@ -35,6 +37,23 @@ namespace UniversalDashboard.Models
             Id = properties["id"].ToString();
             Properties = properties;
         }
+
+		public GenericComponent(Hashtable properties) 
+		{
+            if (!properties.ContainsKey("type"))
+            {
+                throw new Exception("type is a required property");
+            }
+
+            if (!properties.ContainsKey("id"))
+            {
+                throw new Exception("id is a required property");
+            }
+
+            Type = properties["type"].ToString();
+            Id = properties["id"].ToString();
+            Properties = properties.ToDictionary() as Dictionary<string, object>;
+		}
 
         public Dictionary<string, object> Properties { get; set; }
 

@@ -5,11 +5,11 @@ param(
 
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
-$version = "2.2.0"
+$version = "2.3.0"
 #$prerelease = "-beta2"
 
 $ReleaseNotes = "
-	For release notes, see: https://docs.universaldashboard.io/updates/v2.2.0-beta2
+	For release notes, see: https://docs.universaldashboard.io/updates/v2.3.0
 "
 
 $manifestParameters = @{
@@ -28,7 +28,7 @@ $manifestParameters = @{
 	IconUri = 'https://raw.githubusercontent.com/ironmansoftware/universal-dashboard/master/images/logo.png'
 	PrivateData = $PrivateData
     DotNetFrameworkVersion = '4.7'
-    PowerShellVersion = '5.0'
+	PowerShellVersion = '5.0'
 	FunctionsToExport = @(
 		"Out-UDChartData", 
 		"Out-UDGridData", 
@@ -87,6 +87,8 @@ $manifestParameters = @{
 		"New-UDImage"
 		"New-UDFab"
 		"New-UDFabButton"
+		"New-UDTab"
+		"New-UDTabContainer"
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 

@@ -34,6 +34,14 @@ Start-Process npm -ArgumentList "install" -Wait
 & npm run build
 Pop-Location
 
+# Build Child Modules 
+
+Push-Location "$PSScriptRoot\UniversalDashboard.Materialize"
+.\build.ps1
+Pop-Location
+
+# End Build Child Modules
+
 $outputDirectory = Join-Path $PSScriptRoot "output"
 if ((Test-Path $outputDirectory)) {
 	Remove-Item $outputDirectory -Force -Recurse
@@ -46,11 +54,13 @@ $netstandard20 = Join-Path $outputDirectory "netstandard2.0"
 $help = Join-Path $outputDirectory "en-US"
 $client = Join-Path $outputDirectory "client"
 $poshud = Join-Path $outputDirectory "poshud"
+$childModules = Join-Path $outputDirectory "Modules"
 
 New-Item -ItemType Directory $net472
 New-Item -ItemType Directory $netstandard20
 New-Item -ItemType Directory $help
 New-Item -ItemType Directory $client
+New-Item -ItemType Directory $childModules
 
 Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\netstandard2.0\publish\*" $netstandard20 -Recurse
 Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net472\publish\*" $net472 -Recurse
@@ -70,6 +80,12 @@ Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboard.psm1" $outputDire
 Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboardServer.psm1" $outputDirectory
 Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net472\UniversalDashboard.Controls.psm1" $outputDirectory
 Copy-Item "$PSScriptRoot\poshud" $poshud -Recurse -Container
+
+# Copy Child Modules
+
+Copy-Item "$PSScriptRoot\UniversalDashboard.Materialize\output\UniversalDashboard.Materialize" $childModules -Recurse -Container
+
+# End Copy Child Modules 
 
 . "$PSScriptRoot\CorFlags.exe" /32BITREQ-  "$outputDirectory\net472\UniversalDashboard.Server.exe" 
 
