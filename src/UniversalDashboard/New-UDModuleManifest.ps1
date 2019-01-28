@@ -28,7 +28,7 @@ $manifestParameters = @{
 	IconUri = 'https://raw.githubusercontent.com/ironmansoftware/universal-dashboard/master/images/logo.png'
 	PrivateData = $PrivateData
     DotNetFrameworkVersion = '4.7'
-    PowerShellVersion = '5.0'
+	PowerShellVersion = '5.0'
 	FunctionsToExport = @(
 		"Out-UDChartData", 
 		"Out-UDGridData", 
@@ -87,6 +87,8 @@ $manifestParameters = @{
 		"New-UDImage"
 		"New-UDFab"
 		"New-UDFabButton"
+		"New-UDTab"
+		"New-UDTabContainer"
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 
