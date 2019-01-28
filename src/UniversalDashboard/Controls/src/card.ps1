@@ -55,8 +55,13 @@ function New-UDCard {
     if ($Horizontal) {
         $cardClass = "card $sizeClass horizontal ud-card"
     }
+
+    $colors = @{
+        backgroundColor = $BackgroundColor.HtmlColor
+        color = $FontColor.HtmlColor
+    }
      
-    New-UDElement -Tag "div" -Id $Id -Attributes @{ className = $cardClass} -Content {
+    New-UDElement -Tag "div" -Id $Id -Attributes @{ className = $cardClass; style = $colors } -Content {
         if ($Image -ne $null) {
             New-UDElement -Tag 'div' -Attributes @{ className = "card-image waves-effect waves-block waves-light" } -Content {
                 $Image
