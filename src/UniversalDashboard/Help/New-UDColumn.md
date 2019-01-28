@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -68,7 +68,7 @@ Whether this column should auto-refresh. The default interval is every 5 seconds
 ```yaml
 Type: SwitchParameter
 Parameter Sets: endpoint
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -83,7 +83,7 @@ The content of the column. This can be one or more controls. It can also be othe
 ```yaml
 Type: ScriptBlock
 Parameter Sets: content
-Aliases:
+Aliases: 
 
 Required: False
 Position: 1
@@ -98,7 +98,7 @@ The endpoint to call to generate the content of this column. This is mutually ex
 ```yaml
 Type: Object
 Parameter Sets: endpoint
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -113,7 +113,7 @@ The ID of the column. This is the ID set in the HTML markup.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -128,7 +128,7 @@ The number of columns to offset this column on large screens. Large screens are 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -143,7 +143,7 @@ The size of this column on large screens. Large screens are over 992px wide.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -158,7 +158,7 @@ The number of columns to offset this column on medium screens. Medium screens ar
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -173,7 +173,7 @@ The size of this column on medium screens. Medium screens are over 600px and les
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -188,7 +188,7 @@ How often this column refreshes.
 ```yaml
 Type: Int32
 Parameter Sets: endpoint
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -203,7 +203,7 @@ The number of columns to offset this column on small screens. Small screens are 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -241,3 +241,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

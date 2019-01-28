@@ -55,6 +55,27 @@ export default class UdGrid extends React.Component {
     }
 
     componentWillUnmount() {
+        this.state.data.forEach(x => {
+            for(var propertyName in x) {
+                var property = x[propertyName];
+                if (property.type === "element") {
+                    for(var i = 0; i < property.events.length; i++) {
+                        PubSub.publish('element-event', {
+                            type: "unregisterEvent",
+                            eventId: property.events[i].id
+                        });
+                    }
+    
+                    if (property.hasCallback) {
+                        PubSub.publish('element-event', {
+                            type: "unregisterEvent",
+                            eventId: property.id
+                        });
+                    }
+                }
+            }
+        });
+
         PubSub.unsubscribe(this.pubSubToken);
     }
 

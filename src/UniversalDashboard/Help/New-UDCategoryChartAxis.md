@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -37,7 +37,7 @@ The ID of the axis. This can should be referenced with the dataset using the axi
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 2
@@ -52,7 +52,7 @@ An array of labels to display.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 3
@@ -67,7 +67,7 @@ The maximum item to display.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 5
@@ -82,7 +82,7 @@ The minimum item to display.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 4
@@ -97,7 +97,7 @@ If true, extra space is added to the both edges and the axis is scaled to fit in
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 1
@@ -112,7 +112,7 @@ Position of the axis in the chart. Possible values are: 'top', 'left', 'bottom',
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 Accepted values: left, right, top, bottom
 
 Required: False
@@ -136,3 +136,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

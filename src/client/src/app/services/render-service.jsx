@@ -3,7 +3,6 @@ import UdColumn from './../ud-column.jsx';
 import UdNavbar from './../ud-navbar.jsx';
 import UdRow from './../ud-row.jsx';
 
-
 const UdCardComponent = React.lazy(() => import('./../ud-card.jsx' /* webpackChunkName: "ud-card" */))
 const UdChartComponent = React.lazy(() => import('./../ud-chart.jsx' /* webpackChunkName: "ud-chart" */))
 const UdMonitorComponent = React.lazy(() => import('./../ud-monitor.jsx' /* webpackChunkName: "ud-monitor" */))
@@ -19,20 +18,8 @@ const UdElementComponent = React.lazy(() => import('./../ud-element.jsx' /* webp
 const UdImageCarouselComponent = React.lazy(() => import( './../ud-image-carousel.jsx' /* webpackChunkName: "ud-image-carousel" */))
 const UdTerminal = React.lazy(() => import( './../ud-terminal.jsx' /* webpackChunkName: "ud-terminal" */))
 
-export default function renderComponent(component, history) {
+export function internalRenderComponent(component, history) {
     if (!component) return null;
-
-    var pluginComponent = null;
-    window.UniversalDashboard.plugins.some(plugin => {
-        if (plugin.components == null) return false;
-
-        pluginComponent = plugin.components.find(component.type === component.type);
-        return pluginComponent != null;
-    });
-
-    if (pluginComponent != null) {
-        return React.createElement(pluginComponent, component);
-    }
 
     switch(component.type) {
 
@@ -115,4 +102,8 @@ export default function renderComponent(component, history) {
                 <UdTerminal {...component} key={component.id}/>
             </Suspense>
     }
+}
+
+export default function renderComponent(component, history) {
+    return window.UniversalDashboard.renderComponent(component, history);
 }

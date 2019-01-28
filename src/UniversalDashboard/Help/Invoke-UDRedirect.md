@@ -13,7 +13,7 @@ Redirects a user to a URL.
 ## SYNTAX
 
 ```
-Invoke-UDRedirect -Url <String> [<CommonParameters>]
+Invoke-UDRedirect -Url <String> [-OpenInNewWindow] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,13 +32,28 @@ Redirects the user to Google.
 
 ## PARAMETERS
 
+### -OpenInNewWindow
+Opens the URL in a new window. 
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Url
 The URL to redirect the user to. 
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -61,3 +76,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

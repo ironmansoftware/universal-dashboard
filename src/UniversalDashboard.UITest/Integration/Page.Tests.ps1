@@ -11,7 +11,6 @@ Get-UDDashboard | Stop-UDDashboard
 
 Describe "New-UDPage" {
 
-    
     Context "cycling" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
@@ -88,8 +87,16 @@ Describe "New-UDPage" {
         $Page5 = New-UDPage -Url "/level/level2/:test" -Endpoint {
             New-UDCard -Text "Level 2" -Id "Level2"
         }
+
+        $Page6 = New-UDPage -Name "/parent" -Content {
+            New-UDCard -Text "parent" -Id "parent"
+        }
+
+        $Page7 = New-UDPage -Name "/parent/child" -Content {
+            New-UDCard -Text "child" -Id "child"
+        }
         
-        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3, $Page5, $Page4)
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3, $Page5, $Page4, $Page6, $Page7)
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
@@ -137,6 +144,18 @@ Describe "New-UDPage" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/level/level2/1"
             Find-SeElement -Id 'Level1' -Driver $Driver | Should be $null
             Find-SeElement -Id 'Level2' -Driver $Driver | Should not be $null
+        }
+
+        it "should have parent but not child" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/parent"
+            Find-SeElement -Id 'child' -Driver $Driver | Should be $null
+            Find-SeElement -Id 'parent' -Driver $Driver | Should not be $null
+        }
+
+        it "should have child but not parent" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/parent/child"
+            Find-SeElement -Id 'parent' -Driver $Driver | Should be $null
+            Find-SeElement -Id 'child' -Driver $Driver | Should not be $null
         }
 
         Stop-SeDriver $Driver

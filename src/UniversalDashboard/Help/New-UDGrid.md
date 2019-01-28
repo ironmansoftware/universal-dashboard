@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -51,7 +51,7 @@ Arguments to pass to the endpoint. They will be available via the $ArgumentList 
 ```yaml
 Type: Object[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -66,7 +66,7 @@ Enables auto refresh for this control.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -81,7 +81,7 @@ The background color of the grid.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -96,7 +96,7 @@ The DateTime format to use in the Grid. This is a MomentJS DateTime format.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -111,7 +111,7 @@ Specifies the column index of the default sort column. This index begins with ze
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -126,7 +126,7 @@ Specifies whether to sort descending or ascending by default.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -141,7 +141,7 @@ The endpoint that returns the grid data.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -156,7 +156,7 @@ Text to override the "Filter" placeholder text.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -171,7 +171,7 @@ The font color of the grid.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -186,7 +186,7 @@ The headers to use for the grid columns. The count of headers should match the c
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -201,7 +201,7 @@ The id of the grid. This is the HTML markup ID.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -216,7 +216,7 @@ Links to display on the bottom of the grid. Use New-UDLink to generate a link.
 ```yaml
 Type: Link[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -231,7 +231,7 @@ Disables paging for this grid.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -246,7 +246,7 @@ The number of items to display per page.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -261,7 +261,7 @@ The properties to select from objects for data in the row. The number of propert
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -276,7 +276,7 @@ The number of seconds between refreshes. The default is 5.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -291,7 +291,7 @@ Turns on server side processing for the grid. This disables client-side filterin
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -306,7 +306,7 @@ The title of the section for this grid.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -329,3 +329,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

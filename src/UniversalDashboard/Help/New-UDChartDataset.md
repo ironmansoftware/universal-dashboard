@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -45,7 +45,7 @@ Additional options to pass to the dataset. This value can be different depending
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 10
@@ -60,7 +60,7 @@ The background color of the dataset in the chart. Should be in rgba() syntax.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 2
@@ -75,7 +75,7 @@ The border color of the dataset in the chart. Should be in rgba() syntax.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 3
@@ -90,7 +90,7 @@ The width of the border in pixels.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 4
@@ -105,7 +105,7 @@ The property to select as the data for the y value of the chart.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 0
@@ -120,7 +120,7 @@ The hover background color of the dataset in the chart. Should be in rgba() synt
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 5
@@ -135,7 +135,7 @@ The hover border color of the dataset in the chart. Should be in rgba() syntax.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 6
@@ -150,7 +150,7 @@ The hover width of the border in pixels.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 7
@@ -165,7 +165,7 @@ A label of this dataset.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 1
@@ -180,7 +180,7 @@ The ID of the X axis. Used for advanced properties.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 8
@@ -195,7 +195,7 @@ The ID of the Y axis. Used for advanced properties.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 9
@@ -218,3 +218,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

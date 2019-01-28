@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
 using System.Reflection;
+using Microsoft.AspNetCore.Routing;
 
 namespace UniversalDashboard.Controllers
 {
@@ -53,10 +54,12 @@ namespace UniversalDashboard.Controllers
         }
 
         [Authorize]
-        [Route("{page}")]
+        [Route("page/{*page}")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public Page Index(string page)
+        public Page Page()
         {
+            var page = HttpContext.GetRouteValue("page") as string;
+
             Log.Debug($"Index - Page = {page}");
             return _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
         }
@@ -71,6 +74,29 @@ namespace UniversalDashboard.Controllers
             var css = System.IO.File.ReadAllText(materializeCss);
             css += System.IO.File.ReadAllText(siteCss);
             css += _dashboard?.Themes?.FirstOrDefault()?.RenderedContent;
+
+            if (_dashboard?.Navigation != null)
+            {
+                css += Environment.NewLine;
+                css += $@"side-nav {{
+                            width: {_dashboard.Navigation.Width}px;
+                        }}";
+            }
+
+            if (_dashboard?.Navigation?.Fixed == true)
+            {
+                css += Environment.NewLine;
+                css += $@"
+                        header, main, footer {{
+                          padding-left: {_dashboard.Navigation.Width}px;
+                        }}
+
+                        @media only screen and (max-width : 992px) {{
+                          header, main, footer {{
+                            padding-left: 0;
+                          }}
+                        }}";
+            }
 
 			return new ContentResult()
             {

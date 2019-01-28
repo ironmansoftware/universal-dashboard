@@ -37,11 +37,11 @@ export default class UdNavbar extends React.Component {
 
         var href = dPage.name;
         if (href != null) {
-            href = `/${dPage.name.replace(/ /g, "-")}`;
+            href = window.baseUrl + `/${dPage.name.replace(/ /g, "-")}`;
         }
 
         return <nav style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">
-                    <UdNavigation pages={this.props.pages} togglePaused={this.props.togglePaused} showPauseToggle={this.props.showPauseToggle}/>
+                    <UdNavigation pages={this.props.pages} togglePaused={this.props.togglePaused} showPauseToggle={this.props.showPauseToggle} {...this.props.navigation} customNavigation={this.props.navigation != null}/>
 
                    
                     <a href={href} style={{paddingLeft: '10px', fontSize: '2.1rem'}}>

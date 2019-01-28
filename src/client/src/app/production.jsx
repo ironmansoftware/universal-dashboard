@@ -1,5 +1,5 @@
 export function getApiPath() {
-    return ""
+    return window.baseUrl;
 }
 
 export function getWsApiPath() {

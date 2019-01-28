@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation.Runspaces;
-using UniversalDashboard.Execution;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 
@@ -11,8 +10,6 @@ namespace UniversalDashboard.Services
 	public class DashboardService : IDashboardService
 	{
 		public DashboardService(DashboardOptions dashboardOptions, string reloadToken) {
-            EndpointService = new EndpointService();
-
             if (dashboardOptions.Dashboard != null) 
             {
                 SetDashboard(dashboardOptions.Dashboard);
@@ -36,7 +33,13 @@ namespace UniversalDashboard.Services
 		public string ReloadToken {get;set;}
         public DateTime StartTime { get; private set; }
 
-        public IEndpointService EndpointService { get; private set; }
+        public IEndpointService EndpointService
+        {
+            get
+            {
+                return Execution.EndpointService.Instance;
+            }
+        }
 
         public Dictionary<string, object> Properties { get; }
 
@@ -45,16 +48,6 @@ namespace UniversalDashboard.Services
 			if (dashboard == null) return;
 
 			Dashboard = dashboard;
-            var dashboardBuilder = new DashboardBuilder();
-			var app = dashboardBuilder.Build(Dashboard);
-
-			ElementScripts = app.ElementScripts;
-
-            foreach (var endpoint in app.Endpoints.ToArray())
-            {
-                EndpointService.Register(endpoint);
-            }
-
 			SetRunspaceFactory(Dashboard.EndpointInitialSessionState);
         }
 

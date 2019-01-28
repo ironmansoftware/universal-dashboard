@@ -107,7 +107,7 @@ class UDElementContent extends React.Component {
         else 
         {
             if (this.props.js) {
-                $.getScript(getApiPath() + "/js/" + this.props.js, function() {
+                $.getScript(getApiPath() + "/api/internal/javascript/" + this.props.js, function() {
                     this.setState({
                         loading: false
                     })
@@ -177,20 +177,22 @@ class UDElementContent extends React.Component {
     }
 
     componentWillUnmount() {
-        if (this.state.events != null) {
-            for(var i = 0; i < this.state.events.length; i++) {
+        if (!this.props.preventUnregister) {
+            if (this.state.events != null) {
+                for(var i = 0; i < this.state.events.length; i++) {
+                    PubSub.publish('element-event', {
+                        type: "unregisterEvent",
+                        eventId: this.state.events[i].id
+                    });
+                }
+            }
+    
+            if (this.props.hasCallback) {
                 PubSub.publish('element-event', {
                     type: "unregisterEvent",
-                    eventId: this.state.events[i].id
+                    eventId: this.props.id
                 });
             }
-        }
-
-        if (this.props.hasCallback) {
-            PubSub.publish('element-event', {
-                type: "unregisterEvent",
-                eventId: this.props.id
-            });
         }
 
         PubSub.unsubscribe(this.pubSubToken);
@@ -289,7 +291,10 @@ class UDElementContent extends React.Component {
         }
 
         if (this.props.js) {
-            return React.createElement(eval(this.props.moduleName + "." + this.props.componentName), this.props.props);
+            return renderComponent({
+                type: this.props.componentName,
+                ...this.props.props
+            }, this.props.history)
         }
 
         var children = null;

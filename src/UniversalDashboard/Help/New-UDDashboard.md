@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -19,7 +19,7 @@ New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <Dashboar
  [-FontIconStyle <String>] [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>]
  [-CyclePages] [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
  [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [-IdleTimeout <TimeSpan>]
- [<CommonParameters>]
+ [-Navigation <SideNav>] [<CommonParameters>]
 ```
 
 ### Pages
@@ -29,7 +29,7 @@ New-UDDashboard [-Title <String>] -Pages <Page[]> [-NavBarColor <DashboardColor>
  [-FontIconStyle <String>] [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>]
  [-CyclePages] [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
  [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [-IdleTimeout <TimeSpan>]
- [<CommonParameters>]
+ [-Navigation <SideNav>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -75,7 +75,7 @@ Background color.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -90,7 +90,7 @@ Content of the dashboard.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: Content
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -105,7 +105,7 @@ Changes pages in the dashboard automatically.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -120,7 +120,7 @@ The number of seconds to wait on each page before changing to the next page. Def
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -135,7 +135,7 @@ The initial session state for endpoints of this dashboard. Use New-UDEndpointIni
 ```yaml
 Type: InitialSessionState
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -150,7 +150,7 @@ Font color.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -165,7 +165,7 @@ Choose the style of the icons, filled or line.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 Accepted values: FontAwesome, LineAwesome
 
 Required: False
@@ -181,7 +181,7 @@ Configuration options for the footer. Use New-UDFooter to create the object for 
 ```yaml
 Type: Footer
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -198,7 +198,7 @@ latitude, longitude, heading and speed.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -213,7 +213,7 @@ The amount of time a session can be idle before it times out. This defaults to 2
 ```yaml
 Type: TimeSpan
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -243,7 +243,7 @@ Navigation bar and footer font color.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -258,7 +258,7 @@ A logo to use within the navbar. Use New-UDImage to create this logo.
 ```yaml
 Type: Element
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -273,7 +273,22 @@ Links to present on the dashboard. Use New-UDLink to create links.
 ```yaml
 Type: Link[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Navigation
+{{Fill Navigation Description}}
+
+```yaml
+Type: SideNav
+Parameter Sets: (All)
+Aliases: 
 
 Required: False
 Position: Named
@@ -288,7 +303,7 @@ An array of pages to display in a multi-page dashboard.
 ```yaml
 Type: Page[]
 Parameter Sets: Pages
-Aliases:
+Aliases: 
 
 Required: True
 Position: Named
@@ -303,7 +318,7 @@ Additional scripts to include with the dashboard. These scripts are not copied b
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -318,7 +333,7 @@ Additional stylesheets to include with the dashboard. These stylesheets are not 
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -333,7 +348,7 @@ The theme to use with this dashboard. This can be a predefined theme supplied by
 ```yaml
 Type: Theme
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -348,7 +363,7 @@ Title for the dashboard.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -371,3 +386,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

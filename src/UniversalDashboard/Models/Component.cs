@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using UniversalDashboard.Utilities;
 
 namespace UniversalDashboard.Models
 {
@@ -17,14 +19,25 @@ namespace UniversalDashboard.Models
 		[JsonProperty("error", NullValueHandling = NullValueHandling.Ignore)]
 		public Error Error { get; set; }
 
-        [JsonIgnore]
-        public Endpoint[] ChildEndpoints { get; set; }
-
 		[JsonProperty("hasCallback")]
 		public bool HasCallback => Callback?.ScriptBlock != null;
 
 		public string ToJson() {
 			return JsonConvert.SerializeObject(this);
 		}
+    }
+    [JsonConverter(typeof(GenericComponentJsonConvert))]
+    public class GenericComponent : Component
+    {
+        public GenericComponent(Dictionary<string, object> properties)
+        {
+            Type = properties["type"].ToString();
+            Id = properties["id"].ToString();
+            Properties = properties;
+        }
+
+        public Dictionary<string, object> Properties { get; set; }
+
+        public override string Type { get; }
     }
 }

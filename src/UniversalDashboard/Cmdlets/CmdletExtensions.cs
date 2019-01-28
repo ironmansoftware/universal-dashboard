@@ -1,17 +1,38 @@
 ﻿using NLog;
 using UniversalDashboard.Models;
-using UniversalDashboard.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
+using UniversalDashboard.Execution;
 
 namespace UniversalDashboard.Cmdlets
 {
     public static class CmdletExtensions
     {
         public static string[] SkippedVariables = new[] { "args", "input", "psboundparameters", "pscommandpath", "foreach", "myinvocation", "psscriptroot", "DefaultVIServer", "DefaultVIServers"  };
+
+        public static Endpoint TryGenerateEndpoint(this object obj, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+
+            if (obj is Endpoint endpoint)
+            {
+                endpoint.Name = id;
+                return endpoint;
+            }
+
+            if (obj is ScriptBlock scriptBlock)
+            {
+                return GenerateCallback(scriptBlock, id, sessionState);
+            }
+
+            throw new Exception($"Expected UDEndpoint or ScriptBlock but got {obj.GetType()}");
+        }
 
         public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
         {
@@ -48,11 +69,7 @@ namespace UniversalDashboard.Cmdlets
             callback.SessionId = sessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
             callback.Page = sessionState.PSVariable.Get(Constants.UDPage)?.Value as Page;
 
-            var dashboardService = sessionState.PSVariable.Get("DashboardService")?.Value as DashboardService;
-            if (dashboardService != null)
-            {
-                dashboardService.EndpointService.Register(callback);
-            }
+            EndpointService.Instance.Register(callback);
 
             return callback;
         }

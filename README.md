@@ -1,6 +1,6 @@
 # Universal Dashboard 
 
-[Documentation](https://docs.universaldashboard.io) | [Licensing](https://marketplace.universaldashboard.io/Pricing) | [Live Preview](https://poshud.com/) | [YouTube Videos](https://www.youtube.com/playlist?list=PL-0mHH7DlSiSZ4ozleNTUSXNkF6dlySVz) | [Forums](https://forums.universaldashboard.io/)
+[Documentation](https://docs.universaldashboard.io) | [Licensing](https://ironmansoftware.com/product/powershell-universal-dashboard/) | [Live Preview](https://poshud.com/) | [YouTube Videos](https://www.youtube.com/playlist?list=PL-0mHH7DlSiSZ4ozleNTUSXNkF6dlySVz) | [Forums](https://forums.universaldashboard.io/)
 
 
 Create beautiful websites and dashboards using only PowerShell

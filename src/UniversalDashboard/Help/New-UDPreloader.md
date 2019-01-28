@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -48,7 +48,7 @@ The background color of the preloader
 ```yaml
 Type: DashboardColor
 Parameter Sets: indeterminate, determinate
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -63,7 +63,7 @@ Whether the preloadre is circular.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: circular
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -78,7 +78,7 @@ The color of the preloader.
 ```yaml
 Type: String
 Parameter Sets: circular
-Aliases:
+Aliases: 
 Accepted values: blue, red, green
 
 Required: False
@@ -94,7 +94,7 @@ The percent complete of the preloader.
 ```yaml
 Type: Object
 Parameter Sets: determinate
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -109,7 +109,7 @@ The color of the preloaders progress.
 ```yaml
 Type: DashboardColor
 Parameter Sets: indeterminate, determinate
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -124,7 +124,7 @@ The size of the circular preloader.
 ```yaml
 Type: String
 Parameter Sets: circular
-Aliases:
+Aliases: 
 Accepted values: small, medium, large
 
 Required: False
@@ -148,3 +148,4 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
+

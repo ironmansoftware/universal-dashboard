@@ -18,7 +18,7 @@ module.exports = (env) => {
       path: BUILD_DIR,
       filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
       sourceMapFilename: isDev ? '[name].bundle.map' : '[name].[hash].bundle.map',
-      publicPath: "/"
+      publicPath: ""
     },
     module : {
       rules : [
@@ -52,6 +52,7 @@ module.exports = (env) => {
     },
     devtool: 'source-map',
     devServer: {
+      disableHostCheck: true,
       historyApiFallback: true,
       port: 10000,
       // hot: true,

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System;
-using UniversalDashboard.Interfaces;
+using UniversalDashboard.Services;
 
 namespace PowerShellProTools.UniversalDashboard.Controllers
 {
@@ -10,22 +10,15 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
     {
         private readonly Logger Log = LogManager.GetLogger(nameof(JavaScriptController));
 
-        private readonly IDashboardService _dashboardService;
-        public JavaScriptController(IDashboardService dashboardService)
-        {
-            _dashboardService = dashboardService;
-        }
-
-        [Route("js/{id}")]
+        [Route("{id}")]
         public IActionResult Index(Guid id)
         {
-            if (!_dashboardService.ElementScripts.ContainsKey(id))
+            var filePath = AssetService.Instance.GetScript(id);
+            if (filePath == null)
             {
                 Log.Warn($"Unknown element script: {id}");
                 return StatusCode(404);
             }
-
-            var filePath = _dashboardService.ElementScripts[id];
 
             if (!System.IO.File.Exists(filePath))
             {

@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using NLog;
 using UniversalDashboard.Models;
 using System.Management.Automation;
+using System.Collections.Generic;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -61,13 +62,18 @@ namespace UniversalDashboard.Cmdlets
 
 					foreach (var component in components)
 					{
-						var dashboardComponent = component.BaseObject as Component;
-						if (dashboardComponent != null)
-						{
-							page.Components.Add(dashboardComponent);
-						}
-					}
+                        if (component.BaseObject is Component dashboardComponent)
+                        {
+                            page.Components.Add(dashboardComponent);
+                        }
 
+                        if (component.BaseObject is Dictionary<string, object> dictionary)
+                        {
+                            page.Components.Add(new GenericComponent(dictionary));
+                        }
+                    }
+
+                    page.Name = page.Name.TrimStart('/');
 					page.Dynamic = false;
 				}
 			}

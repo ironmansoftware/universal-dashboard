@@ -1339,7 +1339,7 @@ function New-UDDoughnutChartDataset {
 		[int[]]$HoverBorderWidth
 	)
 
-	$obj = [PSCustomObject]@{
+	$obj = @{
 		data = @()
 	}
 
