@@ -1,8 +1,4 @@
-if ($Env:APPVEYOR) {
-    $BuildFolder = $env:APPVEYOR_BUILD_FOLDER
-} else {
-    $BuildFolder = $PSScriptRoot
-}
+$BuildFolder = $PSScriptRoot
 
 $powerShellGet = Import-Module PowerShellGet  -PassThru -ErrorAction Ignore
 if ($powerShellGet.Version -lt ([Version]'1.6.0')) {
