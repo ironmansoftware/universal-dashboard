@@ -13,16 +13,15 @@ Describe "Tabs" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDTabContainer -Tabs {
                 New-UDTab -Text "Tab1" -Content { New-UDCard -Title "Hi" -Content {} }
-                New-UDTab -Text "Tab2" -Content { New-UDCard -Title "Hi" -Content {} }
+                New-UDTab -Text "Tab2" -Content { New-UDCard -Title "Hi2" -Content {} }
             }
         }
 
-        $Server = Start-UDDashboard -Port 8888 -Dashboard $dashboard 
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
-
-#       Stop-SeDriver $Driver
-#       Stop-UDDashboard -Server $Server 
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
     }
 }

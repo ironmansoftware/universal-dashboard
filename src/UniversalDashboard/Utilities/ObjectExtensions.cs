@@ -27,7 +27,7 @@ namespace UniversalDashboard.Utilities
             {
                 if (psObject.BaseObject != null)
                 {
-                    return psObject.BaseObject;
+                    return ToDictionary(psObject.BaseObject);
                 }
 
                 var dictionary = new Dictionary<string, object>();

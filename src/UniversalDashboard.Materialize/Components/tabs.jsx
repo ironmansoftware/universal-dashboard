@@ -10,7 +10,7 @@ class TabContainer extends React.Component {
 
         var tabIndex = 0;
 
-        this.props.tabs.map(x => {
+        return this.props.tabs.map(x => {
             tabIndex++;
             return (
                 <li class="tab"><a href={`#${this.props.id}${tabIndex}`}>{x.text}</a></li>
@@ -21,7 +21,7 @@ class TabContainer extends React.Component {
     renderTabContent() {
         var tabIndex = 0;
 
-        this.props.tabs.map(x => {
+        return this.props.tabs.map(x => {
             tabIndex++;
             return (
                 <div id={`${this.props.id}${tabIndex}`} className="col s12">
@@ -32,18 +32,19 @@ class TabContainer extends React.Component {
     }
 
     render() {
-
         var headers = this.renderTabHeaders();
         var content = this.renderTabContent();
 
-        <div className="row">
-        <div className="col s12">
-          <ul className="tabs">
-            {headers}
-          </ul>
-        </div>
-        {content}
-      </div>
+        return (
+            <div className="row">
+            <div className="col s12">
+              <ul className="tabs">
+                {headers}
+              </ul>
+            </div>
+            {content}
+          </div>
+        )
     }
 }
 
