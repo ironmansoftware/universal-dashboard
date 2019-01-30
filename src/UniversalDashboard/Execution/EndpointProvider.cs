@@ -231,6 +231,8 @@ namespace UniversalDashboard.Execution
 
         private bool IsMatch(Endpoint callback, string url, Dictionary<string, object> matchedVariables)
         {
+            if (callback.Parts == null) return false;
+
             var urlParts = url.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
             for (var i = 0; i < urlParts.Length; i++)
