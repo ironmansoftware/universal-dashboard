@@ -40,6 +40,7 @@ module.exports = (env) => {
             })
     ],
     optimization: {
+      minimize: false,
       splitChunks: {
         cacheGroups: {
           vendor:{

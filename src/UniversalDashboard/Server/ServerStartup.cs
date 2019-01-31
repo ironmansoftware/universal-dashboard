@@ -16,6 +16,7 @@ using UniversalDashboard.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using UniversalDashboard.Controllers;
 using System.IO;
+using UniversalDashboard.Utilities;
 
 namespace UniversalDashboard
 {
@@ -46,6 +47,9 @@ namespace UniversalDashboard
 			services.AddSignalR(hubOptions =>
             {
                 hubOptions.EnableDetailedErrors = true;
+            }).AddJsonProtocol(x =>
+            {
+                x.PayloadSerializerSettings.ContractResolver = new CustomContractResolver();
             });
             services.AddTransient<StateRequestService>();
             services.AddSingleton<IHostedService, ScheduledEndpointManager>();
@@ -53,7 +57,9 @@ namespace UniversalDashboard
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddSingleton(ExecutionService.MemoryCache);
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(x => {
+                x.SerializerSettings.ContractResolver = new CustomContractResolver();
+            });
 
             services.AddScoped<IFilterProvider, EncFilterProvider>();
 

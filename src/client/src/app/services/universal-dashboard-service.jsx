@@ -19,6 +19,8 @@ export const UniversalDashboardService = {
     publish: PubSub.publishSync,
     renderComponent: function(component, history, dynamicallyLoaded) {
 
+        if (component == null) return <React.Fragment/>;
+
         if (Array.isArray(component)) {
             return component.map(x => this.renderComponent(x, history));
         }

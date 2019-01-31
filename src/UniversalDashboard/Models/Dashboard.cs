@@ -10,30 +10,47 @@ namespace UniversalDashboard.Models
     {
 		[JsonProperty("id")]
 		public Guid Id { get; set;}
-		public string Title { get; set; }
+        [JsonProperty("title")]
+        public string Title { get; set; }
 		[JsonIgnore]
 		public Theme[] Themes { get; set; }
-		public string NavBarColor { get; set; }
-	    public string NavBarFontColor { get; set; }
-	    public string BackgroundColor { get; set; }
-	    public string FontColor { get; set; }
-	    public string FontIconStyle { get; set; }
-		public IEnumerable<Link> NavbarLinks { get; set; }
-		public string[] Scripts { get; set; }
-		public string[] Stylesheets { get; set; }
-	    public List<Page> Pages { get; set; } = new List<Page>();
-		public bool CyclePages { get; set; }
-		public int CyclePagesInterval { get; set; }
-		public string Error { get; set; }
-		public bool Design { get; set; }
-		public Footer Footer { get; set; }
-		public Element NavBarLogo { get; set; }
+        [JsonProperty("navBarColor")]
+        public string NavBarColor { get; set; }
+        [JsonProperty("navBarFontColor")]
+        public string NavBarFontColor { get; set; }
+        [JsonProperty("backgroundColor")]
+        public string BackgroundColor { get; set; }
+        [JsonProperty("fontColor")]
+        public string FontColor { get; set; }
+        [JsonProperty("fontIconStyle")]
+        public string FontIconStyle { get; set; }
+        [JsonProperty("navbarLinks")]
+        public IEnumerable<Link> NavbarLinks { get; set; }
+        [JsonProperty("scripts")]
+        public string[] Scripts { get; set; }
+        [JsonProperty("stylesheets")]
+        public string[] Stylesheets { get; set; }
+        [JsonProperty("pages")]
+        public List<Page> Pages { get; set; } = new List<Page>();
+        [JsonProperty("cyclePages")]
+        public bool CyclePages { get; set; }
+        [JsonProperty("cyclePagesInterval")]
+        public int CyclePagesInterval { get; set; }
+        [JsonProperty("error")]
+        public string Error { get; set; }
+        [JsonProperty("design")]
+        public bool Design { get; set; }
+        [JsonProperty("footer")]
+        public Footer Footer { get; set; }
+        [JsonProperty("navBarLogo")]
+        public Element NavBarLogo { get; set; }
 		[JsonIgnore]
 		public InitialSessionState EndpointInitialSessionState { get; set; }
 		public bool Demo { get; set; }
 		[JsonProperty("geolocation")]
 		public bool GeoLocation { get; set; }
-		public string FilterText { get; set; }
+        [JsonProperty("filterText")]
+        public string FilterText { get; set; }
 		[JsonIgnore]
 		public TimeSpan IdleTimeout { get; set; }
         [JsonProperty("navigation")]

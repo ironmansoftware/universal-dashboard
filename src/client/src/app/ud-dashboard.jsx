@@ -94,6 +94,9 @@ export default class UdDashboard extends React.Component {
         });
 
         connection.on('addElement', (componentId, elements) => {
+
+            if (componentId == null) return;
+
             PubSub.publish(componentId, {
                 type: "addElement",
                 componentId: componentId,
