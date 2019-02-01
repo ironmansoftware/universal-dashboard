@@ -129,7 +129,7 @@ Describe "Input" {
             $Element = Find-SeElement -Id 'SomeOtherItem2' -Driver $Driver
             Send-SeKeys -Element $Element -Keys 'Rules'
 
-            Start-Sleep 1
+            Start-Sleep 3
 
             Find-SeElement -Driver $Driver -Id "btncontent" |  Get-SeElementAttribute -Attribute 'class' | Should be 'btn'
         }
@@ -562,6 +562,6 @@ Describe "Input" {
         }
     }
 
-    Stop-SeDriver $Driver
-    Stop-UDDashboard -Server $Server 
+    #Stop-SeDriver $Driver
+    #Stop-UDDashboard -Server $Server 
 }
