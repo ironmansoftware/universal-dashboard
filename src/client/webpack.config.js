@@ -35,6 +35,7 @@ module.exports = (env) => {
     },
     plugins: [
             new HtmlWebpackPlugin({
+              favicon: path.resolve(SRC_DIR, 'favicon.ico'),
               template: path.resolve(SRC_DIR, 'index.html'),
               chunksSortMode: 'none'
             })
