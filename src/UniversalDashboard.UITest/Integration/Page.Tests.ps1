@@ -128,7 +128,7 @@ Describe "New-UDPage" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Test"
             $TestPageText = (Find-SeElement -Id 'Test-Page' -Driver $Driver).text
             Start-Sleep 3
-            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
+            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/header/nav/a[2]' -Driver $Driver 
             Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
             Start-Sleep 3
             (Find-SeElement -Id 'home-page' -Driver $Driver).text | Should not be $TestPageText
@@ -190,7 +190,7 @@ Describe "New-UDPage" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Home"
             $HomePageText = (Find-SeElement -Id 'home-page' -Driver $Driver).text
             Start-Sleep 3
-            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
+            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/header//nav/a[2]' -Driver $Driver 
             Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
             Start-Sleep 3
             (Find-SeElement -Id 'Test-Page' -Driver $Driver).text | Should not be $HomePageText

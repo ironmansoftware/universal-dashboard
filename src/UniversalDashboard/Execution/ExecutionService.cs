@@ -162,12 +162,7 @@ namespace UniversalDashboard.Execution
                 return json;
             }
 
-            if (!output.Where(m => m != null).Select(m => m.BaseObject).OfType<InputAction>().Any() && !output.Where(m => m != null).Select(m => m.BaseObject).OfType<Component>().Any())
-            {
-                return output.Where(m => m != null).Select(m => m.BaseObject);
-            }
-
-            return FindComponents(output, endpoint.Page);
+            return output.Where(m => m != null).Select(m => m.BaseObject);
         }
 
         private string ReplaceIfNotReplaced(string script, string valueToReplace, string replacementValue)
@@ -182,17 +177,6 @@ namespace UniversalDashboard.Execution
             }
             return script;
         }
-
-        private IEnumerable<object> FindComponents(Collection<PSObject> output, Page page) {
-			var inputActionComponents = output.Select(m => m.BaseObject).OfType<InputAction>().Where(m => m.Type == InputAction.Content).SelectMany(m => m.Components);
-
-            if (inputActionComponents.Any())
-            {
-                return inputActionComponents;
-            }
-
-			return output.Select(m => m.BaseObject).ToArray();
-		}
 
 		private void SetVariables(Runspace runspace, Dictionary<string, object> variables) {
 			foreach (var variable in variables)

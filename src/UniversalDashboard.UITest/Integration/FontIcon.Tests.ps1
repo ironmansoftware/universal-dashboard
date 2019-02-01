@@ -22,6 +22,8 @@ Describe "Font Icons" {
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
+        Start-Sleep 3
+
         it "should have font-family of FontAwesome" {
             ((Find-SeElement -Driver $driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
         }
@@ -42,6 +44,8 @@ Describe "Font Icons" {
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
+        Start-Sleep 3
+
         it "should have font-family of FontAwesome" {
             ((Find-SeElement -Driver $driver -TagName 'style')[-1] | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:FontAwesome" | Should be $true
         }
@@ -60,6 +64,8 @@ Describe "Font Icons" {
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Start-Sleep 3
 
         it "should have font-family of LineAwesome" {
             $font = (Find-SeElement -Driver $driver -TagName 'style' | Get-SeElementAttribute -Attribute 'textContent') -match "font-family:LineAwesome" 

@@ -15,7 +15,22 @@ namespace UniversalDashboard.Utilities
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return null;
+            var hashtable = new Hashtable();
+
+            var propertyName = "";
+            while(reader.Read() && reader.TokenType != JsonToken.EndObject)
+            {
+                if (reader.TokenType == JsonToken.PropertyName)
+                {
+                    propertyName = reader.Value as string;
+                }
+                else
+                {
+                    hashtable.Add(propertyName, reader.Value);
+                }
+            }
+
+            return hashtable;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
