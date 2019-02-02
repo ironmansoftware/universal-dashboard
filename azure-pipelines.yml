@@ -14,3 +14,24 @@ steps:
 - powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration
   displayName: Start Integration Tests
   errorActionPreference: continue
+  
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'NUnit' # Options: JUnit, NUnit, VSTest, xUnit
+    testResultsFiles: '**/*TEST-*.xml' 
+    searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
+    mergeTestResults: true # Optional
+    #testRunTitle: 
+    #buildPlatform: # Optional
+    #buildConfiguration: # Optional
+    publishRunAttachments: true # Optional
+
+- powershell: Compress-Archive -Path .\src\output -DestinationPath $(Build.ArtifactStagingDirectory) -Force
+  displayName: Create Output Zip File
+  errorActionPreference: continue
+
+# Publish Pipeline Artifact
+- task: PublishPipelineArtifact@0
+  inputs:
+    artifactName: 'UniversalDashboard'
+    targetPath: $(Build.ArtifactStagingDirectory)
