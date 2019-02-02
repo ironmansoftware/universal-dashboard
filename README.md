@@ -2,6 +2,7 @@
 
 [Documentation](https://docs.universaldashboard.io) | [Licensing](https://ironmansoftware.com/product/powershell-universal-dashboard/) | [Live Preview](https://poshud.com/) | [YouTube Videos](https://www.youtube.com/playlist?list=PL-0mHH7DlSiSZ4ozleNTUSXNkF6dlySVz) | [Forums](https://forums.universaldashboard.io/) | [Changelog](https://github.com/adamdriscoll/universal-dashboard-documentation/tree/master/updates)
 
+[![Build Status](https://dev.azure.com/ironmansoftware/universal-dashboard/_apis/build/status/ironmansoftware.universal-dashboard?branchName=master)](https://dev.azure.com/ironmansoftware/universal-dashboard/_build/latest?definitionId=1&branchName=master)
 
 Create beautiful websites and dashboards using only PowerShell
 
@@ -33,10 +34,6 @@ Install-Module UniversalDashboard.Community
 - Simple syntax to generate client and server side code
 - Generate REST APIs with only PowerShell
 - Extreme customization 
-
-## Build Status
-
-[![Build status](https://ci.appveyor.com/api/projects/status/ng3ye067j04eblwi?svg=true)](https://ci.appveyor.com/project/adamdriscoll/universal-dashboard)
 
 ## Examples
 
