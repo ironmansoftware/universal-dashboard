@@ -41,4 +41,4 @@ steps:
 - task: PublishPipelineArtifact@0
   inputs:
     artifactName: 'UniversalDashboard.Community'
-    targetPath: $(Build.ArtifactStagingDirectory)/UniversalDashboard.Community.$(Build.BuildId).zip
+    targetPath: $(Build.ArtifactStagingDirectory)
