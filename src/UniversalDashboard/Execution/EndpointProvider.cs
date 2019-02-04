@@ -113,6 +113,13 @@ namespace UniversalDashboard.Execution
                         throw new Exception("Duplicate variable name in URL.");
                 }
 
+                var existingEndpoint = _restEndpoints.FirstOrDefault(m => m.Method == callback.Method && m.Url.Equals(callback.Url, StringComparison.OrdinalIgnoreCase));
+
+                if (existingEndpoint != null)
+                {
+                    _restEndpoints.Remove(existingEndpoint);
+                }
+
                 _restEndpoints.Add(callback);
             }
         }
