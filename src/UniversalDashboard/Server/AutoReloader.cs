@@ -61,7 +61,7 @@ namespace UniversalDashboard
 			{
 				var dashboardInfo = _dashboards.First(m => m.Key.Equals(e.FullPath, StringComparison.OrdinalIgnoreCase)).Value;
 
-				var reloadRequest = WebRequest.CreateHttp($"http://localhost:{dashboardInfo.Port}/api/dashboard/reload");
+				var reloadRequest = WebRequest.CreateHttp($"http://localhost:{dashboardInfo.Port}/api/internal/dashboard/reload");
 				reloadRequest.Headers.Add("x-ud-reload-token", dashboardInfo.ReloadKey);
 				reloadRequest.Method = "GET";
 				var response = reloadRequest.GetResponse();
