@@ -30,12 +30,12 @@ steps:
   inputs:
     rootFolderOrFile: '.\src\output' 
     #includeRootFolder: true 
-    #archiveType: 'zip' # Options: zip, 7z, tar, wim
+    archiveType: 'zip' # Options: zip, 7z, tar, wim
     #tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
     archiveFile: '$(Build.ArtifactStagingDirectory)/UniversalDashboard.Community.$(Build.BuildId).zip' 
-    #replaceExistingArchive: true 
+    replaceExistingArchive: true 
     #verbose: # Optional
-    #quiet: # Optional
+    quiet: true # Optional
 
 # Publish Pipeline Artifact
 - task: PublishPipelineArtifact@0
