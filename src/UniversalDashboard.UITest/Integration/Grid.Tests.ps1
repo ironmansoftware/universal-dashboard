@@ -8,6 +8,64 @@ Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
 Describe "Grid" {
+    Context "Custom Columns" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+
+            $Variable = "Test"
+
+            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+                $data = @(
+                    [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
+                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
+                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDIcon -Icon check -Color Green)}
+                )
+
+                $data | Out-UDGridData 
+            } -Links @(
+                (New-UDLink -Text "Other link" -Url "http://www.google.com")
+            )
+            New-UDElement -Id "Hey" -Tag "div"
+        }
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should click button" {
+            $Button = Find-SeElement -LinkText "HEY" -Driver $Driver 
+            Invoke-SeClick -Element $Button 
+
+            Start-Sleep -Seconds 5
+
+            (Find-SeElement -Id "Hey" -Driver $Driver).Text | should be "Hey"
+        }
+
+
+        It "should have link" {
+            Find-SeElement -LinkText "This is text" -Driver $Driver | Should not be $null
+        }
+
+        It "should have link in footer" {
+            Find-SeElement -LinkText "OTHER LINK" -Driver $Driver | Should not be $null
+        }
+
+        It "should format date correctly" {
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $Element[5].Text | Should BeLike "Dec 2, 2007*"
+        }
+
+        It "should format bool correctly" {
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $Element[7].Text | Should Be 'true'
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
     Context "no data" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
@@ -52,63 +110,6 @@ Describe "Grid" {
         It "should be able to nest new-udelement in grid" {
             $Element = Find-SeElement -Id "nested-element" -Driver $Driver
             $Element.Text.Contains("Stopped") | Should be $true
-        }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
-    }
-
-    Context "Custom Columns" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-
-            $Variable = "Test"
-
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
-                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
-                )
-
-                $data | Out-UDGridData 
-            } -Links @(
-                (New-UDLink -Text "Other link" -Url "http://www.google.com")
-            )
-            New-UDElement -Id "Hey" -Tag "div"
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        It "should click button" {
-            $Button = Find-SeElement -LinkText "HEY" -Driver $Driver 
-            Invoke-SeClick -Element $Button 
-
-            Start-Sleep -Seconds 5
-
-            (Find-SeElement -Id "Hey" -Driver $Driver).Text | should be "Hey"
-        }
-
-
-        It "should have link" {
-            Find-SeElement -LinkText "This is text" -Driver $Driver | Should not be $null
-        }
-
-        It "should have link in footer" {
-            Find-SeElement -LinkText "OTHER LINK" -Driver $Driver | Should not be $null
-        }
-
-        It "should format date correctly" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-            $Element[5].Text | Should BeLike "Dec 2, 2007*"
-        }
-
-        It "should format bool correctly" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-            $Element[7].Text | Should Be 'true'
         }
 
         Stop-SeDriver $Driver

@@ -15,7 +15,7 @@ function strMapToObj(strMap) {
     } 
     if (!strMap.__iterate) return strMap;
 
-    let obj = Object.create(null);
+    let obj = Object.create({});
     for (let [k,v] of strMap) {
         // We don’t escape the key '__proto__'
         // which can cause problems on older engines
