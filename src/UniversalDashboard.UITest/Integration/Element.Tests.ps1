@@ -15,6 +15,41 @@ Describe "Element" {
     $Driver = Start-SeFirefox
     Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
+    Context "SyncUdElement" {
+        Update-UDDashboard -Url "http://localhost:10001" -UpdateToken "TEST" -Content {
+            New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
+                New-UDElement -Tag "div" -Id "item1" -Endpoint { $Cache:Value }
+                New-UDElement -Tag "div" -Id "item2" -Endpoint { $Cache:Value }
+                New-UDElement -Tag "div" -Id "item3" -Endpoint { $Cache:Value }
+                New-UDButton -Id "btnPipeline" -Text "Click Me" -OnClick {
+                    $Cache:Value = "Updated via pipeline"
+                    "item1", "item2", "item3" | Sync-UDElement 
+                }
+
+                New-UDButton -Id "btnParameter" -Text "Click Me" -OnClick {
+                    $Cache:Value = "Updated via parameter"
+                    Sync-UDElement -Id @( "item1", "item2", "item3")
+                }
+            }
+        }
+
+        It "should update via pipeline" {
+            Find-SeElement -Driver $Driver -Id 'btnParameter' | Invoke-SeClick
+            Start-Sleep 1
+            (Find-SeElement -Drive $Driver -Id 'item1').Text | should be "Updated via parameter"
+            (Find-SeElement -Drive $Driver -Id 'item2').Text | should be "Updated via parameter"
+            (Find-SeElement -Drive $Driver -Id 'item3').Text | should be "Updated via parameter"
+        }
+
+        It "should update via parameter" {
+            Find-SeElement -Driver $Driver -Id 'btnPipeline' | Invoke-SeClick
+            Start-Sleep 1
+            (Find-SeElement -Drive $Driver -Id 'item1').Text | should be "Updated via pipeline"
+            (Find-SeElement -Drive $Driver -Id 'item2').Text | should be "Updated via pipeline"
+            (Find-SeElement -Drive $Driver -Id 'item3').Text | should be "Updated via pipeline"
+        }
+    }
+
     Context "ArgumentList" {
         Update-UDDashboard -Url "http://localhost:10001" -UpdateToken "TEST" -Content {
             New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
