@@ -77,7 +77,12 @@ export default class UdModal extends React.Component {
 
         var footer = null;
         if (this.state.footer != null) {
-            footer = this.footer.content.map(x => renderComponent(x));
+            if (this.state.footer.map) {
+                footer = this.state.footer.map(x => renderComponent(x));
+            }
+            else {
+                footer = renderComponent(this.state.footer);
+            }
         }
 
         return (
@@ -86,7 +91,9 @@ export default class UdModal extends React.Component {
                 {header}
                 {content}
               </div>
+              <div class="modal-footer">
               {footer}
+              </div>
             </div>
         )
     }
