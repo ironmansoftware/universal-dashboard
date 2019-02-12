@@ -123,6 +123,10 @@ export default class UdInputField extends React.Component {
         if (this.props.type === 'time') {
             this.setupTimePicker();
         } 
+
+        if (this.props.type === 'select') {
+            $('.select-wrapper').parent().removeClass("col");
+        }
     }
 
     updateTextField() {
