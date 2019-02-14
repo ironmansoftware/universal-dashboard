@@ -429,8 +429,10 @@ namespace UniversalDashboard.Controllers
         [HttpPost]
         [Route("element/sessionState/{requestId}")]
         [Authorize]
-        public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]Element element)
+        public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]JObject jobject)
         {
+            var element = (Element)jobject.ToObject(typeof(Element));
+
             _stateRequestService.Set(requestId, element);
             return Ok();
         }

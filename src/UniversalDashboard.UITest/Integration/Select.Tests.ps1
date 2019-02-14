@@ -20,9 +20,15 @@ Describe "Select" {
             }
 
             New-UDElement -Id "output" -Tag "div" -Content { }
+            New-UDElement -Id "output2" -Tag "div" -Content { }
+
+            New-UDButton -Text "Button" -Id 'btn' -OnClick {
+                $Value = (Get-UDElement -Id 'test').Attributes['value'] 
+                Set-UDElement -Id "output2" -Content { $Value  }
+            }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Design 
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
@@ -33,7 +39,24 @@ Describe "Select" {
             $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 0 -First 1
             Invoke-SeClick -Element $Element
 
+            Start-Sleep 1
+
             (Find-SeElement -Driver $Driver -Id 'output').Text | should be "1"
+        }
+
+        It "should select item and get it with Get-UDElement" {
+            $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Driver | Select-Object -First 1
+            Invoke-SeClick -Element $Element
+            
+            $Element = Find-SeElement -XPath "//ul/li" -Element $Element | Select-Object -Skip 0 -First 1
+            Invoke-SeClick -Element $Element
+
+            Start-Sleep 1
+
+            $Button = Find-SeElement -Driver $Driver -Id 'btn'
+            Invoke-SeClick -Element $Button
+
+            (Find-SeElement -Driver $Driver -Id 'output2').Text | should be "1"
         }
 
        Stop-SeDriver $Driver
