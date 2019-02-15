@@ -54,11 +54,11 @@ namespace UniversalDashboard.Controllers
         }
 
         [Authorize]
-        [Route("page/{*page}")]
+        [Route("page/{*pageName}")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public Page Page()
         {
-            var page = HttpContext.GetRouteValue("page") as string;
+            var page = HttpContext.GetRouteValue("pageName") as string;
 
             Log.Debug($"Index - Page = {page}");
             return _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
