@@ -13,9 +13,9 @@ function New-UDCard {
         [Parameter(ParameterSetName = 'text')]
         [string]$Text,
         [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$BackgroundColor = 'white',
+        [UniversalDashboard.Models.DashboardColor]$BackgroundColor,
         [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$FontColor = 'black',
+        [UniversalDashboard.Models.DashboardColor]$FontColor,
         [Parameter()]
         [UniversalDashboard.Models.Link[]]$Links,
         [Parameter()]
