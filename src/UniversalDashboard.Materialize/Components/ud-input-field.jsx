@@ -1,7 +1,6 @@
 import React from 'react';
 import {Input as RInput, Row, Col, Preloader} from 'react-materialize';
 import {DebounceInput} from 'react-debounce-input';
-import { fetchPost } from './services/fetch-service';
 
 export default class UdInputField extends React.Component {
 
@@ -57,7 +56,7 @@ export default class UdInputField extends React.Component {
 
         this.props.onValidating(field.name);
 
-        fetchPost(`/api/internal/component/input/validate/${field.validationEndpoint}/${field.name}`, e.target.value, function(result) {
+        UniversalDashboard.post(`/api/internal/component/input/validate/${field.validationEndpoint}/${field.name}`, e.target.value, function(result) {
             if (result.error != null) {
 
                 var message = this.props.validationErrorMessage;

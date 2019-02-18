@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
 using System.Reflection;
 using Microsoft.AspNetCore.Routing;
+using UniversalDashboard.Services;
+using System.Text;
 
 namespace UniversalDashboard.Controllers
 {
@@ -68,25 +70,26 @@ namespace UniversalDashboard.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Theme()
 	    {
-            var materializeCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "styles", "materialize.min.css");
             var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "styles", "site.css");
 
-            var css = System.IO.File.ReadAllText(materializeCss);
-            css += System.IO.File.ReadAllText(siteCss);
-            css += _dashboard?.Themes?.FirstOrDefault()?.RenderedContent;
+            var css = new StringBuilder();
+            foreach(var style in AssetService.Instance.Stylesheets) {
+                var stylesheet = System.IO.File.ReadAllText(style);
+                css.AppendLine(stylesheet);
+            }
 
+            css.AppendLine(siteCss);
+            css.AppendLine(_dashboard?.Themes?.FirstOrDefault()?.RenderedContent);
             if (_dashboard?.Navigation != null)
             {
-                css += Environment.NewLine;
-                css += $@"side-nav {{
+                css.AppendLine($@"side-nav {{
                             width: {_dashboard.Navigation.Width}px;
-                        }}";
+                        }}");
             }
 
             if (_dashboard?.Navigation?.Fixed == true)
             {
-                css += Environment.NewLine;
-                css += $@"
+                css.AppendLine($@"
                         header, main, footer {{
                           padding-left: {_dashboard.Navigation.Width}px;
                         }}
@@ -95,12 +98,12 @@ namespace UniversalDashboard.Controllers
                           header, main, footer {{
                             padding-left: 0;
                           }}
-                        }}";
+                        }}");
             }
 
 			return new ContentResult()
             {
-                Content = css,
+                Content = css.ToString(),
                 ContentType = "text/css",
             };
 	    }

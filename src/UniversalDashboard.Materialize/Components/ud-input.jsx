@@ -1,11 +1,8 @@
-import React,{Suspense} from 'react';
+import React from 'react';
 import {Input as RInput, Row, Col, Preloader} from 'react-materialize';
-import {fetchPost} from './services/fetch-service.jsx';
-import renderComponent from './services/render-service.jsx';
 import UdInputField from './ud-input-field.jsx';
-import toaster from './services/toaster';
-
-const UdLinkComponent = React.lazy(() => import('./ud-link.jsx' /* webpackChunkName: "ud-link" */))
+import toaster from '../../client/src/app/services/toaster';
+import UdLink from './ud-link';
 
 export default class Input extends React.Component {
 
@@ -79,7 +76,7 @@ export default class Input extends React.Component {
             loading: true
         })
         
-        fetchPost(`/api/internal/component/input/${this.props.id}`, this.state.fields, res => {
+        UniversalDashboard.post(`/api/internal/component/input/${this.props.id}`, this.state.fields, res => {
                 if (res.error) {
 
                     toaster.error({message: res.error.message})
@@ -163,7 +160,7 @@ export default class Input extends React.Component {
 
         if (this.state.newContent.length > 0) {
             return this.state.newContent.map(function(content) {
-                return renderComponent(content);
+                return UniversalDashboard.renderComponent(content);
             });
         }
 
@@ -174,9 +171,7 @@ export default class Input extends React.Component {
         var actions = null 
         if (this.props.links) {
             var links = this.props.links.map(function(x, i) {
-                return <Suspense fallback={<div>Loading...</div>}>
-                    <UdLinkComponent {...x} key={x.url} />
-                </Suspense>
+                return <UdLink {...x} key={x.url} />
             });
             actions = <div className="card-action">
                 {links}

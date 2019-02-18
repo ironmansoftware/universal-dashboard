@@ -1,11 +1,9 @@
 import React from 'react';
 import {Doughnut, Bar, Line, Area} from 'react-chartjs-2';
-import {fetchGet} from './services/fetch-service.jsx';
 import ReactInterval from 'react-interval';
 import ErrorCard from './error-card.jsx'
 import UdLink from './ud-link.jsx';
 import UdInputField from './ud-input-field.jsx';
-import PubSub from 'pubsub-js';
 
 export default class UdMonitor extends React.Component {
     constructor(props) {
@@ -26,7 +24,7 @@ export default class UdMonitor extends React.Component {
     }
 
     componentWillUnmount() {
-        PubSub.unsubscribe(this.pubSubToken);
+        UniversalDashboard.unsubscribe(this.pubSubToken);
     }
 
     onValueChanged(fieldName, value) {
@@ -60,7 +58,7 @@ export default class UdMonitor extends React.Component {
             queryString = queryString.substr(0, queryString.length - 1);
         }
 
-        fetchGet(`/api/internal/component/element/${this.props.id}${queryString}`,function(data){
+        UniversalDashboard.get(`/api/internal/component/element/${this.props.id}${queryString}`,function(data){
                 if (!this.refs.chart) return;
 
                 if (data.error) {
@@ -101,7 +99,7 @@ export default class UdMonitor extends React.Component {
 
     componentWillMount() {
         this.loadData();
-        this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+        this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
     }
     
     renderArea(data, options) {

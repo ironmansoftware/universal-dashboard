@@ -1,6 +1,5 @@
 import React from 'react';
 import {Treebeard, decorators} from 'react-treebeard';
-import {fetchPost} from './services/fetch-service';
 
 
 export default class UDTreeView extends React.Component {
@@ -14,7 +13,7 @@ export default class UDTreeView extends React.Component {
 
     onToggle(node, toggled)
     {
-        fetchPost('/api/internal/component/element/' + this.props.id, { nodeId: node.id}, function(data) {
+        UniversalDashboard.post('/api/internal/component/element/' + this.props.id, { nodeId: node.id}, function(data) {
             node.children = data;
             if(this.state.cursor){this.state.cursor.active = false;}
             

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class TabContainer extends React.Component {
+export default class TabContainer extends React.Component {
 
     componentDidMount() {
         $('ul.tabs').tabs();
@@ -48,4 +48,3 @@ class TabContainer extends React.Component {
     }
 }
 
-UniversalDashboard.register("tab-container", TabContainer);

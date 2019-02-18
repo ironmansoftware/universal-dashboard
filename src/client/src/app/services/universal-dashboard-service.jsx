@@ -1,7 +1,10 @@
 import React from 'react';
 import { fetchGet, fetchPost } from './fetch-service.jsx';
-import { internalRenderComponent } from './render-service.jsx';
-import LazyElement from './../basics/lazy-element.jsx';
+import LazyElement from '../lazy-element.jsx';
+
+import UdHtml from './../ud-html.jsx';
+import UdElement from './../ud-element.jsx';
+import UdTerminal from './../ud-terminal.jsx';
 
 export const UniversalDashboardService = {
     components: [],
@@ -39,3 +42,7 @@ export const UniversalDashboardService = {
         return internalRenderComponent(component, history);
     }
 }
+
+UniversalDashboardService.Register('html', UdHtml);
+UniversalDashboardService.Register('element', UdElement);
+UniversalDashboardService.Register('terminal', UdTerminal);

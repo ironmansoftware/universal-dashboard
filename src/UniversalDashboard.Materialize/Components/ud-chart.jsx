@@ -1,13 +1,10 @@
-import React,{Suspense} from 'react';
+import React from 'react';
 import {Row, Col} from 'react-materialize';
 import {Doughnut, Bar, Line, Polar, Radar, Pie, HorizontalBar} from 'react-chartjs-2';
-import {fetchGet} from './services/fetch-service.jsx';
 import ReactInterval from 'react-interval';
-import UdInputField from './ud-input-field.jsx';
-import PubSub from 'pubsub-js';
-
-const UdLinkComponent = React.lazy(() => import('./ud-link.jsx' /* webpackChunkName: "ud-link" */))
-const UdErrorCardComponent = React.lazy(() => import('./error-card.jsx' /* webpackChunkName: "ud-error-card" */))
+import UdInputField from './ud-input-field';
+import UdLink from './ud-link';
+import ErrorCard from './error-card';
 
 export default class UdChart extends React.Component {
     constructor(props) {
@@ -42,7 +39,7 @@ export default class UdChart extends React.Component {
     }
 
     componentWillUnmount() {
-        PubSub.unsubscribe(this.pubSubToken);
+        UniversalDashboard.unsubscribe(this.pubSubToken);
     }
 
     onValueChanged(fieldName, value) {
@@ -76,7 +73,7 @@ export default class UdChart extends React.Component {
             queryString = queryString.substr(0, queryString.length - 1);
         }
 
-        fetchGet(`/api/internal/component/element/${this.props.id}${queryString}`, function(json){
+        UniversalDashboard.get(`/api/internal/component/element/${this.props.id}${queryString}`, function(json){
                 if (json.error) {
                     this.setState({
                         hasError: true, 
@@ -92,7 +89,7 @@ export default class UdChart extends React.Component {
 
     componentWillMount() {
         this.loadData();
-        this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+        this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
     }
     
     renderArea() {
@@ -126,9 +123,8 @@ export default class UdChart extends React.Component {
     render() {
         if (this.state.hasError) {
             return [
-                <Suspense fallback={<div>Loading...</div>}>
-                    <UdErrorCardComponent message={this.state.errorMessage} key={this.props.id} id={this.props.id} title={this.props.title}/>, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
-                </Suspense>
+                    <ErrorCard message={this.state.errorMessage} key={this.props.id} id={this.props.id} title={this.props.title}/>, 
+                    <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
                 ]
         }
 
@@ -171,9 +167,8 @@ export default class UdChart extends React.Component {
         }
         else if(this.props.width === null && this.props.height !== null){
             return [
-                <Suspense fallback={<div>Loading...</div>}>
-                    <UdErrorCardComponent message={'Width property is missing'} key={this.props.id} id={this.props.id} title={this.props.title}/>, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
-                </Suspense>
+                <ErrorCard message={'Width property is missing'} key={this.props.id} id={this.props.id} title={this.props.title}/>, 
+                <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
             ]
 
         }
@@ -221,9 +216,7 @@ export default class UdChart extends React.Component {
         var actions = null 
         if (this.props.links) {
             var links = this.props.links.map(function(x, i) {
-                return <Suspense fallback={<div>Loading...</div>}>
-                    <UdLinkComponent {...x} key={x.url} />
-                </Suspense>
+                return <UdLink {...x} key={x.url} />
             })
             actions = <div className="card-action">
                 {links}

@@ -11,6 +11,9 @@ foreach($item in $items)
     $AssetIds[$item] = [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($FilePath.FullName)
 }
 
+$Styles = Get-ChildItem  "$PSScriptRoot\*.css"
+[UniversalDashboard.Services.AssetService]::Instance.RegisterStylesheet($Styles.FullName) | Out-Null
+
 function New-UDTabContainer {
     param(
         [Parameter(Mandatory, ParameterSetName = "Static")]

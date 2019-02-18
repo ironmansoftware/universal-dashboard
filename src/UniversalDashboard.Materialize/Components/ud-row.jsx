@@ -1,12 +1,8 @@
 import React from 'react';
-import {Col} from 'react-materialize';
-import renderComponent from './services/render-service.jsx';
-import ErrorCard from './error-card.jsx';
+import ErrorCard from './error-card.jsx/index.js';
 import ReactInterval from 'react-interval';
-import {fetchGet} from './services/fetch-service.jsx';
-import PubSub from 'pubsub-js';
 
-export default class UdColumn extends React.Component {
+export default class UdRow extends React.Component {
 
     constructor(props) {
         super(props);
@@ -14,8 +10,12 @@ export default class UdColumn extends React.Component {
         this.state = {
             hasError: false,
             errorMessage: "",
-            components: props.components
+            columns: props.columns
         }
+    }
+    
+    componentWillMount() {
+        UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
     }
 
     onIncomingEvent(eventName, event) {
@@ -23,13 +23,9 @@ export default class UdColumn extends React.Component {
             this.loadData();
         }
     }
-
-    componentWillUnmount() {
-        PubSub.unsubscribe(this.pubSubToken);
-    }
-
+    
     loadData(){
-        fetchGet(`/api/internal/component/element/${this.props.id}`,function(data){
+        UniversalDashboard.get(`/api/internal/component/element/${this.props.id}`,function(data){
                 if (data.error) {
                     this.setState({
                         hasError: true, 
@@ -39,21 +35,21 @@ export default class UdColumn extends React.Component {
                 }
 
                 this.setState({
-                    components: data
+                    columns: data
                 })
             }.bind(this));
     }
 
     componentWillMount() {
-        if (!this.state.components || this.state.components.length == 0) {
+        if (!this.state.columns) {
             this.loadData();
-            this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+            this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
         }
     }
 
     componentDidCatch(error, info) {
         this.setState({ hasError: true, errorMessage: error.message });
-      }
+    }
 
     render() {
         if (this.state.hasError) {
@@ -64,17 +60,17 @@ export default class UdColumn extends React.Component {
             return <ErrorCard message={this.props.error.message} />
         }
 
-        if (this.state.components == null) {
+        if (this.state.columns == null) {
             return <div/>
         }
 
-        var components = this.state.components.map(function(comp) {
-            return renderComponent(comp, this.props.history);
-        }.bind(this))
+        var children = this.state.columns.map(function(x, i) {
+            return UniversalDashboard.renderComponent(x, this.props.history);
+        }.bind(this));
 
-        return <Col s={12} l={this.props.size} key={this.props.id} className="ud-column">
-                    {components}
+        return <div key={this.props.id} className="row ud-row">
+                    {children}
                     <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
-                </Col>;
+                </div>;
     }
 }

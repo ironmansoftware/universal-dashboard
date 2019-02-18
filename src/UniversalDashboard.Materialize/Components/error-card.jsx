@@ -1,6 +1,6 @@
 import React from 'react';
 import {Card, Row, Col} from 'react-materialize';
-import UdIcon from './ud-icon.jsx';
+import UdIcon from './ud-icon';
 
 export default class ErrorCard extends React.Component {
     render() {

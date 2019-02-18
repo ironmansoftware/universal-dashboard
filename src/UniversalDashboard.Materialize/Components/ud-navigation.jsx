@@ -1,7 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import UdIcon from './ud-icon.jsx';
-import { fetchGet } from './services/fetch-service.jsx';
 
 export default class UdNavigation extends React.Component {
 
@@ -16,7 +15,7 @@ export default class UdNavigation extends React.Component {
 
     componentWillMount() {
         if (this.props.customNavigation && this.props.content === null) {
-            fetchGet(`/api/internal/component/element/${this.props.id}`, function(data) {
+            UniversalDashboard.get(`/api/internal/component/element/${this.props.id}`, function(data) {
                 this.setState({
                     content: data
                 })
@@ -62,7 +61,7 @@ export default class UdNavigation extends React.Component {
         if (item.hasCallback) {
             e.preventDefault(); 
 
-            PubSub.publish('element-event', {
+            UniversalDashboard.publish('element-event', {
                 type: "clientEvent",
                 eventId: item.id,
                 eventName: 'onClick'

@@ -58,6 +58,14 @@ namespace UniversalDashboard.Services
             }
         }
 
+        public IEnumerable<string> Stylesheets 
+        {
+            get 
+            {
+                return _styleSheets.Values;
+            }
+        }
+
         public void ClearRegistration()
         {
             _scripts.Clear();

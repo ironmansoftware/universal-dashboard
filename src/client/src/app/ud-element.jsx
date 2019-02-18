@@ -1,10 +1,6 @@
 import React from 'react';
-import renderComponent from './services/render-service.jsx';
-import PubSub from 'pubsub-js';
-import {fetchGet, fetchPost} from './services/fetch-service.jsx';
 import {getApiPath} from 'config';
 import ReactInterval from 'react-interval';
-import ErrorCard from './error-card.jsx';
 
 export default class UdElement extends React.Component {
     constructor() {
@@ -29,7 +25,7 @@ export default class UdElement extends React.Component {
 
     componentWillMount() {
         if (!this.isGuid(this.props.id)) {
-            this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+            this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
         }
     }
 
@@ -43,14 +39,13 @@ export default class UdElement extends React.Component {
 
     componentDidUpdate() {
         if (this.state.hidden && this.pubSubToken != null) {
-            PubSub.unsubscribe(this.pubSubToken);
+            UniversalDashboard.unsubscribe(this.pubSubToken);
         }
     }
 
     componentWillUnmount() {
         if (this.pubSubToken != null) {
-            console.log(this.pubSubToken);
-            PubSub.unsubscribe(this.pubSubToken);
+            UniversalDashboard.unsubscribe(this.pubSubToken);
         }
     }
 
@@ -79,7 +74,7 @@ class UDElementContent extends React.Component {
 
     loadData()
     { 
-        fetchGet("/api/internal/component/element/" + this.props.id, function(data) {
+        UniversalDashboard.get("/api/internal/component/element/" + this.props.id, function(data) {
             if (data.error) {
                 this.setState({
                     hasError: true, 
@@ -100,7 +95,7 @@ class UDElementContent extends React.Component {
     }
 
     componentWillMount() {
-        this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+        this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
         if (this.props.hasCallback) {
             this.loadData();
         }
@@ -166,7 +161,7 @@ class UDElementContent extends React.Component {
 
                 var event = this.state.events[i];
 
-                PubSub.publish('element-event', {
+                UniversalDashboard.publish('element-event', {
                     type: "clientEvent",
                     eventId: event.id,
                     eventName: 'onChange',
@@ -180,7 +175,7 @@ class UDElementContent extends React.Component {
         if (!this.props.preventUnregister) {
             if (this.state.events != null) {
                 for(var i = 0; i < this.state.events.length; i++) {
-                    PubSub.publish('element-event', {
+                    UniversalDashboard.publish('element-event', {
                         type: "unregisterEvent",
                         eventId: this.state.events[i].id
                     });
@@ -188,14 +183,14 @@ class UDElementContent extends React.Component {
             }
     
             if (this.props.hasCallback) {
-                PubSub.publish('element-event', {
+                UniversalDashboard.publish('element-event', {
                     type: "unregisterEvent",
                     eventId: this.props.id
                 });
             }
         }
 
-        PubSub.unsubscribe(this.pubSubToken);
+        UniversalDashboard.unsubscribe(this.pubSubToken);
     }
 
     onIncomingEvent(eventName, event) {
@@ -203,7 +198,7 @@ class UDElementContent extends React.Component {
             this.setState(event.state);
         }
         else if (event.type === "requestState") {
-            fetchPost(`/api/internal/component/element/sessionState/${event.requestId}`, this.state);
+            UniversalDashboard.post(`/api/internal/component/element/sessionState/${event.requestId}`, this.state);
         } else if (event.type === "removeElement") {
             this.setState({
                 hidden: true
@@ -266,7 +261,7 @@ class UDElementContent extends React.Component {
         this.state.attributes.value = val;
         this.setState(this.state);
 
-        PubSub.publish('element-event', {
+        UniversalDashboard.publish('element-event', {
             type: "clientEvent",
             eventId: event.id,
             eventName: eventName,
@@ -280,11 +275,17 @@ class UDElementContent extends React.Component {
         }
 
         if (this.state.hasError) {
-            return <ErrorCard message={this.state.errorMessage} />
+            return UniversalDashboard.renderComponent({
+                type: "error",
+                message : this.state.errorMessage
+            });
         }
 
         if (this.props.error) {
-            return <ErrorCard message={this.props.error.message} />
+            return UniversalDashboard.renderComponent({
+                type: "error",
+                message : this.props.error.message
+            });
         }
 
         if (this.state.loading) {
@@ -292,7 +293,7 @@ class UDElementContent extends React.Component {
         }
 
         if (this.props.js) {
-            return renderComponent({
+            return UniversalDashboard.renderComponent({
                 type: this.props.componentName,
                 ...this.props.props
             }, this.props.history)
@@ -303,7 +304,7 @@ class UDElementContent extends React.Component {
         if (this.state.content && this.state.content.map) {
             children = this.state.content.map(function(x) {
                 if (x.type != null) {
-                    return renderComponent(x, this.props.history);
+                    return UniversalDashboard.renderComponent(x, this.props.history);
                 } 
                 return x;
             }.bind(this));

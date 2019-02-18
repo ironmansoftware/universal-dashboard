@@ -1,12 +1,10 @@
 import React from 'react';
 import UdIcon from './ud-icon.jsx';
 var numeral = require("numeral");
-import {fetchGet} from './services/fetch-service.jsx';
 import ReactInterval from 'react-interval';
 import ErrorCard from './error-card.jsx';
 import UdLink from './ud-link.jsx';
-import TextSize from './basics/text-size.jsx';
-import PubSub from 'pubsub-js';
+import TextSize from './text-size.jsx';
 
 export default class UdCounter extends React.Component {
     constructor() {
@@ -24,7 +22,7 @@ export default class UdCounter extends React.Component {
             return;
         }
 
-        fetchGet(`/api/internal/component/element/${this.props.id}`,function(json){
+        UniversalDashboard.get(`/api/internal/component/element/${this.props.id}`,function(json){
             if (json.error) {
                 this.setState({
                     hasError: true, 
@@ -41,7 +39,7 @@ export default class UdCounter extends React.Component {
 
     componentWillMount() {
         this.loadData();
-        this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+        this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
     }
 
     onIncomingEvent(eventName, event) {
@@ -51,7 +49,7 @@ export default class UdCounter extends React.Component {
     }
 
     componentWillUnmount() {
-        PubSub.unsubscribe(this.pubSubToken);
+        UniversalDashboard.unsubscribe(this.pubSubToken);
     }
 
     componentDidUpdate(prevProps) {

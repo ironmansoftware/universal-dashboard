@@ -1,7 +1,6 @@
 import React from 'react';
 import {Carousel} from "react-materialize";
 import $ from "jquery";
-import PubSub from 'pubsub-js';
 
 
 export default class UdImageCarousel extends React.Component {
@@ -16,7 +15,7 @@ export default class UdImageCarousel extends React.Component {
     }
 
     componentWillMount() {
-        this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+        this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
     }
 
     onIncomingEvent(eventName, event) {

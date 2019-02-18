@@ -1,5 +1,4 @@
 import React from 'react';
-import renderComponent from './services/render-service';
 
 export default class UdModal extends React.Component {
     constructor(props) {
@@ -19,8 +18,8 @@ export default class UdModal extends React.Component {
     }
 
     componentDidMount() {
-        this.openToken = PubSub.subscribe('modal.open', this.onOpen.bind(this));
-        this.closeToken = PubSub.subscribe('modal.close', this.onClose.bind(this));
+        this.openToken = UniversalDashboard.subscribe('modal.open', this.onOpen.bind(this));
+        this.closeToken = UniversalDashboard.subscribe('modal.close', this.onClose.bind(this));
     }
 
     componentDidUpdate() {
@@ -48,11 +47,11 @@ export default class UdModal extends React.Component {
 
     componentWillUnmount() {
         if (this.openToken != null) {
-            PubSub.unsubscribe(this.openToken);
+            UniversalDashboard.unsubscribe(this.openToken);
         }
 
         if (this.closeToken != null) {
-            PubSub.unsubscribe(this.closeToken);
+            UniversalDashboard.unsubscribe(this.closeToken);
         }
     }
 
@@ -67,21 +66,21 @@ export default class UdModal extends React.Component {
 
         var header = null;
         if (this.state.header != null) {
-            header = this.state.header.map(x => renderComponent(x));
+            header = this.state.header.map(x => UniversalDashboard.renderComponent(x));
         }
 
         var content = null;
         if (this.state.content != null) {
-            content = this.state.content.map(x => renderComponent(x));
+            content = this.state.content.map(x => UniversalDashboard.renderComponent(x));
         }
 
         var footer = null;
         if (this.state.footer != null) {
             if (this.state.footer.map) {
-                footer = this.state.footer.map(x => renderComponent(x));
+                footer = this.state.footer.map(x => UniversalDashboard.renderComponent(x));
             }
             else {
-                footer = renderComponent(this.state.footer);
+                footer = UniversalDashboard.renderComponent(this.state.footer);
             }
         }
 

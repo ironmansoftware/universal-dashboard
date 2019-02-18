@@ -1,12 +1,11 @@
 import React from 'react';
 import UdNavigation from './ud-navigation.jsx';
 import UdLink from './ud-link.jsx';
-import {fetchGet} from './services/fetch-service.jsx';
 
 export default class UdNavbar extends React.Component {
 
     signOut() {
-        fetchGet("/api/internal/signout", function() {
+        UniversalDashboard.get("/api/internal/signout", function() {
             this.props.history.push("/login");
         }.bind(this));
     }

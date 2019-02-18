@@ -11,8 +11,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "jquery": "^3.3.1",
     "materialize-css": "0.100.2",
-    "react": "16.6.0"
+    "react": "16.6.0",
+    "react-chartjs-2": "^2.7.4",
+    "react-debounce-input": "^3.2.0",
+    "react-interval": "^2.0.2",
+    "react-materialize": "^2.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

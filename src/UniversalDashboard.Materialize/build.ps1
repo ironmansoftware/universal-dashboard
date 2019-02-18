@@ -19,6 +19,7 @@ npm install
 npm run build
 
 Copy-Item $BuildFolder\public\*.bundle.js $OutputPath
+Copy-Item $BuildFolder\Styles\*.css $OutputPath
 Copy-Item $BuildFolder\UniversalDashboard.Materialize.psm1 $OutputPath
 
 $Version = "1.0.0"

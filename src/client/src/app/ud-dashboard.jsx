@@ -1,4 +1,4 @@
-import React,{Suspense} from 'react';
+import React from 'react';
 
 import {
     Route,
@@ -7,16 +7,10 @@ import {
 } from 'react-router-dom'
 import {getApiPath} from 'config';
 import UdPage from './ud-page.jsx';
-import UdNavbar from './ud-navbar.jsx';
-import UdFooter from './ud-footer.jsx';
-import {fetchGet} from './services/fetch-service.jsx';
-import PubSub from 'pubsub-js';
-import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
-const UdLoadingComponent = React.lazy(() => import('./ud-loading.jsx' /* webpackChunkName: "ud-loading" */))
-const UdPageCyclerComponent = React.lazy(() => import('./page-cycler.jsx' /* webpackChunkName: "ud-page-cycler" */))
-const UdModalComponent = React.lazy(() => import('./ud-modal.jsx' /* webpackChunkName: "ud-modal" */))
-const UdErrorCardComponent = React.lazy(() => import('./error-card.jsx' /* webpackChunkName: "ud-error-card" */))
+import {fetchGet} from './services/fetch-service.jsx';
+import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import UdPageCycler  from './page-cycler';
 
 import toaster from './services/toaster';
 import UDDesigner from './ud-designer';
@@ -51,7 +45,7 @@ export default class UdDashboard extends React.Component {
         });
         
         connection.on('setState', (componentId, state) => {
-            PubSub.publish(componentId, {
+            UniversalDashboard.publish(componentId, {
                 type: "setState",
                 state: state
             });
@@ -66,28 +60,28 @@ export default class UdDashboard extends React.Component {
         });
 
         connection.on('requestState', (componentId, requestId) => {
-            PubSub.publish(componentId, {
+            UniversalDashboard.publish(componentId, {
                 type: "requestState",
                 requestId: requestId
             });
         });
 
         connection.on('removeElement', (componentId) => {
-            PubSub.publish(componentId, {
+            UniversalDashboard.publish(componentId, {
                 type: "removeElement",
                 componentId: componentId
             });
         });
 
         connection.on('clearElement', (componentId) => {
-            PubSub.publish(componentId, {
+            UniversalDashboard.publish(componentId, {
                 type: "clearElement",
                 componentId: componentId
             });
         });
 
         connection.on('syncElement', (componentId) => {
-            PubSub.publish(componentId, {
+            UniversalDashboard.publish(componentId, {
                 type: "syncElement",
                 componentId: componentId
             });
@@ -97,7 +91,7 @@ export default class UdDashboard extends React.Component {
 
             if (componentId == null) return;
 
-            PubSub.publish(componentId, {
+            UniversalDashboard.publish(componentId, {
                 type: "addElement",
                 componentId: componentId,
                 elements: elements
@@ -105,11 +99,11 @@ export default class UdDashboard extends React.Component {
         });
 
         connection.on('showModal', (props) => {
-            PubSub.publish("modal.open", props);
+            UniversalDashboard.publish("modal.open", props);
         });
 
         connection.on('closeModal', () => {
-            PubSub.publish("modal.close", {});
+            UniversalDashboard.publish("modal.close", {});
         });
 
         connection.on('redirect', (url, newWindow) => {
@@ -121,7 +115,7 @@ export default class UdDashboard extends React.Component {
             }
         });
 
-        PubSub.subscribe('element-event', function(e, data) {
+        UniversalDashboard.subscribe('element-event', function(e, data) {
             if (data.type === "requestStateResponse") {
                 connection.invoke("requestStateResponse", data.requestId, data.state)
             }
@@ -157,7 +151,7 @@ export default class UdDashboard extends React.Component {
         var events = JSON.parse(json);
 
         events.map(function(event) {
-            PubSub.publish(event.id, event);
+            UniversalDashboard.publish(event.id, event);
         })
     }
 
@@ -194,12 +188,6 @@ export default class UdDashboard extends React.Component {
 
             document.title = dashboard.title;
 
-            if(dashboard.fontIconStyle == 'FontAwesome'){
-                import("font-awesome/css/font-awesome.min.css" /* webpackChunkName: "font-awesome" */);
-            }else {
-                import("line-awesome/css/line-awesome.min.css" /* webpackChunkName: "line-awesome" */);
-            }
-            
             if (dashboard.stylesheets)
                 dashboard.stylesheets.map(this.loadStylesheet.bind(this));
 
@@ -273,9 +261,10 @@ export default class UdDashboard extends React.Component {
             return <Redirect to={defaultHomePage.url}/>
         }
         else if (defaultHomePage.name == null) {
-            return <Suspense fallback={<div></div>}>
-                        <UdErrorCardComponent message="Your first page needs to be a static page or a dynamic page without a variable in the URL." />
-                    </Suspense>
+            return UniversalDashboard.renderComponent({
+                type: 'error',
+                message: 'Your first page needs to be a static page or a dynamic page without a variable in the URL.'
+            }) 
         }
         else {
             return <Redirect to={window.baseUrl + `/${defaultHomePage.name.replace(/ /g,"-")}`}/>
@@ -284,15 +273,17 @@ export default class UdDashboard extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return <Suspense fallback={<div></div>}>
-                        <UdErrorCardComponent message={this.state.error.message} location={this.state.error.stackTrace} />
-                    </Suspense>
+            return UniversalDashboard.renderComponent({
+                type: 'error',
+                message: this.state.error.message,
+                location: this.state.error.stackTrace
+            }) 
         }
 
         if (this.state.loading) {
-            return <Suspense fallback={<div></div>}>
-                        <UdLoadingComponent />
-                    </Suspense>
+            return UniversalDashboard.renderComponent({
+                type: 'loading'
+            })
         }
 
         var dynamicPages = this.state.dashboard.pages.map(function(x) {
@@ -315,21 +306,33 @@ export default class UdDashboard extends React.Component {
             )} />
         })
 
+        var modal = UniversalDashboard.renderComponent({ type:'modal' });
+
+        var navbar = UniversalDashboard.renderComponent({ 
+            type:'navbar',
+            backgroundColor : this.state.dashboard.navBarColor,
+            fontColor : this.state.dashboard.navBarFontColor,
+            text : this.state.dashboard.title,
+            link: this.state.dashboard.navbarLinks,
+            logo: this.state.dashboard.navBarLogo,
+            pages: this.state.dashboard.pages,
+            togglePaused: this.togglePausePageCycle.bind(this), 
+            showPauseToggle: this.state.dashboard.cyclePages,
+            history: this.props.history,
+            authenticated: this.state.authenticated,
+            navigation: this.state.dashboard.navigation,
+         });
+
+         var footer = UniversalDashboard.renderComponent({
+            type: 'footer',
+            backgroundColor: this.state.dashboard.navBarColor,
+            fontColor: this.state.dashboard.navBarFontColor,
+            footer: this.state.dashboard.footer,
+            demo: this.state.dashboard.demo
+         })
+
         return [
-                <header>
-                    <UdNavbar backgroundColor={this.state.dashboard.navBarColor} 
-                            fontColor={this.state.dashboard.navBarFontColor} 
-                            text={this.state.dashboard.title} 
-                            links={this.state.dashboard.navbarLinks}
-                            logo={this.state.dashboard.navBarLogo}
-                            pages={this.state.dashboard.pages}
-                            togglePaused={this.togglePausePageCycle.bind(this)} 
-                            showPauseToggle={this.state.dashboard.cyclePages}
-                            history={this.props.history}
-                            authenticated={this.state.authenticated}
-                            navigation={this.state.dashboard.navigation}
-                            />
-                </header>,
+                <header>{navbar}</header>,
                 <main style={{background: this.state.dashboard.backgroundColor, color: this.state.dashboard.fontColor}}>
                     <Switch>
                         {staticPages}
@@ -337,14 +340,10 @@ export default class UdDashboard extends React.Component {
                         <Route exact path="/" render={this.redirectToHomePage.bind(this)} />
                     </Switch>
                 </main>,
-                <Suspense fallback={<div></div>}>
-                    <UdModalComponent />
-                </Suspense>,
-                <UdFooter backgroundColor={this.state.dashboard.navBarColor} fontColor={this.state.dashboard.navBarFontColor} footer={this.state.dashboard.footer} demo={this.state.dashboard.demo} />,
+                modal,
+                footer,
                 <Route path="/" render={function (x) {
-                    return <Suspense fallback={<div></div>}>
-                        <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />
-                    </Suspense>
+                    return <UdPageCycler history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />
                     }.bind(this)}/>,
                 this.state.design ? <UDDesigner/> : <span/>
                 ]

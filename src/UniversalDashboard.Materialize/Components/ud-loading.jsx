@@ -1,7 +1,5 @@
 import React from 'react';
 import {Row, Col} from 'react-materialize';
-import {getApiPath,getWsApiPath} from 'config';
-import {fetchGet} from './services/fetch-service.jsx';
 
 export default class Loading extends React.Component {
 
@@ -36,7 +34,7 @@ export default class Loading extends React.Component {
     }
 
     loadData() {        
-        fetchGet("/api/internal/dashboard/loadingoptions", function(json){
+        UniversalDashboard.get("/api/internal/dashboard/loadingoptions", function(json){
             if(this.state.cancelData){
                 return;
             }

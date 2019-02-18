@@ -1,7 +1,4 @@
 import React from 'react';
-import renderComponent from './services/render-service';
-import ErrorCard from './error-card.jsx';
-import {fetchGet} from './services/fetch-service.jsx';
 import ReactInterval from 'react-interval';
 
 export default class UdPage extends React.Component {
@@ -33,7 +30,7 @@ export default class UdPage extends React.Component {
     }
 
     loadStaticPage() {
-        fetchGet(`/api/internal/dashboard/page/${this.props.name}`, function(json){
+        UniversalDashboard.get(`/api/internal/dashboard/page/${this.props.name}`, function(json){
             if (json.error) {
                 this.setState({
                     errorMessage: json.error.message,
@@ -67,7 +64,7 @@ export default class UdPage extends React.Component {
             .map(k => esc(k) + '=' + esc(queryParams[k]))
             .join('&');
     
-        fetchGet(`/api/internal/component/element/${this.props.id}?${query}`, function(json){
+        UniversalDashboard.get(`/api/internal/component/element/${this.props.id}?${query}`, function(json){
             if (json.error) {
                 this.setState({
                     errorMessage: json.error.message,
@@ -85,16 +82,24 @@ export default class UdPage extends React.Component {
 
     render() {
         if (this.state.hasError) {
-            return <ErrorCard message={this.state.errorMessage} id={this.props.id} title={"An error occurred on this page"}/>
+            return UniversalDashboard.renderComponent({
+                type: 'error',
+                message: this.state.errorMessage,
+                title: 'An error occurred on this page',
+                id: this.props.id
+            })
         }
 
         if (!this.state.components || !this.state.components.map) {
             var parameterName = this.props.dynamic ? "Endpoint" : "Content";
-            return <ErrorCard message={`There was an error with your ${parameterName} for this page. You need to return at least one component from the ${parameterName}.`} />
+            return UniversalDashboard.renderComponent({
+                type: 'error',
+                message: `There was an error with your ${parameterName} for this page. You need to return at least one component from the ${parameterName}.`
+            })
         } 
 
         var childComponents = this.state.components.map(function(x) {
-            return renderComponent(x, this.props.history);
+            return UniversalDashboard.renderComponent(x, this.props.history);
         }.bind(this));
 
         return <div>{childComponents}

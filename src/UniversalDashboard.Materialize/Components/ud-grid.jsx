@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactInterval from 'react-interval';
 import Griddle, { RowDefinition, ColumnDefinition, plugins } from 'griddle-react';
-import {fetchGet} from './services/fetch-service.jsx';
 import ErrorCard from './error-card.jsx';
 import UdLink from './ud-link.jsx';
-import CustomCell from './basics/custom-cell.jsx';
+import CustomCell from './custom-cell.jsx';
 import {DebounceInput} from 'react-debounce-input';
-import PubSub from 'pubsub-js';
 
 function strMapToObj(strMap) {
     if (strMap == undefined) return null;
@@ -60,14 +58,14 @@ export default class UdGrid extends React.Component {
                 var property = x[propertyName];
                 if (property.type === "element") {
                     for(var i = 0; i < property.events.length; i++) {
-                        PubSub.publish('element-event', {
+                        UniversalDashboard.publish('element-event', {
                             type: "unregisterEvent",
                             eventId: property.events[i].id
                         });
                     }
     
                     if (property.hasCallback) {
-                        PubSub.publish('element-event', {
+                        UniversalDashboard.publish('element-event', {
                             type: "unregisterEvent",
                             eventId: property.id
                         });
@@ -76,7 +74,7 @@ export default class UdGrid extends React.Component {
             }
         });
 
-        PubSub.unsubscribe(this.pubSubToken);
+        UniversalDashboard.unsubscribe(this.pubSubToken);
     }
 
 
@@ -88,7 +86,7 @@ export default class UdGrid extends React.Component {
     loadData(page, pageSize, sortColumn, sortAscending, filterText) {
         var skip = (page - 1) * pageSize;
 
-        fetchGet(`/api/internal/component/datatable/${this.props.id}?start=${skip}&length=${pageSize}&sortColumn=${sortColumn}&sortAscending=${sortAscending}&filterText=${filterText}`, function(json){
+        UniversalDashboard.get(`/api/internal/component/datatable/${this.props.id}?start=${skip}&length=${pageSize}&sortColumn=${sortColumn}&sortAscending=${sortAscending}&filterText=${filterText}`, function(json){
             if (json.error) {
                 this.setState({
                     hasError: true,
@@ -160,7 +158,7 @@ export default class UdGrid extends React.Component {
     componentWillMount() {
         const { currentPage, pageSize, sortColumn, sortAscending, filterText } = this.state;
         this.loadData(currentPage, pageSize, sortColumn, sortAscending, filterText);
-        this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+        this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
     }
 
     render() {
