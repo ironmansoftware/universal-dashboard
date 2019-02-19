@@ -262,7 +262,7 @@ namespace UniversalDashboard.Controllers
         [HttpPost]
         [Route("input/validate/{fieldId}/{fieldName}")]
         [Authorize]
-        public IActionResult ValidateField([FromRoute]string fieldId, [FromRoute]string fieldName, [FromBody]object value)
+        public IActionResult ValidateField([FromRoute]string fieldId, [FromRoute]string fieldName, [FromBody]string value)
         {
             Log.Debug($"Validate Field - id = {fieldId}, value = {value}");
 
