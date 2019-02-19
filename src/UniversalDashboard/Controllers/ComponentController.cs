@@ -262,7 +262,7 @@ namespace UniversalDashboard.Controllers
         [HttpPost]
         [Route("input/validate/{fieldId}/{fieldName}")]
         [Authorize]
-        public IActionResult ValidateField([FromRoute]string fieldId, [FromRoute]string fieldName, [FromBody]object value)
+        public IActionResult ValidateField([FromRoute]string fieldId, [FromRoute]string fieldName, [FromBody]string value)
         {
             Log.Debug($"Validate Field - id = {fieldId}, value = {value}");
 
@@ -429,8 +429,10 @@ namespace UniversalDashboard.Controllers
         [HttpPost]
         [Route("element/sessionState/{requestId}")]
         [Authorize]
-        public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]Element element)
+        public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]JObject jobject)
         {
+            var element = (Element)jobject.ToObject(typeof(Element));
+
             _stateRequestService.Set(requestId, element);
             return Ok();
         }

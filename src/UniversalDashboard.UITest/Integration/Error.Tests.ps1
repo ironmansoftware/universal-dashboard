@@ -33,7 +33,7 @@ Describe "Error" {
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
-        Start-Sleep 2
+        Start-Sleep 5
 
         #Run some tests using selenium
         It "should show an error for chart" {

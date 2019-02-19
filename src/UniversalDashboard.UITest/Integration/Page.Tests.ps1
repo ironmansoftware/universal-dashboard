@@ -95,8 +95,18 @@ Describe "New-UDPage" {
         $Page7 = New-UDPage -Name "/parent/child" -Content {
             New-UDCard -Text "child" -Id "child"
         }
+
+        $Page8 = New-UDPage -Url "/parameter/:test" -Endpoint {
+            param($test)
+
+            New-UDCard -Text $test -Id "parameter"
+        }
+
+        $Page9 = New-UDPage -Url "level1/level2" -Endpoint {
+            New-UDCard -Text "level1/level2" -Id "nofrontslash"
+        }
         
-        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3, $Page5, $Page4, $Page6, $Page7)
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3, $Page5, $Page4, $Page7, $Page6, $Page8, $Page9)
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
@@ -128,7 +138,7 @@ Describe "New-UDPage" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Test"
             $TestPageText = (Find-SeElement -Id 'Test-Page' -Driver $Driver).text
             Start-Sleep 3
-            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
+            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/header/nav/a[2]' -Driver $Driver 
             Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
             Start-Sleep 3
             (Find-SeElement -Id 'home-page' -Driver $Driver).text | Should not be $TestPageText
@@ -156,6 +166,16 @@ Describe "New-UDPage" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/parent/child"
             Find-SeElement -Id 'parent' -Driver $Driver | Should be $null
             Find-SeElement -Id 'child' -Driver $Driver | Should not be $null
+        }
+
+        it "should pass in parameter" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/parameter/myParameter"
+            (Find-SeElement -Id 'parameter' -Driver $Driver).Text | Should be "myParameter"
+        }
+
+        it "should work if no prefix slash" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/level1/level2"
+            (Find-SeElement -Id 'nofrontslash' -Driver $Driver).Text | Should be "level1/level2"
         }
 
         Stop-SeDriver $Driver
@@ -190,7 +210,7 @@ Describe "New-UDPage" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Home"
             $HomePageText = (Find-SeElement -Id 'home-page' -Driver $Driver).text
             Start-Sleep 3
-            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/nav/a[2]' -Driver $Driver 
+            $TitleElement = Find-SeElement -XPath '//*[@id="app"]/div/header//nav/a[2]' -Driver $Driver 
             Invoke-SeClick -Element $TitleElement -Driver $Driver -JavaScriptClick
             Start-Sleep 3
             (Find-SeElement -Id 'Test-Page' -Driver $Driver).text | Should not be $HomePageText

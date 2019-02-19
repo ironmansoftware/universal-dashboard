@@ -13,9 +13,9 @@ function New-UDCard {
         [Parameter(ParameterSetName = 'text')]
         [string]$Text,
         [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$BackgroundColor = 'white',
+        [UniversalDashboard.Models.DashboardColor]$BackgroundColor,
         [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$FontColor = 'black',
+        [UniversalDashboard.Models.DashboardColor]$FontColor,
         [Parameter()]
         [UniversalDashboard.Models.Link[]]$Links,
         [Parameter()]
@@ -55,8 +55,13 @@ function New-UDCard {
     if ($Horizontal) {
         $cardClass = "card $sizeClass horizontal ud-card"
     }
+
+    $colors = @{
+        backgroundColor = $BackgroundColor.HtmlColor
+        color = $FontColor.HtmlColor
+    }
      
-    New-UDElement -Tag "div" -Id $Id -Attributes @{ className = $cardClass} -Content {
+    New-UDElement -Tag "div" -Id $Id -Attributes @{ className = $cardClass; style = $colors } -Content {
         if ($Image -ne $null) {
             New-UDElement -Tag 'div' -Attributes @{ className = "card-image waves-effect waves-block waves-light" } -Content {
                 $Image

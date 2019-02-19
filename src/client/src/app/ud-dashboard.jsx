@@ -94,6 +94,9 @@ export default class UdDashboard extends React.Component {
         });
 
         connection.on('addElement', (componentId, elements) => {
+
+            if (componentId == null) return;
+
             PubSub.publish(componentId, {
                 type: "addElement",
                 componentId: componentId,
@@ -294,6 +297,10 @@ export default class UdDashboard extends React.Component {
 
         var dynamicPages = this.state.dashboard.pages.map(function(x) {
             if (!x.dynamic) return null;
+
+            if (!x.url.startsWith("/")) {
+                x.url = "/" + x.url;
+            }
 
             return <Route path={window.baseUrl + x.url} render={props => (
                 <UdPage id={x.id} dynamic={true} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>

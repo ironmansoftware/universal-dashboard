@@ -24,7 +24,26 @@ export default class UdNavigation extends React.Component {
         }
     }
 
+    componentDidUpdate() {
+        $(".collapsible").collapsible();
+
+        if (this.props.fixed) {
+            $(".button-collapse").sideNav({
+                menuWidth: this.props.width,
+                closeOnClick: true
+            });
+        }
+        else {
+            $(".menu-button").sideNav({
+                menuWidth: this.props.width,
+                closeOnClick: true
+            });
+        }
+    }
+
     componentDidMount() {
+        $(".collapsible").collapsible();
+
         if (this.props.fixed) {
             $(".button-collapse").sideNav({
                 menuWidth: this.props.width,

@@ -123,13 +123,32 @@ export default class UdInputField extends React.Component {
         if (this.props.type === 'time') {
             this.setupTimePicker();
         } 
+
+        if (this.props.type === 'select') {
+            $('.select-wrapper').parent().removeClass("col");
+        }
+    }
+
+    updateTextField() {
+        if (this.textField != null) {
+            let $this = this.textField;
+            if (
+              element.value.length > 0 ||
+              $(element).is(':focus') ||
+              element.autofocus ||
+              $this.attr('placeholder') !== null
+            ) {
+              $this.siblings('label').addClass('active');
+            } else if (element.validity) {
+              $this.siblings('label').toggleClass('active', element.validity.badInput === true);
+            } else {
+              $this.siblings('label').removeClass('active');
+            }
+        }
     }
 
     componentDidUpdate() {
-        if (Materialize && Materialize.updateTextFields)
-        {
-            Materialize.updateTextFields();
-        }
+        this.updateTextField();
 
         if (this.props.type === 'date') {
             this.setupDatePicker();
@@ -172,7 +191,7 @@ export default class UdInputField extends React.Component {
             var textfield = null;
             if (this.props.debounceTimeout == null) {
 
-                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)} onKeyDown={this.onKeyDown.bind(this)}/>
+                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)} onKeyDown={this.onKeyDown.bind(this)} ref={ref => this.textField}/>
             } else {
                 textfield = <DebounceInput id={field.name} name={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} debounceTimeout={this.props.debounceTimeout}  onKeyDown={this.onKeyDown.bind(this)}/>
             }

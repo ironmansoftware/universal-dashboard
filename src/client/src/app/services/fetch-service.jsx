@@ -9,12 +9,20 @@ export const fetchGet = function(url, success, history) {
             history.push("/login");
             throw new Error('Redirecting to login');
         } else if (response.status === 200) {
-            return response.json();
+            response.text().then(text => {
+                try 
+                {
+                    return JSON.parse(text);    
+                }
+                catch 
+                {
+                    return text;   
+                }
+            }).then(success);
         } else {
             throw new Error(response.statusText);
         }
     })
-    .then(success)
     .catch(function(e) {
         console.log(e)
     });

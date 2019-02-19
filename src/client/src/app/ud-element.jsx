@@ -244,8 +244,9 @@ class UDElementContent extends React.Component {
             if (val.length === 1) {
                 val = val[0]
             }
-
-            val = JSON.stringify(val);
+            else {
+                val = JSON.stringify(val);
+            }
 
             for(var i = 0; i < this.state.events.length; i++) {
                 if (this.state.events[i].event === 'onChange') {
@@ -299,13 +300,16 @@ class UDElementContent extends React.Component {
 
         var children = null;
         
-        if (this.state.content) {
+        if (this.state.content && this.state.content.map) {
             children = this.state.content.map(function(x) {
                 if (x.type != null) {
                     return renderComponent(x, this.props.history);
                 } 
                 return x;
             }.bind(this));
+        }
+        else if (this.state.content) {
+            children = this.state.content;
         }
 
         var attributes = this.state.attributes;

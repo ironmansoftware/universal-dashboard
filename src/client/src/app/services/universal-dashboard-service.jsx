@@ -18,6 +18,13 @@ export const UniversalDashboardService = {
     unsubsribe: PubSub.unsubscribe,
     publish: PubSub.publishSync,
     renderComponent: function(component, history, dynamicallyLoaded) {
+
+        if (component == null) return <React.Fragment/>;
+
+        if (Array.isArray(component)) {
+            return component.map(x => this.renderComponent(x, history));
+        }
+
         var existingComponent = this.components.find(x => x.type === component.type);
         if (existingComponent != null) {
             return React.createElement(existingComponent.component, {
@@ -28,7 +35,7 @@ export const UniversalDashboardService = {
         } else if (component.isPlugin && !dynamicallyLoaded) {
             return <LazyElement component={component} key={component.id} history={history}/>
         }
-        
+
         return internalRenderComponent(component, history);
     }
 }

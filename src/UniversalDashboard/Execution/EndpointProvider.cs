@@ -113,6 +113,13 @@ namespace UniversalDashboard.Execution
                         throw new Exception("Duplicate variable name in URL.");
                 }
 
+                var existingEndpoint = _restEndpoints.FirstOrDefault(m => m.Method == callback.Method && m.Url.Equals(callback.Url, StringComparison.OrdinalIgnoreCase));
+
+                if (existingEndpoint != null)
+                {
+                    _restEndpoints.Remove(existingEndpoint);
+                }
+
                 _restEndpoints.Add(callback);
             }
         }
@@ -231,6 +238,8 @@ namespace UniversalDashboard.Execution
 
         private bool IsMatch(Endpoint callback, string url, Dictionary<string, object> matchedVariables)
         {
+            if (callback.Parts == null) return false;
+
             var urlParts = url.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
 
             for (var i = 0; i < urlParts.Length; i++)

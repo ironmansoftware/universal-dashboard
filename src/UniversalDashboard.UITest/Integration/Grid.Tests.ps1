@@ -8,52 +8,6 @@ Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
 Describe "Grid" {
-    Context "no data" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-                $data = @()
-
-                $data | Out-UDGridData 
-            } 
-
-            New-UDGrid -Title "Grid" -Id "Grid2" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-                $data = @()
-
-                "Has" | Out-UDGridData 
-            } 
-
-            New-UDGrid -Title "Service Grid with filter" -Id "Grid3" -Headers @("Name", "DisplayName", "Status") -Properties @("Name", "DisplayName", "Status") -Endpoint {
-                Get-Service bits  | Select Name, DisplayName,
-                @{
-                    Name       = "Status"
-                    Expression = {New-UDElement -Tag div -Attributes @{ className = "red white-text" } -Content { $_.status.tostring() }}
-                } | Out-UDGridData
-            } 
-        }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        It "should not shown an error with no data" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
-            $Element.Text.Contains("No results found") | Should be $true
-        }
-
-        It "should not shown an error with invalid output" {
-            $Element = Find-SeElement -Id "Grid2" -Driver $Driver
-            $Element.Text.Contains("No results found") | Should be $true
-        }
-
-        It "should be able to nest new-udelement in grid" {
-            $Element = Find-SeElement -Id "Grid3" -Driver $Driver
-            $Element.Text.Contains("Stopped") | Should be $true
-        }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
-    }
-
     Context "Custom Columns" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
 
@@ -64,6 +18,7 @@ Describe "Grid" {
                     [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
                     [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
                     [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
+                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDIcon -Icon check -Color Green)}
                 )
 
                 $data | Out-UDGridData 
@@ -105,6 +60,56 @@ Describe "Grid" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element[7].Text | Should Be 'true'
+        }
+
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+    }
+
+    Context "no data" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                $data = @()
+
+                $data | Out-UDGridData 
+            } 
+
+            New-UDGrid -Title "Grid" -Id "Grid2" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                $data = @()
+
+                "Has" | Out-UDGridData 
+            } 
+
+            New-UDGrid -Title "Service Grid with filter" -Id "Grid3" -Headers @("Name", "DisplayName", "Status") -Properties @("Name", "DisplayName", "Status") -Endpoint {
+                [PSCustomObject]@{
+                    Name = "bits"
+                    DisplayName = "bits"
+                    Status = "Stopped"
+                }  | Select Name, DisplayName,
+                @{
+                    Name       = "Status"
+                    Expression = {New-UDElement -Id "nested-element" -Tag div -Attributes @{ className = "red white-text" } -Content { $_.status.tostring() }}
+                } | Out-UDGridData
+            } 
+        }
+
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+        $Driver = Start-SeFirefox
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should not shown an error with no data" {
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element.Text.Contains("No results found") | Should be $true
+        }
+
+        It "should not shown an error with invalid output" {
+            $Element = Find-SeElement -Id "Grid2" -Driver $Driver
+            $Element.Text.Contains("No results found") | Should be $true
+        }
+
+        It "should be able to nest new-udelement in grid" {
+            $Element = Find-SeElement -Id "nested-element" -Driver $Driver
+            $Element.Text.Contains("Stopped") | Should be $true
         }
 
         Stop-SeDriver $Driver

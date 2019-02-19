@@ -45,28 +45,22 @@ Describe "Scheduled Endpoint" {
             $Cache:EverySecondNumber = Get-Random 
         }
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCounter -Title "Test" -Id "Counter" -Endpoint {
-                $Cache:EverySecondNumber
-            } -AutoRefresh -RefreshInterval 1
-        } 
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Endpoint $EverySecond
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
-
-        It "should update number in background" {
-            $Element = Find-SeElement -Driver $Driver -Id 'Counter'
-            $Text = $Element.Text
-
-            Start-Sleep 2
-
-            (Find-SeElement -Driver $Driver -Id 'Counter').Text | Should not be $Text
+        $Endpoint = New-UDEndpoint -Url "test" -Endpoint {
+            $Cache:EverySecondNumber
         }
 
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
+        $Server = Start-UDRestApi -Endpoint @($Endpoint, $EverySecond) -Port 10001
+
+        It "should update number in background" {
+
+            $Result  = Invoke-RestMethod http://localhost:10001/api/test
+            Start-Sleep 2
+            $Result2  = Invoke-RestMethod http://localhost:10001/api/test
+
+            $Result | Should not be $Result2
+        }
+
+        Stop-UDRestApi -Server $Server
     }
 
 }
