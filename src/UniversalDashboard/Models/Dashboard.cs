@@ -25,7 +25,7 @@ namespace UniversalDashboard.Models
         [JsonProperty("fontIconStyle")]
         public string FontIconStyle { get; set; }
         [JsonProperty("navbarLinks")]
-        public IEnumerable<Link> NavbarLinks { get; set; }
+        public IEnumerable<object> NavbarLinks { get; set; }
         [JsonProperty("scripts")]
         public string[] Scripts { get; set; }
         [JsonProperty("stylesheets")]
@@ -41,7 +41,7 @@ namespace UniversalDashboard.Models
         [JsonProperty("design")]
         public bool Design { get; set; }
         [JsonProperty("footer")]
-        public Footer Footer { get; set; }
+        public object Footer { get; set; }
         [JsonProperty("navBarLogo")]
         public Element NavBarLogo { get; set; }
 		[JsonIgnore]

@@ -44,7 +44,7 @@ namespace UniversalDashboard.Cmdlets
 	    public string FontIconStyle { get; set; } = "FontAwesome";
 
         [Parameter]
-		public Link[] NavbarLinks { get; set; }
+		public object[] NavbarLinks { get; set; }
 
 		[Parameter]
 		public string[] Scripts { get; set; }
@@ -59,7 +59,7 @@ namespace UniversalDashboard.Cmdlets
 		public int CyclePagesInterval { get; set; } = 10;
 
 		[Parameter]
-		public Footer Footer {get;set;}
+		public object Footer {get;set;}
 		[Parameter]
 		public Element NavBarLogo {get;set;}
 
