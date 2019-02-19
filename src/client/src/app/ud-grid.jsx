@@ -132,9 +132,9 @@ export default class UdGrid extends React.Component {
         this.setState({ data, currentPage, recordCount, hasError: false, sortColumn, sortAscending , filterText});
     }
 
-    onSort(sortOptions) {
+    onSort(sortProperties) {
         const { currentPage, pageSize, filterText } = this.state;
-        this.loadData(currentPage, pageSize, sortOptions.id, !sortOptions.sortAscending, filterText);
+        this.loadData(currentPage, pageSize, sortProperties.id, sortProperties.sortAscending, filterText);
     }
 
     onFilter(e) {
