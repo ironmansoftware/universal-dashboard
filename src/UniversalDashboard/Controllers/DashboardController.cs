@@ -68,25 +68,27 @@ namespace UniversalDashboard.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Theme()
 	    {
-            var materializeCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "styles", "materialize.min.css");
-            var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "styles", "site.css");
-
-            var css = System.IO.File.ReadAllText(materializeCss);
-            css += System.IO.File.ReadAllText(siteCss);
-            css += _dashboard?.Themes?.FirstOrDefault()?.RenderedContent;
-
-            if (_dashboard?.Navigation != null)
+            try
             {
-                css += Environment.NewLine;
-                css += $@"side-nav {{
+                var materializeCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "materialize.min.css");
+                var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "site.css");
+
+                var css = System.IO.File.ReadAllText(materializeCss);
+                css += System.IO.File.ReadAllText(siteCss);
+                css += _dashboard?.Themes?.FirstOrDefault()?.RenderedContent;
+
+                if (_dashboard?.Navigation != null)
+                {
+                    css += Environment.NewLine;
+                    css += $@"side-nav {{
                             width: {_dashboard.Navigation.Width}px;
                         }}";
-            }
+                }
 
-            if (_dashboard?.Navigation?.Fixed == true)
-            {
-                css += Environment.NewLine;
-                css += $@"
+                if (_dashboard?.Navigation?.Fixed == true)
+                {
+                    css += Environment.NewLine;
+                    css += $@"
                         header, main, footer {{
                           padding-left: {_dashboard.Navigation.Width}px;
                         }}
@@ -96,13 +98,22 @@ namespace UniversalDashboard.Controllers
                             padding-left: 0;
                           }}
                         }}";
-            }
+                }
 
-			return new ContentResult()
+                return new ContentResult()
+                {
+                    Content = css,
+                    ContentType = "text/css",
+                };
+            }
+            catch (Exception ex)
             {
-                Content = css,
-                ContentType = "text/css",
-            };
+                return new ContentResult()
+                {
+                    Content = ex.Message,
+                    ContentType = "text/css"
+                };
+             }
 	    }
 
         [Route("reload")]
