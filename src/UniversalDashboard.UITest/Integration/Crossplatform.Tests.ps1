@@ -2,8 +2,8 @@ param(
     [Switch]$Release
 )
 
-if ($ENV:APPVEYOR) {
-    Write-Warning  "Cross platform tests do not work on AppVeyor."
+if ($ENV:AGENT_JOBSTATUS) {
+    Write-Warning  "Cross platform tests do not work on Azure Pipelines."
     return
 }
 
@@ -24,7 +24,7 @@ $Init = [ScriptBlock]::Create("Import-Module (Join-Path $Root `"Docker/Docker.ps
 Describe "Ubuntu" {
     Context "dashboard running" {
         Get-DockerContainer -All -Name "TestContainer" | Remove-DockerContainer -Force
-        New-DockerContainer -Name "TestContainer" -Repository "microsoft/powershell" -Tag "ubuntu-16.04" -Port 10001
+        New-DockerContainer -Name "TestContainer" -Repository "microsoft/powershell" -Tag "latest" -Port 10001
         Start-DockerContainer -Name "TestContainer"
         Invoke-DockerCommand -ContainerName "TestContainer" -ScriptBlock {
             New-Item UniversalDashboard -ItemType directory | Out-Null
@@ -33,7 +33,7 @@ Describe "Ubuntu" {
         
         Start-Job {
             Invoke-DockerCommand -ContainerName "TestContainer" -ScriptBlock {
-                Import-Module '/UniversalDashboard/output/UniversalDashboard.psd1'
+                Import-Module '/UniversalDashboard/output/UniversalDashboard.Community.psd1'
                 Enable-UDLogging
                 Start-UDDashboard -Port 10001 -Dashboard (New-UDDashboard -Title 'Hey' -Content {}) -Wait
             } 
