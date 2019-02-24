@@ -11,7 +11,7 @@ function New-UDCollapsible {
         [Parameter()]
         [Switch]$Popout,
         [Parameter()]
-        [ValidateSet("Expandable", "Accordian")]
+        [ValidateSet("Expandable", "Accordion")]
         [String]$Type = 'Expandable'
     )
 
