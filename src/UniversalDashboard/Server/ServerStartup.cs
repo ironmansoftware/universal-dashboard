@@ -92,6 +92,7 @@ namespace UniversalDashboard
                     var filePath = env.ContentRootPath + "/index.html";
                     response.ContentType = "text/html; charset=utf-8";
                     var file = File.ReadAllText(filePath);
+                    file = file.Replace("root", context.HttpContext.Request.PathBase);
                     await response.WriteAsync(file);
                 }
                 else
