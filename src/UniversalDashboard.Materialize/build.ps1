@@ -14,11 +14,13 @@ Remove-Item -Path $OutputPath -Force -ErrorAction SilentlyContinue -Recurse
 Remove-Item -Path "$BuildFolder\public" -Force -ErrorAction SilentlyContinue -Recurse
 
 New-Item -Path $OutputPath -ItemType Directory
+New-Item -Path $OutputPath\Scripts -ItemType Directory
 
 npm install
 npm run build
 
 Copy-Item $BuildFolder\public\*.bundle.js $OutputPath
+Copy-Item $BuildFolder\scripts\*.ps1 $OutputPath\scripts
 Copy-Item $BuildFolder\UniversalDashboard.Materialize.psm1 $OutputPath
 
 $Version = "1.0.0"

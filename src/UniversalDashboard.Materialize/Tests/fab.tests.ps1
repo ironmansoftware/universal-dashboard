@@ -1,24 +1,11 @@
-param([Switch]$Release)
-
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
 Describe "Fab" {
     Context "Fab with buttons" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard {
 
             New-UDElement -Id "Output" -Tag "div"
 
             New-UdFab -Id "main" -Icon "plus" -Size "large" -ButtonColor "red" -onClick {
-
-                Add-UDElement -ParentId 'Output' -Content {
-                    New-UDElement -Tag 'div' -Id 'MainOutput' -Content { 'Main '}
-                }
+                State
             } -Content {
                 New-UDFabButton -ButtonColor "green" -Icon "edit" -size "small"
                 New-UDFabButton -Id "btn" -ButtonColor "yellow" -Icon "trash" -size "large" -onClick {
@@ -29,10 +16,6 @@ Describe "Fab" {
                 }
             }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should handle clicks" {
             $Element = Find-SeElement -Driver $Driver -Id 'main'
@@ -47,9 +30,6 @@ Describe "Fab" {
             $Element = Find-SeElement -Driver $Driver -Id 'ChildOutput'
             $Element.Text | should be "Child"
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
 }
