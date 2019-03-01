@@ -14,7 +14,7 @@ function New-UDChip {
         [object]$OnClick,
 
         [Parameter (Position = 1, ParameterSetName = "Icon")]
-		[Hashtable]$Icon,
+		[PSTypeName('MUIcon')]$Icon,
 
 		[Parameter(Position = 2)]
         [ValidateSet("default","primary","secondary")]
