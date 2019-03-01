@@ -97,5 +97,6 @@ if (-not $NoHelp) {
 
 if ($Test) {
 	. "$PSScriptRoot\UniversalDashboard.UITest\shebang.tests.ps1" -Release
+	. "$PSScriptRoot\UniversalDashboard.Materialize\driver.ps1"
 }
 
