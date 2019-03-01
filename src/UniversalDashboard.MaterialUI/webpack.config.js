@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'public');
 var SRC_DIR = path.resolve(__dirname);
@@ -19,7 +20,7 @@ module.exports = (env) => {
       publicPath: "/"
     },
     module : {
-      loaders : [
+      rules : [
         { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'}
       ]
     },
@@ -34,8 +35,16 @@ module.exports = (env) => {
       new webpack.ProvidePlugin({
         React: "React", react: "React", "window.react": "React", "window.React": "React"
     }),
-    new webpack.optimize.UglifyJsPlugin()
-    ]
+    ],
+    optimization: {
+      minimizer: [
+        // we specify a custom UglifyJsPlugin here to get source maps in production
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+        })
+      ]
+    },
   };
 }
 
