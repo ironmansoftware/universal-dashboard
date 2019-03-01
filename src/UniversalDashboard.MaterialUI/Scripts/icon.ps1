@@ -36,7 +36,7 @@ function New-UDIcon {
     )
 
     End {
-        @{
+        $MUIcon = @{
             type = "mu-icon"
             isPlugin = $true 
             assetId = $MUAssetId
@@ -57,5 +57,9 @@ function New-UDIcon {
             transform = $Transform
             icon = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "-")
         }
+
+        $MUIcon.PSTypeNames.Insert(0, "MUIcon") | Out-Null
+
+        $MUIcon
     }
 }
