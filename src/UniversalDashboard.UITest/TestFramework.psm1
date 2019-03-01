@@ -1,4 +1,4 @@
-Import-Module "$PSScriptRoot\Integration\Selenium\Selenium.psm1" -Force 
+Import-Module "$PSScriptRoot\..\Selenium\Selenium.psm1" -Force 
 
 function Get-ModulePath {
     param([Switch]$Release)
