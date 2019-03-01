@@ -91,7 +91,7 @@ namespace UniversalDashboard
 			var builder = new WebHostBuilder()
 				.ConfigureServices((y) =>
 				{
-                    DashboardService = new DashboardService(dashboardOptions, _reloadKey);
+					DashboardService = new DashboardService(dashboardOptions, _reloadKey);
 					y.Add(new ServiceDescriptor(typeof(IDashboardService), DashboardService));
                     
 					if (_reloader != null)

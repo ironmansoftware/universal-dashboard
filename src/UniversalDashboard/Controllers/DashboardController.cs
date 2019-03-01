@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
 using System.Reflection;
 using Microsoft.AspNetCore.Routing;
+using System.Text;
+using UniversalDashboard.Services;
 
 namespace UniversalDashboard.Controllers
 {
@@ -70,25 +72,44 @@ namespace UniversalDashboard.Controllers
 	    {
             try
             {
+                var stringBuilder = new StringBuilder();
+
                 var materializeCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "materialize.min.css");
                 var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "site.css");
 
-                var css = System.IO.File.ReadAllText(materializeCss);
-                css += System.IO.File.ReadAllText(siteCss);
-                css += _dashboard?.Themes?.FirstOrDefault()?.RenderedContent;
+                stringBuilder.AppendLine(System.IO.File.ReadAllText(materializeCss));
+                stringBuilder.AppendLine(System.IO.File.ReadAllText(siteCss));
 
+                foreach(var item in AssetService.Instance.Stylesheets)
+                {
+                    try
+                    {
+                        var content = System.IO.File.ReadAllText(item.Value);
+                        stringBuilder.AppendLine(content);
+                    }
+                    catch (Exception ex)
+                    {
+                        stringBuilder.AppendLine($"/* Failed to load style sheet {item.Value}. {ex.Message} */");
+                    }
+                }
+
+                if (_dashboard?.Themes?.FirstOrDefault() != null)
+                {
+                    stringBuilder.AppendLine(_dashboard?.Themes?.FirstOrDefault()?.RenderedContent);
+                }
+
+                stringBuilder.AppendLine(System.IO.File.ReadAllText(siteCss));
+                
                 if (_dashboard?.Navigation != null)
                 {
-                    css += Environment.NewLine;
-                    css += $@"side-nav {{
+                    stringBuilder.AppendLine($@"side-nav {{
                             width: {_dashboard.Navigation.Width}px;
-                        }}";
+                        }}");
                 }
 
                 if (_dashboard?.Navigation?.Fixed == true)
                 {
-                    css += Environment.NewLine;
-                    css += $@"
+                    stringBuilder.AppendLine($@"
                         header, main, footer {{
                           padding-left: {_dashboard.Navigation.Width}px;
                         }}
@@ -97,12 +118,12 @@ namespace UniversalDashboard.Controllers
                           header, main, footer {{
                             padding-left: 0;
                           }}
-                        }}";
+                        }}");
                 }
 
                 return new ContentResult()
                 {
-                    Content = css,
+                    Content = stringBuilder.ToString(),
                     ContentType = "text/css",
                 };
             }
