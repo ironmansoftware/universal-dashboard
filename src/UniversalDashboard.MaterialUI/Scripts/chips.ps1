@@ -63,7 +63,7 @@ function New-UDChip {
             #Eventually everything will be a plugin so we wont need this.
             isPlugin = $true
             #This was set in the UniversalDashboard.MaterialUI.psm1 file
-            assetId = $AssetId
+            assetId = $MUAssetId
 
             id = $Id
             label = $Label

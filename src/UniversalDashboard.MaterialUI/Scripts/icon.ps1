@@ -39,7 +39,7 @@ function New-UDIcon {
         @{
             type = "mu-icon"
             isPlugin = $true 
-            assetId = $AssetId
+            assetId = $MUAssetId
 
             id = $id 
             size = $Size

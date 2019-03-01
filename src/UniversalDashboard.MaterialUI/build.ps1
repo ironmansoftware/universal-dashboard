@@ -20,7 +20,7 @@ npm run build
 
 Copy-Item $BuildFolder\public\*.bundle.js $OutputPath
 Copy-Item $BuildFolder\UniversalDashboard.MaterialUI.psm1 $OutputPath
-Copy-Item $BuildFolder\Scripts $OutputPath\Scripts -Recurse
+Copy-Item $BuildFolder\Scripts $OutputPath\Scripts -Recurse -Force
 
 $Version = "1.0.0"
 
@@ -34,7 +34,7 @@ $manifestParameters = @{
 	ModuleVersion = $version
 	Tags = @("universaldashboard", "material UI", "materialdesign")
 	ReleaseNotes = "Initial release"
-	FunctionsToExport = @("New-UDIcon", "New-UDChip")
+	FunctionsToExport = @("New-UDIcon", "New-UDChip", "New-UDPaper")
     RequiredModules = @()
 }
 
