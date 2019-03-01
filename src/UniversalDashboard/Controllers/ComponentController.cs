@@ -43,7 +43,7 @@ namespace UniversalDashboard.Controllers
             _stateRequestService = stateRequestService;
         }
 
-        private IActionResult RunScript(Endpoint endpoint, Dictionary<string, object> parameters = null)
+        private async Task<IActionResult> RunScript(Endpoint endpoint, Dictionary<string, object> parameters = null)
         {
             try {
                 var variables = new Dictionary<string, object> {
@@ -77,10 +77,13 @@ namespace UniversalDashboard.Controllers
                     executionContext.ConnectionId = _memoryCache.Get(executionContext.SessionId) as string;
                 }
 
-                var result = _executionService.ExecuteEndpoint(executionContext, endpoint);
-                var actionResult = ConvertToActionResult(result);
+                return await Task.Run(() =>
+                {
+                    var result = _executionService.ExecuteEndpoint(executionContext, endpoint);
+                    var actionResult = ConvertToActionResult(result);
 
-                return actionResult;
+                    return actionResult;
+                });
             }
             catch (Exception ex) {
                 Log.Warn("RunScript() " + ex.Message + Environment.NewLine + ex.StackTrace);
@@ -117,7 +120,7 @@ namespace UniversalDashboard.Controllers
         [Route("element/{id}")]
         [Authorize]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public IActionResult Element(string id)
+        public async Task<IActionResult> Element(string id)
         {
             var variables = new Dictionary<string, object>();
 
@@ -145,13 +148,13 @@ namespace UniversalDashboard.Controllers
                 return NotFound();
             }
 
-            return RunScript(endpoint, variables);
+            return await RunScript(endpoint, variables);
         }
 
         [HttpPost]
         [Route("element/{id}")]
         [Authorize]
-        public IActionResult ElementPost(string id)
+        public async Task<IActionResult> ElementPost(string id)
         {
             var variables = new Dictionary<string, object>();
 
@@ -175,13 +178,13 @@ namespace UniversalDashboard.Controllers
                 return NotFound();
             }
 
-            return RunScript(endpoint, variables);
+            return await RunScript(endpoint, variables);
         }
 
 		[Route("datatable/{id}")]
 		[Authorize]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public IActionResult DataTable(string id, int draw, int start, int length, string sortColumn, bool sortAscending, string filterText)
+        public async Task<IActionResult> DataTable(string id, int draw, int start, int length, string sortColumn, bool sortAscending, string filterText)
 		{
 			Log.Debug($"Grid - id = {id}, skip = {start}, take = {length}, sortColumn = {sortColumn}, sortAscending = {sortAscending}, filterText = {filterText}");
 
@@ -203,13 +206,13 @@ namespace UniversalDashboard.Controllers
                 return NotFound();
             }
 
-            return RunScript(endpoint, variables);
+            return await RunScript(endpoint, variables);
 		}
 
 		[HttpPost]
 		[Route("input/{id}")]
 		[Authorize]
-		public IActionResult Input(string id)
+		public async Task<IActionResult> Input(string id)
 		{
 			var variables = new Dictionary<string, object>();
 
@@ -256,13 +259,13 @@ namespace UniversalDashboard.Controllers
                 return NotFound();
             }
 
-            return RunScript(endpoint, variables);
+            return await RunScript(endpoint, variables);
         }
 
         [HttpPost]
         [Route("input/validate/{fieldId}/{fieldName}")]
         [Authorize]
-        public IActionResult ValidateField([FromRoute]string fieldId, [FromRoute]string fieldName, [FromBody]string value)
+        public async Task<IActionResult> ValidateField([FromRoute]string fieldId, [FromRoute]string fieldName, [FromBody]string value)
         {
             Log.Debug($"Validate Field - id = {fieldId}, value = {value}");
 
@@ -279,14 +282,14 @@ namespace UniversalDashboard.Controllers
                 { fieldName, value }
             };
 
-            return RunScript(endpoint, parameters);
+            return await RunScript(endpoint, parameters);
         }
 
 
         [HttpGet]
 		[Route("/api/{*parts}")]
 		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-		public IActionResult GetEndpoint()
+		public async Task<IActionResult> GetEndpoint()
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
 
@@ -298,7 +301,7 @@ namespace UniversalDashboard.Controllers
             var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "GET", variables);
             if (endpoint != null)
             {
-                return RunScript(endpoint, variables);
+                return await RunScript(endpoint, variables);
             }
 
 			Log.Info("Did not match endpoint.");
@@ -309,7 +312,7 @@ namespace UniversalDashboard.Controllers
 		[HttpDelete]
 		[Route("/api/{*parts}")]
 		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-		public IActionResult DeleteEndpoint()
+		public async Task<IActionResult> DeleteEndpoint()
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
 
@@ -322,7 +325,7 @@ namespace UniversalDashboard.Controllers
             var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "DELETE", variables);
             if (endpoint != null)
             {
-                return RunScript(endpoint, variables);
+                return await RunScript(endpoint, variables);
             }
 
             Log.Info("Did not match endpoint.");
@@ -387,7 +390,7 @@ namespace UniversalDashboard.Controllers
             var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "POST", variables);
             if (endpoint != null)
             {
-                return RunScript(endpoint, variables);
+                return await RunScript(endpoint, variables);
             }
 
             Log.Info("Did not match endpoint.");
@@ -418,7 +421,7 @@ namespace UniversalDashboard.Controllers
             var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "PUT", variables);
             if (endpoint != null)
             {
-                return RunScript(endpoint, variables);
+                return await RunScript(endpoint, variables);
             }
 
             Log.Info("Did not match endpoint.");
@@ -440,7 +443,7 @@ namespace UniversalDashboard.Controllers
         [HttpPost]
         [Route("terminal")]
         [Authorize]
-        public IActionResult RunTerminalCommand() {
+        public async Task<IActionResult> RunTerminalCommand() {
 
             if (!_dashboardService.Dashboard.Design) {
                 NotFound();
@@ -458,7 +461,7 @@ namespace UniversalDashboard.Controllers
             IActionResult result;
             try 
             {
-                result = RunScript(endpoint);
+                result = await RunScript(endpoint);
             }
             catch 
             {

@@ -51,3 +51,7 @@ function New-UDTab {
         }
     }
 }
+
+Get-ChildItem (Join-Path $PSScriptRoot "scripts") -File | ForEach-Object {
+    . $_.FullName
+}

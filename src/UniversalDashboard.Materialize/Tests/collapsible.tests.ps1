@@ -1,18 +1,6 @@
-param([Switch]$Release)
-
-Import-Module "$PSScriptRoot\Selenium\Selenium.psm1" -Force 
-
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
 Describe "Collapsible" {
     Context "Simple Collapsible" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard {
             New-UDCollapsible -Id "Collapsible" -Items {
                 New-UDCollapsibleItem -Id "First" -Title "First" -Icon user -Content {
                     New-UDCard -Title "First"
@@ -49,10 +37,6 @@ Describe "Collapsible" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
         It "should have title text" {
             $Element = Find-SeElement -Id "First-header" -Driver $Driver
             $Element.Text| should be "First"
@@ -88,8 +72,5 @@ Describe "Collapsible" {
             Find-SeElement -Id "changeIcon" -Driver $Driver | Invoke-SeClick
             Find-SeElement -Id "ChangeMyIcon-icon" -Driver $Driver | Get-SeElementAttribute -Attribute "className" | Should be "fa fa-user" 
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 }
