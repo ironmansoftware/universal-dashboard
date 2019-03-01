@@ -63,6 +63,7 @@ export class UdChip extends React.Component{
 
         return(
             <Chip 
+                id={this.props.id}
                 avatar={avatar}
                 label={this.props.label}
                 clickable={this.props.clickable}
