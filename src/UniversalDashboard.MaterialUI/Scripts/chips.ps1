@@ -1,7 +1,7 @@
 function New-UDChip {
     [CmdletBinding(DefaultParameterSetName = 'Icon')]
     param(
-        [Parmaeter()]
+        [Parameter()]
         [string]$Id = (New-Guid).ToString(),
 
         [Parameter(Position = 0)]
@@ -14,14 +14,14 @@ function New-UDChip {
         [object]$OnClick,
 
         [Parameter (Position = 1, ParameterSetName = "Icon")]
-		[MuIcon]$Icon,
+		[Hashtable]$Icon,
 
 		[Parameter(Position = 2)]
-        [ValidateSetAttribute("default","primary","secondary")]
+        [ValidateSet("default","primary","secondary")]
 		[string]$Color = "default",
 
 		[Parameter(Position = 3)]
-        [ValidateSetAttribute("outlined","default")]
+        [ValidateSet("outlined","default")]
 		[string]$Style = "default",
 
 		[Parameter(Position = 4)]

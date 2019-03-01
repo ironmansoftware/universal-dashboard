@@ -10,8 +10,8 @@ Set-Location $BuildFolder
 
 $OutputPath = "$BuildFolder\output\UniversalDashboard.MaterialUI"
 
-Remove-Item -Path $OutputPath -Force -ErrorAction SilentlyContinue -Recurse
-Remove-Item -Path "$BuildFolder\public" -Force -ErrorAction SilentlyContinue -Recurse
+Remove-Item -Path $OutputPath -Force -Recurse
+Remove-Item -Path "$BuildFolder\public" -Force -Recurse
 
 New-Item -Path $OutputPath -ItemType Directory
 

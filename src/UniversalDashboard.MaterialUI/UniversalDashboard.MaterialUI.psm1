@@ -3,7 +3,7 @@ $JsFile = Get-ChildItem "$PSScriptRoot\index.*.bundle.js"
 $CSSFile = Get-ChildItem "$PSScriptRoot\*.css"
 
 # Register our style sheet with UD
-[UniversalDashboard.Services.AssetService]::Instance.RegisterSytlesheet($CSSFile.FullName)
+[UniversalDashboard.Services.AssetService]::Instance.RegisterStyleSheet($CSSFile.FullName)
 
 $AssetId = [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($JSFile.FullName)
 

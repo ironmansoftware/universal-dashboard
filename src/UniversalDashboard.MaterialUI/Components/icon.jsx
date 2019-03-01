@@ -4,6 +4,9 @@ import { icon,findIconDefinition } from '@fortawesome/fontawesome-svg-core/index
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index.es'
 import findSolidIcon from './faSolid'
 
+import * as fas from '@fortawesome/free-solid-svg-icons';
+import * as fab from '@fortawesome/free-brands-svg-icons';
+
 export default class UdMuIcon extends React.Component {
 
     state = {
@@ -25,23 +28,21 @@ export default class UdMuIcon extends React.Component {
     setFontAwesomeIcon = (faIcon) => {
         var i = null
         const name = `fa${faIcon}`
-        findSolidIcon(name) === true ?
-        import(`@fortawesome/free-solid-svg-icons/index.es.js`).then(({fas}) => {
+        if (findSolidIcon(name) === true) {
             let fai = icon(fas[name])
             i = fai
             this.setState({
                 icon: i,
                 ...this.state
             })
-        }) : import(`@fortawesome/free-brands-svg-icons/index.es.js`).then(({fab}) => {
+        } else {
             let fai = icon(fab[name])
             i = fai
             this.setState({
                 icon: i,
                 ...this.state
             })
-
-        })      
+        }    
     }
 
     componentWillMount(){
