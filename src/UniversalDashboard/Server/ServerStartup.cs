@@ -87,12 +87,24 @@ namespace UniversalDashboard
 
                 if (context.HttpContext.Response.StatusCode == 404 && !context.HttpContext.Request.Path.StartsWithSegments("/api"))
                 {
-                    var response = context.HttpContext.Response;
-                    response.StatusCode = 200;
-                    var filePath = env.ContentRootPath + "/index.html";
-                    response.ContentType = "text/html; charset=utf-8";
-                    var file = File.ReadAllText(filePath);
-                    await response.WriteAsync(file);
+                    var fileName = context.HttpContext.Request.Path.ToString().Split('/').Last();
+                    var asset = AssetService.Instance.FindAsset(fileName);
+                    if (asset != null)
+                    {
+                        var response = context.HttpContext.Response;
+                        response.StatusCode = 200;
+                        var file = File.ReadAllText(asset);
+                        await response.WriteAsync(file);
+                    }
+                    else
+                    {
+                        var response = context.HttpContext.Response;
+                        response.StatusCode = 200;
+                        var filePath = env.ContentRootPath + "/index.html";
+                        response.ContentType = "text/html; charset=utf-8";
+                        var file = File.ReadAllText(filePath);
+                        await response.WriteAsync(file);
+                    }
                 }
                 else
                 {
