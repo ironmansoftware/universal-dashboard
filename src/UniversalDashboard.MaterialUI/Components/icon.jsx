@@ -1,11 +1,11 @@
 import React from 'react'
 import Icon from '@material-ui/core/Icon'
-import { icon,findIconDefinition } from '@fortawesome/fontawesome-svg-core/index.es'
+import { icon } from '@fortawesome/fontawesome-svg-core/index.es'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index.es'
 import findSolidIcon from './faSolid'
 
-import * as fas from '@fortawesome/free-solid-svg-icons';
-import * as fab from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
 
 export default class UdMuIcon extends React.Component {
 
