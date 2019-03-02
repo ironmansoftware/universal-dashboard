@@ -4,7 +4,10 @@ function New-UDList {
         [string]$Id = (New-Guid).ToString(),
 
         [Parameter ()]
-		[scriptblock]$Content
+		[scriptblock]$Content,
+
+        [Parameter ()]
+		[string]$SubHeader
     )
     End
     {
@@ -14,6 +17,7 @@ function New-UDList {
             assetId = $MUAssetId
             id = $Id
             content = $Content.Invoke()
+            subHeader = $SubHeader
         }
     }
 }
@@ -43,7 +47,10 @@ function New-UDListItem {
 		[string] $SubTitle,
 
         [Parameter ()]
-		[scriptblock] $SecondaryAction
+		[scriptblock] $SecondaryAction,
+
+        [Parameter ()]
+		[switch] $Divider
 
     )
 
@@ -51,7 +58,7 @@ function New-UDListItem {
     {
         if ($null -ne $OnClick) {
             if ($OnClick -is [scriptblock]) {
-                $OnClick = New-UDEndpoint -Endpoint $OnClick 
+                $OnClick = [UniversalDashboard.Models.Endpoint]::new($OnClick)
             }
             elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
                 throw "OnClick must be a script block or UDEndpoint"
@@ -82,6 +89,7 @@ function New-UDListItem {
             secondaryAction = $Action
             icon = $Icon
             isButton = $IsButton
+            divider = $Divider
         }
     }
 }

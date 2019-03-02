@@ -10,6 +10,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 const styles = theme => ({
   root: {
@@ -41,12 +42,12 @@ class UdList extends Component {
   renderListitem = (props) => {
     return (
       <ListItem
-        style={{border: '2px solid #c9c9c9'}}
         button={!props.isButton ? false : true}
         key={props.id}
         onClick={
           props.isButton ? this.handleItemClick.bind(this, props) : null
         }
+        divider={props.divider}
       >
         <ListItemIcon>
           {props.icon ? UniversalDashboard.renderComponent(props.icon) : null}
@@ -74,6 +75,7 @@ class UdList extends Component {
                     key={props.id}
                     button={!props.isButton ? false : true}
                     onClick={this.handleClick.bind(this, props.label)}
+                    divider={props.divider}
                   >
                     <ListItemIcon>
                       {props.icon
@@ -120,7 +122,7 @@ class UdList extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <List className={classes.root} component="div">
+      <List id={this.props.id} subheader={<ListSubheader disableSticky>{this.props.subHeader}</ListSubheader>} className={classes.root} component="div">
         {this.props.content.map(item => {
           return this.renderNestedListItem(item);
         })}

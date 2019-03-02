@@ -2,21 +2,18 @@ Describe "list" {
     Context "content" {
         Set-TestDashboard {
             New-UDList -Id 'demo-list' -Content {
-                New-UDListItem -Id 'demo-list-item' -Icon (
-                    New-UDIcon -Icon github -Size sm
-                    ) -Label 'Item01' -SubTitle 'Item-01-Subtitle' -Content {
-                    New-UDListItem -Id 'list-item-02'   -Label 'Test 02'  -SubTitle 'Test 02 subtile' -Icon (new-udicon -Icon codepen -Size sm) -OnClick (Show-UDToast -Message 'TEST 5555') -IsButton
-                }
-                New-UDListItem -Id 'demo-list-item1' -Icon (New-UDIcon -Icon github -Size sm) -Label 'Item011' -SubTitle 'Item-01-Subtitle' -Content {
-                    New-UDListItem -Id 'list-item-03'   -Label 'Test 022'  -SubTitle 'Test 02 subtile' -Icon (new-udicon -Icon codepen -Size sm) -IsButton -OnClick (
-                        Show-UDToast -Message 'demo'
-                    )
-                }
-                New-UDListItem -Id 'demo-list-item15' -Icon (New-UDIcon -Icon github -Size sm) -Label 'Item0121' -SubTitle 'Item-01-Subt2itle' -IsButton -OnClick {
+                New-UDListItem -Id 'item1' -Icon (New-UDIcon -Icon github -Size sm) -Label 'Item01' -SubTitle 'Item-01-Subtitle' -IsButton -OnClick {
                     Show-UDToast -Message 'demo'
+                } -Divider
+                New-UDListItem -Id 'item2' -Icon (New-UDIcon -Icon gitlab -Size sm) -Label 'Item02' -SubTitle 'Item-02-Subtitle' -Divider -Content {
+                    New-UDListItem -Id 'subitem2' -Icon (New-UDIcon -Icon git -Size sm) -Label 'Item03' -SubTitle 'Item-03-Subtitle' -Divider
                 }
-
-            }
+                New-UDListItem -Id 'item4' -Icon (New-UDIcon -Icon gitlab -Size sm) -Label 'Item04' -SubTitle 'Item-04-Subtitle' -Divider -Content {
+                    New-UDListItem -Id 'subitem4' -Icon (New-UDIcon -Icon git -Size sm) -Label 'Item05' -SubTitle 'Item-05-Subtitle' -Divider -Content {
+                        New-UDListItem -Id 'subitem6' -Icon (New-UDIcon -Icon codepen -Size sm) -Label 'Item06' -SubTitle 'Item-06-Subtitle' -Divider
+                    }
+                }
+            } -SubHeader 'Git Services'
         }
 
         It 'has content' {
