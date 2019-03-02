@@ -9,3 +9,4 @@ UniversalDashboard.register("mu-icon", Icon);
 UniversalDashboard.register("mu-paper", Paper);
 UniversalDashboard.register("mu-icon-button", IconButton);
 UniversalDashboard.register("mu-list", List);
+UniversalDashboard.register("mu-list-item", List);
