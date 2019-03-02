@@ -2,7 +2,7 @@ Describe "icon button" {
     Context "content" {
         Set-TestDashboard {
             New-UDPaper -Content {
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm) -Badge -BadgeContent 6 -BadgeColor primary -Id 'test-icon-button'
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Color primary)  -Id 'test-icon-button' 
             }
         }
         It 'has content' {
@@ -13,7 +13,7 @@ Describe "icon button" {
     Context "icon" {
         Set-TestDashboard {
             New-UDPaper -Content {
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm) -Badge -BadgeContent 6 -BadgeColor primary -Id 'test-icon-button'
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Color primary)  -Id 'test-icon-button' 
             }
         }
         It 'has an icon' {
@@ -24,11 +24,11 @@ Describe "icon button" {
     Context "size" {
         Set-TestDashboard {
             New-UDPaper -Content {
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size xs) -Badge -BadgeContent 6 -BadgeColor primary -Id 'test-icon-button'
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm) -Badge -BadgeContent 6 -BadgeColor primary -Id 'test-icon-button'
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size lg) -Badge -BadgeContent 6 -BadgeColor primary -Id 'test-icon-button'
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 2x) -Badge -BadgeContent 6 -BadgeColor primary -Id 'test-icon-button'
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 5x) -Badge -BadgeContent 6 -BadgeColor primary -Id 'test-icon-button'
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size xs -Color Primary)  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Color Secondary)  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size lg -Color Primary)  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 2x -Color Primary)  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 5x -Color Primary)  -Id 'test-icon-button' 
             }
         }
         It 'has an icon size of xs' {
@@ -45,17 +45,6 @@ Describe "icon button" {
         }
         It 'has an icon size of 5x' {
             Find-SeElement -ClassName 'fa-5x' -Driver $Driver | should not be $null
-        }
-    }
-
-    Context "badge" {
-        Set-TestDashboard {
-            New-UDPaper -Content {
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size xs) -Badge -BadgeContent 6 -BadgeColor primary -Id 'test-icon-button'
-            }
-        }
-        It 'has a badge with the number 6' {
-            (Find-SeElement -Driver $Driver -XPath '/html/body/div[1]/div/main/div/div/div/button/span[1]/span/span[2]').Text | should be 6
         }
     }
 }

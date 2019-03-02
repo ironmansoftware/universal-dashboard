@@ -9,22 +9,13 @@ function New-UDIconButton {
 		[Parameter ()]
 		[object] $OnClick, 
 
-		[Parameter ()]
-		[int] $BadgeContent,
-
-		[Parameter ()]
-		[Switch] $Badge,
 
         [Parameter ()]
 		[Switch] $Disable, 
 
         [Parameter ()]
-		[ValidateSet("default","primary","secondary","inherit")]
-		[string] $Color  = "default",
+		[string] $BackgroundColor
 
-		[Parameter ()]
-		[ValidateSet("default","primary","secondary","error")]
-		[string] $BadgeColor = "default"
 
     )
 
@@ -44,11 +35,8 @@ function New-UDIconButton {
             isPlugin = $true
             assetId = $MUAssetId
             id = $Id
-            color = $Color 
             disable = $Disable
-            badge = $Badge
-            badgeContent = $BadgeContent
-            badgeColor = $BadgeColor
+            backgroundColor = $BackgroundColor
             onClick = $OnClick
             icon = $Icon
         }
