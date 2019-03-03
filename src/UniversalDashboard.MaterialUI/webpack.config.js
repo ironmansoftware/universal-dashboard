@@ -17,7 +17,7 @@ module.exports = (env) => {
       path: BUILD_DIR,
       filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
       sourceMapFilename: 'bundle.map',
-      publicPath: ""
+      publicPath: "/"
     },
     module : {
       rules : [
