@@ -40,6 +40,10 @@ Push-Location "$PSScriptRoot\UniversalDashboard.Materialize"
 .\build.ps1
 Pop-Location
 
+Push-Location "$PSScriptRoot\UniversalDashboard.MaterialUI"
+.\build.ps1
+Pop-Location
+
 # End Build Child Modules
 
 $outputDirectory = Join-Path $PSScriptRoot "output"
