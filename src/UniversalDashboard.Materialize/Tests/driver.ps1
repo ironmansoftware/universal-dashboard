@@ -1,5 +1,6 @@
 param(
-    [Switch]$NoClose
+    [Switch]$NoClose,
+    [Switch]$OutputTestResultXml
 )
 
 Import-Module (Join-Path $PSScriptRoot "../../Selenium/Selenium.psm1") -Force
@@ -26,8 +27,18 @@ function Set-TestDashboard {
     Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver
 }
 
-$Tests | ForEach-Object {
-    . $_.FullName
+if ($OutputTestResultXml) {
+    $OutputPath = "$PSScriptRoot\test-results" 
+    Remove-Item $OutputPath -Recurse -ErrorAction SilentlyContinue -Force
+    New-Item -Path $OutputPath -ItemType Directory
+
+    Push-Location $PSScriptRoot
+    Invoke-Pester -OutputFile (Join-Path $OutputPath "TEST-$Subfolder-$FileName.xml") -OutputFormat NUnitXml
+    Pop-Location
+} else {
+    $Tests | ForEach-Object {
+        . $_.FullName
+    }
 }
 
 if (-not $NoClose) 
@@ -35,3 +46,6 @@ if (-not $NoClose)
     Stop-UDDashboard -Port 10000
     Stop-SeDriver $Driver
 }
+
+
+

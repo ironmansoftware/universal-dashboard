@@ -35,7 +35,20 @@ $manifestParameters = @{
 	ModuleVersion = $version
 	Tags = @("universaldashboard", "materialize", "materialdesign")
 	ReleaseNotes = "Initial release"
-	FunctionsToExport = @("New-UDTab", "New-UDTabContainer")
+	FunctionsToExport = @(
+		"New-UDButton", 
+		"New-UDCard", 
+		"New-UDCheckbox", 
+		"New-UDCollapsible", 
+		"New-UDCollapsibleItem", 
+		"New-UDCollection", 
+		"New-UDCollectionItem",
+		"New-UDColumn",
+		"New-UDFab", 
+		"New-UDFabButton",
+		"New-UDTab", 
+		"New-UDTabContainer"
+		)
     RequiredModules = @()
 }
 
