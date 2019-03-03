@@ -19,6 +19,7 @@ npm install
 npm run build
 
 Copy-Item $BuildFolder\public\*.bundle.js $OutputPath
+Copy-Item $BuildFolder\public\*.bundle.map $OutputPath
 Copy-Item $BuildFolder\UniversalDashboard.MaterialUI.psm1 $OutputPath
 Copy-Item $BuildFolder\Scripts $OutputPath\Scripts -Recurse -Force
 
