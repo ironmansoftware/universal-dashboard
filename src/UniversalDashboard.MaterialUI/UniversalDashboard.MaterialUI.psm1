@@ -1,6 +1,7 @@
 
 $JsFile = Get-ChildItem "$PSScriptRoot\index.*.bundle.js"
 $JsFiles = Get-ChildItem "$PSScriptRoot\*.bundle.js"
+$Maps = Get-ChildItem "$PSScriptRoot\*.bundle.map"
 $CSSFile = Get-ChildItem "$PSScriptRoot\*.css"
 
 # Register our style sheet with UD
@@ -8,6 +9,10 @@ $CSSFile = Get-ChildItem "$PSScriptRoot\*.css"
 
 $JsFiles | ForEach-Object {
     [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($_.FullName)
+}
+
+$Maps | ForEach-Object {
+    [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($_.FullName) | Out-Null
 }
 
 $MUAssetId = [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($JSFile.FullName)
