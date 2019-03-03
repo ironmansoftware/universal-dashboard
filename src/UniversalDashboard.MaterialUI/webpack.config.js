@@ -16,12 +16,14 @@ module.exports = (env) => {
     output: {
       path: BUILD_DIR,
       filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
-      sourceMapFilename: 'bundle.map',
-      publicPath: "/"
+      sourceMapFilename: '[name].[hash].bundle.map',
+      publicPath: "",
+      library: 'materialui',
+      libraryTarget: 'var'
     },
     module : {
       rules : [
-        { test: /\.(js|jsx)$/, exclude: [/node_modules/], loader: 'babel-loader'}
+        { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'}
       ]
     },
     externals: {
@@ -31,20 +33,8 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.json', '.js', '.jsx'],
     },
-    plugins: [
-      new webpack.ProvidePlugin({
-        React: "React", react: "React", "window.react": "React", "window.React": "React"
-    }),
-    ],
-    optimization: {
-      minimizer: [
-        // we specify a custom UglifyJsPlugin here to get source maps in production
-        new UglifyJsPlugin({
-          cache: true,
-          parallel: true,
-        })
-      ]
-    },
+    plugins: [],
+    devtool: "source-map"
   };
 }
 

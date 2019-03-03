@@ -7,19 +7,46 @@ export default class LazyElement extends React.Component {
         super();
 
         this.state = {
-            loading: true
+            loading: true,
+            error: ""
         }
     }
     componentWillMount() {
-        $.getScript(getApiPath() + "/api/internal/javascript/" + this.props.component.assetId, function() {
-            this.setState({loading:false})
-        }.bind(this));
+        var script = document.createElement('script');
+        script.onload = function() {
+            this.setState({loading:false});
+        }.bind(this)
+        script.src = getApiPath() + "/api/internal/javascript/" + this.props.component.assetId;
+        document.head.appendChild(script); 
+    }
+
+    componentDidCatch(e) {
+        this.setState({
+            error: e
+        })
     }
 
     render() {
         if (this.state.loading) {
             return <div></div>;
         }
-        return renderComponent(this.props.component, this.props.history, true);
+
+        if (this.state.error !== "") {
+            return renderComponent({
+                type: 'error', 
+                message: `There was an error rendering component of type ${this.props.component.type}. ${this.state.error}`
+            });
+        }
+
+        var element = renderComponent(this.props.component, this.props.history, true);
+
+        if (element == null) {
+            return renderComponent({
+                type: 'error', 
+                message: `Component not registered: ${this.props.component.type}`
+            });
+        }
+
+        return element;
     }
 }
