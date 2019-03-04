@@ -1,7 +1,7 @@
 param(
-    [string]$FileName
-    [Switch]$OutputTestResultXml
-    [Switch]$NoClose,
+    [string]$FileName,
+    [Switch]$OutputTestResultXml,
+    [Switch]$NoClose
 )
 
 Import-Module (Join-Path $PSScriptRoot "../../Selenium/Selenium.psm1") -Force

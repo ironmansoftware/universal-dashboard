@@ -33,7 +33,7 @@ export class UdChip extends React.Component{
         });
     }
       
-    handleClick = () => {
+    handleClick() {
 
         UniversalDashboard.publish('element-event', {
             type: "clientEvent",
@@ -67,7 +67,7 @@ export class UdChip extends React.Component{
                 avatar={avatar}
                 label={this.props.label}
                 clickable={this.props.clickable}
-                onClick={this.handleClick}
+                onClick={this.props.clickable ? this.handleClick.bind(this) : null}
                 onDelete={this.props.delete ? this.handleDelete.bind(this) : null}
                 className={classes.chip}
                 color={this.props.color}

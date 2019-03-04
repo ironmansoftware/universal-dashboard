@@ -35,6 +35,9 @@ function New-UDListItem {
         [Parameter ()]
 		[PSTypeName('MUIcon')]$Icon,
 
+        [Parameter ()]
+		[string]$AvatarSource,
+
 		[Parameter ()]
 		[object] $OnClick, 
 
@@ -53,8 +56,8 @@ function New-UDListItem {
         [Parameter ()]
 		[scriptblock] $SecondaryAction,
 
-        # [Parameter ()]
-        # [switch] $Divider,
+        [Parameter ()]
+        [Hashtable]$LabelStyle,
 
         [Parameter ()]
 		[Hashtable]$Style
@@ -66,7 +69,7 @@ function New-UDListItem {
     {
         if ($null -ne $OnClick) {
             if ($OnClick -is [scriptblock]) {
-                $OnClick = [UniversalDashboard.Models.Endpoint]::new($OnClick)
+                $OnClick = New-UDEndpoint -Endpoint $OnClick -Id ($Id + "onClick")
             }
             elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
                 throw "OnClick must be a script block or UDEndpoint"
@@ -96,8 +99,9 @@ function New-UDListItem {
             content = $ItemContent
             secondaryAction = $Action
             icon = $Icon
+            avatarSource = $AvatarSource
             isButton = $IsButton
-            # divider = $Divider
+            labelStyle = $LabelStyle
             style = $Style
         }
     }

@@ -23,7 +23,7 @@ function New-UDIconButton {
     {
         if ($null -ne $OnClick) {
             if ($OnClick -is [scriptblock]) {
-                $OnClick = New-UDEndpoint -Endpoint $OnClick 
+                $OnClick =  New-UDEndpoint -Endpoint $OnClick -Id ($Id + "onClick")
             }
             elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
                 throw "OnClick must be a script block or UDEndpoint"

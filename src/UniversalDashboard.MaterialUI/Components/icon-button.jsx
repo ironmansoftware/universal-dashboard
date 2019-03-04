@@ -19,10 +19,10 @@ class UdIconButton extends React.Component {
     ...this.props
   }; 
 
-  handleClick = (props) => {
+  handleClick = () => {
     UniversalDashboard.publish('element-event', {
         type: "clientEvent",
-        eventId: props.id + 'onClick',
+        eventId: this.props.id + 'onClick',
         eventName: '',
         eventData: ''
     });
@@ -33,7 +33,7 @@ class UdIconButton extends React.Component {
 
     return (
           <IconButton 
-            onClick={this.props.clickable ? this.handleClick.bind(this, this.props) : null} 
+            onClick={this.handleClick.bind(this)} 
             className={classes.button}
             // color={this.props.color}
             disabled={this.props.disabled}

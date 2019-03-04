@@ -12,6 +12,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import Divider from "@material-ui/core/Divider";
+import { Avatar } from "@material-ui/core";
 
 const styles = theme => ({
   root: {
@@ -47,12 +48,16 @@ class UdList extends Component {
         onClick={
           item.isButton === true ? this.handleItemClick.bind(this, item) : null
         }
-        divider
         style={item.style}
+        
       >
-        <ListItemIcon>
-          {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
-        </ListItemIcon>
+          {
+            item.icon ? <ListItemIcon>
+              {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
+            </ListItemIcon> : (item.avatarSource ? <ListItemAvatar>
+              <Avatar src={item.avatarSource}/>
+            </ListItemAvatar> : null)
+          }
 
         <ListItemText inset primary={item.label} secondary={item.subTitle} style={!item.icon ? {marginLeft:'24px'}: null} />
 
@@ -77,12 +82,15 @@ class UdList extends Component {
           id={item.id}
           button
           onClick={this.handleClick.bind(this, item.label)}
-          divider
         >
-          <ListItemIcon>
-            {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
-          </ListItemIcon>
-          <ListItemText inset primary={item.label} secondary={item.subTitle} style={!item.icon ? {marginLeft:'24px'}: null}/>
+          {
+            item.icon ? <ListItemIcon>
+              {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
+            </ListItemIcon> : (item.avatarSource ? <ListItemAvatar>
+              <Avatar src={item.avatarSource}/>
+            </ListItemAvatar> : null)
+          }
+          <ListItemText inset primary={item.label} secondary={item.subTitle} style={(!item.icon ? {marginLeft:'24px'}: null)} primaryTypographyProps={{...item.labelStyle}} />
           {this.state[item.label] ? (
             <ExpandLess color="primary" />
           ) : (
@@ -99,6 +107,7 @@ class UdList extends Component {
                   return this.renderNestedItem(nestedItem);
                 })}
           </List>
+          <Divider/>
         </Collapse>
       </>
     );
@@ -115,6 +124,7 @@ class UdList extends Component {
         className={classes.root}
         component="div"
         style={this.props.style}
+        
       >
         {this.props.content.map(item => {
           return this.renderNestedItem(item);

@@ -25,10 +25,12 @@ Describe "icon button" {
         Set-TestDashboard {
             New-UDPaper -Content {
                 New-UDIconButton -Icon (New-UDIcon -Icon user -Size xs -Color Primary)  -Id 'test-icon-button' 
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Color Secondary)  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Color Primary)  -Id 'test-icon-button' 
                 New-UDIconButton -Icon (New-UDIcon -Icon user -Size lg -Color Primary)  -Id 'test-icon-button' 
                 New-UDIconButton -Icon (New-UDIcon -Icon user -Size 2x -Color Primary)  -Id 'test-icon-button' 
-                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 5x -Color Primary)  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 5x -Color Primary)  -Id 'test-icon-button' -OnClick {
+                    Show-UDToast -Message 'TEST'
+                }
             }
         }
         It 'has an icon size of xs' {
