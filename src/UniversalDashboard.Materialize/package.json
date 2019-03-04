@@ -12,7 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "materialize-css": "0.100.2",
-    "react": "16.6.0"
+    "react": "16.6.0",
+    "react-materialize": "1.1.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
