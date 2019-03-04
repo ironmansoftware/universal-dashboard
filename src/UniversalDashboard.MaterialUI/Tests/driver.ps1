@@ -33,7 +33,7 @@ if ($OutputTestResultXml) {
     New-Item -Path $OutputPath -ItemType Directory
 
     Push-Location $PSScriptRoot
-    Invoke-Pester -OutputFile (Join-Path $OutputPath "TEST-$Subfolder-$FileName.xml") -OutputFormat NUnitXml
+    Invoke-Pester -OutputFile (Join-Path $OutputPath "TEST-MaterialUI.xml") -OutputFormat NUnitXml
     Pop-Location
 } else {
     $Tests | ForEach-Object {
