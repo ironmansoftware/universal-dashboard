@@ -39,7 +39,7 @@ function New-UDChip {
 
         if ($null -ne $OnClick) {
             if ($OnClick -is [scriptblock]) {
-                $OnClick = New-UDEndpoint -Endpoint $OnClick 
+                $OnClick = New-UDEndpoint -Endpoint $OnClick -Id ($Id + "onClick")
             }
             elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
                 throw "OnClick must be a script block or UDEndpoint"
@@ -50,7 +50,7 @@ function New-UDChip {
         if ($null -ne $OnDelete) {
             $Delete = $true
             if ($OnDelete -is [scriptblock]) {
-                $OnDelete = New-UDEndpoint -Endpoint $OnDelete 
+                $OnDelete = New-UDEndpoint -Endpoint $OnDelete -Id ($Id + "onDelete")
             }
             elseif ($OnDelete -isnot [UniversalDashboard.Models.Endpoint]) {
                 throw "OnDelete must be a script block or UDEndpoint"
