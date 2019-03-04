@@ -46,6 +46,8 @@ $manifestParameters = @{
 		"New-UDColumn",
 		"New-UDFab", 
 		"New-UDFabButton",
+		"New-UDLayout",
+		"New-UDPreloader",
 		"New-UDTab", 
 		"New-UDTabContainer"
 		)
