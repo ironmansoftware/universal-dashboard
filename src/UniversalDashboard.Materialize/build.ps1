@@ -48,8 +48,14 @@ $manifestParameters = @{
 		"New-UDFabButton",
 		"New-UDLayout",
 		"New-UDPreloader",
+		"New-UDRow",
+		"New-UDSelect",
+		"New-UDSelectOption",
+		"New-UDSelectGroup",
+		"New-UDSwitch",
 		"New-UDTab", 
 		"New-UDTabContainer"
+		"New-UDTable"
 		)
     RequiredModules = @()
 }
