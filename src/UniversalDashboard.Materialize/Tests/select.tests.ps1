@@ -1,16 +1,6 @@
-param([Switch]$Release)
-
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
 Describe "Select" {
     Context "onSelect" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard -Content {
 
             New-UDButton -Text "Button" -Id 'btn' -OnClick {
                 $Value = (Get-UDElement -Id 'test').Attributes['value'] 
@@ -30,13 +20,7 @@ Describe "Select" {
             }
 
             New-UDElement -Id "output" -Tag "div" -Content { }
-
-
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Design 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should select item" {
             $Element = Find-SeElement -ClassName "select-wrapper" -Driver $Driver | Select-Object -First 1
@@ -60,8 +44,5 @@ Describe "Select" {
 
             (Find-SeElement -Driver $Driver -Id 'innerOutput2').Text | should be "1"
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 }

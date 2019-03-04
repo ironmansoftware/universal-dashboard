@@ -1,20 +1,6 @@
-param([Switch]$Release)
-
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-
-Get-UDDashboard | Stop-UDDashboard
-
 Describe "New-UDImageCarousel" {
-
     Context "Image Carousel With Slides" {
-
-        $Page1 = New-UDPage -Name "Carousel" -Content {
-
+        Set-TestDashboard {
             $FirstSlide = @{
                 backgroundRepeat = 'no-repeat'
                 BackgroundImage = 'https://stmed.net/sites/default/files/lady-deadpool-wallpapers-27626-5413437.jpg'
@@ -41,15 +27,9 @@ Describe "New-UDImageCarousel" {
                 New-UDImageCarouselItem @FirstSlide
                 New-UDImageCarouselItem @SecondSlide
                 New-UDImageCarouselItem @ThirdSlide
-            }  -Height 750px -FullWidth -ShowIndecators -AutoCycle -Speed 8000 -ButtonText 'Button' -FixButton
+            }  -Height 750px -FullWidth -ShowIndicators -AutoCycle -Speed 8000 -ButtonText 'Button' -FixButton
         
         }
-        
-        $dashboard = New-UDDashboard -Title "Test Carousel" -Pages $Page1
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Carousel"
-        Start-Sleep 2
 
         $carousel = Find-SeElement -Driver $driver -Id 'carousel-demo
         '
@@ -68,8 +48,5 @@ Describe "New-UDImageCarousel" {
         it "Should have custom height Size" {
             $carousel.Size.Height | should be 750
         }
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
-
 }

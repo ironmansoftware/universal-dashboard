@@ -63,11 +63,11 @@ function New-UDColumn {
     }
 
     if ($PSCmdlet.ParameterSetName -eq 'content') {
-        New-UDElement -Tag 'div' -Attributes @{
+        New-UDElement -Id $Id -Tag 'div' -Attributes @{
             className = $classes
         } -Content $Content
     } else {
-        New-UDElement -Tag 'div' -Attributes @{
+        New-UDElement -Id $id -Tag 'div' -Attributes @{
             className = $classes
         } -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval 
     }
