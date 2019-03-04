@@ -48,4 +48,3 @@ class TabContainer extends React.Component {
     }
 }
 
-UniversalDashboard.register("tab-container", TabContainer);

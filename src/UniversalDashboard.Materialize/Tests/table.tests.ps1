@@ -1,36 +1,19 @@
-param([Switch]$Release)
-
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 Describe "Table" {
     Context "Error in table" {
-        $Dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard -Content {
             New-UDTable -Title "Top GitHub Issues" -Id "Table" -Headers @("Id", "Title", "Description", "Comments", "Date") -Endpoint {
                 throw "Error"
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
-
         It "has an error" {
             $Element = Find-SeElement -Id "Table" -Driver $Driver
             $Element.Text.Contains("Error") | should be true
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "AutoRefresh" {
-        $Dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard -Content {
             New-UDTable -Title "Top GitHub Issues" -Id "Table" -Headers @("Id") -Endpoint {
                 $items = @()
                 $items += [PSCustomObject]@{ ID = Get-Random}
@@ -42,11 +25,6 @@ Describe "Table" {
             } -AutoRefresh -RefreshInterval 1
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
-
         It "auto reloads" {
             $Element = Find-SeElement -Id "Table" -Driver $Driver
             $Text = $Element.Text
@@ -57,13 +35,10 @@ Describe "Table" {
             $Element.Text | should not be $text
 
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "Table" {
-        $Dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard -Content {
             New-UDTable -Title "Top GitHub Issues" -Id "Table" -Headers @("Id", "Title", "Description", "Comments", "Date") -Endpoint {
                 $issues = @();
                 $issues += [PSCustomObject]@{ "ID" = 123456;  "Title" = "Product is too awesome...";  "Description" = "Universal Desktop is just too awesome."; Comments = (Get-Random -Minimum 10 -Maximum 10000); Date = (Get-Date -Day 2 -Month 12 -Year 2007) }
@@ -80,11 +55,6 @@ Describe "Table" {
                 [PSCustomObject]@{ "ID" = 123456;  "Title" = "Product is too awesome...";  "Description" = "Universal Desktop is just too awesome."; Comments = (Get-Random -Minimum 10 -Maximum 10000); Date = (Get-Date -Day 2 -Month 12 -Year 2007) } | Out-UDTableData -Property @("ID", "Title") 
             } 
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 5
 
         It "has Id in column" {
             $Element = Find-SeElement -Id "Table" -Driver $Driver
@@ -108,49 +78,33 @@ Describe "Table" {
             $Element = Find-SeElement -Id "SingleItemTable" -Driver $Driver
             $Element.Text.Contains("123456") | should be true
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "Element onClick in table" {
-        $Dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard -Content {
 
             New-UDElement -Tag "span" -Id "spanTest" -Content {""}
 
             New-UDTable -Title "Top GitHub Issues" -Id "Table2" -Headers @("Id", "Title", "Description", "Comments", "Date") -Endpoint {
                 [PSCustomObject]@{ Test = $null; Name = "Test"; Description = (
                     New-UDElement -Tag "a" -Id "btnTest" -Attributes @{ href = "#!"; onClick = {
-                        Set-UDElement -Id "spanTest" -Content {
-                            "THIS WORKED"
-                        }
+                        Set-TestData -Data $true
                     } 
                 } -Content { "Click Me" }
                 ) } | Out-UDTableData -Property @("Test", "Name", "Description")
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
-
         It "element changes on click" {
             $Element = Find-SeElement -Id "btnTest" -Driver $Driver
             Invoke-SeClick -Element $Element 
 
-            Start-Sleep -Seconds 3
-
-            $Element = Find-SeElement -Id "spanTest" -Driver $Driver
-            $Element.Text | Should be "THIS WORKED"
+            Get-TestData | should be $true
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "No error with table with no rows" {
-        $Dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard -Content {
             New-UDTable -Title "Top GitHub Issues" -Id "Table" -Headers @("Id", "Title", "Description", "Comments", "Date") -Endpoint {
                 
             }
@@ -160,12 +114,6 @@ Describe "Table" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
-
-        
         It "has no error" {
             $Element = Find-SeElement -Id "Table" -Driver $Driver
             $Element.Text.Contains("An error occurred in this component") | should not be true
@@ -175,12 +123,5 @@ Describe "Table" {
             $Element = Find-SeElement -Id "Table2" -Driver $Driver
             $Element.Text.Contains("An error occurred in this component") | should not be true
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
-
-
-
-
 }

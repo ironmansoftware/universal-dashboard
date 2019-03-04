@@ -14,11 +14,13 @@ Remove-Item -Path $OutputPath -Force -ErrorAction SilentlyContinue -Recurse
 Remove-Item -Path "$BuildFolder\public" -Force -ErrorAction SilentlyContinue -Recurse
 
 New-Item -Path $OutputPath -ItemType Directory
+New-Item -Path $OutputPath\Scripts -ItemType Directory
 
 npm install
 npm run build
 
 Copy-Item $BuildFolder\public\*.bundle.js $OutputPath
+Copy-Item $BuildFolder\scripts\*.ps1 $OutputPath\scripts
 Copy-Item $BuildFolder\UniversalDashboard.Materialize.psm1 $OutputPath
 
 $Version = "1.0.0"
@@ -33,7 +35,31 @@ $manifestParameters = @{
 	ModuleVersion = $version
 	Tags = @("universaldashboard", "materialize", "materialdesign")
 	ReleaseNotes = "Initial release"
-	FunctionsToExport = @("New-UDTab", "New-UDTabContainer")
+	FunctionsToExport = @(
+		"New-UDButton", 
+		"New-UDCard", 
+		"New-UDCheckbox", 
+		"New-UDCollapsible", 
+		"New-UDCollapsibleItem", 
+		"New-UDCollection", 
+		"New-UDCollectionItem",
+		"New-UDColumn",
+		"New-UDFab", 
+		"New-UDFabButton",
+		"New-UDImageCarousel",
+		"New-UDImageCarouselItem",
+		"New-UDLayout",
+		"New-UDPreloader",
+		"New-UDRadio",
+		"New-UDRow",
+		"New-UDSelect",
+		"New-UDSelectOption",
+		"New-UDSelectGroup",
+		"New-UDSwitch",
+		"New-UDTab", 
+		"New-UDTabContainer"
+		"New-UDTable"
+		)
     RequiredModules = @()
 }
 

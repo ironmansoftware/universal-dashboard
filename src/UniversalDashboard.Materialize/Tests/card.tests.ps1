@@ -1,23 +1,6 @@
-﻿param([Switch]$Release)
-
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
-Describe "Card" {
+﻿Describe "Card" {
     Context "Simple Card" {
-        $tempDir = [System.IO.Path]::GetTempPath()
-        $tempFile = Join-Path $tempDir "output.txt"
-
-        if ((Test-path $tempFile)) {
-            Remove-Item $tempFile -Force
-        }
-
-        $dashboard = New-UDDashboard -Title "Test" -Content {
+        Set-TestDashboard -Content {
             New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
                 New-UDLink -Text "My Link" -Url "http://www.google.com"
             )
@@ -44,11 +27,7 @@ Describe "Card" {
                 }
             }
         }
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
+        
         It "should have title text" {
             $Element = Find-SeElement -Id "Card" -Driver $Driver
             $Element.Text.Split("`r`n")[0] | should be "Test"
@@ -111,8 +90,5 @@ Describe "Card" {
             $Element = Find-SeElement -Id "spanTest" -Driver $Driver
             $Element.Text | should be "This is some custom content"
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 }

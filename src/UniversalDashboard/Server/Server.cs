@@ -18,6 +18,7 @@ using System.Runtime.Loader;
 using UniversalDashboard.Execution;
 using UniversalDashboard.Utilities;
 using UniversalDashboard.Interfaces;
+using System.Management.Automation.Runspaces;
 
 namespace UniversalDashboard
 {
@@ -68,9 +69,9 @@ namespace UniversalDashboard
 
 		public bool Running { get; private set; }
 
-		internal bool IsRestApi { get; private set; }
+        public IDashboardService DashboardService { get; private set; }
 
-		public IDashboardService DashboardService { get; private set; }
+		internal bool IsRestApi { get; private set; }
 		
 		private string _reloadKey;
 
