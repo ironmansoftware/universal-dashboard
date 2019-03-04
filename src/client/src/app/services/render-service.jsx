@@ -1,9 +1,6 @@
 import React,{Suspense} from 'react';
-import UdColumn from './../ud-column.jsx';
 import UdNavbar from './../ud-navbar.jsx';
-import UdRow from './../ud-row.jsx';
 
-const UdCardComponent = React.lazy(() => import('./../ud-card.jsx' /* webpackChunkName: "ud-card" */))
 const UdChartComponent = React.lazy(() => import('./../ud-chart.jsx' /* webpackChunkName: "ud-chart" */))
 const UdMonitorComponent = React.lazy(() => import('./../ud-monitor.jsx' /* webpackChunkName: "ud-monitor" */))
 const UdLinkComponent = React.lazy(() => import('./../ud-link.jsx' /* webpackChunkName: "ud-link" */))
@@ -23,18 +20,10 @@ export function internalRenderComponent(component, history) {
 
     switch(component.type) {
 
-        case "card":  
-            return <Suspense fallback={<div></div>}>
-                <UdCardComponent {...component} key={component.id}/>
-            </Suspense>
-
         case "chart":
             return <Suspense fallback={<div></div>}>
                 <UdChartComponent {...component} key={component.id}/>
             </Suspense>
-            
-        case "column":
-            return <UdColumn {...component} key={component.id} history={history} />
 
         case "counter":
             return <Suspense fallback={<div></div>}>
@@ -83,9 +72,6 @@ export function internalRenderComponent(component, history) {
 
         case "navbar":
             return <UdNavbar {...component} key={component.id}/>
-
-        case "row":
-            return <UdRow {...component} key={component.id} history={history}/>
 
         case "treeview":
             return <Suspense fallback={<div></div>}>
