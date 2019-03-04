@@ -6,8 +6,9 @@ import Paper from "@material-ui/core/Paper";
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    display: "flex",
     padding: theme.spacing.unit * 2,
-    margin: "auto"
+    margin: theme.spacing.unit
   }
 });
 
@@ -16,7 +17,9 @@ export class UdPaper extends React.Component {
     content: this.props.content,
     width: this.props.width,
     height: this.props.height,
-    square: this.props.square
+    square: this.props.square,
+    style: this.props.style,
+    elevation: this.props.elevation
   };
 
   render() {
@@ -31,12 +34,7 @@ export class UdPaper extends React.Component {
     });
 
     return (
-      <Paper
-        square={this.state.square}
-        className={classes.root}
-        elevation={2}
-        style={{ width: this.state.width, height: this.state.height }}
-      >
+      <Paper id={this.props.id} className={classes.root} {...this.state}>
         {components}
       </Paper>
     );
