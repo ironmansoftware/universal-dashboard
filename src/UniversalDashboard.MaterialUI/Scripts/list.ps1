@@ -7,7 +7,10 @@ function New-UDList {
 		[scriptblock]$Content,
 
         [Parameter ()]
-		[string]$SubHeader
+		[string]$SubHeader,
+
+        [Parameter ()]
+		[Hashtable]$Style
     )
     End
     {
@@ -18,6 +21,7 @@ function New-UDList {
             id = $Id
             content = $Content.Invoke()
             subHeader = $SubHeader
+            style = $Style
         }
     }
 }
@@ -49,8 +53,12 @@ function New-UDListItem {
         [Parameter ()]
 		[scriptblock] $SecondaryAction,
 
+        # [Parameter ()]
+        # [switch] $Divider,
+
         [Parameter ()]
-		[switch] $Divider
+		[Hashtable]$Style
+
 
     )
 
@@ -89,7 +97,8 @@ function New-UDListItem {
             secondaryAction = $Action
             icon = $Icon
             isButton = $IsButton
-            divider = $Divider
+            # divider = $Divider
+            style = $Style
         }
     }
 }

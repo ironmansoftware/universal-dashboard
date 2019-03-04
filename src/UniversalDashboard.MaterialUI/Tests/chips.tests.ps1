@@ -11,8 +11,10 @@ Describe "chips" {
 
     Context "icon" {
         Set-TestDashboard {
-            $Icon = New-UDIcon -Icon 'user'
-            New-UDChip -Label "my Label" -Id "chip" -Icon $Icon
+           New-UDPage -Name demo -Endpoint {
+               $Icon = New-UDIcon -Icon 'user'
+               New-UDChip -Label "my Label" -Id "chip" -Icon $Icon -OnClick {Show-UDToast -Message 'test'} -Clickable 
+           }
         }
 
         It 'has an icon' {

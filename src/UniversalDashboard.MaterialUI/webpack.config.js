@@ -11,7 +11,7 @@ module.exports = (env) => {
 
   return {
     entry: {
-      'index' : __dirname + '/components/index.js'
+      'index': __dirname + '/components/index.js'
     },
     output: {
       path: BUILD_DIR,
@@ -21,9 +21,16 @@ module.exports = (env) => {
       library: 'materialui',
       libraryTarget: 'var'
     },
-    module : {
-      rules : [
-        { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'}
+    module: {
+      rules: [{
+          test: /\.(js|jsx)$/,
+          exclude: [/node_modules/, /public/],
+          loader: 'babel-loader'
+        },
+        {
+          test: /\.css$/,
+          loader:'css-loader',
+        },
       ]
     },
     externals: {
@@ -37,4 +44,3 @@ module.exports = (env) => {
     devtool: "source-map"
   };
 }
-

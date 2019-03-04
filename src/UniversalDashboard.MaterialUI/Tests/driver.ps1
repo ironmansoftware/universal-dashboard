@@ -1,6 +1,7 @@
 param(
-    [Switch]$NoClose,
+    [string]$FileName
     [Switch]$OutputTestResultXml
+    [Switch]$NoClose,
 )
 
 Import-Module (Join-Path $PSScriptRoot "../../Selenium/Selenium.psm1") -Force
@@ -9,10 +10,15 @@ $Global:UDNoMaterialize = $true
 Import-Module (Join-Path $PSScriptRoot "../../output/UniversalDashboard.Community.psd1") -Force 
 Import-Module (Join-Path $PSScriptRoot "../output/UniversalDashboard.MaterialUI/UniversalDashboard.MaterialUI.psd1") -Force
 
-$Tests = Get-ChildItem $PSScriptRoot -Filter "*.tests.ps1"
+if($PSBoundParameters.keys -contains 'FileName'){
+    $Tests = Get-ChildItem $PSScriptRoot -Filter $FileName
+}else{
+    $Tests = Get-ChildItem $PSScriptRoot -Filter "*.tests.ps1"
+}
 
 $Dashboard = New-UDDashboard -Title "Test" -Content {}
-$Server = Start-UDDashboard -Port 10000 -Dashboard $Dashboard
+$files = Publish-UDFolder -Path $PSScriptRoot -RequestPath "/files"
+$Server = Start-UDDashboard -Port 10000 -Dashboard $Dashboard -PublishedFolder $files
 $Driver = Start-SeFirefox
 Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver
 

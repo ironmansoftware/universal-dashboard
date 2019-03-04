@@ -11,15 +11,14 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
-import ListSubheader from '@material-ui/core/ListSubheader';
+import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
   root: {
-    width: "100%",
+    width: "100%"
   },
   item: {
-    border: '1px solid #c9c9c9',
-    marginBottom: theme.spacing.unit,
+    marginBottom: theme.spacing.unit
   }
 });
 
@@ -40,23 +39,26 @@ class UdList extends Component {
   };
 
   //   Render Basic list Item
-  renderListitem = (props) => {
+  renderListItem = item => {
     return (
       <ListItem
-        button={!props.isButton ? false : true}
-        key={props.id}
+        button={item.isButton !== true ? false : true}
+        key={item.id}
         onClick={
-          props.isButton ? this.handleItemClick.bind(this, props) : null
+          item.isButton === true ? this.handleItemClick.bind(this, item) : null
         }
-        divider={props.divider}
+        divider
+        style={item.style}
       >
         <ListItemIcon>
-          {props.icon ? UniversalDashboard.renderComponent(props.icon) : null}
+          {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
         </ListItemIcon>
-        <ListItemText inset primary={props.label} secondary={props.subTitle} />
-        {props.secondaryAction ? (
+
+        <ListItemText inset primary={item.label} secondary={item.subTitle} style={!item.icon ? {marginLeft:'24px'}: null} />
+
+        {item.secondaryAction ? (
           <ListItemSecondaryAction>
-            {UniversalDashboard.renderComponent(props.secondaryAction)}
+            {UniversalDashboard.renderComponent(item.secondaryAction)}
           </ListItemSecondaryAction>
         ) : null}
       </ListItem>
@@ -64,68 +66,58 @@ class UdList extends Component {
   };
 
   //   Render Nested List Item With Collapse Option
-  renderNestedListItem = (props) => {
-    return (
-      <Fragment>
-        {props.content == null
-          ? this.renderListitem(props)
-          : props.content.map(item => {
-              return (
-                <Fragment>
-                  <ListItem
-                    key={props.id}
-                    button={!props.isButton ? false : true}
-                    onClick={this.handleClick.bind(this, props.label)}
-                    divider={props.divider}
-                  >
-                    <ListItemIcon>
-                      {props.icon
-                        ? UniversalDashboard.renderComponent(props.icon)
-                        : null}
-                    </ListItemIcon>
-                    <ListItemText
-                      inset
-                      primary={props.label}
-                      secondary={props.subTitle}
-                    />
-                    {this.state[props.label] ? (
-                      <ExpandLess color="default" />
-                    ) : (
-                      <ExpandMore color="default" />
-                    )}
-                    {props.secondaryAction ? (
-                      <ListItemSecondaryAction>
-                        {UniversalDashboard.renderComponent(
-                          props.secondaryAction
-                        )}
-                      </ListItemSecondaryAction>
-                    ) : null}
-                  </ListItem>
+  renderNestedItem = item => {
+    return item.content == null ? (
+      this.renderListItem(item)
+    ) : (
+      <>
+        {/* Top list item with collapse option */}
+        <ListItem
+          style={item.style}
+          id={item.id}
+          button
+          onClick={this.handleClick.bind(this, item.label)}
+          divider
+        >
+          <ListItemIcon>
+            {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
+          </ListItemIcon>
+          <ListItemText inset primary={item.label} secondary={item.subTitle} style={!item.icon ? {marginLeft:'24px'}: null}/>
+          {this.state[item.label] ? (
+            <ExpandLess color="primary" />
+          ) : (
+            <ExpandMore color="primary" />
+          )}
+        </ListItem>
 
-                  <Collapse
-                    in={this.state[props.label]}
-                    timeout="auto"
-                    unmountOnExit
-                  >
-                    <List component="div" key={item.id}>
-                      {item.content == null
-                        ? this.renderListitem(item)
-                        : this.renderNestedListItem(item)}
-                    </List>
-                  </Collapse>
-                </Fragment>
-              );
-            })}
-      </Fragment>
+        {/* The Content of the collapse element should be basic list item or nested */}
+        <Collapse in={this.state[item.label]} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {item.content == null
+              ? this.renderListItem(item)
+              : item.content.map(nestedItem => {
+                  return this.renderNestedItem(nestedItem);
+                })}
+          </List>
+        </Collapse>
+      </>
     );
   };
 
   render() {
     const { classes } = this.props;
     return (
-      <List id={this.props.id} subheader={<ListSubheader disableSticky>{this.props.subHeader}</ListSubheader>} className={classes.root} component="div">
+      <List
+        id={this.props.id}
+        subheader={
+          <ListSubheader disableSticky>{this.props.subHeader}</ListSubheader>
+        }
+        className={classes.root}
+        component="div"
+        style={this.props.style}
+      >
         {this.props.content.map(item => {
-          return this.renderNestedListItem(item);
+          return this.renderNestedItem(item);
         })}
       </List>
     );

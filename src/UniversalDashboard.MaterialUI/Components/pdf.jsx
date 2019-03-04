@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import { Document, Page } from 'react-pdf';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+
+const options = {
+  cMapUrl: 'cmaps/',
+  cMapPacked: true,
+};
 
 export default class UdPdf extends Component {
   state = {
@@ -7,23 +13,55 @@ export default class UdPdf extends Component {
     pageNumber: 1,
   }
 
-  onDocumentLoadSuccess = ({ numPages }) => {
-    this.setState({ numPages });
-  }
+  onDocumentLoadSuccess = (document) => {
+    const { numPages } = document;
+    this.setState({
+      numPages,
+      pageNumber: 1,
+    });
+  };
+
+  changePage = offset => this.setState(prevState => ({
+    pageNumber: prevState.pageNumber + offset,
+  }));
+
+  previousPage = () => this.changePage(-1);
+
+  nextPage = () => this.changePage(1);
 
   render() {
-    const { pageNumber, numPages } = this.state;
+    const { numPages, pageNumber } = this.state;
 
     return (
-      <div>
+      <>
         <Document
           file={this.props.filePath}
           onLoadSuccess={this.onDocumentLoadSuccess}
+          options={options}
+          renderMode="svg"
         >
-          <Page pageNumber={pageNumber} />
+          <Page  pageNumber={pageNumber} renderAnnotationLayer renderInteractiveForms renderTextLayer={false}/>
         </Document>
-        <p>Page {pageNumber} of {numPages}</p>
-      </div>
+        <div>
+          <p>
+            Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'}
+          </p>
+          <button
+            type="button"
+            disabled={pageNumber <= 1}
+            onClick={this.previousPage}
+          >
+            Previous
+          </button>
+          <button
+            type="button"
+            disabled={pageNumber >= numPages}
+            onClick={this.nextPage}
+          >
+            Next
+          </button>
+        </div>
+      </>
     );
   }
 }

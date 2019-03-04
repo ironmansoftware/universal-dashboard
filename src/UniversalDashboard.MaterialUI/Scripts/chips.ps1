@@ -37,14 +37,14 @@ function New-UDChip {
 
     End {
 
-        if ($null -ne $OnClick) {
-            if ($OnClick -is [scriptblock]) {
-                $OnClick = New-UDEndpoint -Endpoint $OnClick 
-            }
-            elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
-                throw "OnClick must be a script block or UDEndpoint"
-            }
-        }
+        # if ($null -ne $OnClick) {
+        #     if ($OnClick -is [scriptblock]) {
+        #         $OnClick = New-UDEndpoint -Endpoint $OnClick 
+        #     }
+        #     elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
+        #         throw "OnClick must be a script block or UDEndpoint"
+        #     }
+        # }
 
         $Delete = $False
         if ($null -ne $OnDelete) {
@@ -71,7 +71,7 @@ function New-UDChip {
             color = $Color 
             style = $Style 
             clickable = $Clickable 
-            onClick = $OnClick
+            onClick = New-UDEndpoint -Endpoint $OnClick
             onDelete  = $OnDelete
             delete = $Delete 
             avatar = $Avatar
