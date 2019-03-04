@@ -15,17 +15,35 @@ $Dashboard = New-UDDashboard -Title "Test" -Content {}
 $Server = Start-UDDashboard -Port 10000 -Dashboard $Dashboard
 $Driver = Start-SeFirefox
 Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver
+
+function Set-TestData {
+    param($Data)
+
+    $StateCollection.Add($Data)
+}
+
+function Get-TestData {
+    $Data = $null
+    if ($Global:StateCollection.TryTake([ref]$Data, 5000)) {
+        $Data 
+    } 
+    else {
+        throw "Retreiving data timed out (5000ms)."
+    }
+}
+
 function Set-TestDashboard {
     param(
         [ScriptBlock]$Content
     )
 
-    $Global:StateDictionary = @{}
+    $Global:StateCollection = New-Object -TypeName 'System.Collections.Concurrent.BlockingCollection[object]'
 
-    $Dashboard = New-UDDashboard -Content $Content -Title "TEST" -EndpointInitialization (New-UDEndpointInitialization -Variable "StateDictionary")
+    $Dashboard = New-UDDashboard -Content $Content -Title "TEST" -EndpointInitialization (New-UDEndpointInitialization -Variable "StateCollection" -Function "Set-TestData")
     $Server.DashboardService.SetDashboard($Dashboard)
     Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver
 }
+
 
 if ($OutputTestResultXml) {
     $OutputPath = "$PSScriptRoot\test-results" 

@@ -100,8 +100,14 @@ if (-not $NoHelp) {
 }
 
 if ($Test) {
-	. "$PSScriptRoot\UniversalDashboard.UITest\shebang.tests.ps1" -Release
-	. "$PSScriptRoot\UniversalDashboard.Materialize\tests\driver.ps1" -OutputTestResultXml
-	. "$PSScriptRoot\UniversalDashboard.MaterialUI\tests\driver.ps1" -OutputTestResultXml
+	. "$PSScriptRoot\UniversalDashboard.UITest\shebang.tests.ps1" -Release -Integration
+
+	Get-UDDashboard | Stop-UDDashboard
+
+	. "$PSScriptRoot\UniversalDashboard.Materialize\Tests\driver.ps1" -OutputTestResultXml
+
+	Get-UDDashboard | Stop-UDDashboard
+
+	. "$PSScriptRoot\UniversalDashboard.MaterialUI\Tests\driver.ps1" -OutputTestResultXml
 }
 

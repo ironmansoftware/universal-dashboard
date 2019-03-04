@@ -5,30 +5,25 @@ Describe "Fab" {
             New-UDElement -Id "Output" -Tag "div"
 
             New-UdFab -Id "main" -Icon "plus" -Size "large" -ButtonColor "red" -onClick {
-                State
+                Set-TestData -Data "parent"
             } -Content {
                 New-UDFabButton -ButtonColor "green" -Icon "edit" -size "small"
                 New-UDFabButton -Id "btn" -ButtonColor "yellow" -Icon "trash" -size "large" -onClick {
-
-                    Add-UDElement -ParentId 'Output' -Content {
-                        New-UDElement -Tag 'div' -Id 'ChildOutput' -Content { 'Child '}
-                    }
+                    Set-TestData -Data "child"
                 }
             }
         }
 
         It "should handle clicks" {
             $Element = Find-SeElement -Driver $Driver -Id 'main'
-            $Element | Invoke-SeClick
+            $Element | Invoke-SeClick -JavascriptClick -Driver $Driver
 
-            $Element = Find-SeElement -Driver $Driver -Id 'MainOutput'
-            $Element.Text | should be "main"
+            Get-TestData | should be "parent"
 
             $Element = Find-SeElement -Driver $Driver -Id 'btn'
-            $Element | Invoke-SeClick
+            $Element | Invoke-SeClick -JavascriptClick -Driver $Driver
 
-            $Element = Find-SeElement -Driver $Driver -Id 'ChildOutput'
-            $Element.Text | should be "Child"
+            Get-TestData | should be "child"
         }
     }
 

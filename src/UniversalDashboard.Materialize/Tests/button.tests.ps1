@@ -32,14 +32,14 @@ Describe "New-UDButton" {
     Context "OnClick" {
         Set-TestDashboard {
             New-UDButton -Text "Click Me" -Id "button" -OnClick {
-                $StateDictionary["Clicked"] = $true
+                Set-TestData -Data $true
             }
         } 
 
         Invoke-SeClick -Element (Find-SeElement -Id 'button' -Driver $Driver)
         
         It "was clicked" {
-            $Global:StateDictionary["Clicked"] | should be $true
+            Get-TestData | Should be $true
         }
     }
 }

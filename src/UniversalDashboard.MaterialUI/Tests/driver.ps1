@@ -15,14 +15,42 @@ $Dashboard = New-UDDashboard -Title "Test" -Content {}
 $Server = Start-UDDashboard -Port 10000 -Dashboard $Dashboard
 $Driver = Start-SeFirefox
 Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver
+
+<# 
+    Sets test data from within the dashboard that can be validated in Pester tests.
+#>
+function Set-TestData {
+    param($Data)
+
+    $StateCollection.Add($Data)
+}
+
+<#
+    Retrieves test data from within the dashboard. This will block up to 5 seconds while waiting for the data. 
+
+    This can be used for things that take time. For example, making sure that onClick events work. 
+#>
+function Get-TestData {
+    $Data = $null
+    if ($Global:StateCollection.TryTake([ref]$Data, 5000)) {
+        $Data 
+    } 
+    else {
+        throw "Retreiving data timed out (5000ms)."
+    }
+}
+
+<# 
+    Updates the dashboard with the latest test dashboard.  
+#>
 function Set-TestDashboard {
     param(
         [ScriptBlock]$Content
     )
 
-    $Global:StateDictionary = @{}
+    $Global:StateCollection = New-Object -TypeName 'System.Collections.Concurrent.BlockingCollection[object]'
 
-    $Dashboard = New-UDDashboard -Content $Content -Title "TEST" -EndpointInitialization (New-UDEndpointInitialization -Variable "StateDictionary")
+    $Dashboard = New-UDDashboard -Content $Content -Title "TEST" -EndpointInitialization (New-UDEndpointInitialization -Variable "StateCollection" -Function "Set-TestData")
     $Server.DashboardService.SetDashboard($Dashboard)
     Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver
 }
