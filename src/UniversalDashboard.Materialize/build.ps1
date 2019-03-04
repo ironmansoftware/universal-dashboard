@@ -48,6 +48,7 @@ $manifestParameters = @{
 		"New-UDFabButton",
 		"New-UDLayout",
 		"New-UDPreloader",
+		"New-UDRadio",
 		"New-UDRow",
 		"New-UDSelect",
 		"New-UDSelectOption",
