@@ -14,7 +14,7 @@ function New-UDIconButton {
 		[Switch] $Disable, 
 
         [Parameter ()]
-		[string] $BackgroundColor
+		[Hashtable] $Style
 
 
     )
@@ -36,7 +36,7 @@ function New-UDIconButton {
             assetId = $MUAssetId
             id = $Id
             disable = $Disable
-            backgroundColor = $BackgroundColor
+            style = $Style
             onClick = $OnClick
             icon = $Icon
         }

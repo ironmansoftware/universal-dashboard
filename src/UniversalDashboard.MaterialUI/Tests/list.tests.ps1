@@ -45,9 +45,32 @@ Describe "list" {
     
                     } -Style $ItemStyle
 
+                    New-UDListItem -Id 'list-item-asbutton' -Label 'Alon Gvili' -AvatarSource 'https://pbs.twimg.com/profile_images/847923651282423808/M-SFbPV1_400x400.jpg' -IsButton -OnClick {
+                        Invoke-UDRedirect -Url 'https://github.com/AlonGvili' -OpenInNewWindow
+                    } -Style $ItemStyle
+
+                    New-UDListItem -Id 'list-item-with-iconbutton' -Label 'Go to my github page' -AvatarSource 'https://pbs.twimg.com/profile_images/847923651282423808/M-SFbPV1_400x400.jpg' -SecondaryAction { 
+                        
+                        New-UDIconButton -Icon (New-UDIcon -Icon user -Size xs -Color '#8bc34a') -OnClick {
+                        
+                            Invoke-UDRedirect -Url 'https://github.com/AlonGvili' -OpenInNewWindow
+                        
+                        } -Style @{marginRight = 0}
+
+                    } -Style $ItemStyle 
+
+                    New-UDListItem -Id 'list-item-ud' -Label 'Universal Dashboard' -AvatarSource 'https://avatars1.githubusercontent.com/u/34902941?s=200&v=4' -SubTitle 'PowerShell Module For Creating Dashboards & WebSites' -Content {
+    
+                        New-UDPaper -Content {
+
+                            New-UDHtml -Markup '<iframe width="560" height="315" src="https://www.youtube.com/embed/3ilV86JemjA" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+
+                        } -Style @{backgroundColor = '#f8f8f8'; margin = 0} -Elevation 0
+    
+                    } -Style $ItemStyle
+
                 } -SubHeader 'USERS' -Style @{
                     backgroundColor = '#ececec'
-                    # borderRadius = '6px'
                     paddingLeft = '8px'
                     paddingRight = '8px'
                     boxShadow = "0px 1px 5px 0px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 3px 1px -2px rgba(0,0,0,0.12)"

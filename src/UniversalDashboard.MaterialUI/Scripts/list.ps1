@@ -73,6 +73,8 @@ function New-UDListItem {
             }
             elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
                 throw "OnClick must be a script block or UDEndpoint"
+            }else{
+                $OnClick = $null
             }
         }
 

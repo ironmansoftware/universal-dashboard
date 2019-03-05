@@ -35,7 +35,7 @@ $manifestParameters = @{
 	ModuleVersion = $version
 	Tags = @("universaldashboard", "material UI", "materialdesign")
 	ReleaseNotes = "Initial release"
-	FunctionsToExport = @("New-UDIcon", "New-UDChip", "New-UDPaper","New-UDIconButton","New-UDList","New-UDListItem","New-UDPdf","New-UDExpandListItem")
+	FunctionsToExport = @("New-UDIcon", "New-UDChip", "New-UDPaper","New-UDIconButton","New-UDList","New-UDListItem","New-UDPdf","New-UDExpandListItem","New-UDMuButton")
     RequiredModules = @()
 }
 

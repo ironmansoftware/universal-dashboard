@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
-import classNames from 'classnames';
 
 
 const styles = theme => ({
@@ -16,7 +14,6 @@ class UdIconButton extends React.Component {
 
   state = {
     anchorEl: null,
-    ...this.props
   }; 
 
   handleClick = () => {
@@ -38,6 +35,7 @@ class UdIconButton extends React.Component {
             // color={this.props.color}
             disabled={this.props.disabled}
             id={this.props.id}
+            style={{...this.props.style}}
           >
               {UniversalDashboard.renderComponent(this.props.icon)}
           </IconButton>

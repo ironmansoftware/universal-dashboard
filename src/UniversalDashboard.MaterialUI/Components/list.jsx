@@ -30,10 +30,10 @@ class UdList extends Component {
     this.setState({ [event]: !this.state[event] });
   };
 
-  handleItemClick = props => {
+  handleItemClick = (item) => {
     UniversalDashboard.publish("element-event", {
       type: "clientEvent",
-      eventId: props.id + "onClick",
+      eventId: item.id + "onClick",
       eventName: "",
       eventData: ""
     });
@@ -43,13 +43,13 @@ class UdList extends Component {
   renderListItem = item => {
     return (
       <ListItem
-        button={item.isButton !== true ? false : true}
+        button={item.onClick !== null ? true : false}
         key={item.id}
+        id={item.id}
         onClick={
-          item.isButton === true ? this.handleItemClick.bind(this, item) : null
+          item.onClick !== null ? this.handleItemClick.bind(this,item) : item.onClick
         }
         style={item.style}
-        
       >
           {
             item.icon ? <ListItemIcon>
@@ -80,6 +80,7 @@ class UdList extends Component {
         <ListItem
           style={item.style}
           id={item.id}
+          key={item.id}
           button
           onClick={this.handleClick.bind(this, item.label)}
         >
@@ -90,7 +91,7 @@ class UdList extends Component {
               <Avatar src={item.avatarSource}/>
             </ListItemAvatar> : null)
           }
-          <ListItemText inset primary={item.label} secondary={item.subTitle} style={(!item.icon ? {marginLeft:'24px'}: null)} primaryTypographyProps={{...item.labelStyle}} />
+          <ListItemText inset primary={item.label} secondary={item.subTitle} style={(!item.icon || !item.avatarSource ? {marginLeft:'24px'}: null)} primaryTypographyProps={{...item.labelStyle}} />
           {this.state[item.label] ? (
             <ExpandLess color="primary" />
           ) : (
@@ -99,13 +100,14 @@ class UdList extends Component {
         </ListItem>
 
         {/* The Content of the collapse element should be basic list item or nested */}
-        <Collapse in={this.state[item.label]} timeout="auto" unmountOnExit>
+        <Collapse in={this.state[item.label]} timeout="auto" unmountOnExit mountOnEnter>
           <List component="div" disablePadding>
             {item.content == null
               ? this.renderListItem(item)
-              : item.content.map(nestedItem => {
-                  return this.renderNestedItem(nestedItem);
-                })}
+              : (item.content.map(nestedItem => {
+                  return nestedItem.type === 'mu-list-item' ?
+                  this.renderNestedItem(nestedItem) : UniversalDashboard.renderComponent(nestedItem)
+                }))}
           </List>
           <Divider/>
         </Collapse>
@@ -118,13 +120,13 @@ class UdList extends Component {
     return (
       <List
         id={this.props.id}
+        key={this.props.id}
         subheader={
           <ListSubheader disableSticky>{this.props.subHeader}</ListSubheader>
         }
         className={classes.root}
         component="div"
         style={this.props.style}
-        
       >
         {this.props.content.map(item => {
           return this.renderNestedItem(item);

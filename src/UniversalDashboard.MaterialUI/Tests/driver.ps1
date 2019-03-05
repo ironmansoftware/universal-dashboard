@@ -6,7 +6,7 @@ param(
 
 Import-Module (Join-Path $PSScriptRoot "../../Selenium/Selenium.psm1") -Force
 #Don't auto-load the materialize from UD
-$Global:UDNoMaterialize = $true
+$Global:UDNoMaterialize = $false
 Import-Module (Join-Path $PSScriptRoot "../../output/UniversalDashboard.Community.psd1") -Force 
 Import-Module (Join-Path $PSScriptRoot "../output/UniversalDashboard.MaterialUI/UniversalDashboard.MaterialUI.psd1") -Force
 
