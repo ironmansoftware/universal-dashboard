@@ -20,6 +20,7 @@
     "classnames": "^2.2.6",
     "react": "16.8.3",
     "react-dom": "16.8.3",
+    "react-interval": "^2.0.2",
     "react-pdf": "^4.0.4"
   },
   "devDependencies": {

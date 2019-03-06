@@ -5,6 +5,7 @@ import IconButton from "./icon-button";
 import List from "./list";
 import ExpandListitem from "./expandlistitem";
 import Button from "./button";
+import Card from "./card";
 // import Pdf from "./pdf"; this version has a bug render text not correct.
 
 UniversalDashboard.register("mu-chip", Chip);
@@ -15,4 +16,5 @@ UniversalDashboard.register("mu-list", List);
 UniversalDashboard.register("mu-list-item", List);
 UniversalDashboard.register("mu-expand-list-item", ExpandListitem);
 UniversalDashboard.register("mu-button", Button);
+UniversalDashboard.register("mu-card", Card);
 // UniversalDashboard.register("ud-pdf", Pdf);
