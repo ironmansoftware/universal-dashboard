@@ -147,6 +147,8 @@ namespace UniversalDashboard
 				this.Running = false;
 				this.host.Dispose();
 
+                DashboardService.Dispose();
+
 				Servers.Remove(this);
 
 				_reloader.StopWatchingFile(FileName);
