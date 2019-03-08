@@ -7,13 +7,15 @@ function New-UDLayout {
     )
 
     $Components = $Content.Invoke()
-    $columnSize = 12 / $Columns
+    $LargeColumnSize = 12 / $Columns
+    $MediumColumnSize = (12 / $Columns) * 2
+    $SmallColumnSize = 12
     $Offset = 0
     $ComponentCount = ($Components | Measure-Object).Count
 
     while ($Offset -lt $ComponentCount) {
         $ColumnObjects = $Components | Select-Object -Skip $Offset -First $Columns | ForEach-Object {
-            New-UDColumn -Size $ColumnSize -Content {
+            New-UDColumn -SmallSize $SmallColumnSize -MediumSize $MediumColumnSize -LargeSize $LargeColumnSize -Content {
                 $_
             }
         }
