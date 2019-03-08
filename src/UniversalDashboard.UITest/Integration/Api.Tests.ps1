@@ -187,8 +187,6 @@ Describe "Api" {
         Stop-UDRestApi $Server
     }
 
-    Disable-UDLogging
-
     Context "Post without content type"{
 
         $wsPOST = New-UDEndpoint -Url "/SpireonEvents" -Method POST -Endpoint {
@@ -207,8 +205,16 @@ Describe "Api" {
             $result = Invoke-RestMethod -Uri 'http://localhost:1001/api/SpireonEvents' -Method POST -Body $json #-ContentType 'application/json'
             $result | Should Be '@{Arguments=script.ps1; FilePath=code}'
         }
+
+        $RunspaceCount = (Get-Runspace).Length
+
         $Server| Stop-UDDashboard
-        
         Stop-UDRestApi $Server
+
+        It "should get disposed of runspaces"{
+            $NewRunspaceCount = (Get-Runspace).Length
+
+            $RunspaceCount | should BeGreaterThan $NewRunspaceCount
+        }
     }
 }
