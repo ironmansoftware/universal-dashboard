@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-UDEndpointInitialization
 
 ## SYNOPSIS
-{{Fill in the Synopsis}}
+New-UDEndpointInitialization is used to configure the runspaces that Universal Dashboard uses to run Endpoints.
 
 ## SYNTAX
 
@@ -18,21 +18,61 @@ New-UDEndpointInitialization [-Variable <String[]>] [-Module <String[]>] [-Funct
 ```
 
 ## DESCRIPTION
-{{Fill in the Description}}
+New-UDEndpointInitialization is used to configure the runspaces that Universal Dashboard uses to run Endpoints. The cmdlet creates a InitialSessionState object to automatically import variables, functions and modules. You can further customize this object to using the properties and methdos of the InitialSessionState class.
+
+For more information, visit: https://docs.microsoft.com/en-us/dotnet/api/system.management.automation.runspaces.initialsessionstate?view=powershellsdk-1.1.0
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> $MyVariable = "Test"
+PS C:\> $EI = New-UDEndpointInitialization -Variable "MyVariable"
+PS C:\> $Dashboard = New-UDDashboard -Title "EI" -Content {} -EndpointInitialization $EI
 ```
 
-{{ Add example description here }}
+Initializes the runspaces with the $MyVariable variable. 
+
+### Example 2
+```
+PS C:\> $MyVariable = "Test"
+PS C:\> $MyOtherVariable = "Test2"
+PS C:\> $EI = New-UDEndpointInitialization -Variable @("MyVariable", "MyOtherVariable")
+PS C:\> $Dashboard = New-UDDashboard -Title "EI" -Content {} -EndpointInitialization $EI
+```
+
+Initializes the runspaces with the $MyVariable and $MyOtherVariable variables. 
+
+### Example 3
+```
+PS C:\> function Get-Stuff {}
+PS C:\> $EI = New-UDEndpointInitialization -Function "Get-Stuff"
+PS C:\> $Dashboard = New-UDDashboard -Title "EI" -Content {} -EndpointInitialization $EI
+```
+
+Initializes the runspaces with the Get-Stuff function.
+
+### Example 4
+```
+PS C:\> $EI = New-UDEndpointInitialization -Module "HyperV"
+PS C:\> $Dashboard = New-UDDashboard -Title "EI" -Content {} -EndpointInitialization $EI
+```
+
+Initializes the runspaces with the HyperV module.
+
+### Example 5
+```
+PS C:\> $EI = New-UDEndpointInitialization 
+PS C:\> $EI.StartupScripts.Add("C:\test.ps1")
+PS C:\> $Dashboard = New-UDDashboard -Title "EI" -Content {} -EndpointInitialization $EI
+```
+
+Initializes the runspaces with a startup script. 
 
 ## PARAMETERS
 
 ### -Function
-{{Fill Function Description}}
+Functions to import by default into the runspaces used for endpoints.
 
 ```yaml
 Type: String[]
@@ -47,7 +87,7 @@ Accept wildcard characters: False
 ```
 
 ### -Module
-{{Fill Module Description}}
+Modules to import by default into the runspaces used for endpoints.
 
 ```yaml
 Type: String[]
@@ -62,7 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -Variable
-{{Fill Variable Description}}
+Variables to import by default into the runspaces used for endpoints.
 
 ```yaml
 Type: String[]
