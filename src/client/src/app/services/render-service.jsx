@@ -13,11 +13,15 @@ const UdGridComponent = React.lazy(() => import('./../ud-grid.jsx' /* webpackChu
 const UdDateTimeComponent = React.lazy(() => import('./../basics/datetime.jsx' /* webpackChunkName: "ud-date-time" */))
 const UdElementComponent = React.lazy(() => import('./../ud-element.jsx' /* webpackChunkName: "ud-element" */))
 const UdTerminal = React.lazy(() => import( './../ud-terminal.jsx' /* webpackChunkName: "ud-terminal" */))
+import UDGridLayout from './../ud-grid-layout';
 
 export function internalRenderComponent(component, history) {
     if (!component) return null;
 
     switch(component.type) {
+
+        case "grid-layout":
+            return <UDGridLayout {...component} key={component.id}/>;
 
         case "chart":
             return <Suspense fallback={<div></div>}>
