@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+var RemoveWebpackPlugin = require('remove-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'public');
 var SRC_DIR = path.resolve(__dirname);
@@ -29,8 +30,12 @@ module.exports = (env) => {
         },
         {
           test: /\.css$/,
-          loader:'css-loader',
+          loader: 'css-loader',
         },
+        {
+          test: /\.(eot|ttf|woff2?|otf|svg)$/,
+          loader: 'file-loader'
+        }
       ]
     },
     externals: {
@@ -40,7 +45,9 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.json', '.js', '.jsx'],
     },
-    plugins: [],
+    plugins: [
+      // new RemoveWebpackPlugin(BUILD_DIR)
+    ],
     devtool: "source-map"
   };
 }

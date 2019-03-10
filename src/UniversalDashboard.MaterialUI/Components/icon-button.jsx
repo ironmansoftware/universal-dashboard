@@ -12,30 +12,26 @@ const styles = theme => ({
 
 class UdIconButton extends React.Component {
 
-  state = {
-    anchorEl: null,
-  }; 
-
-  handleClick = () => {
+  onClickEvent = () => {
     UniversalDashboard.publish('element-event', {
         type: "clientEvent",
         eventId: this.props.id + 'onClick',
         eventName: '',
         eventData: ''
     });
-}
+  }
 
   render(){
     const { classes } = this.props;   
 
     return (
           <IconButton 
-            onClick={this.handleClick.bind(this)} 
-            className={classes.button}
-            // color={this.props.color}
+            onClick={this.onClickEvent} 
+            className='ud-icon-button'
             disabled={this.props.disabled}
             id={this.props.id}
             style={{...this.props.style}}
+            href={this.props.href}
           >
               {UniversalDashboard.renderComponent(this.props.icon)}
           </IconButton>

@@ -1,4 +1,4 @@
-function New-UDChip {
+function New-UDMuChip {
     [CmdletBinding(DefaultParameterSetName = 'Icon')]
     param(
         [Parameter()]

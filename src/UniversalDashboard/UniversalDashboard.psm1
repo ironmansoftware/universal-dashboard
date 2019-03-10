@@ -17,3 +17,7 @@ if (-not $Global:UDNoMaterialize)
 {
 	Import-Module (Join-Path $PSScriptRoot "Modules\UniversalDashboard.Materialize\UniversalDashboard.Materialize.psd1")
 }
+if (-not $Global:UDNoMaterialUI)
+{
+	Import-Module (Join-Path $PSScriptRoot "Modules\UniversalDashboard.MaterialUI\UniversalDashboard.MaterialUI.psd1")
+}

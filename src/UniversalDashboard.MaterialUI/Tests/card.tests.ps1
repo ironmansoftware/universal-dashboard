@@ -1,108 +1,51 @@
 Describe "card" {
     Context "content" {
         Set-TestDashboard {
-
-            New-UDRow -columns {
-
-                New-UDCOLUMN -LargeSize 8 -LargeOffset 2 -Content {
                     
                     New-UDMuCard -Content {
-                        New-UDHeading -Text 'Demo' -Size 2
-                    }  -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
+                        New-UDHeading -Text 'Card As Static' -Size 1 -Color '#000'
+                        new-udheading -text (get-date -Format "HH:mm:ss") -size 4 -color '#000'
+                    } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
                         backgroundColor = '#03a9f4'
                         color = '#fff'
-                    } -Icon (New-UDIcon -Icon server -Size xs -Color '#fff') -ToolbarContent {
-                        New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Color '#fff')  
-                        New-UDIconButton -Icon (New-UDIcon -Icon plus -Size sm -Color '#fff')  
+                    } -Icon (New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} ) -ToolbarContent {    
+                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#0d47a1'})  
+                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon info_circle -Size sm -Style @{ color = '#0d47a1'} -Spin)  
                     }
-                
-                }
-            }
-            
-          new-udcolumn -Content {
 
-              
-  
-                  new-udcolumn -LargeSize 6 -Content {
-                      
-                      New-UDMuCard -Content {
-                        new-udheading -Text "$(0..100000 | Get-Random)" -Size 2 -Color '#009688'
-                      } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
-                          backgroundColor = '#009688'
-                          color = '#fff'
-                      } -Icon (New-UDIcon -Icon server -Size xs -Color '#fff') -ToolbarContent {
-                          New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Color '#fff')  
-                          New-UDIconButton -Icon (New-UDIcon -Icon plus -Size sm -Color '#fff')  
-                      }
-                  }
-      
-                  new-udcolumn -LargeSize 6 -Content {
-                      
-                      New-UDMuCard -AutoRefresh -RefreshInterval 3 -Content {
-                            
-                        new-udheading -Text "$(0..100000 | Get-Random)" -Size 2 -Color '#000'
-                        
-                      } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
-                          backgroundColor = '#009688'
-                          color = '#fff'
-                      } -Icon (New-UDIcon -Icon server -Size xs -Color '#fff') -ToolbarContent {
-                          New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Color '#fff')  
-                          New-UDIconButton -Icon (New-UDIcon -Icon plus -Size sm -Color '#fff')  
-                      } 
-                  }
-  
-              }
-          
-            
-
-            NEW-UDrow -Columns {
-
-                New-UDCOLUMN -LargeSize 6 -Content {
                     New-UDMuCard -Content {
-                        New-UDHeading -Text 'Demo' -Size 2
+                        New-UDHeading -Text 'Card As EndPoint With Reload Button' -Size 1 -Color '#000'
+                        new-udheading -text "$(0..100000 | Get-Random)" -Size 4 -color 'green'
                     } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
-                        backgroundColor = '#ffc107'
+                        backgroundColor = '#03a9f4'
                         color = '#fff'
-                    } -Icon (New-UDIcon -Icon server -Size xs -Color '#fff') -ToolbarContent {
-                        New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Color '#fff')  
-                        New-UDIconButton -Icon (New-UDIcon -Icon plus -Size sm -Color '#fff')  
-                    }
+                    } -Icon (New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} ) -ToolbarContent {    
+                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#0d47a1'})  
+                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon info_circle -Size sm -Style @{ color = '#0d47a1'} -Spin)  
+                    } -IsEndPoint
+
                     New-UDMuCard -Content {
-                        New-UDHeading -Text 'Demo' -Size 2
-                    }  -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
-                        backgroundColor = '#ffc107'
-                        color = '#fff'
-                    } -Icon (New-UDIcon -Icon server -Size xs -Color '#fff') -ToolbarContent {
-                        New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Color '#fff')  
-                        New-UDIconButton -Icon (New-UDIcon -Icon plus -Size sm -Color '#fff')  
-                    }
-                }
-                New-UDCOLUMN -LargeSize 6 -Content {
-                    
+                        New-UDHeading -Text 'Card As EndPoint' -Size 1 -Color '#000'
 
-                New-UDMuCard -Content {
-                    New-UDHeading -Text 'Demo' -Size 2
-                }  -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
-                    backgroundColor = '#ffc107'
-                    color = '#fff'
-                } -Icon (New-UDIcon -Icon server -Size xs -Color '#fff') -ToolbarContent {
-                    New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Color '#fff')  
-                    New-UDIconButton -Icon (New-UDIcon -Icon plus -Size sm -Color '#fff')  
+                        $MuIcon = [UniversalDashboard.Models.FontAwesomeIcons].DeclaredMembers.Name  | Select -skip 3 | get-random 
+                        $UdIcon = [UniversalDashboard.Models.FontAwesomeIcons].DeclaredMembers.Name  | Select -skip 3 | get-random 
+                        
+                        #working no error
+                        New-UDIcon -icon $UdIcon -size 5x -Color 'blue'
+
+
+                        # Not working getting an error
+                        New-UDMuIcon -icon $MuIcon -size 6x -style @{color = 'red'}
+                        
+                        # new-udheading -Text 'Demo' -Color '#000' -Size 2
+                    } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{backgroundColor = '#03a9f4';color = '#fff'
+                    } -Icon (New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} ) -ToolbarContent {    
+                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#0d47a1'})  
+                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon info_circle -Size sm -Style @{ color = '#0d47a1'} -Spin)  
+                    } -Elevation 12 -AutoRefresh -RefreshInterval 10 -IsEndPoint 
                 }
-                New-UDMuCard -Content {
-                    New-UDHeading -Text 'Demo' -Size 2
-                } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
-                    backgroundColor = '#ffc107'
-                    color = '#fff'
-                } -Icon (New-UDIcon -Icon server -Size xs -Color '#fff') -ToolbarContent {
-                    New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Color '#fff')  
-                    New-UDIconButton -Icon (New-UDIcon -Icon plus -Size sm -Color '#fff')  
-                }
-            }
+            
         
-            }
-        }
-
         It 'has content' {
             Find-SeElement -Id 'demo-card' -Driver $Driver | should not be $null
         }

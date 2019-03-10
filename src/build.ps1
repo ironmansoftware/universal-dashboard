@@ -87,6 +87,7 @@ Copy-Item "$PSScriptRoot\poshud" $poshud -Recurse -Container
 # Copy Child Modules
 
 Copy-Item "$PSScriptRoot\UniversalDashboard.Materialize\output\UniversalDashboard.Materialize" $childModules -Recurse -Container
+Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard.MaterialUI" $childModules -Recurse -Container
 
 # End Copy Child Modules 
 

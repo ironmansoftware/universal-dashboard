@@ -28,6 +28,9 @@ function New-UDMuCard {
 		[Parameter()]
 		[scriptblock]$Content,
 
+        [Parameter()]
+		[switch]$IsEndPoint,
+
 		[Parameter()]
 		[Hashtable]$ToolbarStyle,
 
@@ -38,19 +41,22 @@ function New-UDMuCard {
 		[switch]$AutoRefresh,
 
         [Parameter()]
-		[int]$RefreshInterval
+		[int]$RefreshInterval = 5
 
     )
 
     End {
 
-        
+        if($IsEndPoint){
+            $CardEndPoint = New-UDEndpoint -Endpoint $Content -Id $id
+        }
 
         if($null -eq $ToolBarContent){
             $ToolBarItems = $null
         }else{
             $ToolBarItems = $ToolBarContent.Invoke()
         }
+        
         @{
             #This needs to match what is in the register function call of chips.jsx
             type = "mu-card"
@@ -67,7 +73,8 @@ function New-UDMuCard {
             title = $Title
             style = $Style
             elevation = $Elevation
-            content = New-UDEndpoint -Endpoint $Content -Id $Id
+            content = $Content.Invoke() 
+            isEndpoint = $isEndPoint.IsPresent
             toolbarStyle = $ToolBarStyle
             toolbarContent = $ToolBarItems
             refreshInterval = $RefreshInterval

@@ -1,11 +1,11 @@
-import Chip from "./chips";
-import Icon from "./icon";
-import Paper from "./paper";
-import IconButton from "./icon-button";
-import List from "./list";
-import ExpandListitem from "./expandlistitem";
-import Button from "./button";
-import Card from "./card";
+import Chip from "./chips"
+import Icon from "./icon"
+import Paper from "./paper"
+import IconButton from "./icon-button"
+import List from "./list"
+import ExpandListitem from "./expandlistitem"
+import Button from "./button"
+import Card from "./card"
 // import Pdf from "./pdf"; this version has a bug render text not correct.
 
 UniversalDashboard.register("mu-chip", Chip);

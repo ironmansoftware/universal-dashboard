@@ -1,4 +1,4 @@
-function New-UDPaper {
+function New-UDMuPaper {
     param(
         [Parameter()][string]$Id = (New-Guid).ToString(),
         [Parameter()][ScriptBlock]$Content,

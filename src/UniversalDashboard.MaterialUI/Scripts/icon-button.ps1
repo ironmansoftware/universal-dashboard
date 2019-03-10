@@ -1,18 +1,15 @@
-function New-UDIconButton {
+function New-UDMuIconButton {
     param(
         [Parameter()]
         [string]$Id = (New-Guid).ToString(),
-
         [Parameter ()]
 		[PSTypeName('MUIcon')]$Icon,
-
 		[Parameter ()]
 		[object] $OnClick, 
-
-
         [Parameter ()]
 		[Switch] $Disable, 
-
+        [Parameter ()]
+		[string] $Href, 
         [Parameter ()]
 		[Hashtable] $Style
 
@@ -39,6 +36,7 @@ function New-UDIconButton {
             style = $Style
             onClick = $OnClick
             icon = $Icon
+            href = $Href
         }
     }
 }

@@ -50,9 +50,9 @@ export default class UdMuIcon extends React.Component {
     render(){
 
         return (
-        <Icon style={{width: 'auto', height: 'auto',color:this.props.color,...this.props.style}}>
-            <FontAwesomeIcon {...this.state}/>
-        </Icon>
+        // <Icon style={{width: 'auto', height: 'auto',color:this.props.color,...this.props.style}}>
+            <FontAwesomeIcon style={{...this.props.style}} {...this.state}/>
+        // </Icon>
         )
     }
 }

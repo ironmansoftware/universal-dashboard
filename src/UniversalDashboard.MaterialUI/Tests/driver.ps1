@@ -1,12 +1,14 @@
 param(
     [string]$FileName,
     [Switch]$OutputTestResultXml,
-    [Switch]$NoClose
+    [Switch]$NoClose,
+    [Switch]$StopSelenium
 )
 
 Import-Module (Join-Path $PSScriptRoot "../../Selenium/Selenium.psm1") -Force
 #Don't auto-load the materialize from UD
-$Global:UDNoMaterialize = $false
+$Global:UDNoMaterialize = $true
+$Global:UDNoMaterialUI = $false
 Import-Module (Join-Path $PSScriptRoot "../../output/UniversalDashboard.Community.psd1") -Force 
 Import-Module (Join-Path $PSScriptRoot "../output/UniversalDashboard.MaterialUI/UniversalDashboard.MaterialUI.psd1") -Force
 
@@ -73,6 +75,11 @@ if ($OutputTestResultXml) {
     $Tests | ForEach-Object {
         . $_.FullName
     }
+}
+
+if ($StopSelenium) 
+{
+    Stop-SeDriver $Driver
 }
 
 if (-not $NoClose) 

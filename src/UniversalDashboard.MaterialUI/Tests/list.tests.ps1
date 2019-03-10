@@ -38,6 +38,14 @@ Describe "list" {
 
                     } -Style $ItemStyle 
 
+                    New-UDListItem -Id 'list-item' -Label 'List item with metadata on the right' -AvatarSource 'https://pbs.twimg.com/profile_images/847923651282423808/M-SFbPV1_400x400.jpg' -SecondaryAction { 
+                        
+                        New-UDEndpoint -Endpoint {
+                            New-UDParagraph -Text (Get-Date).ToShortTimeString() -Color '#000'
+                        } -Schedule (New-UDEndpointSchedule -Every 1 -Second)
+
+                    } -Style $ItemStyle 
+
                     New-UDListItem -Id 'list-item' -Label 'Universal Dashboard' -AvatarSource 'https://avatars1.githubusercontent.com/u/34902941?s=200&v=4' -SubTitle 'PowerShell Module For Creating Dashboards & WebSites' -Content {
     
                         New-UDPaper -Content {
@@ -104,6 +112,12 @@ Describe "list" {
                         
                         } -Style @{marginRight = 0}
 
+                    } -Style $ItemStyle 
+
+                    New-UDListItem -Id 'list-item' -Label 'List item with metadata on the right' -AvatarSource 'https://pbs.twimg.com/profile_images/847923651282423808/M-SFbPV1_400x400.jpg' -SecondaryAction { 
+                        new-udelement -tag 'p' -Endpoint {(get-date -Format "HH:mm:ss")} -AutoRefresh -RefreshInterval 1 -Attributes @{
+                            style = @{fontSize = 12; fontWeight = 600; color = '#c5c5c5'; marginRight = 12}
+                        }
                     } -Style $ItemStyle 
 
                     New-UDListItem -Id 'list-item-ud' -Label 'Universal Dashboard' -AvatarSource 'https://avatars1.githubusercontent.com/u/34902941?s=200&v=4' -SubTitle 'PowerShell Module For Creating Dashboards & WebSites' -Content {
