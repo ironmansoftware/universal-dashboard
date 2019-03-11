@@ -118,8 +118,9 @@ Describe "Manifest" {
         Get-Command 'New-UDSideNavItem' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDTabContainer' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDTab' -ErrorAction SilentlyContinue | Should not be $null
+        Get-Command 'New-UDGridLayout' -ErrorAction SilentlyContinue | Should not be $null
         
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 103
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 104
     }
 
     It "should require .NET 4.7" -Skip  {
