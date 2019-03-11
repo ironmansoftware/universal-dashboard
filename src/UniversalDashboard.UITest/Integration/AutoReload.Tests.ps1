@@ -71,6 +71,8 @@ Describe "Auto reload" {
 
         It "auto reloads" {
 
+            Start-Sleep 1 
+
             Invoke-RestMethod http://localhost:10001/api/user | should be "2"
 
             {

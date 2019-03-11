@@ -123,7 +123,7 @@ Defines whether multiple items can be expanded.
 Type: String
 Parameter Sets: (All)
 Aliases: 
-Accepted values: Expandable, Accordian
+Accepted values: Expandable, Accordion
 
 Required: False
 Position: Named

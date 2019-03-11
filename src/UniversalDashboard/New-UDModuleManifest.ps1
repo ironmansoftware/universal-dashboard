@@ -5,11 +5,11 @@ param(
 
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
-$version = "2.3.0"
+$version = "2.3.2"
 #$prerelease = "-beta2"
 
 $ReleaseNotes = "
-	For release notes, see: https://docs.universaldashboard.io/updates/v2.3.0
+	For release notes, see: https://docs.universaldashboard.io/updates/v2.3.2
 "
 
 $manifestParameters = @{
@@ -89,6 +89,8 @@ $manifestParameters = @{
 		"New-UDFabButton"
 		"New-UDTab"
 		"New-UDTabContainer"
+		"New-UDGridLayout"
+		"New-UDGridLayoutElement"
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 

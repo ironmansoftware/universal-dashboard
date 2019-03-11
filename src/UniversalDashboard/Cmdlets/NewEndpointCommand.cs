@@ -50,8 +50,11 @@ namespace UniversalDashboard.Cmdlets
 
             callback.SessionId = SessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
 
-            Execution.EndpointService.Instance.Register(callback);
-
+            if (callback.Schedule == null) 
+            {
+                Execution.EndpointService.Instance.Register(callback);
+            }
+            
             WriteObject(callback);
 	    }
     }

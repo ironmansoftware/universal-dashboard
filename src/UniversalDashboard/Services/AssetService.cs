@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using UniversalDashboard.Utilities;
 
 namespace UniversalDashboard.Services
 {
     public class AssetService
     {
-        private Dictionary<Guid, string> _scripts;
-        private Dictionary<Guid, string> _styleSheets;
+        public Dictionary<Guid, string> Scripts;
+        public Dictionary<Guid, string> Stylesheets;
 
         private static AssetService _instance;
 
@@ -25,16 +27,16 @@ namespace UniversalDashboard.Services
 
         private AssetService()
         {
-            _scripts = new Dictionary<Guid, string>();
-            _styleSheets = new Dictionary<Guid, string>();
+            Scripts = new Dictionary<Guid, string>();
+            Stylesheets = new Dictionary<Guid, string>();
         }
 
         public Guid RegisterScript(string script)
         {
             var id = script.ToGuid();
-            if (!_scripts.ContainsKey(id))
+            if (!Scripts.ContainsKey(id))
             {
-                _scripts.Add(id, script);
+                Scripts.Add(id, script);
             }
 
             return id;
@@ -42,9 +44,9 @@ namespace UniversalDashboard.Services
 
         public string GetScript(Guid id)
         {
-            if (_scripts.ContainsKey(id))
+            if (Scripts.ContainsKey(id))
             {
-                return _scripts[id];
+                return Scripts[id];
             }
             return null;
         }
@@ -52,16 +54,36 @@ namespace UniversalDashboard.Services
         public void RegisterStyleSheet(string stylesheet)
         {
             var id = stylesheet.ToGuid();
-            if (!_styleSheets.ContainsKey(id))
+            if (!Stylesheets.ContainsKey(id))
             {
-                _styleSheets.Add(id, stylesheet);
+                Stylesheets.Add(id, stylesheet);
             }
         }
 
         public void ClearRegistration()
         {
-            _scripts.Clear();
-            _styleSheets.Clear();
+            Scripts.Clear();
+            Stylesheets.Clear();
+        }
+
+        public string FindAsset(string fileName)
+        {
+            try
+            {
+                var file = Scripts.Values.FirstOrDefault(m => new FileInfo(m).Name.Equals(fileName, StringComparison.OrdinalIgnoreCase));
+                if (file != null)
+                {
+                    return file;
+                }
+
+                file = Stylesheets.Values.FirstOrDefault(m => new FileInfo(m).Name.Equals(fileName, StringComparison.OrdinalIgnoreCase));
+
+                return file;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

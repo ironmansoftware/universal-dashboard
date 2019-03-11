@@ -1,8 +1,7 @@
 param(
     [ValidateSet("Debug", "Release")]
 	[string]$Configuration = "Debug",
-	[Switch]$NoHelp,
-	[Switch]$Test
+	[Switch]$NoHelp
 )
 
 $platyPS = Import-Module platyPS  -PassThru -ErrorAction Ignore
@@ -37,6 +36,10 @@ Pop-Location
 # Build Child Modules 
 
 Push-Location "$PSScriptRoot\UniversalDashboard.Materialize"
+.\build.ps1
+Pop-Location
+
+Push-Location "$PSScriptRoot\UniversalDashboard.MaterialUI"
 .\build.ps1
 Pop-Location
 
@@ -94,8 +97,3 @@ Copy-Item "$PSScriptRoot\UniversalDashboard.Materialize\output\UniversalDashboar
 if (-not $NoHelp) {
 	New-ExternalHelp -Path "$PSScriptRoot\UniversalDashboard\Help" -OutputPath $help
 }
-
-if ($Test) {
-	. "$PSScriptRoot\UniversalDashboard.UITest\shebang.tests.ps1" -Release
-}
-

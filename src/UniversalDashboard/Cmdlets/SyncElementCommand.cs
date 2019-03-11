@@ -10,7 +10,7 @@ namespace UniversalDashboard.Cmdlets
         private readonly Logger Log = LogManager.GetLogger(nameof(SyncElementCommand));
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public string Id { get; set; }
+        public string[] Id { get; set; }
         [Parameter]
         public SwitchParameter Broadcast { get; set; }
 
@@ -18,15 +18,18 @@ namespace UniversalDashboard.Cmdlets
         {
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
 
-            if (Broadcast)
+            foreach(var id in Id) 
             {
-                hub.SyncElement(Id).Wait();
-            }
-            else
-            {
-                var connectionId = this.GetVariableValue("ConnectionId") as string;
-                hub.SyncElement(connectionId, Id).Wait();
-            }
+                if (Broadcast)
+                {
+                    hub.SyncElement(id).Wait();
+                }
+                else
+                {
+                    var connectionId = this.GetVariableValue("ConnectionId") as string;
+                    hub.SyncElement(connectionId, id).Wait();
+                }
+            }            
         }
     }
 }

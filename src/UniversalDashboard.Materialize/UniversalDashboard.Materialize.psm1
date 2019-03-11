@@ -1,53 +1,14 @@
 
+$IndexJs = Get-ChildItem "$PSScriptRoot\index.*.bundle.js"
 $JsFiles = Get-ChildItem "$PSScriptRoot\*.bundle.js"
 
-$Items = @("tabs")
+$AssetId = [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($IndexJs.FullName)
 
-$AssetIds = @{}
-
-foreach($item in $items)
+foreach($item in $JsFiles)
 {
-    $FilePath = $JsFiles | Where-Object { $_.Name.Contains($item) }
-    $AssetIds[$item] = [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($FilePath.FullName)
+    [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($item.FullName) | Out-Null
 }
 
-function New-UDTabContainer {
-    param(
-        [Parameter(Mandatory, ParameterSetName = "Static")]
-        [ScriptBlock]$Tabs,
-        [Parameter()]
-        [string]$Id = (New-Guid).ToString()
-    )
-
-    End {
-        @{
-            isPlugin = $true
-            assetId = $AssetIds["tabs"]
-            type = "tab-container"
-            tabs = $Tabs.Invoke()
-            id = $id
-        }
-    }
-}
-
-function New-UDTab {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Text,
-        [Parameter(Mandatory, ParameterSetName = "static")]
-        [ScriptBlock]$Content,
-        [Parameter()]
-        [string]$Id = (New-Guid).ToString()
-    )
-
-    End {
-        @{
-            isPlugin = $true
-            assetId = $AssetIds["tabs"]
-            type = "tab"
-            text = $Text
-            content = $Content.Invoke()
-            id = $Id
-        }
-    }
+Get-ChildItem (Join-Path $PSScriptRoot "scripts") -File | ForEach-Object {
+    . $_.FullName
 }

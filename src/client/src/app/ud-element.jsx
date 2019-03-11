@@ -300,13 +300,16 @@ class UDElementContent extends React.Component {
 
         var children = null;
         
-        if (this.state.content) {
+        if (this.state.content && this.state.content.map) {
             children = this.state.content.map(function(x) {
                 if (x.type != null) {
                     return renderComponent(x, this.props.history);
                 } 
                 return x;
             }.bind(this));
+        }
+        else if (this.state.content) {
+            children = this.state.content;
         }
 
         var attributes = this.state.attributes;

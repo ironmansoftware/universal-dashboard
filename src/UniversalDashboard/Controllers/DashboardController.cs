@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
 using System.Reflection;
 using Microsoft.AspNetCore.Routing;
+using System.Text;
+using UniversalDashboard.Services;
 
 namespace UniversalDashboard.Controllers
 {
@@ -54,11 +56,11 @@ namespace UniversalDashboard.Controllers
         }
 
         [Authorize]
-        [Route("page/{*page}")]
+        [Route("page/{*pageName}")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public Page Page()
         {
-            var page = HttpContext.GetRouteValue("page") as string;
+            var page = HttpContext.GetRouteValue("pageName") as string;
 
             Log.Debug($"Index - Page = {page}");
             return _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
@@ -68,25 +70,46 @@ namespace UniversalDashboard.Controllers
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public IActionResult Theme()
 	    {
-            var materializeCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "styles", "materialize.min.css");
-            var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "styles", "site.css");
-
-            var css = System.IO.File.ReadAllText(materializeCss);
-            css += System.IO.File.ReadAllText(siteCss);
-            css += _dashboard?.Themes?.FirstOrDefault()?.RenderedContent;
-
-            if (_dashboard?.Navigation != null)
+            try
             {
-                css += Environment.NewLine;
-                css += $@"side-nav {{
+                var stringBuilder = new StringBuilder();
+
+                var materializeCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "materialize.min.css");
+                var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "site.css");
+
+                stringBuilder.AppendLine(System.IO.File.ReadAllText(materializeCss));
+                stringBuilder.AppendLine(System.IO.File.ReadAllText(siteCss));
+
+                foreach(var item in AssetService.Instance.Stylesheets)
+                {
+                    try
+                    {
+                        var content = System.IO.File.ReadAllText(item.Value);
+                        stringBuilder.AppendLine(content);
+                    }
+                    catch (Exception ex)
+                    {
+                        stringBuilder.AppendLine($"/* Failed to load style sheet {item.Value}. {ex.Message} */");
+                    }
+                }
+
+                if (_dashboard?.Themes?.FirstOrDefault() != null)
+                {
+                    stringBuilder.AppendLine(_dashboard?.Themes?.FirstOrDefault()?.RenderedContent);
+                }
+
+                stringBuilder.AppendLine(System.IO.File.ReadAllText(siteCss));
+                
+                if (_dashboard?.Navigation != null)
+                {
+                    stringBuilder.AppendLine($@"side-nav {{
                             width: {_dashboard.Navigation.Width}px;
-                        }}";
-            }
+                        }}");
+                }
 
-            if (_dashboard?.Navigation?.Fixed == true)
-            {
-                css += Environment.NewLine;
-                css += $@"
+                if (_dashboard?.Navigation?.Fixed == true)
+                {
+                    stringBuilder.AppendLine($@"
                         header, main, footer {{
                           padding-left: {_dashboard.Navigation.Width}px;
                         }}
@@ -95,14 +118,23 @@ namespace UniversalDashboard.Controllers
                           header, main, footer {{
                             padding-left: 0;
                           }}
-                        }}";
-            }
+                        }}");
+                }
 
-			return new ContentResult()
+                return new ContentResult()
+                {
+                    Content = stringBuilder.ToString(),
+                    ContentType = "text/css",
+                };
+            }
+            catch (Exception ex)
             {
-                Content = css,
-                ContentType = "text/css",
-            };
+                return new ContentResult()
+                {
+                    Content = ex.Message,
+                    ContentType = "text/css"
+                };
+             }
 	    }
 
         [Route("reload")]

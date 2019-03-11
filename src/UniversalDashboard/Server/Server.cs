@@ -18,6 +18,7 @@ using System.Runtime.Loader;
 using UniversalDashboard.Execution;
 using UniversalDashboard.Utilities;
 using UniversalDashboard.Interfaces;
+using System.Management.Automation.Runspaces;
 
 namespace UniversalDashboard
 {
@@ -68,6 +69,8 @@ namespace UniversalDashboard
 
 		public bool Running { get; private set; }
 
+        public IDashboardService DashboardService { get; private set; }
+
 		internal bool IsRestApi { get; private set; }
 		
 		private string _reloadKey;
@@ -88,8 +91,8 @@ namespace UniversalDashboard
 			var builder = new WebHostBuilder()
 				.ConfigureServices((y) =>
 				{
-					var dashboardService = new DashboardService(dashboardOptions, _reloadKey);
-					y.Add(new ServiceDescriptor(typeof(IDashboardService), dashboardService));
+					DashboardService = new DashboardService(dashboardOptions, _reloadKey);
+					y.Add(new ServiceDescriptor(typeof(IDashboardService), DashboardService));
                     
 					if (_reloader != null)
 						y.Add(new ServiceDescriptor(typeof(AutoReloader), _reloader));
@@ -143,6 +146,8 @@ namespace UniversalDashboard
 			{
 				this.Running = false;
 				this.host.Dispose();
+
+                DashboardService.Dispose();
 
 				Servers.Remove(this);
 

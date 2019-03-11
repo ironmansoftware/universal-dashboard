@@ -10,16 +10,18 @@ module.exports = (env) => {
 
   return {
     entry: {
-      'tabs' : __dirname + '/components/tabs.jsx'
+      'index' : __dirname + '/components/index.js'
     },
     output: {
       path: BUILD_DIR,
       filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
-      //sourceMapFilename: 'bundle.map',
-      publicPath: "/"
+      sourceMapFilename: '[name].[hash].bundle.map',
+      publicPath: "/",
+      library: 'udmaterialize',
+      libraryTarget: 'var'
     },
     module : {
-      loaders : [
+      rules : [
         { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'}
       ]
     },
@@ -30,12 +32,7 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.json', '.js', '.jsx']
     },
-    plugins: [
-      new webpack.ProvidePlugin({
-        React: "React", react: "React", "window.react": "React", "window.React": "React"
-    }),
-    new webpack.optimize.UglifyJsPlugin()
-    ]
+    devtool: 'source-map'
   };
 }
 
