@@ -31,7 +31,9 @@ function New-UDGridLayout {
         [Parameter()]
         [switch]$Draggable,
         [Parameter()]
-        [switch]$Resizable
+        [switch]$Resizable,
+        [Parameter()]
+        [switch]$Persist
     )
 
     End {
@@ -53,7 +55,7 @@ function New-UDGridLayout {
 
         @{
             type = "grid-layout"
-            id = $Id
+            id = "grid-element-$Id"
             className = "layout"
             rowHeight = $RowHeight
             content = $Content.Invoke()
@@ -62,23 +64,7 @@ function New-UDGridLayout {
             breakpoints = $Breakpoints
             isDraggable = $Draggable.IsPresent
             isResizable = $Resizable.IsPresent
-        }
-    }
-}
-
-function New-UDGridLayoutElement {
-    param(
-        [Parameter()]
-        [string]$Id,
-        [Parameter()]
-        [scriptblock]$Content
-    )
-
-    End {
-        @{
-            type = "grid-layout-element"
-            id = $Id
-            content = $Content.Invoke()
+            persist = $Persist.IsPresent
         }
     }
 }
