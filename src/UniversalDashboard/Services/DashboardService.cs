@@ -67,5 +67,27 @@ namespace UniversalDashboard.Services
 
 			RunspaceFactory = new UDRunspaceFactory(this, initialSessionState);
 		}
+
+        #region IDisposable Support
+        private bool disposedValue = false; 
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    RunspaceFactory.Dispose();
+                }
+
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+        #endregion
     }
 }

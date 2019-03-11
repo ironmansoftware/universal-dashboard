@@ -33,6 +33,7 @@
     "react-color": "2.13.8",
     "react-debounce-input": "3.2.0",
     "react-dom": "^16.6.0",
+    "react-grid-layout": "^0.16.6",
     "react-interval": "^2.0.1",
     "react-materialize": "1.1.0",
     "react-redux": "5.0.7",

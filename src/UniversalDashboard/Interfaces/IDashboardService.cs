@@ -4,7 +4,7 @@ using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Interfaces
 {
-    public interface IDashboardService 
+    public interface IDashboardService : IDisposable
     {
         void SetDashboard(Dashboard dashboard);
         void SetRestEndpoints(Endpoint[] endpoints);

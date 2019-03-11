@@ -169,6 +169,8 @@ namespace UniversalDashboard.Services
             {
                 if (disposing)
                 {
+                    _firstItem?.Dispose();
+
                     foreach(var item in _items) {
                         item.Value?.Dispose();
                     }
