@@ -27,11 +27,21 @@ export default class UDGridLayout extends React.Component {
     }
 
     onLayoutChange(layout, layouts) {
-        if (this.props.persist) {
-            saveToLS("layouts", layouts);
-            this.setState({ layouts });
-        }
+
+      if (this.props.endpoint) {
+        UniversalDashboard.publish('element-event', {
+          type: "clientEvent",
+          eventId: this.props.endpoint,
+          eventName: 'onLayoutChanged',
+          eventData: JSON.stringify(layouts)
+        });
       }
+
+      if (this.props.persist) {
+          saveToLS("layouts", layouts);
+          this.setState({ layouts });
+      }
+    }
 
     render() {
 
