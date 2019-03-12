@@ -12,7 +12,9 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import Divider from "@material-ui/core/Divider";
-import { Avatar } from "@material-ui/core";
+import { Avatar, CssBaseline } from "@material-ui/core";
+import ReactInterval from "react-interval";
+
 
 const styles = theme => ({
   root: {
@@ -24,7 +26,10 @@ const styles = theme => ({
 });
 
 class UdList extends Component {
-  state = {};
+
+  state = {
+    content: this.props.content,
+  };
 
   handleClick = event => {
     this.setState({ [event]: !this.state[event] });
@@ -39,25 +44,59 @@ class UdList extends Component {
     });
   };
 
+  onLoadData = () => {
+    UniversalDashboard.get(`/api/internal/component/element/${this.props.id}`,(data) =>{
+      data.error ?
+      this.setState({
+        hasError: true,
+        error: data.error,
+        data: data,
+        errorMessage: data.error.message
+      }) :
+      this.setState({
+        content: data
+      })
+    })
+  }
+
+  componentWillMount = () => {
+    if(this.props.isEndpoint){
+      this.onLoadData()
+    }
+    this.pubSubToken = UniversalDashboard.subscribe(
+      this.props.id,
+      this.onIncomingEvent.bind(this)
+    );
+  };
+
+  onIncomingEvent(eventName, event) {
+    if (event.type === "syncElement") {
+      this.onLoadData();
+    }
+  }
+
+  componentWillUnmount() {
+    UniversalDashboard.unsubscribe(this.pubSubToken);
+  }
+
   //   Render Basic list Item
   renderListItem = item => {
+
     return (
       <ListItem
-        button={item.onClick !== null ? true : false}
+        button={item.isButton}
         key={item.id}
         id={item.id}
         onClick={
           item.onClick !== null ? this.handleItemClick.bind(this,item) : item.onClick
         }
-        style={item.style}
-      >
-          {
-            item.icon ? <ListItemIcon>
+        style={item.style}>
+
+          {item.avatarType === 'Icon' ? <ListItemIcon>
               {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
-            </ListItemIcon> : (item.avatarSource ? <ListItemAvatar>
-              <Avatar src={item.avatarSource}/>
-            </ListItemAvatar> : null)
-          }
+            </ListItemIcon> : (item.avatarType === 'Avatar' ? <ListItemAvatar>
+              <Avatar src={item.source}/>
+            </ListItemAvatar> : null)}
 
         <ListItemText inset primary={item.label} secondary={item.subTitle} style={!item.icon ? {marginLeft:'24px'}: null} />
 
@@ -85,13 +124,13 @@ class UdList extends Component {
           onClick={this.handleClick.bind(this, item.label)}
         >
           {
-            item.icon ? <ListItemIcon>
+            item.avatarType === 'Icon' ? <ListItemIcon>
               {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
-            </ListItemIcon> : (item.avatarSource ? <ListItemAvatar>
-              <Avatar src={item.avatarSource}/>
+            </ListItemIcon> : (item.avatarType === 'Avatar' ? <ListItemAvatar>
+              <Avatar src={item.source}/>
             </ListItemAvatar> : null)
           }
-          <ListItemText inset primary={item.label} secondary={item.subTitle} style={(!item.icon || !item.avatarSource ? {marginLeft:'24px'}: null)} primaryTypographyProps={{...item.labelStyle}} />
+          <ListItemText inset primary={item.label} secondary={item.subTitle} style={(!item.icon || !item.source ? {marginLeft:'24px'}: null)} primaryTypographyProps={{...item.labelStyle}} />
           {this.state[item.label] ? (
             <ExpandLess color="primary" />
           ) : (
@@ -116,8 +155,18 @@ class UdList extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { 
+      classes, 
+      autoRefresh,
+      refreshInterval,
+      isEndpoint 
+    } = this.props;
+
+    const { content } = this.state;
+
     return (
+      <>
+      <CssBaseline />
       <List
         id={this.props.id}
         key={this.props.id}
@@ -128,10 +177,17 @@ class UdList extends Component {
         component="div"
         style={this.props.style}
       >
-        {this.props.content.map(item => {
+        {content.map(item => {
           return this.renderNestedItem(item);
         })}
       </List>
+      <ReactInterval
+        timeout={refreshInterval * 1000}
+        enabled={autoRefresh}
+        callback={this.onLoadData}
+      />
+
+      </>
     );
   }
 }

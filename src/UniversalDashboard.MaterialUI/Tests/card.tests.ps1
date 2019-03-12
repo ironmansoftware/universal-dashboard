@@ -2,7 +2,7 @@ Describe "card" {
     Context "content" {
         Set-TestDashboard {
                     
-                    New-UDMuCard -Content {
+                    New-UDMuCard -Id 'demo-card' -Content {
                         New-UDHeading -Text 'Card As Static' -Size 1 -Color '#000'
                         new-udheading -text (get-date -Format "HH:mm:ss") -size 4 -color '#000'
                     } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
@@ -11,43 +11,46 @@ Describe "card" {
                     } -Icon (New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} ) -ToolbarContent {    
                         New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#0d47a1'})  
                         New-UDMuIconButton -Icon (New-UDMuIcon -Icon info_circle -Size sm -Style @{ color = '#0d47a1'} -Spin)  
-                    }
+                    } -Elevation 12
 
-                    New-UDMuCard -Content {
-                        New-UDHeading -Text 'Card As EndPoint With Reload Button' -Size 1 -Color '#000'
-                        new-udheading -text "$(0..100000 | Get-Random)" -Size 4 -color 'green'
-                    } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{
-                        backgroundColor = '#03a9f4'
-                        color = '#fff'
-                    } -Icon (New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} ) -ToolbarContent {    
-                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#0d47a1'})  
-                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon info_circle -Size sm -Style @{ color = '#0d47a1'} -Spin)  
-                    } -IsEndPoint
-
-                    New-UDMuCard -Content {
-                        New-UDHeading -Text 'Card As EndPoint' -Size 1 -Color '#000'
-
-                        $MuIcon = [UniversalDashboard.Models.FontAwesomeIcons].DeclaredMembers.Name  | Select -skip 3 | get-random 
-                        $UdIcon = [UniversalDashboard.Models.FontAwesomeIcons].DeclaredMembers.Name  | Select -skip 3 | get-random 
-                        
-                        #working no error
-                        New-UDIcon -icon $UdIcon -size 5x -Color 'blue'
-
-
-                        # Not working getting an error
-                        New-UDMuIcon -icon $MuIcon -size 6x -style @{color = 'red'}
-                        
-                        # new-udheading -Text 'Demo' -Color '#000' -Size 2
-                    } -ShowToolBar -ShowControls -Title 'Universal Dashboard MaterialUI Card' -ToolBarStyle @{backgroundColor = '#03a9f4';color = '#fff'
-                    } -Icon (New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} ) -ToolbarContent {    
-                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#0d47a1'})  
-                        New-UDMuIconButton -Icon (New-UDMuIcon -Icon info_circle -Size sm -Style @{ color = '#0d47a1'} -Spin)  
-                    } -Elevation 12 -AutoRefresh -RefreshInterval 10 -IsEndPoint 
                 }
             
         
         It 'has content' {
             Find-SeElement -Id 'demo-card' -Driver $Driver | should not be $null
+        }
+    }
+
+    Context "endpoint" {
+
+        Set-TestDashboard {
+                    
+            $icon = New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} 
+            $ToolbarStyle =  @{backgroundColor = '#03a9f4';color = '#fff'}
+            $ToolBarContent = {New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#0d47a1'})}
+            $CardProps = @{
+                Elevation = 12
+                AutoRefresh = $true
+                RefreshInterval = 1
+                IsEndPoint = $true
+                ShowToolBar = $true
+                ShowControls = $true
+            }
+
+            New-UDMuCard -Id 'demo-card' -Title 'Universal Dashboard MaterialUI Card' -Content {
+                
+                New-UDHeading -Text "$(0..15 | get-random)" -Size 1 -Color '#000' -id 'dynamic'
+        
+            } -ToolBarStyle $ToolbarStyle -Icon $icon -ToolbarContent $ToolBarContent @CardProps
+        }
+            
+        
+        It 'has dynamic content' {
+            $element = Find-SeElement -Id 'dynamic' -Driver $Driver
+            start-sleep 3
+            $element1 = Find-SeElement -Id 'dynamic' -Driver $Driver
+            $element.text -eq $element1.text | should be $false
+
         }
     }
 }

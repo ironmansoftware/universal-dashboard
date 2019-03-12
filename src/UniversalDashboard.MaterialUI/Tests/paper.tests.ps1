@@ -1,7 +1,7 @@
 Describe "paper" {
     Context "content" {
         Set-TestDashboard {
-            New-UDPaper -Content {
+            New-UDMuPaper -Content {
                 New-UDHeading -Text "hi" -Id 'hi'
             }
         }
@@ -12,7 +12,7 @@ Describe "paper" {
     }
     Context "style" {
         Set-TestDashboard {
-            New-UDPaper -Content {
+            New-UDMuPaper -Content {
                 New-UDHeading -Text "hi" -Id 'hi'
             } -Style @{
                 backgroundColor = '#90caf9'
@@ -27,7 +27,7 @@ Describe "paper" {
     }
     Context "elevation" {
         Set-TestDashboard {
-            New-UDPaper -Content {
+            New-UDMuPaper -Content {
                 New-UDHeading -Text "hi" -Id 'hi'
             } -Style @{
                 backgroundColor = '#90caf9'
@@ -37,6 +37,22 @@ Describe "paper" {
         It 'has elevation of 4' {
             $element = Find-SeElement -Id 'paper-container' -Driver $Driver
             (Get-SeElementAttribute -Element $element -Attribute 'class') -match '.jss8' | should be $true
+        }
+    }
+    Context "endpoint" {
+        Set-TestDashboard {
+            New-UDMuPaper -Content {
+                New-UDHeading -Text "$(0..10 | get-random)" -Id 'dynamic'
+            } -Style @{
+                backgroundColor = '#90caf9'
+            } -Id 'paper-container' -IsEndPoint -AutoRefresh -RefreshInterval 1
+        }
+
+        It 'has content dynamic content' {
+            $element = Find-SeElement -Id 'dynamic' -Driver $Driver
+            start-sleep 3
+            $element1 = Find-SeElement -Id 'dynamic' -Driver $Driver
+            $element.text -eq $element1.text | should be $false
         }
     }
 }

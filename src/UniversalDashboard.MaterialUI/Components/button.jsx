@@ -51,6 +51,7 @@ export class UdButton extends React.Component {
         href={this.props.href}
         onClick={this.handleClick.bind(this)}
         style={{ ...this.props.style }}
+        id={this.props.id}
       >
         {this.props.iconAlignment === "left" ? icon : null}
         {this.props.text}

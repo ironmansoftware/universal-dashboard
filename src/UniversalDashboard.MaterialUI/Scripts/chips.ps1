@@ -17,12 +17,11 @@ function New-UDMuChip {
 		[PSTypeName('MUIcon')]$Icon,
 
 		[Parameter(Position = 2)]
-        [ValidateSet("default","primary","secondary")]
-		[string]$Color = "default",
+		[Hashtable]$Style,
 
 		[Parameter(Position = 3)]
         [ValidateSet("outlined","default")]
-		[string]$Style = "default",
+		[string]$Variant = "default",
 
 		[Parameter(Position = 4)]
 		[Switch]$Clickable,
@@ -68,8 +67,8 @@ function New-UDMuChip {
             id = $Id
             label = $Label
             icon = $Icon 
-            color = $Color 
             style = $Style 
+            variant = $Variant 
             clickable = $Clickable 
             onClick = $OnClick
             onDelete  = $OnDelete

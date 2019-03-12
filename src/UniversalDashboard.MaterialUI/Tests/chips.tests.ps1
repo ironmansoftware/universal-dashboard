@@ -1,7 +1,7 @@
 Describe "chips" {
     Context "label" {
         Set-TestDashboard {
-            New-UDChip -Label "my Label" -Id "chip"
+            New-UDMuChip -Label "my Label" -Id "chip"
         }
 
         It 'has a label' {
@@ -11,8 +11,8 @@ Describe "chips" {
 
     Context "icon" {
         Set-TestDashboard {
-            $Icon = New-UDIcon -Icon 'user'
-            New-UDChip -Label "my Label" -Id "chip" -Icon $Icon -OnClick {Show-UDToast -Message 'test'} -Clickable 
+            $Icon = New-UDMuIcon -Icon 'user' -Size sm -Style @{color = '#fff'}
+            New-UDMuChip -Label "Demo User" -Id "chip" -Icon $Icon -OnClick {Show-UDToast -Message 'test'} -Clickable -Style @{backgroundColor = '#00838f'}
         }
 
         It 'has an icon' {
@@ -22,7 +22,7 @@ Describe "chips" {
 
     Context "should click" {
         Set-TestDashboard {
-            New-UDChip -Label "my Label" -Id "chip" -OnClick {
+            New-UDMuChip -Label "my Label" -Id "chip" -OnClick {
                 Set-TestData -Data "OnClick"
             }
         }
@@ -35,9 +35,14 @@ Describe "chips" {
 
     Context "should delete" {
         Set-TestDashboard {
-            New-UDChip -Label "my Label" -Id "chip" -OnDelete {
+            $Icon = New-UDMuIcon -Icon 'user_circle' -Size sm -Style @{color = '#fff'}
+            New-UDMuChip -Label "my Label" -Id "chip" -Icon $Icon -OnDelete {
                 Set-TestData -Data "OnDelete"
-            }
+            } -Style @{backgroundColor = '#00838f'} 
+            $Icon = New-UDMuIcon -Icon 'user_circle' -Size sm -Style @{color = '#2196f3'}
+            New-UDMuChip -Label "my Label" -Id "dmeo" -Icon $Icon -OnDelete {
+                Set-TestData -Data "OnDelete"
+            } -Style @{borderColor = '#2196f3'} -Variant outlined
         }
 
         It "should click delete and have test data" {

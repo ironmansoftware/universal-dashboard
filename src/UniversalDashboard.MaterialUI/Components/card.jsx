@@ -216,9 +216,11 @@ export class UdMuCard extends React.Component {
       isEndpoint
     } = this.props;
 
-    const { minimized, elevation, content } = this.state;
-    console.log("Prosp", this.props);
-    console.log("State", this.state);
+    const { 
+      minimized, 
+      elevation, 
+      content } = this.state;
+    
     return (
       <>
         <CssBaseline />
@@ -273,17 +275,17 @@ export class UdMuCard extends React.Component {
 
 UdMuCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  // size: PropTypes.string,
+  size: PropTypes.string,
   // content: PropTypes.array,
-  // style: PropTypes.object,
-  // showToolBar: PropTypes.bool.isRequired,
-  // toolbarStyle: PropTypes.object,
-  // toolbarContent: PropTypes.object,
-  // showControls: PropTypes.bool,
-  // icon: PropTypes.oneOfType(["UdMuIcon"]),
-  // title: PropTypes.string,
-  // autoRefresh: PropTypes.bool,
-  // refreshInterval: PropTypes.number
+  style: PropTypes.object,
+  showToolBar: PropTypes.bool.isRequired,
+  toolbarStyle: PropTypes.object,
+  toolbarContent: PropTypes.object,
+  showControls: PropTypes.bool,
+  icon: PropTypes.oneOfType(["UdMuIcon"]),
+  title: PropTypes.string,
+  autoRefresh: PropTypes.bool,
+  refreshInterval: PropTypes.number
 };
 
 export default withStyles(styles)(UdMuCard);
