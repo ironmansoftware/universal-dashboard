@@ -1,4 +1,4 @@
-function New-UDIcon {
+function New-UDMuIcon {
     param(
         [Parameter()]
         [string]$Id = (New-Guid).ToString(),
@@ -29,10 +29,12 @@ function New-UDIcon {
         [Parameter()]
         [switch]$Pulse,
         [Parameter ()]
-		[ValidateSet("xs", "sm", "lg", "2x", "3x", "4x", "5x", "6x", "7x", "8x", "9x", "10x")]
+		[ValidateSet("xs", "sm", "lg", "2x", "3x","4x", "5x", "6x", "7x", "8x", "9x", "10x")]
         [string]$Size = "sm",
         [Parameter()]
-        [string]$Color
+        [Hashtable]$Style,
+        [Parameter()]
+        [string]$Title
     )
 
     End {
@@ -55,7 +57,9 @@ function New-UDIcon {
             pull = $Pull
             className = $ClassName
             transform = $Transform
-            icon = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "-")
+            style = $Style
+            title = $Title
+            icon = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "")
         }
 
         $MUIcon.PSTypeNames.Insert(0, "MUIcon") | Out-Null

@@ -91,6 +91,15 @@ $manifestParameters = @{
 		"New-UDTabContainer"
 		"New-UDGridLayout"
 		"New-UDGridLayoutElement"
+		"New-UDMuIcon"
+		"New-UDMuChip"
+		"New-UDMuPaper"
+		"New-UDMuIconButton"
+		"New-UDMuList"
+		"New-UDMuListItem"
+		"New-UDMuButton"
+		"New-UDMuCard"
+		"New-UDPdf"
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 

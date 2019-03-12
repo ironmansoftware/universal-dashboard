@@ -1,6 +1,8 @@
 var webpack = require('webpack');
 var path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const RemoveWebpackPlugin = require('remove-webpack-plugin');
+
 
 var BUILD_DIR = path.resolve(__dirname, 'src/public');
 var SRC_DIR = path.resolve(__dirname, 'src');
@@ -38,7 +40,8 @@ module.exports = (env) => {
               favicon: path.resolve(SRC_DIR, 'favicon.ico'),
               template: path.resolve(SRC_DIR, 'index.html'),
               chunksSortMode: 'none'
-            })
+            }),
+            new RemoveWebpackPlugin(BUILD_DIR)
     ],
     optimization: {
       minimize: false,
