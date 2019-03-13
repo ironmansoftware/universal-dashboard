@@ -99,7 +99,12 @@ Describe "Api" {
                 
                 $name
             } -EvaluateUrlAsRegex
-        ) -EndpointInitialization $Init
+
+            New-UDEndpoint -Url "/delete/body" -Method "DELETE" -Endpoint {
+                $body
+            }
+
+            ) -EndpointInitialization $Init
 
         New-UDEndpoint -Url "/afterstartup" -Method "GET" -Endpoint {
             "After Startup"
@@ -182,6 +187,11 @@ Describe "Api" {
 
         It "should add endpoints after startup" {
             Invoke-RestMethod -Uri 'http://localhost:10001/api/afterstartup' -Method GET | Should be "After Startup"
+        }
+
+        It "should use body for delete"  {
+            $result = Invoke-RestMethod -Uri http://localhost:10001/api/delete/body -Method DELETE -Body "test"
+            $result | Should be "test"
         }
 
         Stop-UDRestApi $Server
