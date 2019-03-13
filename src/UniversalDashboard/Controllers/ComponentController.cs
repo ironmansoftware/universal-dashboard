@@ -322,6 +322,14 @@ namespace UniversalDashboard.Controllers
 
             SetQueryStringValues(variables);
 
+            if (!await TryProcessBodyAsForm(Request, variables))
+            { 
+                //If we made it here we either have a non-form content type
+                //or the request was made with the default content type of form
+                //when it is really something else (probably application/json)
+                ProcessBodyAsRaw(Request, variables);                              
+            }
+
             var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "DELETE", variables);
             if (endpoint != null)
             {
