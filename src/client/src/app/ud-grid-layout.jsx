@@ -10,11 +10,17 @@ export default class UDGridLayout extends React.Component {
     constructor(props) {
         super(props);
 
-        var layouts = this.props.layout.map(x => {
+        var layouts = null;
+        if (props.layoutJson) {
+          layouts = JSON.parse(props.layoutJson)
+        } else {
+          layouts = props.layout.map(x => {
             x.i = "grid-element-" + x.i;
             return x;
-        });
-        if (this.props.persist) {
+          });
+        }
+
+        if (props.persist) {
             var jsonLayouts = getFromLS("layouts");
             if (jsonLayouts != null) {
                 layouts = JSON.parse(JSON.stringify(jsonLayouts))
@@ -22,8 +28,37 @@ export default class UDGridLayout extends React.Component {
         };
 
         this.state = {
-            layouts
+            layouts, 
+            content: props.content
         };
+    }
+
+    componentDidMount() {
+      UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+    }
+
+    onIncomingEvent(eventName, event) {
+      if (event.type === "addElement") {
+          var layouts = this.state.layouts;
+
+          event.elements.forEach(x => {
+            layouts.push({
+              i: `grid-element-${x.id}`
+            })
+          })
+
+          this.setState({
+            layouts,
+            content: this.state.content.concat(event.elements)
+          })
+      }
+
+      if (event.type == "removeElement") {
+        this.setState({
+          layouts: this.state.filter(x => x.i !== event.id),
+          content: this.state.content.filter(x => x.id !== event.id)
+        })
+      }
     }
 
     onLayoutChange(layout, layouts) {
@@ -44,8 +79,7 @@ export default class UDGridLayout extends React.Component {
     }
 
     render() {
-
-        var elements = this.props.content.map(x => 
+        var elements = this.state.content.map(x => 
                 <div key={"grid-element-" + x.id}>
                     {UniversalDashboard.renderComponent(x)}
                 </div>
