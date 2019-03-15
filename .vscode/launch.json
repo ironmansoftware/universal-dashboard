@@ -4,6 +4,13 @@
    // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
    "version": "0.2.0",
    "configurations": [
+       {
+           "type": "PowerShell",
+           "request": "attach",
+           "name": "PowerShell Attach to Host Process",
+           "processId": "${command:PickPSHostProcess}",
+           "runspaceId": 1
+       },
         {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
