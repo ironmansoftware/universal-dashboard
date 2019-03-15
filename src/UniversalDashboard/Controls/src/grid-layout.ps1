@@ -9,6 +9,8 @@ function New-UDGridLayout {
         [Parameter()]
         [Hashtable[]]$Layout,
         [Parameter()]
+        [string]$LayoutJson,
+        [Parameter()]
         [int]$LargeColumns = 12,
         [Parameter()]
         [int]$MediumColumns = 10,
@@ -55,20 +57,21 @@ function New-UDGridLayout {
             xxs = $ExtraExtraSmallColumns
         }
 
-        if ($OnLayoutChanged -is ([ScriptBlock])) {
+        if ($null -ne $OnLayoutChanged -and $OnLayoutChanged -is ([ScriptBlock])) {
             $OnLayoutChanged = New-UDEndpoint -Endpoint $OnLayoutChanged
         }
-        elseif ($OnLayoutChanged -isnot ([UniversalDashboard.Models.Endpoint])) {
+        elseif ($null -ne $OnLayoutChanged -and $OnLayoutChanged -isnot ([UniversalDashboard.Models.Endpoint])) {
             throw "OnLayoutChanged must be a ScriptBlock of UDEndpoint"
         }
 
         @{
             type = "grid-layout"
-            id = "grid-element-$Id"
+            id = $Id
             className = "layout"
             rowHeight = $RowHeight
             content = $Content.Invoke()
             layout = $Layout
+            layoutJson = $LayoutJson
             cols = $Columns
             breakpoints = $Breakpoints
             isDraggable = $Draggable.IsPresent
