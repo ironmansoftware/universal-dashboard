@@ -29,7 +29,7 @@ function New-UDMuIcon {
         [Parameter()]
         [switch]$Pulse,
         [Parameter ()]
-		[ValidateSet("xs", "sm", "lg", "2x", "3x","4x", "5x", "6x", "7x", "8x", "9x", "10x")]
+        [ValidateSet("xs", "sm", "lg", "2x", "3x", "4x", "5x", "6x", "7x", "8x", "9x", "10x")]
         [string]$Size = "sm",
         [Parameter()]
         [Hashtable]$Style,
@@ -39,30 +39,30 @@ function New-UDMuIcon {
 
     End {
         $MUIcon = @{
-            type = "mu-icon"
-            isPlugin = $true 
-            assetId = $MUAssetId
+            type       = "mu-icon"
+            isPlugin   = $true 
+            assetId    = $MUAssetId
 
-            id = $id 
-            size = $Size
+            id         = $id 
+            size       = $Size
             fixedWidth = $FixedWidth
-            color = $Color
-            listItem = $ListItem.IsPresent
-            inverse = $Inverse.IsPresent
-            rotation = $Rotation
-            flip = $Flip
-            spin = $Spin.IsPresent
-            pulse = $Pulse.IsPresent
-            border = $Border.IsPresent
-            pull = $Pull
-            className = $ClassName
-            transform = $Transform
-            style = $Style
-            title = $Title
-            icon = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "")
+            color      = $Color
+            listItem   = $ListItem.IsPresent
+            inverse    = $Inverse.IsPresent
+            rotation   = $Rotation
+            flip       = $Flip
+            spin       = $Spin.IsPresent
+            pulse      = $Pulse.IsPresent
+            border     = $Border.IsPresent
+            pull       = $Pull
+            className  = $ClassName
+            transform  = $Transform
+            style      = $Style
+            title      = $Title
+            icon       = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "")
         }
 
-        $MUIcon.PSTypeNames.Insert(0, "MUIcon") | Out-Null
+        $MUIcon.PSTypeNames.Insert(0, "UniversalDashboard.MaterialUI.Icon") | Out-Null
 
         $MUIcon
     }

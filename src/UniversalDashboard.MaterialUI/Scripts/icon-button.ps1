@@ -3,7 +3,7 @@ function New-UDMuIconButton {
         [Parameter()]
         [string]$Id = (New-Guid).ToString(),
         [Parameter ()]
-		[PSTypeName('MUIcon')]$Icon,
+		[PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
 		[Parameter ()]
 		[object] $OnClick, 
         [Parameter ()]
