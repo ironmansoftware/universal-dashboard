@@ -266,3 +266,5 @@ TEST-*.xml
 .vscode/launch.json
 .vscode/settings.json
 .vscode/launch.json
+
+\.vscode/
