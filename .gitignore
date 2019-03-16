@@ -268,3 +268,5 @@ TEST-*.xml
 .vscode/launch.json
 
 \.vscode/
+/package-lock.json
+src/UniversalDashboard.MaterialUI/package-lock.json

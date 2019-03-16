@@ -5,13 +5,11 @@ Describe "card" {
         Set-TestDashboard {
            
             $ToolBarProps = @{
-                icon        = New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} 
-                Style       = @{backgroundColor = '#2196f3'; color = '#fff';flexGrow = 1}
-                Content     = {New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#fff'}) -OnClick {Show-UDToast -Message 'test'}}
-                Title       = New-UDMuTypography -Variant h5 -Content{
-                    Get-Date -Format "HH:mm:ss"
-                } -IsEndPoint -AutoRefresh -RefreshInterval 1
-                ShowButtons = $true
+                # icon        = New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#000'} 
+                Style       = @{backgroundColor = '#fff'; color = '#000';flexGrow = 1}
+                Content     = {New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#000'}) -OnClick {Show-UDToast -Message 'test'}}
+                Title       = New-UDMuTypography -Variant h5 -Text 'Universal Dashboard'
+                ShowButtons = $false
                 Id = 'toolbar'
             }
             $ToolBar = New-UDMuCardToolbar @ToolBarProps
@@ -20,7 +18,6 @@ Describe "card" {
                 Style = @{backgroundColor = '#bbdefb'; display = 'flex'; flexDirection = 'row'}
                 Content = {
                     New-UDMuCardMedia -Component video -Source "http://media.w3.org/2010/05/bunny/movie.mp4" 
-                    New-UDMuCardMedia -Component video -Source "https://gcs-vimeo.akamaized.net/exp=1552735105~acl=%2A%2F1062516359.mp4%2A~hmac=9af60d59dd6ed66cc5c9acaa6ffaebc039105a206cabe6d5499111b56f2d21c6/vimeo-prod-skyfire-std-us/01/1551/11/282759939/1062516359.mp4"
                 }
                 IsEndPoint = $false 
                 AutoRefresh = $false
@@ -75,7 +72,7 @@ Describe "card" {
                 RefreshInterval = 5
                 IsEndPoint      = $false
                 ShowToolBar     = $true
-                ToolBar         = $ToolBar
+                # ToolBar         = $ToolBar
                 Header          = $Header
                 Body            = $Body
                 Expand          = $Expand
@@ -85,9 +82,15 @@ Describe "card" {
             
             New-UDRow -Columns {
                 New-UDColumn -LargeSize 8 -LargeOffset 2 -Content {
-                    New-UDMuCard @CardProps
+                    New-UDGridLayout -Layout @(@{i = 'ud-card-demo'; x = 0; y = 0; w = 2; h = 2}) -Content {
+                        New-UDMuCard @CardProps
+                    } -OnLayoutChanged (
+                        New-UDEndpoint -Endpoint {}
+                    )
                 }
             }
+
+
         }
         
         It 'has toolbar with content' {

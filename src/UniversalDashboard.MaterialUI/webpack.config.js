@@ -1,11 +1,12 @@
 var webpack = require('webpack');
 var path = require('path');
-var UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-var RemoveWebpackPlugin = require('remove-webpack-plugin');
+
 
 var BUILD_DIR = path.resolve(__dirname, 'public');
 var SRC_DIR = path.resolve(__dirname);
 var APP_DIR = path.resolve(__dirname, 'src/app');
+
+process.env.NODE_ENV = 'production'
 
 module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
