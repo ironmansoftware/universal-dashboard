@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -47,7 +47,7 @@ The content of the dashboard to update.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: Content
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -62,7 +62,7 @@ The file path of a PS1 that returns a New-UDDashboard.
 ```yaml
 Type: String
 Parameter Sets: FilePath
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -77,7 +77,7 @@ The update token for the dashboard. This is specified with Start-UDDashboard. Tr
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -92,7 +92,7 @@ The URL of the running Universal Dashboard.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -115,4 +115,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

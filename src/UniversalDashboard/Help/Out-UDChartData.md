@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -54,7 +54,7 @@ Background colors for the chart data.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 5
@@ -69,7 +69,7 @@ Border colors for the chart data.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -84,7 +84,7 @@ Data to display in the chart.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -99,7 +99,7 @@ The property to select as the y-axis of the data set. This should be used in con
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -114,7 +114,7 @@ A collection of hashtables created by New-UDChartDataset. This allows for multip
 ```yaml
 Type: Hashtable[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -129,7 +129,7 @@ The label for a dataset.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -144,7 +144,7 @@ Hover background colors for the chart data.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 7
@@ -159,7 +159,7 @@ Hover border colors for the chart data.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 8
@@ -174,7 +174,7 @@ The property to select as the dataset label (x-axis). This should be used in con
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -197,4 +197,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

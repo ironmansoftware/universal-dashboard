@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -44,7 +44,7 @@ The padding to add inside the chart.
 ```yaml
 Type: Int32
 Parameter Sets: Size
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -59,7 +59,7 @@ The padding to add inside the bottom of the chart.
 ```yaml
 Type: Int32
 Parameter Sets: Object
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -74,7 +74,7 @@ The padding to add inside the left of the chart.
 ```yaml
 Type: Int32
 Parameter Sets: Object
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -89,7 +89,7 @@ The padding to add inside the right of the chart.
 ```yaml
 Type: Int32
 Parameter Sets: Object
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -104,7 +104,7 @@ The padding to add inside the top of the chart.
 ```yaml
 Type: Int32
 Parameter Sets: Object
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -127,4 +127,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

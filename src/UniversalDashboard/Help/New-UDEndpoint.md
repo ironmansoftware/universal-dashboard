@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -75,7 +75,7 @@ Arguments to pass to the endpoint. They will be available via the $ArgumentList 
 ```yaml
 Type: Object[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -90,7 +90,7 @@ The script block endpoint that is invoked when the URL is called. This script bl
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -105,7 +105,7 @@ Accept wildcard characters: False
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Rest
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -120,7 +120,7 @@ The ID of ths endpoint.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -135,7 +135,7 @@ The HTTP method for this endpoint.
 ```yaml
 Type: String
 Parameter Sets: Rest
-Aliases: 
+Aliases:
 Accepted values: GET, POST, DELETE, PUT
 
 Required: False
@@ -151,7 +151,7 @@ Schedule to run this endpoint on. Use New-UDEndpointSchedule to create a schedul
 ```yaml
 Type: EndpointSchedule
 Parameter Sets: Scheduled
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -166,7 +166,7 @@ The URL for this endpoint. All URLs are automatically prefixed with "/api/". Any
 ```yaml
 Type: String
 Parameter Sets: Rest
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -189,4 +189,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

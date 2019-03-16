@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -42,7 +42,7 @@ Percent (0-1) of the available width each bar should be within the category widt
 ```yaml
 Type: Single
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -57,7 +57,7 @@ Manually set width of each bar in pixels. If not set, the base sample widths are
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 8
@@ -72,7 +72,7 @@ Percent (0-1) of the available width each category should be within the sample w
 ```yaml
 Type: Single
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 7
@@ -87,7 +87,7 @@ Layout options for this chart. Use New-UDChartLayoutOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -102,7 +102,7 @@ Legend options for this chart. Use New-UDChartLegendOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -117,7 +117,7 @@ Set this to ensure that bars are not sized thicker than this.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 9
@@ -132,7 +132,7 @@ Title options for this chart. Use New-UDChartTitleOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -147,7 +147,7 @@ Tooltip options for this chart. Use New-UDChartTooltipOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -162,7 +162,7 @@ The x-Axis for this chart. Use New-UDCategoryChartAxis, New-UDLinearChartAxis or
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -177,7 +177,7 @@ The y-Axis for this chart. Use New-UDCategoryChartAxis, New-UDLinearChartAxis or
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 5
@@ -200,4 +200,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

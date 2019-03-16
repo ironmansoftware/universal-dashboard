@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -55,7 +55,7 @@ Name of the dashboard to stop.
 ```yaml
 Type: String
 Parameter Sets: ByName
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -70,7 +70,7 @@ Stops the dashboard by port number.
 ```yaml
 Type: Int32
 Parameter Sets: ByPort
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -85,7 +85,7 @@ The dashboard server to stop. This is returned by Start-UDDashboard.
 ```yaml
 Type: Server
 Parameter Sets: ByServer
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -108,4 +108,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

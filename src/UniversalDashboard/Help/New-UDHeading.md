@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -43,7 +43,7 @@ Font color for the heading.
 ```yaml
 Type: DashboardColor
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -58,7 +58,7 @@ Content for the heading.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: Content
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -73,7 +73,7 @@ The ID of this heading.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -88,7 +88,7 @@ Size of this heading from 1 to 6. 1 is the largest and 6 is the smallest.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: 1, 2, 3, 4, 5, 6
 
 Required: False
@@ -104,7 +104,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: Text
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -127,4 +127,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

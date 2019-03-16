@@ -8,7 +8,9 @@ Describe "card" {
                 icon        = New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#fff'} 
                 Style       = @{backgroundColor = '#2196f3'; color = '#fff';flexGrow = 1}
                 Content     = {New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#fff'}) -OnClick {Show-UDToast -Message 'test'}}
-                Title       = New-UDMuTypography -Variant h5 -Text "Universal Dashboard MaterialUI" -Style @{ color = '#fff' } 
+                Title       = New-UDMuTypography -Variant h5 -Content{
+                    Get-Date -Format "HH:mm:ss"
+                } -IsEndPoint -AutoRefresh -RefreshInterval 1
                 ShowButtons = $true
                 Id = 'toolbar'
             }

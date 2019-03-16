@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.dll-Help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -50,7 +50,7 @@ Arguments to pass to the endpoint. They will be available via the $ArgumentList 
 ```yaml
 Type: Object[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -65,7 +65,7 @@ A hashtable of attributes that will be set on the HTML tag.
 ```yaml
 Type: Hashtable
 Parameter Sets: HTML
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -80,7 +80,7 @@ Whether to auto refresh the contents of this element.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -95,7 +95,7 @@ The JavaScript component to include.
 ```yaml
 Type: String
 Parameter Sets: JS
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -110,7 +110,7 @@ The static content for this HTML node. This can be a string or another element.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: HTML
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -125,7 +125,7 @@ An endpoint that is called to load the content of this element.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -140,7 +140,7 @@ The ID for this element.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -155,7 +155,7 @@ Path to a JavaScript file that contains the JavaScript component to load.
 ```yaml
 Type: String
 Parameter Sets: JS
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -170,7 +170,7 @@ The name of the JavaScript module.
 ```yaml
 Type: String
 Parameter Sets: JS
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -185,7 +185,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String
 Parameter Sets: HTML
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -200,7 +200,7 @@ Properties to pass into the JavaScript component.
 ```yaml
 Type: Hashtable
 Parameter Sets: JS
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -215,7 +215,7 @@ The refresh interval on which to reload the content of this element, in seconds.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -230,7 +230,7 @@ The HTML tag to render.
 ```yaml
 Type: String
 Parameter Sets: HTML
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -253,4 +253,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

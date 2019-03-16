@@ -117,7 +117,7 @@ The menu items for the side navigation menu. Use New-UDSideNavItem to add new it
 ```yaml
 Type: ScriptBlock
 Parameter Sets: Content
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -132,7 +132,7 @@ Load items dynamically from an endpoint. Use New-UDSideNavItem to add new items.
 ```yaml
 Type: Object
 Parameter Sets: Endpoint
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -147,7 +147,7 @@ Produces a fixed side navigation menu that does not include a popout hamburger m
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -162,7 +162,7 @@ The ID of the menu.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -177,7 +177,7 @@ Hide the side navigation menu and hamburger menu button.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: None
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -192,7 +192,7 @@ The width in pixels of the side navigation menu.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -215,4 +215,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

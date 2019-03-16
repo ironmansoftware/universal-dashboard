@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -32,7 +32,7 @@ If true, the chart will animate in with a rotation animation.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 9
@@ -47,7 +47,7 @@ If true, will animate scaling the chart from the center outwards.
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 10
@@ -62,7 +62,7 @@ Sweep to allow arcs to cover
 ```yaml
 Type: Single
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 8
@@ -77,7 +77,7 @@ The percentage of the chart that is cut out of the middle.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -92,7 +92,7 @@ Layout options for this chart. Use New-UDChartLayoutOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -107,7 +107,7 @@ Legend options for this chart. Use New-UDChartLegendOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -122,7 +122,7 @@ Starting angle to draw arcs from.
 ```yaml
 Type: Single
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 7
@@ -137,7 +137,7 @@ Title options for this chart. Use New-UDChartTitleOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -152,7 +152,7 @@ Tooltip options for this chart. Use New-UDChartTooltipOptions.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -167,7 +167,7 @@ The x-Axis for this chart. Use New-UDCategoryChartAxis, New-UDLinearChartAxis or
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -182,7 +182,7 @@ The y-Axis for this chart. Use New-UDCategoryChartAxis, New-UDLinearChartAxis or
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 5
@@ -205,4 +205,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-

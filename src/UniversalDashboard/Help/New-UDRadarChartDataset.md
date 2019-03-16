@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version:
 schema: 2.0.0
 ---
 
@@ -36,7 +36,7 @@ The fill color under the line
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -51,7 +51,7 @@ Cap style of the line.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: butt, round, square
 
 Required: False
@@ -67,7 +67,7 @@ The color of the line.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -82,7 +82,7 @@ Line joint style.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: bevel, round, miter
 
 Required: False
@@ -98,7 +98,7 @@ The width of the line in pixels.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -113,7 +113,7 @@ The property of the object to use as the y-Axis of the dataset.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 0
@@ -128,7 +128,7 @@ How to fill the area under the line.
 ```yaml
 Type: Object
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 7
@@ -143,7 +143,7 @@ The label for the dataset which appears in the legend and tooltips.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -158,7 +158,7 @@ Bezier curve tension of the line. Set to 0 to draw straightlines.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 8
@@ -173,7 +173,7 @@ The fill color for points.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 9
@@ -188,7 +188,7 @@ The border color for points.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 10
@@ -203,7 +203,7 @@ The width of the point border in pixels.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 11
@@ -218,7 +218,7 @@ The pixel size of the non-displayed point that reacts to mouse events.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 14
@@ -233,7 +233,7 @@ Point background color when hovered.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 15
@@ -248,7 +248,7 @@ Point border color when hovered.
 ```yaml
 Type: DashboardColor[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 16
@@ -263,7 +263,7 @@ Border width of point when hovered.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 17
@@ -278,7 +278,7 @@ The radius of the point when hovered.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 18
@@ -293,7 +293,7 @@ The radius of the point shape. If set to 0, the point is not rendered.
 ```yaml
 Type: Int32[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 12
@@ -308,7 +308,7 @@ Style of the point.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 Accepted values: circle, cross, crossRot, dash, line, rect, rectRounded, rectRot, star, triangle
 
 Required: False
@@ -332,4 +332,3 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 ## RELATED LINKS
-
