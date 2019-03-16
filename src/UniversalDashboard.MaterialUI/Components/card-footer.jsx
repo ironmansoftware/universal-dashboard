@@ -87,7 +87,7 @@ class UDCardFooter extends React.Component {
           </CardActions>
           <CardActions className={classes.expand}>
             {isExpandExists ?
-                <IconButton onClick={onExpand}>
+                <IconButton id={'ud-card-expand-button'} onClick={onExpand}>
                   {isExpanded ? 
                     <ExpandLess color="primary" />
                     :<ExpandMore color="primary" />}

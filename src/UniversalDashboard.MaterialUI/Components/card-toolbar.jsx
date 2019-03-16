@@ -71,6 +71,7 @@ export class UDCardToolBar extends React.Component {
 
   render() {
     const {
+      id,
       classes,
       onMinimize,
       title,
@@ -87,6 +88,7 @@ export class UDCardToolBar extends React.Component {
       <>
         <CssBaseline />
         <Toolbar
+          id={id}
           style={{ ...style }}
           disableGutters
           className={classNames("ud-card-toolbar", classes.cardToolBar)}
