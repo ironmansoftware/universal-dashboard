@@ -34,7 +34,7 @@ function New-UDMuListItem {
         [Parameter ()][switch]$AutoRefresh,
         [Parameter ()][int]$RefreshInterval = 5,
         [Parameter ()][string]$SubTitle,
-        [Parameter ()][PSTypeName('MuIcon')]$Icon,
+        [Parameter ()][PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
         [Parameter ()][string]$Source,
         [Parameter ()][scriptblock]$SecondaryAction,
         [Parameter ()][Hashtable]$LabelStyle,

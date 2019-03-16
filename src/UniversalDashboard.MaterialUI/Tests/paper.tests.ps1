@@ -50,7 +50,7 @@ Describe "paper" {
 
         It 'has content dynamic content' {
             $element = Find-SeElement -Id 'dynamic' -Driver $Driver
-            start-sleep 3
+            start-sleep 4
             $element1 = Find-SeElement -Id 'dynamic' -Driver $Driver
             $element.text -eq $element1.text | should be $false
         }

@@ -101,12 +101,7 @@ function New-UDMuCard {
             id              = $Id
             className       = $ClassName
             showToolBar     = $ShowToolBar.IsPresent
-            # toolbar         = $ToolBar
-            # header          = $Header
             content         = $Content.Invoke()
-            # object          = $Object
-            # expand          = $Expand
-            # footer          = $Footer
             style           = $Style
             elevation       = $Elevation
             isEndpoint      = $isEndPoint.IsPresent
@@ -149,7 +144,7 @@ function New-UDMuCardToolbar {
     End {
 
         # if ($null -ne $Title) {
-        #     if (-not($Title.psobject.typenames -match "UniversalDashboard.MaterialUI.Typography")) {
+        #     if (-not($Title.psobject.typenames -notcontains "UniversalDashboard.MaterialUI.Typography") -or ($Title -isnot [string])) {
         #         throw "Title must be a string or UniversalDashboard.MaterialUI.Typography object, please use New-UDMuTypography command."
         #     }
         # }

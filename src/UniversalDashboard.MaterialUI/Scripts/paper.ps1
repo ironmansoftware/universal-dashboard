@@ -25,8 +25,8 @@ function New-UDMuPaper {
             
             id = $Id
             isEndpoint = $IsEndPoint.IsPresent
-            content = $Content.Invoke()
             width  = $Width 
+            content = $Content.Invoke()
             height = $Height
             square = $Square.IsPresent
             style = $Style

@@ -78,7 +78,7 @@ function New-UDMuTypography {
             autoRefresh = $AutoRefresh.IsPresent
         }
 
-        $MUTypography.PSTypeNames.Insert(0, "MUTypography") | Out-Null
+        $MUTypography.PSTypeNames.Insert(0, 'UniversalDashboard.MaterialUI.Typography') | Out-Null
 
         $MUTypography
     }
