@@ -17,9 +17,10 @@ Describe "card" {
             $ToolBar = New-UDMuCardToolbar @ToolBarProps
 
             $HeaderProps = @{
-                Style = @{backgroundColor = '#bbdefb'}
+                Style = @{backgroundColor = '#bbdefb'; display = 'flex'; flexDirection = 'row'}
                 Content = {
-                    New-UDMuCardMedia -Component video -Source "http://media.w3.org/2010/05/bunny/movie.mp4"
+                    New-UDMuCardMedia -Component video -Source "http://media.w3.org/2010/05/bunny/movie.mp4" 
+                    New-UDMuCardMedia -Component video -Source "https://gcs-vimeo.akamaized.net/exp=1552735105~acl=%2A%2F1062516359.mp4%2A~hmac=9af60d59dd6ed66cc5c9acaa6ffaebc039105a206cabe6d5499111b56f2d21c6/vimeo-prod-skyfire-std-us/01/1551/11/282759939/1062516359.mp4"
                 }
                 IsEndPoint = $false 
                 AutoRefresh = $false
@@ -72,7 +73,7 @@ Describe "card" {
                 Elevation       = 24    
                 AutoRefresh     = $false
                 RefreshInterval = 5
-                IsEndPoint      = $true
+                IsEndPoint      = $false
                 ShowToolBar     = $true
                 ToolBar         = $ToolBar
                 Header          = $Header
