@@ -12,6 +12,7 @@ import UDCardBody from "./card-body";
 import UDCardExpand from "./card-expand";
 import UDCardFooter from "./card-footer";
 import Typography from "./typography";
+import UDLink from "./link";
 // import Pdf from "./pdf"; //this version has a bug render text not correct.
 
 UniversalDashboard.register("mu-chip", Chip);
@@ -29,4 +30,5 @@ UniversalDashboard.register("mu-card-body", UDCardBody);
 UniversalDashboard.register("mu-card-expand", UDCardExpand);
 UniversalDashboard.register("mu-card-footer", UDCardFooter);
 UniversalDashboard.register("mu-typography", Typography);
+UniversalDashboard.register("mu-link", UDLink);
 // UniversalDashboard.register("ud-pdf", Pdf);
