@@ -55,6 +55,7 @@ $manifestParameters = @{
         "New-UDMuCardBody"
         "New-UDMuCardExpand"
         "New-UDMuCardFooter"
+        "New-UDMuLink"
     )
     RequiredModules   = @()
 }
