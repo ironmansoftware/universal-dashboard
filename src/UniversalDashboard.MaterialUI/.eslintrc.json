@@ -12,7 +12,8 @@
 	"parser": "babel-eslint",
 	"globals": {
 		"Atomics": "readonly",
-		"SharedArrayBuffer": "readonly"
+		"SharedArrayBuffer": "readonly",
+		"UniversalDashboard": "writable"
 	},
 	"parserOptions": {
 		"ecmaFeatures": {

@@ -68,11 +68,8 @@ Describe "card" {
             $CardProps = @{
                 Id              = 'ud-card-demo'
                 Elevation       = 24    
-                AutoRefresh     = $false
-                RefreshInterval = 5
-                IsEndPoint      = $false
                 ShowToolBar     = $true
-                # ToolBar         = $ToolBar
+                ToolBar         = $ToolBar
                 Header          = $Header
                 Body            = $Body
                 Expand          = $Expand
@@ -82,11 +79,9 @@ Describe "card" {
             
             New-UDRow -Columns {
                 New-UDColumn -LargeSize 8 -LargeOffset 2 -Content {
-                    New-UDGridLayout -Layout @(@{i = 'ud-card-demo'; x = 0; y = 0; w = 2; h = 2}) -Content {
+                    
                         New-UDMuCard @CardProps
-                    } -OnLayoutChanged (
-                        New-UDEndpoint -Endpoint {}
-                    )
+                   
                 }
             }
 
