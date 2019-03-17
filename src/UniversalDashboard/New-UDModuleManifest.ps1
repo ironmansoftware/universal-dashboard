@@ -108,6 +108,7 @@ $manifestParameters = @{
         "New-UDMuTypography"
         "New-UDPdf"
         "New-UDMuLink"
+        "New-UDMuAvatar"
     )
     CmdletsToExport        = @("New-UDChart", 
         "New-UDDashboard", 
