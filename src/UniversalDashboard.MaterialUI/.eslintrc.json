@@ -1,0 +1,49 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+      ],
+	"parser": "babel-eslint",
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly"
+	},
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"ecmaVersion": 2018,
+		"sourceType": "module"
+	},
+	"plugins": ["react"],
+	"rules": {
+        "no-debugger": "off",
+        "no-console": "off",
+        "no-unused-vars": "off",
+        "no-undef": "warn",
+        "import/named": 2,
+        "import/namespace": 2,
+        "import/default": 2,
+        "import/export": 2,
+        "react/prop-types": "off"  
+    },
+	"settings": {
+		"react": {
+			"version": "16.8.4"
+		},
+		"import/resolver": {
+			"node": {
+				"extensions": [".js", ".jsx"]
+			},
+			"webpack": {
+				"config": "webpack.config.js"
+			}
+		}
+	}
+}
