@@ -79,9 +79,6 @@ export class UDCardToolBar extends React.Component {
       onShowButtons,
       style,
       content,
-      // onReload,
-      // showReloadButton,
-      // isEndpoint
     } = this.props;
 
     return (
@@ -121,25 +118,6 @@ export class UDCardToolBar extends React.Component {
                   }
                 />
               </IconButton>
-
-              {/* I disabled the reload button option, because i'm getting an errors of undefined */}
-              {/* <IconButton
-                onClick={onReload}
-                className={classNames("ud-card-toolbar-button-reload", {
-                  [classes.reloadButton]: !showReloadButton
-                })}
-              >
-                <UdMuIcon
-                  icon="Sync"
-                  size={content === null ? "xs" : content[0].icon.size}
-                  style={
-                    content !== null
-                      ? { ...content[0].icon.style }
-                      : { color: "inherit", backgroundColor: "transparent" }
-                  }
-                />
-              </IconButton> */}
-
               {UniversalDashboard.renderComponent(content)}
 
             </div>

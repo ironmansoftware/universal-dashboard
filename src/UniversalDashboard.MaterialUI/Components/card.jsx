@@ -37,7 +37,6 @@ export class UDMuCard extends React.Component {
   state = {
     expanded: false,
     minimized: false,
-    content: this.props.content,
     elevation : 1
   };
 
@@ -61,58 +60,9 @@ export class UDMuCard extends React.Component {
     this.setState({expanded: !this.state.expanded });
   };
 
-  // onLoadData = () => {
-  //   if(!this.props.isEndpoint){
-  //     this.setState({
-  //       content: this.props.content
-  //     })
-  //   }
-  //   else{
-  //     UniversalDashboard.get(
-  //       `/api/internal/component/element/${this.props.id}`, data => {
-  //         data.error ?
-  //           (this.setState({
-  //             hasError: true,
-  //             error: data.error,
-  //             content: data.content,
-  //           }),
-  //             console.log({
-  //               component: "mu-card",
-  //               action: "UniversalDashboard.get",
-  //               status: "failed",
-  //               error: data.error,
-  //               content: data})
-  //           )
-  //           : 
-  //           (this.setState({
-  //             content: data.content
-  //           }),
-  //               console.log({
-  //                 component: "mu-card",
-  //                 action: "UniversalDashboard.get",
-  //                 status: "success",
-  //                 content: data})
-  //           )
-  //       }
-  //     )
-  //   }
-  // }
-
-  // onReloadClick = () => {
-  //   this.onLoadData()
-  // };
-
-  // componentWillMount = () => {
-  //     this.onLoadData()
-  // }
-
   render() {
-    const { classes, id, className, style, showToolBar } = this.props;
+    const { classes, id, className, style, showToolBar, toolbar, header, body, expand, footer } = this.props;
     const { expanded, minimized, elevation } = this.state
-    const [{ toolbar, header, body, expand, footer, }] = this.state.content
-
-    // console.log( toolbar, header, body, expand, footer)
-
 
     return (
       <Fragment>
@@ -137,11 +87,8 @@ export class UDMuCard extends React.Component {
             icon={toolbar.icon}
             title={toolbar.title}
             onMinimize={this.onMinimizeClick}
-            // onReload={this.onReloadClick}
             style={toolbar.style}
             content={toolbar.content}
-            // showReloadButton={isEndpoint}
-            // isEndpoint={toolbar.isEndpoint}/> 
             /> : null}
 
           <Collapse
@@ -208,13 +155,6 @@ export class UDMuCard extends React.Component {
               autoRefresh={footer.autoRefresh}/> : null}
 
           </Collapse>
-
-          {/* This option was disabled until i fix the undefined error when the card is an Endpoint */}
-          {/* <ReactInterval
-            timeout={refreshInterval * 1000}
-            enabled={autoRefresh}
-            callback={this.onLoadData}/> */}
-
         </Card>
       
       </Fragment>
@@ -224,17 +164,6 @@ export class UDMuCard extends React.Component {
 
 UDMuCard.propTypes = {
   classes: PropTypes.object.isRequired
-  // size: PropTypes.string,
-  // // content: PropTypes.array,
-  // style: PropTypes.object,
-  // showToolBar: PropTypes.bool.isRequired,
-  // toolbarStyle: PropTypes.object,
-  // toolbarContent: PropTypes.object,
-  // showControls: PropTypes.bool,
-  // icon: PropTypes.oneOfType(["UdMuIcon"]),
-  // title: PropTypes.string,
-  // autoRefresh: PropTypes.bool,
-  // refreshInterval: PropTypes.number
 };
 
 export default withStyles(styles)(UDMuCard);

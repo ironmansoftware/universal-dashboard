@@ -2,7 +2,8 @@ function New-UDMuLink {
     param(
         [Parameter (HelpMessage="Enter id for this object")][string]$Id = (New-Guid).ToString(),
         [Parameter (HelpMessage="Enter url, this can be remote or local")][string]$url,
-        [Parameter (HelpMessage="Show line under the text or content")][switch]$underline,
+        [Parameter (HelpMessage="Show line under the text or content")]
+        [ValidateSet('none','hover','always')][string]$underline = "none",
         [Parameter (HelpMessage="The css propertis for this object")][hashtable]$style,
         [Parameter (HelpMessage="The pre configure style", ParameterSetName = 'text')]
         [ValidateSet('h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'subtitle1', 'subtitle2', 'body1', 'body2', 'caption', 'button', 'overline', 'srOnly', 'inherit')]
@@ -13,6 +14,10 @@ function New-UDMuLink {
         [Parameter (HelpMessage="The text to show as link", ParameterSetName = 'text')][string]$text
     )
     End {
+
+        if($null -ne $Content){
+            $Object = $content.Invoke()
+        }else{$Object = $null}
         @{
             type            = 'mu-link'
             isPlugin        = $true
@@ -20,12 +25,12 @@ function New-UDMuLink {
 
             id              = $Id
             url             = $url
-            underline       = $underline.IsPresent
+            underline       = $underline
             style           = $style
             variant         = $variant
             className       = $ClassName
             openInNewWindow = $openInNewWindow.IsPresent
-            content         = $content
+            content         = $Object
             text            = $text
         }
     }

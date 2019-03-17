@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
 import classnames from 'classnames'
+import { Typography } from '@material-ui/core';
 
 const styles = (theme) => ({
 	link: {
@@ -13,6 +14,7 @@ const styles = (theme) => ({
 export class UDLink extends React.Component {
 	render() {
 		const {
+			id,
 			url,
 			underline,
 			style,
@@ -23,19 +25,23 @@ export class UDLink extends React.Component {
 			content,
 			text
 		} = this.props;
-		const body = !text ? UniversalDashboard.renderComponent(content) : text;
+
 
 		return (
-			<Link
-				href={url}
-				rel="noopener"
-				underline={underline}
-				style={{ ...style }}
-				variant={variant}
-				className={classnames("ud-link",className,classes.link)}
-				target={openInNewWindow ? '_blank' : '_self'}>
-				{body}
-			</Link>
+			
+				<Link
+					id={id}
+					href={url}
+					rel="noopener"
+					underline={underline}
+					style={{ ...style }}
+					variant={variant}
+					className={classnames(className,classes.link, "ud-link")}
+					target={openInNewWindow ? '_blank' : '_self'}>
+					{!text ? (UniversalDashboard.renderComponent(content)) : text}
+				</Link>
+
+			
 		);
 	}
 }
