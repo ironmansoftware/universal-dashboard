@@ -30,17 +30,7 @@ function New-UDMuCard {
 
         [Parameter()]
         [ValidateSet("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24")]
-        [int]$Elevation,
-
-        [Parameter(ParameterSetName = 'endpoint')]
-        [switch]$IsEndPoint,
-
-        [Parameter(ParameterSetName = 'endpoint')]
-        [switch]$AutoRefresh,
-
-        [Parameter(ParameterSetName = 'endpoint')]
-        [int]$RefreshInterval = 5
-
+        [int]$Elevation
     )
 
     End {
@@ -101,12 +91,14 @@ function New-UDMuCard {
             id              = $Id
             className       = $ClassName
             showToolBar     = $ShowToolBar.IsPresent
-            content         = $Content.Invoke()
+            toolbar         = $ToolBar
+            header          = $Header
+            body            = $Body
+            expand          = $Expand
+            footer          = $Footer
             style           = $Style
             elevation       = $Elevation
-            isEndpoint      = $isEndPoint.IsPresent
-            refreshInterval = $RefreshInterval
-            autoRefresh     = $AutoRefresh.IsPresent
+
         }
 
         $Card.PSTypeNames.Insert(0, "UniversalDashboard.MaterialUI.Card") | Out-Null

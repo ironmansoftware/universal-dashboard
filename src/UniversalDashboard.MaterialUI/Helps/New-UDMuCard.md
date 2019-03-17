@@ -13,9 +13,9 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-New-UDMuCard [-Id <String>] [-ClassName <String>] [-ShowToolBar] [-ToolBar <Object>] [-Header <Object>]
- [-Body <Object>] [-Expand <Object>] [-Footer <Object>] [-Style <Hashtable>] [-Elevation <Int32>] [-IsEndPoint]
- [-AutoRefresh] [-RefreshInterval <Int32>] [<CommonParameters>]
+New-UDMuCard [[-Id] <String>] [[-ClassName] <String>] [-ShowToolBar] [[-ToolBar] <Object>] [[-Header] <Object>]
+ [[-Body] <Object>] [[-Expand] <Object>] [[-Footer] <Object>] [[-Style] <Hashtable>] [[-Elevation] <Int32>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,21 +32,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -AutoRefresh
-{{Fill AutoRefresh Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Body
 {{Fill Body Description}}
 
@@ -56,7 +41,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -71,7 +56,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -87,7 +72,7 @@ Aliases:
 Accepted values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24
 
 Required: False
-Position: Named
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -102,7 +87,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -117,7 +102,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -132,7 +117,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -147,37 +132,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IsEndPoint
-{{Fill IsEndPoint Description}}
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RefreshInterval
-{{Fill RefreshInterval Description}}
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -207,7 +162,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -222,7 +177,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

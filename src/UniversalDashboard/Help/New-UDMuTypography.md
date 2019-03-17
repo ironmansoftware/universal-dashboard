@@ -1,6 +1,6 @@
 ---
-external help file: UniversalDashboard-help.xml
-Module Name: UniversalDashboard.Community
+external help file: UniversalDashboard.MaterialUI-help.xml
+Module Name: UniversalDashboard.MaterialUI
 online version:
 schema: 2.0.0
 ---
@@ -8,7 +8,7 @@ schema: 2.0.0
 # New-UDMuTypography
 
 ## SYNOPSIS
-Create new text object
+{{Fill in the Synopsis}}
 
 ## SYNTAX
 
@@ -27,30 +27,21 @@ New-UDMuTypography [-Id <String>] [-Variant <String>] [-Content <ScriptBlock>] [
 ```
 
 ## DESCRIPTION
-This command will let you generate text object, you can generate the content as static or dynamic.
+{{Fill in the Description}}
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-PS C:\> New-UDMuTypography -Variant h5 -Text "Universal Dashboard MaterialUI" -Style @{ color = '#fff' } 
+PS C:\> {{ Add example code here }}
 ```
 
-Create HTML h5 tag with "Universal Dashboard MaterialUI" as it content and the text color will be white.  
-
-### Example 2
-```powershell
-PS C:\> New-UDMuTypography -Variant h5 -Content{
-                    Get-Date -Format "HH:mm:ss"
-                } -IsEndPoint -AutoRefresh -RefreshInterval 1 
-```
-
-Create HTML h5 tag with the current time as it content, this element content will be updated every 1 second.   
+{{ Add example description here }}
 
 ## PARAMETERS
 
 ### -Align
-Set the position of the text.
+{{Fill Align Description}}
 
 ```yaml
 Type: String
@@ -66,7 +57,7 @@ Accept wildcard characters: False
 ```
 
 ### -AutoRefresh
-Whether to auto refresh the contents of this element.
+{{Fill AutoRefresh Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -81,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -ClassName
-Set the HTML class attribute for this element.
+{{Fill ClassName Description}}
 
 ```yaml
 Type: String
@@ -96,8 +87,7 @@ Accept wildcard characters: False
 ```
 
 ### -Content
-The static content for this HTML node. This can be a string or another element.
-If -IsEndpoint is true this content will be An endpoint that is called to load the content of this element.
+{{Fill Content Description}}
 
 ```yaml
 Type: ScriptBlock
@@ -112,7 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -GutterBottom
-If true, the text will have a bottom margin.
+{{Fill GutterBottom Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -127,7 +117,7 @@ Accept wildcard characters: False
 ```
 
 ### -Id
-The ID of the row. This is the HTML markup ID.
+{{Fill Id Description}}
 
 ```yaml
 Type: String
@@ -142,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsEndPoint
-Will set the object as endpoint.
+{{Fill IsEndPoint Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -157,7 +147,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsParagraph
-If true, the text will have a bottom margin.
+{{Fill IsParagraph Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -172,7 +162,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoWrap
-If true, the text will not wrap, but instead will truncate with an ellipsis.
+{{Fill NoWrap Description}}
 
 ```yaml
 Type: SwitchParameter
@@ -187,7 +177,7 @@ Accept wildcard characters: False
 ```
 
 ### -RefreshInterval
-The number of seconds between refreshes.
+{{Fill RefreshInterval Description}}
 
 ```yaml
 Type: Int32
@@ -202,7 +192,7 @@ Accept wildcard characters: False
 ```
 
 ### -Style
-The css style to apply
+{{Fill Style Description}}
 
 ```yaml
 Type: Hashtable
@@ -217,7 +207,7 @@ Accept wildcard characters: False
 ```
 
 ### -Text
-Text for this object
+{{Fill Text Description}}
 
 ```yaml
 Type: String
@@ -232,7 +222,7 @@ Accept wildcard characters: False
 ```
 
 ### -Variant
-The text object type.
+{{Fill Variant Description}}
 
 ```yaml
 Type: String
@@ -248,8 +238,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
-For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
