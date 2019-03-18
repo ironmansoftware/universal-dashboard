@@ -920,4 +920,3 @@ export default function findSolidIcon(iconName){
 
     return faSolid.includes(iconName)
 }
-
