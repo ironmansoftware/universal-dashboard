@@ -25,9 +25,11 @@ Command for creating materialUI user avatar ( circle user photo ), you can style
 ### Example 1
 ```powershell
 PS C:\>New-UDMuAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'test-avatar' -Style @{width = 80; height = 80}
+
 ```
 
 Create avatar image with custom size, the size will be 80px x 80px
+
 
 ### Example 2
 ```powershell
@@ -37,7 +39,7 @@ PS C:\>$AvatarProps = @{
                 Id = 'test-avatar'
                 Style = @{width = 150; height = 150; borderRadius = '4px'}
 }
-New-UDMuAvatar @AvatarProps
+New-UDMuAvatar @AvatarProps 
 ```
 
 Create avatar image with custom size, the size will be 15px x 15px and change it to be a square using borderRadius property.

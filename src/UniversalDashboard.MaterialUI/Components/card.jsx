@@ -9,8 +9,6 @@ import UDCardBody from "./card-body";
 import UDCardExpand from "./card-expand";
 import UDCardFooter from "./card-footer";
 
-import ReactInterval from "react-interval";
-
 const styles = theme => ({
   root: {
     display: "flex",

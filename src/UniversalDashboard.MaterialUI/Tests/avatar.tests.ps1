@@ -26,13 +26,20 @@ Describe 'avatar' {
             $element.GetCssValue('height') | should be '80px'
         }
     }
-    Context 'squer' {
+    Context 'square' {
 
         Set-TestDashboard {
-            New-UDMuAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'test-avatar' -Style @{width = 150; height = 150;borderRadius = '4px'}
+
+            $AvatarProps = @{
+                Image = 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4'
+                Alt = 'alon gvili avatar'
+                Id = 'test-avatar'
+                Style = @{width = 150; height = 150; borderRadius = '4px'}
+            }
+            New-UDMuAvatar @AvatarProps 
         }
 
-        It 'has border radius of 4px ( avatar is squer not round )' {
+        It 'has border radius of 4px ( avatar is square not round )' {
             $element = (Find-SeElement -Id 'test-avatar' -Driver $Driver).GetAttribute('style') -match "border-radius: (\d\w+)"
             $Matches[1] | should be '4px'
         }

@@ -9,8 +9,8 @@ import Promise from "promise-polyfill";
 import { UniversalDashboardService } from "./services/universal-dashboard-service.jsx";
 import App from "./App";
 import { getApiPath } from "config";
-import("typeface-roboto-condensed" /* webpackChunkName: "typeface-roboto-condensed" */);
-import("typeface-roboto" /* webpackChunkName: "typeface-roboto" */);
+// import("typeface-roboto-condensed" /* webpackChunkName: "typeface-roboto-condensed" */);
+// import("typeface-roboto" /* webpackChunkName: "typeface-roboto" */);
 
 // To add to window
 if (!window.Promise) {
