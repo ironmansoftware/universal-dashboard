@@ -44,7 +44,7 @@ module.exports = (env) => {
             new RemoveWebpackPlugin(BUILD_DIR)
     ],
     optimization: {
-      minimize: false,
+      minimize: true,
       splitChunks: {
         cacheGroups: {
           vendor:{
