@@ -27,7 +27,7 @@ module.exports = (env) => {
       rules: [{
           test: /\.(js|jsx)$/,
           exclude: [/node_modules/, /public/],
-          loader: 'babel-loader'
+          use: ['babel-loader','eslint-loader']
         },
         {
           test: /\.css$/,

@@ -23,7 +23,7 @@ module.exports = (env) => {
     module : {
       rules : [
         { test: /\.css$/, loader: "style-loader!css-loader" },
-        { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'},
+        { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: ['babel-loader','eslint-loader']},
         { test: /\.(eot|ttf|woff2?|otf|svg)$/, loader:'file-loader' }
       ]
     },

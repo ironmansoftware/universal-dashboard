@@ -50,7 +50,7 @@ export class UdPaper extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+  UNSAFE_componentWillUnmount() {
     UniversalDashboard.unsubscribe(this.pubSubToken);
   }
 
@@ -69,10 +69,6 @@ export class UdPaper extends React.Component {
     
     const { content } = this.state;
 
-
-console.log('paper-content',content)
-console.log('papaer-state',this.state)
-console.log('papaer-props',this.props)
     return (
       <>
       <Paper 

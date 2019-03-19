@@ -28,7 +28,7 @@ const UDCardMedia = withStyles(theme => ({
         image={image}
         title={title}
         src={source}
-        controls={component === "video" || "audio" ? true : false}
+        controls={component === ("video" || "audio") ? true : false}
       />
       {children}
     </>
