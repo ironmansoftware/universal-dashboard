@@ -25,7 +25,7 @@ export default class UDGridLayout extends React.Component {
             if (jsonLayouts != null) {
                 layouts = JSON.parse(JSON.stringify(jsonLayouts))
             }
-        };
+        }
 
         this.state = {
             layouts, 

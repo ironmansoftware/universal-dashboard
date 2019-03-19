@@ -91,7 +91,7 @@ export default class UdModal extends React.Component {
                 {header}
                 {content}
               </div>
-              <div class="modal-footer">
+              <div className="modal-footer">
               {footer}
               </div>
             </div>

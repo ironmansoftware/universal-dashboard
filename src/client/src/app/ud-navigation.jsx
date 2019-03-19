@@ -92,7 +92,7 @@ export default class UdNavigation extends React.Component {
             var pauseIcon = this.state.paused ? "play-circle" : "pause-circle";
             var words = this.state.paused ? "Cycle Pages"  : "Pause Page Cycling";
 
-            pauseToggle = [<li><div class="divider"></div></li>,
+            pauseToggle = [<li><div className="divider"></div></li>,
                            <li><a href="#!" onClick={this.onTogglePauseCycling.bind(this)}><UdIcon icon={pauseIcon}/> {words}</a></li>
                           ]
         }
@@ -162,7 +162,7 @@ export default class UdNavigation extends React.Component {
         var toggleButton = <a href="#" className="menu-button" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}><UdIcon icon="bars"/></a>;
         if (this.props.fixed) {
             sideNavClass += " fixed";
-            toggleButton = <a href="#" className="button-collapse" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}><UdIcon icon="bars"/></a>;;
+            toggleButton = <a href="#" className="button-collapse" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}><UdIcon icon="bars"/></a>;
         }
 
         var children = [];

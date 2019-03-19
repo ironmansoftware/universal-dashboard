@@ -263,3 +263,7 @@ __pycache__/
 /src/client/src/public/
 
 TEST-*.xml
+src/UniversalDashboard.MaterialUI/package-lock.json
+.vscode/settings.json
+.vscode/tasks.json
+.eslintrc.*
