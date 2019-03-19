@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
-import classnames from 'classnames'
-import { Typography } from '@material-ui/core';
+import classNames from 'classnames'
 
 const styles = (theme) => ({
 	link: {
@@ -27,8 +26,7 @@ export class UDLink extends React.Component {
 		} = this.props;
 
 
-		return (
-			
+		return (			
 				<Link
 					id={id}
 					href={url}
@@ -36,18 +34,26 @@ export class UDLink extends React.Component {
 					underline={underline}
 					style={{ ...style }}
 					variant={variant}
-					className={classnames(className,classes.link, "ud-link")}
+					className={classNames(className,classes.link, "ud-mu-link")}
 					target={openInNewWindow ? '_blank' : '_self'}>
 					{!text ? (UniversalDashboard.renderComponent(content)) : text}
 				</Link>
 
-			
 		);
 	}
 }
 
 UDLink.propTypes = {
-	classes: PropTypes.object.isRequired
+  className: PropTypes.string,
+  classes: PropTypes.object.isRequired,
+  content: PropTypes.object,
+  id: PropTypes.string,
+  openInNewWindow: PropTypes.bool,
+  style: PropTypes.object,
+  text: PropTypes.string,
+  underline: PropTypes.string,
+  url: PropTypes.string,
+  variant: PropTypes.string
 };
 
 export default withStyles(styles)(UDLink);

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import ReactInterval from "react-interval";
+import classNames from "classnames"
 
 const styles = theme => ({
   root: {
@@ -73,7 +74,7 @@ export class UdPaper extends React.Component {
       <>
       <Paper 
         id={this.props.id} 
-        className={classes.root}
+        className={classNames(classes.root, "ud-mu-paper")}
         elevation={elevation}
         style={{...style}}
         height={height}

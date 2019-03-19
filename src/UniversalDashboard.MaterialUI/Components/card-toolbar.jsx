@@ -23,49 +23,27 @@ const styles = theme => ({
   },
   title: {
     flex: "1 1 auto",
-    marginLeft: 32,
-    fontWeight: 600,
-    fontFamily: [
-      '"Roboto Condensed"',
-      "Roboto",
-      '"Segoe UI"',
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif"
-    ].join(",")
+    marginLeft: theme.spacing.unit * 2,
   },
   action: {
     flex: "0 0 auto"
-  },
-  reloadButton: {
-    display: "none"
   }
 });
 
 export class UDCardToolBar extends React.Component {
   
-  onTitleText = (classes, style, title) => {
+  onTitle = (classes, style, title) => {
     return (
-      <Typography
-        variant="h6"
-        style={{ color: style.color }}
-        className={classNames("ud-card-toolbar-title-basic", classes.title)}
-      >
-        {title}
-      </Typography>
-    );
-  };
-
-  onTitleComponent = (classes, title) => {
-    return (
+      title.type === 'mu-typography' ?
       <UdMuTypography
-        classes={classNames(
-          "ud-card-toolbar-title",
-          classes.title,
-          title.className
-        )}
-        {...title}
-      />
+        classes={classNames(classes.title,title.className, "ud-mu-cardtoolbar-title")}
+        {...title}/> 
+      : <Typography
+          variant="h6"
+          style={{ color: style.color, font: style.font }}
+          className={classNames(classes.title, "ud-mu-cardtoolbar-title")}>
+          {title}
+      </Typography>
     );
   };
 
@@ -88,26 +66,18 @@ export class UDCardToolBar extends React.Component {
           id={id}
           style={{ ...style }}
           disableGutters
-          className={classNames("ud-card-toolbar", classes.cardToolBar)}
+          className={classNames("ud-mu-cardtoolbar", classes.cardToolBar)}
         >
           {icon !== null ? (
-            <UdMuIcon className="ud-card-toolbar-icon" {...icon} />
+            <UdMuIcon className="ud-mu-cardtoolbar-icon" {...icon} />
           ) : null}
-          {!title.type
-            ? this.onTitleText(classes, style, title)
-            : this.onTitleComponent(classes, title)}
-
+          {this.onTitle(classes, style, title)}
           {onShowButtons ? (
             <div
-              className={classNames(
-                classes.action,
-                "ud-card-toolbar-buttons-wrapper"
-              )}
-            >
+              className={classNames(classes.action,"ud-mu-cardtoolbar")}>
               <IconButton
-                className="ud-card-toolbar-button-minimize"
-                onClick={onMinimize}
-              >
+                className="ud-mu-cardtoolbar-minimize"
+                onClick={onMinimize}>
                 <UdMuIcon
                   icon="Minus"
                   size={content === null ? "xs" : content[0].icon.size}

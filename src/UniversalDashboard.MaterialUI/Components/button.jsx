@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import classNames from "classnames"
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import UdMuIcon from "./icon";
@@ -46,7 +47,7 @@ export class UdButton extends React.Component {
         variant={this.props.variant}
         size={this.props.size}
         disabled={this.props.disabled}
-        className={classes.button}
+        className={classNames(classes.button, "ud-mu-button")}
         fullWidth={this.props.fullWidth}
         href={this.props.href}
         onClick={this.handleClick.bind(this)}

@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames"
 import { CardMedia, withStyles } from "@material-ui/core";
 
 const UDCardMedia = withStyles(theme => ({
@@ -21,7 +22,7 @@ const UDCardMedia = withStyles(theme => ({
   return (
     <>
       <CardMedia
-        className={classes.media}
+        className={classNames(classes.media, "ud-mu-cardmedia")}
         component={component}
         alt={alt}
         height={height}

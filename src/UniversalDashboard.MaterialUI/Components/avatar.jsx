@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
-import classnames from 'classnames'
+import classNames from 'classnames'
 
 const styles = {
   avatar: {
@@ -15,7 +15,7 @@ function UDMuAvatar(props) {
   const { classes } = props;
   
   return (
-      <Avatar id={props.id} alt={props.alt} src={props.image} className={classnames(props.className,classes.avatar, "ud-avatar")} style={{...props. style}}/>
+      <Avatar id={props.id} alt={props.alt} src={props.image} className={classNames(props.className,classes.avatar, "ud-mu-avatar")} style={{...props. style}}/>
   );
 }
 

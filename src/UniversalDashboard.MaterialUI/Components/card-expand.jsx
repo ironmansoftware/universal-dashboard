@@ -24,22 +24,8 @@ class UDCardExpand extends React.Component {
       UniversalDashboard.get(
         `/api/internal/component/element/${this.props.id}`, data => {
         data.error ?
-            [this.setState({hasError: true,error: data.error,content: data,}),
-              console.log({
-                component: "mu-card-expand",
-                action: "UniversalDashboard.get",
-                status: "failed",
-                error: data.error,
-                content: data})
-            ]
-            : 
-            [this.setState({content: data,loading: false}),
-                console.log({
-                  component: "mu-card-expand",
-                  action: "UniversalDashboard.get",
-                  status: "success",
-                  content: data})
-            ]
+            this.setState({hasError: true,error: data.error,content: data,})
+            : this.setState({content: data,loading: false})
         }
       )
     }
@@ -68,7 +54,7 @@ class UDCardExpand extends React.Component {
 
         <div
           id={id}
-          className={classNames(classes.content, className)}
+          className={classNames(classes.content, className, "ud-mu-cardexpand")}
           style={{ ...style }}>
           {UniversalDashboard.renderComponent(content)}   
         </div>

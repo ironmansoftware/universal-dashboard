@@ -55,7 +55,7 @@ export class UDMuCard extends React.Component {
   };
 
   onExpandedClick = () => {
-    this.setState({expanded: !this.state.expanded });
+    this.setState(state => ({ expanded: !state.expanded }));
   };
 
   render() {
@@ -64,13 +64,12 @@ export class UDMuCard extends React.Component {
 
     return (
       <Fragment>
-
         <CssBaseline />
         
         <Card
           id={id}
           elevation={elevation}
-          className={classNames(className,classes.root, "ud-card")}
+          className={classNames(className,classes.root, "ud-mu-card")}
           onMouseEnter={this.onMouseEnterEvent}
           onMouseLeave={this.onMouseLeaveEvent}
           style={{ ...style }}>
@@ -78,7 +77,7 @@ export class UDMuCard extends React.Component {
           {toolbar !== null && showToolBar ?
           <UDCardToolBar
             id={toolbar.id}
-            className={classNames(toolbar.className, "ud-card-toolbar", {
+            className={classNames(toolbar.className,{
               [classes.hidden]: showToolBar
             })}
             onShowButtons={toolbar.showButtons}
@@ -96,7 +95,7 @@ export class UDMuCard extends React.Component {
 
             {header !== null ?
             <UDCardHeader
-              className={classNames("ud-card-header", {
+              className={classNames(header.className,{
                 [classes.hidden]: header.content === null
               })}
               id={header.id}
@@ -108,7 +107,7 @@ export class UDMuCard extends React.Component {
 
             {body !== null ?
             <UDCardBody
-              className={classNames("ud-card-body", {
+              className={classNames(body.className, {
                 [classes.hidden]: body.content === null
               })}
               id={body.id}
@@ -125,7 +124,7 @@ export class UDMuCard extends React.Component {
               mountOnEnter>
 
               <UDCardExpand
-                className={classNames("ud-card-expand", {
+                className={classNames(expand.className, {
                   [classes.hidden]: expand.content === null
                 })}
                 id={expand.id}
@@ -139,7 +138,7 @@ export class UDMuCard extends React.Component {
 
             {footer !== null ?
             <UDCardFooter
-              className={classNames("ud-card-footer", {
+              className={classNames(footer.className, {
                 [classes.hidden]: footer.content === null
               })}
               id={footer.id}

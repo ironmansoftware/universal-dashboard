@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { CssBaseline } from "@material-ui/core";
+import classNames from "classnames"
 import { ReactInterval } from "react-interval/lib/Component";
 
 export default class UDCardHeader extends React.Component {
@@ -17,22 +18,8 @@ export default class UDCardHeader extends React.Component {
       UniversalDashboard.get(
         `/api/internal/component/element/${this.props.id}`, data => {
         data.error ?
-            [this.setState({hasError: true,error: data.error,content: data,}),
-              console.log({
-                component: "mu-card-header",
-                action: "UniversalDashboard.get",
-                status: "failed",
-                error: data.error,
-                content: data})
-            ]
-            : 
-            [this.setState({content: data,loading: false}),
-                console.log({
-                  component: "mu-card-header",
-                  action: "UniversalDashboard.get",
-                  status: "success",
-                  content: data})
-            ]
+            this.setState({hasError: true,error: data.error,content: data,})
+            : this.setState({content: data,loading: false})
         }
       )
     }
@@ -60,7 +47,7 @@ export default class UDCardHeader extends React.Component {
 
         <div
           id={id}
-          className={className}
+          className={classNames(className, "ud-mu-cardheader")}
           style={{ ...style }}>
           {UniversalDashboard.renderComponent(content)}
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
+import classNames from "classnames"
 
 
 const styles = theme => ({
@@ -22,18 +23,18 @@ class UdIconButton extends React.Component {
   }
 
   render(){
-    const { classes } = this.props;   
+    const { classes, className,disabled,id,style,href,icon } = this.props;   
 
     return (
           <IconButton 
             onClick={this.onClickEvent} 
-            className='ud-icon-button'
-            disabled={this.props.disabled}
-            id={this.props.id}
-            style={{...this.props.style}}
-            href={this.props.href}
+            className={classNames(className, 'ud-mu-iconbutton')}
+            disabled={disabled}
+            id={id}
+            style={{...style}}
+            href={href}
           >
-              {UniversalDashboard.renderComponent(this.props.icon)}
+              {UniversalDashboard.renderComponent(icon)}
           </IconButton>
     );
   }

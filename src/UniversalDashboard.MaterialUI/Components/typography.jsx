@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Typography from "@material-ui/core/Typography";
-import { withStyles } from "@material-ui/core/styles";
 import { ReactInterval } from "react-interval/lib/Component";
+import classNames from "classnames"
 
 export default class UdMuTypography extends React.Component {
   state = {
@@ -69,7 +69,7 @@ export default class UdMuTypography extends React.Component {
     return (
       <Typography
         id={id}
-        className={classes}
+        className={classNames(classes, "ud-mu-typography")}
         style={style === null ? {} : { ...style }}
         align={align}
         gutterBottom={gutterBottom}

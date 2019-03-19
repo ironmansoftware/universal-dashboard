@@ -1,5 +1,4 @@
 import React from 'react'
-import Icon from '@material-ui/core/Icon'
 import { icon } from '@fortawesome/fontawesome-svg-core/index.es'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index.es'
 import findSolidIcon from './faSolid'
@@ -19,7 +18,6 @@ export default class UdMuIcon extends React.Component {
         pull: this.props.pull,
         transform: this.props.transform,
         title: this.props.title,
-        // ...this.props
     }
 
     setFontAwesomeIcon = (faIcon) => {
@@ -50,9 +48,7 @@ export default class UdMuIcon extends React.Component {
     render(){
 
         return (
-        // <Icon style={{width: 'auto', height: 'auto',color:this.props.color,...this.props.style}}>
             <FontAwesomeIcon style={{...this.props.style}} {...this.state}/>
-        // </Icon>
         )
     }
 }

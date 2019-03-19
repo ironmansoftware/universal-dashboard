@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
-import { Icon } from '@material-ui/core';
+import { Icon, Chip, Avatar } from '@material-ui/core';
+import classNames from "classnames"
 
 const styles = theme => ({
   root: {
@@ -70,7 +69,7 @@ export class UdChip extends React.Component{
                 clickable={this.props.clickable}
                 onClick={this.props.clickable ? this.handleClick.bind(this) : null}
                 onDelete={this.props.delete ? this.handleDelete.bind(this) : null}
-                className={classes.chip}
+                className={classNames(classes.chip, "ud-mu-chip")}
                 style={{...this.props.style}}
                 icon={<Icon className={classes.chipIcon}>
                     {UniversalDashboard.renderComponent(this.props.icon)}
