@@ -22,7 +22,7 @@ $Dashboard = New-UDDashboard -Title "Test" -Content {}
 $files = Publish-UDFolder -Path $PSScriptRoot -RequestPath "/files"
 $Server = Start-UDDashboard -Port 10000 -Dashboard $Dashboard -PublishedFolder $files
 $Driver = Start-SeFirefox
-Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver
+Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver #DevSkim: ignore DS137138 
 
 <# 
     Sets test data from within the dashboard that can be validated in Pester tests.
@@ -60,7 +60,7 @@ function Set-TestDashboard {
 
     $Dashboard = New-UDDashboard -Content $Content -Title "TEST" -EndpointInitialization (New-UDEndpointInitialization -Variable "StateCollection" -Function "Set-TestData")
     $Server.DashboardService.SetDashboard($Dashboard)
-    Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver
+    Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver #DevSkim: ignore DS137138 
 }
 
 if ($OutputTestResultXml) {
@@ -69,7 +69,7 @@ if ($OutputTestResultXml) {
     New-Item -Path $OutputPath -ItemType Directory
 
     Push-Location $PSScriptRoot
-    Invoke-Pester -OutputFile (Join-Path $OutputPath "TEST-MaterialUI.xml") -OutputFormat NUnitXml
+    Invoke-Pester -OutputFile (Join-Path $OutputPath "TEST-MaterialUI.xml") -OutputFormat NUnitXml #DevSkim: ignore DS104456 
     Pop-Location
 } else {
     $Tests | ForEach-Object {
