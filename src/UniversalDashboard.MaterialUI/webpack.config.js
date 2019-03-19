@@ -1,16 +1,19 @@
 var webpack = require('webpack');
 var path = require('path');
 
+
 var BUILD_DIR = path.resolve(__dirname, 'public');
 var SRC_DIR = path.resolve(__dirname);
 var APP_DIR = path.resolve(__dirname, 'src/app');
+
+process.env.NODE_ENV = 'production'
 
 module.exports = (env) => {
   const isDev = env == 'development' || env == 'isolated';
 
   return {
     entry: {
-      'index' : __dirname + '/components/index.js'
+      'index': __dirname + '/components/index.js'
     },
     output: {
       path: BUILD_DIR,
@@ -20,9 +23,20 @@ module.exports = (env) => {
       library: 'materialui',
       libraryTarget: 'var'
     },
-    module : {
-      rules : [
-        { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'}
+    module: {
+      rules: [{
+          test: /\.(js|jsx)$/,
+          exclude: [/node_modules/, /public/],
+          use: ['babel-loader']
+        },
+        {
+          test: /\.css$/,
+          loader: 'css-loader',
+        },
+        {
+          test: /\.(eot|ttf|woff2?|otf|svg)$/,
+          loader: 'file-loader'
+        }
       ]
     },
     externals: {
@@ -30,10 +44,11 @@ module.exports = (env) => {
       $: "$"
     },
     resolve: {
-      extensions: ['.json', '.js', '.jsx']
+      extensions: ['.json', '.js', '.jsx'],
     },
-    plugins: [],
+    plugins: [
+      // new RemoveWebpackPlugin(BUILD_DIR)
+    ],
     devtool: "source-map"
   };
 }
-

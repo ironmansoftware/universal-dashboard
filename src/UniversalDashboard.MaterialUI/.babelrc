@@ -10,7 +10,7 @@
         }
       }
     ],
-    "@babel/preset-react"
+    "babel-preset-react-app"
   ],
   "plugins": [
     ["minify-dead-code-elimination", { "optimizeRawSize": true }],
