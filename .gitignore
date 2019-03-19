@@ -266,3 +266,4 @@ TEST-*.xml
 src/UniversalDashboard.MaterialUI/package-lock.json
 .vscode/settings.json
 .vscode/tasks.json
+.eslintrc.*

@@ -63,3 +63,4 @@ output/
 classes/bin
 classes/obj
 src/UniversalDashboard.MaterialUI/package-lock.json
+.eslintrc.*
