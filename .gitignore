@@ -263,3 +263,6 @@ __pycache__/
 /src/client/src/public/
 
 TEST-*.xml
+
+# vscode settings folder
+.vscode/tasks.json
