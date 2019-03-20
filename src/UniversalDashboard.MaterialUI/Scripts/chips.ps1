@@ -1,4 +1,4 @@
-function New-UDChip {
+function New-UDMuChip {
     [CmdletBinding(DefaultParameterSetName = 'Icon')]
     param(
         [Parameter()]
@@ -14,15 +14,14 @@ function New-UDChip {
         [object]$OnClick,
 
         [Parameter (Position = 1, ParameterSetName = "Icon")]
-		[PSTypeName('MUIcon')]$Icon,
+		[PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
 
 		[Parameter(Position = 2)]
-        [ValidateSet("default","primary","secondary")]
-		[string]$Color = "default",
+		[Hashtable]$Style,
 
 		[Parameter(Position = 3)]
         [ValidateSet("outlined","default")]
-		[string]$Style = "default",
+		[string]$Variant = "default",
 
 		[Parameter(Position = 4)]
 		[Switch]$Clickable,
@@ -68,8 +67,8 @@ function New-UDChip {
             id = $Id
             label = $Label
             icon = $Icon 
-            color = $Color 
             style = $Style 
+            variant = $Variant 
             clickable = $Clickable 
             onClick = $OnClick
             onDelete  = $OnDelete
