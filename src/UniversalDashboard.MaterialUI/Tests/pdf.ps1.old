@@ -1,0 +1,13 @@
+Describe "Pdf" {
+    Context "content" {
+        Set-TestDashboard {
+        
+                New-UDPdf -FilePath "/files/gppowershell.pdf" -Id 'pdf'
+            
+        } 
+
+        It 'has content' {
+            Find-SeElement -Id 'pdf' -Driver $Driver | should not be $null
+        }
+    }
+}
