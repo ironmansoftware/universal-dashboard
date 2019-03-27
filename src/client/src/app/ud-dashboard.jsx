@@ -20,6 +20,7 @@ const UdErrorCardComponent = React.lazy(() => import('./error-card.jsx' /* webpa
 
 import toaster from './services/toaster';
 import UDDesigner from './ud-designer';
+import NotFound from './not-found.jsx';
 
 export default class UdDashboard extends React.Component {
     constructor() {
@@ -335,6 +336,7 @@ export default class UdDashboard extends React.Component {
                         {staticPages}
                         {dynamicPages}
                         <Route exact path="/" render={this.redirectToHomePage.bind(this)} />
+                        <Route path="/" render={() => <NotFound/>} />
                     </Switch>
                 </main>,
                 <Suspense fallback={<div></div>}>
