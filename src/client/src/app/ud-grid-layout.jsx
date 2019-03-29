@@ -37,41 +37,7 @@ export default class UDGridLayout extends React.Component {
       UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
     }
 
-    onIncomingEvent(eventName, event) {
-      if (event.type === "addElement") {
-          var layouts = this.state.layouts;
-
-          event.elements.forEach(x => {
-            layouts.push({
-              i: `grid-element-${x.id}`
-            })
-          })
-
-          this.setState({
-            layouts,
-            content: this.state.content.concat(event.elements)
-          })
-      }
-
-      if (event.type == "removeElement") {
-        this.setState({
-          layouts: this.state.filter(x => x.i !== event.id),
-          content: this.state.content.filter(x => x.id !== event.id)
-        })
-      }
-    }
-
     onLayoutChange(layout, layouts) {
-
-      if (this.props.endpoint) {
-        UniversalDashboard.publish('element-event', {
-          type: "clientEvent",
-          eventId: this.props.endpoint,
-          eventName: 'onLayoutChanged',
-          eventData: JSON.stringify(layouts)
-        });
-      }
-
       if (this.props.persist) {
           saveToLS("layouts", layouts);
           this.setState({ layouts });
@@ -86,9 +52,7 @@ export default class UDGridLayout extends React.Component {
             );
 
         return (
-            <ResponsiveReactGridLayout className={this.props.className} layouts={this.state.layouts} cols={this.props.cols} rowHeight={this.props.rowHeight} onLayoutChange={(layout, layouts) =>
-                this.onLayoutChange(layout, layouts)
-              }>
+            <ResponsiveReactGridLayout className={this.props.className} layouts={this.state.layouts} cols={this.props.cols} rowHeight={this.props.rowHeight} >
                 {elements}
             </ResponsiveReactGridLayout>
         )
