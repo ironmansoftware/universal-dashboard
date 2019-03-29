@@ -35,9 +35,7 @@ function New-UDGridLayout {
         [Parameter()]
         [switch]$Resizable,
         [Parameter()]
-        [switch]$Persist,
-        [Parameter()]
-        [object]$OnLayoutChanged
+        [switch]$Persist
     )
 
     End {
@@ -57,13 +55,6 @@ function New-UDGridLayout {
             xxs = $ExtraExtraSmallColumns
         }
 
-        if ($null -ne $OnLayoutChanged -and $OnLayoutChanged -is ([ScriptBlock])) {
-            $OnLayoutChanged = New-UDEndpoint -Endpoint $OnLayoutChanged
-        }
-        elseif ($null -ne $OnLayoutChanged -and $OnLayoutChanged -isnot ([UniversalDashboard.Models.Endpoint])) {
-            throw "OnLayoutChanged must be a ScriptBlock of UDEndpoint"
-        }
-
         @{
             type = "grid-layout"
             id = $Id
@@ -77,7 +68,6 @@ function New-UDGridLayout {
             isDraggable = $Draggable.IsPresent
             isResizable = $Resizable.IsPresent
             persist = $Persist.IsPresent
-            endpoint = $OnLayoutChanged.Name
         }
     }
 }
