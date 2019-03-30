@@ -136,7 +136,7 @@ namespace UniversalDashboard.Execution
                                 var error = ps.Streams.Error[0].Exception.Message;
 
                                 foreach(var errorRecord in ps.Streams.Error) {
-                                    Log.Warn($"Error executing endpoint script. {errorRecord} {Environment.NewLine} {errorRecord.ScriptStackTrace}");
+                                    Log.Warn($"Error executing endpoint {endpoint.Name}. {errorRecord} {Environment.NewLine} {errorRecord.ScriptStackTrace}");
                                 }
 
                                 return new { Error = new Error { Message = error } };
@@ -145,7 +145,7 @@ namespace UniversalDashboard.Execution
                     }
                     catch (Exception ex)
                     {
-                        Log.Warn(ex, "Error executing endpoint script.");
+                        Log.Warn(ex, $"Error executing endpoint {endpoint.Name}.");
 
                         return new { Error = new Error { Message = ex.Message, Location = ex.StackTrace } };
                     }
