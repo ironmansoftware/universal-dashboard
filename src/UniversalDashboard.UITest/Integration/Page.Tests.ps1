@@ -178,6 +178,11 @@ Describe "New-UDPage" {
             (Find-SeElement -Id 'nofrontslash' -Driver $Driver).Text | Should be "level1/level2"
         }
 
+        it "should show not found" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/somerandompage"
+            Find-SeElement -Id 'notfound' -Driver $Driver | Should not be $null
+        }
+
         Stop-SeDriver $Driver
         Stop-UDDashboard -Server $Server 
     }
