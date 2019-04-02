@@ -26,6 +26,9 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter(Position = 3)]
 		public SwitchParameter DefaultHomePage { get; set; }
 
+		[Parameter(Position = 4)]
+		public string Title { get; set; }
+
 		protected override void EndProcessing()
 		{
 			var page = new Page();
@@ -36,6 +39,7 @@ namespace UniversalDashboard.Cmdlets
 			page.DefaultHomePage = DefaultHomePage;
 			page.AutoRefresh = AutoRefresh;
 			page.RefreshInterval = RefreshInterval;
+			page.Title = Title;
 
 			if (Content != null && Endpoint != null) {
 				throw new Exception("Content and Endpoint cannot both be specified.");

@@ -36,7 +36,8 @@ export default class UdDashboard extends React.Component {
             location: null,
             authenticated: false,
             sessionId: '',
-            design: false
+            design: false,
+            title: ''
         }
     }
 
@@ -218,7 +219,8 @@ export default class UdDashboard extends React.Component {
                 loading: false,
                 sessionId:  json.sessionId,
                 authenticated: json.authenticated,
-                design: dashboard.design
+                design: dashboard.design,
+                title: dashboard.title
             });
 
         }.bind(this), this.props.history);
@@ -282,6 +284,12 @@ export default class UdDashboard extends React.Component {
             return <Redirect to={window.baseUrl + `/${defaultHomePage.name.replace(/ /g,"-")}`}/>
         }
     }
+    
+    onTitleChanged(title) {
+        this.setState({
+            title
+        })
+    }
 
     render() {
         if (this.state.hasError) {
@@ -296,6 +304,7 @@ export default class UdDashboard extends React.Component {
                     </Suspense>
         }
 
+        var _this = this;
         var dynamicPages = this.state.dashboard.pages.map(function(x) {
             if (!x.dynamic) return null;
 
@@ -303,16 +312,16 @@ export default class UdDashboard extends React.Component {
                 x.url = "/" + x.url;
             }
 
-            return <Route path={window.baseUrl + x.url} render={props => (
-                <UdPage id={x.id} dynamic={true} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
+            return <Route key={x.url} path={window.baseUrl + x.url} render={props => (
+                <UdPage onTitleChanged={_this.onTitleChanged.bind(_this)} id={x.id} dynamic={true} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
             )} />
         })
 
         var staticPages = this.state.dashboard.pages.map(function(x) {
             if (x.dynamic) return null;
 
-            return <Route exact path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
-                <UdPage dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
+            return <Route key={x.name} exact path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
+                <UdPage onTitleChanged={_this.onTitleChanged.bind(_this)} dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key}/>
             )} />
         })
 
@@ -320,7 +329,7 @@ export default class UdDashboard extends React.Component {
                 <header>
                     <UdNavbar backgroundColor={this.state.dashboard.navBarColor} 
                             fontColor={this.state.dashboard.navBarFontColor} 
-                            text={this.state.dashboard.title} 
+                            text={this.state.title} 
                             links={this.state.dashboard.navbarLinks}
                             logo={this.state.dashboard.navBarLogo}
                             pages={this.state.dashboard.pages}
