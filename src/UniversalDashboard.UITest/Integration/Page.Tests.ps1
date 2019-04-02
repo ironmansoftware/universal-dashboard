@@ -6,8 +6,17 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
-
 Get-UDDashboard | Stop-UDDashboard
+
+$Driver = Start-SeFirefox
+$Server = Start-UDDashboard -Port 10001 
+
+function Set-TestDashboard {
+    param($Dashboard)
+
+    $Server.DashboardService.SetDashboard($Dashboard)
+    Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver 
+}
 
 Describe "New-UDPage" {
 
@@ -22,19 +31,14 @@ Describe "New-UDPage" {
         }
         
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2) -CyclePages -CyclePagesInterval 2
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        
+        Set-TestDashboard -Dashboard $dashboard
 
         It "should cycle dynamic pages" {
             Find-SeElement -Id "Home" -Driver $Driver | Should not be $null
             Start-Sleep 2
             Find-SeElement -Id "Page" -Driver $Driver | Should not be $null
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "AutoReload" {
@@ -49,21 +53,45 @@ Describe "New-UDPage" {
 
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/mypage"
-        Start-Sleep 2
+        Set-TestDashboard -Dashboard $dashboard
 
-        It "should navigate to page with spaces" {
+        It "should autoreload" {
+
+            Enter-SeUrl -Driver $Driver -Url http://localhost:$BrowserPort/mypage
+
             $ElementText = (Find-SeElement -Id "page-with-spaces" -Driver $Driver).Text
 
             Start-Sleep 3
 
             (Find-SeElement -Id "page-with-spaces" -Driver $Driver).Text | Should not be $ElementText
         }
+    }
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
+    Context "Titles" {
+
+        $Page1 = New-UDPage -Name "Home" -Content {
+            New-UDCard -Text "Home"
+        } -Title "My First Page"
+
+        $Page2 = New-UDPage -Url "/mypage" -Endpoint {
+            New-UDCard -Text (Get-Date) -Id "page-with-spaces"
+        }  
+
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
+
+        Set-TestDashboard -Dashboard $dashboard
+
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Home"
+        Start-Sleep 2
+
+        It "should have home page title" {
+            (Find-SeElement -Id "udtitle" -Driver $Driver).Text | should be "My First Page"
+
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/mypage"
+            Start-Sleep 2
+
+            (Find-SeElement -Id "udtitle" -Driver $Driver).Text | should be "Test"
+        }
     }
 
     Context "multi-page" {
@@ -107,10 +135,7 @@ Describe "New-UDPage" {
         }
         
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3, $Page5, $Page4, $Page7, $Page6, $Page8, $Page9)
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Set-TestDashboard -Dashboard $dashboard
 
         It "should navigate to page with spaces" {
             $Element = Find-SeElement -ClassName "menu-button" -Driver $Driver
@@ -182,9 +207,6 @@ Describe "New-UDPage" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/somerandompage"
             Find-SeElement -Id 'notfound' -Driver $Driver | Should not be $null
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Page with DefaultHomePage parameter" {
@@ -198,10 +220,7 @@ Describe "New-UDPage" {
         }
         
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Set-TestDashboard -Dashboard $dashboard
 
         it "First page should be the one with DefualtHomePage parameter set to true" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
@@ -220,9 +239,6 @@ Describe "New-UDPage" {
             Start-Sleep 3
             (Find-SeElement -Id 'Test-Page' -Driver $Driver).text | Should not be $HomePageText
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
 
@@ -237,11 +253,7 @@ Describe "New-UDPage" {
         }
 
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
-
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
+        Set-TestDashboard -Dashboard $dashboard
 
         It "should navigate to page with hyphens" {
             $Element = Find-SeElement -ClassName "menu-button" -Driver $Driver
@@ -262,8 +274,8 @@ Describe "New-UDPage" {
             Start-Sleep 3
             Find-SeElement -Id "page-with-hyphens" -Driver $Driver | Should not be $null
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 }
+
+Stop-SeDriver $Driver 
+Stop-UDDashboard -Server $Server

@@ -45,7 +45,7 @@ export default class UdNavbar extends React.Component {
 
                    
                     <a href={href} style={{paddingLeft: '10px', fontSize: '2.1rem'}}>
-                        {logo}  <span>{this.props.text}</span>
+                        {logo}  <span id="udtitle">{this.props.text}</span>
                     </a>
                     {
                         this.props.authenticated ?
