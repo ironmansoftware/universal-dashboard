@@ -84,6 +84,8 @@ Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboardServer.psm1" $outp
 Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net472\UniversalDashboard.Controls.psm1" $outputDirectory
 Copy-Item "$PSScriptRoot\poshud" $poshud -Recurse -Container
 
+Copy-Item "$PSScriptRoot\..\LICENSE" "$outputDirectory\LICENSE.txt" 
+
 # Copy Child Modules
 
 Copy-Item "$PSScriptRoot\UniversalDashboard.Materialize\output\UniversalDashboard.Materialize" $childModules -Recurse -Container
