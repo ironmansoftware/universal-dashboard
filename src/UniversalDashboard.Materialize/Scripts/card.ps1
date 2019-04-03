@@ -17,7 +17,7 @@ function New-UDCard {
         [Parameter()]
         [UniversalDashboard.Models.DashboardColor]$FontColor,
         [Parameter()]
-        [UniversalDashboard.Models.Link[]]$Links,
+        [Hashtable[]]$Links,
         [Parameter()]
         [UniversalDashboard.Models.Basics.Element]$Image,
         [Parameter()]

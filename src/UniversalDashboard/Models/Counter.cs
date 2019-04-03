@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using Newtonsoft.Json;
 
 namespace UniversalDashboard.Models
 {
@@ -17,7 +18,7 @@ namespace UniversalDashboard.Models
 		[JsonProperty("type")]
 		public override string Type => "counter";
 		[JsonProperty("links")]
-		public Link[] Links { get;set;}
+		public Hashtable[] Links { get;set;}
 		[JsonProperty("textSize")]
 		public string TextSize { get; set; }
 		[JsonProperty("textAlignment")]

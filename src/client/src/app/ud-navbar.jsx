@@ -1,6 +1,5 @@
 import React from 'react';
 import UdNavigation from './ud-navigation.jsx';
-import UdLink from './ud-link.jsx';
 import {fetchGet} from './services/fetch-service.jsx';
 
 export default class UdNavbar extends React.Component {
@@ -21,7 +20,7 @@ export default class UdNavbar extends React.Component {
         var links = null;
         if (this.props.links) {
             links = this.props.links.map(function(x) {
-                return <li key={x.url}><UdLink {...x}  /></li>
+                return <li key={x.url}>{UniversalDashboard.renderComponent(x)}</li>
             });
         }
 
