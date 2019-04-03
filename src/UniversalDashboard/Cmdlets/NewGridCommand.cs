@@ -15,9 +15,9 @@ namespace UniversalDashboard.Cmdlets
 
 		[Parameter]
 		public string Title { get; set; }
-		[Parameter(Mandatory = true)]
+		[Parameter()]
 		public string[] Headers { get; set; }
-		[Parameter(Mandatory = true)]
+		[Parameter()]
 		public string[] Properties { get; set; }
 
 

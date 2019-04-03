@@ -7,7 +7,52 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
+
+$Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
+$Driver = Start-SeFirefox
+
+function Set-TestDashboard {
+    param($Dashboard)
+
+    $Server.DashboardService.SetDashboard($Dashboard)
+    Enter-SeUrl -Url "http://localhost:$BrowserPort" -Driver $Driver 
+}
+
 Describe "Grid" {
+
+    Context "simple grid" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDGrid -Title "Grid" -Id "Grid" -Endpoint {
+                $data = @(
+                    [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
+                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
+                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDIcon -Icon check -Color Green)}
+                )
+
+                $data | Out-UDGridData 
+            } 
+        }
+
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should have link" {
+            Find-SeElement -LinkText "This is text" -Driver $Driver | Should not be $null
+        }
+
+        It "should format date correctly" {
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $Element[5].Text | Should BeLike "Dec 2, 2007*"
+        }
+
+        It "should format bool correctly" {
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $Element[7].Text | Should Be 'true'
+        } 
+    }
+
     Context "Custom Columns" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
 
@@ -28,9 +73,7 @@ Describe "Grid" {
             New-UDElement -Id "Hey" -Tag "div"
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Set-TestDashboard -Dashboard $dashboard
 
         It "should click button" {
             $Button = Find-SeElement -LinkText "HEY" -Driver $Driver 
@@ -61,9 +104,6 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element[7].Text | Should Be 'true'
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "no data" {
@@ -93,9 +133,7 @@ Describe "Grid" {
             } 
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Set-TestDashboard -Dashboard $dashboard
 
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
@@ -111,9 +149,6 @@ Describe "Grid" {
             $Element = Find-SeElement -Id "nested-element" -Driver $Driver
             $Element.Text.Contains("Stopped") | Should be $true
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "throws" {
@@ -131,17 +166,12 @@ Describe "Grid" {
             } 
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Set-TestDashboard -Dashboard $dashboard
  
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
             $Element.Text.Contains("No results found") | Should be $true
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "server side processing" {
@@ -181,9 +211,7 @@ Describe "Grid" {
             } 
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Set-TestDashboard -Dashboard $dashboard
 
         It "should have data" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
@@ -234,13 +262,8 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element.Length | Should be 6
         }
-        
-        #Stop-SeDriver $Driver
-        #Stop-UDDashboard -Server $Server 
     }
 
-    return
-    
     Context "Grid" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
@@ -323,9 +346,7 @@ Describe "Grid" {
             } -PageSize 5
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Set-TestDashboard -Dashboard $dashboard
 
         It "should not page when NoPaging set" {
             $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Driver
@@ -407,13 +428,8 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0]
             $Element.Length | Should be 6
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
-
-    
     Context "default sort" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
@@ -429,10 +445,8 @@ Describe "Grid" {
             )
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
- 
+        Set-TestDashboard -Dashboard $dashboard
+
         It "should have sorted correctly" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
@@ -442,10 +456,6 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[1] 
             $Element[1].Text | should be "20"
         }
-
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "refresh" {
@@ -459,9 +469,7 @@ Describe "Grid" {
             } 
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+        Set-TestDashboard -Dashboard $dashboard
 
         It "should refresh" {
             $previousText = ""
@@ -476,7 +484,9 @@ Describe "Grid" {
             (Find-SeElement -ClassName "griddle-cell" -Driver $NewElement[0])[2].Text | should not be $text     
         }
 
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
-    }
+        
+    }    
 }
+
+Stop-SeDriver $Driver
+Stop-UDDashboard -Server $Server 

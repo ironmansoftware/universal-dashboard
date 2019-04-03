@@ -15,7 +15,7 @@ function Set-TestDashboard {
     param($Dashboard)
 
     $Server.DashboardService.SetDashboard($Dashboard)
-    Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver 
+    Enter-SeUrl -Url "http://localhost:$BrowserPort" -Driver $Driver 
 }
 
 Describe "New-UDPage" {
