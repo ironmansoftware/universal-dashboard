@@ -33,10 +33,6 @@ export default class UDGridLayout extends React.Component {
         };
     }
 
-    componentDidMount() {
-      UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
-    }
-
     onLayoutChange(layout, layouts) {
       if (this.props.persist) {
           saveToLS("layouts", layouts);

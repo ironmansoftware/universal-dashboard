@@ -24,6 +24,13 @@ export default class UdPage extends React.Component {
         this.loadData();
     }
 
+    componentDidMount() {
+        if (this.props.title) {
+            document.title = this.props.title;
+            this.props.onTitleChanged(this.props.title);
+        }
+    }
+
     loadData() {
         if (this.props.dynamic) {
             this.loadDynamicPage();

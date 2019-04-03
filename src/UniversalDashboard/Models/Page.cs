@@ -25,5 +25,8 @@ namespace UniversalDashboard.Models
 
 		[JsonProperty("dynamic")]
 		public bool Dynamic { get; set; }
+
+				[JsonProperty("title")]
+				public string Title { get; set; }
     }
 }
