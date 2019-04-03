@@ -34,6 +34,13 @@ class CustomColumn extends React.Component {
 export default class UdGrid extends React.Component {
     constructor(props) {
         super(props);
+
+        var defaultSortColumn = props.defaultSortColumn;
+        if (props.defaultSortColumn == null && props.properties != null) {
+            defaultSortColumn = props.properties[0];
+        } else if (defaultSortColumn == null) {
+            defaultSortColumn = ''
+        }
     
         this.state = {
           data: [],
@@ -42,9 +49,11 @@ export default class UdGrid extends React.Component {
           recordCount: 0,
           hasError: false,
           errorMessage: "",
-          sortColumn: props.defaultSortColumn ? props.defaultSortColumn : props.properties[0],
+          sortColumn: defaultSortColumn,
           sortAscending: !props.defaultSortDescending,
-          filterText: ""
+          filterText: "",
+          properties: props.properties,
+          headers: props.headers
         };
       }
 
@@ -175,6 +184,15 @@ export default class UdGrid extends React.Component {
             }.bind(this));
 
             rowDefinition = <RowDefinition>{columns}</RowDefinition>;
+        } else if (this.state.data && this.state.data.length > 0) {
+            var columns = [];
+            var i = 0;
+            for(var key in this.state.data[0]) {
+                columns.push(<ColumnDefinition key={i.toString()} id={key} title={key} customComponent={CustomColumn} dateTimeFormat={this.props.dateTimeFormat}/>)
+                i++;
+            }
+
+            rowDefinition = <RowDefinition>{columns}</RowDefinition>;
         }
 
         const styleConfig = {
@@ -222,6 +240,8 @@ export default class UdGrid extends React.Component {
                 <div className="card-content">
                     <span className="card-title">{this.props.title}</span>
                     {serverFilterControl}
+                    { rowDefinition ? 
+
                     <Griddle 
                         data={this.state.data}
                         plugins={gridPlugins}
@@ -245,7 +265,7 @@ export default class UdGrid extends React.Component {
                         styleConfig={styleConfig}
                     >
                         {rowDefinition}
-                    </Griddle>
+                    </Griddle>: <div/> }
                 </div>
                 {actions}
                 <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.reload.bind(this)}/>
