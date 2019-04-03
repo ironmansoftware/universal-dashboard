@@ -28,6 +28,9 @@ function New-UDMuButton {
         [Parameter (Position = 9)]
         [Hashtable]$Style,
 
+        [Parameter (Position = 10)]
+        [string]$Href,
+
         [Parameter()]
         [string]$Id = (New-Guid).ToString()
 
@@ -60,6 +63,7 @@ function New-UDMuButton {
             icon          = $Icon
             fullWidth     = $FullWidth.IsPresent
             size          = $Size
+            href          = $Href
             style         = $Style
         }
 
