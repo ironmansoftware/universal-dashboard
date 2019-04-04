@@ -6,7 +6,7 @@ Import-Module $ModulePath -Force
 
 Describe "New-UDDashboard" {
     It "Should set properties" {
-        $Dashboard = New-UDDashboard -Title "Test" -Content { New-UDCard -Title "test" } -NavBarColor Black -NavBarFontColor Black -BackgroundColor Black -FontColor Black -GeoLocation -FontIconStyle FontAwesome
+        $Dashboard = New-UDDashboard -Title "Test" -Content { New-UDCard -Title "test" } -NavBarColor Black -NavBarFontColor Black -BackgroundColor Black -FontColor Black -GeoLocation 
 
         $Dashboard.Title | Should be "Test"
         $Dashboard.NavBarColor | should be "rgba(0, 0, 0, 1)"
@@ -14,7 +14,6 @@ Describe "New-UDDashboard" {
         $Dashboard.BackgroundColor | should be "rgba(0, 0, 0, 1)"
         $Dashboard.FontColor | should be "rgba(0, 0, 0, 1)"
         $Dashboard.GeoLocation | should be $true 
-        $Dashboard.FontIconStyle | should be 'FontAwesome' 
     }
 
     It "should set default page name when using content" {

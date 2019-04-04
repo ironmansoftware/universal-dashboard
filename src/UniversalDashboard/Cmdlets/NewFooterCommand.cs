@@ -4,6 +4,7 @@ using System.Management.Automation;
 using System.Linq;
 using Newtonsoft.Json;
 using NLog;
+using System.Collections;
 
 namespace UniversalDashboard.Cmdlets.Formatting
 {
@@ -13,7 +14,7 @@ namespace UniversalDashboard.Cmdlets.Formatting
 		private static readonly Logger Log = LogManager.GetLogger(nameof(NewFooterCommand));
 
 		[Parameter()]
-		public Link[] Links { get; set; }
+		public Hashtable[] Links { get; set; }
         [Parameter()]
         public string Copyright {get;set;}
 		[Parameter()]

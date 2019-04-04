@@ -6,6 +6,8 @@ $BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
+Get-UDDashboard | Stop-UDDashboard
+
 Describe "Cache" {
     Context "Xml" {
         It "Should work with XML" {

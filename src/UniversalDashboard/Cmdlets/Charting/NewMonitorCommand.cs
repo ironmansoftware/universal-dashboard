@@ -48,7 +48,7 @@ namespace UniversalDashboard.Cmdlets.Charting
 		[Parameter]
 		public string[] Label { get;set;}
 		[Parameter]
-		public Link[] Links {get;set;}
+		public Hashtable[] Links {get;set;}
 		[Parameter]
 		public ScriptBlock FilterFields { get; set; }
 		protected override void EndProcessing()

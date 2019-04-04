@@ -3,6 +3,7 @@ using NLog;
 using UniversalDashboard.Models;
 using System.Management.Automation;
 using UniversalDashboard.Models.Enums;
+using System.Collections;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -22,7 +23,7 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public DashboardColor FontColor { get; set; }
 	    [Parameter]
-	    public Link[] Links { get; set; }
+	    public Hashtable[] Links { get; set; }
 		[Parameter()]
 		public TextSize TextSize { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using Newtonsoft.Json;
 
 namespace UniversalDashboard.Models
 {
@@ -24,7 +25,7 @@ namespace UniversalDashboard.Models
 		[JsonProperty("serverSideProcessing")]
 		public bool ServerSideProcessing {get;set;}
 		[JsonProperty("links")]
-		public Link[] Links { get;set;}
+		public Hashtable[] Links { get;set;}
 		[JsonProperty("dateTimeFormat")]
 		public string DateTimeFormat { get; set; }
 		[JsonProperty("pageSize")]

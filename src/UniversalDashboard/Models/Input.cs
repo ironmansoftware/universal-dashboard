@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections;
+using Newtonsoft.Json;
 
 namespace UniversalDashboard.Models
 {
@@ -47,7 +48,7 @@ namespace UniversalDashboard.Models
 		[JsonProperty("value")]
 		public object Value { get; set; }
 		[JsonProperty("links")]
-		public Link[] Links { get;set;}
+		public Hashtable[] Links { get;set;}
         [JsonProperty("okText")]
         public string OkText { get; set; }
         [JsonProperty("cancelText")]

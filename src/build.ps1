@@ -89,6 +89,7 @@ Copy-Item "$PSScriptRoot\..\LICENSE" "$outputDirectory\LICENSE.txt"
 # Copy Child Modules
 
 Copy-Item "$PSScriptRoot\UniversalDashboard.Materialize\output\UniversalDashboard.Materialize" $childModules -Recurse -Container
+Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard.MaterialUI" $childModules -Recurse -Container
 
 # End Copy Child Modules 
 

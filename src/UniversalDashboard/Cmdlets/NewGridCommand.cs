@@ -5,6 +5,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Management.Automation;
+using System.Collections;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -31,7 +32,7 @@ namespace UniversalDashboard.Cmdlets
 	    [Parameter]
 	    public DashboardColor FontColor { get; set; }
 	    [Parameter]
-	    public Link[] Links { get; set; }
+	    public Hashtable[] Links { get; set; }
 
 		[Parameter]
 		public SwitchParameter ServerSideProcessing { get; set; }
