@@ -53,8 +53,6 @@ Describe "Grid" {
         } 
     }
 
-    Wait-Debugger
-
     Context "Custom Columns" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
 

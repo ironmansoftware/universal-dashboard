@@ -3,7 +3,6 @@ import '@babel/polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 import $ from "jquery";
-import Materialize from "materialize-css";
 import 'whatwg-fetch';
 import Promise from 'promise-polyfill'; 
 import { UniversalDashboardService } from './services/universal-dashboard-service.jsx';

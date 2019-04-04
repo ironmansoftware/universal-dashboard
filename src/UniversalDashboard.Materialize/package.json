@@ -11,10 +11,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "chart.js": "2.7.3",
     "font-awesome": "4.7.0",
+    "griddle-react": "1.13.1",
     "materialize-css": "0.100.2",
+    "moment": "2.19.3",
+    "numeral": "2.0.6",
     "react": "16.6.0",
-    "react-materialize": "1.1.0"
+    "react-chartjs-2": "2.7.4",
+    "react-debounce-input": "3.2.0",
+    "react-interval": "^2.0.1",
+    "react-materialize": "1.1.0",
+    "react-router-dom": "4.3.1"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",

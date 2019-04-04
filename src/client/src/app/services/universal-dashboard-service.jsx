@@ -3,6 +3,7 @@ import { fetchGet, fetchPost } from './fetch-service.jsx';
 import { internalRenderComponent } from './render-service.jsx';
 import LazyElement from './../basics/lazy-element.jsx';
 import PubSub from 'pubsub-js';
+import toaster from './toaster';
 
 export const UniversalDashboardService = {
     components: [],
@@ -16,8 +17,9 @@ export const UniversalDashboardService = {
     get: fetchGet,
     post: fetchPost,
     subscribe: PubSub.subscribe,
-    unsubsribe: PubSub.unsubscribe,
+    unsubscribe: PubSub.unsubscribe,
     publish: PubSub.publishSync,
+    toaster: toaster,
     renderComponent: function(component, history, dynamicallyLoaded) {
 
         if (component == null) return <React.Fragment/>;
