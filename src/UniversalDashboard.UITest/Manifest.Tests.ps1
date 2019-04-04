@@ -120,7 +120,7 @@ Describe "Manifest" {
         Get-Command 'New-UDTab' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDGridLayout' -ErrorAction SilentlyContinue | Should not be $null
         
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 104
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 122
     }
 
     It "should require .NET 4.7" -Skip  {
