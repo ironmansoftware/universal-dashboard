@@ -52,7 +52,7 @@ $MultiDatasetChart = {
     }
 }
 
-New-UDPage -Name "Charts" -Icon area_chart -Content {
+New-UDPage -Name "Charts" -Icon chart_area -Content {
     New-UDPageHeader -Title "Charts" -Icon "area-chart" -Description "Visual data using dynamic charts based on ChartJS" -DocLink "https://adamdriscoll.gitbooks.io/powershell-universal-dashboard/content/charts.html"
     New-UDExample -Title "Basic Charts" -Description "Create basic charts from any type of data." -Script $BasicChart
     New-UDExample -Title "Auto Refreshing Charts" -Description "Automatically refresh chart data on an interval" -Script $AutoRefreshChart

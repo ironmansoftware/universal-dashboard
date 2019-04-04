@@ -1,5 +1,5 @@
 
-New-UDPage -Name "Icon" -Icon smile_o -Content {
+New-UDPage -Name "Icon" -Icon smile -Content {
     New-UDRow -Columns {
         New-UDColumn -Size 2 -Content {}
         New-UDColumn -Size 10 -Content {
