@@ -61,7 +61,7 @@ function New-UDMuIcon {
             transform  = $Transform
             style      = $Style
             title      = $Title
-            regular      = $Regular.IsPresent
+            regular    = $Regular.IsPresent
             icon       = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "")
         }
 
