@@ -2,6 +2,8 @@ import React from 'react'
 import { icon } from '@fortawesome/fontawesome-svg-core/index.es'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index.es'
 import findSolidIcon from './faSolid'
+import findRegularIcon from './faRegular'
+import classNames from "classnames"
 
 export default class UdMuIcon extends React.Component {
 
@@ -18,11 +20,21 @@ export default class UdMuIcon extends React.Component {
         pull: this.props.pull,
         transform: this.props.transform,
         title: this.props.title,
+        id: this.props.id,
     }
 
     setFontAwesomeIcon = (faIcon) => {
         var i = null
         const name = `fa${faIcon}`
+        this.props.regular && findRegularIcon(name) === true ? 
+        import(`@fortawesome/free-regular-svg-icons/index.es.js`).then(({far}) => {
+            let fai = icon(far[name])
+            i = fai
+            this.setState({
+                icon: i,
+                ...this.state
+            })
+        }) :
         findSolidIcon(name) === true ?
         import(`@fortawesome/free-solid-svg-icons/index.es.js`).then(({fas}) => {
             let fai = icon(fas[name])
@@ -48,7 +60,7 @@ export default class UdMuIcon extends React.Component {
     render(){
 
         return (
-            <FontAwesomeIcon style={{...this.props.style}} {...this.state}/>
+            <FontAwesomeIcon className={classNames(this.props.className, "ud-mu-icon")} style={{...this.props.style}} {...this.state}/>
         )
     }
 }

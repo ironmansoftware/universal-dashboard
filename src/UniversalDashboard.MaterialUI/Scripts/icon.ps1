@@ -34,7 +34,9 @@ function New-UDMuIcon {
         [Parameter()]
         [Hashtable]$Style,
         [Parameter()]
-        [string]$Title
+        [string]$Title,
+        [Parameter()]
+        [switch]$Regular
     )
 
     End {
@@ -59,6 +61,7 @@ function New-UDMuIcon {
             transform  = $Transform
             style      = $Style
             title      = $Title
+            regular      = $Regular.IsPresent
             icon       = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "")
         }
 
