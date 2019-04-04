@@ -54,5 +54,7 @@ namespace UniversalDashboard.Models
 		public TimeSpan IdleTimeout { get; set; }
         [JsonProperty("navigation")]
         public SideNav Navigation { get; set; }
+        [JsonProperty("frameworkAssetId")]
+        public Guid FrameworkAssetId { get; set; }
     }
 }

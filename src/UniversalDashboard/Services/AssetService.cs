@@ -10,6 +10,7 @@ namespace UniversalDashboard.Services
     {
         public Dictionary<Guid, string> Scripts;
         public Dictionary<Guid, string> Stylesheets;
+        public Dictionary<string, Guid> Frameworks;
 
         private static AssetService _instance;
 
@@ -29,6 +30,7 @@ namespace UniversalDashboard.Services
         {
             Scripts = new Dictionary<Guid, string>();
             Stylesheets = new Dictionary<Guid, string>();
+            Frameworks = new Dictionary<string, Guid>();
         }
 
         public Guid RegisterScript(string script)
@@ -40,6 +42,14 @@ namespace UniversalDashboard.Services
             }
 
             return id;
+        }
+
+        public void RegisterFramework(string name, Guid assetId)
+        {
+            if (!Frameworks.ContainsKey(name))
+            {
+                Frameworks.Add(name, assetId);
+            }
         }
 
         public string GetScript(Guid id)

@@ -20,6 +20,7 @@ npm install
 npm run build
 
 Copy-Item $BuildFolder\public\*.bundle.js $OutputPath
+Copy-Item $BuildFolder\public\*.map $OutputPath
 Copy-Item $BuildFolder\scripts\*.ps1 $OutputPath\scripts
 Copy-Item $BuildFolder\UniversalDashboard.Materialize.psm1 $OutputPath
 

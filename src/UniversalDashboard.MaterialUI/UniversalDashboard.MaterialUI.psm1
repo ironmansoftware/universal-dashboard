@@ -16,6 +16,7 @@ $Maps | ForEach-Object {
 }
 
 $MUAssetId = [UniversalDashboard.Services.AssetService]::Instance.RegisterScript($JSFile.FullName)
+[UniversalDashboard.Services.AssetService]::Instance.RegisterFramework("MaterialUI", $MUAssetId)
 
 # Load out controls
 Get-ChildItem (Join-Path $PSScriptRoot "Scripts") -File -Filter "*.ps1" | ForEach-Object {

@@ -74,6 +74,9 @@ namespace UniversalDashboard.Cmdlets
         [Parameter]
         public SideNav Navigation { get; set; } 
 
+		[Parameter()]
+		public string DefaultFramework { get; set; } = "Materialize";
+
         protected override void EndProcessing()
 	    {
 			var dashboard = new Dashboard();
@@ -93,6 +96,12 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.GeoLocation = GeoLocation;
 			dashboard.IdleTimeout = IdleTimeout;
             dashboard.Navigation = Navigation;
+
+			if (!AssetService.Instance.Frameworks.ContainsKey(DefaultFramework)) {
+				throw new Exception($"Invalid DefaultFramework specified. Valid frameworks are {AssetService.Instance.Frameworks.Keys.Aggregate((x,y) => x + ", " + y )}");
+			}
+
+			dashboard.FrameworkAssetId = AssetService.Instance.Frameworks[DefaultFramework];
 
             if (Theme != null) {
 				var themeService = new ThemeService();
