@@ -91,7 +91,8 @@ $manifestParameters = @{
 		"New-UDTab"
 		"New-UDTabContainer"
 		"New-UDGridLayout"
-		"New-UDGridLayoutElement"
+		"New-UDImageCarousel"
+		"New-UDImageCarouselItem"
 
 		#Material UI
 		'New-UDMuAvatar'
@@ -152,8 +153,6 @@ $manifestParameters = @{
 						"Publish-UDFolder"
 						"New-UDTreeNode"
 						"New-UDTreeView"
-						"New-UDImageCarousel"
-						"New-UDImageCarouselItem"
 						"New-UDEndpointInitialization"
 						"New-UDSideNav"
 						"New-UDSideNavItem"

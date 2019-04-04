@@ -15,7 +15,7 @@ Describe "Dashboard" {
         $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
 
         $Navigation = New-UDSideNav -Content {
-            New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon group
+            New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon user
             New-UDSideNavItem -Text "My Second Page" -PageName "Page Name 2" -Icon User
             New-UDSideNavItem -Text "Google" -Url 'https://www.google.com' -Icon Users
         }
@@ -46,7 +46,7 @@ Describe "Dashboard" {
                 $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
         
                 $Navigation = New-UDSideNav -Content {
-                    New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon group
+                    New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon user
                     New-UDSideNavItem -Text "My Second Page" -PageName "Page Name 2" -Icon User
                     New-UDSideNavItem -Text "Google" -Url 'https://www.google.com' -Icon Users
                 } -Fixed
@@ -117,7 +117,7 @@ Describe "Dashboard" {
                 $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
         
                 $Navigation = New-UDSideNav -Content {
-                    New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon group
+                    New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon user
                     New-UDSideNavItem -Subheader -Text "Subheader"
                     New-UDSideNavItem -Text "My Second Page" -PageName "Page Name 2" -Icon User
                     New-UDSideNavItem -Divider
@@ -139,7 +139,7 @@ Describe "Dashboard" {
                 $Page2 = New-UDPage -Name "Page Name 2" -Content { New-UDCard -Id 'page-2'}
         
                 $Navigation = New-UDSideNav -Endpoint {
-                    New-UDSideNavItem -Text "My First Page" -OnClick { Show-UDModal -Content { New-UDCard -Id "ModalCard" } } -Icon group
+                    New-UDSideNavItem -Text "My First Page" -OnClick { Show-UDModal -Content { New-UDCard -Id "ModalCard" } } -Icon user
                 } -Fixed
                 
                 New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
