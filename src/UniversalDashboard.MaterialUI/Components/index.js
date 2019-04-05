@@ -14,6 +14,7 @@ import UDCardFooter from "./card-footer";
 import Typography from "./typography";
 import UDLink from "./link";
 import UDAvatar from "./avatar";
+import UDCheckBox from "./checkbox";
 // import Pdf from "./pdf"; //this version has a bug render text not correct.
 
 UniversalDashboard.register("mu-chip", Chip);
@@ -33,4 +34,5 @@ UniversalDashboard.register("mu-card-footer", UDCardFooter);
 UniversalDashboard.register("mu-typography", Typography);
 UniversalDashboard.register("mu-link", UDLink);
 UniversalDashboard.register("mu-avatar", UDAvatar);
+UniversalDashboard.register("mu-checkbox", UDCheckBox);
 // UniversalDashboard.register("ud-pdf", Pdf);
