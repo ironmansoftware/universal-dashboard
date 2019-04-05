@@ -104,6 +104,7 @@ $manifestParameters = @{
 		'New-UDMuCardExpand'
 		'New-UDMuCardFooter'
 		'New-UDMuCardMedia'
+		'New-UDMuCheckBox'
 		'New-UDMuChip'
 		'New-UDMuIcon'
 		'New-UDMuIconButton'
