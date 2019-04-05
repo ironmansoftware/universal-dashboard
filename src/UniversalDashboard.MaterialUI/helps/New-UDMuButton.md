@@ -14,7 +14,7 @@ schema: 2.0.0
 
 ```
 New-UDMuButton [[-Text] <String>] [[-Icon] <Object>] [[-Variant] <String>] [[-IconAlignment] <String>]
- [-FullWidth] [[-OnClick] <Object>] [[-Size] <String>] [[-Style] <Hashtable>] [-Id <String>]
+ [-FullWidth] [[-OnClick] <Object>] [[-Size] <String>] [[-Style] <Hashtable>] [[-Href] <String>] [-Id <String>]
  [<CommonParameters>]
 ```
 
@@ -42,6 +42,21 @@ Aliases:
 
 Required: False
 Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Href
+{{ Fill Href Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

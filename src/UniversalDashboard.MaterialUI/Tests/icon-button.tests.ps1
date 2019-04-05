@@ -62,28 +62,28 @@ Describe "icon button" {
         It 'has an icon size of 2x' {
             Find-SeElement -ClassName 'fa-2x' -Driver $Driver | should not be $null
         }
-        It 'has an icon size of 2x' {
+        It 'has an icon size of 3x' {
             Find-SeElement -ClassName 'fa-3x' -Driver $Driver | should not be $null
         }
-        It 'has an icon size of 2x' {
+        It 'has an icon size of 4x' {
             Find-SeElement -ClassName 'fa-4x' -Driver $Driver | should not be $null
         }
         It 'has an icon size of 5x' {
             Find-SeElement -ClassName 'fa-5x' -Driver $Driver | should not be $null
         }
-        It 'has an icon size of 5x' {
+        It 'has an icon size of 6x' {
             Find-SeElement -ClassName 'fa-6x' -Driver $Driver | should not be $null
         }
-        It 'has an icon size of 5x' {
+        It 'has an icon size of 7x' {
             Find-SeElement -ClassName 'fa-7x' -Driver $Driver | should not be $null
         }
-        It 'has an icon size of 5x' {
+        It 'has an icon size of 8x' {
             Find-SeElement -ClassName 'fa-8x' -Driver $Driver | should not be $null
         }
-        It 'has an icon size of 5x' {
+        It 'has an icon size of 9x' {
             Find-SeElement -ClassName 'fa-9x' -Driver $Driver | should not be $null
         }
-        It 'has an icon size of 5x' {
+        It 'has an icon size of 10x' {
             Find-SeElement -ClassName 'fa-10x' -Driver $Driver | should not be $null
         }
     }
