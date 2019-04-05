@@ -86,6 +86,8 @@ export function internalRenderComponent(component, history) {
                 <UdTerminal {...component} key={component.id}/>
             </Suspense>
     }
+
+    return null;
 }
 
 export default function renderComponent(component, history, dynamicallyLoaded) {

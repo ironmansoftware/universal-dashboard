@@ -39,12 +39,8 @@ namespace UniversalDashboard.Cmdlets
 	    [Parameter]
 	    public DashboardColor FontColor { get; set; }
 
-	    [Parameter]
-		[ValidateSet("FontAwesome","LineAwesome")]
-	    public string FontIconStyle { get; set; } = "FontAwesome";
-
         [Parameter]
-		public Link[] NavbarLinks { get; set; }
+		public Hashtable[] NavbarLinks { get; set; }
 
 		[Parameter]
 		public string[] Scripts { get; set; }
@@ -78,6 +74,9 @@ namespace UniversalDashboard.Cmdlets
         [Parameter]
         public SideNav Navigation { get; set; } 
 
+		[Parameter()]
+		public string DefaultFramework { get; set; } = "Materialize";
+
         protected override void EndProcessing()
 	    {
 			var dashboard = new Dashboard();
@@ -95,9 +94,14 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.NavBarLogo = NavBarLogo;
 			dashboard.EndpointInitialSessionState = EndpointInitialization;
 			dashboard.GeoLocation = GeoLocation;
-			dashboard.FontIconStyle = FontIconStyle;
 			dashboard.IdleTimeout = IdleTimeout;
             dashboard.Navigation = Navigation;
+
+			if (!AssetService.Instance.Frameworks.ContainsKey(DefaultFramework)) {
+				throw new Exception($"Invalid DefaultFramework specified. Valid frameworks are {AssetService.Instance.Frameworks.Keys.Aggregate((x,y) => x + ", " + y )}");
+			}
+
+			dashboard.FrameworkAssetId = AssetService.Instance.Frameworks[DefaultFramework];
 
             if (Theme != null) {
 				var themeService = new ThemeService();

@@ -35,7 +35,7 @@ namespace UniversalDashboard.Models
 		[JsonProperty("type")]
 		public override string Type => "chart";
 		[JsonProperty("links")]
-		public Link[] Links { get;set;}
+		public Hashtable[] Links { get;set;}
 		[JsonProperty("filterFields")]
 		public Field[] FilterFields { get; set; }
 		[JsonIgnore]

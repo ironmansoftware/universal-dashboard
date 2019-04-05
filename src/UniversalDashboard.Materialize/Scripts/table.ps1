@@ -14,7 +14,7 @@ function New-UDTable {
 		[ValidateSet("bordered", "striped", "highlight", "centered", "responsive-table")]
 		[string]$Style,
 	    [Parameter()]
-		[UniversalDashboard.Models.Link[]] $Links,
+		[Hashtable[]] $Links,
 		[Parameter(Mandatory = $true, ParameterSetName = 'endpoint')]
 		[object]$Endpoint,
 		[Parameter(ParameterSetName = 'endpoint')]

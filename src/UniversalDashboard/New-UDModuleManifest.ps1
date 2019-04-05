@@ -68,6 +68,7 @@ $manifestParameters = @{
 		"New-UDLayout",
 		"New-UDParagraph",
 		"New-UDHeading",
+		"New-UDLink",
 		"New-UDIFrame",
 		"New-UDIcon",
 		"New-UDPreloader",
@@ -90,7 +91,8 @@ $manifestParameters = @{
 		"New-UDTab"
 		"New-UDTabContainer"
 		"New-UDGridLayout"
-		"New-UDGridLayoutElement"
+		"New-UDImageCarousel"
+		"New-UDImageCarouselItem"
 
 		#Material UI
 		'New-UDMuAvatar'
@@ -120,7 +122,6 @@ $manifestParameters = @{
 						"Start-UDDashboard", 
 						"Stop-UDDashboard", 
 						"New-UDMonitor", 
-						"New-UDLink",
 						"New-UDHtml",
 						"New-UDCounter", 
 						"New-UDPage",
@@ -153,8 +154,6 @@ $manifestParameters = @{
 						"Publish-UDFolder"
 						"New-UDTreeNode"
 						"New-UDTreeView"
-						"New-UDImageCarousel"
-						"New-UDImageCarouselItem"
 						"New-UDEndpointInitialization"
 						"New-UDSideNav"
 						"New-UDSideNavItem"

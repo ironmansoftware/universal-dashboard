@@ -31,6 +31,8 @@ Describe "New-UDLink" {
             Find-SeElement -Driver $Driver -LinkText "MICROSOFT" | Get-SeElementAttribute -Attribute "style" | Should be "color: rgb(255, 83, 13);"
         }
 
+
+        Wait-Debugger
        Stop-SeDriver $Driver
        Stop-UDDashboard -Server $Server 
     }

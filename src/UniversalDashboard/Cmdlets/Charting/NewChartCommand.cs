@@ -30,7 +30,7 @@ namespace UniversalDashboard.Cmdlets.Charting
 		[Parameter]
 		public DashboardColor FontColor { get; set; }
 		[Parameter]
-		public Link[] Links { get; set; }
+		public Hashtable[] Links { get; set; }
 		[Parameter]
 
 		public ScriptBlock FilterFields { get; set; }

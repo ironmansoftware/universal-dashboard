@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation.Runspaces;
 using Newtonsoft.Json;
@@ -22,10 +23,8 @@ namespace UniversalDashboard.Models
         public string BackgroundColor { get; set; }
         [JsonProperty("fontColor")]
         public string FontColor { get; set; }
-        [JsonProperty("fontIconStyle")]
-        public string FontIconStyle { get; set; }
         [JsonProperty("navbarLinks")]
-        public IEnumerable<Link> NavbarLinks { get; set; }
+        public IEnumerable<Hashtable> NavbarLinks { get; set; }
         [JsonProperty("scripts")]
         public string[] Scripts { get; set; }
         [JsonProperty("stylesheets")]
@@ -55,5 +54,7 @@ namespace UniversalDashboard.Models
 		public TimeSpan IdleTimeout { get; set; }
         [JsonProperty("navigation")]
         public SideNav Navigation { get; set; }
+        [JsonProperty("frameworkAssetId")]
+        public Guid FrameworkAssetId { get; set; }
     }
 }

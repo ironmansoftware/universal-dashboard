@@ -182,8 +182,9 @@ export default class UdDashboard extends React.Component {
         document.getElementsByTagName('head')[0].appendChild(styles);
     }
 
-    loadJavascript(url) {
+    loadJavascript(url, onLoad) {
         var jsElm = document.createElement("script");
+        jsElm.onload = onLoad;
         jsElm.type = "application/javascript";
         jsElm.src = url;
         document.body.appendChild(jsElm);
@@ -196,33 +197,28 @@ export default class UdDashboard extends React.Component {
 
             document.title = dashboard.title;
 
-            if(dashboard.fontIconStyle == 'FontAwesome'){
-                import("font-awesome/css/font-awesome.min.css" /* webpackChunkName: "font-awesome" */);
-            }else {
-                import("line-awesome/css/line-awesome.min.css" /* webpackChunkName: "line-awesome" */);
-            }
-            
-            if (dashboard.stylesheets)
+            this.loadJavascript(getApiPath() + "/api/internal/javascript/" + dashboard.frameworkAssetId, function() {
+                if (dashboard.stylesheets)
                 dashboard.stylesheets.map(this.loadStylesheet.bind(this));
 
-            if (dashboard.scripts)
-                dashboard.scripts.map(this.loadJavascript.bind(this));
+                if (dashboard.scripts)
+                    dashboard.scripts.map(this.loadJavascript.bind(this));
 
-            if (dashboard.geolocation) {
-                this.getLocation();
-            }
+                if (dashboard.geolocation) {
+                    this.getLocation();
+                }
 
-            this.connectWebSocket(json.sessionId);
+                this.connectWebSocket(json.sessionId);
 
-            this.setState({
-                dashboard: dashboard,
-                loading: false,
-                sessionId:  json.sessionId,
-                authenticated: json.authenticated,
-                design: dashboard.design,
-                title: dashboard.title
-            });
-
+                this.setState({
+                    dashboard: dashboard,
+                    loading: false,
+                    sessionId:  json.sessionId,
+                    authenticated: json.authenticated,
+                    design: dashboard.design,
+                    title: dashboard.title
+                });
+            }.bind(this));
         }.bind(this), this.props.history);
     }
 

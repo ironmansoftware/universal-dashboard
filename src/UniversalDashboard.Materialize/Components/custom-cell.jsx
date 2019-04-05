@@ -1,6 +1,5 @@
 import React from 'react';
 import moment from 'moment';
-import renderComponent from './../services/render-service.jsx';
 
 export default class CustomCell extends React.Component {
     render() {
@@ -27,11 +26,11 @@ export default class CustomCell extends React.Component {
             }
         } else if (y.type && validComponents.indexOf(y.type) !== -1) {
             y.preventUnregister = true;
-            return renderComponent(y);
+            return UniversalDashboard.renderComponent(y);
         }
         else if (y.type) {
             y.preventUnregister = true;
-            return renderComponent(y);
+            return UniversalDashboard.renderComponent(y);
         }else if (typeof(y) === "boolean"){            
             y = y.toString();
         }
