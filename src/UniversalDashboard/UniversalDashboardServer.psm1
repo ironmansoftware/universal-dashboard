@@ -1520,7 +1520,7 @@ function Publish-UDDashboard {
 
 		$binPath = [System.IO.Path]::Combine($TargetPath, "net472", "UniversalDashboard.Server.exe")
 
-		sc.exe create UniversalDashboard DisplayName="PowerShell Universal Dashboard" binPath="$binPath --run-as-service" start="$ServiceStart"
+		sc.exe create UniversalDashboard DisplayName= "PowerShell Universal Dashboard" binPath= "$binPath --run-as-service" start= "$ServiceStart"
 
 		Write-Verbose "Starting service UniversalDashboard"
 		sc.exe start UniversalDashboard
