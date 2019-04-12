@@ -80,16 +80,16 @@ namespace UniversalDashboard.Controllers
                 stringBuilder.AppendLine(System.IO.File.ReadAllText(materializeCss));
                 stringBuilder.AppendLine(System.IO.File.ReadAllText(siteCss));
 
-                foreach(var item in AssetService.Instance.Stylesheets)
+                foreach(var item in AssetService.Instance.Assets.Where(m => m.EndsWith(".css", StringComparison.OrdinalIgnoreCase)))
                 {
                     try
                     {
-                        var content = System.IO.File.ReadAllText(item.Value);
+                        var content = System.IO.File.ReadAllText(item);
                         stringBuilder.AppendLine(content);
                     }
                     catch (Exception ex)
                     {
-                        stringBuilder.AppendLine($"/* Failed to load style sheet {item.Value}. {ex.Message} */");
+                        stringBuilder.AppendLine($"/* Failed to load style sheet {item}. {ex.Message} */");
                     }
                 }
 

@@ -2,6 +2,22 @@ import React from 'react';
 import {Input as RInput} from 'react-materialize';
 import {DebounceInput} from 'react-debounce-input';
 
+    // taken from https://davidwalsh.name/javascript-debounce-function
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this, args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate && !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+
 export default class UdInputField extends React.Component {
 
     constructor() {
@@ -76,7 +92,7 @@ export default class UdInputField extends React.Component {
     setupDatePicker() {
         var comp = this;
 
-        $(this.datetime).pickadate({
+        this.picker = $(this.datetime).pickadate({
             selectYears: 100,
             clearText: this.props.clearText,
             okText: this.props.okText,
@@ -117,6 +133,19 @@ export default class UdInputField extends React.Component {
         
         if (this.props.type === 'date') {
             this.setupDatePicker();
+
+            // Dirty hack to get this to work in Chrome
+            $("#" + this.props.name).unbind("click");
+            $("#" + this.props.name).unbind("focus");
+            $("#" + this.props.name).on("click", debounce(function(event) {
+                event.preventDefault()
+                this.picker.pickadate('picker').open()
+            }.bind(this), 100));
+
+            $("#" + this.props.name).on("focus", debounce(function(event) {
+                event.preventDefault()
+                this.picker.pickadate('picker').open()
+            }.bind(this), 100));
         } 
 
         if (this.props.type === 'time') {
@@ -145,6 +174,9 @@ export default class UdInputField extends React.Component {
             }
         }
     }
+
+
+
 
     componentDidUpdate() {
         this.updateTextField();

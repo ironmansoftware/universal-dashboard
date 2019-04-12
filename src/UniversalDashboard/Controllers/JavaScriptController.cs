@@ -10,13 +10,13 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
     {
         private readonly Logger Log = LogManager.GetLogger(nameof(JavaScriptController));
 
-        [Route("{id}")]
-        public IActionResult Index(Guid id)
+        [Route("{asset}")]
+        public IActionResult Index(string asset)
         {
-            var filePath = AssetService.Instance.GetScript(id);
+            var filePath = AssetService.Instance.FindAsset(asset);
             if (filePath == null)
             {
-                Log.Warn($"Unknown element script: {id}");
+                Log.Warn($"Unknown element script: {asset}");
                 return StatusCode(404);
             }
 

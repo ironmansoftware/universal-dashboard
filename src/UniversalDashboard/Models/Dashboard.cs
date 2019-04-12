@@ -55,6 +55,6 @@ namespace UniversalDashboard.Models
         [JsonProperty("navigation")]
         public SideNav Navigation { get; set; }
         [JsonProperty("frameworkAssetId")]
-        public Guid FrameworkAssetId { get; set; }
+        public string FrameworkAssetId { get; set; }
     }
 }

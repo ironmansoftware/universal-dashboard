@@ -8,9 +8,9 @@ namespace UniversalDashboard.Services
 {
     public class AssetService
     {
-        public Dictionary<Guid, string> Scripts;
-        public Dictionary<Guid, string> Stylesheets;
-        public Dictionary<string, Guid> Frameworks;
+        public Dictionary<string, string> Frameworks;
+
+        public List<string> Assets;
 
         private static AssetService _instance;
 
@@ -28,67 +28,50 @@ namespace UniversalDashboard.Services
 
         private AssetService()
         {
-            Scripts = new Dictionary<Guid, string>();
-            Stylesheets = new Dictionary<Guid, string>();
-            Frameworks = new Dictionary<string, Guid>();
+            Assets = new List<string>();
+            Frameworks = new Dictionary<string, string>();
         }
 
-        public Guid RegisterScript(string script)
-        {
-            var id = script.ToGuid();
-            if (!Scripts.ContainsKey(id))
-            {
-                Scripts.Add(id, script);
-            }
+        public string RegisterAsset(string asset) {
+            var fileInfo = new FileInfo(asset);
+            Assets.Add(asset);
+            return fileInfo.Name;
+        }
+        
+        public string RegisterScript(string asset) {
 
-            return id;
+            var fileInfo = new FileInfo(asset);
+            Assets.Add(asset);
+            return fileInfo.Name;
         }
 
-        public void RegisterFramework(string name, Guid assetId)
-        {
-            if (!Frameworks.ContainsKey(name))
-            {
-                Frameworks.Add(name, assetId);
-            }
+        public string RegisterStylesheet(string asset) {
+            var fileInfo = new FileInfo(asset);
+            Assets.Add(asset);
+            return fileInfo.Name;
         }
 
-        public string GetScript(Guid id)
+        public void RegisterFramework(string name, string rootAsset)
         {
-            if (Scripts.ContainsKey(id))
+            if (Frameworks.ContainsKey(name))
             {
-                return Scripts[id];
+                Frameworks.Remove(name);
             }
-            return null;
-        }
 
-        public void RegisterStyleSheet(string stylesheet)
-        {
-            var id = stylesheet.ToGuid();
-            if (!Stylesheets.ContainsKey(id))
-            {
-                Stylesheets.Add(id, stylesheet);
-            }
+            Frameworks.Add(name, rootAsset);
         }
 
         public void ClearRegistration()
         {
-            Scripts.Clear();
-            Stylesheets.Clear();
+            Assets.Clear();
+            Frameworks.Clear();
         }
 
         public string FindAsset(string fileName)
         {
             try
             {
-                var file = Scripts.Values.FirstOrDefault(m => new FileInfo(m).Name.Equals(fileName, StringComparison.OrdinalIgnoreCase));
-                if (file != null)
-                {
-                    return file;
-                }
-
-                file = Stylesheets.Values.FirstOrDefault(m => new FileInfo(m).Name.Equals(fileName, StringComparison.OrdinalIgnoreCase));
-
-                return file;
+                return Assets.FirstOrDefault(m => new FileInfo(m).Name.Equals(fileName, StringComparison.OrdinalIgnoreCase));
             }
             catch
             {
