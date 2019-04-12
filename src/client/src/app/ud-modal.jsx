@@ -12,7 +12,9 @@ export default class UdModal extends React.Component {
             content: null,
             footer: null,
             backgroundColor: null,
-            fontColor: null
+            fontColor: null,
+            height: null,
+            width: null
         }
 
         this.loading = true;
@@ -57,7 +59,7 @@ export default class UdModal extends React.Component {
     }
 
     render() {
-        var className = "modal";
+        var className = "modal ud-modal";
         if (this.state.bottomSheet) {
             className += " bottom-sheet"
         }
@@ -86,7 +88,7 @@ export default class UdModal extends React.Component {
         }
 
         return (
-            <div className={className} ref={modal => this.modal = modal} style={{color: this.state.fontColor, backgroundColor: this.state.backgroundColor}}>
+            <div className={className} ref={modal => this.modal = modal} style={{height: this.state.height, width: this.state.width, color: this.state.fontColor, backgroundColor: this.state.backgroundColor}}>
               <div className="modal-content">
                 {header}
                 {content}

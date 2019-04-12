@@ -22,6 +22,10 @@ namespace UniversalDashboard.Cmdlets
         public DashboardColor BackgroundColor { get; set; }
         [Parameter()]
         public DashboardColor FontColor { get; set; }
+        [Parameter()]
+        public string Height { get; set; }
+        [Parameter()]
+        public string Width { get; set; }
 
         protected override void EndProcessing()
         {
@@ -33,7 +37,9 @@ namespace UniversalDashboard.Cmdlets
                 Header = Header?.Invoke().Select(m => m.BaseObject).ToArray(),
                 Content = Content?.Invoke().Select(m => m.BaseObject).ToArray(),
                 BackgroundColor = BackgroundColor?.HtmlColor,
-                FontColor = FontColor?.HtmlColor
+                FontColor = FontColor?.HtmlColor,
+                Height = Height,
+                Width = Width
             };
 
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
