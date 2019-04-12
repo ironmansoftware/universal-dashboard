@@ -18,7 +18,9 @@ function New-UDButton {
         [Parameter()] 
         [UniversalDashboard.Models.DashboardColor]$BackgroundColor,
         [Parameter()] 
-        [UniversalDashboard.Models.DashboardColor]$FontColor
+        [UniversalDashboard.Models.DashboardColor]$FontColor,
+        [Parameter()]
+        [Switch]$Disabled
     )
 
     $btnClass = 'btn'
@@ -28,6 +30,10 @@ function New-UDButton {
 
     if ($Flat) {
         $btnClass = 'btn-flat'
+    }
+
+    if ($Disabled) {
+        $btnClass += ' disabled'
     }
 
     $style = @{ 
