@@ -107,7 +107,7 @@ namespace UniversalDashboard.Cmdlets
 					}
 				}
 
-                AssetService.Instance.RegisterScript(path);
+                AssetService.Instance.RegisterAsset(path);
 
 				var element = new Element
 				{

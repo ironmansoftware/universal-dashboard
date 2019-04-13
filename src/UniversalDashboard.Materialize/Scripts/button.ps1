@@ -14,7 +14,13 @@ function New-UDButton {
         [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
         [Parameter()]
         [ValidateSet('left', 'right')]
-        [String]$IconAlignment = 'left'
+        [String]$IconAlignment = 'left',
+        [Parameter()] 
+        [UniversalDashboard.Models.DashboardColor]$BackgroundColor,
+        [Parameter()] 
+        [UniversalDashboard.Models.DashboardColor]$FontColor,
+        [Parameter()]
+        [Switch]$Disabled
     )
 
     $btnClass = 'btn'
@@ -26,9 +32,19 @@ function New-UDButton {
         $btnClass = 'btn-flat'
     }
 
+    if ($Disabled) {
+        $btnClass += ' disabled'
+    }
+
+    $style = @{ 
+        backgroundColor = $BackgroundColor.HtmlColor 
+        color = $FontColor.HtmlColor 
+    }
+
     New-UDElement -Id $Id -Tag "a" -Attributes @{
         className = "$btnClass"
         onClick = $OnClick
+        style = $style
     } -Content {
         if ($Icon -ne $null) {
             $faClass = $Icon.ToString().Replace('_', '-')

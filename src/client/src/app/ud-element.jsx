@@ -235,10 +235,16 @@ class UDElementContent extends React.Component {
         if (this.state.tag === 'select') {
 
             val = new Array();
-            for(var item in  this.refs.element.selectedOptions) {
-                if (isNaN(item)) continue;
-                var value = this.refs.element.selectedOptions[item].value;
-                val.push(value);
+
+            if (this.refs.element.selectedOptions) {
+                for(var item in  this.refs.element.selectedOptions) {
+                    if (isNaN(item)) continue;
+                    var value = this.refs.element.selectedOptions[item].value;
+                    val.push(value);
+                }
+            }
+            else {
+                val.push(this.refs.element.value);
             }
 
             if (val.length === 1) {
