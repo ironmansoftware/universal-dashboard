@@ -220,12 +220,23 @@ export default class UdGrid extends React.Component {
         if (!this.props.serverSideProcessing) {
             gridPlugins = [plugins.LocalPlugin]
             serverFilterControl = null;
+
+            if (this.props.noFilter) {
+                components = {
+                    Filter: () => <span/>,
+                    SettingsToggle: () => <span />
+                }
+            }
         } else {
             serverSort = this.onSort.bind(this);
             serverFilter = this.onFilter.bind(this);
             serverPrev = this.onPreviousPage.bind(this);
             serverNext = this.onNextPage.bind(this);
             serverGetPage = this.onGetPage.bind(this);
+
+            if (this.props.noFilter) {
+                serverFilter = null;
+            }
 
             components = {
                 Filter: () => <span/>,
