@@ -55,6 +55,61 @@ export const fetchPost = function(url, data, success) {
     });
 }
 
+export const fetchDelete = function(url, data, success) {
+    if (!success) {
+        success = () => {}
+    }
+
+    fetch(getApiPath() + url, {
+        method: 'delete',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        credentials: 'include'
+      })
+      .then(function(response){
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(response.statusText);
+        }
+    })
+    .then(success)
+    .catch(function(e) {
+        console.log(e)
+    });
+}
+
+export const fetchPut = function(url, data, success) {
+    if (!success) {
+        success = () => {}
+    }
+
+    fetch(getApiPath() + url, {
+        method: 'put',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+        credentials: 'include'
+      })
+      .then(function(response){
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(response.statusText);
+        }
+    })
+    .then(success)
+    .catch(function(e) {
+        console.log(e)
+    });
+}
+
+
 export const fetchPostRaw = function(url, data, success) {
     if (!success) {
         success = () => {}
