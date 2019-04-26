@@ -106,17 +106,17 @@ $GridData =     @(
 $Basic = {
     New-UDGrid -Title "Customer Locations"  -Headers @("Country", "Customers", "First Purchase Date") -Properties @("Country", "Customers", "FirstPurchaseDate") -Endpoint {
         $GridData | Out-UDGridData
-    } -FontColor "black"  
+    } -FontColor "black"
 }
 
 $AutoRefresh = {
     New-UDGrid -Title "Customer Locations"  -Headers @("Country", "Customers", "First Purchase Date") -Properties @("Country", "Customers", "FirstPurchaseDate") -Endpoint {
         $GridData | Out-UDGridData
-    } -AutoRefresh -RefreshInterval 5 -FontColor "black" 
+    } -AutoRefresh -RefreshInterval 5 -FontColor "black"
 }
 
 New-UDPage -Name "Grids" -Icon th_large -Content {
-    New-UDPageHeader -Title "Grids" -Icon "th-large" -Description "Display data in a grid that can sort, filter and page." -DocLink "https://adamdriscoll.gitbooks.io/powershell-universal-dashboard/content/grids.html"
+    New-UDPageHeader -Title "Grids" -Icon "th-large" -Description "Display data in a grid that can sort, filter and page." -DocLink "https://docs.universaldashboard.io/components/grids"
     New-UDExample -Title "Basic Grids" -Description "A basic grid that displays data." -Script $Basic
     New-UDExample -Title "Auto Refreshing Grids" -Description "A grid that auto refreshes" -Script $AutoRefresh
 }

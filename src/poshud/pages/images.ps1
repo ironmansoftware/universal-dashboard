@@ -4,6 +4,6 @@ $Image = {
 }
 
 New-UDPage -Name "Images" -Icon image -Content {
-    New-UDPageHeader -Title "Images" -Icon "image" -Description "Display images" -DocLink "https://adamdriscoll.gitbooks.io/powershell-universal-dashboard/content/api/1.5.0/New-UDImage.html"
+    New-UDPageHeader -Title "Images" -Icon "image" -Description "Display images" -DocLink "https://github.com/adamdriscoll/universal-dashboard-documentation/blob/master/api/1.5.0/New-UDImage.md"
     New-UDExample -Title "Base64 Image" -Description "Embed base64 images in your dashboard." -Script $Image
 }

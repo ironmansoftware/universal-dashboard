@@ -3,7 +3,7 @@ $BasicChart = {
 
         $30DaysBack = [DateTime]::Now.AddDays(-30)
         0..30 | ForEach-Object {
-            [PSCustomObject]@{ 
+            [PSCustomObject]@{
                 Date = $30DaysBack.AddDays($_).ToShortDateString()
                 Price = (Get-Random -Minimum 5000 -Maximum 20000)
             }
@@ -16,7 +16,7 @@ $AutoRefreshChart = {
 
         $30DaysBack = [DateTime]::Now.AddYears(-30)
         0..30 | ForEach-Object {
-            [PSCustomObject]@{ 
+            [PSCustomObject]@{
                 Year = $30DaysBack.AddDays($_).Year
                 Population = (Get-Random -Minimum 50000 -Maximum 250000)
             }
@@ -27,7 +27,7 @@ $AutoRefreshChart = {
 $CustomColors = {
     New-UDChart -Title "Packets per second" -Type Bar -Endpoint {
         30..0 | ForEach-Object {
-            [PSCustomObject]@{ 
+            [PSCustomObject]@{
                 Minute = " -$_"
                 PacketsPerSecond = (Get-Random -Minimum 50000 -Maximum 250000)
             }
@@ -53,7 +53,7 @@ $MultiDatasetChart = {
 }
 
 New-UDPage -Name "Charts" -Icon chart_area -Content {
-    New-UDPageHeader -Title "Charts" -Icon "area-chart" -Description "Visual data using dynamic charts based on ChartJS" -DocLink "https://adamdriscoll.gitbooks.io/powershell-universal-dashboard/content/charts.html"
+    New-UDPageHeader -Title "Charts" -Icon "area-chart" -Description "Visual data using dynamic charts based on ChartJS" -DocLink "https://docs.universaldashboard.io/components/data-visualizations/charts"
     New-UDExample -Title "Basic Charts" -Description "Create basic charts from any type of data." -Script $BasicChart
     New-UDExample -Title "Auto Refreshing Charts" -Description "Automatically refresh chart data on an interval" -Script $AutoRefreshChart
     New-UDExample -Title "Custom colors" -Description "Adjust colors of different components within the chart." -Script $CustomColors

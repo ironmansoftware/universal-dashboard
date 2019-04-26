@@ -14,7 +14,7 @@ $ScriptColors = @{
 }
 
 $NavBarLinks = @((New-UDLink -Text "Buy Universal Dashboard" -Url "https://poshtools.com/buy-powershell-pro-tools/" -Icon heart_o),
-                 (New-UDLink -Text "Documentation" -Url "https://adamdriscoll.gitbooks.io/powershell-tools-documentation/content/powershell-pro-tools-documentation/universal-dashboard.html" -Icon book))
+                 (New-UDLink -Text "Documentation" -Url "https://docs.universaldashboard.io/" -Icon book))
 
 $Components = New-UDPage -Name Components -Icon area_chart -Content {
     New-UDHtml -Markup '<link rel="stylesheet"
@@ -98,17 +98,17 @@ $Components = New-UDPage -Name Components -Icon area_chart -Content {
         New-UDColumn -Size 4 {
             New-UDMonitor -Title "Downloads per second" -Type Line -DataPointHistory 20 -RefreshInterval 5 -ChartBackgroundColor '#59FF681B' -ChartBorderColor '#FFFF681B' @Colors -Endpoint {
                 Get-Random -Minimum 0 -Maximum 10 | Out-UDMonitorData
-            } 
+            }
         }
         New-UDColumn -Size 4 {
             New-UDMonitor -Title "Tweets per second" -Type Line -DataPointHistory 20 -RefreshInterval 20 -ChartBackgroundColor '#595479FF' -ChartBorderColor '#FF5479FF' @Colors -Endpoint {
                 Get-Random -Minimum 0 -Maximum 10000 | Out-UDMonitorData
-            } 
+            }
         }
         New-UDColumn -Size 4 {
             New-UDMonitor -Title "Visits per second" -Type Line -DataPointHistory 20 -RefreshInterval 20 -ChartBackgroundColor '#591179FF' -ChartBorderColor '#FF1279FF' @Colors -Endpoint {
                 Get-Random -Minimum 0 -Maximum 10000 | Out-UDMonitorData
-            } 
+            }
         }
     }
     New-UDRow {
@@ -125,17 +125,17 @@ $Components = New-UDPage -Name Components -Icon area_chart -Content {
         New-UDColumn -Size 4 {
             New-UDCounter -Title "Total Bytes Downloaded" -AutoRefresh -RefreshInterval 3 -Format '0.00b' -Icon cloud_download @Colors -Endpoint {
                 Get-Random -Minimum 0 -Maximum 100000000 | ConvertTo-Json
-            } 
+            }
         }
         New-UDColumn -Size 4 {
             New-UDCounter -Title "Total Bytes Uploaded" -AutoRefresh -RefreshInterval 3 -Format '0.00b' -Icon cloud_upload @Colors -Endpoint {
                 Get-Random -Minimum 0 -Maximum 100000000 | ConvertTo-Json
-            } 
+            }
         }
         New-UDColumn -Size 4 {
             New-UDCounter -Title "Total Revenue" -AutoRefresh -RefreshInterval 3 -Format '$0,0.00' -Icon money @Colors -Endpoint {
                 Get-Random -Minimum 0 -Maximum 100000000 | ConvertTo-Json
-            } 
+            }
         }
     }
     New-UDRow {
@@ -151,7 +151,7 @@ $Components = New-UDPage -Name Components -Icon area_chart -Content {
     New-UDRow {
         New-UDColumn -Size 12 {
             New-UDGrid -Title "Customer Locations" @Colors -Headers @("Country", "Customers", "First Purchase Date") -Properties @("Country", "Customers", "FirstPurchaseDate") -AutoRefresh -RefreshInterval 20 -Endpoint {
-                
+
                                      @(
                                             @{
                                                     Country = "MAURITANIA"
@@ -253,7 +253,7 @@ $Components = New-UDPage -Name Components -Icon area_chart -Content {
                                                     Customers = 377
                                                     FirstPurchaseDate = "4/22/2017"
                                                 }
-                
+
                                              )  | Out-UDGridData
                                 }
         }
@@ -269,8 +269,8 @@ $Components = New-UDPage -Name Components -Icon area_chart -Content {
     $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Support for running on a PS4";  "Description" = "A dashboard on a PS4 would be pretty cool."; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
     $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Bug in the flux capacitor";  "Description" = "The flux capacitor is constantly crashing."; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
     $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Feature Request - Hypnotoad Widget";  "Description" = "Every dashboard needs more hypnotoad"; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
-    
-    $issues | Out-UDTableData -Property @("ID", "Title", "Description", "Comments") 
+
+    $issues | Out-UDTableData -Property @("ID", "Title", "Description", "Comments")
 }' -Title "PowerShell"
         }
 
@@ -283,8 +283,8 @@ $Components = New-UDPage -Name Components -Icon area_chart -Content {
                 $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Support for running on a PS4";  "Description" = "A dashboard on a PS4 would be pretty cool."; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
                 $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Bug in the flux capacitor";  "Description" = "The flux capacitor is constantly crashing."; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
                 $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Feature Request - Hypnotoad Widget";  "Description" = "Every dashboard needs more hypnotoad"; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
-                
-                $issues | Out-UDTableData -Property @("ID", "Title", "Description", "Comments") 
+
+                $issues | Out-UDTableData -Property @("ID", "Title", "Description", "Comments")
             }
         }
     }
@@ -366,12 +366,12 @@ $Formatting = New-UDPage -Name "Formatting" -Icon th {
         }
         New-UDColumn -Size 9 {
             New-UDCard @ScriptColors -Language "PowerShell" -Text 'New-UDLayout -Columns 3 -Content {
-    New-UDCard 
-    New-UDCard 
-    New-UDCard 
-    New-UDCard 
-    New-UDCard 
-    New-UDCard 
+    New-UDCard
+    New-UDCard
+    New-UDCard
+    New-UDCard
+    New-UDCard
+    New-UDCard
 }' -Title "PowerShell"
         }
     }
@@ -379,12 +379,12 @@ $Formatting = New-UDPage -Name "Formatting" -Icon th {
     New-UDRow {
         New-UDColumn -Size 12 {
             New-UDLayout -Columns 3 -Content {
-                New-UDCard 
                 New-UDCard
                 New-UDCard
-                New-UDCard 
-                New-UDCard 
-                New-UDCard 
+                New-UDCard
+                New-UDCard
+                New-UDCard
+                New-UDCard
             }
         }
     }
@@ -405,7 +405,7 @@ $Formatting = New-UDPage -Name "Formatting" -Icon th {
         }
         New-UDColumn -Size 9 {
             New-UDCard @ScriptColors -Language "PowerShell" -Text '$NavBarLinks = @((New-UDLink -Text "PowerShell Pro Tools" -Url "https://poshtools.com/buy-powershell-pro-tools/" -Icon heart_o),
-(New-UDLink -Text "Documentation" -Url "https://adamdriscoll.gitbooks.io/powershell-tools-documentation/content/powershell-pro-tools-documentation/universal-dashboard.html" -Icon book))
+(New-UDLink -Text "Documentation" -Url "https://docs.universaldashboard.io/" -Icon book))
 New-UDDashboard -NavbarLinks $NavBarLinks -Title "PowerShell Universal Dashboard" -NavBarColor "#FF1c1c1c" -NavBarFontColor "#FF55b3ff" -BackgroundColor "#FF333333" -FontColor "#FFFFFFF" ' -Title "PowerShell"
         }
     }
@@ -444,7 +444,7 @@ $HomePage = New-UDPage -Name "Home" -Icon home -Content {
         New-UDColumn -Size 4 {
             New-UDRow {
                 New-UDColumn -Size 12 {
-                    New-UDCard @Colors -Title "Modern Technology" -Text "Using PowerShell Core, Material Design, ReactJS and ASP.NET Core, Universal Dashboard takes advantage of cutting-edge technology to provide cross-platform, cross-device dashboards that looks sleek and modern." 
+                    New-UDCard @Colors -Title "Modern Technology" -Text "Using PowerShell Core, Material Design, ReactJS and ASP.NET Core, Universal Dashboard takes advantage of cutting-edge technology to provide cross-platform, cross-device dashboards that looks sleek and modern."
                 }
             }
             New-UDRow {
@@ -467,7 +467,7 @@ $HomePage = New-UDPage -Name "Home" -Icon home -Content {
         New-UDColumn -Size 4 {
             New-UDRow {
                 New-UDColumn -Size 12 {
-                    New-UDCard @Colors -Title "Written in PowerShell" -Text "Develop both the front-end interface and backend endpoints in the same PowerShell script. Host dashboards right from the console or in Azure\IIS."  -Links @(New-UDLink -Text "View this dashboard's PowerShell Script" -Url "https://github.com/adamdriscoll/poshprotools/blob/master/examples/universal-dashboard/azure-dashboard.ps1")
+                    New-UDCard @Colors -Title "Written in PowerShell" -Text "Develop both the front-end interface and backend endpoints in the same PowerShell script. Host dashboards right from the console or in Azure\IIS."  -Links @(New-UDLink -Text "View this dashboard's PowerShell Script" -Url "https://github.com/ironmansoftware/universal-dashboard/blob/master/examples/azure-dashboard.ps1")
                 }
             }
             New-UDRow {
@@ -479,10 +479,10 @@ $HomePage = New-UDPage -Name "Home" -Icon home -Content {
     }
 }
 
-Start-UDDashboard -Content { 
+Start-UDDashboard -Content {
     New-UDDashboard -NavbarLinks $NavBarLinks -Title "PowerShell Universal Dashboard" -NavBarColor '#FF1c1c1c' -NavBarFontColor "#FF55b3ff" -BackgroundColor "#FF333333" -FontColor "#FFFFFFF" -Pages @(
         $HomePage,
         $Components,
         $Formatting
-    ) 
+    )
 } -Port 10001 -Wait
