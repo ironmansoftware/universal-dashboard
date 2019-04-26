@@ -29,7 +29,7 @@ $Select = {
 
 $DeclarativeInputs = {
     New-UDInput -Title "Try Me" -Endpoint {
-        param($Textbox, $Checkbox) 
+        param($Textbox, $Checkbox)
 
         New-UDInputAction -Toast "$Textbox : $Checkbox"
     } -Content {
@@ -50,7 +50,7 @@ $ReplacingContent = {
 
 
 New-UDPage -Name "Inputs" -Icon wpforms -Content {
-    New-UDPageHeader -Title "Inputs" -Icon "wpforms" -Description "Take input and perform actions." -DocLink "https://adamdriscoll.gitbooks.io/powershell-universal-dashboard/content/inputs.html"
+    New-UDPageHeader -Title "Inputs" -Icon "wpforms" -Description "Take input and perform actions." -DocLink "https://docs.universaldashboard.io/components/inputs"
     New-UDExample -Title "Textboxes" -Description "Accept data from a textbox." -Script $Textboxes
     New-UDExample -Title "Checkboxes" -Description "Accept data from a checkbox." -Script $Checkboxes
     New-UDExample -Title "Select" -Description "Accept data from a select." -Script $Select

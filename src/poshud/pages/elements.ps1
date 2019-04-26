@@ -4,19 +4,19 @@ $CustomElement = {
 }
 
 $NestedElements = {
-    New-UDElement -Tag "div" -Attributes @{ className = "card black-text"} -Content { 
+    New-UDElement -Tag "div" -Attributes @{ className = "card black-text"} -Content {
         New-UDElement -Tag "div" -Attributes @{ className = "card-content" } -Content { "Nested Element!" }
      }
 }
 
 $Attributes = {
-    New-UDElement -Tag "div" -Attributes @{ 
+    New-UDElement -Tag "div" -Attributes @{
         className = "card"
         style = @{
             backgroundColor = "#4081C9"
             color = "#FFFFFF"
         }
-    } -Content { 
+    } -Content {
         "Attributes"
     }
 }
@@ -64,7 +64,7 @@ $ClearChildren = {
     }
 
     New-UDElement -Tag "a" -Attributes @{ className = "btn"; onClick = $onClickHandler } -Content { "Clear Children" }
-    New-UDElement -Tag "div" -Id "clearMe" -Attributes @{ className = "card black-text" } -Endpoint { 
+    New-UDElement -Tag "div" -Id "clearMe" -Attributes @{ className = "card black-text" } -Endpoint {
         New-UDElement -Tag "p" -Content { "Child1" }
         New-UDElement -Tag "p" -Content { "Child2" }
         New-UDElement -Tag "p" -Content { "Child3" }
@@ -72,7 +72,7 @@ $ClearChildren = {
 }
 
 New-UDPage -Name "Elements" -Icon cubes -Content {
-    New-UDPageHeader -Title "Elements" -Icon "cubes" -Description "Create custom elements using PowerShell script to create any type of HTML node. Take advantage of websockets to create real-time applications." -DocLink "https://adamdriscoll.gitbooks.io/powershell-universal-dashboard/content/custom-elements.html"
+    New-UDPageHeader -Title "Elements" -Icon "cubes" -Description "Create custom elements using PowerShell script to create any type of HTML node. Take advantage of websockets to create real-time applications." -DocLink "https://docs.universaldashboard.io/components/custom-components/powershell-elements"
     New-UDExample -Title "Simple Elements" -Description "Simple HTML element." -Script $CustomElement
     New-UDExample -Title "Nested Elements" -Description "Elements can be nested within each other." -Script $NestedElements
     New-UDExample -Title "Attributes" -Description "Set attributes on the HTML tag." -Script $Attributes

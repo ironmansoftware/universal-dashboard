@@ -4,10 +4,10 @@ $Colors = @{
 }
 
 $NavBarLinks = @((New-UDLink -Text "<i class='material-icons' style='display:inline;padding-right:5px'>favorite_border</i> PowerShell Pro Tools" -Url "https://poshtools.com/buy-powershell-pro-tools/"),
-                 (New-UDLink -Text "<i class='material-icons' style='display:inline;padding-right:5px'>description</i> Documentation" -Url "https://adamdriscoll.gitbooks.io/powershell-tools-documentation/content/powershell-pro-tools-documentation/about-universal-dashboard.html"))
+                 (New-UDLink -Text "<i class='material-icons' style='display:inline;padding-right:5px'>description</i> Documentation" -Url "https://docs.universaldashboard.io/"))
 
-Start-UDDashboard -Wait -Content { 
-    New-UDDashboard -NavbarLinks $NavBarLinks -Title "PowerShell Pro Tools Universal Dashboard" -NavBarColor '#FF1c1c1c' -NavBarFontColor "#FF55b3ff" -BackgroundColor "#FF333333" -FontColor "#FFFFFFF" -Content { 
+Start-UDDashboard -Wait -Content {
+    New-UDDashboard -NavbarLinks $NavBarLinks -Title "PowerShell Pro Tools Universal Dashboard" -NavBarColor '#FF1c1c1c' -NavBarFontColor "#FF55b3ff" -BackgroundColor "#FF333333" -FontColor "#FFFFFFF" -Content {
         New-UDRow {
             New-UDColumn -Size 3 {
                 New-UDHtml -Markup "<div class='card' style='background: rgba(37, 37, 37, 1); color: rgba(255, 255, 255, 1)'><div class='card-content'><span class='card-title'>About Universal Dashboard</span><p>Universal Dashboard is a cross-platform PowerShell module used to design beautiful dashboards from any available dataset. Visit GitHub to see some example dashboards.</p></div><div class='card-action'><a href='https://www.github.com/adamdriscoll/poshprotools'>GitHub</a></div></div>"
@@ -15,17 +15,17 @@ Start-UDDashboard -Wait -Content {
             New-UDColumn -Size 3 {
                 New-UDMonitor -Title "Users per second" -Type Line -DataPointHistory 20 -RefreshInterval 15 -ChartBackgroundColor '#5955FF90' -ChartBorderColor '#FF55FF90' @Colors -Endpoint {
                     Get-Random -Minimum 0 -Maximum 100 | Out-UDMonitorData
-                } 
+                }
             }
             New-UDColumn -Size 3 {
                 New-UDMonitor -Title "Downloads per second" -Type Line -DataPointHistory 20 -RefreshInterval 5 -ChartBackgroundColor '#59FF681B' -ChartBorderColor '#FFFF681B' @Colors -Endpoint {
                     Get-Random -Minimum 0 -Maximum 10 | Out-UDMonitorData
-                } 
+                }
             }
             New-UDColumn -Size 3 {
                 New-UDMonitor -Title "Tweets per second" -Type Line -DataPointHistory 20 -RefreshInterval 20 -ChartBackgroundColor '#595479FF' -ChartBorderColor '#FF5479FF' @Colors -Endpoint {
                     Get-Random -Minimum 0 -Maximum 10000 | Out-UDMonitorData
-                } 
+                }
             }
         }
         New-UDRow {
@@ -50,13 +50,13 @@ Start-UDDashboard -Wait -Content {
                     $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Support for running on a PS4";  "Description" = "A dashboard on a PS4 would be pretty cool."; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
                     $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Bug in the flux capacitor";  "Description" = "The flux capacitor is constantly crashing."; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
                     $issues += [PSCustomObject]@{ "ID" = (Get-Random -Minimum 10 -Maximum 10000);  "Title" = "Feature Request - Hypnotoad Widget";  "Description" = "Every dashboard needs more hypnotoad"; Comments = (Get-Random -Minimum 10 -Maximum 10000) }
-                    
+
                     $issues | Out-UDGridData
                 }
             }
         }
     }
-} 
+}
 
 Start-Process http://localhost
- 
+
