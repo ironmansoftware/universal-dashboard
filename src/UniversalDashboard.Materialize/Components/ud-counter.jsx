@@ -1,5 +1,4 @@
 import React from 'react';
-import UdIcon from './ud-icon.jsx';
 var numeral = require("numeral");
 import ReactInterval from 'react-interval';
 import ErrorCard from './error-card.jsx';
@@ -70,7 +69,7 @@ export default class UdCounter extends React.Component {
                 em = "4em";
             }
 
-            icon = <UdIcon icon={this.props.icon} style={{opacity: 0.05, float:'left', marginLeft: '70px', fontSize: em, position:'absolute', top: '20px', color: this.props.fontColor}}/>
+            icon = UniversalDashboard.renderComponent({type: 'icon', icon: this.props.icon, color: this.props.fontColor});
         }
 
         var value = numeral(this.state.value).format(this.props.format);
