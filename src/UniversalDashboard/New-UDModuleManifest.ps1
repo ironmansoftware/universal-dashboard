@@ -94,6 +94,7 @@ $manifestParameters = @{
 		"New-UDGridLayout"
 		"New-UDImageCarousel"
 		"New-UDImageCarouselItem"
+		'New-UDIcon'
 
 		#Material UI
 		'New-UDMuAvatar'
@@ -107,7 +108,6 @@ $manifestParameters = @{
 		'New-UDMuCardMedia'
 		'New-UDMuCheckBox'
 		'New-UDMuChip'
-		'New-UDMuIcon'
 		'New-UDMuIconButton'
 		'New-UDMuLink'
 		'New-UDMuList'

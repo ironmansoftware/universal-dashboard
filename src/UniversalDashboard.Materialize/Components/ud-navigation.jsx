@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import UdIcon from './ud-icon';
 
 export default class UdNavigation extends React.Component {
 
