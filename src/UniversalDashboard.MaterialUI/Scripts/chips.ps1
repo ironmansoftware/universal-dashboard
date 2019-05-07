@@ -14,7 +14,7 @@ function New-UDMuChip {
         [object]$OnClick,
 
         [Parameter (Position = 1, ParameterSetName = "Icon")]
-		[PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
+		[PSTypeName('UniversalDashboard.Icon')]$Icon,
 
 		[Parameter(Position = 2)]
 		[Hashtable]$Style,

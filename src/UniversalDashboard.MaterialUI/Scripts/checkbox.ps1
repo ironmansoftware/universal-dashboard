@@ -5,10 +5,10 @@ function New-UDMuCheckBox {
         [string]$Label,
 
         [Parameter (Position = 1)]
-        [PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
+        [PSTypeName('UniversalDashboard.Icon')]$Icon,
 
         [Parameter (Position = 2)]
-        [PSTypeName('UniversalDashboard.MaterialUI.Icon')]$CheckedIcon,
+        [PSTypeName('UniversalDashboard.Icon')]$CheckedIcon,
 
         [Parameter (Position = 3)]
         [object]$OnChange,

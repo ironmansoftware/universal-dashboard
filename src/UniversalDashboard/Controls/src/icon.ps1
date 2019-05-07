@@ -65,7 +65,7 @@ function New-UDMuIcon {
             icon       = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "")
         }
 
-        $MUIcon.PSTypeNames.Insert(0, "UniversalDashboard.MaterialUI.Icon") | Out-Null
+        $MUIcon.PSTypeNames.Insert(0, "UniversalDashboard.Icon") | Out-Null
 
         $MUIcon
     }

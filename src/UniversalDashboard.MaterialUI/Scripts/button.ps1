@@ -5,7 +5,7 @@ function New-UDMuButton {
         [string]$Text,
 
         [Parameter (Position = 1)]
-        [PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
+        [PSTypeName('UniversalDashboard.Icon')]$Icon,
 
         [Parameter (Position = 2)]
         [ValidateSet("text", "outlined", "contained", "flat", "raised")]
