@@ -11,7 +11,7 @@ Describe "button" {
 
     Context "icon" {
         Set-TestDashboard {
-            $Icon = New-UDMuIcon -Icon 'github'
+            $Icon = New-UDIcon -Icon 'github'
             New-UDMuButton -Text "Submit" -Id "button" -variant flat -Icon $Icon -OnClick {Show-UDToast -Message 'test'}  
         }
 
@@ -22,7 +22,7 @@ Describe "button" {
 
     Context "should click" {
         Set-TestDashboard {
-            $Icon = New-UDMuIcon -Icon 'github'
+            $Icon = New-UDIcon -Icon 'github'
             New-UDMuButton -Text "Submit" -Id "button" -variant flat -Icon $Icon -OnClick {
                 Set-TestData -Data "OnClick"
             }

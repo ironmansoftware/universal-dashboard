@@ -1,4 +1,4 @@
-function New-UDMuIconButton {
+function New-UDIconButton {
     param(
         [Parameter()]
         [string]$Id = (New-Guid).ToString(),

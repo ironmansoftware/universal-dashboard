@@ -2,7 +2,7 @@ Describe "icon button" {
     Context "content" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'test-icon-button' 
             }
         }
         It 'has content' {
@@ -13,7 +13,7 @@ Describe "icon button" {
     Context "icon" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'test-icon-button' 
             }
         }
         It 'has an icon' {
@@ -24,7 +24,7 @@ Describe "icon button" {
     Context "style" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size sm )  -Id 'test-icon-button' -Style @{backgroundColor = '#000'; color='rgb(33, 150, 243)'}
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm )  -Id 'test-icon-button' -Style @{backgroundColor = '#000'; color='rgb(33, 150, 243)'}
             }
         }
         It 'has backgroundColor and icon color' {
@@ -36,18 +36,18 @@ Describe "icon button" {
     Context "size" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size xs -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size lg -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 2x -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 3x -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 4x -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 5x -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 6x -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 7x -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 8x -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 9x -Style @{color = '#000'})  -Id 'test-icon-button' 
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size 10x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size xs -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size lg -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 2x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 3x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 4x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 5x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 6x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 7x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 8x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 9x -Style @{color = '#000'})  -Id 'test-icon-button' 
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size 10x -Style @{color = '#000'})  -Id 'test-icon-button' 
             }
         }
         It 'has an icon size of xs' {
@@ -91,7 +91,7 @@ Describe "icon button" {
     Context "event" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIconButton -Icon (New-UDMuIcon -Icon user -Size lg)  -Id 'test-icon-button' -Style @{backgroundColor = '#c9c9c9'; color='rgb(33, 150, 243)'} -OnClick {
+                New-UDIconButton -Icon (New-UDIcon -Icon user -Size lg)  -Id 'test-icon-button' -Style @{backgroundColor = '#c9c9c9'; color='rgb(33, 150, 243)'} -OnClick {
                     Set-TestData -Data "OnClick"
                 }
             }

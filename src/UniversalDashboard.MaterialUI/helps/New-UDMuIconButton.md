@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# New-UDMuIconButton
+# New-UDIconButton
 
 ## SYNOPSIS
 {{Fill in the Synopsis}}
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-New-UDMuIconButton [[-Id] <String>] [[-Icon] <Object>] [[-OnClick] <Object>] [-Disable] [[-Href] <String>]
+New-UDIconButton [[-Id] <String>] [[-Icon] <Object>] [[-OnClick] <Object>] [-Disable] [[-Href] <String>]
  [[-Style] <Hashtable>] [<CommonParameters>]
 ```
 

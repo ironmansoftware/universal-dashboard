@@ -48,7 +48,7 @@ function New-UDMuListItem {
     #          #create a new ParameterAttribute Object
     #          $IconAttribute = New-Object System.Management.Automation.ParameterAttribute
     #          $IconAttribute.Mandatory = $true
-    #          $IconAttribute.HelpMessage = "Use New-UDMuIcon to create new icon"
+    #          $IconAttribute.HelpMessage = "Use New-UDIcon to create new icon"
     #          $attributeCollection = new-object System.Collections.ObjectModel.Collection[System.Attribute]
     #          #add our custom attribute
     #          $attributeCollection.Add($IconAttribute)
