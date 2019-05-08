@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -1615,7 +1616,7 @@ namespace UniversalDashboard.Models
 				icon = (FontAwesomeIcons)(intIcon - 10000);
 			}
 
-			return Enum.GetName(typeof(FontAwesomeIcons), icon).TrimStart('_').Replace("_", "-");
+			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(icon.ToString()).Replace("_", "");
 		}
 	}
 

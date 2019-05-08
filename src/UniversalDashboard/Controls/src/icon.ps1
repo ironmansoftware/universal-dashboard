@@ -40,6 +40,9 @@ function New-UDIcon {
     )
 
     End {
+
+        $iconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon)
+
         $MUIcon = @{
             type       = "mu-icon"
             isPlugin   = $true 
@@ -62,7 +65,7 @@ function New-UDIcon {
             style      = $Style
             title      = $Title
             regular    = $Regular.IsPresent
-            icon       = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "")
+            icon       = $iconName
         }
 
         $MUIcon.PSTypeNames.Insert(0, "UniversalDashboard.Icon") | Out-Null

@@ -10,9 +10,9 @@ namespace UniversalDashboard.Test.Models
         [Fact]
         public void ShouldConvertFromOldIconToNewIcon()
         {
-            Assert.Equal("address-card", FontAwesomeIcons.address_card_o.GetIconName());
-            Assert.Equal("hand-point-right", FontAwesomeIcons.hand_o_right.GetIconName());
-            Assert.Equal("empire", FontAwesomeIcons.ge.GetIconName());
+            Assert.Equal("AddressCard", FontAwesomeIcons.address_card_o.GetIconName());
+            Assert.Equal("HandPointRight", FontAwesomeIcons.hand_o_right.GetIconName());
+            Assert.Equal("Empire", FontAwesomeIcons.ge.GetIconName());
         }
     }
 }
