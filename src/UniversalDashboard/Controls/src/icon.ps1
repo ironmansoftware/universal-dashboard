@@ -36,7 +36,10 @@ function New-UDIcon {
         [Parameter()]
         [string]$Title,
         [Parameter()]
-        [switch]$Regular
+        [switch]$Regular,
+        [Parameter()]
+        [UniversalDashboard.Models.DashboardColor]
+        $Color
     )
 
     End {
@@ -44,14 +47,11 @@ function New-UDIcon {
         $iconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon)
 
         $MUIcon = @{
-            type       = "mu-icon"
-            isPlugin   = $true 
-            assetId    = $MUAssetId
-
+            type       = "icon"
             id         = $id 
             size       = $Size
             fixedWidth = $FixedWidth
-            color      = $Color
+            color      = $Color.HtmlColor
             listItem   = $ListItem.IsPresent
             inverse    = $Inverse.IsPresent
             rotation   = $Rotation
