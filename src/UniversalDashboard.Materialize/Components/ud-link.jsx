@@ -1,7 +1,5 @@
 import React,{Suspense} from 'react';
 
-const UdIconComponent = React.lazy(() => import('./ud-icon.jsx' /* webpackChunkName: "ud-icon" */))
-
 export default class UdLink extends React.Component {
     render() {
         var target = this.props.openInNewWindow ? "_blank" : "_self";
@@ -11,9 +9,10 @@ export default class UdLink extends React.Component {
         }
 
         if (this.props.icon) {
+            var icon = UniversalDashboard.renderComponent({type: 'icon', icon: this.props.icon});
             return <a href={this.props.url} target={target} className={this.props.className + " ud-link"} style={style}>
             <Suspense fallback={<div>Loading...</div>}>
-                <UdIconComponent icon={this.props.icon}></UdIconComponent> {this.props.text}
+            {icon} {this.props.text}
             </Suspense>
             </a>
         }

@@ -2,7 +2,7 @@ Describe "icon" {
     Context "content" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIcon -Icon user -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' 
+                New-UDIcon -Icon user -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' 
             }
         }
         It 'has content' {
@@ -13,7 +13,7 @@ Describe "icon" {
     Context "icon solid" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIcon -Icon angry -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' 
+                New-UDIcon -Icon angry -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' 
             }
         }
         It 'has an solid icon' {
@@ -24,7 +24,7 @@ Describe "icon" {
     Context "icon regular ( semi light )" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-               New-UDMuIcon -Icon angry -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' -Regular
+               New-UDIcon -Icon angry -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' -Regular
             }
         }
         It 'has an regular type icon' {
@@ -36,7 +36,7 @@ Describe "icon" {
     Context "solid icon as regular icon fallback" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-               New-UDMuIcon -Icon box -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' -Regular
+               New-UDIcon -Icon box -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' -Regular
             }
         }
         It 'has an regular type icon' {
@@ -48,7 +48,7 @@ Describe "icon" {
     Context "style" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIcon -Icon user -Size 3x -Style @{color='rgb(33, 150, 243)'}
+                New-UDIcon -Icon user -Size 3x -Style @{color='rgb(33, 150, 243)'}
             }
         }
         It 'has backgroundColor and icon color' {
@@ -60,18 +60,18 @@ Describe "icon" {
     Context "size" {
         Set-TestDashboard {
             New-UDMuPaper -Content {
-                New-UDMuIcon -Icon angry -Size xs -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size sm -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size lg -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 2x -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 3x -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 4x -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 5x -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 6x -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 7x -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 8x -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 9x -Style @{color = '#000'}  
-                New-UDMuIcon -Icon angry -Size 10x -Style @{color = '#000'}
+                New-UDIcon -Icon angry -Size xs -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size sm -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size lg -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 2x -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 3x -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 4x -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 5x -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 6x -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 7x -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 8x -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 9x -Style @{color = '#000'}  
+                New-UDIcon -Icon angry -Size 10x -Style @{color = '#000'}
             }
         }
         It 'has an icon size of xs' {

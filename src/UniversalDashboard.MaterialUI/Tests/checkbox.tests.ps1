@@ -56,8 +56,8 @@ Describe "checkbox" {
 
     Context "custom icon" {
         Set-TestDashboard {
-            $Icon = New-UDMuIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon' -Regular
-            $CheckedIcon = New-UDMuIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon-checked' 
+            $Icon = New-UDIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon' -Regular
+            $CheckedIcon = New-UDIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon-checked' 
             New-UDMuCheckBox -Id 'demo-checkbox' -Icon $Icon -CheckedIcon $CheckedIcon -OnChange {} -Style @{color = '#2196f3'}
         }
 
@@ -75,8 +75,8 @@ Describe "checkbox" {
 
     Context "event" {
         Set-TestDashboard {
-            $Icon = New-UDMuIcon -Icon circle -Size lg -Id 'demo-checkbox-icon' -Regular
-            $CheckedIcon = New-UDMuIcon -Icon check_circle -Size lg  -Id 'demo-checkbox-icon-checked' 
+            $Icon = New-UDIcon -Icon circle -Size lg -Id 'demo-checkbox-icon' -Regular
+            $CheckedIcon = New-UDIcon -Icon check_circle -Size lg  -Id 'demo-checkbox-icon-checked' 
             New-UDMuCheckBox -Id 'demo-checkbox' -Icon $Icon -CheckedIcon $CheckedIcon -OnChange {
                 Set-TestData -Data "OnChange"
             }
@@ -90,8 +90,8 @@ Describe "checkbox" {
 
     Context "style" {
         Set-TestDashboard {
-            $Icon = New-UDMuIcon -Icon heart  -Id 'demo-checkbox-icon' -Regular
-            $CheckedIcon = New-UDMuIcon -Icon heart  -Id 'demo-checkbox-icon-checked' 
+            $Icon = New-UDIcon -Icon heart  -Id 'demo-checkbox-icon' -Regular
+            $CheckedIcon = New-UDIcon -Icon heart  -Id 'demo-checkbox-icon-checked' 
             New-UDMuCheckBox -Id 'demo-checkbox' -Icon $Icon -CheckedIcon $CheckedIcon -OnChange {
                 Set-TestData -Data "OnChange"
             } -Style @{color = 'pink'} -Label "I'm in love"
@@ -105,8 +105,8 @@ Describe "checkbox" {
 
     Context "disabled" {
         Set-TestDashboard {
-            $Icon = New-UDMuIcon -Icon heart  -Id 'demo-checkbox-icon' -Regular
-            $CheckedIcon = New-UDMuIcon -Icon heart  -Id 'demo-checkbox-icon-checked' 
+            $Icon = New-UDIcon -Icon heart  -Id 'demo-checkbox-icon' -Regular
+            $CheckedIcon = New-UDIcon -Icon heart  -Id 'demo-checkbox-icon-checked' 
             New-UDMuCheckBox -Id 'demo-checkbox' -Icon $Icon -CheckedIcon $CheckedIcon -OnChange {
                 Set-TestData -Data "OnChange"
             } -Disabled

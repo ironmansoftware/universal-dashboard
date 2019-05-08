@@ -1,9 +1,9 @@
-function New-UDMuIconButton {
+function New-UDIconButton {
     param(
         [Parameter()]
         [string]$Id = (New-Guid).ToString(),
         [Parameter ()]
-		[PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
+		[PSTypeName('UniversalDashboard.Icon')]$Icon,
 		[Parameter ()]
 		[object] $OnClick, 
         [Parameter ()]

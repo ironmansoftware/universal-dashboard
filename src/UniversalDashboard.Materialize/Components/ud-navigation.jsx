@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import UdIcon from './ud-icon.jsx';
+import UdIcon from './ud-icon';
 
 export default class UdNavigation extends React.Component {
 
@@ -157,11 +157,16 @@ export default class UdNavigation extends React.Component {
     renderCustomNavigation() {
         if (this.props.none) { return <div/> }
 
+        var icon = UniversalDashboard.renderComponent({
+            type:'icon',
+            icon: 'bars'
+        })
+
         var sideNavClass = "side-nav ud-page-navigation";
-        var toggleButton = <a href="#" className="menu-button" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}><UdIcon icon="bars"/></a>;
+        var toggleButton = <a href="#" className="menu-button" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}>{icon}</a>;
         if (this.props.fixed) {
             sideNavClass += " fixed";
-            toggleButton = <a href="#" className="button-collapse" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}><UdIcon icon="bars"/></a>;;
+            toggleButton = <a href="#" className="button-collapse" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}>{icon}</a>;;
         }
 
         var children = [];

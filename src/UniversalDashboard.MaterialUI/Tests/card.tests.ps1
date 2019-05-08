@@ -5,9 +5,9 @@ Describe "card" {
         Set-TestDashboard {
            
             $ToolBarProps = @{
-                # icon        = New-UDMuIcon -Icon server -Size lg -FixedWidth -Style @{color = '#000'} 
+                # icon        = New-UDIcon -Icon server -Size lg -FixedWidth -Style @{color = '#000'} 
                 Style       = @{backgroundColor = '#fff'; color = '#000';flexGrow = 1}
-                Content     = {New-UDMuIconButton -Icon (New-UDMuIcon -Icon github -Size sm -Style @{ color = '#000'}) -OnClick {Show-UDToast -Message 'test'}}
+                Content     = {New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Style @{ color = '#000'}) -OnClick {Show-UDToast -Message 'test'}}
                 Title       = New-UDMuTypography -Variant h5 -Text 'Universal Dashboard'
                 ShowButtons = $false
                 Id = 'toolbar'
@@ -47,9 +47,9 @@ Describe "card" {
                 
                 $ButtonStyle = @{color = '#fff'}
                 $Icons = @(
-                    New-UDMuIcon -Icon github -Size lg -Style $ButtonStyle
-                    New-UDMuIcon -Icon gitlab -Size lg -Style $ButtonStyle
-                    New-UDMuIcon -Icon git    -Size lg -Style $ButtonStyle
+                    New-UDIcon -Icon github -Size lg -Style $ButtonStyle
+                    New-UDIcon -Icon gitlab -Size lg -Style $ButtonStyle
+                    New-UDIcon -Icon git    -Size lg -Style $ButtonStyle
                 )
                 
                 foreach ($Icon in $Icons) {

@@ -1,4 +1,4 @@
-function New-UDMuIcon {
+function New-UDIcon {
     param(
         [Parameter()]
         [string]$Id = (New-Guid).ToString(),
@@ -36,19 +36,22 @@ function New-UDMuIcon {
         [Parameter()]
         [string]$Title,
         [Parameter()]
-        [switch]$Regular
+        [switch]$Regular,
+        [Parameter()]
+        [UniversalDashboard.Models.DashboardColor]
+        $Color
     )
 
     End {
-        $MUIcon = @{
-            type       = "mu-icon"
-            isPlugin   = $true 
-            assetId    = $MUAssetId
 
+        $iconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon)
+
+        $MUIcon = @{
+            type       = "icon"
             id         = $id 
             size       = $Size
             fixedWidth = $FixedWidth
-            color      = $Color
+            color      = $Color.HtmlColor
             listItem   = $ListItem.IsPresent
             inverse    = $Inverse.IsPresent
             rotation   = $Rotation
@@ -62,10 +65,10 @@ function New-UDMuIcon {
             style      = $Style
             title      = $Title
             regular    = $Regular.IsPresent
-            icon       = [CultureInfo]::CurrentCulture.TextInfo.ToTitleCase($Icon.ToString()).Replace("_", "")
+            icon       = $iconName
         }
 
-        $MUIcon.PSTypeNames.Insert(0, "UniversalDashboard.MaterialUI.Icon") | Out-Null
+        $MUIcon.PSTypeNames.Insert(0, "UniversalDashboard.Icon") | Out-Null
 
         $MUIcon
     }

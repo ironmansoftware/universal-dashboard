@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "chart.js": "2.7.3",
-    "font-awesome": "4.7.0",
     "griddle-react": "1.13.1",
     "materialize-css": "0.100.2",
     "moment": "2.19.3",

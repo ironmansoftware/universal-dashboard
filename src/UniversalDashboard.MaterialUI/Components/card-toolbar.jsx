@@ -7,8 +7,8 @@ import {
   Typography
 } from "@material-ui/core";
 import classNames from "classnames";
-import UdMuIcon from "./icon";
 import UdMuTypography from "./typography";
+import UdMuIcon from './icon';
 
 const styles = theme => ({
   cardToolBar: {
