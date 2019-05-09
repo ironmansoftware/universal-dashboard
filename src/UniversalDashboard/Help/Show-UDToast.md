@@ -18,7 +18,7 @@ Show-UDToast [-Message] <String> [-MessageColor <DashboardColor>] [-MessageSize 
  [-BackgroundColor <DashboardColor>] [-Theme <String>] [-Icon <FontAwesomeIcons>] [-IconColor <DashboardColor>]
  [-Position <String>] [-HideCloseButton] [-CloseOnClick] [-CloseOnEscape] [-ReplaceToast] [-RightToLeft]
  [-Balloon] [-Overlay] [-OverlayClose] [-OverlayColor <DashboardColor>] [-TransitionIn <String>]
- [-TransitionOut <String>] [<CommonParameters>]
+ [-TransitionOut <String>]  [-Broadcast <Switch>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -383,6 +383,21 @@ Type: String
 Parameter Sets: (All)
 Aliases: 
 Accepted values: bounceInLeft, bounceInRight, bounceInUp, bounceInDown, fadeIn, fadeInDown, fadeInUp, fadeInLeft, fadeInRight, flipInX
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Broadcast
+Sends a toast to all connected clients. 
+
+```yaml
+Type: Switch
+Parameter Sets: (All)
+Aliases: 
 
 Required: False
 Position: Named
