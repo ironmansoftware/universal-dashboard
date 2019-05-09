@@ -29,6 +29,10 @@ namespace UniversalDashboard
         {
             await hub.Clients.Client(clientId).SendAsync("showToast", toast);
         }
+        public static async Task ShowToast(this IHubContext<DashboardHub> hub, object toast)
+        {
+            await hub.Clients.All.SendAsync("showToast", toast);
+        }
         public static async Task HideToast(this IHubContext<DashboardHub> hub, string clientId, string id)
         {
             await hub.Clients.Client(clientId).SendAsync("hideToast", id);

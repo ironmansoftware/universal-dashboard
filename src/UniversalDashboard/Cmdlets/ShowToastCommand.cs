@@ -72,13 +72,13 @@ namespace UniversalDashboard.Cmdlets
         [Parameter]
         [ValidateSet("bounceInLeft", "bounceInRight", "bounceInUp", "bounceInDown", "fadeIn", "fadeInDown", "fadeInUp", "fadeInLeft", "fadeInRight", "flipInX")]
         public string TransitionOut { get; set; } = "fadeOut";
+        [Parameter()]
+        public SwitchParameter Broadcast { get; set; }
         protected override void EndProcessing()
         {
             try 
             {
-                var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
-                var connectionId = this.GetVariableValue("ConnectionId") as string;   
-                hub.ShowToast(connectionId, new {
+                var options = new {
                     close = !HideCloseButton.IsPresent,
                     id = Id,
                     message = Message, 
@@ -103,7 +103,15 @@ namespace UniversalDashboard.Cmdlets
                     CloseOnEscape = CloseOnEscape.IsPresent,
                     transitionIn = TransitionIn,
                     transitionOut = TransitionOut
-                }).Wait();
+                };
+
+                var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+                if (Broadcast.IsPresent) {
+                    hub.ShowToast(options).Wait();
+                } else {    
+                    var connectionId = this.GetVariableValue("ConnectionId") as string;   
+                    hub.ShowToast(connectionId, options).Wait();
+                }
             }
             catch (Exception ex) {
                  Log.Error(ex.Message);
