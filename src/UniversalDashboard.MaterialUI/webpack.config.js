@@ -13,7 +13,7 @@ module.exports = (env) => {
 
   return {
     entry: {
-      'index': __dirname + '/components/index.js'
+      'materialui.index': __dirname + '/components/index.js'
     },
     output: {
       path: BUILD_DIR,
@@ -49,6 +49,15 @@ module.exports = (env) => {
     plugins: [
       // new RemoveWebpackPlugin(BUILD_DIR)
     ],
-    devtool: "source-map"
+    devtool: "source-map",
+    devServer: {
+      disableHostCheck: true,
+      historyApiFallback: true,
+      port: 10001,
+      // hot: true,
+      compress:true,
+      publicPath: '/',
+      stats: "minimal"
+    },
   };
 }
