@@ -13,11 +13,15 @@ export default class UDDesigner extends React.Component {
     }
 
     componentDidMount() {
-        $(this.modal).modal();
+        if (window.jQuery) {
+            $(this.modal).modal();
+        }
     }
 
     toggleTerminal() {
-        $(this.modal).modal(this.state.open ? 'close' : 'open');
+        if (window.jQuery) {
+            $(this.modal).modal(this.state.open ? 'close' : 'open');
+        }
     }
 
     render() {

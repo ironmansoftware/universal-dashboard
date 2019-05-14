@@ -126,8 +126,10 @@ class UDElementContent extends React.Component {
             Materialize.updateTextFields();
         }
         
-        $('.collapsible').collapsible();
-
+        if (window.jQuery) {
+            $('.collapsible').collapsible();
+        }
+        
         if (this.state.tag === 'select') {
             $(this.refs.element).material_select(this.onUserEvent.bind(this));
         }

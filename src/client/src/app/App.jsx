@@ -10,9 +10,9 @@ export default class App extends React.Component {
         var regex = new RegExp('^' + window.baseUrl + '(?!.*(\/login))(?!.*(\/license)).*$');
 
         return (<Router>
-                <div className="ud-dashboard">
-                    <Route path={regex} component={UdDashboard} />
-                </div>
+                    <div className="ud-dashboard">
+                        <Route path={regex} component={UdDashboard} />
+                    </div>
             </Router> )
   }
 }

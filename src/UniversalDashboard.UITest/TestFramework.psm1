@@ -11,11 +11,5 @@ function Get-ModulePath {
 }
 
 function Get-BrowserPort {
-    param([Switch]$Release)
-
-    if (-not $Release) {
-        10000
-    } else {
-        10001
-    }
+    10000
 }

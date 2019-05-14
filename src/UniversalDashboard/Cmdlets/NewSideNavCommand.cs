@@ -20,7 +20,7 @@ namespace UniversalDashboard.Cmdlets
         public SwitchParameter Fixed { get; set; }
 
         [Parameter()]
-        public int Width { get; set; } = 300;
+        public int Width { get; set; } = 240;
 
         protected override void BeginProcessing()
         {
