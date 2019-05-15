@@ -16,6 +16,7 @@ import UdInput from './ud-input';
 import UdInputField from './ud-input-field';
 import UdMonitor from './ud-monitor';
 import UDLoading from './ud-loading';
+import UDModal from './ud-modal';
 
 UniversalDashboard.register("ud-chart", UDChart);
 UniversalDashboard.register("ud-counter", UDCounter);
@@ -31,3 +32,4 @@ UniversalDashboard.register("ud-udnavigation", UDNavigation);
 UniversalDashboard.register("ud-input", UdInput);
 UniversalDashboard.register("ud-input-field", UdInputField);
 UniversalDashboard.register("ud-loading", UDLoading);
+UniversalDashboard.register("ud-modal", UDModal);

@@ -1,5 +1,7 @@
 param([Switch]$Release)
 
+$Env:Debug = -not $Release
+
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
 $BrowserPort = Get-BrowserPort -Release:$Release
