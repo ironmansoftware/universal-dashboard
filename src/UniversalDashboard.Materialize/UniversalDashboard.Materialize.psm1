@@ -1,6 +1,6 @@
 
-if ($Global:Debug) {
-    $AssetId = [UniversalDashboard.Services.AssetService]::Instance.RegisterAsset("http://localhost:10001/materialize.index.bundle.js")
+if ($Env:Debug) {
+    $AssetId = [UniversalDashboard.Services.AssetService]::Instance.RegisterAsset("http://localhost:10000/materialize.index.bundle.js")
     [UniversalDashboard.Services.AssetService]::Instance.RegisterFramework("Materialize", $AssetId)
 } else {
     $IndexJs = Get-ChildItem "$PSScriptRoot\index.*.bundle.js"

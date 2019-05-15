@@ -69,13 +69,13 @@ export default class UdNavigation extends React.Component {
 
         if(item.children == null) 
         {
-            return <UDSideNavItem {...item}/>
+            return <UDSideNavItem {...item} history={this.props.history} parent={this} fixed={this.props.fixed}/>
         }
         else 
         {
             var children = item.children.map(x => this.renderSideNavItem(x));
             return  <li><Collapsible accordion>
-                        <CollapsibleItem header={item.text} style={{color: 'black', paddingLeft: '15px'}} >
+                        <CollapsibleItem header={item.text} style={{color: 'black', paddingLeft: '15px'}} id={item.id}>
                             <ul>
                                 {children}
                             </ul>
@@ -96,7 +96,7 @@ export default class UdNavigation extends React.Component {
         }
         
         return (
-            <SideNav fixed={this.props.fixed} trigger={<a>Test</a>}>
+            <SideNav ref={x => this.sideNav = x} fixed={this.props.fixed} trigger={<a style={{cursor: 'pointer'}} id='sidenavtrigger'><UdIcon icon="Bars" /></a>} options={{closeOnClick: true}}>
                 {children}
             </SideNav>
         )
@@ -114,10 +114,10 @@ export default class UdNavigation extends React.Component {
 
 class UDSideNavItem extends React.Component {
 
-    onItemClick(e, item) {
-        if (this.props.hasCallback) {
-            e.preventDefault(); 
+    onItemClick(e) {
+        e.preventDefault(); 
 
+        if (this.props.hasCallback) {
             PubSub.publish('element-event', {
                 type: "clientEvent",
                 eventId: item.id,
@@ -133,6 +133,10 @@ class UDSideNavItem extends React.Component {
         }
         else if (this.props.name) {
           this.props.history.push(`/${this.props.name.replace(/ /g, "-")}`);      
+        }
+
+        if (!this.props.fixed) {
+            this.props.parent.sideNav.instance.close();
         }
     }
 

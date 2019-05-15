@@ -5,6 +5,6 @@ export default class UdNavbar extends React.Component {
         return UniversalDashboard.renderComponent({
             ...this.props,
             type: 'ud-navbar'
-        });
+        }, this.props.history);
     }
 }
