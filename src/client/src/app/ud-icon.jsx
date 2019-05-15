@@ -7,20 +7,12 @@ import classNames from "classnames"
 
 export default class UDIcon extends React.Component {
 
-    state = {
-        size: this.props.size,
-        border: this.props.border,
-        listItem: this.props.listItem,
-        fixedWidth: this.props.fixedWidth,
-        inverse: this.props.inverse,
-        rotation: this.props.rotation,
-        flip: this.props.flip,
-        spin: this.props.spin,
-        pulse: this.props.pulse,
-        pull: this.props.pull,
-        transform: this.props.transform,
-        title: this.props.title,
-        id: this.props.id,
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            icon: ''
+        }
     }
 
     setFontAwesomeIcon = (faIcon) => {
@@ -31,8 +23,8 @@ export default class UDIcon extends React.Component {
             let fai = icon(far[name])
             i = fai
             this.setState({
-                icon: i,
-                ...this.state
+                ...this.props,
+                icon: i
             })
         }) :
         findSolidIcon(name) === true ?
@@ -40,15 +32,15 @@ export default class UDIcon extends React.Component {
             let fai = icon(fas[name])
             i = fai
             this.setState({
-                icon: i,
-                ...this.state
+                ...this.props,
+                icon: i
             })
         }) : import(`@fortawesome/free-brands-svg-icons/index.es.js`).then(({fab}) => {
             let fai = icon(fab[name])
             i = fai
-            this.setState({
-                icon: i,
-                ...this.state
+            this.setState({                
+                ...this.props,
+                icon: i
             })
 
         })      
@@ -57,9 +49,15 @@ export default class UDIcon extends React.Component {
     componentWillMount(){
         this.setFontAwesomeIcon(this.props.icon)
     }
+
+    componentWillReceiveProps(newProps) {
+        this.setFontAwesomeIcon(newProps.icon)
+    }
+
+
     render(){
         return (
-            <FontAwesomeIcon className={classNames(this.props.className, "ud-mu-icon")} style={{...this.props.style}} {...this.state}/>
+            <FontAwesomeIcon className={classNames(this.props.className, "ud-mu-icon")} {...this.props} icon={this.state.icon} data-tooltip={this.props.dataTooltip}/>
         )
     }
 }

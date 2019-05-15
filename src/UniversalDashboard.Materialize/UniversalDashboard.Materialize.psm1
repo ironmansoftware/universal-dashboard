@@ -1,5 +1,5 @@
 
-if ($Env:Debug) {
+if ($Env:Debug -eq $true) {
     $AssetId = [UniversalDashboard.Services.AssetService]::Instance.RegisterAsset("http://localhost:10000/materialize.index.bundle.js")
     [UniversalDashboard.Services.AssetService]::Instance.RegisterFramework("Materialize", $AssetId)
 } else {
