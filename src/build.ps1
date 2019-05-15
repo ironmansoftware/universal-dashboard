@@ -17,6 +17,12 @@ if ($powerShellGet.Version -lt ([Version]'1.6.0')) {
 	Import-Module PowerShellGet -Force
 }
 
+& dotnet tool install --global CycloneDX
+
+& dotnet CycloneDX "$PSScriptRoot/UniversalDashboard.Sln" -o ".\"
+
+Rename-Item "bom.xml" "dotnet.bom.xml"
+
 & dotnet clean "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj"
 & dotnet restore "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" 
   
@@ -30,6 +36,8 @@ Push-Location "$PSScriptRoot\client"
 
 Start-Process npm -ArgumentList "install" -Wait
 
+& npm install -g @cyclonedx/bom
+& cyclonedx-bom -o core.bom.xml
 & npm run build
 Pop-Location
 
@@ -51,6 +59,14 @@ if ((Test-Path $outputDirectory)) {
 }
 
 New-Item -ItemType Directory $outputDirectory
+
+$bomDirectory = Join-Path $PSScriptRoot "boms"
+if ((Test-Path $bomDirectory)) {
+	Remove-Item $bomDirectory -Force -Recurse
+}
+
+New-Item -ItemType Directory $bomDirectory
+
 
 $net472 = Join-Path $outputDirectory "net472"
 $netstandard20 = Join-Path $outputDirectory "netstandard2.0"
@@ -100,3 +116,5 @@ Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard
 if (-not $NoHelp) {
 	New-ExternalHelp -Path "$PSScriptRoot\UniversalDashboard\Help" -OutputPath $help
 }
+
+Get-ChildItem $PSScriptRoot -Include "*.bom.xml" -Recurse | ForEach-Object { Copy-Item $_.FullName ".\boms" }

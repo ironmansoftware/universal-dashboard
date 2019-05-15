@@ -15,6 +15,7 @@ Remove-Item -Path "$BuildFolder\public" -Force -Recurse
 
 New-Item -Path $OutputPath -ItemType Directory
 
+& cyclonedx-bom -o materialui.bom.xml
 npm install
 npm run build
 

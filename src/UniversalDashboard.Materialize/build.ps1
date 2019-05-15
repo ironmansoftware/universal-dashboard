@@ -16,6 +16,7 @@ Remove-Item -Path "$BuildFolder\public" -Force -ErrorAction SilentlyContinue -Re
 New-Item -Path $OutputPath -ItemType Directory
 New-Item -Path $OutputPath\Scripts -ItemType Directory
 
+& cyclonedx-bom -o materialize.bom.xml
 npm install
 npm run build
 
