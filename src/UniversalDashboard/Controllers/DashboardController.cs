@@ -74,10 +74,8 @@ namespace UniversalDashboard.Controllers
             {
                 var stringBuilder = new StringBuilder();
 
-                var materializeCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "materialize.min.css");
                 var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "site.css");
 
-                stringBuilder.AppendLine(System.IO.File.ReadAllText(materializeCss));
                 stringBuilder.AppendLine(System.IO.File.ReadAllText(siteCss));
 
                 foreach(var item in AssetService.Instance.Assets.Where(m => m.EndsWith(".css", StringComparison.OrdinalIgnoreCase)))

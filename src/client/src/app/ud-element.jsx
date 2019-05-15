@@ -5,6 +5,7 @@ import {fetchGet, fetchPost} from './services/fetch-service.jsx';
 import {getApiPath} from 'config';
 import ReactInterval from 'react-interval';
 import ErrorCard from './error-card.jsx';
+import $ from 'jquery';
 
 export default class UdElement extends React.Component {
     constructor() {
@@ -121,27 +122,27 @@ class UDElementContent extends React.Component {
         }
     }
 
-    componentDidMount() {
-        if (this.state.tag === 'input' && this.state.attributes != null && this.state.attributes["type"] === 'text') {
-            Materialize.updateTextFields();
-        }
+    // componentDidMount() {
+    //     if (this.state.tag === 'input' && this.state.attributes != null && this.state.attributes["type"] === 'text') {
+    //         Materialize.updateTextFields();
+    //     }
         
-        $('.collapsible').collapsible();
+    //     $('.collapsible').collapsible();
 
-        if (this.state.tag === 'select') {
-            $(this.refs.element).material_select(this.onUserEvent.bind(this));
-        }
+    //     if (this.state.tag === 'select') {
+    //         $(this.refs.element).material_select(this.onUserEvent.bind(this));
+    //     }
 
-        if (this.props.onMount) {
-            eval(this.props.onMount);
-        }
-    }
+    //     if (this.props.onMount) {
+    //         eval(this.props.onMount);
+    //     }
+    // }
 
-    componentDidUpdate() {
-        if (this.state.tag === 'input' && this.state.attributes != null && this.state.attributes["type"] === 'text') {
-            Materialize.updateTextFields();
-        }
-    }
+    // componentDidUpdate() {
+    //     if (this.state.tag === 'input' && this.state.attributes != null && this.state.attributes["type"] === 'text') {
+    //         Materialize.updateTextFields();
+    //     }
+    // }
 
     onTextboxChanged(e) {
         var val = e.target.value;

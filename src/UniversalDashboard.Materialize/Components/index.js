@@ -1,4 +1,6 @@
-import Materialize from "materialize-css";
+require('materialize-css/dist/css/materialize.min.css');
+//require('materialize-css/dist/fonts/roboto/Roboto-Regular.woff');
+//require('materialize-css/dist/fonts/roboto/Roboto-Regular.woff2');
 
 import TabContainer from './tabs';
 import UDChart from './ud-chart';

@@ -1,6 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import UdIcon from './ud-icon';
+import cx from 'classnames';
+
+import { SideNav, SideNavItem, Button, Collapsible, CollapsibleItem} from 'react-materialize';
 
 export default class UdNavigation extends React.Component {
 
@@ -23,51 +26,7 @@ export default class UdNavigation extends React.Component {
         }
     }
 
-    componentDidUpdate() {
-        $(".collapsible").collapsible();
-
-        if (this.props.fixed) {
-            $(".button-collapse").sideNav({
-                menuWidth: this.props.width,
-                closeOnClick: true
-            });
-        }
-        else {
-            $(".menu-button").sideNav({
-                menuWidth: this.props.width,
-                closeOnClick: true
-            });
-        }
-    }
-
-    componentDidMount() {
-        $(".collapsible").collapsible();
-
-        if (this.props.fixed) {
-            $(".button-collapse").sideNav({
-                menuWidth: this.props.width,
-                closeOnClick: true
-            });
-        }
-        else {
-            $(".menu-button").sideNav({
-                menuWidth: this.props.width,
-                closeOnClick: true
-            });
-        }
-    }
-
-    onItemClick(e, item) {
-        if (item.hasCallback) {
-            e.preventDefault(); 
-
-            PubSub.publish('element-event', {
-                type: "clientEvent",
-                eventId: item.id,
-                eventName: 'onClick'
-            });
-        }
-    }
+   
 
     onTogglePauseCycling() {
         this.props.togglePaused();
@@ -96,78 +55,38 @@ export default class UdNavigation extends React.Component {
                           ]
         }
 
-        return   [<div className="side-nav ud-page-navigation" id="navigation" >
-                                        <div className="nav-wrapper">
-                                        <ul className="right" style={{width: '100%'}}>
-                                            {links}
-                                            {pauseToggle}
-                                        </ul>
-                                    </div>
-                </div>,
+        return  [<ul className="right" style={{width: '100%'}} ref={el => (this._sidenav = el)}>
+                    {links}
+                    {pauseToggle}
+                </ul>,
                 <a href="#" className="menu-button" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}><UdIcon icon="bars"/></a>]
     }
 
     renderSideNavItem(item) {
         if (item.divider) {
-            return  <li key={item.id}><div className="divider"></div></li>
-        }
-
-        var itemClass = "";
-        if (item.subheader) {
-            itemClass = "subheader";
-        }
-
-        var icon = null;
-        if (item.icon !== 'none') {
-            icon = <i className={`fa fa-${item.icon}`}></i>
+            return  <SideNavItem divider />
         }
 
         if(item.children == null) 
         {
-            if (item.url === null) {
-                return <li key={item.id}><a href="#" onClick={function(e) { this.onItemClick(e, item)}.bind(this)} className={itemClass}>{icon} {item.text}</a></li>
-            }
-            else if (item.url.startsWith("http") || item.url.startsWith("https")) 
-            {
-                return <li key={item.id}><a href={item.url} className={itemClass}>{icon} {item.text}</a></li>
-            }
-            else 
-            {
-                return <li key={item.id}><Link to={window.baseUrl + "/" + item.url.replace(/ /g, "-")}><UdIcon icon={item.icon}/> {item.text}</Link></li>
-            }
+            return <UDSideNavItem {...item}/>
         }
         else 
         {
             var children = item.children.map(x => this.renderSideNavItem(x));
-            return  <li className="no-padding">
-                        <ul className="collapsible collapsible-accordion">
-                        <li>
-                            <a className="collapsible-header">{item.text}</a>
-                            <div className="collapsible-body">
+            return  <li><Collapsible accordion>
+                        <CollapsibleItem header={item.text} style={{color: 'black', paddingLeft: '15px'}} >
                             <ul>
                                 {children}
                             </ul>
-                            </div>
-                        </li>
-                        </ul>
-                    </li>
+                        </CollapsibleItem>
+                    </Collapsible></li>
+            
         }
     }
 
     renderCustomNavigation() {
         if (this.props.none) { return <div/> }
-
-        var icon = UniversalDashboard.renderComponent({
-            type:'icon',
-            icon: 'bars'
-        })
-
-        var sideNavClass = "side-nav ud-page-navigation";
-        var toggleButton = <a href="#" className="menu-button" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}>{icon}</a>;
-        if (this.props.fixed) {
-            sideNavClass += " fixed";
-            toggleButton = <a href="#" className="button-collapse" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}>{icon}</a>;;
-        }
 
         var children = [];
         if (this.state.content) {
@@ -177,16 +96,9 @@ export default class UdNavigation extends React.Component {
         }
         
         return (
-            [
-                <div className={sideNavClass} id="navigation" >
-                    <div className="nav-wrapper">
-                        <ul className="right" style={{width: '100%'}}>
-                            {children}
-                        </ul>
-                    </div>
-                </div>,
-                toggleButton
-            ]
+            <SideNav fixed={this.props.fixed} trigger={<a>Test</a>}>
+                {children}
+            </SideNav>
         )
     }
 
@@ -197,5 +109,55 @@ export default class UdNavigation extends React.Component {
             return this.renderDefaultNavigation();
         }
 
+    }
+}
+
+class UDSideNavItem extends React.Component {
+
+    onItemClick(e, item) {
+        if (this.props.hasCallback) {
+            e.preventDefault(); 
+
+            PubSub.publish('element-event', {
+                type: "clientEvent",
+                eventId: item.id,
+                eventName: 'onClick'
+            });
+        }
+        else if (this.props.url != null && this.props.url.startsWith("http") || this.props.url.startsWith("https")) 
+        {
+            window.location.href = this.props.url;
+        }
+        else if (this.props.url) {
+            this.props.history.push(`/${this.props.url.replace(/ /g, "-")}`);      
+        }
+        else if (this.props.name) {
+          this.props.history.push(`/${this.props.name.replace(/ /g, "-")}`);      
+        }
+    }
+
+    render() {
+        const {
+            subheader,
+            icon,
+            href = '#!',
+            waves,
+            text,
+            ...props
+          } = this.props;
+          const linkClasses = {
+            subheader: subheader,
+            'waves-effect': waves
+          };
+      
+          return (
+            <li {...props}>
+              {(
+                <a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}>
+                  {icon && <UdIcon icon={icon} />}   {text}
+                </a>
+              )}
+            </li>
+          );
     }
 }
