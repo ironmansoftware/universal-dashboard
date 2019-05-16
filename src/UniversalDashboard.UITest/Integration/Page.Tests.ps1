@@ -138,7 +138,7 @@ Describe "New-UDPage" {
         Set-TestDashboard -Dashboard $dashboard
 
         It "should navigate to page with spaces" {
-            $Element = Find-SeElement -ClassName "menu-button" -Driver $Driver
+            $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
             Invoke-SeClick $Element
 
             $Element = Find-SeElement -LinkText "Page with spaces" -Driver $Driver
@@ -256,7 +256,7 @@ Describe "New-UDPage" {
         Set-TestDashboard -Dashboard $dashboard
 
         It "should navigate to page with hyphens" {
-            $Element = Find-SeElement -ClassName "menu-button" -Driver $Driver
+            $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
             Invoke-SeClick $Element
 
             $Element = Find-SeElement -LinkText "Page-with-hyphens" -Driver $Driver

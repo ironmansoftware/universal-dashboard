@@ -42,24 +42,23 @@ export default class UdNavigation extends React.Component {
 
             if (x.name == null) return null;
 
-            return <li key={x.name}><Link to={window.baseUrl + "/" + x.name.replace(/ /g, "-")}><UdIcon icon={x.icon}/> {x.name}</Link></li>;
-        })
+            return this.renderSideNavItem(x);
+        }.bind(this))
 
         var pauseToggle = null;
         if (this.props.showPauseToggle) {
-            var pauseIcon = this.state.paused ? "play-circle" : "pause-circle";
+            var pauseIcon = this.state.paused ? "PlayCircle" : "PauseCircle";
             var words = this.state.paused ? "Cycle Pages"  : "Pause Page Cycling";
 
-            pauseToggle = [<li><div class="divider"></div></li>,
-                           <li><a href="#!" onClick={this.onTogglePauseCycling.bind(this)}><UdIcon icon={pauseIcon}/> {words}</a></li>
+            pauseToggle = [<SideNavItem divider />,
+                           <SideNavItem onClick={this.onTogglePauseCycling.bind(this)}><UdIcon icon={pauseIcon}/> {words}</SideNavItem>
                           ]
         }
 
-        return  [<ul className="right" style={{width: '100%'}} ref={el => (this._sidenav = el)}>
-                    {links}
-                    {pauseToggle}
-                </ul>,
-                <a href="#" className="menu-button" data-activates="navigation" style={{marginLeft: '25px', fontSize: '2.1rem'}}><UdIcon icon="bars"/></a>]
+        return <SideNav ref={x => this.sideNav = x} trigger={<a style={{cursor: 'pointer'}} id='sidenavtrigger'><UdIcon icon="Bars" /></a>} options={{closeOnClick: true}}>
+            {links}
+            {pauseToggle}
+        </SideNav> 
     }
 
     renderSideNavItem(item) {
@@ -124,14 +123,14 @@ class UDSideNavItem extends React.Component {
                 eventName: 'onClick'
             });
         }
-        else if (this.props.url != null && this.props.url.startsWith("http") || this.props.url.startsWith("https")) 
+        else if (this.props.url != null && (this.props.url.startsWith("http") || this.props.url.startsWith("https"))) 
         {
             window.location.href = this.props.url;
         }
-        else if (this.props.url) {
+        else if (this.props.url != null) {
             this.props.history.push(`/${this.props.url.replace(/ /g, "-")}`);      
         }
-        else if (this.props.name) {
+        else if (this.props.name != null) {
           this.props.history.push(`/${this.props.name.replace(/ /g, "-")}`);      
         }
 
@@ -147,18 +146,21 @@ class UDSideNavItem extends React.Component {
             href = '#!',
             waves,
             text,
+            name,
             ...props
           } = this.props;
           const linkClasses = {
             subheader: subheader,
             'waves-effect': waves
           };
+
+          var linkText = text ? text : name;
       
           return (
             <li {...props}>
               {(
                 <a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}>
-                  {icon && <UdIcon icon={icon} />}   {text}
+                  {icon && <UdIcon icon={icon} />}   {linkText}
                 </a>
               )}
             </li>
