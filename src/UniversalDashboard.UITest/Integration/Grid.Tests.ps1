@@ -214,21 +214,24 @@ Describe "Grid" {
         Set-TestDashboard -Dashboard $dashboard
 
         It "should have data" {
+
+            Start-Sleep 1
+
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element.Length | Should be 3
-            $Element[0].Text | should be "1"
-            $Element[1].Text | should be "10"
-            $Element[2].Text | should be "30"
+            $Element[0].Text | should be "3"
+            $Element[1].Text | should be "30"
+            $Element[2].Text | should be "10"
         }
 
         It "should sort data" {
             
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
 
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
@@ -236,9 +239,9 @@ Describe "Grid" {
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
             
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
@@ -246,9 +249,9 @@ Describe "Grid" {
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
         }
 
         It "should filter data" {
@@ -353,6 +356,8 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
             $Element.Length | Should be 18
         }
+
+        Wait-Debugger
 
         It "should set page size" {
             $Element = Find-SeElement -Id "PageSizeGrid" -Driver $Driver
