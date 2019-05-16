@@ -6,6 +6,8 @@ if ($Pester -eq $null) {
 	Import-Module Pester -Force
 }
 
+$Env:Debug = -not $Release
+
 if (-not $Release) {
     Import-Module "$PSScriptRoot\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
 } else {

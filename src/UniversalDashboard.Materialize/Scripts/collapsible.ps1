@@ -15,19 +15,17 @@ function New-UDCollapsible {
         [String]$Type = 'Expandable'
     )
 
-    $className = "collapsible ud-collapsible"
-    if ($Popout) {
-        $className += " popout"
-    }
+    @{
+        type = 'ud-collapsible'
+        isPlugin = $true
 
-    New-UDElement -Tag "ul" -Id $Id -Attributes @{
-        className = $className 
-        'data-collapsible' = $Type.ToLower()
-        style = @{
-            backgroundColor = $BackgroundColor.HtmlColor
-            color = $FontColor.HtmlColor
-        }
-    } -Content $Items
+        id = $id
+        items = $Items.Invoke()
+        backgroundColor = $BackgroundColor.HtmlColor
+        color = $Color.HtmlColor
+        popout = $Popout.IsPresent
+        accordion = $Type -eq 'Accordion'
+    }
 }
 
 function New-UDCollapsibleItem {
@@ -42,7 +40,7 @@ function New-UDCollapsibleItem {
 		[Parameter(ParameterSetName = "content")]
         [ScriptBlock]$Content,
         [Parameter(ParameterSetName = "endpoint")]
-        [ScriptBlock]$Endpoint,
+        [object]$Endpoint,
         [Parameter(ParameterSetName = "endpoint")]
         [Switch]$AutoRefresh,
         [Parameter(ParameterSetName = "endpoint")]
@@ -55,45 +53,35 @@ function New-UDCollapsibleItem {
         [UniversalDashboard.Models.DashboardColor]$FontColor = 'Black'
     )
 
-    $liClassName = "ud-collapsible-item"
-    $itemClassName = "collapsible-header" 
-
-    if ($Active) {
-        $liClassName += " active"
-        $itemClassName += " active"
+    if ($PSCmdlet.ParameterSetName -eq 'Content') {
+        $pContent = $Content.Invoke()
+    }
+    else {
+        if ($null -ne $Endpoint) {
+            if ($Endpoint -is [scriptblock]) {
+                $Endpoint = New-UDEndpoint -Endpoint $Endpoint -Id $Id
+            }
+            elseif ($OnChange -isnot [UniversalDashboard.Models.Endpoint]) {
+                throw "Endpoint must be a script block or UDEndpoint"
+            }
+        }
     }
 
-    New-UDElement -Tag "li" -id $Id -Attributes @{
-        style = @{
-            backgroundColor = $BackgroundColor.HtmlColor
-            color = $FontColor.HtmlColor
-        }
-        className = $liClassName
-    } -Content {
-        New-UDElement -Tag "div" -Attributes @{
-            className = $itemClassName 
-            style = @{
-                backgroundColor = $BackgroundColor.HtmlColor
-                color = $FontColor.HtmlColor
-            }
-        } -Id "$Id-header" -Content {
-            if ($PSBoundParameters.ContainsKey("Icon")) {
-                New-UDIcon -Icon $Icon -Id "$Id-icon"
-            }
-            $Title
-        }
-        if ($PSCmdlet.ParameterSetName -eq "content") {
-            New-UDElement -Tag "div" -Attributes @{
-                className = "collapsible-body"
-            } -Content $Content -Id "$Id-body"
-        }
-        else {
-            New-UDElement -Tag "div" -Attributes @{
-                className = "collapsible-body"
-            } -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -Id "$Id-body"
-        }
+    $iconName = $null
+    if ($PSBoundParameters.ContainsKey("Icon")) {
+        $iconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon)
     }
-    
 
-    
+    @{
+        id = $Id 
+        title = $Title 
+        content = $pContent 
+        endpoint = $Endpoint.Name 
+        autoRefresh = $AutoRefresh.IsPresent
+        refreshInterval = $RefreshInterval
+        active = $Active.IsPresent
+        backgroundColor = $BackgroundColor.HtmlColor
+        color = $Color.HtmlColor
+        icon = $iconName
+    }
 }

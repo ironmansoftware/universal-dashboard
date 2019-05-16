@@ -122,28 +122,6 @@ class UDElementContent extends React.Component {
         }
     }
 
-    // componentDidMount() {
-    //     if (this.state.tag === 'input' && this.state.attributes != null && this.state.attributes["type"] === 'text') {
-    //         Materialize.updateTextFields();
-    //     }
-        
-    //     $('.collapsible').collapsible();
-
-    //     if (this.state.tag === 'select') {
-    //         $(this.refs.element).material_select(this.onUserEvent.bind(this));
-    //     }
-
-    //     if (this.props.onMount) {
-    //         eval(this.props.onMount);
-    //     }
-    // }
-
-    // componentDidUpdate() {
-    //     if (this.state.tag === 'input' && this.state.attributes != null && this.state.attributes["type"] === 'text') {
-    //         Materialize.updateTextFields();
-    //     }
-    // }
-
     onTextboxChanged(e) {
         var val = e.target.value;
         this.state.attributes.value = val;
