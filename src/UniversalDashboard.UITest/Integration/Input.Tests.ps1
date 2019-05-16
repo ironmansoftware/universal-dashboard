@@ -300,14 +300,6 @@ Describe "Input" {
     }
 
     Context "Simple Form" {
-        $tempDir = [System.IO.Path]::GetTempPath()
-        $tempFile = Join-Path $tempDir "output.txt"
-
-        if ((Test-path $tempFile)) {
-            Remove-Item $tempFile -Force
-        }
-
-    
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
                 param(
@@ -319,20 +311,13 @@ Describe "Input" {
                     [Parameter(HelpMessage = "Favorite Fruit")]
                     [ValidateSet("Banana", "Apple", "Grape")]$Fruit)
 
-                $tempDir = [System.IO.Path]::GetTempPath()
-                $tempFile = Join-Path $tempDir "output.txt"
-
-                if ((Test-path $tempFile)) {
-                    Remove-Item $tempFile -Force
-                }
-
-                [PSCustomObject]@{
+                $Cache:Output = [PSCustomObject]@{
                     Textbox = $Textbox
                     Checkbox = $Checkbox 
-                    Checkbox2 = [bool]$Checkbox2
+                    Checkbox2= [bool]$Checkbox2
                     DayOfWeek = $DayOfWeek
                     Vals = $Vals
-                } | ConvertTo-Json | Out-File -FilePath $tempFile
+                } 
             }
         }
 
@@ -349,22 +334,20 @@ Describe "Input" {
 
             Start-Sleep 2
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.Textbox | Should be "Hello"
+            $Cache:Output.Textbox | Should be "Hello"
         }
 
         It "should have friendly label for textbox" {
-            Find-SeElement -Id "Textbox" -Driver $Driver | Get-SeElementAttribute $_ -Attribute "placeholder" | Should be "My Textbox"
+            Find-SeElement -Id "Textbox" -Driver $Driver | Get-SeElementAttribute -Attribute "placeholder" | Should be "My Textbox"
         }
 
         It "should have friendly label for checkbox" {
-            $Element = Find-SeElement -Id "Checkboxlabel" -Driver $Driver
+            $Element = Find-SeElement -TagName 'label' -Driver $Driver | Where-Object { (Get-SeElementAttribute $_ -Attribute "for") -eq "Checkbox" }
             $Element.Text | Should be "My Checkbox"
         }
         
         It "should output bool" {
-            $Element = Find-SeElement -Name "Checkbox" -Driver $Driver
+            $Element = Find-SeElement -id "Checkbox" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
@@ -372,13 +355,11 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.Checkbox | Should be "true"
+            $Cache:Output.Checkbox | Should be "true"
         }
 
         It "should output switch" {
-            $Element = Find-SeElement -Name "Checkbox2" -Driver $Driver
+            $Element = Find-SeElement -id "Checkbox2" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
@@ -386,9 +367,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.Checkbox2 | Should be "true"
+            $Cache:Output.Checkbox2 | Should be "true"
         }
 
         It "should output day of week" {
@@ -403,9 +382,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.DayOfWeek | Should be "1"
+            $Cache:Output.DayOfWeek | Should be "Monday"
         }
 
         It "should output vals" {
@@ -421,9 +398,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Output = Get-Content -Path $tempFile | ConvertFrom-Json 
-
-            $Output.Vals | Should be "Apple"
+            $Cache:Output.Vals | Should be "Apple"
         }
     }
 
@@ -467,10 +442,10 @@ Describe "Input" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "have cleared input on toast" {
-            $Element = Find-SeElement -Name "test" -Driver $Driver
+            $Element = Find-SeElement -Id "test" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Hello"
 
-            $Element = Find-SeElement -Name "test2" -Driver $Driver
+            $Element = Find-SeElement -Id "test2" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
@@ -478,9 +453,9 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Element = Find-SeElement -Name "test" -Driver $Driver
+            $Element = Find-SeElement -Id "test" -Driver $Driver
             [string]::IsNullOrEmpty($Element.Text) | Should be $true
-            $Element = Find-SeElement -Name "test2" -Driver $Driver
+            $Element = Find-SeElement -Id "test2" -Driver $Driver
             $Element.Selected | Should be $False
         }
     }

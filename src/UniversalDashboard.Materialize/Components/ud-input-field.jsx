@@ -141,7 +141,13 @@ export default class UdInputField extends React.Component {
         }
 
         if (field.type === 'checkbox') {
-            return <Checkbox id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } checked={field.value} label={field.placeholder ? field.placeholder[0] : field.name} />
+
+            var value = false;
+            if (field.value) {
+                value = String(field.value).toLowerCase() === "true";
+            }
+
+            return <Checkbox id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } checked={value} label={field.placeholder ? field.placeholder[0] : field.name} />
         }
 
         if (field.type === 'date') {
@@ -193,7 +199,12 @@ export default class UdInputField extends React.Component {
                 off = field.placeholder[1];
             }
 
-            return <Switch id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } checked={field.value} offLabel={off} onLabel={on} />
+            var value = false;
+            if (field.value) {
+                value = String(field.value).toLowerCase() === "true";
+            }
+
+            return <Switch id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } checked={value} offLabel={off} onLabel={on} />
         }
 
         if (field.type == 'select') {

@@ -1,7 +1,7 @@
 import React,{Suspense} from 'react';
 import {Input as RInput, Row, Col, Preloader} from 'react-materialize';
 import UdInputField from './ud-input-field.jsx';
-
+import M from 'materialize-css';
 
 const UdLinkComponent = React.lazy(() => import('./ud-link.jsx' /* webpackChunkName: "ud-link" */))
 
@@ -91,7 +91,7 @@ export default class Input extends React.Component {
 
                 res.map(function(x) {
                     if (x.type === "toast") {
-                        Materialize.toast(x.text, x.duration);
+                        M.toast({html: x.text, displayLength: x.duration});
 
                         if (x.clearInput) {
                             var fields = this.state.fields.map(function(x) {
