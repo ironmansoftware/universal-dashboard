@@ -260,7 +260,7 @@ export default class UdGrid extends React.Component {
                         }]}
                         pageProperties={{
                             currentPage: this.state.currentPage,
-                            pageSize: this.state.pageSize,
+                            pageSize: this.props.noPaging ? Number.MAX_SAFE_INTEGER : this.state.pageSize,
                             recordCount: this.state.recordCount,
                         }}
                         events={{

@@ -1,5 +1,7 @@
 param([Switch]$Release)
 
+$Env:Debug = -not $Release
+
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
 $BrowserPort = Get-BrowserPort -Release:$Release
@@ -345,7 +347,7 @@ Describe "Grid" {
                     [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
                 )
 
-                $data | Out-UDGridData 
+                $data | Sort-Object -Property day | Out-UDGridData 
             } -PageSize 5
         }
 
@@ -356,8 +358,6 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
             $Element.Length | Should be 18
         }
-
-        Wait-Debugger
 
         It "should set page size" {
             $Element = Find-SeElement -Id "PageSizeGrid" -Driver $Driver
@@ -426,7 +426,7 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
 
             Send-SeKeys -Element $Element[0] -Keys "2"
-            Sleep 1
+            Start-Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
 
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
