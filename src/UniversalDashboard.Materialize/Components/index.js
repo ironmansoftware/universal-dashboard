@@ -20,6 +20,7 @@ import UDModal from './ud-modal';
 import UDCheckbox from './ud-checkbox';
 import UDCollapsible from './ud-collapsible';
 import UDSelect from './ud-select';
+import UDDesigner from './ud-designer';
 
 UniversalDashboard.register("ud-chart", UDChart);
 UniversalDashboard.register("ud-counter", UDCounter);
@@ -39,3 +40,4 @@ UniversalDashboard.register("ud-modal", UDModal);
 UniversalDashboard.register("ud-checkbox", UDCheckbox);
 UniversalDashboard.register("ud-collapsible", UDCollapsible);
 UniversalDashboard.register("ud-select", UDSelect);
+UniversalDashboard.register("ud-designer", UDDesigner);

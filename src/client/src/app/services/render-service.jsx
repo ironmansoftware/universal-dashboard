@@ -12,7 +12,6 @@ const UdHtmlComponent = React.lazy(() => import('./../ud-html.jsx' /* webpackChu
 const UdGridComponent = React.lazy(() => import('./../ud-grid.jsx' /* webpackChunkName: "ud-grid" */))
 const UdDateTimeComponent = React.lazy(() => import('./../basics/datetime.jsx' /* webpackChunkName: "ud-date-time" */))
 const UdElementComponent = React.lazy(() => import('./../ud-element.jsx' /* webpackChunkName: "ud-element" */))
-const UdTerminal = React.lazy(() => import( './../ud-terminal.jsx' /* webpackChunkName: "ud-terminal" */))
 const UdIcon = React.lazy(() => import( './../ud-icon.jsx' /* webpackChunkName: "ud-icon" */))
 import UDGridLayout from './../ud-grid-layout';
 
@@ -83,11 +82,6 @@ export function internalRenderComponent(component, history) {
         case "treeview":
             return <Suspense fallback={<div></div>}>
                 <UdTreeViewComponent {...component} key={component.id} history={history}/>
-            </Suspense>
-
-        case "terminal":
-            return <Suspense fallback={<div></div>}>
-                <UdTerminal {...component} key={component.id}/>
             </Suspense>
     }
 

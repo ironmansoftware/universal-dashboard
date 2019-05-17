@@ -23,7 +23,8 @@
     "react-debounce-input": "3.2.0",
     "react-interval": "^2.0.1",
     "react-materialize": "^3.3.0",
-    "react-router-dom": "4.3.1"
+    "react-router-dom": "4.3.1",
+    "terminal-in-react": "^4.3.1"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
