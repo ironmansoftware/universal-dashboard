@@ -8,7 +8,7 @@ function New-UDLayout {
 
     $Components = $Content.Invoke()
     $LargeColumnSize = 12 / $Columns
-    $MediumColumnSize = (12 / $Columns) * 2
+    $MediumColumnSize = 12 / $Columns
     $SmallColumnSize = 12
     $Offset = 0
     $ComponentCount = ($Components | Measure-Object).Count

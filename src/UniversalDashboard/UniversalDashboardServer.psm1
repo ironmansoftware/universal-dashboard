@@ -49,15 +49,6 @@ function Get-UDSessionData {
 		}
 	}
 }
-
-function New-UDLayout {
-	param(
-		[Parameter()]
-		$ColumnSize = 12,
-		[Parameter()]
-		$Content
-	)
-}
 function Write-UDLog {
 	param(
 		[Parameter(Mandatory = $true, Position = 0)]
