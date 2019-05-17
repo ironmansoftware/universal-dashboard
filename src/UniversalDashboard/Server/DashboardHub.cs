@@ -12,6 +12,7 @@ using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 using UniversalDashboard.Models.Basics;
 using UniversalDashboard.Services;
+using System.Text; 
 
 namespace UniversalDashboard
 {
