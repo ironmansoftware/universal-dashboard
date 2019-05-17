@@ -16,29 +16,26 @@ function New-UDSelect {
         [object]$OnChange
     )
 
-    Process {
-        $Attributes = @{
-            onChange = $OnChange
+    if ($null -ne $OnChange) {
+        if ($OnChange -is [scriptblock]) {
+            $OnChange = New-UDEndpoint -Endpoint $OnChange -Id ($Id + "OnChange")
         }
-        if ($MultiSelect) {
-            $Attributes.multiple = $true
+        elseif ($OnChange -isnot [UniversalDashboard.Models.Endpoint]) {
+            throw "OnChange must be a script block or UDEndpoint"
         }
+    }
 
-        if ($BrowserDefault) {
-            $Attributes.className = "browser-default"
-        }
+    @{
+        type = 'ud-select'
+        isPlugin = $true 
 
-        if ($Icons) {
-            $Attributes.className = "icons"
-        }
-
-        New-UDElement -Tag "div" -Attributes @{className = 'input-field'} -Content {
-            New-UDElement -Tag "select" -Id $Id -Content $Option -Attributes $Attributes
-
-            if ($PSBoundParameters.ContainsKey('Label')) {
-                New-UDElement -Tag "label" -Content { $Label }
-            } 
-        }
+        id = $id 
+        options = $Option.Invoke()
+        multiple = $MultiSelect.IsPresent
+        label = $Label
+        browserDefault = $BrowserDefault.IsPresent
+        icons = $Icons.IsPresent
+        onChange = $OnChange.Name
     }
 }
 
@@ -50,9 +47,11 @@ function New-UDSelectGroup {
         [String]$Name
     )
 
-    Process {
-        New-UDElement -Tag "optgroup" -Attributes @{ label = $Name }  -Content $Option
+    @{
+        name = $Name 
+        options = $Option.Invoke()
     }
+
 }
 
 function New-UDSelectOption {
@@ -69,23 +68,11 @@ function New-UDSelectOption {
         [String]$Icon
     )
 
-    $Attributes = @{
-        value = $Value
-    }
-
-    if ($Disabled) {
-        $Attributes.disabled = $Disabled
-    }
-
-    if ($Selected) {
-        $Attributes.selected = $Selected
-    }
-
-    if ($PSBoundParameters.ContainsKey('Icon')) {
-        $Attributes.'data-icon' = $Icon
-    }
-
-    New-UDElement -Tag "option" -Attributes $Attributes -Content {
-        $Name
+    @{
+        name = $Name 
+        value = $Value 
+        disabled = $Disabled 
+        selected = $Selected 
+        icon = $Icon
     }
 }

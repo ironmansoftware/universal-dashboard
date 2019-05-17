@@ -61,7 +61,7 @@ function New-UDCollapsibleItem {
             if ($Endpoint -is [scriptblock]) {
                 $Endpoint = New-UDEndpoint -Endpoint $Endpoint -Id $Id
             }
-            elseif ($OnChange -isnot [UniversalDashboard.Models.Endpoint]) {
+            elseif ($Endpoint -isnot [UniversalDashboard.Models.Endpoint]) {
                 throw "Endpoint must be a script block or UDEndpoint"
             }
         }
