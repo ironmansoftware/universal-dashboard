@@ -14,6 +14,35 @@ $Driver = Start-SeFirefox
 
 Describe "Input" {
 
+    Context "textarea" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDInput -Title "Simple Form" -Id "Form" -Content {
+                New-UDInputField -Type 'textarea' -Name 'test'
+            } -Endpoint {
+                param($Test)
+
+                $Cache:Data = $Test
+            }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Start-Sleep 4
+
+        It "should include new line charts" {
+            $Element = Find-SeElement -Id "test" -Driver $Driver
+            Send-SeKeys -Element $Element -Keys "16`r`n17`r`n18"
+
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick $Button
+
+            Start-Sleep 1
+
+            $Cache:Data | should be "16`n17`n18"
+        }
+    }
+
     Context "should return the error is there is an error" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
