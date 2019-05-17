@@ -1,9 +1,10 @@
 import React from 'react';
+import M from 'materialize-css';
 
 export default class TabContainer extends React.Component {
 
     componentDidMount() {
-        $('ul.tabs').tabs();
+        M.Tabs.init(this.element);
     }
 
     renderTabHeaders() {
@@ -38,7 +39,7 @@ export default class TabContainer extends React.Component {
         return (
             <div className="row">
             <div className="col s12">
-              <ul className="tabs">
+              <ul className="tabs" ref={x => this.element = x}>
                 {headers}
               </ul>
             </div>

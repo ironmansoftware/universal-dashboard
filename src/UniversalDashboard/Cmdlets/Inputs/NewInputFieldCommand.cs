@@ -28,7 +28,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
         public string[] Placeholder { get; set; }
 
         [Parameter()]
-        [ValidateSet("textbox", "checkbox", "select", "radioButtons", "password", "textarea", "switch", "date", "file")]
+        [ValidateSet("textbox", "checkbox", "select", "radioButtons", "password", "textarea", "switch", "date", "file", "time")]
         public string Type { get; set; }
 
         [Parameter(ParameterSetName = "datetime")]

@@ -40,7 +40,7 @@ Describe "Checkbox" {
             $Element = Find-SeElement -Id 'Test' -Driver $Driver 
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
             Start-Sleep 1
- 
+
             Get-TestData | should be $true
         }
     }

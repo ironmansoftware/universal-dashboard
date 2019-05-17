@@ -20,6 +20,10 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
                 return StatusCode(404);
             }
 
+            if (filePath.StartsWith("http")) {
+                return Redirect(filePath);
+            }
+
             if (!System.IO.File.Exists(filePath))
             {
                 Log.Warn($"Static file [{filePath}] does not exist.");

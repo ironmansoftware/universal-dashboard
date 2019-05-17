@@ -5,6 +5,6 @@ export default class Input extends React.Component {
         return UniversalDashboard.renderComponent({
             ...this.props,
             type: 'ud-input'
-        });
+        }, this.props.history);
     }
 }

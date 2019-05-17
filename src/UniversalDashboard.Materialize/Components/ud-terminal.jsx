@@ -1,6 +1,5 @@
 import React from 'react';
 import Terminal from 'terminal-in-react';
-import {fetchPostRaw} from './services/fetch-service.jsx';
 
 export default class UDTerminal extends React.Component {
     render() {
@@ -9,7 +8,7 @@ export default class UDTerminal extends React.Component {
 
                 const text = cmd.join(' ');
 
-                fetchPostRaw(`/api/internal/component/terminal`, text, res => {
+                UniversalDashboard.postRaw(`/api/internal/component/terminal`, text, res => {
                     print(res);
                  });
               }} watchConsoleLogging={false} promptSymbol={"UD >"} hideTopBar={true} allowTabs={false} startState={'maximised'}/>

@@ -33,6 +33,12 @@ namespace UniversalDashboard.Services
         }
 
         public string RegisterAsset(string asset) {
+
+            if (asset.StartsWith("http")) {
+                Assets.Add(asset);
+                return asset.Split('/').Last();
+            }
+
             var fileInfo = new FileInfo(asset);
             Assets.Add(asset);
             return fileInfo.Name;
@@ -71,7 +77,13 @@ namespace UniversalDashboard.Services
         {
             try
             {
-                return Assets.FirstOrDefault(m => new FileInfo(m).Name.Equals(fileName, StringComparison.OrdinalIgnoreCase));
+                return Assets.FirstOrDefault(m => {
+                    if (m.StartsWith("http"))
+                    {
+                        return m.Split('/').Last().Equals(fileName);
+                    }
+                    return new FileInfo(m).Name.Equals(fileName, StringComparison.OrdinalIgnoreCase);
+                });
             }
             catch
             {

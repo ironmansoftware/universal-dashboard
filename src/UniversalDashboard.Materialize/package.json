@@ -6,22 +6,25 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -p --env production",
-    "dev": "webpack -p --env development"
+    "dev": "webpack-dev-server --config webpack.config.js -p --env development"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chart.js": "2.7.3",
+    "classnames": "^2.2.6",
     "griddle-react": "1.13.1",
-    "materialize-css": "0.100.2",
+    "jquery": "^3.4.1",
+    "materialize-css": "1.0.0",
     "moment": "2.19.3",
     "numeral": "2.0.6",
     "react": "16.6.0",
     "react-chartjs-2": "2.7.4",
     "react-debounce-input": "3.2.0",
     "react-interval": "^2.0.1",
-    "react-materialize": "1.1.0",
-    "react-router-dom": "4.3.1"
+    "react-materialize": "^3.3.0",
+    "react-router-dom": "4.3.1",
+    "terminal-in-react": "^4.3.1"
   },
   "devDependencies": {
     "@babel/core": "7.1.2",
@@ -36,6 +39,7 @@
     "style-loader": "0.23.1",
     "uglifyjs-webpack-plugin": "0.4.6",
     "webpack": "4.21.0",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "3.1.11"
   }
 }

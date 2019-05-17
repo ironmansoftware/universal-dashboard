@@ -2,8 +2,8 @@ Describe "Collapsible" {
     Context "Simple Collapsible" {
         Set-TestDashboard {
             New-UDCollapsible -Id "Collapsible" -Items {
-                New-UDCollapsibleItem -Id "First" -Title "First" -Icon user -Content {
-                    New-UDCard -Title "First"
+                New-UDCollapsibleItem -Id "First" -Title "FirstHeader" -Icon user -Content {
+                    New-UDCard -Title "FirstBody"
                 } -Active
                 New-UDCollapsibleItem -Id "Second" -Title "Second" -Icon user -Content {
                     New-UDCard -Title "Second"
@@ -38,39 +38,17 @@ Describe "Collapsible" {
         }
 
         It "should have title text" {
-            $Element = Find-SeElement -Id "First-header" -Driver $Driver
-            $Element.Text| should be "First"
+            (Find-SeElement -Id "First" -Driver $Driver).Text.Contains("FirstHeader") | Should be $true
         }
 
         It "should have body text" {
-            $Element = Find-SeElement -Id "First-body" -Driver $Driver
-            $Element.Text| should be "First"
+            (Find-SeElement -Id "First" -Driver $Driver).Text.Contains("FirstBody") | Should be $true
         }
-
-        It "should have active class" {
-            Find-SeElement -Id "First-header" -Driver $Driver | Get-SeElementAttribute -Attribute "class" | Should be "collapsible-header active"
-        }
-
+        
         It "should have title text for endpoint" {
             Start-Sleep 1
 
-            $Element = Find-SeElement -Id "First-Endpoint-header" -Driver $Driver
-            $Element.Text | should be "First"
-        }
-
-        It "should have colors for collapsible" {
-            Find-SeElement -Id "Collapsible2" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(73, 69, 255); color: rgb(169, 56, 255);" 
-        }
-
-        It "should have colors for collapsible item" {
-            Find-SeElement -Id "Collapsible2-Second-header" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(76, 255, 110); color: rgb(152, 255, 63);" 
-            Find-SeElement -Id "Collapsible2-Second" -Driver $Driver | Get-SeElementAttribute -Attribute "style" | Should be "background-color: rgb(76, 255, 110); color: rgb(152, 255, 63);" 
-        }
-
-        It "should change icon on click" {
-            Find-SeElement -Id "ChangeMyIcon-icon" -Driver $Driver | Get-SeElementAttribute -Attribute "className" | Should be "fa fa-user  " 
-            Find-SeElement -Id "changeIcon" -Driver $Driver | Invoke-SeClick
-            Find-SeElement -Id "ChangeMyIcon-icon" -Driver $Driver | Get-SeElementAttribute -Attribute "className" | Should be "fa fa-user" 
+            (Find-SeElement -Id "First-Endpoint" -Driver $Driver).Text.Contains("Endpoint") | should be $true
         }
     }
 }

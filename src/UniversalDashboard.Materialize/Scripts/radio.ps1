@@ -35,9 +35,9 @@ function New-UDRadio {
     }
 
     New-UDElement -Tag "p" -Content {
-        New-UDElement -Id $Id -Tag "input" -Attributes $Attributes
-        New-UDElement -Tag "label" -Attributes @{
-            "for" = $id
-        } -Content { $label }
+        New-UDElement -Tag 'label' -Content {
+            New-UDElement -Id $Id -Tag "input" -Attributes $Attributes
+            New-UDElement -Tag 'span' -Content { $label }
+        }
     }
 }

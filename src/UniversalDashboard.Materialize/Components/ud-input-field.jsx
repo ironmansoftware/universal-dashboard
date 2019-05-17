@@ -1,22 +1,6 @@
 import React from 'react';
-import {Input as RInput} from 'react-materialize';
-import {DebounceInput} from 'react-debounce-input';
-
-    // taken from https://davidwalsh.name/javascript-debounce-function
-    function debounce(func, wait, immediate) {
-        var timeout;
-        return function() {
-            var context = this, args = arguments;
-            var later = function() {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            };
-            var callNow = immediate && !timeout;
-            clearTimeout(timeout);
-            timeout = setTimeout(later, wait);
-            if (callNow) func.apply(context, args);
-        };
-    }
+import {Select, DatePicker, TimePicker, TextInput, Textarea, Checkbox, Switch, RadioGroup} from 'react-materialize';
+import M from 'materialize-css';
 
 export default class UdInputField extends React.Component {
 
@@ -58,8 +42,6 @@ export default class UdInputField extends React.Component {
 
         var file = e.target.files[0].name;
         this.setState({ file: file });
-        
-        
     }
 
     onValidateField(field, e) {
@@ -89,107 +71,9 @@ export default class UdInputField extends React.Component {
         }.bind(this))
     }
 
-    setupDatePicker() {
-        var comp = this;
-
-        this.picker = $(this.datetime).pickadate({
-            selectYears: 100,
-            clearText: this.props.clearText,
-            okText: this.props.okText,
-            cancelText: this.props.cancelText,
-            closeOnSelect: true,
-            onSet: function(e) {   
-                // you can use any of the pickadate options here
-                var val = this.get('select', 'dd-mm-yyyy');
-                comp.onTextFieldChange({name: comp.props.name},  {target: {value: val}});
-                // auto close on select
-                //this.close();
-            }
-        })
-    }
-
-    setupTimePicker() {
-        var comp = this;
-
-        $(this.datetime).pickatime({
-            clearText: this.props.clearText,
-            okText: this.props.okText,
-            cancelText: this.props.cancelText,
-            closeOnSelect: true,
-            onSet: function(e) {   
-                var val = this.get('select');
-                comp.onTextFieldChange({name: comp.props.name},  {target: {value: val}});
-                // auto close on select
-                this.close();
-            }
-        })
-    }
-
-    componentDidMount() {
-        if (Materialize && Materialize.updateTextFields)
-        {
-            Materialize.updateTextFields();
-        }
-        
-        if (this.props.type === 'date') {
-            this.setupDatePicker();
-
-            // Dirty hack to get this to work in Chrome
-            $("#" + this.props.name).unbind("click");
-            $("#" + this.props.name).unbind("focus");
-            $("#" + this.props.name).on("click", debounce(function(event) {
-                event.preventDefault()
-                this.picker.pickadate('picker').open()
-            }.bind(this), 100));
-
-            $("#" + this.props.name).on("focus", debounce(function(event) {
-                event.preventDefault()
-                this.picker.pickadate('picker').open()
-            }.bind(this), 100));
-        } 
-
-        if (this.props.type === 'time') {
-            this.setupTimePicker();
-        } 
-
-        if (this.props.type === 'select') {
-            $('.select-wrapper').parent().removeClass("col");
-        }
-    }
-
-    updateTextField() {
-        if (this.textField != null) {
-            let $this = this.textField;
-            if (
-              element.value.length > 0 ||
-              $(element).is(':focus') ||
-              element.autofocus ||
-              $this.attr('placeholder') !== null
-            ) {
-              $this.siblings('label').addClass('active');
-            } else if (element.validity) {
-              $this.siblings('label').toggleClass('active', element.validity.badInput === true);
-            } else {
-              $this.siblings('label').removeClass('active');
-            }
-        }
-    }
-
-
-
-
     componentDidUpdate() {
-        this.updateTextField();
-
-        if (this.props.type === 'date') {
-            this.setupDatePicker();
-        } 
-
-        if (this.props.type === 'time') {
-            this.setupTimePicker();
-        } 
-
-        $('.tooltipped').tooltip();
+        var elems = document.querySelectorAll('.tooltipped');
+        M.Tooltip.init(elems);
     }
 
     onKeyDown(e) {
@@ -209,56 +93,100 @@ export default class UdInputField extends React.Component {
         }
 
         if (field.type === 'textbox' || field.type === 'password') {
-            var type = field.type == 'textbox' ? 'text' : 'password';
-
             var validationIcon = null;
             if (this.props.validating) {
-                validationIcon = <i className='fa fa-circle-o-notch fa-spin fa-fw tooltipped prefix' data-tooltip="Validating..."></i>
+
+                validationIcon = UniversalDashboard.renderComponent({
+                    type: 'icon',
+                    icon: 'CircleNotch',
+                    spin: true,
+                    className: 'green-text prefix tooltipped',
+                    dataTooltip: 'Validating...',
+                    key: field.name + "icon"
+                })
             }
             else if (this.props.validationError != null) {
-                validationIcon = <i className='fa fa-times-circle tooltipped red-text prefix' data-tooltip={this.props.validationError}></i>
+
+                validationIcon = UniversalDashboard.renderComponent({
+                    type: 'icon',
+                    icon: 'TimesCircle',
+                    className: 'red-text prefix tooltipped',
+                    dataTooltip: this.props.validationError,
+                    key: field.name + "icon"
+                })
             }
 
-            var textfield = null;
-            if (this.props.debounceTimeout == null) {
-
-                textfield = <input id={field.name} name={field.name} type={type} onChange={e => this.onTextFieldChange(field, e) } value={field.value} onBlur={e => this.onValidateField(field, e)} onKeyDown={this.onKeyDown.bind(this)} ref={ref => this.textField}/>
-            } else {
-                textfield = <DebounceInput id={field.name} name={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} debounceTimeout={this.props.debounceTimeout}  onKeyDown={this.onKeyDown.bind(this)}/>
-            }
-
-            return <div className="input-field">
-                        {validationIcon}
-                        {textfield}
-                        <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>
-                    </div>
+            return <TextInput 
+                key={field.name}
+                icon={validationIcon}
+                password={field.type === 'password'}  
+                id={field.name} name={field.name} 
+                onChange={e => this.onTextFieldChange(field, e) } 
+                value={field.value} 
+                onBlur={e => this.onValidateField(field, e)} 
+                onKeyDown={this.onKeyDown.bind(this)}  
+                placeholder={field.placeholder ? field.placeholder[0] : field.name}
+            />
         }
 
         if (field.type === 'textarea') {
-            return <div className="input-field">
-                        <textarea className="materialize-textarea" id={field.name} name={field.name} type="textarea" onChange={e => this.onTextFieldChange(field, e) } value={field.value}  onKeyDown={this.onKeyDown.bind(this)}/>
-                        <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>
-                    </div>
+            return <Textarea 
+                id={field.name}
+                name={field.name}
+                onChange={e => this.onTextFieldChange(field, e) } 
+                value={field.value}  
+                onKeyDown={this.onKeyDown.bind(this)}
+                placeholder={field.placeholder ? field.placeholder[0] : field.name}
+            />
         }
 
         if (field.type === 'checkbox') {
-            return <p>
-                    <input type="checkbox" id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } value={field.value}/>
-                    <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>
-                   </p>
+
+            var value = false;
+            if (field.value) {
+                value = String(field.value).toLowerCase() === "true";
+            }
+
+            return <Checkbox id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } checked={value} label={field.placeholder ? field.placeholder[0] : field.name} />
         }
 
         if (field.type === 'date') {
+            var options = {
+                selectYears: 100,
+                clearText: this.props.clearText,
+                okText: this.props.okText,
+                cancelText: this.props.cancelText,
+                closeOnSelect: true
+            };
+
             return [
                 <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>,
-                <input type="text" className="datepicker" id={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} ref={datetime => this.datetime = datetime}/>
+                <DatePicker  options={options} onChange={function(e) {  
+                    
+                    const moment = require('moment');
+                    let m = moment(e);
+
+                    var val = m.format('DD-MM-YYYY')
+                    this.onTextFieldChange({name: field.name},  {target: {value: val}});
+                }.bind(this)} id={field.name}/>
             ]
         }
 
         if (field.type == 'time') {
+
+            var options = {
+                clearText: this.props.clearText,
+                okText: this.props.okText,
+                cancelText: this.props.cancelText,
+                closeOnSelect: true
+            }
+
             return [
                 <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>,
-                <input type="text"  className="timepicker" id={field.name} onChange={e => this.onTextFieldChange(field, e) } value={field.value} ref={datetime => this.datetime = datetime}/>
+                <TimePicker id={field.name} options={options} onChange={function(e) {   
+                    var val = this.get('select');
+                    comp.onTextFieldChange({name: comp.props.name},  {target: {value: val}});
+                }} />
             ]
         }
 
@@ -271,14 +199,12 @@ export default class UdInputField extends React.Component {
                 off = field.placeholder[1];
             }
 
-            return <div className="switch">
-                        <label>
-                            {off}
-                            <input type="checkbox" id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } value={field.value}/>
-                            <span className="lever"></span>
-                            {on}
-                        </label>
-                    </div>
+            var value = false;
+            if (field.value) {
+                value = String(field.value).toLowerCase() === "true";
+            }
+
+            return <Switch id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } checked={value} offLabel={off} onLabel={on} />
         }
 
         if (field.type == 'select') {
@@ -289,9 +215,9 @@ export default class UdInputField extends React.Component {
                 });
             }
             
-            return <RInput type='select' label={field.placeholder ? field.placeholder[0] : field.name} onChange={e => this.onSelectChanged(field, e) } defaultValue={field.value}>
+            return <Select label={field.placeholder ? field.placeholder[0] : field.name} onChange={e => this.onSelectChanged(field, e) } value={field.value}>
                 {options}
-            </RInput>
+            </Select>
         }
 
         if (field.type == 'radioButtons') {
@@ -304,13 +230,13 @@ export default class UdInputField extends React.Component {
             var self = this;
 
             var options = field.validOptions.map(function(option, i) {
-                return <p>
-                            <input name={field.name} type="radio" id={option} value={option} onChange={e => self.onRadioChanged(field, e) } />
-                            <label htmlFor={option}>{usePlaceholder ? field.placeholder[i] : option}</label>
-                        </p>
+                return {
+                    label: usePlaceholder ? field.placeholder[i] : option,
+                    value: option
+                }
             });
 
-            return options;
+            return <RadioGroup id={field.name} name={field.name} label={""} onChange={e => self.onRadioChanged(field, e) } options={options} />
         }
 
         if (field.type == 'file') {

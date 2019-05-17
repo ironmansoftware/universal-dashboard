@@ -23,7 +23,7 @@ Describe "Counter" {
         It "should support new line in card" {
         
         }
-wait-debugger
+
        Stop-SeDriver $Driver
        Stop-UDDashboard -Server $Server 
     }

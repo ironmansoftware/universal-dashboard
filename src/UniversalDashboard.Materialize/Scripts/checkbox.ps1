@@ -14,27 +14,24 @@ function New-UDCheckbox {
         [object]$OnChange
     )
 
-    $Attributes = @{
-        type = "checkbox"
-        onChange = $OnChange
+    if ($null -ne $OnChange) {
+        if ($OnChange -is [scriptblock]) {
+            $OnChange = New-UDEndpoint -Endpoint $OnChange -Id ($Id + "onChange")
+        }
+        elseif ($OnChange -isnot [UniversalDashboard.Models.Endpoint]) {
+            throw "OnChange must be a script block or UDEndpoint"
+        }
     }
 
-    if ($Checked) {
-        $Attributes.checked = 'checked'
-    }
+    @{
+        type = 'ud-checkbox'
+        isPlugin = $true
 
-    if ($FilledIn) {
-        $Attributes.className = 'filled-in'
-    }
-
-    if ($Disabled) {
-        $Attributes.disabled = $true
-    }
-
-    New-UDElement -Tag "p" -Content {
-        New-UDElement -Id $Id -Tag "input" -Attributes $Attributes
-        New-UDElement -Tag "label" -Attributes @{
-            "for" = $id
-        } -Content { $label }
+        onChange = $OnChange.Name
+        checked = $Checked.IsPresent
+        filledIn = $FilledIn.IsPresent
+        disabled = $Disabled.IsPresent
+        id = $Id
+        label = $Label
     }
 }

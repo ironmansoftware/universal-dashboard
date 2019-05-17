@@ -1,5 +1,7 @@
 param([Switch]$Release)
 
+$Env:Debug = -not $Release
+
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
 $BrowserPort = Get-BrowserPort -Release:$Release
@@ -214,21 +216,24 @@ Describe "Grid" {
         Set-TestDashboard -Dashboard $dashboard
 
         It "should have data" {
+
+            Start-Sleep 1
+
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
             $Element.Length | Should be 3
-            $Element[0].Text | should be "1"
-            $Element[1].Text | should be "10"
-            $Element[2].Text | should be "30"
+            $Element[0].Text | should be "3"
+            $Element[1].Text | should be "30"
+            $Element[2].Text | should be "10"
         }
 
         It "should sort data" {
             
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
 
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
@@ -236,9 +241,9 @@ Describe "Grid" {
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
             
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
@@ -246,9 +251,9 @@ Describe "Grid" {
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
         }
 
         It "should filter data" {
@@ -342,7 +347,7 @@ Describe "Grid" {
                     [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
                 )
 
-                $data | Out-UDGridData 
+                $data | Sort-Object -Property day | Out-UDGridData 
             } -PageSize 5
         }
 
@@ -421,7 +426,7 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
 
             Send-SeKeys -Element $Element[0] -Keys "2"
-            Sleep 1
+            Start-Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
 
             $Element = Find-SeElement -Id "Grid" -Driver $Driver

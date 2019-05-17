@@ -14,7 +14,7 @@ module.exports = (env) => {
     },
     output: {
       path: BUILD_DIR,
-      filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
+      filename: isDev ? 'materialize.[name].bundle.js' : '[name].[hash].bundle.js',
       sourceMapFilename: '[name].[hash].bundle.map',
       publicPath: "/",
       library: 'udmaterialize',
@@ -34,7 +34,16 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.json', '.js', '.jsx']
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    devServer: {
+      disableHostCheck: true,
+      historyApiFallback: true,
+      port: 10000,
+      // hot: true,
+      compress:true,
+      publicPath: '/',
+      stats: "minimal"
+    },
   };
 }
 
