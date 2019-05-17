@@ -74,8 +74,7 @@ namespace UniversalDashboard.Cmdlets
         [Parameter]
         public SideNav Navigation { get; set; } 
 
-		[Parameter()]
-		public string DefaultFramework { get; set; } = "Materialize";
+		internal string DefaultFramework { get; set; } = "Materialize";
 
         protected override void EndProcessing()
 	    {

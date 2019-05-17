@@ -197,28 +197,26 @@ export default class UdDashboard extends React.Component {
 
             document.title = dashboard.title;
 
-            this.loadJavascript(getApiPath() + "/api/internal/javascript/" + dashboard.frameworkAssetId, function() {
-                if (dashboard.stylesheets)
-                dashboard.stylesheets.map(this.loadStylesheet.bind(this));
+            if (dashboard.stylesheets)
+            dashboard.stylesheets.map(this.loadStylesheet.bind(this));
 
-                if (dashboard.scripts)
-                    dashboard.scripts.map(this.loadJavascript.bind(this));
+            if (dashboard.scripts)
+                dashboard.scripts.map(this.loadJavascript.bind(this));
 
-                if (dashboard.geolocation) {
-                    this.getLocation();
-                }
+            if (dashboard.geolocation) {
+                this.getLocation();
+            }
 
-                this.connectWebSocket(json.sessionId);
+            this.connectWebSocket(json.sessionId);
 
-                this.setState({
-                    dashboard: dashboard,
-                    loading: false,
-                    sessionId:  json.sessionId,
-                    authenticated: json.authenticated,
-                    design: dashboard.design,
-                    title: dashboard.title
-                });
-            }.bind(this));
+            this.setState({
+                dashboard: dashboard,
+                loading: false,
+                sessionId:  json.sessionId,
+                authenticated: json.authenticated,
+                design: dashboard.design,
+                title: dashboard.title
+            });
         }.bind(this), this.props.history);
     }
 
