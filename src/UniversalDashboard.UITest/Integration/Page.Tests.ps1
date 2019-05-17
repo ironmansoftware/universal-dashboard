@@ -141,6 +141,8 @@ Describe "New-UDPage" {
             $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
             Invoke-SeClick $Element
 
+            Start-Sleep 1
+
             $Element = Find-SeElement -LinkText "Page with spaces" -Driver $Driver
             Invoke-SeClick $Element
 
@@ -258,6 +260,8 @@ Describe "New-UDPage" {
         It "should navigate to page with hyphens" {
             $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
             Invoke-SeClick $Element
+
+            Start-Sleep 1
 
             $Element = Find-SeElement -LinkText "Page-with-hyphens" -Driver $Driver
             Invoke-SeClick $Element
