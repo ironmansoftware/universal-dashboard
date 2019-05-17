@@ -12,6 +12,7 @@ using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 using UniversalDashboard.Models.Basics;
 using UniversalDashboard.Services;
+using System.Text; 
 
 namespace UniversalDashboard
 {
@@ -194,6 +195,7 @@ namespace UniversalDashboard
             }
 
             if (!string.IsNullOrEmpty(location)) {
+                location = Encoding.UTF8.GetString(Convert.FromBase64String(location));
                 var locationObject = JsonConvert.DeserializeObject<Location>(location);
                 variables.Add("Location", locationObject);
 			}

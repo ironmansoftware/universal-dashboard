@@ -268,3 +268,4 @@ TEST-*.xml
 .vscode/tasks.json
 
 *.bom.xml
+bom.xml
