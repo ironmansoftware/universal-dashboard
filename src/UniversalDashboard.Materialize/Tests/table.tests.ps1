@@ -7,6 +7,9 @@ Describe "Table" {
         }
 
         It "has an error" {
+
+            Start-Sleep 1
+
             $Element = Find-SeElement -Id "Table" -Driver $Driver
             $Element.Text.Contains("Error") | should be true
         }
@@ -55,6 +58,8 @@ Describe "Table" {
                 [PSCustomObject]@{ "ID" = 123456;  "Title" = "Product is too awesome...";  "Description" = "Universal Desktop is just too awesome."; Comments = (Get-Random -Minimum 10 -Maximum 10000); Date = (Get-Date -Day 2 -Month 12 -Year 2007) } | Out-UDTableData -Property @("ID", "Title") 
             } 
         }
+
+        Start-Sleep 1
 
         It "has Id in column" {
             $Element = Find-SeElement -Id "Table" -Driver $Driver

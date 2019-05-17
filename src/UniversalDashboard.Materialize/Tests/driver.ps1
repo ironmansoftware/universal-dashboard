@@ -1,7 +1,8 @@
 param(
     [Switch]$NoClose,
     [Switch]$OutputTestResultXml,
-    [Switch]$Release
+    [Switch]$Release,
+    [string]$Control
 )
 
 $Env:Debug = -not $Release
@@ -54,7 +55,7 @@ if ($OutputTestResultXml) {
     Invoke-Pester -OutputFile (Join-Path $OutputPath "TEST-Materialize.xml") -OutputFormat NUnitXml
     Pop-Location
 } else {
-    $Tests | ForEach-Object {
+    $Tests | Where-Object { $_.Name.Contains($Control) } | ForEach-Object {
         . $_.FullName
     }
 }
