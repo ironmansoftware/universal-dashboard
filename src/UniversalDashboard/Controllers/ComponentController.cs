@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models.Basics;
+using System.Security;
 
 namespace UniversalDashboard.Controllers
 {
@@ -241,6 +242,22 @@ namespace UniversalDashboard.Controllers
 						{
 							variables.Add(item.Name, result);
 						}
+					}
+                    else if (item.DotNetType == typeof(SecureString).FullName)
+					{
+                        var secureString = new SecureString();
+                        if (!string.IsNullOrEmpty((string)item.Value)) {
+                            Array.ForEach(((string)item.Value).ToCharArray(), secureString.AppendChar);
+                        }
+                        variables.Add(item.Name, secureString);
+					}
+                    else if (item.DotNetType == typeof(String[]).FullName)
+					{
+						var value = item.Value?.ToString();
+                        if (!string.IsNullOrEmpty(value)) {
+                            var values = value.Split('\n');
+                            variables.Add(item.Name, values);
+                        }
 					}
 					else
 					{
