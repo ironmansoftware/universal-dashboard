@@ -18,7 +18,7 @@ function New-UDSelect {
 
     if ($null -ne $OnChange) {
         if ($OnChange -is [scriptblock]) {
-            $OnChange = New-UDEndpoint -Endpoint $OnChange -Id ($Id + "OnChange")
+            $OnChange = New-UDEndpoint -Endpoint $OnChange -Id ($Id + "onChange")
         }
         elseif ($OnChange -isnot [UniversalDashboard.Models.Endpoint]) {
             throw "OnChange must be a script block or UDEndpoint"
@@ -71,8 +71,8 @@ function New-UDSelectOption {
     @{
         name = $Name 
         value = $Value 
-        disabled = $Disabled 
-        selected = $Selected 
+        disabled = $Disabled.IsPresent
+        selected = $Selected.IsPresent
         icon = $Icon
     }
 }
