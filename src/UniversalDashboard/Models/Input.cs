@@ -71,6 +71,8 @@ namespace UniversalDashboard.Models
 		public static string RadioButtons = "radioButtons";
         public static string Date = "date";
         public static string Time = "time";
+		public static string Password = "password";
+		public static string Textarea = "textarea";
     }
 }
 

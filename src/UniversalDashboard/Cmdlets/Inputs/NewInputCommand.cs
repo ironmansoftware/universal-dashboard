@@ -6,6 +6,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
 using Newtonsoft.Json;
+using System.Security;
 
 namespace UniversalDashboard.Cmdlets.Inputs
 {
@@ -91,6 +92,16 @@ namespace UniversalDashboard.Cmdlets.Inputs
                 else if (parameter.StaticType == typeof(DateTime))
                 {
                     field.Type = FieldTypes.Date;
+                    field.DotNetType = parameter.StaticType.FullName;
+                }
+                else if (parameter.StaticType == typeof(SecureString))
+                {
+                    field.Type = FieldTypes.Password;
+                    field.DotNetType = parameter.StaticType.FullName;
+                }
+                else if (parameter.StaticType == typeof(String[]))
+                {
+                    field.Type = FieldTypes.Textarea;
                     field.DotNetType = parameter.StaticType.FullName;
                 }
                 else

@@ -338,7 +338,11 @@ Describe "Input" {
                     [Parameter(HelpMessage = "Day of the week")]
                     [System.DayOfWeek]$DayOfWeek,
                     [Parameter(HelpMessage = "Favorite Fruit")]
-                    [ValidateSet("Banana", "Apple", "Grape")]$Fruit)
+                    [ValidateSet("Banana", "Apple", "Grape")]$Fruit,
+                    [Parameter()]
+                    [System.Security.SecureString]$SecureString,
+                    [Parameter()]
+                    [String[]]$ArrayOfStrings)
 
                 $Cache:Output = [PSCustomObject]@{
                     Textbox = $Textbox
@@ -346,6 +350,8 @@ Describe "Input" {
                     Checkbox2= [bool]$Checkbox2
                     DayOfWeek = $DayOfWeek
                     Vals = $Vals
+                    SecureString = $SecureString
+                    Strings = $ArrayOfStrings
                 } 
             }
         }
@@ -428,6 +434,33 @@ Describe "Input" {
             Start-Sleep 1
 
             $Cache:Output.Vals | Should be "Apple"
+        }
+
+        
+        It "should output secure string" {
+            $Element = Find-SeElement -Id "SecureString" -Driver $Driver 
+            Send-SeKeys -Element $Element -Keys "password"
+
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick -Element $Button 
+
+            Start-Sleep 1
+
+            $Cache:Output.SecureString -is [System.Security.SecureString] | Should be $true
+        }
+
+        It "should output string array" {
+            $Element = Find-SeElement -Id "ArrayOfStrings" -Driver $Driver 
+            Send-SeKeys -Element $Element -Keys "1`r`n2`r`n3"
+
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick -Element $Button 
+
+            Start-Sleep 1
+
+            $Cache:Output.Strings[0] | Should be "1"
+            $Cache:Output.Strings[1] | Should be "2"
+            $Cache:Output.Strings[2] | Should be "3"
         }
     }
 
