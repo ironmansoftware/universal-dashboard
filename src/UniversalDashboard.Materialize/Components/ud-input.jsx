@@ -186,7 +186,7 @@ export default class Input extends React.Component {
             submit = <a href="#!"id={`btn${this.props.id}`} className="btn disabled">{this.props.submitText}</a>;
         }
 
-        return <div className="card ud-input" key={this.props.id} style={{background: this.props.backgroundColor, color: this.props.fontColor}}>
+        return <div className="card ud-input" key={this.props.id} id={this.props.id} style={{background: this.props.backgroundColor, color: this.props.fontColor}}>
                     <div className="card-content" >
                         <span className="card-title">{this.props.title}</span>
                         {fields}
