@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System;
+using UniversalDashboard.Interfaces;
 using UniversalDashboard.Services;
 
 namespace PowerShellProTools.UniversalDashboard.Controllers
@@ -9,6 +10,15 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
     public class JavaScriptController : Controller
     {
         private readonly Logger Log = LogManager.GetLogger(nameof(JavaScriptController));
+        private readonly IDashboardService _dashboardService;
+        public JavaScriptController(IDashboardService dashboardService) {
+            _dashboardService = dashboardService;
+        }
+
+        [Route("framework")]
+        public IActionResult Framework() {
+            return Index(_dashboardService.Dashboard.FrameworkAssetId);
+        }
 
         [Route("{asset}")]
         public IActionResult Index(string asset)
