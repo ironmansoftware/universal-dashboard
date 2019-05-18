@@ -26,6 +26,8 @@ namespace UniversalDashboard.Cmdlets
         public string Height { get; set; }
         [Parameter()]
         public string Width { get; set; }
+        [Parameter()]
+        public SwitchParameter Persistent { get; set; }
 
         protected override void EndProcessing()
         {
@@ -39,7 +41,8 @@ namespace UniversalDashboard.Cmdlets
                 BackgroundColor = BackgroundColor?.HtmlColor,
                 FontColor = FontColor?.HtmlColor,
                 Height = Height,
-                Width = Width
+                Width = Width,
+                Dismissible = !Persistent.IsPresent
             };
 
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;

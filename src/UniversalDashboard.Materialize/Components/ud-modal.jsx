@@ -24,17 +24,19 @@ export default class UdModal extends React.Component {
         this.openToken = UniversalDashboard.subscribe('modal.open', this.onOpen.bind(this));
         this.closeToken = UniversalDashboard.subscribe('modal.close', this.onClose.bind(this));
 
-        this._instance = M.Modal.init(this.modal);
+        var dismissible = this.props.dismissible;
+
+        this._instance = M.Modal.init(this.modal, {dismissible});
     }
 
-    componentWillUnmount() {
-        this._instance.destroy();
-    }
-
-    componentDidUpdate() {
+    componentDidUpdate(newProps) {
         if (this.loading) {
             return;
         }
+
+        var dismissible = newProps.dismissible;
+
+        this._instance = M.Modal.init(this.modal, {dismissible});
 
         this._instance.open();
 
@@ -51,6 +53,8 @@ export default class UdModal extends React.Component {
     }
 
     componentWillUnmount() {
+        this._instance.destroy();
+
         if (this.openToken != null) {
             UniversalDashboard.unsubscribe(this.openToken);
         }
@@ -90,7 +94,10 @@ export default class UdModal extends React.Component {
         }
 
         return (
-            <div className={className} ref={modal => this.modal = modal} style={{height: this.state.height, width: this.state.width, color: this.state.fontColor, backgroundColor: this.state.backgroundColor}}>
+            <div className={className} 
+                 ref={modal => this.modal = modal} 
+                 style={{height: this.state.height, width: this.state.width, color: this.state.fontColor, backgroundColor: this.state.backgroundColor}}
+                 >
               <div className="modal-content">
                 {header}
                 {content}
