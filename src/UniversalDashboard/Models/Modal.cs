@@ -11,5 +11,6 @@
         public string BackgroundColor { get; set; }
         public string Height { get; set; }
         public string Width { get; set; }
+        public bool Dismissible { get; set; }
     }
 }
