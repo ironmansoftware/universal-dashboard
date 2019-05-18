@@ -13,7 +13,7 @@ export default class App extends React.Component {
         super();
 
         this.state = {
-            loading: false
+            loading: true
         }
     }
 
@@ -26,22 +26,23 @@ export default class App extends React.Component {
     }
 
     componentWillMount() {
-        this.showLoader = true;
         this.loadJavascript(getApiPath() + "/api/internal/javascript/framework", function() {
-            this.showLoader = false;
             this.setState({
                 loading: false
             })
         }.bind(this))
-
-        setTimeout(function(){if(this.showLoader){this.setState({loading: true})}}.bind(this), 750);
     }
 
     render () {
         var regex = new RegExp('^' + window.baseUrl + '(?!.*(\/login))(?!.*(\/license)).*$');
 
         if (this.state.loading) {
-            return <div style={{paddingLeft: '48vw', paddingTop: '40vh', backgroundColor: '#0689B7'}}><Spinner name="folding-cube" style={{width: '100px', height: '100px', color: '#E8E8E8'}}/></div>
+            return <div style={{backgroundColor: '#FFFFFF'}} className="v-wrap">
+                        <article className="v-box">
+                            <Spinner name="folding-cube" style={{width: '150px', height: '150px', color: '#0689B7'}}/>
+                        </article>
+                        
+                    </div>
         }
 
         return (<Router>
