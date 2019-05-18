@@ -20,8 +20,8 @@ export default class CustomCell extends React.Component {
                 return <span>{y.DateTime}</span>;
             }
         }
-        else if (moment2.isValid) {
-            
+        else if (y.match  && y.match(/^(\d{4})-(\d{1,2})-(\d{1,2})T/) != null) {
+            var moment2 = moment(y);
             if (moment2.isValid) {
                 return <span>{moment2.format(this.props.dateTimeFormat)}</span>;
             }
