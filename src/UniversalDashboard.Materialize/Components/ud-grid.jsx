@@ -193,7 +193,7 @@ export default class UdGrid extends React.Component {
             }.bind(this));
 
             rowDefinition = <RowDefinition>{columns}</RowDefinition>;
-        } else if (!this.state.loading) {
+        } else if (this.state.data != null && this.state.data.length > 0) {
             var columns = [];
             var i = 0;
             for(var key in this.state.data[0]) {
@@ -202,7 +202,7 @@ export default class UdGrid extends React.Component {
             }
 
             rowDefinition = <RowDefinition>{columns}</RowDefinition>;
-        }
+        } 
 
         const styleConfig = {
             classNames: {
@@ -263,6 +263,7 @@ export default class UdGrid extends React.Component {
                     {serverFilterControl}
                     { this.state.loading ? 
                     <div className="progress"><div className="indeterminate"></div></div> :
+                    rowDefinition ? 
                     <Griddle 
                         data={this.state.data}
                         plugins={gridPlugins}
@@ -286,7 +287,7 @@ export default class UdGrid extends React.Component {
                         styleConfig={styleConfig}
                     >
                         {rowDefinition}
-                    </Griddle>}
+                    </Griddle> : <div>No results found</div>}
                 </div>
                 {actions}
                 <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.reload.bind(this)}/>
