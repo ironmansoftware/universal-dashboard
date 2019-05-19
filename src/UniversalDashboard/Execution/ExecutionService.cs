@@ -129,7 +129,6 @@ namespace UniversalDashboard.Execution
                         SetVariable(ps, "ClaimsPrincipal", context.User);
                     }
 
-                    ps.AddStatement().AddScript("$Host.SetStuff('Hello')");
                     ps.AddStatement().AddScript(script);
 
                     foreach (var parameter in context.Parameters)
