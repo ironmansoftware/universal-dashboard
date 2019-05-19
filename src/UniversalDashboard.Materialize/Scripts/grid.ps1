@@ -72,7 +72,7 @@ function New-UDGrid {
             noPaging = $NoPaging.IsPresent
             filterText = $FilterText
             noFilter = $NoFilter.IsPresent
-            autoRefresh = $AutoRefresh
+            autoRefresh = $AutoRefresh.IsPresent
             refreshInterval = $RefreshInterval
         }
     }

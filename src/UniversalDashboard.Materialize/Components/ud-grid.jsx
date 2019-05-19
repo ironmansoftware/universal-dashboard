@@ -51,7 +51,8 @@ export default class UdGrid extends React.Component {
           sortAscending: !props.defaultSortDescending,
           filterText: "",
           properties: props.properties,
-          headers: props.headers
+          headers: props.headers,
+          loading: false
         };
       }
 
@@ -95,6 +96,10 @@ export default class UdGrid extends React.Component {
     loadData(page, pageSize, sortColumn, sortAscending, filterText) {
         var skip = (page - 1) * pageSize;
 
+        this.setState({
+            loading: true
+        })
+
         UniversalDashboard.get(`/api/internal/component/datatable/${this.props.id}?start=${skip}&length=${pageSize}&sortColumn=${sortColumn}&sortAscending=${sortAscending}&filterText=${filterText}`, function(json){
             if (json.error) {
                 this.setState({
@@ -118,6 +123,10 @@ export default class UdGrid extends React.Component {
                     if (Object.prototype.toString.call( json.data[0] ) === '[object Array]' && json.data[0].length === 0)
                         return;
                 }
+
+                this.setState({
+                    loading: false
+                })
 
                 this.updateTableState({
                     data: json.data,
@@ -182,7 +191,7 @@ export default class UdGrid extends React.Component {
             }.bind(this));
 
             rowDefinition = <RowDefinition>{columns}</RowDefinition>;
-        } else if (this.state.data && this.state.data.length > 0) {
+        } else if (!this.state.loading) {
             var columns = [];
             var i = 0;
             for(var key in this.state.data[0]) {
@@ -213,8 +222,7 @@ export default class UdGrid extends React.Component {
         var gridPlugins = [];
         var serverSort, serverFilter, serverNext, serverPrev, serverGetPage, serverFilterControl;
         var components = {
-            SettingsToggle: () => <span />,
-            NoResults: () => <NoResults />
+            SettingsToggle: () => <span />
         }
         var serverFilterControl = <DebounceInput name="filter" className="griddle-filter" type="text" placeholder={this.props.filterText} value={this.state.filterText} onChange={this.onFilter.bind(this)} debounceTimeout={300} />
 
@@ -225,8 +233,7 @@ export default class UdGrid extends React.Component {
             if (this.props.noFilter) {
                 components = {
                     Filter: () => <span/>,
-                    SettingsToggle: () => <span />,
-                    NoResults: () => <NoResults />
+                    SettingsToggle: () => <span />
                 }
             }
         } else {
@@ -243,8 +250,7 @@ export default class UdGrid extends React.Component {
 
             components = {
                 Filter: () => <span/>,
-                SettingsToggle: () => <span />,
-                NoResults: () => <NoResults />
+                SettingsToggle: () => <span />
             }
         }
 
@@ -278,17 +284,11 @@ export default class UdGrid extends React.Component {
                         styleConfig={styleConfig}
                     >
                         {rowDefinition}
-                    </Griddle>: <div/> }
+                    </Griddle>: <div className="progress"><div className="indeterminate"></div></div>}
                 </div>
                 {actions}
                 <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.reload.bind(this)}/>
             </div>
                );
-    }
-}
-
-class NoResults extends React.Component {
-    render() {
-        return <div>Loading...</div>
     }
 }
