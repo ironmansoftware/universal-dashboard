@@ -52,7 +52,7 @@ export default class UdGrid extends React.Component {
           filterText: "",
           properties: props.properties,
           headers: props.headers,
-          loading: false
+          loading: true
         };
       }
 
@@ -101,12 +101,18 @@ export default class UdGrid extends React.Component {
         })
 
         UniversalDashboard.get(`/api/internal/component/datatable/${this.props.id}?start=${skip}&length=${pageSize}&sortColumn=${sortColumn}&sortAscending=${sortAscending}&filterText=${filterText}`, function(json){
+            
+            this.setState({
+                loading: false
+            })
+
             if (json.error) {
                 this.setState({
                     hasError: true,
                     errorMessage: json.error.message
                 })
             } else {
+               
                 if (!json.data.length) {
                     json.data = [json.data]
                 }
@@ -123,10 +129,6 @@ export default class UdGrid extends React.Component {
                     if (Object.prototype.toString.call( json.data[0] ) === '[object Array]' && json.data[0].length === 0)
                         return;
                 }
-
-                this.setState({
-                    loading: false
-                })
 
                 this.updateTableState({
                     data: json.data,
@@ -259,8 +261,8 @@ export default class UdGrid extends React.Component {
                 <div className="card-content">
                     <span className="card-title">{this.props.title}</span>
                     {serverFilterControl}
-                    { rowDefinition ? 
-
+                    { this.state.loading ? 
+                    <div className="progress"><div className="indeterminate"></div></div> :
                     <Griddle 
                         data={this.state.data}
                         plugins={gridPlugins}
@@ -284,7 +286,7 @@ export default class UdGrid extends React.Component {
                         styleConfig={styleConfig}
                     >
                         {rowDefinition}
-                    </Griddle>: <div className="progress"><div className="indeterminate"></div></div>}
+                    </Griddle>}
                 </div>
                 {actions}
                 <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.reload.bind(this)}/>
