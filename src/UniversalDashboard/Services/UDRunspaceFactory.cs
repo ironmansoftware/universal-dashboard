@@ -106,44 +106,4 @@ namespace UniversalDashboard.Services
         }
         #endregion
     }
-
-	public class UDHost : PSHost
-	{
-		public override string Name => "UDHost";
-
-		public override Version Version => new Version(1, 0);
-
-		public override Guid InstanceId => Guid.NewGuid();
-
-		public override PSHostUserInterface UI => null;
-
-		public override CultureInfo CurrentCulture => CultureInfo.CurrentCulture;
-
-		public override CultureInfo CurrentUICulture => CultureInfo.CurrentUICulture;
-
-		public override void EnterNestedPrompt()
-		{
-			
-		}
-
-		public override void ExitNestedPrompt()
-		{
-			
-		}
-
-		public override void NotifyBeginApplication()
-		{
-			
-		}
-
-		public override void NotifyEndApplication()
-		{
-			
-		}
-
-		public override void SetShouldExit(int exitCode)
-		{
-			
-		}
-	}
 }

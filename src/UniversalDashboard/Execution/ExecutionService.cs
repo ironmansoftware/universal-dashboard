@@ -13,6 +13,7 @@ using System.Management.Automation.Language;
 using System.Management.Automation.Runspaces;
 using System.Text;
 using UniversalDashboard.Interfaces;
+using System.Reflection;
 
 namespace UniversalDashboard.Execution
 {
@@ -52,6 +53,9 @@ namespace UniversalDashboard.Execution
             _hubContext = hubContext;
             _stateRequestService = stateRequestService;
         }
+
+        private static readonly Type _runspaceBase = typeof(Runspace).Assembly.GetType("System.Management.Automation.Runspaces.RunspaceBase");
+        private static readonly PropertyInfo _host = _runspaceBase.GetProperty("Host", BindingFlags.GetProperty | BindingFlags.NonPublic | BindingFlags.Instance);
 
         public object ExecuteEndpoint(ExecutionContext context, Endpoint endpoint)
         {
@@ -93,6 +97,9 @@ namespace UniversalDashboard.Execution
                     Runspace.DefaultRunspace = runspaceRef.Runspace;
                     ps.Runspace = runspaceRef.Runspace;
 
+                    var host = (UDHost)_host.GetValue(ps.Runspace);
+                    var ui = (UDHostUserInterface)host.UI;
+                    
                     if (endpoint.Variables != null)
                     {
                         Log.Debug("Scope variables--------------");
@@ -113,12 +120,16 @@ namespace UniversalDashboard.Execution
                     SetVariable(ps, "ArgumentList", context.Endpoint.ArgumentList?.ToList());
                     SetVariable(ps, Constants.UDPage, context.Endpoint.Page);
 
+                    ui.HubContext = _hubContext;
+                    ui.ConnectionId = context.ConnectionId;
+
                     if (context.User != null)
                     {
                         SetVariable(ps, "ClaimsPrinciple", context.User);
                         SetVariable(ps, "ClaimsPrincipal", context.User);
                     }
 
+                    ps.AddStatement().AddScript("$Host.SetStuff('Hello')");
                     ps.AddStatement().AddScript(script);
 
                     foreach (var parameter in context.Parameters)

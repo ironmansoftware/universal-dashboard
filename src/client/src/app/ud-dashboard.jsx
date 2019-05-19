@@ -123,6 +123,11 @@ export default class UdDashboard extends React.Component {
             }
         });
 
+        connection.on('write', (message) => {
+            console.log(message);
+            PubSub.publish("write", message);
+        });
+
         PubSub.subscribe('element-event', function(e, data) {
             if (data.type === "requestStateResponse") {
                 connection.invoke("requestStateResponse", data.requestId, data.state)
