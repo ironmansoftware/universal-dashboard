@@ -139,16 +139,25 @@ Describe "Grid" {
 
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
+
+            Start-Sleep 2
+
             $Element.Text.Contains("No results found") | Should be $true
         }
 
         It "should not shown an error with invalid output" {
             $Element = Find-SeElement -Id "Grid2" -Driver $Driver
+
+            Start-Sleep 2
+
             $Element.Text.Contains("No results found") | Should be $true
         }
 
         It "should be able to nest new-udelement in grid" {
             $Element = Find-SeElement -Id "nested-element" -Driver $Driver
+
+            Start-Sleep 2
+
             $Element.Text.Contains("Stopped") | Should be $true
         }
     }
@@ -172,6 +181,9 @@ Describe "Grid" {
  
         It "should not shown an error with no data" {
             $Element = Find-SeElement -Id "Grid" -Driver $Driver
+
+            Start-Sleep 1
+
             $Element.Text.Contains("No results found") | Should be $true
         }
     }
@@ -385,21 +397,15 @@ Describe "Grid" {
 
         It "should sort data" {
             
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
-
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
             Invoke-SeClick $header
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
             
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
@@ -407,9 +413,9 @@ Describe "Grid" {
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
         }
 
         It "should have data in single item grid" {
