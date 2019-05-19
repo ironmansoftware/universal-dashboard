@@ -213,10 +213,11 @@ export default class UdGrid extends React.Component {
         var gridPlugins = [];
         var serverSort, serverFilter, serverNext, serverPrev, serverGetPage, serverFilterControl;
         var components = {
-            SettingsToggle: () => <span />
+            SettingsToggle: () => <span />,
+            NoResults: () => <NoResults />
         }
         var serverFilterControl = <DebounceInput name="filter" className="griddle-filter" type="text" placeholder={this.props.filterText} value={this.state.filterText} onChange={this.onFilter.bind(this)} debounceTimeout={300} />
-        
+
         if (!this.props.serverSideProcessing) {
             gridPlugins = [plugins.LocalPlugin]
             serverFilterControl = null;
@@ -224,7 +225,8 @@ export default class UdGrid extends React.Component {
             if (this.props.noFilter) {
                 components = {
                     Filter: () => <span/>,
-                    SettingsToggle: () => <span />
+                    SettingsToggle: () => <span />,
+                    NoResults: () => <NoResults />
                 }
             }
         } else {
@@ -236,11 +238,13 @@ export default class UdGrid extends React.Component {
 
             if (this.props.noFilter) {
                 serverFilter = null;
+                serverFilterControl = null;
             }
 
             components = {
                 Filter: () => <span/>,
-                SettingsToggle: () => <span />
+                SettingsToggle: () => <span />,
+                NoResults: () => <NoResults />
             }
         }
 
@@ -280,5 +284,11 @@ export default class UdGrid extends React.Component {
                 <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.reload.bind(this)}/>
             </div>
                );
+    }
+}
+
+class NoResults extends React.Component {
+    render() {
+        return <div>Loading...</div>
     }
 }
