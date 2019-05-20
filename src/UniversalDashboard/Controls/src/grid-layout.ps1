@@ -7,7 +7,7 @@ function New-UDGridLayout {
         [Parameter()]
         [scriptblock]$Content,
         [Parameter()]
-        [string]$Layout,
+        [string]$Layout = '[]',
         [Parameter()]
         [int]$LargeColumns = 12,
         [Parameter()]

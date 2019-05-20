@@ -1,5 +1,23 @@
 import React from 'react';
 import M from 'materialize-css';
+import styled from 'styled-components';
+
+const Modal = styled.div`
+    height: ${props => props.height ? props.height + "!important" : "" };
+    width: ${props => props.width ? props.width + "!important" : "" };
+    background-color: ${props => props.backgroundColor ? props.backgroundColor + "!important" : "" };
+    color: ${props => props.fontColor ? props.fontColor + "!important" : "" };
+`
+
+const ModalContent = styled.div`
+    background-color: ${props => props.backgroundColor ? props.backgroundColor + "!important" : "" };
+    color: ${props => props.fontColor ? props.fontColor + "!important" : "" };
+`
+
+const ModalFooter = styled.div`
+    background-color: ${props => props.backgroundColor ? props.backgroundColor + "!important" : "" };
+    color: ${props => props.fontColor ? props.fontColor + "!important" : "" };
+`
 
 export default class UdModal extends React.Component {
     constructor(props) {
@@ -24,9 +42,7 @@ export default class UdModal extends React.Component {
         this.openToken = UniversalDashboard.subscribe('modal.open', this.onOpen.bind(this));
         this.closeToken = UniversalDashboard.subscribe('modal.close', this.onClose.bind(this));
 
-        var dismissible = this.props.dismissible;
-
-        this._instance = M.Modal.init(this.modal, {dismissible});
+        this._instance = M.Modal.init(this.modal, {dismissible: true});
     }
 
     componentDidUpdate(newProps) {
@@ -34,9 +50,8 @@ export default class UdModal extends React.Component {
             return;
         }
 
-        var dismissible = newProps.dismissible;
-
-        this._instance = M.Modal.init(this.modal, {dismissible});
+        this._instance.destroy();
+        this._instance = M.Modal.init(this.modal, {dismissible: this.state.dismissible});
 
         this._instance.open();
 
@@ -94,18 +109,30 @@ export default class UdModal extends React.Component {
         }
 
         return (
-            <div className={className} 
-                 ref={modal => this.modal = modal} 
-                 style={{height: this.state.height, width: this.state.width, color: this.state.fontColor, backgroundColor: this.state.backgroundColor}}
-                 >
-              <div className="modal-content">
-                {header}
-                {content}
-              </div>
-              <div class="modal-footer">
-              {footer}
-              </div>
-            </div>
+                <Modal className={className} 
+                    height={this.state.height}
+                    width={this.state.width}
+                    backgroundColor={this.state.backgroundColor}
+                    fontColor={this.state.fontColor}
+                    ref={modal => this.modal = modal} 
+                    >
+                    <ModalContent className="modal-content" 
+                        backgroundColor={this.state.backgroundColor}
+                        fontColor={this.state.fontColor}
+                    >
+                        {header}
+                        {content}
+                    </ModalContent>
+                    {
+                        footer ? <ModalFooter className="modal-footer"
+                            backgroundColor={this.state.backgroundColor}
+                            fontColor={this.state.fontColor}
+                        >
+                            {footer}
+                        </ModalFooter> : <React.Fragment/>
+                    }
+
+                </Modal>
         )
     }
 }
