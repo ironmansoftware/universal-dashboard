@@ -13,6 +13,7 @@
   "dependencies": {
     "chart.js": "2.7.3",
     "classnames": "^2.2.6",
+    "clipboard-polyfill": "^2.8.0",
     "griddle-react": "1.13.1",
     "jquery": "^3.4.1",
     "materialize-css": "1.0.0",

@@ -7,9 +7,7 @@ function New-UDGridLayout {
         [Parameter()]
         [scriptblock]$Content,
         [Parameter()]
-        [Hashtable[]]$Layout,
-        [Parameter()]
-        [string]$LayoutJson,
+        [string]$Layout,
         [Parameter()]
         [int]$LargeColumns = 12,
         [Parameter()]
@@ -62,7 +60,6 @@ function New-UDGridLayout {
             rowHeight = $RowHeight
             content = $Content.Invoke()
             layout = $Layout
-            layoutJson = $LayoutJson
             cols = $Columns
             breakpoints = $Breakpoints
             isDraggable = $Draggable.IsPresent
