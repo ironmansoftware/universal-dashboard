@@ -214,6 +214,8 @@ export default class UdDashboard extends React.Component {
 
             this.connectWebSocket(json.sessionId);
 
+            UniversalDashboard.design = dashboard.design;
+
             this.setState({
                 dashboard: dashboard,
                 loading: false,
