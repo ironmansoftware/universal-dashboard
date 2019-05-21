@@ -54,7 +54,8 @@ function New-UDGridLayout {
         }
 
         @{
-            type = "grid-layout"
+            type = "ud-grid-layout"
+            isPlugin = $true
             id = $Id
             className = "layout"
             rowHeight = $RowHeight
