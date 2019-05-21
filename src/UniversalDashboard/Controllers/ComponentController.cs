@@ -465,41 +465,6 @@ namespace UniversalDashboard.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        [Route("terminal")]
-        [Authorize]
-        public async Task<IActionResult> RunTerminalCommand() {
-
-            if (!_dashboardService.Dashboard.Design) {
-                NotFound();
-            }
-
-            Endpoint endpoint;
-            using (var streamReader = new StreamReader(Request.Body))
-            {
-                var body = streamReader.ReadToEnd();
-                endpoint = new Endpoint(ScriptBlock.Create(body));
-                endpoint.Name = Guid.NewGuid().ToString();
-                _dashboardService.EndpointService.Register(endpoint);
-            }
-
-            IActionResult result;
-            try 
-            {
-                result = await RunScript(endpoint);
-            }
-            catch 
-            {
-                return NotFound();
-            }
-            finally 
-            {
-                _dashboardService.EndpointService.Unregister(endpoint.Name, null);
-            }
-            
-            return result;
-        }
-
         private void SetQueryStringValues(Dictionary<string, object> variables)
         {
             foreach (var item in HttpContext.Request.Query)
