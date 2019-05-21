@@ -16,10 +16,7 @@ export default class UDGridLayout extends React.Component {
 
           if (!Array.isArray) {
             layouts = []
-          } else {
-            saveToLS("uddesign", layouts)
-          }
-
+          } 
         } 
 
         if (props.persist) {
@@ -28,19 +25,6 @@ export default class UDGridLayout extends React.Component {
                 layouts = JSON.parse(JSON.stringify(jsonLayouts))
             }
         };
-
-        if (UniversalDashboard.design) {
-            var jsonLayouts = getFromLS("uddesign");
-            if (jsonLayouts != null) {
-                layouts = JSON.parse(JSON.stringify(jsonLayouts))
-
-                if (layouts.lg != null) {
-                  layouts.lg.forEach(x => {
-                    x.static = false
-                  });
-                }
-            }
-        }
 
         this.state = {
             layouts, 
@@ -51,11 +35,6 @@ export default class UDGridLayout extends React.Component {
     onLayoutChange(layout, layouts) {
       if (this.props.persist) {
           saveToLS("layouts", layouts);
-          this.setState({ layouts });
-      }
-
-      if (UniversalDashboard.design) {
-          saveToLS("uddesign", layouts);
           this.setState({ layouts });
       }
     }
