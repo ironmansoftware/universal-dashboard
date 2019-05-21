@@ -62,7 +62,8 @@ $manifestParameters = @{
 		"New-UDSwitch",
 		"New-UDTab", 
 		"New-UDTabContainer"
-		"New-UDTable"
+		"New-UDTable",
+		"New-UDGridLayout"
 		)
     RequiredModules = @()
 }
