@@ -23,6 +23,7 @@
     "react-chartjs-2": "2.7.4",
     "react-debounce-input": "3.2.0",
     "react-interval": "^2.0.1",
+    "react-grid-layout": "^0.16.6",
     "react-materialize": "^3.3.0",
     "react-router-dom": "4.3.1",
     "styled-components": "^4.2.0",
