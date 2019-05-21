@@ -37,8 +37,6 @@ namespace UniversalDashboard.Models
         public int CyclePagesInterval { get; set; }
         [JsonProperty("error")]
         public string Error { get; set; }
-        [JsonProperty("design")]
-        public bool Design { get; set; }
         [JsonProperty("footer")]
         public Footer Footer { get; set; }
         [JsonProperty("navBarLogo")]

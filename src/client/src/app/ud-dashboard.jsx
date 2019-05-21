@@ -19,7 +19,6 @@ const UdModalComponent = React.lazy(() => import('./ud-modal.jsx' /* webpackChun
 const UdErrorCardComponent = React.lazy(() => import('./error-card.jsx' /* webpackChunkName: "ud-error-card" */))
 
 import toaster from './services/toaster';
-import UDDesigner from './ud-designer';
 import NotFound from './not-found.jsx';
 
 export default class UdDashboard extends React.Component {
@@ -357,8 +356,7 @@ export default class UdDashboard extends React.Component {
                     return <Suspense fallback={<div></div>}>
                         <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />
                     </Suspense>
-                    }.bind(this)}/>,
-                this.state.design ? <UDDesigner/> : <span/>
+                    }.bind(this)}/>
                 ]
     }
 }

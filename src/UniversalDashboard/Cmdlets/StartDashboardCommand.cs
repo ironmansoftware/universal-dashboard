@@ -55,9 +55,6 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public PublishedFolder[] PublishedFolder { get; set; }
 
-        [Parameter]
-        public SwitchParameter Design { get; set; }
-
         protected override void EndProcessing()
 	    {
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
@@ -128,8 +125,6 @@ namespace UniversalDashboard.Cmdlets
 			}
 
 			var server = new Server(Name, base.MyInvocation.ScriptName, AutoReload, Host, Port);
-
-            Dashboard.Design = Design;
 
 			var options = new DashboardOptions();
 			options.Dashboard = Dashboard;
