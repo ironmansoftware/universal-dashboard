@@ -3,6 +3,7 @@ require('materialize-css/dist/css/materialize.min.css');
 //require('materialize-css/dist/fonts/roboto/Roboto-Regular.woff2');
 
 import TabContainer from './tabs';
+import UDButton from './ud-button';
 import UDChart from './ud-chart';
 import UDCounter from './ud-counter';
 import UDErrorCard from './error-card';
@@ -21,6 +22,7 @@ import UDCollapsible from './ud-collapsible';
 import UDSelect from './ud-select';
 import UDGridLayout from './ud-grid-layout';
 
+UniversalDashboard.register("ud-button", UDButton);
 UniversalDashboard.register("ud-chart", UDChart);
 UniversalDashboard.register("ud-counter", UDCounter);
 UniversalDashboard.register("tab-container", TabContainer);

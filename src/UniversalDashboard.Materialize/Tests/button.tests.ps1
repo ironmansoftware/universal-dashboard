@@ -29,6 +29,16 @@ Describe "New-UDButton" {
         }
     }
 
+    Context "UdButton" {
+        Set-TestDashboard {
+            New-UDButton -Text "Click Me" -Id "button" -Flat
+        } 
+        
+        It "has ud-button" {
+            Find-SeElement -Driver $Driver -ClassName "ud-button" | should not be $null
+        }
+    }
+
     Context "OnClick" {
         Set-TestDashboard {
             New-UDButton -Text "Click Me" -Id "button" -OnClick {
@@ -40,6 +50,31 @@ Describe "New-UDButton" {
         
         It "was clicked" {
             Get-TestData | Should be $true
+        }
+    }
+
+    Context "Icon" {
+        Set-TestDashboard {
+            New-UDButton -Text "Click Me" -Id button -Icon user
+        } 
+
+        $Element = Find-SeElement -ClassName 'fa-user' -Driver $Driver
+        
+        It "has an icon" {
+            $Element | should not be $null
+        }
+    }
+
+    Context "Colors" {
+        Set-TestDashboard {
+            New-UDButton -Text "Click Me" -Id button -BackgroundColor red -FontColor black
+        } 
+
+        $Element = Find-SeElement -Id 'button' -Driver $Driver
+        $Style = Get-SeElementAttribute -Element $Element -Attribute "style"
+        
+        It "has colors" {
+            $Style | Should be "background-color: rgb(255, 0, 0); color: rgb(0, 0, 0);"
         }
     }
 }
