@@ -162,7 +162,7 @@ namespace UniversalDashboard.Services
 
                 var setting = value as string;
                 if (setting != null) {
-                    stringBuilder.AppendLine("\t" + identifier + " : " + setting + ";");
+                    stringBuilder.AppendLine("\t" + identifier + " : " + setting + " !important;");
                     continue;
                 }
 
@@ -179,7 +179,7 @@ namespace UniversalDashboard.Services
         }
 
         static ThemeService() {
-            // Calsses
+            // Classes
             _cssMap.Add("udcard", ".ud-card");
             _cssMap.Add("udchart", ".ud-chart");
             _cssMap.Add("udcollapsible", ".ud-collapsible");
