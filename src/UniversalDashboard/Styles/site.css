@@ -58,26 +58,3 @@ td {
     margin-left: 10px !important;
 }
 
-.v-wrap{
-    height: 100% !important;
-    white-space: nowrap !important;
-    text-align: center !important;
-    display: block !important;
-    min-height: auto !important;
-    flex-direction: row !important;
-}
-.v-wrap:before{
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    width: 0;
-    /* adjust for white space between pseudo element and next sibling */
-    margin-right: -.25em;
-    /* stretch line height */
-    height: 100vh; 
-}
-.v-box{
-    display: inline-block;
-    vertical-align: middle;
-    white-space: normal;
-}
