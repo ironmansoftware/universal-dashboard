@@ -103,23 +103,23 @@ export default class UdMonitor extends React.Component {
     }
     
     renderArea(data, options) {
-        return <Area ref={x => this.chart} data={data} options={options}/>
+        return <Area ref={x => this.chart = x} data={data} options={options}/>
     }
 
     renderDoughnut(data, options) {
-        return <Doughnut ref={x => this.chart} data={data} options={options}/>
+        return <Doughnut ref={x => this.chart = x} data={data} options={options}/>
     }
 
     renderBar(data, options) {
-        return <Bar ref={x => this.chart} data={data} options={options}/>
+        return <Bar ref={x => this.chart = x} data={data} options={options}/>
     }
 
     renderLine(data, options) {
-        return <Line ref={x => this.chart} data={data} options={options}/>
+        return <Line ref={x => this.chart = x} data={data} options={options}/>
     }
 
     renderRadar(data, options) {
-        return <Radar ref={x => this.chart} data={data} options={options}/>
+        return <Radar ref={x => this.chart = x} data={data} options={options}/>
     }
 
     render() {
