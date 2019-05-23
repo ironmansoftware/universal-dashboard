@@ -179,7 +179,7 @@ namespace UniversalDashboard.Services
         }
 
         static ThemeService() {
-            // Calsses
+            // Classes
             _cssMap.Add("udcard", ".ud-card");
             _cssMap.Add("udchart", ".ud-chart");
             _cssMap.Add("udcollapsible", ".ud-collapsible");
