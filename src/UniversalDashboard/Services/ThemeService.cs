@@ -162,7 +162,7 @@ namespace UniversalDashboard.Services
 
                 var setting = value as string;
                 if (setting != null) {
-                    stringBuilder.AppendLine("\t" + identifier + " : " + setting + " !important;");
+                    stringBuilder.AppendLine("\t" + identifier + " : " + setting + ";");
                     continue;
                 }
 

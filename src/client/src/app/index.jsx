@@ -16,11 +16,4 @@ if (!window.Promise) {
 
 window.UniversalDashboard = UniversalDashboardService;
 
-var styles = document.createElement('link');
-styles.rel = 'stylesheet';
-styles.type = 'text/css';
-styles.media = 'screen';
-styles.href = getApiPath() + "/api/internal/dashboard/theme";
-document.getElementsByTagName('head')[0].appendChild(styles);
-
 render(<App/>, document.getElementById('app'));
