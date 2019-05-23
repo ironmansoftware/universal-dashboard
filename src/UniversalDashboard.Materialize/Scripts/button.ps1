@@ -23,34 +23,32 @@ function New-UDButton {
         [Switch]$Disabled
     )
 
-    $btnClass = 'btn'
-    if ($Floating) {
-        $btnClass = 'btn-floating'
-    }
-
-    if ($Flat) {
-        $btnClass = 'btn-flat'
-    }
-
-    if ($Disabled) {
-        $btnClass += ' disabled'
-    }
-
-    $style = @{ 
-        backgroundColor = $BackgroundColor.HtmlColor 
-        color = $FontColor.HtmlColor 
-    }
-
-    New-UDElement -Id $Id -Tag "a" -Attributes @{
-        className = "$btnClass"
-        onClick = $OnClick
-        style = $style
-    } -Content {
-        if ($Icon -ne $null) {
-            $faClass = $Icon.ToString().Replace('_', '-')
-            New-UDElement -Tag 'i' -Attributes @{ className = "fa fa-$faClass $iconAlignment" }
+    if ($null -ne $OnClick) {
+        if ($OnClick -is [scriptblock]) {
+            $OnClick = New-UDEndpoint -Endpoint $OnClick -Id $Id
         }
+        elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
+            throw "OnClick must be a script block or UDEndpoint"
+        }
+    }
 
-        $Text
+    if ($PSBoundParameters.ContainsKey("Icon")) {
+        $IconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon)
+    }
+
+    @{
+        type = 'ud-button'
+        isPlugin = $true 
+
+        id = $id 
+        onClick = $OnClick.Name
+        icon = $IconName
+        disabled = $Disabled.IsPresent
+        flat = $Flat.IsPresent 
+        floating = $Floating.IsPresent
+        iconAlignment = $IconAlignment
+        text = $Text 
+        backgroundColor = $BackgroundColor.HtmlColor 
+        fontColor = $FontColor.HtmlColor
     }
 }
