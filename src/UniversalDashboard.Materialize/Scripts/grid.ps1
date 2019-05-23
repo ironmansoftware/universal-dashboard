@@ -62,7 +62,7 @@ function New-UDGrid {
             headers = $Headers 
             properties = $Properties 
             defaultSortColumn = $DefaultSortColumn
-            defaultSortDescending = $DefaultSortDescending
+            defaultSortDescending = $DefaultSortDescending.IsPresent
             backgroundColor = $BackgroundColor.HtmlColor
             fontColor = $FontColor.HtmlColor
             links = $Links
