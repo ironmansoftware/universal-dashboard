@@ -160,7 +160,7 @@ class UDSideNavItem extends React.Component {
             <li {...props}>
               {(
                 <a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}>
-                  {icon && <UdIcon icon={icon} />}   {linkText}
+                  {icon && <UdIcon icon={icon} style={{width: '30px'}}/>}   {linkText}
                 </a>
               )}
             </li>
