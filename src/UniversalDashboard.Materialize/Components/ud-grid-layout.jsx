@@ -47,7 +47,14 @@ export default class UDGridLayout extends React.Component {
             );
 
         return (
-            <ResponsiveReactGridLayout className={this.props.className} layouts={this.state.layouts} cols={this.props.cols} rowHeight={this.props.rowHeight}  onLayoutChange={this.onLayoutChange.bind(this)}>
+            <ResponsiveReactGridLayout 
+              className={this.props.className} 
+              layouts={this.state.layouts} 
+              cols={this.props.cols} 
+              rowHeight={this.props.rowHeight}  
+              onLayoutChange={this.onLayoutChange.bind(this)}
+              isDraggable={this.props.isDraggable}
+              isResizable={this.props.isResizable}>
                 {elements}
             </ResponsiveReactGridLayout>
         )
