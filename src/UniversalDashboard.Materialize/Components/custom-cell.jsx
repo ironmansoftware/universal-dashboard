@@ -6,13 +6,12 @@ export default class CustomCell extends React.Component {
         const validComponents = ["link", "icon", "image", "element"]
         
         var y = this.props.value;
-        var moment2 = moment(y);
 
         if (y == null) {
             return <span></span>;
         }        
         if (y.DateTime) {
-            moment2 = moment(y.value);
+            var moment2 = moment(y.value);
             if (moment2.isValid) {
                 return <span>{moment2.format(this.props.dateTimeFormat)}</span>;
             }
@@ -27,7 +26,7 @@ export default class CustomCell extends React.Component {
             }
         }
         else if (y.startsWith && y.startsWith("/Date(")){
-            moment2 = moment(y.substr(6), 'x)/"');
+            var moment2 = moment(y.substr(6), 'x)/"');
             if (moment2.isValid) {
                 return <span>{moment2.format(this.props.dateTimeFormat)}</span>;
             }
