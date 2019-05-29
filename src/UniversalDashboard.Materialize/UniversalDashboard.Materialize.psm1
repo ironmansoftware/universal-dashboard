@@ -21,7 +21,7 @@ if ($Env:Debug -eq $true) {
     }
 }
 
-Get-ChildItem (Join-Path $PSScriptRoot "scripts") -File | ForEach-Object {
+Get-ChildItem (Join-Path $PSScriptRoot "Scripts") -File | ForEach-Object {
     . $_.FullName
 }
 
