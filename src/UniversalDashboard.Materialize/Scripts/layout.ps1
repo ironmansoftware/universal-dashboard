@@ -1,15 +1,27 @@
 function New-UDLayout {
     param(
         [Parameter(Mandatory = $true)]
+        [ValidateRange(1, 12)]
         [int]$Columns,
         [Parameter(Mandatory = $true)]
         [ScriptBlock]$Content
     )
 
     $Components = $Content.Invoke()
-    $LargeColumnSize = 12 / $Columns
-    $MediumColumnSize = 12 / $Columns
-    $SmallColumnSize = 12
+
+    if ($Columns -eq 1) 
+    {
+        $LargeColumnSize = 12
+        $MediumColumnSize = 12
+        $SmallColumnSize = 12
+    }
+    else 
+    {
+        $LargeColumnSize = 12 / $Columns
+        $MediumColumnSize = 12 / ($Columns / 2)
+        $SmallColumnSize = 12
+    }
+
     $Offset = 0
     $ComponentCount = ($Components | Measure-Object).Count
 

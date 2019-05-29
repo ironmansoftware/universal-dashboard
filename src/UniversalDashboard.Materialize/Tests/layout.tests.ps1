@@ -23,8 +23,26 @@ Describe "New-UDLayout" {
             New-UDCard -Title "Test" -Content {}
         }
 
-        $Layout[0].Content[0].Attributes["className"].Contains("s12") | should be $true
-        $Layout[0].Content[0].Attributes["className"].Contains("m8") | should be $true
-        $Layout[0].Content[0].Attributes["className"].Contains("l4") | should be $true
+        it "should contain all sizes" {
+            $Layout[0].Content[0].Attributes["className"].Contains("s12") | should be $true
+            $Layout[0].Content[0].Attributes["className"].Contains("m8") | should be $true
+            $Layout[0].Content[0].Attributes["className"].Contains("l4") | should be $true
+        }
+
+    }
+
+    Context "should not show error when column set to 1" {
+        $Layout = New-UDLayout -Columns 1 -Content {
+            New-UDCard -Title "Test" -Content {}
+            New-UDCard -Title "Test" -Content {}
+            New-UDCard -Title "Test" -Content {}
+            New-UDCard -Title "Test" -Content {}
+        }
+
+        it "should contain all sizes" {
+            $Layout[0].Content[0].Attributes["className"].Contains("s12") | should be $true
+            $Layout[0].Content[0].Attributes["className"].Contains("m12") | should be $true
+            $Layout[0].Content[0].Attributes["className"].Contains("l12") | should be $true
+        }
     }
 }

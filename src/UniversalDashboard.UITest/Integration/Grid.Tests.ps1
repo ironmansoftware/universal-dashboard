@@ -64,7 +64,7 @@ Describe "Grid" {
                 $data = @(
                     [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
                     [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
-                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
+                    [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Id button -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
                     [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDIcon -Icon check -Color Green)}
                 )
 
@@ -78,7 +78,7 @@ Describe "Grid" {
         Set-TestDashboard -Dashboard $dashboard
 
         It "should click button" {
-            $Button = Find-SeElement -LinkText "HEY" -Driver $Driver 
+            $Button = Find-SeElement -Id "button" -Driver $Driver 
             Invoke-SeClick -Element $Button 
 
             Start-Sleep -Seconds 5
@@ -233,19 +233,19 @@ Describe "Grid" {
 
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-            $Element.Length | Should be 3
-            $Element[0].Text | should be "3"
-            $Element[1].Text | should be "30"
-            $Element[2].Text | should be "10"
+            $Element.Length | Should be 2
+            $Element[0].Text | should be "1"
+            $Element[1].Text | should be "10"
+            $Element[2].Text | should be "30"
         }
 
         It "should sort data" {
             
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
 
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
@@ -253,9 +253,9 @@ Describe "Grid" {
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
+            $Element[0].Text | should be "3"
             
             $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
             $header = $element[0]
@@ -263,9 +263,9 @@ Describe "Grid" {
 
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "3"
+            $Element[0].Text | should be "1"
         }
 
         It "should filter data" {
