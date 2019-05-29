@@ -71,7 +71,7 @@ Describe "Auto reload" {
 
         It "auto reloads" {
 
-            Start-Sleep 1 
+            Start-Sleep 3
 
             Invoke-RestMethod http://localhost:10001/api/user | should be "2"
 
@@ -84,7 +84,7 @@ Describe "Auto reload" {
                 $Server = Start-UDRestApi -Port 10001 -Endpoint $Endpoint -AutoReload
             }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile -Force
 
-            Start-Sleep 1
+            Start-Sleep 3
             Invoke-RestMethod http://localhost:10001/api/user | should be "1"
         }
 
