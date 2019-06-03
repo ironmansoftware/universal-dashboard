@@ -1,13 +1,52 @@
 param([Switch]$Release)
 
+$Env:Debug = -not $Release
+
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
 
 Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
+$Server = Start-UDDashboard -Dashboard $dash -Port 10001
+$Driver = Start-SeFirefox
+
 Describe "Theme" {
+
+    Context "Controls" {
+
+        $AzureTheme = Get-UDTheme -Name 'Azure'
+
+        $Dashboard = New-UdDashboard -Title "Theme" -Theme $AzureTheme -Content {
+            New-UDInput -Title "Input" -Content {
+                New-UDInputField -Name 'Textbox' -Type textbox
+                New-UDInputField -Name 'Textarea' -Type textarea
+                New-UDInputField -Name 'Password' -Type password
+                New-UDInputField -Name 'Date' -Type date
+            } -Endpoint {
+
+            }
+        } 
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:10001"
+        
+        It "should have the correct UDInput colors" {
+            $Element = Find-SeElement -Driver $Driver -Id Textbox 
+            $Element | Get-SeElementCssValue -Name 'color' | Should be 'rgb(255, 255, 255)'
+
+            $Element = Find-SeElement -Driver $Driver -Id Textarea
+            $Element | Get-SeElementCssValue -Name 'color' | Should be 'rgb(255, 255, 255)'
+
+            $Element = Find-SeElement -Driver $Driver -Id Password
+            $Element | Get-SeElementCssValue -Name 'color' | Should be 'rgb(255, 255, 255)'
+
+            $Element = Find-SeElement -Driver $Driver -Id Date
+            $Element | Get-SeElementCssValue -Name 'color' | Should be 'rgb(255, 255, 255)'
+
+        }
+    }
+
     Context "no stackoverflow" {
         $Theme3 = New-UDTheme -Name "Basic" -Definition @{
             UDDashboard = @{
@@ -16,17 +55,12 @@ Describe "Theme" {
             }
           } -Parent "Azure"
 
-        $dash = New-UDDashboard -Title 'Debug' -Theme $Theme3 -Content {
+        $Dashboard = New-UDDashboard -Title 'Debug' -Theme $Theme3 -Content {}
+        $Server.DashboardService.SetDashboard($Dashboard)
 
-        }
-
-        $Server = Start-UDDashboard -Dashboard $dash -Port 10001
-        
         It "should not throw stackoverflow exception" {
             Get-UDDashboard |  should not be $null
         }
-
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "basic theme" {
@@ -42,15 +76,13 @@ Describe "Theme" {
             New-UDCard -Title "Theme Test" -BackgroundColor "#888888"
         } -Theme $Theme
 
-        $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
+        $Server.DashboardService.SetDashboard($Dashboard)
         
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content.Contains(".ud-card {`r`n`tcolor : #999999;`r`n`tbackground-color : #123123;`r`n}`r`n") | should be $true
         }
-
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "css mapper theme" {
@@ -66,15 +98,13 @@ Describe "Theme" {
             New-UDCard -Title "Theme Test" -BackgroundColor "#888888"
         } -Theme $Theme
 
-        $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
+        $Server.DashboardService.SetDashboard($Dashboard)
 
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content.Contains(".ud-card {`r`n`tbackground-color : #123123;`r`n`tcolor : #999999;`r`n}") | should be $true
         }
-
-       Stop-UDDashboard -Server $Server 
     }
 
 
@@ -89,20 +119,16 @@ Describe "Theme" {
             New-UDCard -Title "Theme Test"
             New-UDCard -Title "Theme Test" -BackgroundColor "#888888"
         } -Theme $Theme
-
-        $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
-        
+        $Server.DashboardService.SetDashboard($Dashboard)
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content.Contains(".ud-dashboard {`r`n`tbackground-color : #234234;`r`n`tcolor : #959595;`r`n}`r`n.ud-table {`r`n`tbackground-color : #123123;`r`n}`r`n") | should be $true
         }
-
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "predefined theme" {
-        $Theme = Get-UDTheme | Where Name -eq "Azure"
+        $Theme = Get-UDTheme | Where-Object Name -eq "Azure"
 
         $Dashboard = New-UdDashboard -Title "Theme" -Content {
             New-UDCard -Title "Theme Test"
@@ -130,15 +156,13 @@ Describe "Theme" {
             } 
         } -Theme $Theme
 
-        $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
+        $Server.DashboardService.SetDashboard($Dashboard)
         
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content | Should not be $null
         }
-
-      Stop-UDDashboard -Server $Server 
     }
 
     Context "default theme" {
@@ -147,21 +171,18 @@ Describe "Theme" {
             New-UDCard -Title "Theme Test" -BackgroundColor "#888888"
         } 
 
-        $Server = Start-UDDashboard -Dashboard $Dashboard -Port 10001
+        $Server.DashboardService.SetDashboard($Dashboard)
         
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
 
             $Theme.Content | Should not be $null
         }
-
-        Stop-UDDashboard -Server $Server 
     }
-
-
 }
 
-
+Stop-SeDriver $Driver
+Stop-UDDashboard -Server $Server 
 
 
 

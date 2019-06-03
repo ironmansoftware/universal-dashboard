@@ -96,8 +96,6 @@ namespace UniversalDashboard.Controllers
                     stringBuilder.AppendLine(_dashboard?.Themes?.FirstOrDefault()?.RenderedContent);
                 }
 
-                stringBuilder.AppendLine(System.IO.File.ReadAllText(siteCss));
-                
                 if (_dashboard?.Navigation != null)
                 {
                     stringBuilder.AppendLine($@"side-nav {{

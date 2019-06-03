@@ -152,6 +152,18 @@ function Get-SeElementAttribute {
     }   
 }
 
+function Get-SeElementCssValue {
+    param(
+        [Parameter(ValueFromPipeline=$true, Mandatory = $true)]
+        [OpenQA.Selenium.IWebElement]$Element,
+        [Parameter(Mandatory=$true)]
+        [string]$Name
+    )
+    
+    Process {
+        $Element.GetCssValue($Name)
+    }
+}
 function Invoke-SeScreenshot {
     param($Driver, [Switch]$AsBase64EncodedString)
 
