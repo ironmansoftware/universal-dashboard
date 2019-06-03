@@ -173,7 +173,7 @@ Describe "Input" {
                 New-UDInputField -Type 'textbox' -Name 'test' -Placeholder 'Test testbox' -DefaultValue "Test"
                 New-UDInputField -Type 'checkbox' -Name 'test2' -Placeholder 'checkbox'
                 New-UDInputField -Type 'select' -Name 'test3' -Placeholder 'select' -Values @("Test", "Test2", "Test3") -DefaultValue "Test"
-                New-UDInputField -Type 'radioButtons' -Name 'test4' -Placeholder @("My Test Value", "My Test Value 2", "My Test Value 3") -Values @("MyTestValue", "MyTestValue2", "MyTestValue3")
+                New-UDInputField -Type 'radioButtons' -Name 'test4' -Values @("MyTestValue", "MyTestValue2", "MyTestValue3")
 
                 New-UDInputField -Type 'password' -Name 'test5' -Placeholder 'Password'
                 New-UDInputField -Type 'textarea' -Name 'test6' -Placeholder 'Big Box o Text'
@@ -181,8 +181,9 @@ Describe "Input" {
                 New-UDInputField -Type 'select' -Name 'test8' -Placeholder 'select2'
                 New-UDInputField -Type 'date' -Name 'test9' -Placeholder 'My Time' 
                 New-UDInputField -Type 'time' -Name 'test10' -Placeholder 'My Date' 
+                New-UDInputField -Type 'radioButtons' -Name 'test11' -Values @("1", "2", "3")
             } -Endpoint {
-                param($Test, $Test2, $Test3, $Test4, $Test5, $Test6, $Test7, $Test8, $Test9, $Test10)
+                param($Test, $Test2, $Test3, $Test4, $Test5, $Test6, $Test7, $Test8, $Test9, $Test10, $test11)
 
                 $Cache:Output = [PSCustomObject]@{
                     test = $test
@@ -195,6 +196,7 @@ Describe "Input" {
                     test8 = $test8
                     test9 = $test9
                     test10 = $test10
+                    test11 = $test11
                 } 
             } 
         }
@@ -304,8 +306,8 @@ Describe "Input" {
 
         
         It "should select radio button" {
-            $Element = Find-SeElement -TagName "label" -Driver $Driver | Where-Object { (Get-SeElementAttribute $_ -Attribute "for") -eq 'radio0' }
-            Invoke-SeClick -Element $Element
+            $Element = Find-SeElement -TagName "label" -Driver $Driver | Where-Object { (Get-SeElementAttribute $_ -Attribute "for") -eq 'Formtest40' }
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick -Element $Button 
@@ -313,6 +315,19 @@ Describe "Input" {
             Start-Sleep 1
 
             $Cache:Output.test4 | Should be "MyTestValue"
+        }
+
+                
+        It "should select second radio button" {
+            $Element = Find-SeElement -TagName "label" -Driver $Driver | Where-Object { (Get-SeElementAttribute $_ -Attribute "for") -eq 'Formtest110' }
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick -Element $Button 
+
+            Start-Sleep 1
+
+            $Cache:Output.test11 | Should be "1"
         }
 
         It "should switch the switch" {
