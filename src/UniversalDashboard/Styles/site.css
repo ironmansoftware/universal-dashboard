@@ -58,3 +58,10 @@ td {
     margin-left: 10px !important;
 }
 
+[type=checkbox]+span:not(.lever) {
+    display: block;
+}
+
+[type=radio]:checked+span, [type=radio]:not(:checked)+span {
+    display:block;
+}

@@ -235,6 +235,10 @@ export default class UdInputField extends React.Component {
 
             var self = this;
 
+            if (!field.validOptions) {
+                return <div>-Values is required for radio buttons.</div>
+            }
+
             var options = field.validOptions.map(function(option, i) {
                 return {
                     label: usePlaceholder ? field.placeholder[i] : option,
