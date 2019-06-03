@@ -15,7 +15,7 @@ namespace UniversalDashboard.Services
 	public class ThemeService
 	{
         private static Logger Logger = LogManager.GetLogger(nameof(ThemeService));
-        private static Dictionary<string, string> _cssMap = new Dictionary<string, string>();
+        private static Dictionary<string, List<string>> _cssMap = new Dictionary<string, List<string>>();
 
         public IEnumerable<Theme> LoadThemes() {
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
@@ -99,14 +99,19 @@ namespace UniversalDashboard.Services
                 if (children == null) throw new InvalidCastException("Hashtable value is not a hashtable.");
 
                 if (_cssMap.ContainsKey(identifier.ToLower())) {
-                    identifier = _cssMap[identifier.ToLower()];
+                    var ids = _cssMap[identifier.ToLower()];
+                    foreach(var id  in ids) {
+                        stringBuilder.AppendLine(id + " {");        
+                        TranslateHashtable(children, stringBuilder);
+                        stringBuilder.AppendLine("}");
+                    }
                 } 
-
-                stringBuilder.AppendLine(identifier + " {");
-            
-                TranslateHashtable(children, stringBuilder);
-
-                stringBuilder.AppendLine("}");
+                else 
+                {
+                    stringBuilder.AppendLine(identifier + " {");
+                    TranslateHashtable(children, stringBuilder);
+                    stringBuilder.AppendLine("}");
+                }
             }   
 
             var themeContent = stringBuilder.ToString();
@@ -157,7 +162,7 @@ namespace UniversalDashboard.Services
                 var value = hashtable[identifier];
 
                 if (_cssMap.ContainsKey(identifier.ToLower())) {
-                    identifier = _cssMap[identifier.ToLower()];
+                    identifier = _cssMap[identifier.ToLower()].First();
                 } 
 
                 var setting = value as string;
@@ -178,29 +183,33 @@ namespace UniversalDashboard.Services
             }
         }
 
+        private static List<string> ToClasses(params string[] values)
+        {
+            return values.ToList();
+        }
         static ThemeService() {
             // Classes
-            _cssMap.Add("udcard", ".ud-card");
-            _cssMap.Add("udchart", ".ud-chart");
-            _cssMap.Add("udcollapsible", ".ud-collapsible");
-            _cssMap.Add("udcollapsibleitem", ".ud-collapsible-item");
-            _cssMap.Add("udcolumn", ".ud-column");
-            _cssMap.Add("udcounter", ".ud-counter");
-            _cssMap.Add("uddashboard", ".ud-dashboard");
-            _cssMap.Add("udfooter", ".ud-footer");
-            _cssMap.Add("udgrid", ".ud-grid");
-            _cssMap.Add("udimage", ".ud-image");
-            _cssMap.Add("udinput", ".ud-input");
-            _cssMap.Add("udlink", ".ud-link");
-            _cssMap.Add("udmonitor", ".ud-monitor");
-            _cssMap.Add("udnavbar", ".ud-navbar");
-            _cssMap.Add("udpagenavigation", ".ud-page-navigation");
-            _cssMap.Add("udrow", ".ud-row");
-            _cssMap.Add("udtable", ".ud-table");
+            _cssMap.Add("udcard", ToClasses(".ud-card"));
+            _cssMap.Add("udchart", ToClasses(".ud-chart"));
+            _cssMap.Add("udcollapsible", ToClasses(".ud-collapsible"));
+            _cssMap.Add("udcollapsibleitem", ToClasses(".ud-collapsible-item"));
+            _cssMap.Add("udcolumn", ToClasses(".ud-column"));
+            _cssMap.Add("udcounter", ToClasses(".ud-counter"));
+            _cssMap.Add("uddashboard", ToClasses(".ud-dashboard"));
+            _cssMap.Add("udfooter", ToClasses(".ud-footer"));
+            _cssMap.Add("udgrid", ToClasses(".ud-grid"));
+            _cssMap.Add("udimage", ToClasses(".ud-image"));
+            _cssMap.Add("udinput", ToClasses(".ud-input", ".datepicker-table td.is-today", ".datepicker-table td.is-selected", ".datepicker-date-display", ".datepicker-modal", ".datepicker-controls", ".datepicker-done", ".datepicker-cancel"));
+            _cssMap.Add("udlink", ToClasses(".ud-link"));
+            _cssMap.Add("udmonitor", ToClasses(".ud-monitor"));
+            _cssMap.Add("udnavbar", ToClasses(".ud-navbar"));
+            _cssMap.Add("udpagenavigation", ToClasses(".ud-page-navigation"));
+            _cssMap.Add("udrow", ToClasses(".ud-row"));
+            _cssMap.Add("udtable", ToClasses(".ud-table"));
 
             // Properties
-            _cssMap.Add("backgroundcolor", "background-color");
-            _cssMap.Add("fontcolor", "color");
+            _cssMap.Add("backgroundcolor", ToClasses("background-color"));
+            _cssMap.Add("fontcolor", ToClasses("color"));
 
         }
 	}

@@ -117,6 +117,7 @@ export default class UdInputField extends React.Component {
             }
 
             return <TextInput 
+                className="ud-input"
                 key={field.name}
                 icon={validationIcon}
                 password={field.type === 'password'}  
@@ -131,6 +132,7 @@ export default class UdInputField extends React.Component {
 
         if (field.type === 'textarea') {
             return <Textarea 
+                className="ud-input"
                 id={field.name}
                 name={field.name}
                 onChange={e => this.onTextFieldChange(field, e) } 
@@ -159,14 +161,19 @@ export default class UdInputField extends React.Component {
             };
 
             return [
-                <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>,
-                <DatePicker  options={options} onChange={function(e) {  
-                    
-                    const moment = require('moment');
-                    let m = moment(e);
+                <label 
+                    id={field.name + 'label'} 
+                    htmlFor={field.name} 
+                    style={{color: this.props.fontColor}}
+                    className="ud-input">{field.placeholder ? field.placeholder[0] : field.name}</label>,
+                <DatePicker  
+                    className="ud-input"
+                    options={options} onChange={function(e) {  
+                        const moment = require('moment');
+                        let m = moment(e);
 
-                    var val = m.format('DD-MM-YYYY')
-                    this.onTextFieldChange({name: field.name},  {target: {value: val}});
+                        var val = m.format('DD-MM-YYYY')
+                        this.onTextFieldChange({name: field.name},  {target: {value: val}});
                 }.bind(this)} id={field.name}/>
             ]
         }
