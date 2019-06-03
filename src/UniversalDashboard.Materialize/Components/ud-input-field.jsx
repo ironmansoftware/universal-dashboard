@@ -221,21 +221,18 @@ export default class UdInputField extends React.Component {
 
         if (field.type == 'radioButtons') {
 
-            var usePlaceholder = false;
-            if (field.placeholder && field.placeholder.length == field.validOptions.length) {
-                usePlaceholder = true;
-            }
-
             var self = this;
+            var options = field.validOptions.map(function(option, idx) {
+                return <label
+                    htmlFor={`${this.props.inputId}${field.name}${idx}`}
+                    key={`${this.props.inputId}${field.name}${idx}`}
+                >
+                    <input type="radio" name={`${this.props.inputId}${field.name}`} id={`${this.props.inputId}${field.name}${idx}`} disabled={field.disabled} onChange={e => self.onRadioChanged(field, e)} value={option} />
+                    <span>{option}</span>
+                </label>
+            }.bind(this));
 
-            var options = field.validOptions.map(function(option, i) {
-                return {
-                    label: usePlaceholder ? field.placeholder[i] : option,
-                    value: option
-                }
-            });
-
-            return <RadioGroup id={field.name} name={field.name} label={""} onChange={e => self.onRadioChanged(field, e) } options={options} />
+            return [<p>{field.placeholder ? field.placeholder : field.name}</p>, options];
         }
 
         if (field.type == 'file') {

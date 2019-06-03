@@ -166,7 +166,16 @@ export default class Input extends React.Component {
         }
 
         var fields = this.state.fields.map(x => {
-            return <UdInputField validate={this.props.validate} key={x.name} {...x} fontColor={this.props.fontColor} onValueChanged={this.onValueChanged.bind(this)} onValidating={this.onValidating.bind(this)} onValidateComplete={this.onValidateComplete.bind(this)} onEnter={this.onSubmit.bind(this)}/>
+            return <UdInputField 
+                        validate={this.props.validate} 
+                        key={x.name} {...x} 
+                        fontColor={this.props.fontColor} 
+                        onValueChanged={this.onValueChanged.bind(this)} 
+                        onValidating={this.onValidating.bind(this)} 
+                        onValidateComplete={this.onValidateComplete.bind(this)} 
+                        onEnter={this.onSubmit.bind(this)}
+                        inputId={this.props.id}
+                        />
         });
 
         var actions = null 
