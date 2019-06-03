@@ -119,7 +119,7 @@ class UDSideNavItem extends React.Component {
         if (this.props.hasCallback) {
             PubSub.publish('element-event', {
                 type: "clientEvent",
-                eventId: item.id,
+                eventId: this.props.id,
                 eventName: 'onClick'
             });
         }

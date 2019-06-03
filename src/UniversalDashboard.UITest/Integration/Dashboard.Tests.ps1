@@ -13,6 +13,8 @@ Get-UDDashboard | Stop-UDDashboard
 $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
 $Driver = Start-SeFirefox
 
+$Cache:StateCollection = New-Object -TypeName 'System.Collections.Concurrent.BlockingCollection[object]'
+
 Describe "Dashboard" {
 
     Context "Navigation" {
@@ -23,6 +25,7 @@ Describe "Dashboard" {
             New-UDSideNavItem -Text "My First Page" -PageName "Page Name" -Icon user
             New-UDSideNavItem -Text "My Second Page" -PageName "Page Name 2" -Icon User
             New-UDSideNavItem -Text "Google" -Url 'https://www.google.com' -Icon Users
+            New-UDSideNavItem -Text "OnClick" -OnClick { $Cache:StateCollection.Add('NavClicked') } -Icon Users
         }
         
         $Dashboard = New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
@@ -30,6 +33,19 @@ Describe "Dashboard" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 1
+
+        
+        It 'should fire onClick' {
+            $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
+            Invoke-SeClick $Element
+
+            Start-Sleep 1
+
+            $Element = Find-SeElement -LinkText "OnClick" -Driver $Driver
+            Invoke-SeClick $Element
+
+            Get-TestData | Should be "NavClicked"
+        }
 
         It 'should navigate custom navigation' {
             $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
