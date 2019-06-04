@@ -19,7 +19,7 @@
     "materialize-css": "1.0.0",
     "moment": "2.19.3",
     "numeral": "2.0.6",
-    "react": "16.6.0",
+    "react": "16.8.6",
     "react-chartjs-2": "2.7.4",
     "react-debounce-input": "3.2.0",
     "react-interval": "^2.0.1",
