@@ -29,7 +29,9 @@ module.exports = (env) => {
     },
     externals: {
       UniversalDashboard: 'UniversalDashboard',
-      $: "$"
+      $: "$",
+      'react': 'react',
+      'react-router-dom': 'reactrouterdom'
     },
     resolve: {
       extensions: ['.json', '.js', '.jsx']
