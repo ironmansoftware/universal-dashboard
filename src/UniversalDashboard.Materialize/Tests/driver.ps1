@@ -35,7 +35,7 @@ function Get-TestData {
 
 function Set-TestDashboard {
     param(
-        [Parameter(ParameterSetName = 'Content')]
+        [Parameter(ParameterSetName = 'Content', Position = 0)]
         [ScriptBlock]$Content,
         [Parameter(ParameterSetName = 'Dashboard')]
         [object]$Dashboard
