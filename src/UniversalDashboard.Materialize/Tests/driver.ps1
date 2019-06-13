@@ -41,16 +41,23 @@ function Get-TestData {
 
 function Set-TestDashboard {
     param(
-        [ScriptBlock]$Content
+        [Parameter(ParameterSetName = 'Content', Position = 0)]
+        [ScriptBlock]$Content,
+        [Parameter(ParameterSetName = 'Dashboard')]
+        [object]$Dashboard
     )
 
     $Global:StateCollection = New-Object -TypeName 'System.Collections.Concurrent.BlockingCollection[object]'
 
-    $Dashboard = New-UDDashboard -Content $Content -Title "TEST" -EndpointInitialization (New-UDEndpointInitialization -Variable "StateCollection" -Function "Set-TestData")
+    if ($Content) {
+        $Dashboard = New-UDDashboard -Content $Content -Title "TEST" -EndpointInitialization (New-UDEndpointInitialization -Variable "StateCollection" -Function "Set-TestData")
+    } else {
+        $Dashboard.EndpointInitialSessionState = (New-UDEndpointInitialization -Variable "StateCollection" -Function "Set-TestData")
+    }
+
     $Server.DashboardService.SetDashboard($Dashboard)
     Enter-SeUrl -Url "http://localhost:10001" -Driver $Driver
 }
-
 
 if ($OutputTestResultXml) {
     $OutputPath = "$PSScriptRoot\test-results" 

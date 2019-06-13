@@ -66,6 +66,7 @@ export default class UdGrid extends React.Component {
         this.state.data.forEach(x => {
             for(var propertyName in x) {
                 var property = x[propertyName];
+                if (property == null) continue;
                 if (property.type === "element") {
                     for(var i = 0; i < property.events.length; i++) {
                         UniversalDashboard.publish('element-event', {
