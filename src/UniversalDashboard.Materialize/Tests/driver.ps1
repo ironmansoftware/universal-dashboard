@@ -10,6 +10,12 @@ $Env:Debug = -not $Release
 Import-Module (Join-Path $PSScriptRoot "../../Selenium/Selenium.psm1") -Force
 Import-Module (Join-Path $PSScriptRoot "../../output/UniversalDashboard.Community.psd1") -Force 
 
+$Env:Debug = -not $Release
+
+if (-not $Release) {
+    Import-Module (Join-Path $PSScriptRoot "../UniversalDashboard.Materialize.psm1") -Force 
+}
+
 $Tests = Get-ChildItem $PSScriptRoot -Filter "*.tests.ps1"
 
 $Dashboard = New-UDDashboard -Title "Test" -Content {}

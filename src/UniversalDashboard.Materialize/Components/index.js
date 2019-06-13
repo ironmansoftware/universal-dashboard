@@ -1,6 +1,4 @@
 require('materialize-css/dist/css/materialize.min.css');
-//require('materialize-css/dist/fonts/roboto/Roboto-Regular.woff');
-//require('materialize-css/dist/fonts/roboto/Roboto-Regular.woff2');
 
 import TabContainer from './tabs';
 import UDButton from './ud-button';
@@ -21,6 +19,7 @@ import UDCheckbox from './ud-checkbox';
 import UDCollapsible from './ud-collapsible';
 import UDSelect from './ud-select';
 import UDGridLayout from './ud-grid-layout';
+import UDFab from './ud-fab';
 
 UniversalDashboard.register("ud-button", UDButton);
 UniversalDashboard.register("ud-chart", UDChart);
@@ -41,3 +40,4 @@ UniversalDashboard.register("ud-checkbox", UDCheckbox);
 UniversalDashboard.register("ud-collapsible", UDCollapsible);
 UniversalDashboard.register("ud-select", UDSelect);
 UniversalDashboard.register("ud-grid-layout", UDGridLayout);
+UniversalDashboard.register("ud-fab", UDFab);
