@@ -1,9 +1,6 @@
 Describe "Fab" {
     Context "Fab with buttons" {
         Set-TestDashboard {
-
-            New-UDElement -Id "Output" -Tag "div"
-
             New-UdFab -Id "main" -Icon "plus" -Size "large" -ButtonColor "red" -onClick {
                 Set-TestData -Data "parent"
             } -Content {
@@ -28,5 +25,4 @@ Describe "Fab" {
             Get-TestData | should be "child"
         }
     }
-
 }

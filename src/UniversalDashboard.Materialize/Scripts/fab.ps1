@@ -7,6 +7,8 @@ function New-UDFab {
         [Parameter()]
         [UniversalDashboard.Models.DashboardColor]$ButtonColor,
         [Parameter()]
+        [UniversalDashboard.Models.DashboardColor]$IconColor,
+        [Parameter()]
         [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
         [Parameter()]
         [ValidateSet("Small", "Large")]
@@ -14,28 +16,50 @@ function New-UDFab {
         [Parameter()]
         [Switch]$Horizontal,
         [Parameter()]
-        [object]$onClick
+        [object]$onClick,
+        [Parameter()]
+        [ValidateSet("left", "right", "top", "bottom")]
+        [string]$ExpandDirection = "top"
     )
-    
+
     if ($Horizontal) {
-        $direction = "horizontal"
+        $ExpandDirection = "left"
     }
 
-    New-UDElement -Id $Id -Tag "div" -Attributes @{className = "fixed-action-btn $direction"} -Content {
-        New-UDElement -Tag "a" -Attributes @{className = "btn-floating btn-$Size"; onClick = $onClick; style = @{ backgroundColor = $ButtonColor.HtmlColor}} -Content {
-            New-UDElement -Tag "i" -Attributes @{className = "fa $Size fa-$icon"}  
+    $iconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon)
+
+    if ($null -ne $OnClick) {
+        if ($OnClick -is [scriptblock]) {
+            $OnClick = New-UDEndpoint -Endpoint $OnClick -Id $Id
         }
-        New-UDElement -Tag "ul" -Content $Content
-        
+        elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
+            throw "OnClick must be a script block or UDEndpoint"
+        }
+    }
+
+    @{
+        type = "ud-fab"
+        assetId = $AssetId
+        isPlugin = $true 
+
+        id = $id
+        content = & $Content
+        size = $Size
+        backgroundColor = $ButtonColor.HtmlColor
+        color = $IconColor.HtmlColor
+        expandDirection = $ExpandDirection
+        icon = $iconName
+        onClick = $OnClick.Name
     }
 }
-
 function New-UDFabButton {
     param(
         [Parameter()]
         [string] $Id = (New-Guid),
         [Parameter()]
         [UniversalDashboard.Models.DashboardColor]$ButtonColor,
+        [Parameter()]
+        [UniversalDashboard.Models.DashboardColor]$IconColor,
         [Parameter()]
         [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
         [Parameter()]
@@ -45,9 +69,27 @@ function New-UDFabButton {
         [object]$onClick
     )
 
-    New-UDElement -Id $Id -Tag "li" -Content {
-        New-UDElement -Tag "a" -Attributes @{className = "btn-floating btn-$Size"; onClick = $onClick; style = @{ backgroundColor = $ButtonColor.HtmlColor}} -Content {
-            New-UDElement -Tag "i" -Attributes @{className = "fa $Size fa-$icon"} 
+    $iconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon)
+
+    if ($null -ne $OnClick) {
+        if ($OnClick -is [scriptblock]) {
+            $OnClick = New-UDEndpoint -Endpoint $OnClick -Id $Id
         }
+        elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
+            throw "OnClick must be a script block or UDEndpoint"
+        }
+    }
+
+    @{
+        type = "udfabbutton"
+        assetId = $AssetId
+        isPlugin = $true 
+
+        id = $id
+        size = $Size
+        backgroundColor = $ButtonColor.HtmlColor
+        color = $IconColor.HtmlColor
+        icon = $iconName
+        onClick = $OnClick.Name
     }
 }

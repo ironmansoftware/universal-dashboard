@@ -14,6 +14,7 @@
     "chart.js": "2.7.3",
     "classnames": "^2.2.6",
     "clipboard-polyfill": "^2.8.0",
+    "glamor-jss": "^1.4.1",
     "griddle-react": "1.13.1",
     "jquery": "^3.4.1",
     "materialize-css": "1.0.0",
@@ -21,8 +22,8 @@
     "numeral": "2.0.6",
     "react-chartjs-2": "2.7.4",
     "react-debounce-input": "3.2.0",
-    "react-interval": "^2.0.1",
     "react-grid-layout": "^0.16.6",
+    "react-interval": "^2.0.1",
     "react-materialize": "^3.3.0",
     "styled-components": "^4.2.0",
     "terminal-in-react": "^4.3.1"
