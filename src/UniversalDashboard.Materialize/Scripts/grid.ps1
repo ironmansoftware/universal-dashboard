@@ -37,8 +37,7 @@ function New-UDGrid {
         [Parameter()]
 	    [Switch]$AutoRefresh,
 	    [Parameter()]
-	    [int]$RefreshInterval = 5
-
+        [int]$RefreshInterval = 5
     )
 
     End {
