@@ -93,8 +93,8 @@ namespace UniversalDashboard
                     {
                         var response = context.HttpContext.Response;
                         response.StatusCode = 200;
-                        var file = File.ReadAllText(asset);
-                        await response.WriteAsync(file);
+                        var file = File.ReadAllBytes(asset);
+                        await response.Body.WriteAsync(file, 0, file.Length);
                     }
                     else
                     {
