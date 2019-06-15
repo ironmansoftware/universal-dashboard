@@ -1,14 +1,14 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version:https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDButton.md
 schema: 2.0.0
 ---
 
 # New-UDButton
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates a new button.
 
 ## SYNTAX
 
@@ -19,21 +19,59 @@ New-UDButton [[-Id] <String>] [[-Text] <Object>] [[-OnClick] <Object>] [-Floatin
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates a new button. Buttons come in different shapes and sizes and can be configured to execute scripts when clicked. 
 
 ## EXAMPLES
 
-### Example 1
+### Raised Button
 ```powershell
-PS C:\> {{ Add example code here }}
+New-UDButton -Text "Button" 
 ```
 
-{{ Add example description here }}
+Creates a basic, raised button.
+
+### Button with Icon
+```powershell
+New-UDButton -Text "Button" -Icon cloud
+```
+
+Creates a basic, raised button with an icon.
+
+### Button Colors
+```powershell
+New-UDButton -Text "Button" -BackgroundColor "red" -FontColor "white"
+```
+
+Creates a red button with white text.
+
+### Floating
+```powershell
+New-UDButton -Floating -Icon plus
+```
+
+Creates a circular, floating button with a plus icon.
+
+### Floating
+```powershell
+New-UDButton -Flat -Text "Button"
+```
+
+Creates a flat button
+
+### OnClick Event Handler
+```powershell
+New-UDButton -Text "Button" -OnClick {
+    Show-UDToast -Message "Ouch!"
+}
+```
+
+Creats a button that shows a toast message when clicked. 
+
 
 ## PARAMETERS
 
 ### -BackgroundColor
-{{ Fill BackgroundColor Description }}
+Background color of the button.
 
 ```yaml
 Type: DashboardColor
@@ -48,7 +86,7 @@ Accept wildcard characters: False
 ```
 
 ### -Disabled
-{{ Fill Disabled Description }}
+Creates a disabled button.
 
 ```yaml
 Type: SwitchParameter
@@ -63,7 +101,7 @@ Accept wildcard characters: False
 ```
 
 ### -Flat
-{{ Fill Flat Description }}
+Creates a flat button without shadows. 
 
 ```yaml
 Type: SwitchParameter
@@ -78,7 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -Floating
-{{ Fill Floating Description }}
+Creates a circular, floating button.
 
 ```yaml
 Type: SwitchParameter
@@ -93,7 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -FontColor
-{{ Fill FontColor Description }}
+Font color of the button. This also changes the icon color.
 
 ```yaml
 Type: DashboardColor
@@ -108,7 +146,7 @@ Accept wildcard characters: False
 ```
 
 ### -Icon
-{{ Fill Icon Description }}
+The icon for this button.
 
 ```yaml
 Type: FontAwesomeIcons
@@ -124,7 +162,7 @@ Accept wildcard characters: False
 ```
 
 ### -IconAlignment
-{{ Fill IconAlignment Description }}
+The icon alignment. 
 
 ```yaml
 Type: String
@@ -140,7 +178,7 @@ Accept wildcard characters: False
 ```
 
 ### -Id
-{{ Fill Id Description }}
+The ID of the component.
 
 ```yaml
 Type: String
@@ -155,7 +193,7 @@ Accept wildcard characters: False
 ```
 
 ### -OnClick
-{{ Fill OnClick Description }}
+An event handler that is called when the button is clicked. This can be either a ScriptBlock or a UDEndpoint.
 
 ```yaml
 Type: Object
@@ -170,7 +208,7 @@ Accept wildcard characters: False
 ```
 
 ### -Text
-{{ Fill Text Description }}
+The test to display on the button.
 
 ```yaml
 Type: Object
