@@ -1,5 +1,5 @@
 ---
-external help file: UniversalDashboard-help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard
 online version: 
 schema: 2.0.0

@@ -32,9 +32,15 @@ Rename-Item "bom.xml" "dotnet.bom.xml"
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f net472
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard.Server\UniversalDashboard.Server.csproj" -f net472
 
+$public = Join-Path $PSScriptRoot ".\client\src\public"
+if ((Test-Path $public)) {
+	Remove-Item $public -Force -Recurse
+}
+
+
 Push-Location "$PSScriptRoot\client"
 
-Start-Process npm -ArgumentList "install" -Wait
+& npm install
 
 & npm install -g @cyclonedx/bom
 & cyclonedx-bom -o core.bom.xml
