@@ -1,5 +1,5 @@
 ---
-external help file: UniversalDashboard.dll-Help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
 online version: https://go.microsoft.com/fwlink/?LinkID=217032
 schema: 2.0.0
