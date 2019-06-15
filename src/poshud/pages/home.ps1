@@ -1,20 +1,20 @@
 New-UDPage -Name "Home" -Icon home -Content {
     New-UDRow {
         New-UDColumn -Size 12 {
-            New-UDHtml -Markup "<div class='center-align white-text'><h3>Beautiful dashboards. All PowerShell.</h3></h3><h5>Universal Dashboard is a cross-platform PowerShell module for developing and hosting web-based, interactive dashboards.</h5></div>"
+            New-UDHtml -Markup "<div class='center-align'><h3>The web framework for PowerShell</h3></h3><h5>Universal Dashboard is a cross-platform PowerShell module for developing and hosting web-based, interactive dashboards, websites and REST APIs.</h5></div>"
         }
     }
     New-UDRow {
         New-UDColumn -Size 4 {
             New-UDRow {
                 New-UDColumn -Size 12 {
-                    New-UDCard @Colors -Title "Interactive Components" -Text "Display data in interactive charts, grids, tables and counters. Automatically reload data on set intervals.`r`nClick the hamburger menu at the top left to find out more.
+                    New-UDCard -Title "Interactive Components" -Text "Display data in interactive charts, grids, tables and counters. Automatically reload data on set intervals.`r`nClick the hamburger menu at the top left to find out more.
                     "
                 }
             }
             New-UDRow {
                 New-UDColumn -Size 12 {
-                    New-UDChart -Title "Favorite Sport by Country" -Id "FavSportByCountry" -Type Bar -AutoRefresh -RefreshInterval 7 @Colors -Endpoint {
+                    New-UDChart -Title "Favorite Sport by Country" -Id "FavSportByCountry" -Type Bar -AutoRefresh -RefreshInterval 7 -Endpoint {
                         $features = @();
                         $features += [PSCustomObject]@{ "Country" = "United States"; "Football" = (Get-Random -Minimum 10 -Maximum 10000);  "Baseball" = (Get-Random -Minimum 10 -Maximum 10000);  "Curling" = (Get-Random -Minimum 10 -Maximum 10000) }
                         $features += [PSCustomObject]@{ "Country" = "Switzerland"; "Football" = (Get-Random -Minimum 10 -Maximum 10000);  "Baseball" = (Get-Random -Minimum 10 -Maximum 10000);  "Curling" = (Get-Random -Minimum 10 -Maximum 10000) }
@@ -32,7 +32,7 @@ New-UDPage -Name "Home" -Icon home -Content {
         New-UDColumn -Size 4 {
             New-UDRow {
                 New-UDColumn -Size 12 {
-                    New-UDCard @Colors -Title "Modern Technology" -Text "Using PowerShell Core, Material Design, ReactJS and ASP.NET Core, Universal Dashboard takes advantage of cutting-edge technology to provide cross-platform, cross-device dashboards that looks sleek and modern." 
+                    New-UDCard -Title "Modern Technology" -Text "Using PowerShell Core, Material Design, ReactJS and ASP.NET Core, Universal Dashboard takes advantage of cutting-edge technology to provide cross-platform, cross-device dashboards that looks sleek and modern." 
                 }
             }
             New-UDRow {
@@ -55,12 +55,12 @@ New-UDPage -Name "Home" -Icon home -Content {
         New-UDColumn -Size 4 {
             New-UDRow {
                 New-UDColumn -Size 12 {
-                    New-UDCard @Colors -Title "Written in PowerShell" -Text "Develop both the front-end interface and backend endpoints in the same PowerShell script. Host dashboards right from the console or in Azure\IIS."  -Links @(New-UDLink -Text "View this dashboard's PowerShell Script" -Url "https://github.com/ironmansoftware/universal-dashboard/tree/master/src/poshud")
+                    New-UDCard -Title "Written in PowerShell" -Text "Develop both the front-end interface and backend endpoints in the same PowerShell script. Host dashboards right from the console or in Azure\IIS."  -Links @(New-UDLink -Text "View this dashboard's PowerShell Script" -Url "https://github.com/ironmansoftware/universal-dashboard/tree/master/src/poshud")
                 }
             }
             New-UDRow {
                 New-UDColumn -Size 12 {
-                    New-UDCard @Colors -Title "Install now" -Text "Install-Module UniversalDashboard" -Language "PowerShell" -Links @(New-UDLink -Text "PowerShell Gallery" -Url "https://www.powershellgallery.com/packages/UniversalDashboard")
+                    New-UDCard -Title "Install now" -Text "Install-Module UniversalDashboard" -Language "PowerShell" -Links @(New-UDLink -Text "PowerShell Gallery" -Url "https://www.powershellgallery.com/packages/UniversalDashboard")
                 }
             }
         }
