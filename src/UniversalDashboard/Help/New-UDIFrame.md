@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDIframe.md
 schema: 2.0.0
 ---
 
@@ -23,7 +23,7 @@ Creates a new iframe.
 
 ### Example 1
 ```
-PS C:\> New-UDIFrame -Uri https://www.google.com
+New-UDIFrame -Uri https://www.google.com
 ```
 
 Creates an iframe that embeds Google.

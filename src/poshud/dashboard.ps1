@@ -144,9 +144,27 @@ $Pages += . (Join-Path $PSScriptRoot "pages\getting-started.ps1")
 $Pages += . (Join-Path $PSScriptRoot "dashboards\azure.ps1")
 
 $Components = @()
-@("New-UDChart") | Sort-Object | ForEach-Object {
+@('New-UDButton', 
+  'New-UDCard', 
+  'New-UDCheckbox', 
+  "New-UDChart",
+  'New-UDCollapsible',
+  'New-UDCollection',
+  'New-UDCounter',
+  'New-UDElement',
+  'New-UDFab',
+  'New-UDGrid',
+  'New-UDGridLayout',
+  'New-UDHeading',
+  'New-UDHtml',
+  'New-UDIcon',
+  'New-UDIFrame',
+  'New-UDImage',
+  'New-UDImageCarousel',
+  'New-UDInput',
+  'New-UDLink') | Sort-Object | ForEach-Object {
     $Page = New-UDComponentPage -Command $_
-    $Components = New-UDSideNavItem -Text $_.Split('-')[1] -Url $_
+    $Components += New-UDSideNavItem -Text $_.Split('-')[1].Substring(2) -Url $_
     $Pages += $Page
 } 
 

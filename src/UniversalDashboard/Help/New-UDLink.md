@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDLink.md
 schema: 2.0.0
 ---
 
@@ -24,7 +24,7 @@ Creates an HTML link.
 
 ### Example 1
 ```
-PS C:\> New-UDLink -Text "PowerShell Pro Tools" -Url "https://www.poshtools.com"
+New-UDLink -Text "PowerShell Pro Tools" -Url "https://www.poshtools.com"
 ```
 
 Creates an HTML link to PoshTools.com

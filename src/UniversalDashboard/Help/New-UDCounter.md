@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDCounter.md
 schema: 2.0.0
 ---
 
@@ -24,11 +24,11 @@ Creates a simple counter. The counter number can be formatted using Numeral form
 
 ## EXAMPLES
 
-### Example 1
+### Counter
 ```
-PS C:\> New-UDCounter -Title "Total Bytes Downloaded" -AutoRefresh -RefreshInterval 3 -Format '0.00b' -Icon cloud_download -Endpoint {
-			Get-Random -Minimum 0 -Maximum 100000000 | ConvertTo-Json
-		}
+New-UDCounter -Title "Total Bytes Downloaded" -AutoRefresh -RefreshInterval 3 -Format '0.00b' -Icon cloud_download -Endpoint {
+	Get-Random -Minimum 0 -Maximum 100000000 | ConvertTo-Json
+}
 ```
 
 Outputs a random number as a counter. Formats the number into KB, MB or TB depending on the size of the number returned. Puts the cloud_download icon in the background.

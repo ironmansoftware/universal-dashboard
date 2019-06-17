@@ -1,14 +1,14 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version:https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDGridLayout.md
 schema: 2.0.0
 ---
 
 # New-UDGridLayout
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Layout components using a JSON-based grid system.
 
 ## SYNTAX
 
@@ -21,21 +21,31 @@ New-UDGridLayout [[-Id] <String>] [[-RowHeight] <Int32>] [[-Content] <ScriptBloc
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Layout components using a JSON-based grid system. This uses the react-grid-layout component: https://github.com/strml/react-grid-layout#features 
+
+If you are using Enterprise, you can use the -Design flag on Start-UDDashboard to drag and drop components.
 
 ## EXAMPLES
 
-### Example 1
+### Grid Layout
 ```powershell
-PS C:\> {{ Add example code here }}
+New-UDGridLayout -Layout "[
+      {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
+      {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
+      {i: 'c', x: 4, y: 0, w: 1, h: 2}
+    ]" -Content {
+        New-UDCard -BackgroundColor black -Id a 
+        New-UDCard -BackgroundColor black -Id b
+        New-UDCard -BackgroundColor black -Id c
+    }
 ```
 
-{{ Add example description here }}
+Lays out the cards using the specified JSON layout.
 
 ## PARAMETERS
 
 ### -Content
-{{ Fill Content Description }}
+Content of the layout. 
 
 ```yaml
 Type: ScriptBlock
@@ -50,7 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -Draggable
-{{ Fill Draggable Description }}
+Whether the components are draggable. 
 
 ```yaml
 Type: SwitchParameter
@@ -65,7 +75,6 @@ Accept wildcard characters: False
 ```
 
 ### -ExtraExtraSmallBreakpoint
-{{ Fill ExtraExtraSmallBreakpoint Description }}
 
 ```yaml
 Type: Int32
@@ -80,7 +89,6 @@ Accept wildcard characters: False
 ```
 
 ### -ExtraExtraSmallColumns
-{{ Fill ExtraExtraSmallColumns Description }}
 
 ```yaml
 Type: Int32
@@ -95,7 +103,6 @@ Accept wildcard characters: False
 ```
 
 ### -ExtraSmallBreakpoint
-{{ Fill ExtraSmallBreakpoint Description }}
 
 ```yaml
 Type: Int32
@@ -110,7 +117,6 @@ Accept wildcard characters: False
 ```
 
 ### -ExtraSmallColumns
-{{ Fill ExtraSmallColumns Description }}
 
 ```yaml
 Type: Int32
@@ -125,7 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -Id
-{{ Fill Id Description }}
+The ID of this component.
 
 ```yaml
 Type: String
@@ -140,7 +146,6 @@ Accept wildcard characters: False
 ```
 
 ### -LargeBreakpoint
-{{ Fill LargeBreakpoint Description }}
 
 ```yaml
 Type: Int32
@@ -155,7 +160,6 @@ Accept wildcard characters: False
 ```
 
 ### -LargeColumns
-{{ Fill LargeColumns Description }}
 
 ```yaml
 Type: Int32
@@ -170,7 +174,7 @@ Accept wildcard characters: False
 ```
 
 ### -Layout
-{{ Fill Layout Description }}
+The JSON layout for this component.
 
 ```yaml
 Type: String
@@ -185,7 +189,6 @@ Accept wildcard characters: False
 ```
 
 ### -MediumBreakpoint
-{{ Fill MediumBreakpoint Description }}
 
 ```yaml
 Type: Int32
@@ -200,7 +203,6 @@ Accept wildcard characters: False
 ```
 
 ### -MediumColumns
-{{ Fill MediumColumns Description }}
 
 ```yaml
 Type: Int32
@@ -215,7 +217,7 @@ Accept wildcard characters: False
 ```
 
 ### -Persist
-{{ Fill Persist Description }}
+Whether to persist the layout in the user's browser local storage. 
 
 ```yaml
 Type: SwitchParameter
@@ -230,7 +232,7 @@ Accept wildcard characters: False
 ```
 
 ### -Resizable
-{{ Fill Resizable Description }}
+Whether the grid is resizable.
 
 ```yaml
 Type: SwitchParameter
@@ -245,7 +247,6 @@ Accept wildcard characters: False
 ```
 
 ### -RowHeight
-{{ Fill RowHeight Description }}
 
 ```yaml
 Type: Int32
@@ -260,7 +261,6 @@ Accept wildcard characters: False
 ```
 
 ### -SmallBreakpoint
-{{ Fill SmallBreakpoint Description }}
 
 ```yaml
 Type: Int32
@@ -275,7 +275,6 @@ Accept wildcard characters: False
 ```
 
 ### -SmallColumns
-{{ Fill SmallColumns Description }}
 
 ```yaml
 Type: Int32

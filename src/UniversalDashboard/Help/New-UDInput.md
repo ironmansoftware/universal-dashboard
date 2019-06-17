@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDInput.md
 schema: 2.0.0
 ---
 
@@ -23,19 +23,12 @@ Creates an input card on the dashboard to accept user input. The fields for the 
 
 ## EXAMPLES
 
-### Example 1
+### Basic Input
 ```
-PS C:\> New-UDInput -Title "User Information" -Endpoint {
+New-UDInput -Title "User Information" -Endpoint {
 	param($FirstName, $LastName, $Address, $PhoneNumber)
 
-	Invoke-RestMethod http://www.myserver/api/user -Method POST -Body @{
-		FirstName = $FirstName
-		LastName = $LastName
-		Address = $Address
-		PhoneNumber = $PhoneNumber
-	}
-
-	New-UDInputAction -Toast "Record saved!"
+	New-UDInputAction -Toast "Record saved! $FirstName, $LastName, $Address, $PhoneNumber"
 }
 ```
 
