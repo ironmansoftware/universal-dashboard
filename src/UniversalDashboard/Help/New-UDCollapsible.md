@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDCollapsible.md
 schema: 2.0.0
 ---
 
@@ -22,19 +22,19 @@ Creates a new collapsible. Collapsibles are accordion elements that expand when 
 
 ## EXAMPLES
 
-### Example 1
+### Collapsible
 ```
-PS C:\> New-UDCollapsible -Id "Collapsible" -Items {
-                New-UDCollapsibleItem -Title "First" -Icon user -Content {
-                    New-UDCard -Title "First"
-                } -Active
-                New-UDCollapsibleItem -Title "Second" -Icon group -Content {
-                    New-UDCard -Title "Second"
-                }
-                New-UDCollapsibleItem -Title "Third" -Icon user -Content {
-                    New-UDCard -Title "Third"
-                }
-            }
+New-UDCollapsible -Id "Collapsible" -Items {
+    New-UDCollapsibleItem -Title "First" -Icon user -Content {
+        New-UDCard -Title "First"
+    } -Active
+    New-UDCollapsibleItem -Title "Second" -Icon group -Content {
+        New-UDCard -Title "Second"
+    }
+    New-UDCollapsibleItem -Title "Third" -Icon user -Content {
+        New-UDCard -Title "Third"
+    }
+}
 ```
 
 Creates a new collapsible with 3 different items. 
@@ -87,7 +87,7 @@ Accept wildcard characters: False
 ```
 
 ### -Items
-The collapsible items to show in this collapsible.
+The collapsible items to show in this collapsible. Use New-UDCollapsibleItem to create these items.
 
 ```yaml
 Type: ScriptBlock

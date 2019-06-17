@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDElement.md
 schema: 2.0.0
 ---
 
@@ -31,9 +31,9 @@ Create new HTML and JavaScript elements. Create static and dynamic components.
 
 ## EXAMPLES
 
-### Example 1
+### Link
 ```
-PS C:\> New-UDElement -Tag "a" -Attributes @{
+New-UDElement -Tag "a" -Attributes @{
     href = "https://www.google.com"
 } -Content {
     "Google"

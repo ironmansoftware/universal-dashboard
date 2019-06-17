@@ -120,7 +120,7 @@ Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard
 . (Join-Path $PSScriptRoot 'UniversalDashboard\New-UDModuleManifest.ps1') -outputDirectory $outputDirectory
 
 if (-not $NoHelp) {
-	New-ExternalHelp -Path "$PSScriptRoot\UniversalDashboard\Help" -OutputPath $help
+	New-ExternalHelp -Path "$PSScriptRoot\UniversalDashboard\Help" -OutputPath "$help\UniversalDashboard.Community-help.xml"
 }
 
 Get-ChildItem $PSScriptRoot -Include "*.bom.xml" -Recurse | ForEach-Object { Copy-Item $_.FullName ".\boms" }
