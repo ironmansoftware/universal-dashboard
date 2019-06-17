@@ -5,6 +5,7 @@ using System.Management.Automation;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Management.Automation.Runspaces;
+using System.Linq;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -41,6 +42,10 @@ namespace UniversalDashboard.Cmdlets
 		public SwitchParameter AutoReload { get; set; }
 		[Parameter]
 		public PublishedFolder[] PublishedFolder { get; set; }
+		
+		[Parameter()]
+		public SwitchParameter Force { get; set; }
+
 
         protected override void EndProcessing()
 		{
@@ -49,6 +54,12 @@ namespace UniversalDashboard.Cmdlets
 			if (string.IsNullOrEmpty(MyInvocation.ScriptName) && AutoReload)
 			{
 				WriteWarning("AutoReload does not work on the command line. You must save your file as a script.");
+			}
+
+			if (Force) {
+				var existingServer = Server.Servers.FirstOrDefault(m => m.Port == Port || m.Name == m.Name);
+				existingServer.Stop();
+				Server.Servers.Remove(existingServer);
 			}
 
 			var server = new Server(Name, MyInvocation.ScriptName, AutoReload, Host, Port);
