@@ -325,6 +325,8 @@ export default class UdDashboard extends React.Component {
             )} />
         })
 
+        var pluginComponents = UniversalDashboard.provideDashboardComponents(this.state);
+
         return [
                 <header>
                     <UdNavbar backgroundColor={this.state.dashboard.navBarColor} 
@@ -356,7 +358,9 @@ export default class UdDashboard extends React.Component {
                     return <Suspense fallback={<div></div>}>
                         <UdPageCyclerComponent history={x.history} pages={this.state.dashboard.pages} cyclePages={this.state.dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={this.state.dashboard.cyclePagesInterval} />
                     </Suspense>
-                    }.bind(this)}/>
+                    }.bind(this)}
+                />,
+                pluginComponents
                 ]
     }
 }

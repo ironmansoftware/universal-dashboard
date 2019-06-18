@@ -9,6 +9,8 @@ Describe "New-UDButton" {
         }
     }
 
+    Wait-Debugger
+
     Context "Floating" {
         Set-TestDashboard {
             New-UDButton -Text "Click Me" -Id "button" -Floating
