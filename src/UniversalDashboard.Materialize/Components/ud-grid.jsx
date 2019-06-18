@@ -5,7 +5,7 @@ import ErrorCard from './error-card.jsx';
 import UdLink from './ud-link.jsx';
 import CustomCell from './custom-cell.jsx';
 import {DebounceInput} from 'react-debounce-input';
-import { Dropdown, Button } from 'react-materialize';
+import { Dropdown, Button, Row, Col } from 'react-materialize';
 import UdIcon from './ud-icon.jsx';
 
 function strMapToObj(strMap) {
@@ -190,6 +190,10 @@ export default class UdGrid extends React.Component {
         })
     }
 
+    onExportData() {
+
+    }
+
     render() {
         if (this.state.hasError) {
             return [<ErrorCard message={this.state.errorMessage} title={this.props.title} id={this.props.id} key={this.props.id} />, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>]
@@ -323,7 +327,7 @@ class GridToolbar extends React.Component {
             for(var i = 1; i <= this.props.totalPages; i++) {
                 pages.push(<Page activePage={this.props.activePage} onPageChanged={this.props.onPageChanged} page={i} />);
             }
-            pagination = <ul className="pagination right-align">
+            pagination = <ul className="pagination"  style={{display: 'inline-block'}} >
                 <li className={this.props.activePage === 1 ? "disabled" : ""} style={this.props.activePage > 1 ? cursor : {}}><a onClick={() => this.props.activePage > 1 && this.props.onPageChanged(this.props.activePage - 1)}><UdIcon icon="ChevronLeft" /></a></li>
                     {pages}
                 <li className={this.props.activePage === this.props.totalPages ? "disabled" : ""}  style={this.props.activePage < this.props.totalPages ? cursor : {}}><a onClick={() => this.props.activePage < this.props.totalPages && this.props.onPageChanged(this.props.activePage + 1)}><UdIcon icon="ChevronRight" /></a></li>
@@ -331,7 +335,7 @@ class GridToolbar extends React.Component {
         }
 
         return (
-            <div><Button icon={<UdIcon icon="Download" />} />{pagination}</div>
+            <Row><Button icon={<UdIcon icon="Download" />} style={{display: 'inline-block', float: 'right', marginTop: '15x'}} onClick={this.onExportData.bind(this)} />{pagination}</Row>
         )
     }
 }
