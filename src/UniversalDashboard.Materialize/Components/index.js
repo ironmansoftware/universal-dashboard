@@ -41,15 +41,3 @@ UniversalDashboard.register("ud-collapsible", UDCollapsible);
 UniversalDashboard.register("ud-select", UDSelect);
 UniversalDashboard.register("ud-grid-layout", UDGridLayout);
 UniversalDashboard.register("ud-fab", UDFab);
-
-UniversalDashboard.registerPlugin({
-    provideDashboardComponents: function(state) {
-        console.log('provideDashboardComponents');
-    },
-    provideRoutes: function() {
-        console.log('provideRoutes');
-    },
-    invokeMiddleware: function(method, url, history, response) {
-        console.log('invokeMiddleware');
-    }
-})
