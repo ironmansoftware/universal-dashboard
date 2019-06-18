@@ -5,10 +5,9 @@ export const fetchGet = function(url, success, history) {
         credentials: 'include'
     })
     .then(function(response){
-        if (response.status === 401 && history) {
-            history.push("/login");
-            throw new Error('Redirecting to login');
-        } else if (response.status === 200) {
+        UniversalDashboard.invokeMiddleware('GET', url, history, response);
+
+        if (response.status === 200) {
             response.text().then(text => {
                 try 
                 {
