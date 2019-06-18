@@ -1,7 +1,7 @@
 ---
-external help file: UniversalDashboard-help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDCheckbox.md
 schema: 2.0.0
 ---
 
@@ -22,14 +22,27 @@ Creates a checkbox.
 
 ## EXAMPLES
 
-### Example 1
+### Checked
 ```
-PS C:\> New-UDCheckbox -Label "Checkbox" -OnChange {
-    Set-UDElement -Label "lblChecked" -Content { "Checkbox Value: $EventData" }
-}
+New-UDCheckbox -Label "Checkbox" -Checked
 ```
 
-Sets the 'lblChecked' content to the value of the checkbox value.
+A checked checkbox
+
+### Disabled
+```
+New-UDCheckbox -Label "Checkbox" -Disabled
+```
+
+A disabled checkbox
+
+### OnChange
+```
+New-UDCheckbox -Label "Checkbox" -OnChange {
+    Show-UDToast -Message $EventData
+}
+```
+Displays a toast message when clicked.
 
 ## PARAMETERS
 

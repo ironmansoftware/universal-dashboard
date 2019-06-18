@@ -1,7 +1,7 @@
 ---
-external help file: UniversalDashboard-help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDHeading.md
 schema: 2.0.0
 ---
 
@@ -28,9 +28,9 @@ Creates a heading.
 
 ## EXAMPLES
 
-### Example 1
+### Heading
 ```
-PS C:\> New-UDHeading -Size 3 -Content { "Header" }
+New-UDHeading -Size 3 -Content { "Header" }
 ```
 
 Creates the heading "Header" with a size of 3. 

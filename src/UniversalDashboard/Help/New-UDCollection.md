@@ -1,7 +1,7 @@
 ---
-external help file: UniversalDashboard-help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDCollection.md
 schema: 2.0.0
 ---
 
@@ -22,9 +22,9 @@ Creates a collection of items.
 
 ## EXAMPLES
 
-### Example 1
+### Collection
 ```
-PS C:\> New-UDCollection -Content {
+New-UDCollection -Content {
     New-UDCollectionItem -Content { 
         "Item 1"
     }

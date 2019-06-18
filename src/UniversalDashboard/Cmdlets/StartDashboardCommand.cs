@@ -55,10 +55,19 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public PublishedFolder[] PublishedFolder { get; set; }
 
+		[Parameter()]
+		public SwitchParameter Force { get; set; }
+
         protected override void EndProcessing()
 	    {
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
             var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
+
+			if (Force) {
+				var existingServer = Server.Servers.FirstOrDefault(m => m.Port == Port || m.Name == m.Name);
+				existingServer.Stop();
+				Server.Servers.Remove(existingServer);
+			}
 
             // Cache dashboard
             if (Content == null && Dashboard == null && FilePath == null && File.Exists(Constants.CachedDashboardPath)) {

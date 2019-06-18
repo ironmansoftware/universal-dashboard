@@ -1,7 +1,7 @@
 ---
-external help file: UniversalDashboard.dll-Help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: https://go.microsoft.com/fwlink/?LinkID=217032
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDImageCarousel.md
 schema: 2.0.0
 ---
 
@@ -24,11 +24,11 @@ Add image carousel to UniversalDashboard you can set the carousel to be full scr
 
 ### Example 1
 ```
-PS C:\> New-UDImageCarousel -Items {
-                New-UDImageCarouselItem  @Slide1
-                New-UDImageCarouselItem  @Slide2
-                New-UDImageCarouselItem  @Slide3
-        }  -Height 650px -FullWidth -FixButton -ButtonText 'GO TO..' -ShowIndecators
+New-UDImageCarousel -Items {
+        New-UDImageCarouselItem -BackgroundImage https://i0.wp.com/ironmansoftware.com/wp-content/uploads/2019/01/azure.png -BackgroundRepeat = 'no-repeat' -BackgroundSize = 'cover' -BackgroundColor  = '#3f51b5'
+        New-UDImageCarouselItem -BackgroundImage https://i2.wp.com/ironmansoftware.com/wp-content/uploads/2019/01/component.png -BackgroundRepeat = 'no-repeat' -BackgroundSize = 'cover' -BackgroundColor  = '#3f51b5'
+        New-UDImageCarouselItem -BackgroundImage https://i1.wp.com/ironmansoftware.com/wp-content/uploads/2019/01/dsl.png -BackgroundRepeat = 'no-repeat' -BackgroundSize = 'cover' -BackgroundColor  = '#3f51b5'
+}  -Height 650px -FullWidth -FixButton -ButtonText 'GO TO..' -ShowIndicators
 ```
 
 Create new image carousel with 3 slides and with fixed button on every slide.
@@ -140,7 +140,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ShowIndecators
+### -ShowIndicators
 Will display dot for every slide in the bottom of the carousel
 
 ```yaml

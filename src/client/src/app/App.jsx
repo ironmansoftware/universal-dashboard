@@ -53,8 +53,11 @@ export default class App extends React.Component {
                     </div>
         }
 
+        var pluginRoutes = UniversalDashboard.provideRoutes();
+
         return (<Router>
                 <div className="ud-dashboard">
+                    {pluginRoutes}
                     <Route path={regex} component={UdDashboard} />
                 </div>
             </Router> )

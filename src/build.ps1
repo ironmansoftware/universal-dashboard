@@ -32,9 +32,15 @@ Rename-Item "bom.xml" "dotnet.bom.xml"
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f net472
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard.Server\UniversalDashboard.Server.csproj" -f net472
 
+$public = Join-Path $PSScriptRoot ".\client\src\public"
+if ((Test-Path $public)) {
+	Remove-Item $public -Force -Recurse
+}
+
+
 Push-Location "$PSScriptRoot\client"
 
-Start-Process npm -ArgumentList "install" -Wait
+& npm install
 
 & npm install -g @cyclonedx/bom
 & cyclonedx-bom -o core.bom.xml
@@ -114,7 +120,7 @@ Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard
 . (Join-Path $PSScriptRoot 'UniversalDashboard\New-UDModuleManifest.ps1') -outputDirectory $outputDirectory
 
 if (-not $NoHelp) {
-	New-ExternalHelp -Path "$PSScriptRoot\UniversalDashboard\Help" -OutputPath $help
+	New-ExternalHelp -Path "$PSScriptRoot\UniversalDashboard\Help" -OutputPath "$help\UniversalDashboard.Community-help.xml"
 }
 
 Get-ChildItem $PSScriptRoot -Include "*.bom.xml" -Recurse | ForEach-Object { Copy-Item $_.FullName ".\boms" }

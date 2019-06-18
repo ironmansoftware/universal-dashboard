@@ -1,7 +1,7 @@
 ---
-external help file: UniversalDashboard.dll-Help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDHtml.md
 schema: 2.0.0
 ---
 
@@ -23,7 +23,7 @@ Creates a section of HTML.
 
 ### Example 1
 ```
-PS C:\> New-UDHtml -Markup '<h3>Hi! I'm HTML</h3>'
+New-UDHtml -Markup '<h3>Hi! I'm HTML</h3>'
 ```
 
 Creates header text in the dashboard.

@@ -1,7 +1,7 @@
 ---
-external help file: UniversalDashboard.dll-Help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDChart.md
 schema: 2.0.0
 ---
 
@@ -25,23 +25,37 @@ provide the data for display to the chart.
 
 ## EXAMPLES
 
-### Example 1
+### Simple Chart
 ```
-PS C:\> New-UDChart -Type Bar -Memory "CPU" -Endpoint {
-	Get-Process -Name chrome | Out-UDChartData -LabelProperty "Id" -DataProperty "CPU"
+New-UDChart -Type Bar -Endpoint {
+	$Processes = @(
+		[PSCustomObject]@{ Id = Get-Random; CPU = Get-Random;  }
+		[PSCustomObject]@{ Id = Get-Random; CPU = Get-Random;  }
+		[PSCustomObject]@{ Id = Get-Random; CPU = Get-Random;  }
+		[PSCustomObject]@{ Id = Get-Random; CPU = Get-Random;  }
+	)
+
+	$Processes | Out-UDChartData -LabelProperty "Id" -DataProperty "CPU"
 }
 ```
 
 Creates a simple bar chart with information about the CPU usage of all the chrome processes running on the current machine. 
 
-### Example 2
+### Multi-dataset Chart
 ```
-PS C:\> New-UDChart -Type Bar -Memory "CPU" -Endpoint {
-			Get-Process -Name chrome | Out-UDChartData -LabelProperty "Id" -Dataset @(
-				New-UDChartDataset -DataProperty "WorkingSet" -Label "Working Set" -BackgroundColor "rgb(63,123,3)"
-				New-UDChartDataset -DataProperty "PeakWorkingSet" -Label "Peak Working Set" -BackgroundColor "rgb(134,342,122)"
-				New-UDChartDataset -DataProperty "VirtualMemorySize" -Label "Virtual Memory Size" -BackgroundColor "rgb(234,33,43)"
-			)
+New-UDChart -Type Bar -Endpoint {
+	$Processes = @(
+		[PSCustomObject]@{ Id = Get-Random; WorkingSet = Get-Random; PeakWorkingSet = Get-Random; VirtualMemorySize = Get-Random }
+		[PSCustomObject]@{ Id = Get-Random; WorkingSet = Get-Random; PeakWorkingSet = Get-Random; VirtualMemorySize = Get-Random }
+		[PSCustomObject]@{ Id = Get-Random; WorkingSet = Get-Random; PeakWorkingSet = Get-Random; VirtualMemorySize = Get-Random }
+		[PSCustomObject]@{ Id = Get-Random; WorkingSet = Get-Random; PeakWorkingSet = Get-Random; VirtualMemorySize = Get-Random }
+	)
+
+	$Processes | Out-UDChartData -LabelProperty "Id" -Dataset @(
+		New-UDChartDataset -DataProperty "WorkingSet" -Label "Working Set" -BackgroundColor "rgb(63,123,3)"
+		New-UDChartDataset -DataProperty "PeakWorkingSet" -Label "Peak Working Set" -BackgroundColor "rgb(134,342,122)"
+		New-UDChartDataset -DataProperty "VirtualMemorySize" -Label "Virtual Memory Size" -BackgroundColor "rgb(234,33,43)"
+	)
 }
 ```
 

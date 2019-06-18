@@ -1,7 +1,7 @@
 ---
-external help file: UniversalDashboard.dll-Help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDGrid.md
 schema: 2.0.0
 ---
 
@@ -21,27 +21,67 @@ New-UDGrid [-Title <String>] -Headers <String[]> -Properties <String[]> [-Defaul
 ```
 
 ## DESCRIPTION
-Creates a grid in the dashboard with data supplied by a PowerShell endpoint. The grid is produced using jQuery DataTables. 
+Creates a grid in the dashboard with data supplied by a PowerShell endpoint. 
 
 ## EXAMPLES
 
-### Example 1
+### Basic Grid
 ```
-PS C:\> New-UDGrid -Title "Process Information" -Headers @("Name", "Process Id", "Start Time", "Responding") -Properties @("Name", "Id", "StartTime", "Responding")  -Endpoint {
-            Get-Process -Name Chrome | Out-UDGridData
-        }
-```
-
-Creates a grid in the dashboard that displays the process information for Chrome running on the machine.
-
-### Example 2
-```
-PS C:\> New-UDGrid -Title "Service Information" -Headers @("Status", "Name", "Display Name") -Properties @("Status", "Name", "DisplayName")  -Endpoint {
-            Get-Service | Out-UDGridData
-        }
+New-UDGrid -Title "Random Numbers" -Endpoint {
+    @(
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+    ) | Out-UDGridData
+}
 ```
 
-Creates a grid in the dashboard that displays the service information on the machine.
+### Custom Headers
+```
+New-UDGrid -Title "Process Information" -Headers @("Name", "Process Id", "Start Time", "Responding") -Properties @("Name", "Id", "StartTime", "Responding")  -Endpoint {
+    @(
+        [PSCustomObject]@{ Name = "chrome"; Id = 1223; StartTime = "12:12PM"; Responding = $true}
+        [PSCustomObject]@{ Name = "notepad"; Id = 1223; StartTime = "12:12PM"; Responding = $true}
+        [PSCustomObject]@{ Name = "devenv"; Id = 1223; StartTime = "12:12PM"; Responding = $true}
+        [PSCustomObject]@{ Name = "code"; Id = 1223; StartTime = "12:12PM"; Responding = $true}
+        [PSCustomObject]@{ Name = "calc"; Id = 1223; StartTime = "12:12PM"; Responding = $true}
+        [PSCustomObject]@{ Name = "minesweeper"; Id = 1223; StartTime = "12:12PM"; Responding = $true}
+    ) | Out-UDGridData
+}
+```
+
+### Auto refresh
+```
+New-UDGrid -Title "Random Numbers" -Endpoint {
+    @(
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+        [PSCustomObject]@{ X = Get-Random; Y = Get-Random; Z = Get-Random}
+    ) | Out-UDGridData
+} -AutoRefresh
+```
+
+Auto refreshing grid
+
+### Custom Cells
+```
+New-UDGrid -Title "Process Information" -Headers @("Name", "Process Id", "Start Time", "Responding") -Properties @("Name", "Id", "StartTime", "Responding")  -Endpoint {
+    @(
+        [PSCustomObject]@{ Name = "chrome"; Id = 1223; StartTime = "12:12PM"; Responding = New-UDIcon -Icon check}
+        [PSCustomObject]@{ Name = "notepad"; Id = 1223; StartTime = "12:12PM"; Responding = New-UDIcon -Icon check}
+        [PSCustomObject]@{ Name = "devenv"; Id = 1223; StartTime = "12:12PM"; Responding = New-UDIcon -Icon check}
+        [PSCustomObject]@{ Name = "code"; Id = 1223; StartTime = "12:12PM"; Responding = New-UDIcon -Icon check}
+        [PSCustomObject]@{ Name = "calc"; Id = 1223; StartTime = "12:12PM"; Responding = New-UDIcon -Icon check}
+        [PSCustomObject]@{ Name = "minesweeper"; Id = 1223; StartTime = "12:12PM"; Responding = New-UDIcon -Icon check}
+    ) | Out-UDGridData
+}
+```
 
 ## PARAMETERS
 
