@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using System;
+using System.Text;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Services;
+using System.IO;
 
 namespace PowerShellProTools.UniversalDashboard.Controllers
 {
@@ -18,6 +20,17 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
         [Route("framework")]
         public IActionResult Framework() {
             return Index(_dashboardService.Dashboard.FrameworkAssetId);
+        }
+
+        [Route("plugin")]
+        public IActionResult Plugin() {
+            var stringBuilder = new StringBuilder();
+            foreach(var plugin in AssetService.Instance.Plugins) {
+                var pluginContent = System.IO.File.ReadAllText(plugin);
+                stringBuilder.AppendLine(pluginContent);
+            }
+
+            return Content(stringBuilder.ToString(), "text/javascript");
         }
 
         [Route("{asset}")]

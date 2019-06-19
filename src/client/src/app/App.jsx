@@ -13,7 +13,8 @@ export default class App extends React.Component {
         super();
 
         this.state = {
-            loading: true
+            loading: true,
+            loadingMessage: 'Loading framework...'
         }
     }
 
@@ -36,8 +37,14 @@ export default class App extends React.Component {
             document.getElementsByTagName('head')[0].appendChild(styles);
 
             this.setState({
-                loading: false
+                loadingMessage: "Loading plugins..."
             })
+
+            this.loadJavascript(getApiPath() + "/api/internal/javascript/plugin", function() {
+                this.setState({
+                    loading: false
+                })
+            }.bind(this));
         }.bind(this))
     }
 
