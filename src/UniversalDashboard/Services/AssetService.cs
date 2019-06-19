@@ -9,6 +9,7 @@ namespace UniversalDashboard.Services
     public class AssetService
     {
         public Dictionary<string, string> Frameworks;
+        public List<string> Plugins;
 
         public List<string> Assets;
 
@@ -30,6 +31,7 @@ namespace UniversalDashboard.Services
         {
             Assets = new List<string>();
             Frameworks = new Dictionary<string, string>();
+            Plugins = new List<string>();
         }
 
         public string RegisterAsset(string asset) {
@@ -65,6 +67,16 @@ namespace UniversalDashboard.Services
             }
 
             Frameworks.Add(name, rootAsset);
+        }
+
+        public void RegisterPlugin(string rootAsset)
+        {
+            if (Plugins.Contains(rootAsset))
+            {
+                Plugins.Remove(rootAsset);
+            }
+
+            Plugins.Add(rootAsset);
         }
 
         public void ClearRegistration()
