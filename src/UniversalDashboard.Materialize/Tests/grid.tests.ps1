@@ -1,25 +1,3 @@
-param([Switch]$Release)
-
-$Env:Debug = -not $Release
-
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
-$Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-$Driver = Start-SeFirefox
-
-function Set-TestDashboard {
-    param($Dashboard)
-
-    $Server.DashboardService.SetDashboard($Dashboard)
-    Enter-SeUrl -Url "http://localhost:$BrowserPort" -Driver $Driver 
-}
-
 Describe "Grid" {
 
     Context "simple grid" {
@@ -498,6 +476,3 @@ Describe "Grid" {
         
     }    
 }
-
-Stop-SeDriver $Driver
-Stop-UDDashboard -Server $Server 

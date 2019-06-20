@@ -5,6 +5,8 @@ import ErrorCard from './error-card.jsx';
 import UdLink from './ud-link.jsx';
 import CustomCell from './custom-cell.jsx';
 import {DebounceInput} from 'react-debounce-input';
+import { Dropdown, Button, Row, Col } from 'react-materialize';
+import UdIcon from './ud-icon.jsx';
 
 function strMapToObj(strMap) {
     if (strMap == undefined) return null;
@@ -182,6 +184,37 @@ export default class UdGrid extends React.Component {
         this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
     }
 
+    onPageChanged(x) {
+        this.setState({
+            currentPage: x
+        })
+    }
+
+    onExportData() {
+
+        var csv = '';
+        this.state.data.forEach(x => {
+            for(var propertyName in x) {
+                var property = x[propertyName];
+                if (property == null) continue;
+
+                csv += property + ",";
+            }
+            csv = csv.substr(0, csv.length - 1) + "\r\n";
+        })
+
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
+        element.setAttribute('download', 'export.csv');
+      
+        element.style.display = 'none';
+        document.body.appendChild(element);
+      
+        element.click();
+      
+        document.body.removeChild(element);
+    }
+
     render() {
         if (this.state.hasError) {
             return [<ErrorCard message={this.state.errorMessage} title={this.props.title} id={this.props.id} key={this.props.id} />, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>]
@@ -225,7 +258,8 @@ export default class UdGrid extends React.Component {
         var gridPlugins = [];
         var serverSort, serverFilter, serverNext, serverPrev, serverGetPage, serverFilterControl;
         var components = {
-            SettingsToggle: () => <span />
+            SettingsToggle: () => <span />,
+            Pagination: () => <span />
         }
         var serverFilterControl = <DebounceInput name="filter" className="griddle-filter" type="text" placeholder={this.props.filterText} value={this.state.filterText} onChange={this.onFilter.bind(this)} debounceTimeout={300} />
 
@@ -235,8 +269,8 @@ export default class UdGrid extends React.Component {
 
             if (this.props.noFilter) {
                 components = {
-                    Filter: () => <span/>,
-                    SettingsToggle: () => <span />
+                    ...components,
+                    Filter: () => <span/>
                 }
             }
         } else {
@@ -252,8 +286,8 @@ export default class UdGrid extends React.Component {
             }
 
             components = {
-                Filter: () => <span/>,
-                SettingsToggle: () => <span />
+                ...components,
+                Filter: () => <span/>
             }
         }
 
@@ -261,11 +295,12 @@ export default class UdGrid extends React.Component {
             <div className="card ud-grid" id={this.props.id} style={{background: this.props.backgroundColor, color: this.props.fontColor}} key={this.props.id}>
                 <div className="card-content">
                     <span className="card-title">{this.props.title}</span>
+
                     {serverFilterControl}
                     { this.state.loading ? 
                     <div className="progress"><div className="indeterminate"></div></div> :
                     rowDefinition ? 
-                    <Griddle 
+                    [<Griddle 
                         data={this.state.data}
                         plugins={gridPlugins}
                         sortProperties={[{
@@ -288,11 +323,52 @@ export default class UdGrid extends React.Component {
                         styleConfig={styleConfig}
                     >
                         {rowDefinition}
-                    </Griddle> : <div>No results found</div>}
+                    </Griddle>,
+                    <GridToolbar 
+                        activePage={this.state.currentPage} 
+                        totalPages={Math.ceil(this.state.recordCount / this.state.pageSize)} 
+                        onPageChanged={this.onPageChanged.bind(this)}
+                        onExportData={this.onExportData.bind(this)}
+                        noExport={this.props.noExport}
+                        />]
+                     : <div>No results found</div>}
                 </div>
+
                 {actions}
                 <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.reload.bind(this)}/>
             </div>
                );
+    }
+}
+
+class GridToolbar extends React.Component {
+    render() {
+
+        var cursor = {
+            cursor: "pointer"
+        }
+
+        var pagination = null;
+        if (!this.props.noPaging && this.props.totalPages > 1) {
+            var pages = [];
+            for(var i = 1; i <= this.props.totalPages; i++) {
+                pages.push(<Page activePage={this.props.activePage} onPageChanged={this.props.onPageChanged} page={i} />);
+            }
+            pagination = <ul className="pagination"  style={{display: 'inline-block'}} >
+                <li className={this.props.activePage === 1 ? "disabled" : ""} style={this.props.activePage > 1 ? cursor : {}}><a onClick={() => this.props.activePage > 1 && this.props.onPageChanged(this.props.activePage - 1)}><UdIcon icon="ChevronLeft" /></a></li>
+                    {pages}
+                <li className={this.props.activePage === this.props.totalPages ? "disabled" : ""}  style={this.props.activePage < this.props.totalPages ? cursor : {}}><a onClick={() => this.props.activePage < this.props.totalPages && this.props.onPageChanged(this.props.activePage + 1)}><UdIcon icon="ChevronRight" /></a></li>
+            </ul>
+        }
+
+        return (
+            <Row><Button icon={<UdIcon icon="Download" />} style={{display: this.props.noExport ? 'none' : 'inline-block', float: 'right', marginTop: '15px'}} onClick={this.props.onExportData} />{pagination}</Row>
+        )
+    }
+}
+
+class Page extends React.Component {
+    render() {
+        return <li className={this.props.activePage === this.props.page ? "active" : ""} style={{ cursor: "pointer" }}><a onClick={() => this.props.onPageChanged(this.props.page)}>{this.props.page}</a></li>
     }
 }
