@@ -1,4 +1,5 @@
 Describe "Grid" {
+
     Context "refresh doesnt reset filter" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -RefreshInterval 5 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {

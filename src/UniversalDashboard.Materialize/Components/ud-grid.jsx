@@ -54,7 +54,8 @@ export default class UdGrid extends React.Component {
           filterText: "",
           properties: props.properties,
           headers: props.headers,
-          loading: true
+          loading: true,
+          firstLoad: true
         };
       }
 
@@ -99,10 +100,15 @@ export default class UdGrid extends React.Component {
     loadData(page, pageSize, sortColumn, sortAscending, filterText) {
         var skip = (page - 1) * pageSize;
 
+        this.setState({
+            loading: true
+        })
+
         UniversalDashboard.get(`/api/internal/component/datatable/${this.props.id}?start=${skip}&length=${pageSize}&sortColumn=${sortColumn}&sortAscending=${sortAscending}&filterText=${filterText}`, function(json){
             
             this.setState({
-                loading: false
+                loading: false,
+                firstLoad: false
             })
 
             if (json.error) {
@@ -211,6 +217,15 @@ export default class UdGrid extends React.Component {
         document.body.removeChild(element);
     }
 
+    onLocalSort(sortProperties) {
+        if (sortProperties.id !== this.state.sortColumn || sortProperties.sortAscending !== this.state.sortAscending) {
+            this.setState({
+                sortColumn: sortProperties.id,
+                sortAscending: sortProperties.sortAscending
+            })
+        }
+    }
+
     render() {
         if (this.state.hasError) {
             return [<ErrorCard message={this.state.errorMessage} title={this.props.title} id={this.props.id} key={this.props.id} />, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>]
@@ -269,6 +284,7 @@ export default class UdGrid extends React.Component {
                     Filter: () => <span/>
                 }
             }
+            serverSort = this.onLocalSort.bind(this);
         } else {
             serverSort = this.onSort.bind(this);
             serverFilter = this.onFilter.bind(this);
@@ -293,7 +309,7 @@ export default class UdGrid extends React.Component {
                     <span className="card-title">{this.props.title}</span>
 
                     {serverFilterControl}
-                    { this.state.loading ? 
+                    { this.state.firstLoad ? 
                     <div className="progress"><div className="indeterminate"></div></div> :
                     rowDefinition ? 
                     [<Griddle 
@@ -326,6 +342,8 @@ export default class UdGrid extends React.Component {
                         onPageChanged={this.onPageChanged.bind(this)}
                         onExportData={this.onExportData.bind(this)}
                         noExport={this.props.noExport}
+                        reload={this.reload.bind(this)}
+                        loading={this.state.loading}
                         />]
                      : <div>No results found</div>}
                 </div>
@@ -347,9 +365,25 @@ class GridToolbar extends React.Component {
         var pagination = null;
         if (!this.props.noPaging && this.props.totalPages > 1) {
             var pages = [];
-            for(var i = 1; i <= this.props.totalPages; i++) {
-                pages.push(<Page activePage={this.props.activePage} onPageChanged={this.props.onPageChanged} page={i} />);
+            var startPage = this.props.totalPages > 10 ? this.props.activePage : 1;
+
+            if (this.props.totalPages < (this.props.activePage + 10)) {
+                startPage = this.props.totalPages - 10;
             }
+
+            for(var i = startPage; i < this.props.totalPages; i++) {
+                if (i > (startPage + 10)) {
+                    break;
+                }
+
+                pages.push(<Page activePage={this.props.activePage} onPageChanged={this.props.onPageChanged} page={i} pointer/>);
+            }
+
+            if (this.props.totalPages >= 10 && this.props.activePage < (this.props.totalPages - 10)) {
+                pages.push(<Page activePage={this.props.activePage} page='...' />);
+                pages.push(<Page activePage={this.props.activePage} onPageChanged={this.props.onPageChanged} page={this.props.totalPages} pointer/>);
+            }
+
             pagination = <ul className="pagination"  style={{display: 'inline-block'}} >
                 <li className={this.props.activePage === 1 ? "disabled" : ""} style={this.props.activePage > 1 ? cursor : {}}><a onClick={() => this.props.activePage > 1 && this.props.onPageChanged(this.props.activePage - 1)}><UdIcon icon="ChevronLeft" /></a></li>
                     {pages}
@@ -358,13 +392,31 @@ class GridToolbar extends React.Component {
         }
 
         return (
-            <Row><Button icon={<UdIcon icon="Download" />} style={{display: this.props.noExport ? 'none' : 'inline-block', float: 'right', marginTop: '15px'}} onClick={this.props.onExportData} />{pagination}</Row>
+            <Row>
+                <Button 
+                    icon={<UdIcon icon="Sync" spin={this.props.loading} />} 
+                    style={{display: 'inline-block', float: 'right', marginTop: '15px', marginLeft: '10px'}} 
+                    onClick={this.props.reload} 
+                    flat
+                    tooltip="Refresh"
+                    tooltipOptions={{position: 'bottom'}}
+                    />
+                <Button 
+                    icon={<UdIcon icon="Download" />} 
+                    style={{display: this.props.noExport ? 'none' : 'inline-block', float: 'right', marginTop: '15px'}} 
+                    onClick={this.props.onExportData} 
+                    flat
+                    tooltip="Export to CSV"
+                    tooltipOptions={{position: 'bottom'}}
+                    />
+                {pagination}
+            </Row>
         )
     }
 }
 
 class Page extends React.Component {
     render() {
-        return <li className={this.props.activePage === this.props.page ? "active" : ""} style={{ cursor: "pointer" }}><a onClick={() => this.props.onPageChanged(this.props.page)}>{this.props.page}</a></li>
+        return <li className={this.props.activePage === this.props.page ? "active" : ""} style={{ cursor: this.props.pointer ? "pointer" : "default" }}><a onClick={() => this.props.onPageChanged(this.props.page)}>{this.props.page}</a></li>
     }
 }
