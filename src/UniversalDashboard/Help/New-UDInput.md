@@ -32,7 +32,27 @@ New-UDInput -Title "User Information" -Endpoint {
 }
 ```
 
-Accepts user input and sends the data to another server. The endpoint then returns a toast message to the client.
+Accepts user input and a toast message to the client.
+
+
+### Custom Input Fields
+```
+New-UDInput -Title "User Information" -Content {
+    New-UDInputField -Type textbox -Name FirstName -Placeholder 'First Name'
+	New-UDInputField -Type textbox -Name LastName -Placeholder 'Last Name'
+	New-UDInputField -Type textbox -Name Address -Placeholder 'Address'
+	New-UDInputField -Type textbox -Name PhoneNumber -Placeholder 'Phone Number'
+	New-UDInputField -Type password -Name Password -Placeholder 'Password'
+	New-UDInputField -Type date -Name StartDate -Placeholder 'Start Date'
+	New-UDInputField -Type time -Name StartTime -Placeholder 'Start Time'
+} -Endpoint {
+	param($FirstName, $LastName, $Address, $PhoneNumber, $Password, $StartDate, $StartTime)
+
+	New-UDInputAction -Toast "Record saved! $FirstName, $LastName, $Address, $PhoneNumber, $Password, $StartDate, $StartTime"
+}
+```
+
+Users custom input fields to configure the form and then sends a toast to the user when the button is clicked.
 
 ## PARAMETERS
 

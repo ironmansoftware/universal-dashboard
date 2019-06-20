@@ -23,18 +23,61 @@ Shows a modal. This can be called from any endpoint.
 
 ## EXAMPLES
 
-### Example 1
+### Basic Modal
 ```
-PS C:\> New-UDButton -Text "Show Modal" -OnClick {
+New-UDButton -Text "Show Modal" -OnClick {
     Show-UDModal -Header {
         New-UDHeading -Size 4 -Text "Modal"
-    } -Context {
+    } -Content {
         "This is a modal"
     }
 }
 ```
 
 Shows a modal when the button is clicked.
+
+### Bottom Sheet
+```
+New-UDButton -Text "Show Modal" -OnClick {
+    Show-UDModal -Header {
+        New-UDHeading -Size 4 -Text "Modal"
+    } -Content {
+        "This is a modal"
+    } -BottomSheet
+}
+```
+
+Shows a bottom sheet modal.
+
+### Persistent
+```
+New-UDButton -Text "Show Modal" -OnClick {
+    Show-UDModal -Header {
+        New-UDHeading -Size 4 -Text "Modal"
+    } -Content {
+        New-UDButton -Text 'Hide Modal' -OnClick {
+            Hide-UDModal
+        }
+    } -Persistent
+}
+```
+
+Shows a persistent modal.
+
+### Custom Width
+```
+New-UDButton -Text "Show Modal" -OnClick {
+    Show-UDModal -Header {
+        New-UDHeading -Size 4 -Text "Modal"
+    } -Content {
+        New-UDButton -Text 'Hide Modal' -OnClick {
+            Hide-UDModal
+        }
+    } -Width 1000 -Height 1000
+}
+```
+
+Shows a custom width modal.
 
 ## PARAMETERS
 

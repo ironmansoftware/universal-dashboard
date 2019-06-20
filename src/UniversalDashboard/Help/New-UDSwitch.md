@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDSwitch.md
 schema: 2.0.0
 ---
 
@@ -22,12 +22,19 @@ Creates a switch control. Switches are similar in function to checkboxes but use
 
 ## EXAMPLES
 
-### Example 1
+### Basic Switch
 ```
-PS C:\> New-UDSwitch -OnText "yes" -OffText "No"
+New-UDSwitch -OnText "yes" -OffText "No"
 ```
 
 Creates a switch that has yes and no as options.
+
+### OnChange
+```
+New-UDSwitch -OnText "yes" -OffText "No" -OnChange { Show-UDToast -Message $EventData }
+```
+
+Shows a toast when the switch is changed.
 
 ## PARAMETERS
 

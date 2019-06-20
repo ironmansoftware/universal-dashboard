@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDMonitor.md
 schema: 2.0.0
 ---
 
@@ -26,14 +26,14 @@ Creates a live updating chart that shows a single type of data.  This is paired 
 
 ## EXAMPLES
 
-### Example 1
+### Basic Monitor
 ```
-PS C:\>  New-UDMonitor -Type Line -Title "CPU" -RefreshInterval 1 -DataPointHistory 100 -Endpoint {
-    Get-Counter '\Memory\Available MBytes' | Select-Object -ExpandProperty CounterSamples | Select -ExpandProperty CookedValue | Out-UDMonitorData
+New-UDMonitor -Type Line -Title "CPU" -RefreshInterval 1 -DataPointHistory 100 -Endpoint {
+    Get-Random | Out-UDMonitorData
 }
 ```
 
-Displays available memory in megabytes for the machine. 
+Displays random data on the monitor.
 
 ## PARAMETERS
 

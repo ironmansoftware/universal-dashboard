@@ -31,7 +31,7 @@ Renders an image in the dashboard.
 
 ### Example 1
 ```
-New-UDImage -Url "http://www.google.com/logo.png" -Height 50 -Width 50
+New-UDImage -Url "https://i1.wp.com/ironmansoftware.com/wp-content/uploads/2019/01/dsl.png" -Height 50 -Width 50
 ```
 
 Inserts the Google logo and sizes it to 50px by 50px.
@@ -42,13 +42,6 @@ New-UDImage -Height 125 -Width 125 -Url "data:image/svg+xml;base64,PHN2ZyB3aWR0a
 ```
 
 Inserts an SVG, base64 logo and sizes it to 50px by 50px.
-
-### Example 3
-```
-New-UDImage -Height 125 -Width 125 -Path ".\my_image.png"
-```
-
-Inserts my_image.png from the local machine.
 
 ## PARAMETERS
 
