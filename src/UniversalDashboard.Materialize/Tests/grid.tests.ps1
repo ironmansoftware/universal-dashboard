@@ -1,4 +1,51 @@
 Describe "Grid" {
+    Context "refresh doesnt reset filter" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDGrid -Title "Grid" -Id "Grid" -RefreshInterval 5 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                $data = @(
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                )
+
+
+                $data | Out-UDGridData 
+            } 
+        }
+
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should refresh" {
+            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
+
+            Send-SeKeys -Element $Element[0] -Keys "2"
+            Start-Sleep 1
+            Send-SeKeys -Element $Element[0] -Keys "0"
+
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element.Length | Should be 6
+
+            Start-Sleep 5 
+
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element.Length | Should be 6    
+        }
+    }    
 
     Context "simple grid" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
@@ -475,4 +522,6 @@ Describe "Grid" {
 
         
     }    
+
+
 }

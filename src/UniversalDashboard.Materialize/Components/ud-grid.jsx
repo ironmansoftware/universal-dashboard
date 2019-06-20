@@ -99,10 +99,6 @@ export default class UdGrid extends React.Component {
     loadData(page, pageSize, sortColumn, sortAscending, filterText) {
         var skip = (page - 1) * pageSize;
 
-        this.setState({
-            loading: true
-        })
-
         UniversalDashboard.get(`/api/internal/component/datatable/${this.props.id}?start=${skip}&length=${pageSize}&sortColumn=${sortColumn}&sortAscending=${sortAscending}&filterText=${filterText}`, function(json){
             
             this.setState({
