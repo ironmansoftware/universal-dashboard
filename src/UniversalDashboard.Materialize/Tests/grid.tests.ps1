@@ -343,8 +343,6 @@ Describe "Grid" {
 
         Set-TestDashboard -Dashboard $dashboard
 
-        Wait-Debugger
-
         It "should not page when NoPaging set" {
             $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 

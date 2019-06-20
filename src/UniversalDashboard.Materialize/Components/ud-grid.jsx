@@ -192,6 +192,27 @@ export default class UdGrid extends React.Component {
 
     onExportData() {
 
+        var csv = '';
+        this.state.data.forEach(x => {
+            for(var propertyName in x) {
+                var property = x[propertyName];
+                if (property == null) continue;
+
+                csv += property + ",";
+            }
+            csv = csv.substr(0, csv.length - 1) + "\r\n";
+        })
+
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csv));
+        element.setAttribute('download', 'export.csv');
+      
+        element.style.display = 'none';
+        document.body.appendChild(element);
+      
+        element.click();
+      
+        document.body.removeChild(element);
     }
 
     render() {
@@ -303,7 +324,13 @@ export default class UdGrid extends React.Component {
                     >
                         {rowDefinition}
                     </Griddle>,
-                    <GridToolbar activePage={this.state.currentPage} totalPages={Math.ceil(this.state.recordCount / this.state.pageSize)} onPageChanged={this.onPageChanged.bind(this)}/>]
+                    <GridToolbar 
+                        activePage={this.state.currentPage} 
+                        totalPages={Math.ceil(this.state.recordCount / this.state.pageSize)} 
+                        onPageChanged={this.onPageChanged.bind(this)}
+                        onExportData={this.onExportData.bind(this)}
+                        noExport={this.props.noExport}
+                        />]
                      : <div>No results found</div>}
                 </div>
 
@@ -335,7 +362,7 @@ class GridToolbar extends React.Component {
         }
 
         return (
-            <Row><Button icon={<UdIcon icon="Download" />} style={{display: 'inline-block', float: 'right', marginTop: '15x'}} onClick={this.onExportData.bind(this)} />{pagination}</Row>
+            <Row><Button icon={<UdIcon icon="Download" />} style={{display: this.props.noExport ? 'none' : 'inline-block', float: 'right', marginTop: '15px'}} onClick={this.props.onExportData} />{pagination}</Row>
         )
     }
 }

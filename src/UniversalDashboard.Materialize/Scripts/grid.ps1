@@ -37,7 +37,9 @@ function New-UDGrid {
         [Parameter()]
 	    [Switch]$AutoRefresh,
 	    [Parameter()]
-        [int]$RefreshInterval = 5
+        [int]$RefreshInterval = 5,
+        [Parameter()]
+        [Switch]$NoExport 
     )
 
     End {
@@ -73,6 +75,7 @@ function New-UDGrid {
             noFilter = $NoFilter.IsPresent
             autoRefresh = $AutoRefresh.IsPresent
             refreshInterval = $RefreshInterval
+            noExport = $NoExport.IsPresent
         }
     }
 }
