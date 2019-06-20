@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDPreloader.md
 schema: 2.0.0
 ---
 
@@ -33,12 +33,26 @@ Creates a new preloader. Preloaders can be used to show progress or indicate to 
 
 ## EXAMPLES
 
-### Example 1
+### Percent Complete
 ```
-PS C:\> New-UDPreloader -PercentComplete 10
+New-UDPreloader -PercentComplete 10
 ```
 
 Creates a new determinate preloader with a percentage complete of 10.
+
+### Indeterminate
+```
+New-UDPreloader -ProgressColor red
+```
+
+Creates a preloader with a progress color set to red.
+
+### Circular
+```
+New-UDPreloader -Color blue -Circular
+```
+
+Creates a blue, circular preloader.
 
 ## PARAMETERS
 

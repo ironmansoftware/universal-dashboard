@@ -23,7 +23,7 @@ Creates a section of HTML.
 
 ### Example 1
 ```
-New-UDHtml -Markup '<h3>Hi! I'm HTML</h3>'
+New-UDHtml -Markup "<h3>Hi! I'm HTML</h3>"
 ```
 
 Creates header text in the dashboard.

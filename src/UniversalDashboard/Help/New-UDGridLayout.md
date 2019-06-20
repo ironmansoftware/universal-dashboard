@@ -21,9 +21,7 @@ New-UDGridLayout [[-Id] <String>] [[-RowHeight] <Int32>] [[-Content] <ScriptBloc
 ```
 
 ## DESCRIPTION
-Layout components using a JSON-based grid system. This uses the react-grid-layout component: https://github.com/strml/react-grid-layout#features 
-
-If you are using Enterprise, you can use the -Design flag on Start-UDDashboard to drag and drop components.
+Layout components using a JSON-based grid system. This uses the react-grid-layout component: https://github.com/strml/react-grid-layout#features If you are using Enterprise, you can use the -Design flag on Start-UDDashboard to drag and drop components.
 
 ## EXAMPLES
 

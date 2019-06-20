@@ -23,7 +23,7 @@ Creates a new iframe.
 
 ### Example 1
 ```
-New-UDIFrame -Uri https://www.google.com
+New-UDIFrame -Uri https://www.ironmansoftware.com
 ```
 
 Creates an iframe that embeds Google.

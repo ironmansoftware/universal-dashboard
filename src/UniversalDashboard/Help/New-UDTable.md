@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDTable.md
 schema: 2.0.0
 ---
 
@@ -33,8 +33,14 @@ Creates a new table of data within the dashboard.
 
 ### Example 1
 ```
-PS C:\>  New-UDTable -Title "Process Ids" -Header @("Name", "Process Id") -Endpoint {
-    Get-Process -Name Chrome | Out-UDTableData -Property @("name", "id")
+New-UDTable -Title "Process Ids" -Header @("Name", "Process Id") -Endpoint {
+    $Data = @(
+        [PSCustomObject]@{ name = "Chrome"; id = 12352 }
+        [PSCustomObject]@{ name = "devenv"; id = 342 }
+        [PSCustomObject]@{ name = "code"; id = 634532 }
+        [PSCustomObject]@{ name = "powershell_ise"; id = 345342 }
+    )
+    $Data | Out-UDTableData -Property @("name", "id")
 }
 ```
 

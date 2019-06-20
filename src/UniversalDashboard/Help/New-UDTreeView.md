@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: https://go.microsoft.com/fwlink/?LinkID=217032
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDTreeView.md
 schema: 2.0.0
 ---
 
@@ -24,15 +24,15 @@ Creates a tree view control.
 
 ## EXAMPLES
 
-### Example 1
+### Basic Tree View
 ```
-PS C:\> New-UDTreeView -Node {
+New-UDTreeView -Node (
     New-UDTreeNode -Name "Root Node" -Children {
         New-UDTreeNode -Name "Child 1"
         New-UDTreeNode -Name "Child 2"
         New-UDTreeNode -Name "Child 3"
     }
-}
+)
 ```
 
 Creates a tree view with 3 children nodes. 

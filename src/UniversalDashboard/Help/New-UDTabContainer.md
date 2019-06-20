@@ -1,14 +1,14 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version:https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDTabContainer.md
 schema: 2.0.0
 ---
 
 # New-UDTabContainer
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Creates a tab container.
 
 ## SYNTAX
 
@@ -17,21 +17,25 @@ New-UDTabContainer -Tabs <ScriptBlock> [-Id <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Creates a tab container. Use New-UDTab to create tabs within the tab container.
 
 ## EXAMPLES
 
-### Example 1
+### Basic Tabs
 ```powershell
-PS C:\> {{ Add example code here }}
+New-UDTabContainer -Tabs {
+    New-UDTab -Text 'Tab 1' -Content { New-UDHeading -Text 'Tab 1 Content' }
+    New-UDTab -Text 'Tab 2' -Content { New-UDHeading -Text 'Tab 2 Content' }
+    New-UDTab -Text 'Tab 3' -Content { New-UDHeading -Text 'Tab 3 Content' }
+}
 ```
 
-{{ Add example description here }}
+Creates a tab container with 3 tabs.
 
 ## PARAMETERS
 
 ### -Id
-{{ Fill Id Description }}
+ID of this component.
 
 ```yaml
 Type: String
@@ -46,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -Tabs
-{{ Fill Tabs Description }}
+The tabs for this container. Use New-UDTab to create the tabs.
 
 ```yaml
 Type: ScriptBlock

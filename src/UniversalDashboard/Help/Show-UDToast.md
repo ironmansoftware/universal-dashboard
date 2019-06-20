@@ -26,6 +26,15 @@ Shows a new toast message.
 
 ## EXAMPLES
 
+### Basic toast
+```
+New-UDButton -Text "Show Toast" -OnClick {
+    Show-UDToast -Message 'Toast'
+}
+```
+
+Shows a basic toast.
+
 ## PARAMETERS
 
 ### -BackgroundColor

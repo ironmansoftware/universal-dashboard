@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDRow.md
 schema: 2.0.0
 ---
 
@@ -29,12 +29,12 @@ Creates a new row on the dashboard. Columns are defined with New-UDColumn.
 
 ### Example 1
 ```
-PS C:\> New-UDRow {
+New-UDRow {
 	New-UDColumn -Size 6 {
-	
+		New-UDCard -Content {} -BackgroundColor black
 	}
 	New-UDColumn -Size 6 {
-	
+		New-UDCard -Content {} -BackgroundColor black
 	}
 }
 ```
@@ -43,19 +43,19 @@ Defines a row with two columns are equal size.
 
 ### Example 2
 ```
-PS C:\> New-UDRow {
+New-UDRow {
 	New-UDColumn -Size 6 {
 		New-UDRow {
 			New-UDColumn -Size 6 {
-			
+				New-UDCard -Content {} -BackgroundColor black
 			}
 			New-UDColumn -Size 6 {
-			
+				New-UDCard -Content {} -BackgroundColor black
 			}
 		}
 	}
 	New-UDColumn -Size 6 {
-	
+		New-UDCard -Content {} -BackgroundColor black
 	}
 }
 ```

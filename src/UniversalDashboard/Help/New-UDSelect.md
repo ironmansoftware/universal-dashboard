@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDSelect.md
 schema: 2.0.0
 ---
 
@@ -24,12 +24,12 @@ Creates a select.
 
 ### Example 1
 ```
-PS C:\> New-UDSelect -Label "State" -Option {
+New-UDSelect -Label "State" -Option {
     New-UDSelectOption -Name "Wisconsin" -Value 1
     New-UDSelectOption -Name "Idaho" -Value 2
     New-UDSelectOption -Name "Washington" -Value 3
 } -OnChange {
-    $Session:State = $EventData
+    Show-UDToast -Message $EventData
 }
 ```
 

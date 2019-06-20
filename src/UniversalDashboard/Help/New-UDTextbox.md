@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDTextbox.md
 schema: 2.0.0
 ---
 
@@ -24,7 +24,7 @@ Creates a textbox.
 
 ### Example 1
 ```
-PS C:\> New-UDTextbox -Label "Textbox" -Placeholder "Enter your name"
+New-UDTextbox -Label "Textbox" -Placeholder "Enter your name"
 ```
 
 Creates a new textbox that has a placeholder asking to enter the user's name.

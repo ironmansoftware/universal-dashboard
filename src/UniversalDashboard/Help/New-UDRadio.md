@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDRadio.md
 schema: 2.0.0
 ---
 
@@ -22,19 +22,42 @@ Creates a radio. Radios can be used to select between a set of items. They shoul
 
 ## EXAMPLES
 
-### Example 1
+### Basic Radio
 ```
-PS C:\> New-UDRadio -Label 'Option 1' -Group 'Group 1'
-PS C:\> New-UDRadio -Label 'Option 2' -Group 'Group 1'
-PS C:\> New-UDRadio -Label 'Option 3' -Group 'Group 1'
+New-UDRadio -Label 'Option 1' -Group 'Group 1'
+New-UDRadio -Label 'Option 2' -Group 'Group 1'
+New-UDRadio -Label 'Option 3' -Group 'Group 1'
 ```
 
 Creates three options for a radio group.
 
+### OnChange
+```
+New-UDRadio -Label 'Option 1' -Group 'Group 1' -OnChange { Show-UDToast -Message $EventData }
+New-UDRadio -Label 'Option 2' -Group 'Group 1' -OnChange { Show-UDToast -Message $EventData }
+New-UDRadio -Label 'Option 3' -Group 'Group 1' -OnChange { Show-UDToast -Message $EventData }
+```
+
+Creates three options for a radio group with onChange event handlers.
+
+
+### Multiple groupos
+```
+New-UDRadio -Label 'Option 1' -Group 'Group 1'
+New-UDRadio -Label 'Option 2' -Group 'Group 1'
+New-UDRadio -Label 'Option 3' -Group 'Group 1'
+
+New-UDRadio -Label 'Option 1' -Group 'Group 2'
+New-UDRadio -Label 'Option 2' -Group 'Group 2'
+New-UDRadio -Label 'Option 3' -Group 'Group 2'
+```
+
+Creates three options for two radio groups.
+
 ## PARAMETERS
 
 ### -Checked
-{{Fill Checked Description}}
+Whether the radio is checked.
 
 ```yaml
 Type: SwitchParameter
