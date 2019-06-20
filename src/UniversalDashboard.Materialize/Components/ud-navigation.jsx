@@ -73,8 +73,12 @@ export default class UdNavigation extends React.Component {
         else 
         {
             var children = item.children.map(x => this.renderSideNavItem(x));
+
+            var icon = item.icon;
+            var header = [icon && <UdIcon icon={icon} style={{width: '30px', marginTop: '15px'}}/>, item.text]
+
             return  <li><Collapsible accordion>
-                        <CollapsibleItem header={item.text} style={{color: 'black', paddingLeft: '15px'}} id={item.id}>
+                        <CollapsibleItem header={header} style={{color: 'black', paddingLeft: '15px'}} id={item.id}>
                             <ul>
                                 {children}
                             </ul>
