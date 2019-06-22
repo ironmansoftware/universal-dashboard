@@ -18,6 +18,7 @@ function New-UDCollapsible {
     @{
         type = 'ud-collapsible'
         isPlugin = $true
+        assetId = $AssetId
 
         id = $id
         items = $Items.Invoke()

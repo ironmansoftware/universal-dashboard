@@ -73,7 +73,7 @@ class UDCollapsibleItem extends React.Component {
           <div
             className={cx('collapsible-header', { active: this.props.active })}
           >
-            {this.props.icon && <UDIcon icon={this.props.icon}/>}
+            {this.props.icon && <UDIcon icon={this.props.icon} style={{margin: '5px'}}/>}
             {this.props.title}
           </div>
           <div className="collapsible-body">{UniversalDashboard.renderComponent(this.state.content)}</div>
