@@ -120,7 +120,7 @@ class UDSideNavItem extends React.Component {
     onItemClick(e) {
         e.preventDefault(); 
 
-        if (this.props.hasCallback) {
+        if (this.props.type === "side-nav-item" && this.props.hasCallback) {
             PubSub.publish('element-event', {
                 type: "clientEvent",
                 eventId: this.props.id,
@@ -132,7 +132,11 @@ class UDSideNavItem extends React.Component {
             window.location.href = this.props.url;
         }
         else if (this.props.url != null) {
-            this.props.history.push(`/${this.props.url.replace(/ /g, "-")}`);      
+            var url = this.props.url;
+            if (!url.startsWith("/")) {
+                url = "/" + url;
+            }
+            this.props.history.push(`${url.replace(/ /g, "-")}`);      
         }
         else if (this.props.name != null) {
           this.props.history.push(`/${this.props.name.replace(/ /g, "-")}`);      
