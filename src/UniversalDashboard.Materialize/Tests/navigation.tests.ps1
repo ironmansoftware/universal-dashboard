@@ -8,6 +8,8 @@ Describe "Navigation" {
         )
 
         It "should navigate between pages" {
+            Start-Sleep 1
+
             $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
             Invoke-SeClick $Element
 
