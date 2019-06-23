@@ -18,7 +18,7 @@ Describe "Navigation" {
 
             Start-Sleep 1
 
-            Find-SeElement -Id "page1" -Driver $Driver | Should not be $null
+            Find-SeElement -Id "page2" -Driver $Driver | Should not be $null
         }
     }
 }
