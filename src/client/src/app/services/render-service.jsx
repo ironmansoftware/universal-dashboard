@@ -14,6 +14,9 @@ const UdDateTimeComponent = React.lazy(() => import('./../basics/datetime.jsx' /
 const UdElementComponent = React.lazy(() => import('./../ud-element.jsx' /* webpackChunkName: "ud-element" */))
 const UdIcon = React.lazy(() => import( './../ud-icon.jsx' /* webpackChunkName: "ud-icon" */))
 
+import UDSplitPane from './../ud-splitpane';
+UniversalDashboard.register("ud-splitpane", UDSplitPane);
+
 export function internalRenderComponent(component, history) {
     if (!component) return null;
 
