@@ -29,10 +29,6 @@ export default class UDSelect extends React.Component {
     }
 
     onChange(e) {
-        if (this.props.onChange == null) {
-            return
-        }
-
         var val = new Array();
 
         if (e.target.selectedOptions) {
@@ -53,16 +49,20 @@ export default class UDSelect extends React.Component {
             val = JSON.stringify(val);
         }
 
+        this.setState({
+            value: val
+        })
+
+        if (this.props.onChange == null) {
+            return
+        }
+
         UniversalDashboard.publish('element-event', {
             type: "clientEvent",
             eventId: this.props.onChange,
             eventName: 'onChange',
             eventData: val
         });
-
-        this.setState({
-            value: val
-        })
     }
 
     render() {
