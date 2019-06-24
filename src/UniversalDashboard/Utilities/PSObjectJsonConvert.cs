@@ -35,17 +35,22 @@ namespace UniversalDashboard.Utilities
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var dictionary = value.ToDictionary() as Dictionary<string, object>;
+            var obj = value.ToDictionary();
 
-            writer.WriteStartObject();
-           
-            foreach (var property in dictionary)
+            if (obj is Dictionary<string, object> dictionary)
             {
-                writer.WritePropertyName(property.Key);
-                serializer.Serialize(writer, property.Value);
+                writer.WriteStartObject();
+
+                foreach (var property in dictionary)
+                {
+                    writer.WritePropertyName(property.Key);
+                    serializer.Serialize(writer, property.Value);
+                }
+
+                writer.WriteEndObject();
             }
 
-            writer.WriteEndObject();
+            writer.WriteValue(obj);
         }
     }
 }
