@@ -19,5 +19,6 @@ if (!window.Promise) {
 }
 
 window.UniversalDashboard = UniversalDashboardService;
+require('./component-registration');
 
 render(<App/>, document.getElementById('app'));

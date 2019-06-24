@@ -49,8 +49,10 @@ namespace UniversalDashboard.Utilities
 
                 writer.WriteEndObject();
             }
-
-            writer.WriteValue(obj);
+            else
+            {
+                writer.WriteValue(obj);
+            }
         }
     }
 }

@@ -94,6 +94,7 @@ $manifestParameters = @{
 		"New-UDGridLayout"
 		"New-UDImageCarousel"
 		"New-UDImageCarouselItem"
+		"New-UDSplitPane"
 
 		#Material UI
 		'New-UDMuAvatar'
