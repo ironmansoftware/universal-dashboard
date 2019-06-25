@@ -105,3 +105,75 @@ function New-UDComponentExample {
 
     New-UDElement -tag 'hr'
 }
+
+function New-UDRestApiExample {
+    param(
+        $Name,
+        $Description,
+        $Code,
+        $Invocation
+    )
+
+    New-UDHeading -Size 4 -Text $Name 
+    New-UDHeading -Size 5 -Text $Description 
+
+    New-UDTabContainer -Tabs {
+        New-UDTab -Text "Code" -Content {
+            New-UDElement -Tag 'div' -Attributes @{
+                style = @{
+                    padding = '30px'
+                    background = '#f8f8f8'
+                }
+            } -Content {
+                New-UDElement -tag pre -Content {
+                    $Code
+                    Invoke-Expression $Code | Out-Null
+                }
+            }
+        }
+        New-UDTab -Text "Try It" -Content {
+            New-UDElement -Tag 'div' -Attributes @{
+                style = @{
+                    padding = '30px'
+                    background = '#f8f8f8'
+                }
+            } -Content {
+                New-UDElement -tag pre -Content {
+                    $Invocation
+                }
+            }            
+        }
+    }
+
+    New-UDElement -tag 'hr'
+}
+
+
+function New-UDRawExample {
+    param(
+        $Name,
+        $Description,
+        $Code
+    )
+
+    New-UDHeading -Size 4 -Text $Name 
+    New-UDHeading -Size 5 -Text $Description 
+
+    New-UDTabContainer -Tabs {
+        New-UDTab -Text "Code" -Content {
+            New-UDElement -Tag 'div' -Attributes @{
+                style = @{
+                    padding = '30px'
+                    background = '#f8f8f8'
+                }
+            } -Content {
+                New-UDElement -tag pre -Content {
+                    $Code
+                    Invoke-Expression $Code | Out-Null
+                }
+            }
+        }
+    }
+
+    New-UDElement -tag 'hr'
+}

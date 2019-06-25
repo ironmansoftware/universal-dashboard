@@ -21,10 +21,19 @@ Redirects a user to a URL. This cmdlet can be called from any endpoint.
 
 ## EXAMPLES
 
-### Example 1
+### Redirect to Google
 ```
-PS C:\> New-UDButton -Text "Redirect to Google" -OnClick {
+New-UDButton -Text "Redirect to Google" -OnClick {
     Invoke-UDRedirect -Url "https://www.google.com"
+}
+```
+
+Redirects the user to Google.
+
+### Open in a new tab or window
+```
+New-UDButton -Text "Redirect to Google" -OnClick {
+    Invoke-UDRedirect -Url "https://www.google.com" -OpenInNewWindow
 }
 ```
 
