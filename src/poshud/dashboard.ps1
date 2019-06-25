@@ -6,6 +6,8 @@ $NavBarLinks = @((New-UDLink -Text "Buy Universal Dashboard" -Url "https://ironm
 $Pages = @()
 $Pages += . (Join-Path $PSScriptRoot "pages\home.ps1")
 $Pages += . (Join-Path $PSScriptRoot "pages\getting-started.ps1")
+$Pages += . (Join-Path $PSScriptRoot "pages\rest-apis.ps1")
+$Pages += . (Join-Path $PSScriptRoot "pages\scheduled-endpoints.ps1")
 $Pages += . (Join-Path $PSScriptRoot "dashboards\azure.ps1")
 
 $Components = @()
@@ -48,8 +50,8 @@ $Pages += (New-UDComponentPage -Command "Show-UDToast")
 
 $Navigation = New-UDSideNav -Content {
     New-UDSideNavItem -Text "Home" -Url "Home" -Icon home
-    New-UDSideNavItem -SubHeader -Text "Dashboards" -Children {
-        New-UDSideNavItem -Text "Azure Resources" -Url "Azure" -Icon cloud
+    New-UDSideNavItem -SubHeader -Text "Sample Dashboards" -Icon chart_line  -Children {
+        New-UDSideNavItem -Text "Azure Resources" -Url "Azure"
     }
     New-UDSideNavItem -SubHeader -Text "About Universal Dashboard" -Icon question -Children {
         New-UDSideNavItem -Text "Getting Started" -Url "Getting-Started"
@@ -58,11 +60,15 @@ $Navigation = New-UDSideNav -Content {
         $Components 
     }
     New-UDSideNavItem -SubHeader -Text "Utilities" -Icon wrench -Children {
+
         New-UDSideNavItem -Text "Modals" -Url "Show-UDModal"
+        New-UDSideNavItem -Text 'Scheduled Endpoints' -Url 'Scheduled-Endpoints'
         New-UDSideNavItem -Text "Toasts" -Url "Show-UDToast"
+        New-UDSideNavItem -Text 'REST APIs' -Url 'REST-APIs'
+
     }
 } -Fixed
 
-$EndpointInitialization = New-UDEndpointInitialization -Function "New-UDComponentExample"
+$EndpointInitialization = New-UDEndpointInitialization -Function @("New-UDComponentExample", "New-UDRestApiExample", "New-UDRawExample")
 
 New-UDDashboard -NavbarLinks $NavBarLinks -Title "PowerShell Universal Dashboard" -Pages $Pages -Footer $Footer -Navigation $Navigation -EndpointInitialization $EndpointInitialization
