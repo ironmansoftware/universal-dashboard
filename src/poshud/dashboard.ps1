@@ -9,6 +9,7 @@ $Pages += . (Join-Path $PSScriptRoot "pages\getting-started.ps1")
 $Pages += . (Join-Path $PSScriptRoot "pages\rest-apis.ps1")
 $Pages += . (Join-Path $PSScriptRoot "pages\scheduled-endpoints.ps1")
 $Pages += . (Join-Path $PSScriptRoot "dashboards\azure.ps1")
+$Pages += New-UDComponentPage -Command 'Invoke-UDRedirect'
 
 $Components = @()
 @('New-UDButton', 
@@ -64,6 +65,7 @@ $Navigation = New-UDSideNav -Content {
         New-UDSideNavItem -Text "Modals" -Url "Show-UDModal"
         New-UDSideNavItem -Text 'Scheduled Endpoints' -Url 'Scheduled-Endpoints'
         New-UDSideNavItem -Text "Toasts" -Url "Show-UDToast"
+        New-UDSideNavItem -Text 'Redirect' -Url 'Invoke-UDRedirect'
         New-UDSideNavItem -Text 'REST APIs' -Url 'REST-APIs'
 
     }
