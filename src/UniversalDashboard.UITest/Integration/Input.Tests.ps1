@@ -14,6 +14,33 @@ $Driver = Start-SeFirefox
 
 Describe "Input" {
 
+    Context "grid in content" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
+                New-UDInputAction -Content {
+                    New-UDGrid -Id 'test' -Title "Grid" -Endpoint {
+
+                    }
+                }
+            }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Start-Sleep 4
+
+        It "should include new line charts" {
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick $Button
+
+            Start-Sleep 1
+
+            Find-SeElement -Driver $Driver -Id 'test' | Should not be $null
+        }
+    }
+
+
     Context "textarea" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Content {

@@ -1,4 +1,5 @@
-﻿using System.Management.Automation;
+﻿using System.Linq;
+using System.Management.Automation;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Cmdlets.Inputs
@@ -16,7 +17,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
 		public string RedirectUrl { get; set; }
 
 		[Parameter(Mandatory = true, ParameterSetName = "content")]
-		public Component[] Content { get; set; }
+		public object Content { get; set; }
 
 		[Parameter(ParameterSetName = "toast")]
 		public SwitchParameter ClearInput { get; set; }
@@ -42,7 +43,14 @@ namespace UniversalDashboard.Cmdlets.Inputs
 			if (ParameterSetName == "content")
 			{
 				inputAction.Type = InputAction.Content;
-				inputAction.Components = Content;
+
+				if (Content is ScriptBlock scriptBlock) {
+                    inputAction.Components = scriptBlock.Invoke();
+				}
+                else
+                {
+                    inputAction.Components = Content;
+                }
 			}
 
 			WriteObject(inputAction);

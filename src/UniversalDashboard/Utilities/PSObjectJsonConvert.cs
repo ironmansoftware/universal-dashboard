@@ -51,7 +51,17 @@ namespace UniversalDashboard.Utilities
             }
             else
             {
-                writer.WriteValue(obj);
+                try
+                {
+                    writer.WriteValue(obj);
+                }
+                catch
+                {
+                    if (value is PSObject psObject)
+                    {
+                        writer.WriteRaw(JsonConvert.SerializeObject(psObject.BaseObject));
+                    }
+                }
             }
         }
     }

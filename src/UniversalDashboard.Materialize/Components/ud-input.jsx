@@ -133,8 +133,14 @@ export default class Input extends React.Component {
                     }
 
                     if (x.type === "content") {
+
+                        var components = x.components;
+                        if (!Array.isArray(components)) {
+                            components = [components];
+                        }
+
                         this.setState({
-                            newContent: x.components
+                            newContent: components
                         })
                     }
 
