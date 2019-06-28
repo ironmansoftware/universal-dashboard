@@ -39,7 +39,7 @@ Describe "Input" {
 
             Start-Sleep 1
 
-            $Cache:Data | should be "16`n17`n18"
+            $Cache:Data | should be "16`r`n17`r`n18"
         }
     }
 
