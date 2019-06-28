@@ -297,7 +297,7 @@ namespace UniversalDashboard.Controllers
 					{
 						var value = item.Value?.ToString();
                         if (!string.IsNullOrEmpty(value)) {
-                            var values = value.Split(Environment.NewLine.ToArray());
+                            var values = value.Split(Environment.NewLine.ToArray()).Where(m => !string.IsNullOrEmpty(m));
                             variables.Add(item.Name, values);
                         }
 					}
