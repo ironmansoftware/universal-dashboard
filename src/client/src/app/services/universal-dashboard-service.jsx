@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchGet, fetchPost, fetchDelete, fetchPut, fetchPostRaw } from './fetch-service.jsx';
+import { fetchGet, fetchPost, fetchDelete, fetchPut, fetchPostRaw, fetchPostFormData } from './fetch-service.jsx';
 import { internalRenderComponent } from './render-service.jsx';
 import LazyElement from './../basics/lazy-element.jsx';
 import PubSub from 'pubsub-js';
@@ -21,6 +21,7 @@ export const UniversalDashboardService = {
     design: false,
     get: fetchGet,
     post: fetchPost,
+    postFormData: fetchPostFormData,
     postRaw: fetchPostRaw,
     put: fetchPut,
     delete: fetchDelete,
