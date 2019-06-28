@@ -112,6 +112,7 @@ namespace UniversalDashboard
 						}
 						
 					});
+					options.Limits.MaxRequestBodySize = null;
 				});
 
 			builder = builder
