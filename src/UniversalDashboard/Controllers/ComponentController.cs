@@ -213,23 +213,65 @@ namespace UniversalDashboard.Controllers
 		[HttpPost]
 		[Route("input/{id}")]
 		[Authorize]
-		public async Task<IActionResult> Input(string id)
+        public async Task<IActionResult> Input([FromRoute]string id)
 		{
 			var variables = new Dictionary<string, object>();
 
-			string body = string.Empty;
-			using (var streamReader = new StreamReader(Request.Body))
-			{
-				body = streamReader.ReadToEnd();
-			}
+            var fields = new List<Field>();
+            foreach(var formField in Request.Form.Where(m => !m.Key.EndsWith("_dotNetType") && !m.Key.EndsWith("_type")))
+            {
+                string dotNetType = null;
+                if (Request.Form.ContainsKey(formField.Key + "_dotNetType"))
+                {
+                    dotNetType = Request.Form[formField.Key + "_dotNetType"];
+                }
 
-			var fields = JsonConvert.DeserializeObject<List<Field>>(body);
+                fields.Add(new Field
+                {
+                    Name = formField.Key,
+                    Value = formField.Value.FirstOrDefault(),
+                    DotNetType = dotNetType,
+                    Type = Request.Form.First(m => m.Key == formField.Key + "_type").Value,
+                });
+            }
+
+            foreach(var file in Request.Form.Files)
+            {
+                string dotNetType = null;
+                if (Request.Form.ContainsKey(file.Name + "_dotNetType"))
+                {
+                    dotNetType = Request.Form[file.Name + "_dotNetType"];
+                }
+
+                fields.Add(new Field
+                {
+                    Name = file.Name,
+                    DotNetType = dotNetType,
+                    Type = Request.Form.First(m => m.Key == file.Name + "_type").Value,
+                    Value = file
+                });
+            }
 
 			if (fields != null)
 			{
 				foreach (var item in fields)
 				{
-					if (item.DotNetType == typeof(bool).FullName)
+                    if (item.Type == FieldTypes.BinaryFile)
+                    {
+                        variables.Add(item.Name, item.Value);
+                    }
+                    else if (item.Type == FieldTypes.File)
+                    {
+                        var formFile = item.Value as IFormFile;
+                        string value;
+                        using (var reader = new StreamReader(formFile.OpenReadStream()))
+                        {
+                            value = reader.ReadToEnd();
+                        }
+
+                        variables.Add(item.Name, value);
+                    }
+                    else if (item.DotNetType == typeof(bool).FullName)
 					{
 						if (bool.TryParse(item.Value?.ToString(), out bool result))
 						{

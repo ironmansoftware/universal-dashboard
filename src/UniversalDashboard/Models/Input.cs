@@ -73,6 +73,8 @@ namespace UniversalDashboard.Models
         public static string Time = "time";
 		public static string Password = "password";
 		public static string Textarea = "textarea";
+        public static string BinaryFile = "binaryFile";
+        public static string File = "file";
     }
 }
 

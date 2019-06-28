@@ -30,18 +30,8 @@ export default class UdInputField extends React.Component {
 
     onFileChanged(field, e) {
         var file = e.target;
-        var fileContent = "";
-        var reader = new FileReader();
-        
-        var _this = this;
-        reader.onload = function (e) {
-            fileContent = reader.result;
-            _this.props.onValueChanged(field.name, fileContent);
-        }
-        reader.readAsText(file.files[0]);
-
-        var file = e.target.files[0].name;
-        this.setState({ file: file });
+        this.props.onValueChanged(field.name, file.files[0]);
+        this.setState({ file: file.files[0].name });
     }
 
     onValidateField(field, e) {
@@ -252,7 +242,7 @@ export default class UdInputField extends React.Component {
             return [<p>{field.placeholder ? field.placeholder : field.name}</p>, options];
         }
 
-        if (field.type == 'file') {
+        if (field.type == 'file' || field.type == 'binaryFile') {
             var self = this;
             
             return (

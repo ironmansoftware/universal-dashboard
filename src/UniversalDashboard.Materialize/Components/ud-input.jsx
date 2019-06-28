@@ -76,8 +76,15 @@ export default class Input extends React.Component {
         this.setState({
             loading: true
         })
+
+        var formData = new FormData();
+        this.state.fields.forEach(x => {
+            formData.append(x.name, x.value)
+            formData.append(x.name + "_dotNetType", x.dotNetType)
+            formData.append(x.name + "_type", x.type)
+        })
         
-        UniversalDashboard.post(`/api/internal/component/input/${this.props.id}`, this.state.fields, res => {
+        UniversalDashboard.postFormData(`/api/internal/component/input/${this.props.id}`, formData, res => {
                 if (res.error) {
 
                     UniversalDashboard.toaster.error({message: res.error.message})

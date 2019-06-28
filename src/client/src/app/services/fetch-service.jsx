@@ -54,6 +54,33 @@ export const fetchPost = function(url, data, success) {
     });
 }
 
+export const fetchPostFormData = function(url, data, success) {
+    if (!success) {
+        success = () => {}
+    }
+
+    fetch(getApiPath() + url, {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json, text/plain, */*'//,
+          //'Content-Type': 'multipart/form-data'
+        },
+        body: data,
+        credentials: 'include'
+      })
+      .then(function(response){
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error(response.statusText);
+        }
+    })
+    .then(success)
+    .catch(function(e) {
+        console.log(e)
+    });
+}
+
 export const fetchDelete = function(url, data, success) {
     if (!success) {
         success = () => {}
