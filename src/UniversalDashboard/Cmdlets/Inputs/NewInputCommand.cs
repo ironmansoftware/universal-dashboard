@@ -41,8 +41,13 @@ namespace UniversalDashboard.Cmdlets.Inputs
         private IEnumerable<Field> GetFieldsFromParamBlock() {
 
 			var paramBlock = (ParamBlockAst)Endpoint.Ast.Find(m => m is ParamBlockAst, false);
-
 			var fields = new List<Field>();
+
+            if (paramBlock == null)
+            {
+                return fields;
+            }
+
 			foreach(var parameter in paramBlock.Parameters)
 			{
 				var parameterAttribute = parameter.Attributes.OfType<AttributeAst>().FirstOrDefault(m => m.TypeName.Name == "Parameter");

@@ -21,7 +21,7 @@ namespace UniversalDashboard.Models
 		public string Route { get; set; }
 
 		[JsonProperty("components")]
-		public Component[] Components { get; set; }
+		public object Components { get; set; }
 
 		[JsonProperty("clearInput")]
 		public bool ClearInput { get; set; }
