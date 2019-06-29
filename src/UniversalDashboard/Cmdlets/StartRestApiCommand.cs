@@ -58,8 +58,10 @@ namespace UniversalDashboard.Cmdlets
 
 			if (Force) {
 				var existingServer = Server.Servers.FirstOrDefault(m => m.Port == Port || m.Name == m.Name);
-				existingServer.Stop();
-				Server.Servers.Remove(existingServer);
+				if (existingServer != null) {
+					existingServer.Stop();
+					Server.Servers.Remove(existingServer);
+				}
 			}
 
 			var server = new Server(Name, MyInvocation.ScriptName, AutoReload, Host, Port);
