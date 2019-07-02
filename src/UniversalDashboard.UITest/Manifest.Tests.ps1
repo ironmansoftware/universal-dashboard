@@ -11,7 +11,7 @@ Get-UDDashboard | Stop-UDDashboard
 Describe "Manifest" {
 
     It "should have correct version" {
-        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.4.1"
+        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.5.1"
     }
 
     It "should have correct exported commands" {
@@ -120,7 +120,7 @@ Describe "Manifest" {
         Get-Command 'New-UDTab' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDGridLayout' -ErrorAction SilentlyContinue | Should not be $null
         
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 122
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 123
     }
 
     It "should require .NET 4.7" -Skip  {
