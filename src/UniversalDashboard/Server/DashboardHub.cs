@@ -192,8 +192,6 @@ namespace UniversalDashboard
         public Task ClientEvent(string eventId, string eventName, string eventData, string location) {
             _logger.Debug($"ClientEvent {eventId} {eventName}");
 
-            
-
             var variables = new Dictionary<string, object>();
             var userName = Context.User?.Identity?.Name;
 
@@ -238,11 +236,16 @@ namespace UniversalDashboard
                 {
                     try
                     {
-                        
-                        _executionService.ExecuteEndpoint(executionContext, endpoint);
+                        dynamic result = _executionService.ExecuteEndpoint(executionContext, endpoint);
+                        if (result.Error is Error error)
+                        {
+                            Clients.Client(Context.ConnectionId).SendAsync("showError", new { message = error.Message });
+                        }
+
                     }
                     catch (Exception ex)
                     {
+                        
                         _logger.Error("Failed to execute action. " + ex.Message);
                         throw;
                     }

@@ -62,6 +62,10 @@ export default class UdDashboard extends React.Component {
             toaster.show(model);
         });
 
+        connection.on('showError', (model) => {
+            toaster.error(model);
+        });
+
         connection.on('hideToast', (id) => {
             toaster.hide(id);
         });
