@@ -371,7 +371,10 @@ class GridToolbar extends React.Component {
                 startPage = this.props.totalPages - 10;
             }
 
-            for(var i = startPage; i < this.props.totalPages; i++) {
+            for(var i = startPage; i <= this.props.totalPages; i++) {
+
+                if (i <= 0) continue;
+
                 if (i > (startPage + 10)) {
                     break;
                 }
