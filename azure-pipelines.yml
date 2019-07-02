@@ -34,6 +34,10 @@ steps:
     #buildConfiguration: # Optional
     publishRunAttachments: true # Optional
 
+- task: DeleteFiles@1
+  inputs:
+    contents: '.\src\output\dashboard.ps1' 
+
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '.\src\output' 
