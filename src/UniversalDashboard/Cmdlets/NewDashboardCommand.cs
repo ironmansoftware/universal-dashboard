@@ -78,6 +78,10 @@ namespace UniversalDashboard.Cmdlets
 
         protected override void EndProcessing()
 	    {
+			if (EndpointInitialization == null) {
+				EndpointInitialization = InitialSessionState.CreateDefault2();
+			}
+
 			var dashboard = new Dashboard();
 			dashboard.Title = Title;
 			dashboard.NavBarColor = NavBarColor?.HtmlColor;

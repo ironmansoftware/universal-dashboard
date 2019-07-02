@@ -86,7 +86,7 @@ function New-UDComponentExample {
                     background = '#f8f8f8'
                 }
             } -Content {
-                Invoke-Expression $Code
+                Invoke-Expression -Command $Code
             }
         }
         New-UDTab -Text "Code" -Content {
@@ -127,7 +127,7 @@ function New-UDRestApiExample {
             } -Content {
                 New-UDElement -tag pre -Content {
                     $Code
-                    Invoke-Expression $Code | Out-Null
+                    Invoke-Expression -Command $Code | Out-Null
                 }
             }
         }
@@ -169,7 +169,7 @@ function New-UDRawExample {
             } -Content {
                 New-UDElement -tag pre -Content {
                     $Code
-                    Invoke-Expression $Code | Out-Null
+                    Invoke-Expression -Command $Code | Out-Null
                 }
             }
         }

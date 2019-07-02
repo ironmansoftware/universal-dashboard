@@ -24,12 +24,12 @@ Creates a floating action button within a FAB.
 
 ### Example 1
 ```
-PS C:\> New-UdFab -Id "main" -Icon "plus" -Size "large" -ButtonColor "red" -Content {
-                New-UDFabButton -ButtonColor "green" -Icon "edit" -size "small"
-                New-UDFabButton -Id "btn" -ButtonColor "yellow" -Icon "trash" -size "large" -onClick {
-                    Show-UDToast -Message "Clicked!"
-                }
-            }
+New-UdFab -Id "main" -Icon "plus" -Size "large" -ButtonColor "red" -Content {
+    New-UDFabButton -ButtonColor "green" -Icon "edit" -size "small"
+    New-UDFabButton -Id "btn" -ButtonColor "yellow" -Icon "trash" -size "large" -onClick {
+        Show-UDToast -Message "Clicked!"
+    }
+}
 ```
 
 Creates two FAB buttons within a FAB with custom icons and colors and an event handler.
