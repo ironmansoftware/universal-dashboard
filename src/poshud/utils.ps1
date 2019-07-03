@@ -3,7 +3,7 @@ function New-UDComponentPage {
         $Command
     )
 
-    New-UDPage -Name $Command -Endpoint {
+    New-UDPage -Name $Command -Content {
 
         $Help = Get-Help $Command -Full
         $OnlineVersion = $Help.relatedLinks.navigationLink | Where-Object linkText -eq 'Online Version:' | Select-Object -ExpandProperty uri
