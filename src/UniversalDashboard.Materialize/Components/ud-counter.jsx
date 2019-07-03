@@ -21,7 +21,7 @@ export default class UdCounter extends React.Component {
             return;
         }
 
-        UniversalDashboard.get(`/api/internal/component/element/${this.props.id}`,function(json){
+        this.props.getComponentData(this.props.id, function(json){
             if (json.error) {
                 this.setState({
                     hasError: true, 
@@ -38,17 +38,17 @@ export default class UdCounter extends React.Component {
 
     componentWillMount() {
         this.loadData();
-        this.pubSubToken = UniversalDashboard.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+        this.props.subscribeToIncomingEvents(this.props.id, this.onIncomingEvent.bind(this));
+    }
+
+    componentWillUnmount() {
+        this.props.unregisterEndpoint(this.props.id);
     }
 
     onIncomingEvent(eventName, event) {
         if (event.type === "syncElement") {
             this.loadData();
         }
-    }
-
-    componentWillUnmount() {
-        UniversalDashboard.unsubscribe(this.pubSubToken);
     }
 
     componentDidUpdate(prevProps) {

@@ -18,6 +18,9 @@ export default class ComponentContainer extends React.Component {
         component.subscribeToIncomingEvents = function(id, callback) {
             this.pubSubToken = UniversalDashboard.subscribe(id, callback);
         }.bind(this);
+        component.getComponentData = function(id, callback) {
+            UniversalDashboard.get(`/api/internal/component/element/${id}`, callback);
+        }
     
         return component;
     }

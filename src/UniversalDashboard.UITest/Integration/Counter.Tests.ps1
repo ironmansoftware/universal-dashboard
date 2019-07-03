@@ -20,8 +20,8 @@ Describe "Counter" {
         $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
-        It "should support new line in card" {
-        
+        It "should have value" {
+                (Find-SeElement -Driver $Driver -Id 'Counter').Text | should be "1000"
         }
 
        Stop-SeDriver $Driver
