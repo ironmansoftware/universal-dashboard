@@ -7,12 +7,13 @@ export default class UDFab extends React.Component {
 
     onClick() {
         if (this.props.onClick) {
-            UniversalDashboard.publish('element-event', {
-                type: "clientEvent",
-                eventId: this.props.onClick,
-                eventName: 'onChange',
-                eventData: ''
-            });
+            this.props.publishEvent(this.props.onClick, '');
+        }
+    }
+
+    componentWillUnmount() {
+        if (this.props.onClick) {
+            this.props.unregisterEndpoint(this.props.onClick);
         }
     }
 

@@ -4,6 +4,7 @@ import { internalRenderComponent } from './render-service.jsx';
 import LazyElement from './../basics/lazy-element.jsx';
 import PubSub from 'pubsub-js';
 import toaster from './toaster';
+import ComponentContainer from '../ud-component-container.jsx';
 
 export const UniversalDashboardService = {
     components: [],
@@ -39,11 +40,7 @@ export const UniversalDashboardService = {
 
         var existingComponent = this.components.find(x => x.type === component.type);
         if (existingComponent != null) {
-            return React.createElement(existingComponent.component, {
-                ...component,
-                key: component.id, 
-                history
-            });
+            return <ComponentContainer componentType={existingComponent.component} component={component} history={history} />
         } else if (component.isPlugin && !dynamicallyLoaded) {
             return <LazyElement component={component} key={component.id} history={history}/>
         }
@@ -100,5 +97,11 @@ export const UniversalDashboardService = {
 
             }
         })
+    },
+    unregisterEndpoint: function(id) {
+        PubSub.publish('element-event', {
+            type: "unregisterEvent",
+            eventId: id
+        });
     }
 }

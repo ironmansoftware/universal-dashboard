@@ -10,12 +10,13 @@ export default class UDCheckbox extends React.Component {
 
         var val = e.target.checked;
 
-        UniversalDashboard.publish('element-event', {
-            type: "clientEvent",
-            eventId: this.props.onChange,
-            eventName: 'onChange',
-            eventData: val.toString()
-        });
+        this.props.publishEvent(this.props.onChange, val.toString());
+    }
+
+    componentWillUnmount() {
+        if (this.props.onChange) {
+            this.props.unregisterEndpoint(this.props.onChange);
+        }
     }
 
     render() {

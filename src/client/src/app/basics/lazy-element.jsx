@@ -43,7 +43,7 @@ export default class LazyElement extends React.Component {
         if (element == null) {
             return renderComponent({
                 type: 'error', 
-                message: `Component not registered: ${this.props.component.type}`
+                message: `Component not registered: ${component.type}`
             });
         }
 

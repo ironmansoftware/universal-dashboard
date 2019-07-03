@@ -191,7 +191,7 @@ namespace UniversalDashboard
         }
 
         public Task ClientEvent(string eventId, string eventName, string eventData, string location) {
-            _logger.Debug($"ClientEvent {eventId} {eventName}");
+            _logger.Debug($"ClientEvent {eventId}");
 
             var variables = new Dictionary<string, object>();
             var userName = Context.User?.Identity?.Name;
