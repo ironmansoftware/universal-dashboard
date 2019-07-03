@@ -68,6 +68,10 @@ export default class Input extends React.Component {
         });
     }
 
+    componentWillUnmount() {
+        this.props.unregisterEndpoint(this.props.id);
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -174,7 +178,7 @@ export default class Input extends React.Component {
 
         if (this.state.newContent.length > 0) {
             return this.state.newContent.map(function(content) {
-                return UniversalDashboard.renderComponent(content);
+                return this.props.renderComponent(content);
             });
         }
 
