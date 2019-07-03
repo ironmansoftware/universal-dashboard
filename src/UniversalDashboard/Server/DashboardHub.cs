@@ -14,6 +14,7 @@ using UniversalDashboard.Models.Basics;
 using UniversalDashboard.Services;
 using System.Text;
 using UniversalDashboard.Models.Enums;
+using Microsoft.CSharp.RuntimeBinder;
 
 namespace UniversalDashboard
 {
@@ -242,6 +243,9 @@ namespace UniversalDashboard
                             Clients.Client(Context.ConnectionId).SendAsync("showError", new { message = error.Message });
                         }
 
+                    }
+                    catch (RuntimeBinderException) {
+                        
                     }
                     catch (Exception ex)
                     {
