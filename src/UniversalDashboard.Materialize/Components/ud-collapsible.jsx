@@ -41,7 +41,7 @@ class UDCollapsibleItem extends React.Component {
 
     loadData() {
         if (this.props.endpoint) {
-            UniversalDashboard.get("/api/internal/component/element/" + this.props.id, function(data) {
+            this.props.getComponentData(this.props.id, function(data) {
                 if (data.error) {
                     this.setState({
                         content: data.error.message
@@ -55,6 +55,10 @@ class UDCollapsibleItem extends React.Component {
                 });
             }.bind(this));
         }
+    }
+
+    componentWillUnmount() {
+        this.props.unregisterEndpoint(this.props.id);
     }
 
     componentWillMount() {
