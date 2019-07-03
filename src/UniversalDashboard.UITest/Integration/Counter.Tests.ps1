@@ -21,7 +21,8 @@ Describe "Counter" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have value" {
-                (Find-SeElement -Driver $Driver -Id 'Counter').Text | should be "1000"
+            Start-Sleep 1
+            (Find-SeElement -Driver $Driver -Id 'Counter').Text | should be "Test\r\n1000"
         }
 
        Stop-SeDriver $Driver
