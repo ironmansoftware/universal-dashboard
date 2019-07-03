@@ -37,7 +37,7 @@ export default class ComponentContainer extends React.Component {
         return React.createElement(this.props.componentType, {
             ...component,
             key: component.id, 
-            history
+            history: this.props.history
         });
     }
 }
