@@ -31,8 +31,14 @@ export default class UDFab extends React.Component {
             icon = <UdIcon icon={this.props.icon}/>
         }
 
-        var children = this.props.content.map(x => <UDFabButton {...x} />);
-
+        var content = this.props.content;
+        
+        if (!Array.isArray(content)) {
+            content = [content]
+        }
+        
+        var children = content.map(x => <UDFabButton {...x} />);
+        
         return <Button 
                     floating
                     fab={{direction: this.props.expandDirection}}
