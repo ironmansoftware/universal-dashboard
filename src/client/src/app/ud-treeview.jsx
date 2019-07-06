@@ -14,19 +14,32 @@ export default class UDTreeView extends React.Component {
 
     onToggle(node, toggled)
     {
-        fetchPost('/api/internal/component/element/' + this.props.id, { nodeId: node.id}, function(data) {
-            node.children = data;
+
+        if (this.props.hasCallback) {
+            fetchPost('/api/internal/component/element/' + this.props.id, { nodeId: node.id}, function(data) {
+                node.children = data;
+                if(this.state.cursor){this.state.cursor.active = false;}
+                
+                node.active = true;
+                
+                if(node.children){ 
+                    node.toggled = toggled; 
+                }
+    
+                this.setState({ cursor: node })
+                
+            }.bind(this))
+        }
+        else {
             if(this.state.cursor){this.state.cursor.active = false;}
-            
             node.active = true;
-            
             if(node.children){ 
                 node.toggled = toggled; 
             }
-
             this.setState({ cursor: node })
-            
-        }.bind(this))
+        }
+
+
     }
 
     render(){
