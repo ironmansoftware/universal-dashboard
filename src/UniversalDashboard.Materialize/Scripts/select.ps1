@@ -48,6 +48,7 @@ function New-UDSelectGroup {
     )
 
     @{
+        type = 'ud-select-group'
         name = $Name 
         options = $Option.Invoke()
     }
