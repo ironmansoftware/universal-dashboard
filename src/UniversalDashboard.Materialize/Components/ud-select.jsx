@@ -67,8 +67,28 @@ export default class UDSelect extends React.Component {
 
     render() {
 
-        var options = this.props.options.map(x => <option value={x.value} disabled={x.disabled}>{x.name}</option>)
-        var selectedOption = this.props.options.find(x => x.selected);
+        const options = this.props.options.map(
+            group => {
+                return group.type === 'ud-select-group' ? 
+                    <optgroup label={group.name}>
+                    {
+                        group.options.map(goption => 
+                        {
+                            return <option value={goption.value} disabled={goption.disabled}>
+                                {goption.name}
+                            </option> 
+                        }
+                        )
+                    }
+                </optgroup> : 
+                <option  value={group.value} disabled={group.disabled}>
+                    {group.name}
+                </option>
+            }
+        )
+       var selectedOption = this.props.options.map(option => {
+            option.type === 'ud-select-group' ? option.options.find(x => x.selected) : this.props.options.find(x => x.selected) 
+        })
 
         return <Select 
             multiple={this.props.multiple} 
