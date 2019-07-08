@@ -37,14 +37,15 @@ export default class TabContainer extends React.Component {
         var content = this.renderTabContent();
 
         return (
-            <div className="row">
-            <div className="col s12">
+            <Fragment>
+            <div>
               <ul className="tabs" ref={x => this.element = x}>
                 {headers}
               </ul>
             </div>
             {content}
-          </div>
+          </Fragment>
+
         )
     }
 }
