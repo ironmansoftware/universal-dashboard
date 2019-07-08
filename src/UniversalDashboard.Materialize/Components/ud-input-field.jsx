@@ -234,12 +234,13 @@ export default class UdInputField extends React.Component {
                         name={`${this.props.inputId}${field.name}`} 
                         id={`${this.props.inputId}${field.name}${idx}`} 
                         disabled={field.disabled} 
-                        onChange={e => self.onRadioChanged(field, e)} value={option} />
-                    <span>{option}</span>
+                        onChange={e => self.onRadioChanged(field, e)} 
+                        value={option} />
+                    <span>{field.placeholder[idx] ? field.placeholder[idx] : option}</span>
                 </label>
             }.bind(this));
 
-            return [<p>{field.placeholder ? field.placeholder : field.name}</p>, options];
+            return options;
         }
 
         if (field.type == 'file' || field.type == 'binaryFile') {
