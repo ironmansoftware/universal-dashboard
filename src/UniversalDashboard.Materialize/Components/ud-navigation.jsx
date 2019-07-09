@@ -99,7 +99,7 @@ export default class UdNavigation extends React.Component {
         }
         
         return (
-            <SideNav ref={x => this.sideNav = x} fixed={this.props.fixed} trigger={<a style={{cursor: 'pointer'}} id='sidenavtrigger'><UdIcon icon="Bars" /></a>} options={{closeOnClick: true}}>
+            <SideNav ref={x => this.sideNav = x} style={{width: this.props.width}} fixed={this.props.fixed} trigger={<a style={{cursor: 'pointer'}} id='sidenavtrigger'><UdIcon icon="Bars" /></a>} options={{closeOnClick: true}}>
                 {children}
             </SideNav>
         )
