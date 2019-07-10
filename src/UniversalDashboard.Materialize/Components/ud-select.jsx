@@ -74,14 +74,14 @@ export default class UDSelect extends React.Component {
                     {
                         group.options.map(goption => 
                         {
-                            return <option value={goption.value} disabled={goption.disabled}>
+                            return <option {...goption} value={goption.value} disabled={goption.disabled}>
                                 {goption.name}
                             </option> 
                         }
                         )
                     }
                 </optgroup> : 
-                <option  value={group.value} disabled={group.disabled}>
+                <option {...group}  value={group.value} disabled={group.disabled}>
                     {group.name}
                 </option>
             }
