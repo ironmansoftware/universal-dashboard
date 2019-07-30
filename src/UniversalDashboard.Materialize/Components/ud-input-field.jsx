@@ -225,6 +225,7 @@ export default class UdInputField extends React.Component {
             }
 
             var options = field.validOptions.map(function(option, idx) {
+
                 return <label
                     htmlFor={`${this.props.inputId}${field.name}${idx}`}
                     key={`${this.props.inputId}${field.name}${idx}`}
@@ -236,7 +237,7 @@ export default class UdInputField extends React.Component {
                         disabled={field.disabled} 
                         onChange={e => self.onRadioChanged(field, e)} 
                         value={option} />
-                    <span>{field.placeholder[idx] ? field.placeholder[idx] : option}</span>
+                    <span>{field.placeholder && field.placeholder[idx] ? field.placeholder[idx] : option}</span>
                 </label>
             }.bind(this));
 
