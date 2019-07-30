@@ -44,4 +44,27 @@ Describe "Checkbox" {
             Get-TestData | should be $true
         }
     }
+
+    Context "Get-UDElement" {
+        Set-TestDashboard {
+            New-UDCheckbox -Id "Test" -Label "Check me" 
+
+            New-UDElement -Tag div -Id 'Result' -Endpoint {
+                try {
+                    New-UDElement -Tag div -Content { (Get-UDElement -Id 'Test').Attributes['checked'].ToString() }
+                }
+                catch {
+
+                }
+            } -AutoRefresh -RefreshInterval 1
+        }
+
+        It "should check item" {
+            $Element = Find-SeElement -Id 'Test' -Driver $Driver 
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            Start-Sleep 3
+
+            (Find-SeElement -Id 'Result' -Driver $Driver).Text | Should be "true"
+        }
+    }
 }

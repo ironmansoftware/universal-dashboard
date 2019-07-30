@@ -3,7 +3,38 @@ import {Checkbox} from 'react-materialize';
 
 export default class UDCheckbox extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            checked: props.checked
+        }
+    }
+
+    componentWillMount() {
+        this.pubSubToken = PubSub.subscribe(this.props.id, this.onIncomingEvent.bind(this));
+    }
+
+    componentWillUnmount() {
+        PubSub.unsubscribe(this.pubSubToken);
+    }
+
+    onIncomingEvent(eventName, event) {
+        if (event.type === "requestState") {
+            UniversalDashboard.post(`/api/internal/component/element/sessionState/${event.requestId}`, {
+                attributes: {
+                    checked: this.state.checked
+                }
+            });
+        } 
+    }
+
     onChanged(e) {
+
+        this.setState({
+            checked: e.target.checked
+        });
+
         if (this.props.onChange == null) {
             return
         }
