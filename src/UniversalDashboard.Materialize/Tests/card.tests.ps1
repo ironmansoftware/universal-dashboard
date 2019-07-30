@@ -26,6 +26,8 @@
                     "This is some custom content"
                 }
             }
+
+            New-UDCard -Title "Test" -Text "Text" -Id "Card-Watermark" -Watermark address_book
         }
         
         It "should have title text" {
@@ -89,6 +91,10 @@
         It "should have custom content" {
             $Element = Find-SeElement -Id "spanTest" -Driver $Driver
             $Element.Text | should be "This is some custom content"
+        }
+
+        It "should have watermark" {
+            Find-SeElement -ClassName "fa-address-book" -Driver $Driver | Should not be $null
         }
     }
 }
