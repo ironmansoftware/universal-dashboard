@@ -78,8 +78,12 @@ function New-UDCard {
             }
 
             if ($PSBoundParameters.Keys.Contains("Watermark")) {
-                New-UDElement -Tag "i" -Attributes @{
-                    className = "fa fa-" + $Watermark.ToString().Replace("_", "-")
+
+                $IconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Watermark)
+
+                @{
+                    type = "icon"
+                    icon = $IconName
                     style = @{ 
                         opacity = 0.05
                         float= 'left'
