@@ -344,6 +344,7 @@ export default class UdGrid extends React.Component {
                         noExport={this.props.noExport}
                         reload={this.reload.bind(this)}
                         loading={this.state.loading}
+                        noPaging={this.props.noPaging}
                         />]
                      : <div>No results found</div>}
                 </div>
