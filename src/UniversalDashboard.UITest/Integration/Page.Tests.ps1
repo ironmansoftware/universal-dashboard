@@ -20,6 +20,25 @@ function Set-TestDashboard {
 
 Describe "New-UDPage" {
 
+    Context "page with spaces and endpoint" {
+        $Page1 = New-UDPage -Name "Page" -Content {
+            New-UDCard -Text "Home" -Id "Home"
+        }
+
+        $Page2 = New-UDPage -Name "Page with Spaces" -Endpoint {
+            New-UDCard -Text "Home2" -Id "Home2"
+        }
+
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
+        
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should navigate to page with spaces" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Page with Spaces"
+            Find-SeElement -Id "Home2" -Driver $Driver | Should not be $null
+        }
+    }
+
     Context "cycling" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
