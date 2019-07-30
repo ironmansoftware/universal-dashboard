@@ -5,7 +5,6 @@ const UdChartComponent = React.lazy(() => import('./../ud-chart.jsx' /* webpackC
 const UdMonitorComponent = React.lazy(() => import('./../ud-monitor.jsx' /* webpackChunkName: "ud-monitor" */))
 const UdLinkComponent = React.lazy(() => import('./../ud-link.jsx' /* webpackChunkName: "ud-link" */))
 const UdErrorCardComponent = React.lazy(() => import('./../error-card.jsx' /* webpackChunkName: "ud-error-card" */))
-const UdTreeViewComponent = React.lazy(() => import('./../ud-treeview.jsx' /* webpackChunkName: "ud-tree-view" */))
 const UdInputComponent = React.lazy(() => import('./../ud-input.jsx' /* webpackChunkName: "ud-input" */))
 const UdCounterComponent = React.lazy(() => import('./../ud-counter.jsx' /* webpackChunkName: "ud-counter" */))
 const UdHtmlComponent = React.lazy(() => import('./../ud-html.jsx' /* webpackChunkName: "ud-html" */))
@@ -74,11 +73,6 @@ export function internalRenderComponent(component, history) {
 
         case "navbar":
             return <UdNavbar {...component} key={component.id}/>
-
-        case "treeview":
-            return <Suspense fallback={<div></div>}>
-                <UdTreeViewComponent {...component} key={component.id} history={history}/>
-            </Suspense>
     }
 
     return null;

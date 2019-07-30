@@ -25,6 +25,7 @@
     "react-grid-layout": "^0.16.6",
     "react-interval": "^2.0.1",
     "react-materialize": "^3.3.0",
+    "react-treebeard": "^2.1.0",
     "styled-components": "^4.2.0",
     "terminal-in-react": "^4.3.1"
   },

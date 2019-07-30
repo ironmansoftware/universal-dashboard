@@ -20,6 +20,7 @@ import UDCollapsible from './ud-collapsible';
 import UDSelect from './ud-select';
 import UDGridLayout from './ud-grid-layout';
 import UDFab from './ud-fab';
+import UDTreeView from './ud-treeview';
 
 UniversalDashboard.register("ud-button", UDButton);
 UniversalDashboard.register("ud-chart", UDChart);
@@ -41,3 +42,4 @@ UniversalDashboard.register("ud-collapsible", UDCollapsible);
 UniversalDashboard.register("ud-select", UDSelect);
 UniversalDashboard.register("ud-grid-layout", UDGridLayout);
 UniversalDashboard.register("ud-fab", UDFab);
+UniversalDashboard.register("ud-treeview", UDTreeView);
