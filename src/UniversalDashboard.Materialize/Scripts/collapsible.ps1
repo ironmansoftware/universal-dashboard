@@ -82,7 +82,7 @@ function New-UDCollapsibleItem {
         refreshInterval = $RefreshInterval
         active = $Active.IsPresent
         backgroundColor = $BackgroundColor.HtmlColor
-        color = $Color.HtmlColor
+        color = $FontColor.HtmlColor
         icon = $iconName
     }
 }
