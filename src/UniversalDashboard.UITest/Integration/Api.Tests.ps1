@@ -104,7 +104,18 @@ Describe "Api" {
                 $body
             }
 
+            New-UDEndpoint -Url "/group/:id" -Method "GET" -Endpoint {
+                param($id)
+                
+                $id
+            }
+            New-UDEndpoint -Url "/group/:id/memberOf" -Method "GET" -Endpoint {
+                param($id)
+                
+                "memberOf$id"
+            }
             ) -EndpointInitialization $Init
+
 
         New-UDEndpoint -Url "/afterstartup" -Method "GET" -Endpoint {
             "After Startup"
@@ -113,6 +124,9 @@ Describe "Api" {
         It "should work with nested routes" {
             Invoke-RestMethod -Uri 'http://localhost:10001/api/recherches/1' -Method DELETE | Should be "1"
             Invoke-RestMethod -Uri 'http://localhost:10001/api/recherches/2/activate' -Method DELETE | Should be "2"
+            Invoke-RestMethod -Uri 'http://localhost:10001/api/group/1' -Method GET | Should be "1"
+            Invoke-RestMethod -Uri 'http://localhost:10001/api/group/1/memberOf' -Method GET | Should be "memberOf1"
+            
         }
 
         It "should process int correctly" {
