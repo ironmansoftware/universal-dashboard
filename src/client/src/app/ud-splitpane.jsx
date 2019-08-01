@@ -6,7 +6,7 @@ export default class UDSplitPane extends React.Component {
         var { content } = this.props;
         
         if (content.length !== 2) {
-            throw "Split pane supports exactly two components."
+            return <div>Split pane supports exactly two components.</div>
         }
 
         var children = content.map(x => UniversalDashboard.renderComponent(x));
@@ -61,6 +61,10 @@ export default class UDSplitPane extends React.Component {
             }
             .Resizer.disabled:hover {
               border-color: transparent;
+            }
+            .SplitPane {
+                position: relative !important;
+                ${this.props.split === 'vertical' ? 'height: 100ch !important' : ''};
             }
             `}} />,
             <SplitPane {...this.props}>{children}</SplitPane>
