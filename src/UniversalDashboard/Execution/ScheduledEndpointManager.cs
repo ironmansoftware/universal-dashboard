@@ -30,7 +30,8 @@ namespace UniversalDashboard.Execution
 
             var props = new NameValueCollection
             {
-                { "quartz.serializer.type", "binary" }
+                { "quartz.serializer.type", "binary" },
+                { "quartz.threadPool.threadCount", "100" }
             };
             var factory = new StdSchedulerFactory(props);
 
