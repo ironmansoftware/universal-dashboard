@@ -16,13 +16,14 @@ function New-UDSplitPane {
     $Children = & $Content
 
     if ($Children.Length -ne 2) {
-        throw "Split pane requires exactly two components in Content"
+        Write-Error "Split pane requires exactly two components in Content"
+        return
     }
 
     $Options = @{
         content = $Children
         id = $Id
-        split = $Direction
+        split = $Direction.ToLower()
         type = "ud-splitpane"
     }
 
