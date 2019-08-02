@@ -28,7 +28,7 @@ namespace UniversalDashboard.Cmdlets
 				Id = Id,
                 Name = Name, 
                 Children = Children?.Invoke().Select(m => m.BaseObject).Cast<TreeNode>(),
-				Icon = Icon.ToString().Replace("_", "-")
+				Icon = Icon.GetIconName()
             });
 		}
 	}
