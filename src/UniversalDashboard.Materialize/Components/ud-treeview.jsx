@@ -45,14 +45,18 @@ export default class UDTreeView extends React.Component {
 
         decorators.Header = ({style, node}) => {
             const iconType = node.icon;
-            const iconClass = `fa fa-${iconType}`;
             const iconStyle = {marginRight: '5px'};
+
+            var icon = UniversalDashboard.renderComponent({
+                type: 'icon',
+                icon: iconType, 
+                style: iconStyle
+            })
         
             return (
                 <div style={style.base} id={node.id}>
                     <div style={style.title}>
-                        <i className={iconClass} style={iconStyle}/>
-        
+                        {icon}
                         {node.name}
                     </div>
                 </div>

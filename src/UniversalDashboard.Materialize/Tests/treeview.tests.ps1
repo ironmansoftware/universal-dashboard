@@ -1,7 +1,8 @@
 Describe "New-UDTreeView" {
+
     Context "TreeView" {
         Set-TestDashboard {
-            $DomainNode = New-UDTreeNode -Name "Domain" -Id "domain"
+            $DomainNode = New-UDTreeNode -Name "Domain" -Id "domain"  -Icon user
             New-UDTreeView -Node $DomainNode -OnNodeClicked {
               param($Body)
               $Obj = $Body | ConvertFrom-Json
@@ -9,14 +10,14 @@ Describe "New-UDTreeView" {
               if ($Obj.NodeId -eq 'domain')
               {
                   1..10 | % {
-                     New-UDTreeNode -Name $_ -Id $_
+                     New-UDTreeNode -Name $_ -Id $_ -Icon user
                   }
               }
               else
               {
                 1..10 | % {
                     $Name = $Obj.NodeId * $_
-                    New-UDTreeNode -Name $Name -Id $Name
+                    New-UDTreeNode -Name $Name -Id $Name -Icon user
                 }
               }
             }
