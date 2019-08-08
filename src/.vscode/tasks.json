@@ -1,0 +1,53 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Debug",
+            "command": "./build.ps1",
+            "args": ["-Configuration", "Debug", "-NoHelp"],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Build Release",
+            "command": "./build.ps1",
+            "args": ["-Configuration", "Release"],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run Materialize Webpack Server",
+            "command": "./UniversalDashboard.Materialize/run-webpack.ps1",
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run Materialize Test",
+            "command": "./UniversalDashboard.Materialize/Tests/driver.ps1",
+            "args": ["-Control", "${input:control}"],
+            "group": "test",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "control",
+            "description": "Name of the control."
+        }
+    ]
+}
