@@ -147,10 +147,3 @@ You can now create your test dashboard. This can either be part of a Pester test
 Import-Module C:\src\UniversalDashboard.Community\src\output\UniversalDashboard.Community.psd1
 Start-UDDashboard -Port 1000
 ```
-
-### Debugging with VS Code
-
-Make sure to open the UD project from the `src` folder in VS Code. This folder contains `.vscode` folder with the appropriate configurations already created. 
-
-When you execute your PowerShell script, make sure to use PowerShell Core (6/7). In VS Code, you can change which version of PS you are running by clicking the version number in the bottom-right of the status bar. You can now attach to the PowerShell process. Click the Debug button on the VS Code Activity bar (or press Ctrl+Shift+D). In the debug drop down, select the `.NET Core Attach`. A list of processes will be presented. Select the `pwsh.exe` process that you will be running UD in. 
-
