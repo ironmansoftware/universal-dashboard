@@ -215,7 +215,7 @@ namespace UniversalDashboard
             {
                 variables.Add("EventData", eventData);
             }
-            variables.Add("EventId", EventId);
+            variables.Add("EventId", eventId);
 		
             variables.Add("MemoryCache", _memoryCache);
 
