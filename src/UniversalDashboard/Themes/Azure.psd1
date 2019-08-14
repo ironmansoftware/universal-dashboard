@@ -1,7 +1,7 @@
 @{
     Name = "Azure"
     Definition = @{
-        UDDashboard = @{
+      UDDashboard = @{
             BackgroundColor = "#333333"
             FontColor = "#FFFFF"
         }
@@ -47,7 +47,7 @@
         UDFooter = @{
             BackgroundColor = "#1c1c1c"
             FontColor = "#55b3ff"
-            "margin-top" = "20px"
+            "margin-top" = "4% !important"
         }
         '.tabs'                                                                                                                    = @{
             'color' = "#55b3ff"
@@ -86,7 +86,7 @@
 
             }
             '.pagination li a' = @{
-                color = "#55b3ff !important"
+                'color' = "#55b3ff !important"
             }
             ".ud-navbar"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          = @{
                 'width'    = "100%"
@@ -139,7 +139,7 @@
 
             '.sidenav a:hover'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    = @{
                 'background-color' = "#1e353f"
-                'color'            = "#e16036"
+                'color'            = "#55b3ff"
             }
             '.sidenav li > a'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     = @{
                 'color'     = "#f1f1f1"
@@ -163,7 +163,7 @@
             }
             '.collapsible-body' = @{
                 "background-color" = "#252525"
-                "border-bottom" = "1px solid #fff"
+                "border-bottom" = "1px solid #55b3ff"
             }
             '[type="checkbox"]:checked + span:not(.lever)::before' = @{
                 "border-right" = "2px solid #55b3ff"
@@ -176,5 +176,30 @@
                 'border-radius' = "8px"
                 'float' ="left"
             }
+            '.pagination li.active' = @{
+                'background-color' = "#55b3ff"
+            }
+            '.divider' = @{
+                'height' = "1px"
+                'overflow' = "hidden"
+                'background-color' = "#55b3ff"
+}
+        '.sidenav .collapsible-header' = @{
+            'color' = "#fff !important"
+            'background-color' = "#1c1c1c !important"
+            'font-size' = "18px"
+        }
+        'ul:not(.browser-default)' = @{
+        'padding-left' = "0"
+        'list-style-type' = "none"
+        'background-color' = "#1c1c1c"
+}
+       '.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating)' = @{
+    'color'= "#55b3ff"
+    'margin-right'= "24px"
+    '-webkit-transition' = "color .3s ease"
+    'transition' = "color .3s ease"
+    'text-transform' = "uppercase"
+}
     }
 }
