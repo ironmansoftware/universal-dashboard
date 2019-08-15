@@ -41,33 +41,97 @@ namespace UniversalDashboard.Execution
             foreach (var endpoint in endpoints.Where(m => m.Schedule != null))
             {
                 var dataMap = new JobDataMap();
-                dataMap.Add(nameof(ScheduledEndpointJob.Endpoint), endpoint);
-                dataMap.Add(nameof(ScheduledEndpointJob.ExecutionService), _executionService);
-                dataMap.Add(nameof(ScheduledEndpointJob.MemoryCache), _memoryCache);
-
                 var job = JobBuilder.Create<ScheduledEndpointJob>()
                 .UsingJobData(dataMap)
                 .Build();
 
-                ITrigger trigger = null;
-
-                if (endpoint.Schedule.Cron != null)
+                if (endpoint.Schedule.Consecutive)
                 {
-                    trigger = TriggerBuilder.Create()
-                         .StartNow()
-                         .WithSchedule(CronScheduleBuilder.CronSchedule(endpoint.Schedule.Cron))
-                         .Build();
+                    dataMap.Add(nameof(ScheduledEndpointJobConsecutive.Endpoint), endpoint);
+                    dataMap.Add(nameof(ScheduledEndpointJobConsecutive.ExecutionService), _executionService);
+                    dataMap.Add(nameof(ScheduledEndpointJobConsecutive.MemoryCache), _memoryCache);
+                    job = JobBuilder.Create<ScheduledEndpointJobConsecutive>()
+                    .UsingJobData(dataMap)
+                    .Build();
                 }
                 else
                 {
-                    trigger = TriggerBuilder.Create()
-                        .StartNow()
-                        .WithSimpleSchedule(x => x
-                            .WithIntervalInSeconds((int)endpoint.Schedule.Every.TotalSeconds)
-                            .RepeatForever())
-                        .Build();
+                    dataMap.Add(nameof(ScheduledEndpointJob.Endpoint), endpoint);
+                    dataMap.Add(nameof(ScheduledEndpointJob.ExecutionService), _executionService);
+                    dataMap.Add(nameof(ScheduledEndpointJob.MemoryCache), _memoryCache);
+                    job = JobBuilder.Create<ScheduledEndpointJob>()
+                    .UsingJobData(dataMap)
+                    .Build();
                 }
 
+
+                ITrigger trigger = null;
+                if (endpoint.Schedule.Cron != null)
+                {
+                    if (endpoint.Schedule.Consecutive)
+                    {
+                        trigger = TriggerBuilder.Create()
+                             .StartNow()
+                             .WithSchedule(CronScheduleBuilder.CronSchedule(endpoint.Schedule.Cron)
+                             .WithMisfireHandlingInstructionIgnoreMisfires())
+                             .Build();
+                    }
+                    else
+                    {
+                        trigger = TriggerBuilder.Create()
+                             .StartNow()
+                             .WithSchedule(CronScheduleBuilder.CronSchedule(endpoint.Schedule.Cron))
+                             .Build();
+                    }
+                }
+                else
+                {
+                    if (endpoint.Schedule.Repeat > 0)
+                    {
+                        if (job.ConcurrentExecutionDisallowed)
+                        {
+                            trigger = TriggerBuilder.Create()
+                                .StartNow()
+                                .WithSimpleSchedule(x => x
+                                    .WithIntervalInSeconds((int)endpoint.Schedule.Every.TotalSeconds)
+                                    .WithRepeatCount(endpoint.Schedule.Repeat)
+                                    .WithMisfireHandlingInstructionIgnoreMisfires())
+                                .Build();
+                        }
+                        else
+                        {
+                            trigger = TriggerBuilder.Create()
+                                .StartNow()
+                                .WithSimpleSchedule(x => x
+                                    .WithIntervalInSeconds((int)endpoint.Schedule.Every.TotalSeconds)
+                                    .WithRepeatCount(endpoint.Schedule.Repeat))
+                                .Build();
+                        }
+                    }
+                    else
+                    {
+                        if (job.ConcurrentExecutionDisallowed)
+                        {
+                            trigger = TriggerBuilder.Create()
+                                .StartNow()
+                                .WithSimpleSchedule(x => x
+                                    .WithIntervalInSeconds((int)endpoint.Schedule.Every.TotalSeconds)
+                                    .RepeatForever()
+                                    .WithMisfireHandlingInstructionIgnoreMisfires())
+                                .Build();
+                        }
+                        else
+                        {
+                            trigger = TriggerBuilder.Create()
+                                .StartNow()
+                                .WithSimpleSchedule(x => x
+                                    .WithIntervalInSeconds((int)endpoint.Schedule.Every.TotalSeconds)
+                                    .RepeatForever())
+                                .Build();
+                        }
+
+                    }
+                }
                 await _scheduler.ScheduleJob(job, trigger);
             }
         }
@@ -75,7 +139,7 @@ namespace UniversalDashboard.Execution
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             if (_scheduler != null)
-                await _scheduler.Shutdown(false);   
+                await _scheduler.Shutdown(false);
         }
     }
 }

@@ -12,6 +12,13 @@ namespace UniversalDashboard.Cmdlets
         [Parameter(ParameterSetName = "EveryHour", Mandatory = true)]
         [Parameter(ParameterSetName = "EveryDay", Mandatory = true)]
         public int Every { get; set; }
+        [Parameter(ParameterSetName = "EverySecond")]
+        [Parameter(ParameterSetName = "EveryMinute")]
+        [Parameter(ParameterSetName = "EveryHour")]
+        [Parameter(ParameterSetName = "EveryDay")]
+        public int Repeat { get; set; }
+        [Parameter]
+        public SwitchParameter Consecutive { get; set; }
         [Parameter(ParameterSetName = "EverySecond", Mandatory = true)]
         public SwitchParameter Second { get; set; }
         [Parameter(ParameterSetName = "EveryMinute", Mandatory = true)]
@@ -29,7 +36,8 @@ namespace UniversalDashboard.Cmdlets
             {
                 WriteObject(new EndpointSchedule
                 {
-                    Cron = Cron
+                    Cron = Cron,
+                    Consecutive = Consecutive
                 });
             }
 
@@ -37,7 +45,9 @@ namespace UniversalDashboard.Cmdlets
             {
                 WriteObject(new EndpointSchedule
                 {
-                    Every = TimeSpan.FromSeconds((double)Every)
+                    Every = TimeSpan.FromSeconds((double)Every),
+                    Repeat = Repeat,
+                    Consecutive = Consecutive
                 });
             }
 
@@ -45,7 +55,9 @@ namespace UniversalDashboard.Cmdlets
             {
                 WriteObject(new EndpointSchedule
                 {
-                    Every = TimeSpan.FromMinutes((double)Every)
+                    Every = TimeSpan.FromMinutes((double)Every),
+                    Repeat = Repeat,
+                    Consecutive = Consecutive
                 });
             }
 
@@ -53,7 +65,9 @@ namespace UniversalDashboard.Cmdlets
             {
                 WriteObject(new EndpointSchedule
                 {
-                    Every = TimeSpan.FromHours((double)Every)
+                    Every = TimeSpan.FromHours((double)Every),
+                    Repeat = Repeat,
+                    Consecutive = Consecutive
                 });
             }
 
@@ -61,7 +75,9 @@ namespace UniversalDashboard.Cmdlets
             {
                 WriteObject(new EndpointSchedule
                 {
-                    Every = TimeSpan.FromDays((double)Every)
+                    Every = TimeSpan.FromDays((double)Every),
+                    Repeat = Repeat,
+                    Consecutive = Consecutive
                 });
             }
         }
