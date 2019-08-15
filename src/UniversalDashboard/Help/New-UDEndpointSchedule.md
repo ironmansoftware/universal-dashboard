@@ -14,27 +14,27 @@ Creates a schedule for an endpoint.
 
 ### EverySecond
 ```
-New-UDEndpointSchedule -Every <Int32> [-Second] [<CommonParameters>]
+New-UDEndpointSchedule -Every <Int32> [-Second] [-Repeat] [-Consecutive] [<CommonParameters>]
 ```
 
 ### EveryMinute
 ```
-New-UDEndpointSchedule -Every <Int32> [-Minute] [<CommonParameters>]
+New-UDEndpointSchedule -Every <Int32> [-Minute] [-Repeat] [-Consecutive] [<CommonParameters>]
 ```
 
 ### EveryHour
 ```
-New-UDEndpointSchedule -Every <Int32> [-Hour] [<CommonParameters>]
+New-UDEndpointSchedule -Every <Int32> [-Hour] [-Repeat] [-Consecutive] [<CommonParameters>]
 ```
 
 ### EveryDay
 ```
-New-UDEndpointSchedule -Every <Int32> [-Day] [<CommonParameters>]
+New-UDEndpointSchedule -Every <Int32> [-Day] [-Repeat] [-Consecutive] [<CommonParameters>]
 ```
 
 ### Cron
 ```
-New-UDEndpointSchedule [-Cron <String>] [<CommonParameters>]
+New-UDEndpointSchedule [-Cron <String>] [-Consecutive] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -52,6 +52,29 @@ PS C:\> $Endpoint = New-UDEndpoint -Schedule $Schedule -Endpoint {
 
 Gets a list of computers from Active Directory and stores it in the cache every ten seconds. 
 
+### Example 2
+```
+PS C:\> $EndpointSchedule = New-UDEndpointSchedule -Every 10 -Second -Consecutive
+PS C:\> $Endpoint = New-UDEndpoint -Schedule $Schedule -Endpoint {
+    $Cache:Date = Get-Date
+	Start-Sleep -Seconds 21
+}
+```
+
+Gets the current date every 30 seconds.
+
+### Example 3
+```
+PS C:\> $EndpointSchedule = New-UDEndpointSchedule -Every 10 -Second -Consecutive -Repeat 10
+PS C:\> $Endpoint = New-UDEndpoint -Schedule $Schedule -Endpoint {
+    $Cache:Date = Get-Date
+	Start-Sleep -Seconds 21
+}
+```
+
+Gets the current date every 30 seconds 10 times.
+
+
 ## PARAMETERS
 
 ### -Cron
@@ -60,6 +83,21 @@ A CRON expression to run the schedule under.
 ```yaml
 Type: String
 Parameter Sets: Cron
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Consecutive
+Disables concurrently running this schedule. Ie, it does not allow the schedule to run multiple instances.
+
+```yaml
+Type: Switch
+Parameter Sets: Cron, EveryDay, EveryHour, EveryMinute, EverySecond
 Aliases: 
 
 Required: False
@@ -138,6 +176,21 @@ Parameter Sets: EverySecond
 Aliases: 
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Repeat
+If set to 0 this means repeat forever, if not set it will also repeat forever. Otherwise it will run the schedule x amount of times.
+
+```yaml
+Type: Int32
+Parameter Sets: EveryDay, EveryHour, EveryMinute, EverySecond
+Aliases: 
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
