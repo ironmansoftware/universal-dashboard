@@ -7,6 +7,8 @@ namespace UniversalDashboard.Models
     {
 		[JsonProperty("title")]
 		public string Title { get; set; }
+		[JsonIgnore]
+		public Endpoint OnClick {get;set;}
 		[JsonProperty("icon")]
 		public string Icon { get; set; }
 		[JsonProperty("format")]
