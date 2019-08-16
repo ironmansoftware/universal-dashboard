@@ -29,6 +29,10 @@ namespace UniversalDashboard.Cmdlets
 
 		[Parameter()]
 		public TextAlignment TextAlignment { get; set; }
+		
+		[Parameter()]
+		public ScriptBlock OnClick { get; set; }
+
 		protected override void EndProcessing()
 		{
 			var counter = new Counter
@@ -36,6 +40,7 @@ namespace UniversalDashboard.Cmdlets
 				AutoRefresh = AutoRefresh,
 				RefreshInterval = RefreshInterval,
 				Callback = GenerateCallback(Id),
+				OnClick = GenerateCallback(Id + "onClick", OnClick, null),
 				Format = Format,
 				Icon = FontAwesomeIconsExtensions.GetIconName(Icon),
 				Title = Title,
