@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom xmlns="http://cyclonedx.org/schema/bom/1.1" version="1" serialNumber="urn:uuid:0bb40267-da2d-4678-997a-99d8a48a5533">
+<bom xmlns="http://cyclonedx.org/schema/bom/1.1" version="1" serialNumber="urn:uuid:6beb4198-aa94-4dec-95cb-39482353145b">
     <components>
         <component type="library">
             <group>aspnet</group>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom xmlns="http://cyclonedx.org/schema/bom/1.1" version="1" serialNumber="urn:uuid:53a7bb0b-b561-4343-83ed-6becfa708735">
+<bom xmlns="http://cyclonedx.org/schema/bom/1.1" version="1" serialNumber="urn:uuid:08fac46c-9d79-46af-8a35-6e8761b2f652">
     <components>
         <component type="library">
             <name>chart.js</name>
