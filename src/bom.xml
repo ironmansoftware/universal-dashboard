@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bom version="1" serialNumber="urn:uuid:a0f04595-0ffc-492c-b520-ae4488f4b497" xmlns="http://cyclonedx.org/schema/bom/1.1">
+  <components>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv</name>
+      <version>2.1.3</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv@2.1.3</purl>
+    </component>
+    <component type="library">
+      <name>System.Reflection.Emit</name>
+      <version>4.3.0</version>
+      <description><![CDATA[Provides classes that allow a compiler or tool to emit metadata and optionally generate a PE file on disk. The primary clients of these classes are script engines and compilers.
+
+Commonly Used Types:
+System.Reflection.Emit.AssemblyBuilder
+System.Reflection.Emit.FieldBuilder
+System.Reflection.Emit.TypeBuilder
+System.Reflection.Emit.MethodBuilder
+System.Reflection.Emit.ConstructorBuilder
+System.Reflection.Emit.GenericTypeParameterBuilder
+System.Reflection.Emit.ModuleBuilder
+System.Reflection.Emit.PropertyBuilder
+System.Reflection.Emit.AssemblyBuilderAccess
+System.Reflection.Emit.EventBuilder
+ 
+When using NuGet 3.x this package requires at least version 3.4.]]></description>
+      <licenses>
+        <license>
+          <url>http://go.microsoft.com/fwlink/?LinkId=329770</url>
+        </license>
+      </licenses>
+      <copyright>© Microsoft Corporation.  All rights reserved.</copyright>
+      <purl>pkg:nuget/System.Reflection.Emit@4.3.0</purl>
+      <externalReferences>
+        <reference type="website">
+          <url>https://dot.net/</url>
+        </reference>
+      </externalReferences>
+    </component>
+    <component type="library">
+      <name>Microsoft.Extensions.Caching.Memory</name>
+      <version>2.1.2</version>
+      <description><![CDATA[In-memory cache implementation of Microsoft.Extensions.Caching.Memory.IMemoryCache.]]></description>
+      <licenses>
+        <license>
+          <url>https://raw.githubusercontent.com/aspnet/Home/2.0.0/LICENSE.txt</url>
+        </license>
+      </licenses>
+      <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+      <purl>pkg:nuget/Microsoft.Extensions.Caching.Memory@2.1.2</purl>
+      <externalReferences>
+        <reference type="website">
+          <url>https://asp.net/</url>
+        </reference>
+      </externalReferences>
+    </component>
+    <component type="library">
+      <name>Newtonsoft.Json</name>
+      <version>11.0.2</version>
+      <description><![CDATA[Json.NET is a popular high-performance JSON framework for .NET]]></description>
+      <licenses>
+        <license>
+          <url>https://raw.github.com/JamesNK/Newtonsoft.Json/master/LICENSE.md</url>
+        </license>
+      </licenses>
+      <copyright>Copyright © James Newton-King 2008</copyright>
+      <purl>pkg:nuget/Newtonsoft.Json@11.0.2</purl>
+      <externalReferences>
+        <reference type="website">
+          <url>https://www.newtonsoft.com/json</url>
+        </reference>
+      </externalReferences>
+    </component>
+    <component type="library">
+      <name>Microsoft.DotNet.PlatformAbstractions</name>
+      <version>2.1.0</version>
+      <description><![CDATA[Abstractions for making code that uses file system and environment testable.]]></description>
+      <licenses>
+        <license>
+          <url>https://github.com/dotnet/core-setup/blob/master/LICENSE.TXT</url>
+        </license>
+      </licenses>
+      <copyright>© Microsoft Corporation.  All rights reserved.</copyright>
+      <purl>pkg:nuget/Microsoft.DotNet.PlatformAbstractions@2.1.0</purl>
+      <externalReferences>
+        <reference type="website">
+          <url>https://dot.net/</url>
+        </reference>
+      </externalReferences>
+    </component>
+    <component type="library">
+      <name>NLog</name>
+      <version>4.5.8</version>
+      <purl>pkg:nuget/NLog@4.5.8</purl>
+    </component>
+    <component type="library">
+      <name>Quartz</name>
+      <version>3.0.6</version>
+      <purl>pkg:nuget/Quartz@3.0.6</purl>
+    </component>
+    <component type="library">
+      <name>System.Runtime.Loader</name>
+      <version>4.3.0</version>
+      <purl>pkg:nuget/System.Runtime.Loader@4.3.0</purl>
+    </component>
+    <component type="library">
+      <name>NLog.Web.AspNetCore</name>
+      <version>4.6.0</version>
+      <purl>pkg:nuget/NLog.Web.AspNetCore@4.6.0</purl>
+    </component>
+    <component type="library">
+      <name>System.Security.Principal</name>
+      <version>4.3.0</version>
+      <purl>pkg:nuget/System.Security.Principal@4.3.0</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore</name>
+      <version>2.1.3</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore@2.1.3</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Mvc</name>
+      <version>2.1.2</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Mvc@2.1.2</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Routing</name>
+      <version>2.1.1</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Routing@2.1.1</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.Extensions.Logging.Debug</name>
+      <version>2.1.1</version>
+      <purl>pkg:nuget/Microsoft.Extensions.Logging.Debug@2.1.1</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.StaticFiles</name>
+      <version>2.1.1</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.StaticFiles@2.1.1</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.WebSockets</name>
+      <version>2.1.1</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.WebSockets@2.1.1</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.ResponseCompression</name>
+      <version>2.1.1</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.ResponseCompression@2.1.1</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Server.Kestrel.Https</name>
+      <version>2.1.3</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Server.Kestrel.Https@2.1.3</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Authentication.Cookies</name>
+      <version>2.1.2</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Authentication.Cookies@2.1.2</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Authentication.Facebook</name>
+      <version>2.1.2</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Authentication.Facebook@2.1.2</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Authentication.Twitter</name>
+      <version>2.1.2</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Authentication.Twitter@2.1.2</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Authentication.Google</name>
+      <version>2.1.2</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Authentication.Google@2.1.2</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Authentication.MicrosoftAccount</name>
+      <version>2.1.2</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Authentication.MicrosoftAccount@2.1.2</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Authentication.JwtBearer</name>
+      <version>2.1.2</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Authentication.JwtBearer@2.1.2</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.Session</name>
+      <version>2.1.1</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.Session@2.1.1</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.AspNetCore.SignalR</name>
+      <version>1.0.3</version>
+      <purl>pkg:nuget/Microsoft.AspNetCore.SignalR@1.0.3</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.Extensions.Logging.Filter</name>
+      <version>1.1.2</version>
+      <purl>pkg:nuget/Microsoft.Extensions.Logging.Filter@1.1.2</purl>
+    </component>
+    <component type="library">
+      <name>PowerShellStandard.Library</name>
+      <version>5.1.0-preview-06</version>
+      <purl>pkg:nuget/PowerShellStandard.Library@5.1.0-preview-06</purl>
+    </component>
+    <component type="library">
+      <name>System.Net.NameResolution</name>
+      <version>4.3.0</version>
+      <purl>pkg:nuget/System.Net.NameResolution@4.3.0</purl>
+    </component>
+    <component type="library">
+      <name>Microsoft.NET.Test.Sdk</name>
+      <version>15.5.0-preview-20171031-01</version>
+      <purl>pkg:nuget/Microsoft.NET.Test.Sdk@15.5.0-preview-20171031-01</purl>
+    </component>
+    <component type="library">
+      <name>NSubstitute</name>
+      <version>3.1.0</version>
+      <purl>pkg:nuget/NSubstitute@3.1.0</purl>
+    </component>
+    <component type="library">
+      <name>xunit</name>
+      <version>2.4.0</version>
+      <purl>pkg:nuget/xunit@2.4.0</purl>
+    </component>
+    <component type="library">
+      <name>xunit.runner.visualstudio</name>
+      <version>2.4.0</version>
+      <purl>pkg:nuget/xunit.runner.visualstudio@2.4.0</purl>
+    </component>
+    <component type="library">
+      <name>DasMulli.Win32.ServiceUtils</name>
+      <version>1.2.0</version>
+      <purl>pkg:nuget/DasMulli.Win32.ServiceUtils@1.2.0</purl>
+    </component>
+  </components>
+</bom>
