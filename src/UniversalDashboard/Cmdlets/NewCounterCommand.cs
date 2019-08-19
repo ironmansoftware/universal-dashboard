@@ -35,12 +35,18 @@ namespace UniversalDashboard.Cmdlets
 
 		protected override void EndProcessing()
 		{
+			Endpoint onClick = null;
+			if (OnClick != null)
+			{
+				onClick = GenerateCallback(Id + "onClick", OnClick, null);
+			}
+
 			var counter = new Counter
 			{
 				AutoRefresh = AutoRefresh,
 				RefreshInterval = RefreshInterval,
 				Callback = GenerateCallback(Id),
-				OnClick = GenerateCallback(Id + "onClick", OnClick, null),
+				OnClick = onClick,
 				Format = Format,
 				Icon = FontAwesomeIconsExtensions.GetIconName(Icon),
 				Title = Title,
@@ -49,7 +55,8 @@ namespace UniversalDashboard.Cmdlets
 				FontColor = FontColor?.HtmlColor,
 				Links = Links,
 				TextAlignment = TextAlignment.GetName(),
-				TextSize = TextSize.GetName()
+				TextSize = TextSize.GetName(),
+				HasOnClick = onClick != null
 			};
 
 			Log.Debug(JsonConvert.SerializeObject(counter));
