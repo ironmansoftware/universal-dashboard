@@ -25,5 +25,7 @@ namespace UniversalDashboard.Models
 		public string TextSize { get; set; }
 		[JsonProperty("textAlignment")]
 		public string TextAlignment { get; set; }
+		[JsonProperty("hasOnClick")]
+		public bool HasOnClick { get; set; }
 	}
 }
