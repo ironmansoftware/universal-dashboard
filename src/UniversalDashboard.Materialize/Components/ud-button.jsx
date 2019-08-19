@@ -24,7 +24,7 @@ export default class UDButton extends React.Component {
 
         var icon = null; 
         if (this.props.icon) {
-            icon = <UdIcon icon={this.props.icon} style={{marginRight: '5px'}}/>
+            icon = <UdIcon icon={this.props.icon} style={{marginRight: this.props.floating || !this.props.text ? 'unset' : '5px'}}/>
         }
 
         return <Button 
