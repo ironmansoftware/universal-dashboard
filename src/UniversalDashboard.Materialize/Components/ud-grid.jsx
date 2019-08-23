@@ -55,8 +55,7 @@ export default class UdGrid extends React.Component {
           properties: props.properties,
           headers: props.headers,
           loading: true,
-          firstLoad: true,
-          filterPlaceholder: props.filterText
+          firstLoad: true
         };
       }
 
