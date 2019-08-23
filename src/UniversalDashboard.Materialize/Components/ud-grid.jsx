@@ -277,7 +277,6 @@ export default class UdGrid extends React.Component {
         if (!this.props.serverSideProcessing) {
             gridPlugins = [plugins.LocalPlugin]
             serverFilterControl = null;
-
             if (this.props.noFilter) {
                 components = {
                     ...components,
@@ -315,6 +314,7 @@ export default class UdGrid extends React.Component {
                     [<Griddle 
                         data={this.state.data}
                         plugins={gridPlugins}
+						textProperties={{filterPlaceholder: this.props.filterText}}
                         sortProperties={[{
                             id: this.state.sortColumn,
                             sortAscending: this.state.sortAscending
@@ -424,3 +424,4 @@ class Page extends React.Component {
         return <li className={this.props.activePage === this.props.page ? "active" : ""} style={{ cursor: this.props.pointer ? "pointer" : "default" }}><a onClick={() => this.props.onPageChanged(this.props.page)}>{this.props.page}</a></li>
     }
 }
+

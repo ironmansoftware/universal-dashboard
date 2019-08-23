@@ -84,11 +84,19 @@ export default class UdImageCarousel extends React.Component {
             btn = <a class="btn waves-effect white grey-text darken-text-2" href={this.state.slideUrlLink} target='_blank' >{this.props.buttonText}</a>
         };
 
-        // Set the width and height of the carousel container 
-        $(`div#${this.props.id}.carousel.carousel-slider`).css({
-            "width":`${this.props.width}`,
-            "height":`${this.props.height}`
-        })
+		if(options.fullWidth) {
+			// Set the width and height of the carousel container 
+			$(`div#${this.props.id}.carousel.carousel-slider`).css({
+				"width":`${this.props.width}`,
+				"height":`${this.props.height}`
+			})
+		} else {
+			// Set the width and height of the carousel container if it is not a fullWidth
+			$(`div#${this.props.id}.carousel`).css({
+				"width":`${this.props.width}`,
+				"height":`${this.props.height}`
+			})
+		}
 
         return (
  
