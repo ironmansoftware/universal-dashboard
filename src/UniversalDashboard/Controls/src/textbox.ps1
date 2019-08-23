@@ -14,14 +14,26 @@ function New-UDTextbox {
         [Parameter()]
         [Switch]$Disabled,
         [Parameter()]
-        [UniversalDashboard.Models.FontAwesomeIcons]$Icon
+        [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
+        [Switch]$Autofocus
     )
 
-    $Attributes = @{
-        type = $type
-        value = $Value
-        placeholder = $Placeholder
+    If ($Autofocus) {
+        $Attributes = @{
+            type = $type
+            value = $Value
+            placeholder = $Placeholder
+            autofocus = "true"
+        }
     }
+    else {
+        $Attributes = @{
+            type = $type
+            value = $Value
+            placeholder = $Placeholder
+        }
+    }
+    
 
     if ($Disabled) {
         $Attributes.disabled = $true
