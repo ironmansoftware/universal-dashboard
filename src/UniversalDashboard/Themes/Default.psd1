@@ -21,7 +21,7 @@
         }
 
         '.btn:hover' = @{
-            'background-color' = "#002984"
+            'background-color' = "#2c387e"
         }
 
         '.btn-floating' = @{
