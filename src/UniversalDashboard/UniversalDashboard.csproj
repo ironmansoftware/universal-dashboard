@@ -7,16 +7,16 @@
     <StartupObject />
     <UserSecretsId>bb012ad5-1680-4d35-b8ce-9439c394fefa</UserSecretsId>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netcoreapp2.0|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <None Remove="UniversalDashboard.psm1" />
     <None Remove="UniversalDashboardServer.psm1" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Content Include="UniversalDashboard.psm1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -25,7 +25,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Libuv" Version="2.1.3" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
@@ -38,6 +38,7 @@
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.6.0" />
     <PackageReference Include="System.Security.Principal" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
@@ -57,16 +58,16 @@
     <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-preview-06" />
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Update="Styles\site.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>  
+    </None>
     <None Update="Styles\materialize.min.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </None>  
+    </None>
     <None Update="Themes\*.*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

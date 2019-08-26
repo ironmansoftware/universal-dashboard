@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -111,7 +112,7 @@ namespace UniversalDashboard
                     await context.Next(context.HttpContext);
                 }
             });
-			
+
 			app.UseStaticFiles(new StaticFileOptions()
 			{
 				FileProvider = new PhysicalFileProvider(env.ContentRootPath),
@@ -119,6 +120,8 @@ namespace UniversalDashboard
                 ServeUnknownFileTypes = true,
 				ContentTypeProvider = provider
 			});
+
+      app.UseHttpsRedirection();
 
 			var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
 
