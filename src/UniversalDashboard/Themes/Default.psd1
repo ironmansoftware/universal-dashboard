@@ -98,11 +98,38 @@
         }
     
         '.sidenav li>a' = @{
-            'color' = "#111111"
+            'color' = "#FFFFFF"
+            'background-color' = "#3f51b5"
         }
        
         '.sidenav li>a:hover' = @{
+            'background-color' = "#2c387e"
+        }
+    
+        '.sidenav.sidenav-fixed' = @{
             'background-color' = "#3f51b5"
+        }
+    
+        '.sidenav' = @{
+            'background-color' = "#3f51b5"
+        }
+    
+        '.sidenav .subheader' = @{
+            'color'= "#ffffff"
+            'font-size' = 'large'
+        }
+    
+        '.sidenav .divider' = @{
+            'background-color' = "#2c387e"
+        }
+    
+        '.sidenav .collapsible-header' = @{
+            'color'= "#ffffff"
+            'font-size' = 'large'
+        }
+    
+        '.sidenav .collapsible-header:hover' = @{
+            'color'= "#ffffff"
         }
     
 
