@@ -121,9 +121,11 @@ namespace UniversalDashboard
 				ContentTypeProvider = provider
 			});
 
-      app.UseHttpsRedirection();
+      var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
 
-			var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
+      if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) {
+        app.UseHttpsRedirection();
+      }
 
 			if (dashboardService?.DashboardOptions?.PublishedFolders != null) {
 				foreach(var publishedFolder in dashboardService.DashboardOptions.PublishedFolders) {
