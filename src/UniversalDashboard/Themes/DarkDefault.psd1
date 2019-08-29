@@ -44,6 +44,13 @@
             FontColor = "#FFFFFF"
         }
 
+        'main' = @{
+            'padding-left' = "50px"
+            'padding-right' = "50px"
+            'padding-top' = "50px"
+            'padding-bottom' = "50px"
+        }
+
         'p' = @{
             'color' = '#FFFFFF !important'
         }
