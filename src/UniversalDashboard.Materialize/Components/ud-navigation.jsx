@@ -153,6 +153,8 @@ class UDSideNavItem extends React.Component {
             icon,
             href = '#!',
             waves,
+			image,
+			background,
             text,
             name,
             ...props
@@ -161,16 +163,33 @@ class UDSideNavItem extends React.Component {
             subheader: subheader,
             'waves-effect': waves
           };
-
+		  
           var linkText = text ? text : name;
-      
           return (
             <li {...props}>
-              {(
-                <a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}>
-                  {icon && <UdIcon icon={icon} style={{width: '30px'}}/>}   {linkText}
-                </a>
-              )}
+			{(background != '' && background != null) &&
+				<div class='user-view'><div class='background'><img src={background}/></div>
+				{image &&
+					<a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}><img src={image} class='circle'/></a>
+				}
+				<a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}>
+					{icon && <UdIcon icon={icon} style={{width: '30px'}}/>}   {linkText}
+				</a>
+				</div>
+			}
+			{((background == '' || background == null) && (image != null && image != '')) &&
+				<div class='user-view'>
+					<a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}><img src={image} class='circle'/></a>
+				<a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}>
+					{icon && <UdIcon icon={icon} style={{width: '30px'}}/>}   {linkText}
+				</a>
+				</div>
+			}
+			{((background == '' || background == null) && (image == null || image == '')) &&
+				<a className={cx(linkClasses)} href={href} onClick={this.onItemClick.bind(this)}>
+					{icon && <UdIcon icon={icon} style={{width: '30px'}}/>}   {linkText}
+				</a>
+			}
             </li>
           );
     }

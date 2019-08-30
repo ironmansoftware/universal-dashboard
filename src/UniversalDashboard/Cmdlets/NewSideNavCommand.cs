@@ -55,6 +55,11 @@ namespace UniversalDashboard.Cmdlets
         [Alias("PageName")]
         public string Url { get; set; }
 
+        [Parameter()]
+        public string Image { get; set; }
+        [Parameter()]
+        public string Background { get; set; }
+
         [Parameter(ParameterSetName = "SubHeader")]
         [Parameter(ParameterSetName = "Url")]
         [Parameter(ParameterSetName = "OnClick")]
@@ -77,6 +82,8 @@ namespace UniversalDashboard.Cmdlets
                 SubHeader = SubHeader.IsPresent,
                 Children = GetItemsFromScriptBlock<SideNavItem>(Children)?.ToArray(),
                 Text = Text,
+                Image = Image,
+                Background = Background,
                 Url = Url,
                 Icon = Icon.GetIconName(),
                 Callback = OnClick.TryGenerateEndpoint(Id, SessionState)
