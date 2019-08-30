@@ -160,9 +160,6 @@
       '.collection .collection-item'= @{
           'background-color' = "#252525"
       }
-      'img' = @{
-          'float'= "left"
-      }
       '.pagination li.active' = @{
           'background-color' = "#FFFFFF"
       }
