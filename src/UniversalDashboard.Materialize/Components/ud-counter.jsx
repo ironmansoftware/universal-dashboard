@@ -36,7 +36,12 @@ export default class UdCounter extends React.Component {
         }.bind(this));
     }
 
-    onClickEvent(id){
+    onClickEvent(id, hasOnClick){
+
+        if (!hasOnClick)
+        {
+            return;
+        }
         
         UniversalDashboard.publish("element-event", {
                 type: "clientEvent",
@@ -100,8 +105,8 @@ export default class UdCounter extends React.Component {
             </div>
         }
 
-        return <div className="card ud-counter" id={this.props.id} style={{background: this.props.backgroundColor, color: this.props.fontColor}}>
-                  <div className="card-content" onClick={this.onClickEvent.bind(this, this.props.id)}>
+        return <div className="card ud-counter" id={this.props.id} style={{background: this.props.backgroundColor, color: this.props.fontColor, cursor: this.props.hasOnClick ? "pointer" : "default"}}>
+                  <div className="card-content" onClick={this.onClickEvent.bind(this, this.props.id, this.props.hasOnClick)}>
                     <span className="card-title">{this.props.title}</span>
                     {content}
                 </div>

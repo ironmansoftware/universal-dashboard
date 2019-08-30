@@ -44,7 +44,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
         private readonly Logger Log = LogManager.GetLogger(nameof(NewInputFieldCommand));
 		protected override void EndProcessing()
 		{
-            if (Type == "select" && (null == DefaultValue || DefaultValue.ToString() == "") && Values.Count() >= 0)
+            if (Type == "select" && (null == DefaultValue || DefaultValue.ToString() == "") && (null != Values && Values.Count() >= 0))
             {
                 DefaultValue = Values[0];
             }
