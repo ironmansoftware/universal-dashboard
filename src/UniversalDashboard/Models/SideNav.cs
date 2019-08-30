@@ -31,6 +31,12 @@ namespace UniversalDashboard.Models
         [JsonProperty("icon")]
         public string Icon { get; set; }
 
+        [JsonProperty("image")]
+        public string Image { get; set; }
+
+        [JsonProperty("background")]
+        public string Background { get; set; }
+
         [JsonProperty("text")]
         public string Text { get; set; }
 
