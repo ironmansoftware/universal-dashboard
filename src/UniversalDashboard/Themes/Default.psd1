@@ -131,7 +131,14 @@
         '.sidenav .collapsible-header:hover' = @{
             'color'= "#ffffff"
         }
+
+        '.progress' = @{
+            'background-color' = '#8c9eff'
+        }
     
+        '.progress .determinate, .progress .indeterminate' = @{
+            'background-color' = '#3f51b5'
+        }  
 
     }
 }
