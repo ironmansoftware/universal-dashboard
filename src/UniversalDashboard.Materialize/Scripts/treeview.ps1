@@ -54,9 +54,7 @@ function New-UDTreeNode {
 		[Parameter()]
         [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
         [Parameter()]
-        [UniversalDashboard.Models.FontAwesomeIcons]$ExpandedIcon,
-        [Parameter()]
-        [Switch]$Leaf
+        [UniversalDashboard.Models.FontAwesomeIcons]$ExpandedIcon
     )
 
     End {
@@ -80,7 +78,6 @@ function New-UDTreeNode {
             children = $ChildrenArray 
             icon = $IconName 
             expandedIcon = $ExpandedIconName
-            leaf = $leaf.IsPresent
         }
     }
 }

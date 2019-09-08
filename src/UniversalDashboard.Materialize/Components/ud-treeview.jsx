@@ -21,10 +21,10 @@ export default class UDTreeView extends React.Component {
                     return;
                 }
 
-                if (node.leaf)
+                if (!data || data.length === 0)
                 {
                     return;
-                }        
+                } 
 
                 node.children = data;
                 if(this.state.cursor){this.state.cursor.active = false;}
@@ -40,11 +40,6 @@ export default class UDTreeView extends React.Component {
             }.bind(this))
         }
         else {
-            if (node.leaf)
-            {
-                return;
-            }    
-
             if(this.state.cursor){this.state.cursor.active = false;}
             node.active = true;
             if(node.children){ 

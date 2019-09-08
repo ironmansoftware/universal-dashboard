@@ -29,7 +29,7 @@ Describe "New-UDTreeView" {
 
               if ($Obj.NodeId -eq 'treeview')
               {
-                  New-UDTreeNode -Name 'Level 2' -Id 'level2' -Icon file -Leaf
+                  New-UDTreeNode -Name 'Level 2' -Id 'level2' -Icon file
               }
             }
         } 
