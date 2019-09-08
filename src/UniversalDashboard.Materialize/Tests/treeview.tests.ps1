@@ -34,8 +34,6 @@ Describe "New-UDTreeView" {
             }
         } 
         
-        Wait-Debugger
-
         It "expands dynamically" {
             Find-SeElement -Id 'domain' -Driver $Driver | Invoke-SeClick
             Start-Sleep 1
