@@ -21,8 +21,21 @@ Describe "New-UDTreeView" {
                 }
               }
             }
+
+            $Node = New-UDTreeNode -Name "Treeview" -Id "treeview"  -Icon folder -ExpandedIcon folder_open
+            New-UDTreeView -Node $Node -OnNodeClicked {
+              param($Body)
+              $Obj = $Body | ConvertFrom-Json
+
+              if ($Obj.NodeId -eq 'treeview')
+              {
+                  New-UDTreeNode -Name 'Level 2' -Id 'level2' -Icon file -Leaf
+              }
+            }
         } 
         
+        Wait-Debugger
+
         It "expands dynamically" {
             Find-SeElement -Id 'domain' -Driver $Driver | Invoke-SeClick
             Start-Sleep 1
@@ -30,6 +43,8 @@ Describe "New-UDTreeView" {
             Start-Sleep 1
             Find-SeElement -Id '11' -Driver $Driver | Invoke-SeClick
         }
+
+        
     }
 }
 

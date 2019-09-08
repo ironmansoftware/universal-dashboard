@@ -11,7 +11,7 @@ Get-UDDashboard | Stop-UDDashboard
 Describe "Manifest" {
 
     It "should have correct version" {
-        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.5.3"
+        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.6.0"
     }
 
     It "should have correct exported commands" {

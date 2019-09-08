@@ -5,11 +5,11 @@ param(
 
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
-$version = "2.5.3"
+$version = "2.6.0"
 #$prerelease = "-beta2"
 
 $ReleaseNotes = "
-	For release notes, see: https://docs.universaldashboard.io/updates/v2.5.3
+	For release notes, see: https://docs.universaldashboard.io/updates/v2.6.0
 "
 
 $manifestParameters = @{
@@ -95,6 +95,8 @@ $manifestParameters = @{
 		"New-UDImageCarousel"
 		"New-UDImageCarouselItem"
 		"New-UDSplitPane"
+		"New-UDTreeNode"
+		"New-UDTreeView"
 
 		#Material UI
 		'New-UDMuAvatar'
@@ -152,8 +154,6 @@ $manifestParameters = @{
 						"Hide-UDModal",
 						"Hide-UDToast"
 						"Publish-UDFolder"
-						"New-UDTreeNode"
-						"New-UDTreeView"
 						"New-UDEndpointInitialization"
 						"New-UDSideNav"
 						"New-UDSideNavItem"
