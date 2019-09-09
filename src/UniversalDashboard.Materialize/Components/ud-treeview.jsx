@@ -13,9 +13,19 @@ export default class UDTreeView extends React.Component {
 
     onToggle(node, toggled)
     {
-
         if (this.props.hasCallback) {
             UniversalDashboard.post('/api/internal/component/element/' + this.props.id, { nodeId: node.id}, function(data) {
+
+                if (data.error) {
+                    UniversalDashboard.toaster.error(data.error);
+                    return;
+                }
+
+                if (!data || data.length === 0)
+                {
+                    return;
+                } 
+
                 node.children = data;
                 if(this.state.cursor){this.state.cursor.active = false;}
                 
@@ -37,19 +47,22 @@ export default class UDTreeView extends React.Component {
             }
             this.setState({ cursor: node })
         }
-
-
     }
 
     render(){
 
         decorators.Header = ({style, node}) => {
             const iconType = node.icon;
+            var expandedIconType = node.expandedIcon;
             const iconStyle = {marginRight: '5px'};
+
+            if (!expandedIconType) {
+                expandedIconType = iconType;
+            }
 
             var icon = UniversalDashboard.renderComponent({
                 type: 'icon',
-                icon: iconType, 
+                icon: node.toggled ? expandedIconType : iconType, 
                 style: iconStyle
             })
         
