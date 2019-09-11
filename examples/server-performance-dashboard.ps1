@@ -62,6 +62,12 @@ Start-UdDashboard -Content {
                                 New-UdChartDataset -DataProperty "Size" -Label "Size" -BackgroundColor "#80962F23" -HoverBackgroundColor "#80962F23"
                                 New-UdChartDataset -DataProperty "FreeSpace" -Label "Free Space" -BackgroundColor "#8014558C" -HoverBackgroundColor "#8014558C"
                             )
+                        } -Options @{
+                            scales = @{
+                                yAxes = @(@{
+                                    min = 0
+                                })
+                            }
                         }
                     }
                 }
