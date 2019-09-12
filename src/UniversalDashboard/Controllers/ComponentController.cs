@@ -44,7 +44,7 @@ namespace UniversalDashboard.Controllers
             _stateRequestService = stateRequestService;
         }
 
-        private async Task<IActionResult> RunScript(Endpoint endpoint, Dictionary<string, object> parameters = null)
+        private async Task<IActionResult> RunScript(Endpoint endpoint, Dictionary<string, object> parameters = null, bool noSerialization = false)
         {
             try {
                 var variables = new Dictionary<string, object> {
@@ -71,6 +71,8 @@ namespace UniversalDashboard.Controllers
                 }
 
                 ExecutionContext executionContext = new ExecutionContext(endpoint, variables, parameters, HttpContext?.User);
+                executionContext.NoSerialization = noSerialization;
+
                 if (HttpContext.Session.TryGetValue("SessionId", out byte[] sessionIdBytes))
                 {
                     var sessionId = new Guid(sessionIdBytes);
@@ -318,7 +320,7 @@ namespace UniversalDashboard.Controllers
                 return NotFound();
             }
 
-            return await RunScript(endpoint, variables);
+            return await RunScript(endpoint, variables, true);
         }
 
         [HttpPost]
