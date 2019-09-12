@@ -36,9 +36,11 @@ $Components = @()
   'New-UDRadio',
   'New-UDRow',
   'New-UDSelect',
+  'New-UDSplitPane',
   'New-UDSwitch',
   'New-UDTabContainer',
   'New-UDTable',
+  'New-UDTooltip',
   'New-UDTextbox',
   'New-UDTreeview') | Sort-Object | ForEach-Object {
     $Page = New-UDComponentPage -Command $_
@@ -54,7 +56,7 @@ $Navigation = New-UDSideNav -Content {
     New-UDSideNavItem -SubHeader -Text "Sample Dashboards" -Icon chart_line  -Children {
         New-UDSideNavItem -Text "Azure Resources" -Url "Azure"
     }
-    New-UDSideNavItem -SubHeader -Text "About Universal Dashboard" -Icon question -Children {
+    New-UDSideNavItem -SubHeader -Text "About" -Icon question -Children {
         New-UDSideNavItem -Text "Getting Started" -Url "Getting-Started"
     }
     New-UDSideNavItem -SubHeader -Text "UI Components" -Icon window_maximize -Children {

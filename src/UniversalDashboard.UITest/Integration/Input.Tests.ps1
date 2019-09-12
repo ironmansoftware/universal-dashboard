@@ -154,7 +154,7 @@ Describe "Input" {
 
         $Server.DashboardService.SetDashboard($Dashboard)
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-    
+
         It "should validate with custom error message (Endpoint)" {
             $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
             Send-SeKeys -Element $Element -Keys 'a'
@@ -162,7 +162,7 @@ Describe "Input" {
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
             Send-SeKeys -Element $Element -Keys 'a'
 
-            (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'The email address you entered is invalid.'
+            (Find-SeElement -Id 'EmailAddresstooltip' -Driver $Driver).getAttribute("textContent") | should be 'The email address you entered is invalid.'
         }
 
         It "should give error about required field (Endpoint)" {
@@ -177,7 +177,7 @@ Describe "Input" {
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
             Send-SeKeys -Element $Element -Keys 'a'
 
-            (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'SomeOtherField is required.'
+            (Find-SeElement -Id 'SomeOtherFieldtooltip' -Driver $Driver).getAttribute("textContent") | should be 'SomeOtherField is required.'
         }
 
         It "should validate with custom error message (Content)" {
@@ -188,7 +188,7 @@ Describe "Input" {
             $Element = Find-SeElement -Id 'SomeOtherItem2' -Driver $Driver
             Invoke-SeClick -Element $Element 
 
-            (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'The email address you entered is invalid.'
+            (Find-SeElement -Id 'EmailAddress2tooltip' -Driver $Driver).getAttribute("textContent") | should be 'The email address you entered is invalid.'
         }
 
         It "should give error about required field (Content)" {
@@ -200,9 +200,9 @@ Describe "Input" {
             $Element = Find-SeElement -Id 'EmailAddress2' -Driver $Driver
             Invoke-SeClick -Element $Element 
 
-            (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'SomeOtherItem2 is required.'
+            (Find-SeElement -Id 'SomeOtherItem2tooltip' -Driver $Driver).getAttribute("textContent") | should be 'SomeOtherItem2 is required.'
         }
-
+        
         It "should enable submit if success" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 

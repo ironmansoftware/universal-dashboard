@@ -98,11 +98,18 @@ export default class UdInputField extends React.Component {
             else if (this.props.validationError != null) {
 
                 validationIcon = UniversalDashboard.renderComponent({
-                    type: 'icon',
-                    icon: 'TimesCircle',
-                    className: 'red-text prefix tooltipped',
-                    dataTooltip: this.props.validationError,
-                    key: field.name + "icon"
+                    id: field.name + "tooltip",
+                    type: 'ud-tooltip',
+                    tooltipType: 'error',
+                    effect: 'solid',
+                    tooltipContent: this.props.validationError,
+                    className: 'prefix',
+                    content: {
+                        type: 'icon',
+                        icon: 'TimesCircle',
+                        className: 'red-text',
+                        key: field.name + "icon"
+                    }
                 })
             }
 
