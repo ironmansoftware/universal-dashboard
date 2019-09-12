@@ -53,7 +53,7 @@ namespace UniversalDashboard.Cmdlets
 
                 foreach(var variableName in variables)
                 {
-                    var variable = SessionState.PSVariable.Get(variableName);
+                    var variable = sessionState.PSVariable.Get(variableName);
                     if (variable != null && !variable.Options.HasFlag(ScopedItemOptions.Constant) && !variable.Options.HasFlag(ScopedItemOptions.ReadOnly))
                     {
                         if (!callback.Variables.ContainsKey(variable.Name))
