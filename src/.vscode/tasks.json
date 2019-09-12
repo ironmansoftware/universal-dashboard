@@ -16,7 +16,8 @@
             "presentation": {
                 "reveal": "always",
                 "panel": "new"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Build Release",

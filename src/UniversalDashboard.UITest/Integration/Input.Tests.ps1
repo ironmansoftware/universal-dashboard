@@ -14,6 +14,26 @@ $Driver = Start-SeFirefox
 
 Describe "Input" {
 
+    
+    Context "drops to pipeline" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
+                "This is some stuff"
+
+                New-UDInputAction -Content { New-UDElement -Tag 'div' -Id 'hello' }
+            }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should not spin forever if an item is dropped to the pipeline that isn't UDInputAction" {
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick $Button
+            Find-SeElement -Id 'hello' -Driver $Driver | should not be $null
+        }
+    }
+
     Context "textbox" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Content {
