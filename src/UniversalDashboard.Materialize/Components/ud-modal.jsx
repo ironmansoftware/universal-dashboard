@@ -101,7 +101,7 @@ export default class UdModal extends React.Component {
         var footer = null;
         if (this.state.footer != null) {
             if (this.state.footer.map) {
-                footer = this.state.footer.map(x => renderComponent(x));
+                footer = this.state.footer.map(x => UniversalDashboard.renderComponent(x));
             }
             else {
                 footer = UniversalDashboard.renderComponent(this.state.footer);
