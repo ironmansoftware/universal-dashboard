@@ -49,6 +49,28 @@ BGInfo clone built using Universal Dashboard to display computer metrics.
 
 Clock implementation built using SVG and Universal Dashboard. 
 
+## Nightly Builds 
+
+To install nightly builds, you can use the `./tools/install-nightly.ps1` script. 
+
+### Installing Community Edition
+
+```
+./tools/install-nightly.ps1
+```
+
+### Installing Enterprise Edition
+
+```
+./tools/install-nightly.ps1 -Enterprise
+```
+
+### Installing into the PowerShell Core Module Path
+
+```
+./tools/install-nightly.ps1 -Enterprise -Core
+```
+
 ## Contribution Rules
 
 Contributions are always welcome! Please follow the below rules. 
