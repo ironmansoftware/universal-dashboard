@@ -14,6 +14,26 @@ $Driver = Start-SeFirefox
 
 Describe "Input" {
 
+    Context "textbox" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDInput -Title "Simple Form" -Id "Form" -Content {
+                New-UDInputField -Type 'textbox' -Name 'DepartmentNumber' -Placeholder 'Department Number ("2600922")'
+            } -Endpoint {
+                param($DepartmentNumber)
+
+                $Cache:Data = $Test
+            }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should have helper text" {
+            $Element = Find-SeElement -TagName 'label' -Driver $Driver
+            $Element.Text | Should be 'Department Number ("2600922")'
+        }
+    }
+
     Context "grid in content" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
@@ -139,7 +159,8 @@ Describe "Input" {
             $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
             Send-SeKeys -Element $Element -Keys 'a'
             $Element = Find-SeElement -Id 'SomeOtherField' -Driver $Driver
-            Invoke-SeClick -Element $Element 
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            Send-SeKeys -Element $Element -Keys 'a'
 
             (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'The email address you entered is invalid.'
         }
@@ -149,9 +170,12 @@ Describe "Input" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
             $Element = Find-SeElement -Id 'SomeOtherField' -Driver $Driver
-            Invoke-SeClick -Element $Element 
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            Send-SeKeys -Element $Element -Keys ''
+
             $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
-            Invoke-SeClick -Element $Element 
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            Send-SeKeys -Element $Element -Keys 'a'
 
             (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'SomeOtherField is required.'
         }
@@ -415,7 +439,8 @@ Describe "Input" {
         }
 
         It "should have friendly label for textbox" {
-            Find-SeElement -Id "Textbox" -Driver $Driver | Get-SeElementAttribute -Attribute "placeholder" | Should be "My Textbox"
+            $Element = Find-SeElement -TagName "label" -Driver $Driver | Where-Object { $_.Text -eq 'My Textbox' }
+            $Element | Should not be $null
         }
 
         It "should have friendly label for checkbox" {

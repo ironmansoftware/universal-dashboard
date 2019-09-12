@@ -116,7 +116,7 @@ export default class UdInputField extends React.Component {
                 value={field.value} 
                 onBlur={e => this.onValidateField(field, e)} 
                 onKeyDown={this.onKeyDown.bind(this)}  
-                placeholder={field.placeholder ? field.placeholder[0] : field.name}
+                label={field.placeholder ? field.placeholder[0] : field.name}
             />
         }
 
