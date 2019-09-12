@@ -14,6 +14,26 @@ $Driver = Start-SeFirefox
 
 Describe "Input" {
 
+    Context "textbox" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDInput -Title "Simple Form" -Id "Form" -Content {
+                New-UDInputField -Type 'textbox' -Name 'DepartmentNumber' -Placeholder 'Department Number ("2600922")'
+            } -Endpoint {
+                param($DepartmentNumber)
+
+                $Cache:Data = $Test
+            }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should have helper text" {
+            $Element = Find-SeElement -TagName 'label' -Driver $Driver
+            $Element.Text | Should be 'Department Number ("2600922")'
+        }
+    }
+
     Context "grid in content" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
