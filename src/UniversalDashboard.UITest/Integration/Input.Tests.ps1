@@ -159,7 +159,7 @@ Describe "Input" {
             $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
             Send-SeKeys -Element $Element -Keys 'a'
             $Element = Find-SeElement -Id 'SomeOtherField' -Driver $Driver
-            Invoke-SeClick -Element $Element 
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
             (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'The email address you entered is invalid.'
         }
@@ -169,9 +169,9 @@ Describe "Input" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
             $Element = Find-SeElement -Id 'SomeOtherField' -Driver $Driver
-            Invoke-SeClick -Element $Element 
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
             $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
-            Invoke-SeClick -Element $Element 
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
             (Find-SeElement -ClassName 'fa-times-circle' -Driver $Driver) |  Get-SeElementAttribute -Attribute 'data-tooltip' | should be 'SomeOtherField is required.'
         }
@@ -435,7 +435,8 @@ Describe "Input" {
         }
 
         It "should have friendly label for textbox" {
-            Find-SeElement -Id "Textbox" -Driver $Driver | Get-SeElementAttribute -Attribute "placeholder" | Should be "My Textbox"
+            $Element = Find-SeElement -Id "label" -Driver $Driver | Where-Object { $_.Text -eq 'My Textbox' }
+            $Element | Should not be $null
         }
 
         It "should have friendly label for checkbox" {
