@@ -154,6 +154,8 @@ Describe "Input" {
 
         $Server.DashboardService.SetDashboard($Dashboard)
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Wait-Debugger
     
         It "should validate with custom error message (Endpoint)" {
             $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver

@@ -97,6 +97,7 @@ $manifestParameters = @{
 		"New-UDSplitPane"
 		"New-UDTreeNode"
 		"New-UDTreeView"
+		"New-UDTooltip"
 
 		#Material UI
 		'New-UDMuAvatar'
