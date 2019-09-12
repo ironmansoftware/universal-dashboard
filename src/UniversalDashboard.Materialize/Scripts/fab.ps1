@@ -2,7 +2,7 @@ function New-UDFab {
     param(
         [Parameter()]
         [string] $Id = (New-Guid),
-        [Parameter(Mandatory = $true, Position = 0)]
+        [Parameter()]
         [ScriptBlock]$Content,
         [Parameter()]
         [UniversalDashboard.Models.DashboardColor]$ButtonColor,
@@ -37,13 +37,19 @@ function New-UDFab {
         }
     }
 
+    $Children = @()
+    if ($null -ne $Content)
+    {
+        $Children = & $Content
+    }
+
     @{
         type = "ud-fab"
         assetId = $AssetId
         isPlugin = $true 
 
         id = $id
-        content = & $Content
+        content = $Children
         size = $Size
         backgroundColor = $ButtonColor.HtmlColor
         color = $IconColor.HtmlColor
