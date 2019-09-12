@@ -74,6 +74,15 @@ namespace UniversalDashboard.Execution
                 }
 
                 var paramBlockBuilder = new StringBuilder();
+
+                if (scriptBlockAst.UsingStatements != null)
+                {
+                    foreach(var usingStatement in scriptBlockAst.UsingStatements)
+                    {
+                        paramBlockBuilder.AppendLine(usingStatement.ToString());
+                    }
+                }
+
                 paramBlockBuilder.Append("param(");
 
                 foreach (var parameter in context.Parameters)
@@ -84,7 +93,7 @@ namespace UniversalDashboard.Execution
                 paramBlockBuilder.Append(")");
                 paramBlockBuilder.AppendLine();
 
-                script = paramBlockBuilder.ToString() + script;
+                script = paramBlockBuilder.ToString() + scriptBlockAst.EndBlock.ToString();
             }
 
             Collection<PSObject> output;

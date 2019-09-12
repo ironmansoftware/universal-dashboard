@@ -8,6 +8,24 @@ Import-Module $ModulePath -Force
 Get-UDRestApi | Stop-UDRestApi
 Get-UDDashboard | Stop-UDDashboard
 Describe "Api" {
+
+    Context "script block with requires" {
+        $Server = Start-UDRestApi -Port 10001 -Endpoint @(
+
+            $ScriptBlock = [ScriptBlock]::Create((Get-Content (Join-Path $PSScriptRoot "../Assets/requires.txt") -Raw))
+
+            New-UDEndpoint -Url "/scriptblock" -Method "GET" -Endpoint $ScriptBlock
+        ) 
+
+        It "not throw an error" {
+            (Invoke-RestMethod http://localhost:10001/api/scriptblock?hello=test) | Should be "Hello"
+        }
+
+        Stop-UDRestApi $Server
+    }
+
+    Wait-Debugger
+
     Context "Special Characters" {
         $Server = Start-UDRestApi -Port 10001 -Endpoint @(
             New-UDEndpoint -Url "/recherches" -Method "GET" -Endpoint {

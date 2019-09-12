@@ -1,0 +1,2 @@
+using module Microsoft.PowerShell.Utility
+'Hello' | ConvertTo-Json
