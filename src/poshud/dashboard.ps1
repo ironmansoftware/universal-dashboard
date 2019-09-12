@@ -36,9 +36,11 @@ $Components = @()
   'New-UDRadio',
   'New-UDRow',
   'New-UDSelect',
+  'New-UDSplitPane',
   'New-UDSwitch',
   'New-UDTabContainer',
   'New-UDTable',
+  'New-UDTooltip',
   'New-UDTextbox',
   'New-UDTreeview') | Sort-Object | ForEach-Object {
     $Page = New-UDComponentPage -Command $_
