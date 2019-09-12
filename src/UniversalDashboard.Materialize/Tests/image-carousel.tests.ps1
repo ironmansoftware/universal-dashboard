@@ -31,8 +31,8 @@ Describe "New-UDImageCarousel" {
         
         }
 
-        $carousel = Find-SeElement -Driver $driver -Id 'carousel-demo
-        '
+        $carousel = Find-SeElement -Driver $driver -Id 'carousel-demo'
+
         it "Should have image carousel component" {
             $carousel -eq $null | Should be $false
         }
