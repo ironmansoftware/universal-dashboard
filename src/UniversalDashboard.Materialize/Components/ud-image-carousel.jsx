@@ -69,7 +69,7 @@ export default class UdImageCarousel extends React.Component {
                 if(this.props.autoCycle){
                     this.onCarouselButtonClick(this.props)
                     setTimeout(() => {
-                        $(`#${this.props.id}`).carousel('next')
+                        this.instance.instance.next();
                     },this.props.speed)
                 }
                 else{
@@ -100,7 +100,7 @@ export default class UdImageCarousel extends React.Component {
 
         return (
  
-            <Carousel carouselId={this.props.id} options={options} fixedItem={btn}>
+            <Carousel ref={x => this.instance = x} carouselId={this.props.id} options={options} fixedItem={btn}>
                 {carouselItems}
             </Carousel>
 

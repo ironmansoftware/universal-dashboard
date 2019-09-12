@@ -7,7 +7,11 @@
             "label": "Build Debug",
             "command": "./build.ps1",
             "type": "shell",
-            "args": ["-Configuration", "Debug", "-NoHelp"],
+            "args": [
+                "-Configuration",
+                "Debug",
+                "-NoHelp"
+            ],
             "group": "build",
             "presentation": {
                 "reveal": "always",
@@ -18,7 +22,10 @@
             "label": "Build Release",
             "command": "./build.ps1",
             "type": "shell",
-            "args": ["-Configuration", "Release"],
+            "args": [
+                "-Configuration",
+                "Release"
+            ],
             "group": "build",
             "presentation": {
                 "reveal": "always",
@@ -33,13 +40,17 @@
             "presentation": {
                 "reveal": "always",
                 "panel": "new"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Run Materialize Test",
             "command": "./UniversalDashboard.Materialize/Tests/driver.ps1",
             "type": "shell",
-            "args": ["-Control", "${input:control}"],
+            "args": [
+                "-Control",
+                "${input:control}"
+            ],
             "group": "test",
             "presentation": {
                 "reveal": "always",
