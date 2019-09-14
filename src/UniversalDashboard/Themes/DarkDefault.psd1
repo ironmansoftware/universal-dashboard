@@ -204,5 +204,11 @@
             'margin-bottom' = "5%"
         }
 
+        '.sidenav .collapsible li, .sidenav.fixed .collapsible li ' = @{
+            'background-color' = "#252525"
+            'z-index' = "0"
+            'color'= "#FFF"
+        }
+
     }
 }
