@@ -141,6 +141,7 @@
             'color' = "#FFFFFF"
         }
         '.collapsible-header'= @{
+            'color' = "#FFFFFF"
             'background-color' = "#272C33"
             'border-bottom' = '1px solid #1c1c1c;'
             'border-bottom-width' = '1px;'
@@ -178,6 +179,12 @@
             'color'= "#fff !important"
             'background-color' = "#1c1c1c !important"
         }
+
+        '.sidenav .collapsible li, .sidenav.fixed .collapsible li ' = @{
+            'background-color' = "#252525"
+            'z-index' = "0"
+            'color'= "#FFF"
+        }
         
         '.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating)'= @{
             'color'= "#FFFFFF"
@@ -203,6 +210,8 @@
             'display' = "block"
             'margin-bottom' = "5%"
         }
+
+        
 
     }
 }
