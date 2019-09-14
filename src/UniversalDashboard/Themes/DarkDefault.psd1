@@ -141,6 +141,7 @@
             'color' = "#FFFFFF"
         }
         '.collapsible-header'= @{
+            'color' = "#FFFFFF"
             'background-color' = "#272C33"
             'border-bottom' = '1px solid #1c1c1c;'
             'border-bottom-width' = '1px;'
