@@ -6,6 +6,7 @@ using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Management.Automation.Runspaces;
 using System.Linq;
+using UniversalDashboard.Services;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -36,7 +37,7 @@ namespace UniversalDashboard.Cmdlets
 		public SecureString CertificateFilePassword { get; set; }
 
 		[Parameter]
-		public InitialSessionState EndpointInitialization { get; set; } = InitialSessionState.CreateDefault2();
+		public InitialSessionState EndpointInitialization { get; set; }
 
 		[Parameter]
 		public SwitchParameter AutoReload { get; set; }
@@ -50,6 +51,11 @@ namespace UniversalDashboard.Cmdlets
         protected override void EndProcessing()
 		{
 			Log.Info($"{Name} - {MyInvocation.ScriptName} - {AutoReload}");
+
+			if (EndpointInitialization == null)
+			{
+				EndpointInitialization = UDRunspaceFactory.GenerateInitialSessionState(SessionState);
+			}
 
 			if (string.IsNullOrEmpty(MyInvocation.ScriptName) && AutoReload)
 			{

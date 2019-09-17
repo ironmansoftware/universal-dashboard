@@ -2,13 +2,15 @@ param([Switch]$Release)
 
 Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
 $ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
 Import-Module $ModulePath -Force
+
+Push-Location $PSScriptRoot
 
 Get-UDDashboard | Stop-UDDashboard
 Describe "EndpointInitialization" {
-    Context "Variables" {
+
+    Context "Autoload" {
+
 
         function Get-Stuff {
             999
@@ -24,55 +26,112 @@ Describe "EndpointInitialization" {
             }
         }.ToString() | Out-File -FilePath $tempModule
 
-        $Initialization = New-UDEndpointInitialization -Module @($tempModule, ".\TestModule.psm1") -Variable "SomeVar" -Function 'Get-Stuff'
+        Import-Module $tempModule
+        Import-Module ".\TestModule.psm1"
 
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDCounter -Title "Counter" -Id "Counter" -Endpoint {
+        $dashboard = New-UDDashboard -Title "Test" -Content {} 
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Endpoint @(
+            New-UDEndpoint -Url '/module1' -Endpoint {
                 Get-Number 
             }
-
-            New-UDElement -tag "div" -Endpoint {
-                New-UDElement -tag "div" -Id "variable" -Content { $SomeVar }
+            New-UDEndpoint -Url "/variable" -Endpoint {
+                $SomeVar
             }
-
-            New-UDElement -tag "div" -Id "function" -Endpoint {
+            New-UDEndpoint -Url "/function" -Endpoint {
                 Get-Stuff
             }
-
-            New-UDElement -tag "div" -Id "othermodule" -Endpoint {
+            New-UDEndpoint -Url "/module2" -Endpoint {
                 Get-TheMeaningOfLife
             }
-
-        } -EndpointInitialization $Initialization
-        
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        Start-Sleep 3
+        )
 
         It "should load module from temp dir" {
-            $Target = Find-SeElement -Driver $Driver -Id "Counter"
-            $Target.Text | Should be "Counter`r`n10" 
+            Invoke-RestMethod "http://localhost:10001/api/module1" | Should be "10"
         }
 
         It "should have variable defined" {
-            $Target = Find-SeElement -Driver $Driver -Id "variable"
-            $Target.Text | Should be "This is a value" 
+            Invoke-RestMethod "http://localhost:10001/api/variable" | Should be "This is a value"
         }
 
         It "should have function defined" {
-            $Target = Find-SeElement -Driver $Driver -Id "function"
-            $Target.Text | Should be "999" 
+            Invoke-RestMethod "http://localhost:10001/api/function" | Should be "999"
         }
 
         It "should load module from relative path" {
-            $Target = Find-SeElement -Driver $Driver -Id "othermodule"
-            $Target.Text | Should be "42" 
+            Invoke-RestMethod "http://localhost:10001/api/module2" | Should be "42"
         }
 
         Remove-Item $tempModule -Force
-        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
+
+        
+    }
+
+    Context "Variables" {
+
+        function Get-Stuff {
+            999
+        }
+
+        function Get-NoStuff {
+            101
+        }
+
+        $SomeVar = "This is a value"
+
+        $tempModule = [IO.Path]::GetTempFileName() + ".psm1"
+
+        {
+            function Get-Number {
+                10
+            }
+        }.ToString() | Out-File -FilePath $tempModule
+
+        $Initialization = New-UDEndpointInitialization -Module @($tempModule, ".\TestModule.psm1") -Variable "SomeVar" -Function 'Get-Stuff'
+
+        $dashboard = New-UDDashboard -Title "Test" -Content {} -EndpointInitialization $Initialization
+        
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Endpoint @(
+            New-UDEndpoint -Url '/module1' -Endpoint {
+                Get-Number 
+            }
+            New-UDEndpoint -Url "/variable" -Endpoint {
+                $SomeVar
+            }
+            New-UDEndpoint -Url "/function" -Endpoint {
+                Get-Stuff
+            }
+            New-UDEndpoint -Url "/module2" -Endpoint {
+                Get-TheMeaningOfLife
+            }
+            New-UDEndpoint -Url "/notfound" -Endpoint {
+                Get-NoStuff
+            }
+        )
+
+        It "should load module from temp dir" {
+            Invoke-RestMethod "http://localhost:10001/api/module1" | Should be "10"
+        }
+
+        It "should have variable defined" {
+            Invoke-RestMethod "http://localhost:10001/api/variable" | Should be "This is a value"
+        }
+
+        It "should have function defined" {
+            Invoke-RestMethod "http://localhost:10001/api/function" | Should be "999"
+        }
+
+        It "should load module from relative path" {
+            Invoke-RestMethod "http://localhost:10001/api/module2" | Should be "42"
+        }
+
+        It "should not load function" {
+            Invoke-RestMethod "http://localhost:10001/api/notfound" | Should not be 101
+        }
+
+        Remove-Item $tempModule -Force
         Stop-UDDashboard -Server $Server 
     }
 }
+
+Pop-Location
