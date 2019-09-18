@@ -16,7 +16,7 @@ Describe "EndpointInitialization" {
             999
         }
 
-        $SomeVar = "This is a value"
+        $SomeVar123 = "This is a value"
 
         $tempModule = [IO.Path]::GetTempFileName() + ".psm1"
 
@@ -35,7 +35,7 @@ Describe "EndpointInitialization" {
                 Get-Number 
             }
             New-UDEndpoint -Url "/variable" -Endpoint {
-                $SomeVar
+                $SomeVar123
             }
             New-UDEndpoint -Url "/function" -Endpoint {
                 Get-Stuff
@@ -77,7 +77,7 @@ Describe "EndpointInitialization" {
             101
         }
 
-        $SomeVar = "This is a value"
+        $SomeVar123 = "This is a value"
 
         $tempModule = [IO.Path]::GetTempFileName() + ".psm1"
 
@@ -87,7 +87,7 @@ Describe "EndpointInitialization" {
             }
         }.ToString() | Out-File -FilePath $tempModule
 
-        $Initialization = New-UDEndpointInitialization -Module @($tempModule, ".\TestModule.psm1") -Variable "SomeVar" -Function 'Get-Stuff'
+        $Initialization = New-UDEndpointInitialization -Module @($tempModule, ".\TestModule.psm1") -Variable "SomeVar123" -Function 'Get-Stuff'
 
         $dashboard = New-UDDashboard -Title "Test" -Content {} -EndpointInitialization $Initialization
         
@@ -96,7 +96,7 @@ Describe "EndpointInitialization" {
                 Get-Number 
             }
             New-UDEndpoint -Url "/variable" -Endpoint {
-                $SomeVar
+                $SomeVar123
             }
             New-UDEndpoint -Url "/function" -Endpoint {
                 Get-Stuff
