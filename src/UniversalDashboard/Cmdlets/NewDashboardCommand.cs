@@ -60,7 +60,7 @@ namespace UniversalDashboard.Cmdlets
 		public Element NavBarLogo {get;set;}
 
 		[Parameter]
-		public InitialSessionState EndpointInitialization { get; set; } = InitialSessionState.CreateDefault2();
+		public InitialSessionState EndpointInitialization { get; set; }
 
 		[Parameter]
 		public Theme Theme { get; set; }
@@ -78,6 +78,11 @@ namespace UniversalDashboard.Cmdlets
 
         protected override void EndProcessing()
 	    {
+			if (EndpointInitialization == null)
+			{
+				EndpointInitialization = UDRunspaceFactory.GenerateInitialSessionState(SessionState);
+			}
+
 			var dashboard = new Dashboard();
 			dashboard.Title = Title;
 			dashboard.NavBarColor = NavBarColor?.HtmlColor;

@@ -68,7 +68,7 @@ namespace UniversalDashboard
 
 				var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
 
-				var tempPath = Path.Combine(assemblyBasePath, "..\\UniversalDashboard.psd1");
+				var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
 				var initialSessionState = InitialSessionState.CreateDefault();
 				initialSessionState.ImportPSModule(new[] { tempPath });
 

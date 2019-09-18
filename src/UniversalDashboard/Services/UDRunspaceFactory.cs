@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Management.Automation.Runspaces;
@@ -72,6 +73,28 @@ namespace UniversalDashboard.Services
 
 			_runspacePool = new ObjectPool<Runspace>(CreateRunspace);
 		}
+
+        public static InitialSessionState GenerateInitialSessionState(System.Management.Automation.SessionState sessionState)
+        {
+            var initialSessionState = InitialSessionState.CreateDefault2();
+
+            var modulePaths = sessionState.InvokeCommand.InvokeScript("Get-Module").Select(m => m.BaseObject).Cast<PSModuleInfo>().Select(m => m.Path).ToArray();
+            initialSessionState.ImportPSModule(modulePaths);
+
+            var commands = sessionState.InvokeCommand.InvokeScript("Get-ChildItem -Path Function:\\").Select(m => m.BaseObject).Cast<FunctionInfo>();
+            foreach (var command in commands)
+            {
+                initialSessionState.Commands.Add(new SessionStateFunctionEntry(command.Name, command.Definition));
+            }
+
+            var variables = sessionState.InvokeCommand.InvokeScript("Get-Variable").Select(m => m.BaseObject).Cast<PSVariable>();
+            foreach (var variable in variables)
+            {
+                initialSessionState.Variables.Add(new SessionStateVariableEntry(variable.Name, variable.Value, variable.Description));
+            }
+
+            return initialSessionState;
+        }
 
 		private Runspace CreateRunspace() {
 			var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
