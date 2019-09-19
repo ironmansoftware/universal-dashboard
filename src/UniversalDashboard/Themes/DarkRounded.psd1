@@ -227,7 +227,7 @@
                 'color' = "#fff"
             }
             '.sidenav .collapsible li, .sidenav.fixed .collapsible li ' = @{
-                'background-color' = "#252525"
+                'background-color' = "#1c1c1c"
                 'z-index' = "0"
                 'color'= "#FFF"
             }
