@@ -57,16 +57,16 @@ namespace UniversalDashboard.Execution
 
         protected override void NewItem(string path, string itemTypeName, object newItemValue)
         {
-            _memoryCache.Set(path, newItemValue);
+            _memoryCache.Set(path.ToLower(), newItemValue);
         }
 
         protected override void SetItem(string name, object value) {
-            _memoryCache.Set(name, value);
+            _memoryCache.Set(name.ToLower(), value);
         }
 
         protected override bool ItemExists(string path)
         {
-            return _memoryCache.TryGetValue(path, out object val);
+            return _memoryCache.TryGetValue(path.ToLower(), out object val);
         }
 
         protected override bool IsValidPath(string path) {
@@ -75,7 +75,7 @@ namespace UniversalDashboard.Execution
 
         public void ClearContent(string path)
         {
-            _memoryCache.Remove(path);
+            _memoryCache.Remove(path.ToLower());
         }
 
         public object ClearContentDynamicParameters(string path)
@@ -85,7 +85,7 @@ namespace UniversalDashboard.Execution
 
         public IContentReader GetContentReader(string path)
         {
-            return new MemoryCacheContentReaderWriter(path, _memoryCache);
+            return new MemoryCacheContentReaderWriter(path.ToLower(), _memoryCache);
         }
 
         public object GetContentReaderDynamicParameters(string path)
@@ -95,7 +95,7 @@ namespace UniversalDashboard.Execution
 
         public IContentWriter GetContentWriter(string path)
         {
-            return new MemoryCacheContentReaderWriter(path, _memoryCache);
+            return new MemoryCacheContentReaderWriter(path.ToLower(), _memoryCache);
         }
 
         public object GetContentWriterDynamicParameters(string path)
