@@ -60,7 +60,7 @@
             'main' = @{
                 'padding-left' = "50px"
                 'padding-right' = "50px"
-                'padding-top' = "0px"
+                'padding-top' = "30px"
                 'padding-bottom' = "50px"
             }
 
