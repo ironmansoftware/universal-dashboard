@@ -78,26 +78,26 @@ namespace UniversalDashboard.Execution
 
         protected override void GetItem(string name)
         {
-            var item = _memoryCache.Get(ConnectionId + name);
+            var item = _memoryCache.Get(ConnectionId + name.ToLower());
             if (item != null)
             {
-                base.WriteItemObject(item, name, false);
+                base.WriteItemObject(item, name.ToLower(), false);
             }
         }
 
         protected override void NewItem(string path, string itemTypeName, object newItemValue)
         {
-            _memoryCache.Set(ConnectionId + path, newItemValue);
+            _memoryCache.Set(ConnectionId + path.ToLower(), newItemValue);
         }
 
         protected override void SetItem(string name, object value)
         {
-            _memoryCache.Set(ConnectionId + name, value);
+            _memoryCache.Set(ConnectionId + name.ToLower(), value);
         }
 
         protected override bool ItemExists(string path)
         {
-            return _memoryCache.TryGetValue(ConnectionId + path, out object val);
+            return _memoryCache.TryGetValue(ConnectionId + path.ToLower(), out object val);
         }
 
         protected override bool IsValidPath(string path)
@@ -107,7 +107,7 @@ namespace UniversalDashboard.Execution
 
         public void ClearContent(string path)
         {
-            _memoryCache.Remove(ConnectionId + path);
+            _memoryCache.Remove(ConnectionId + path.ToLower());
         }
 
         public object ClearContentDynamicParameters(string path)
@@ -119,7 +119,7 @@ namespace UniversalDashboard.Execution
         {
             Logger.Debug($"GetContentReader - {path} ");
 
-            return new MemoryCacheContentReaderWriter(ConnectionId + path, _memoryCache);
+            return new MemoryCacheContentReaderWriter(ConnectionId + path.ToLower(), _memoryCache);
         }
 
         public object GetContentReaderDynamicParameters(string path)
@@ -131,7 +131,7 @@ namespace UniversalDashboard.Execution
         {
             Logger.Debug($"GetContentWriter - {path} ");
 
-            return new MemoryCacheContentReaderWriter(ConnectionId + path, _memoryCache);
+            return new MemoryCacheContentReaderWriter(ConnectionId + path.ToLower(), _memoryCache);
         }
 
         public object GetContentWriterDynamicParameters(string path)
