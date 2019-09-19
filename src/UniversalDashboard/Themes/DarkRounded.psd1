@@ -70,7 +70,7 @@
 
             '.tabs'= @{
                 'color'= "#FFFFFF"
-                'background-color' = "#272C33"
+                'background-color' = "#171717"
             }
             '.tabs .tab'= @{
                 'color' = "#252525"
@@ -158,7 +158,7 @@
                 'color' = "#FFFFFF"
             }
             '.collapsible-header'= @{
-                'background-color' = "#272C33"
+                'background-color' = "#171717"
                 'border-bottom' = '1px solid #f1f1f1;'
                 'border-bottom-width' = '1px;'
                 'border-bottom-style' = 'solid;'
@@ -172,7 +172,7 @@
 
             '.collapsible-body' = @{
                 'border-bottom' = 'none'
-                "background-color" = "#272C33"
+                "background-color" = "#171717"
             }
             'h'= @{
                 "color" = "#fff !important"
