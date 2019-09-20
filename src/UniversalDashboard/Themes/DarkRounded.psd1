@@ -60,7 +60,7 @@
             'main' = @{
                 'padding-left' = "50px"
                 'padding-right' = "50px"
-                'padding-top' = "50px"
+                'padding-top' = "30px"
                 'padding-bottom' = "50px"
             }
 
@@ -70,7 +70,7 @@
 
             '.tabs'= @{
                 'color'= "#FFFFFF"
-                'background-color' = "#272C33"
+                'background-color' = "#171717"
             }
             '.tabs .tab'= @{
                 'color' = "#252525"
@@ -158,11 +158,12 @@
                 'color' = "#FFFFFF"
             }
             '.collapsible-header'= @{
-                'background-color' = "#272C33"
-                'border-bottom' = '1px solid #1c1c1c;'
+                'background-color' = "#171717"
+                'border-bottom' = '1px solid #f1f1f1;'
                 'border-bottom-width' = '1px;'
                 'border-bottom-style' = 'solid;'
-                'border-bottom-color' = '#1c1c1c;'
+                 'color' = '#f1f1f1'
+
             }
             '.collapsible' = @{
                 'margin' = ".5rem 0 1rem"
@@ -171,14 +172,14 @@
 
             '.collapsible-body' = @{
                 'border-bottom' = 'none'
-                "background-color" = "#272C33"
+                "background-color" = "#171717"
             }
             'h'= @{
                 "color" = "#fff !important"
             }
-            'h3, h4' = @{
+           'h1, h2, h3, h4, h5, h6' = @{
                 'line-height' = "110%"
-                'color' = "#fff"
+                'color' = "#f1f1f1 !important"
             }
 
             '.collection .collection-item'= @{
@@ -224,6 +225,11 @@
             '.sidenav .collapsible-body, .sidenav.fixed .collapsible-body' = @{
                 'background-color' = "#1c1c1c"
                 'color' = "#fff"
+            }
+            '.sidenav .collapsible li, .sidenav.fixed .collapsible li ' = @{
+                'background-color' = "#1c1c1c"
+                'z-index' = "0"
+                'color'= "#FFF"
             }
     }
 }
