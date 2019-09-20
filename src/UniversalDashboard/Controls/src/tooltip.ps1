@@ -6,7 +6,7 @@ function New-UDTooltip {
         [ValidateSet("top", "bottom", "left", "right")]
         [string]$Place = "top",
         [Parameter()]
-        [ValidateSet("dark", "success", "warnign", "error", "info", "light")]
+        [ValidateSet("dark", "success", "warning", "error", "info", "light")]
         [string]$Type = "dark",
         [Parameter()]
         [ValidateSet("float", "solid")]
