@@ -1,6 +1,17 @@
-@{
+﻿@{
     Name = "Default"
     Definition = @{
+    '.divider' = @{
+'height’ = "1px"
+'overflow’ = "hidden"
+'background-color' = "#fff"
+}
+'.switch label input[type="checkbox"]:checked + .lever::after' = @{
+    "background-color" = "#3f51b5"
+}
+'.switch label input[type="checkbox"]:checked + .lever' = @{
+	"background-color" = "#3f51b5"
+}
         
         UDDashboard = @{
             BackgroundColor = "#EEEEEE"
