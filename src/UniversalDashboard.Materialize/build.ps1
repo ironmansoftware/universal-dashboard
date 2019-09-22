@@ -1,3 +1,5 @@
+param([Switch]$Minimal)
+
 $BuildFolder = $PSScriptRoot
 
 $powerShellGet = Import-Module PowerShellGet  -PassThru -ErrorAction Ignore
@@ -16,8 +18,12 @@ Remove-Item -Path "$BuildFolder\public" -Force -ErrorAction SilentlyContinue -Re
 New-Item -Path $OutputPath -ItemType Directory
 New-Item -Path $OutputPath\Scripts -ItemType Directory
 
-& cyclonedx-bom -o materialize.bom.xml
-npm install
+if (-not $Minimal)
+{
+	& cyclonedx-bom -o materialize.bom.xml
+	npm install
+}
+
 npm run build
 
 Copy-Item $BuildFolder\public\*.bundle.js $OutputPath
