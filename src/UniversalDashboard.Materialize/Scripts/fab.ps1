@@ -11,8 +11,8 @@ function New-UDFab {
         [Parameter()]
         [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
         [Parameter()]
-        [ValidateSet("Small", "Large")]
-        $Size = "Large",
+        [ValidateSet("small", "large")]
+        $Size = "large",
         [Parameter()]
         [Switch]$Horizontal,
         [Parameter()]

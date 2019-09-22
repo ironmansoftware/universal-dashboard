@@ -26,7 +26,7 @@ Describe "Fab" {
 
             Get-TestData | should be "child"
 
-            Wait-Debugger
+            
         }
     }
 }
