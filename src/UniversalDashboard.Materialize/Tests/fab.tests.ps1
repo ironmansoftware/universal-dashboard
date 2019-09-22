@@ -25,8 +25,6 @@ Describe "Fab" {
             $Element | Invoke-SeClick -JavascriptClick -Driver $Driver
 
             Get-TestData | should be "child"
-
-            
         }
     }
 }
