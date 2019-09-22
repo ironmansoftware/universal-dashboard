@@ -25,6 +25,7 @@
         UDFooter = @{
             BackgroundColor = "#3f51b5"
             FontColor = "#ffffff"
+            "margin-top" = "20px"
         }
     
         'main' = @{
