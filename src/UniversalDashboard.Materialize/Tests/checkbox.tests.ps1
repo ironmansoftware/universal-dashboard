@@ -32,7 +32,7 @@ Describe "Checkbox" {
     Context "OnChange" {
         Set-TestDashboard {
             New-UDCheckbox -Id "Test" -Label "Check me" -OnChange {
-                Set-TestData -Data $true
+                Set-TestData -Data $EventData
             }
         }
 
@@ -42,6 +42,11 @@ Describe "Checkbox" {
             Start-Sleep 1
 
             Get-TestData | should be $true
+
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            Start-Sleep 1
+
+            Get-TestData | should be $false
         }
     }
 

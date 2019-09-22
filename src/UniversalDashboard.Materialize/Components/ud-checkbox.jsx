@@ -51,7 +51,7 @@ export default class UDCheckbox extends React.Component {
 
     render() {
         return <Checkbox 
-                    checked={this.props.checked} 
+                    checked={this.state.checked} 
                     label={this.props.label}
                     id={this.props.id}
                     filledIn={this.props.filledIn}

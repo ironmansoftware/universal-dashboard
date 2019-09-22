@@ -1,7 +1,7 @@
 param(
     [ValidateSet("Debug", "Release")]
 	[string]$Configuration = "Debug",
-	[Switch]$NoHelp
+	[Switch]$Minimal
 )
 
 $platyPS = Import-Module platyPS  -PassThru -ErrorAction Ignore
@@ -17,11 +17,12 @@ if ($powerShellGet.Version -lt ([Version]'1.6.0')) {
 	Import-Module PowerShellGet -Force
 }
 
-& dotnet tool install --global CycloneDX
+if (-not $Minimal)
+{
+	& dotnet tool install --global CycloneDX
+	& dotnet CycloneDX "$PSScriptRoot/UniversalDashboard.Sln" -o ".\"
+}
 
-& dotnet CycloneDX "$PSScriptRoot/UniversalDashboard.Sln" -o ".\"
-
-Rename-Item "bom.xml" "dotnet.bom.xml"
 
 & dotnet clean "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj"
 & dotnet restore "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" 
@@ -37,13 +38,16 @@ if ((Test-Path $public)) {
 	Remove-Item $public -Force -Recurse
 }
 
-
 Push-Location "$PSScriptRoot\client"
 
-& npm install
+if (-not $Minimal)
+{
+	& npm install
+	& npm install -g @cyclonedx/bom
+	& cyclonedx-bom -o core.bom.xml	
+	Rename-Item "bom.xml" "dotnet.bom.xml"
+}
 
-& npm install -g @cyclonedx/bom
-& cyclonedx-bom -o core.bom.xml
 & npm run build
 Pop-Location
 
@@ -72,7 +76,6 @@ if ((Test-Path $bomDirectory)) {
 }
 
 New-Item -ItemType Directory $bomDirectory
-
 
 $net472 = Join-Path $outputDirectory "net472"
 $netstandard20 = Join-Path $outputDirectory "netstandard2.0"
@@ -119,8 +122,7 @@ Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard
 
 . (Join-Path $PSScriptRoot 'UniversalDashboard\New-UDModuleManifest.ps1') -outputDirectory $outputDirectory
 
-if (-not $NoHelp) {
+if (-not $Minimal) {
 	New-ExternalHelp -Path "$PSScriptRoot\UniversalDashboard\Help" -OutputPath "$help\UniversalDashboard.Community-help.xml"
+	Get-ChildItem $PSScriptRoot -Include "*.bom.xml" -Recurse | ForEach-Object { Copy-Item $_.FullName ".\boms" }
 }
-
-Get-ChildItem $PSScriptRoot -Include "*.bom.xml" -Recurse | ForEach-Object { Copy-Item $_.FullName ".\boms" }
