@@ -134,7 +134,7 @@ export default class UdInputField extends React.Component {
                 name={field.name}
                 onChange={e => this.onTextFieldChange(field, e) } 
                 value={field.value}  
-                placeholder={field.placeholder ? field.placeholder[0] : field.name}
+                label={field.placeholder ? field.placeholder[0] : field.name}
             />
         }
 
