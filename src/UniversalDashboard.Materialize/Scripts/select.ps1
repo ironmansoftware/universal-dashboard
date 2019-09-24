@@ -1,7 +1,7 @@
 function New-UDSelect {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         [ScriptBlock]$Option,
         [Parameter()]

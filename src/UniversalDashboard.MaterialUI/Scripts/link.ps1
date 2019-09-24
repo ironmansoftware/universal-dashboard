@@ -1,6 +1,6 @@
 function New-UDMuLink {
     param(
-        [Parameter (HelpMessage="Enter id for this object")][string]$Id = (New-Guid).ToString(),
+        [Parameter (HelpMessage="Enter id for this object")][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter (HelpMessage="Enter url, this can be remote or local")][string]$url,
         [Parameter (HelpMessage="Show line under the text or content")]
         [ValidateSet('none','hover','always')][string]$underline = "none",

@@ -3,7 +3,7 @@ function New-UDTabContainer {
         [Parameter(Mandatory, ParameterSetName = "Static")]
         [ScriptBlock]$Tabs,
         [Parameter()]
-        [string]$Id = (New-Guid).ToString()
+        [string]$Id = ([Guid]::NewGuid()).ToString()
     )
 
     End {
@@ -24,7 +24,7 @@ function New-UDTab {
         [Parameter(Mandatory, ParameterSetName = "static")]
         [ScriptBlock]$Content,
         [Parameter()]
-        [string]$Id = (New-Guid).ToString()
+        [string]$Id = ([Guid]::NewGuid()).ToString()
     )
 
     End {

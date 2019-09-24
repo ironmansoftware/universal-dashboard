@@ -1,7 +1,7 @@
 function New-UDSplitPane {
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter(Mandatory)]
         [ScriptBlock]$Content,
         [Parameter()]

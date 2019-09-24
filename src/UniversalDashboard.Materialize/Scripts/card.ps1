@@ -2,7 +2,7 @@ function New-UDCard {
     [CmdletBinding(DefaultParameterSetName = 'text')]
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         [String]$Title,
         [Parameter(ParameterSetName = 'content')]

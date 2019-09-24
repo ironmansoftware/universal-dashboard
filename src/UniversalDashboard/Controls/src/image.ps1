@@ -2,7 +2,7 @@ function New-UDImage {
     [CmdletBinding(DefaultParameterSetName = 'url')]
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter(ParameterSetName = 'url')]
         [String]$Url,
         [Parameter(ParameterSetName = 'path')]

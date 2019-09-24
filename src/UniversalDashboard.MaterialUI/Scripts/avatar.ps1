@@ -1,6 +1,6 @@
 function New-UDMuAvatar {
     param(
-        [Parameter ()][string]$Id = (New-Guid).ToString(),
+        [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter ()][string]$Image,
         [Parameter ()][string]$Alt,
         [Parameter ()][string]$ClassName,

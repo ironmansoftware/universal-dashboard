@@ -1,6 +1,6 @@
 function New-UDMuList {
     param(
-        [Parameter ()][string]$Id = (New-Guid).ToString(),
+        [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter ()][scriptblock]$Content,
         [Parameter ()][string]$SubHeader,
         [Parameter ()][Hashtable]$Style
@@ -24,7 +24,7 @@ function New-UDMuList {
 function New-UDMuListItem {
     [CmdletBinding()]
     param(
-        [Parameter ()][string]$Id = (New-Guid).ToString(),
+        [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter ()][ValidateSet("Icon","Avatar")][string]$AvatarType,
 		[Parameter ()][object]$OnClick, 
         [Parameter ()][switch]$IsButton, 

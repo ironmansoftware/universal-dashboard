@@ -2,7 +2,7 @@ function New-UDMuChip {
     [CmdletBinding(DefaultParameterSetName = 'Icon')]
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
 
         [Parameter(Position = 0)]
 		[string]$Label,

@@ -1,7 +1,7 @@
 function New-UDIcon {
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter()]
         [UniversalDashboard.Models.FontAwesomeIcons]$Icon, 
         [Parameter()]

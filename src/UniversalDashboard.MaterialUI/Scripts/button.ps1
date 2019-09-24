@@ -32,7 +32,7 @@ function New-UDMuButton {
         [string]$Href,
 
         [Parameter()]
-        [string]$Id = (New-Guid).ToString()
+        [string]$Id = ([Guid]::NewGuid()).ToString()
 
     )
 

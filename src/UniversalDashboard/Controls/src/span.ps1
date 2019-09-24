@@ -1,7 +1,7 @@
 function New-UDSpan {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         $Content
     )

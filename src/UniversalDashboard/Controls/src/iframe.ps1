@@ -1,7 +1,7 @@
 function New-UDIFrame {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         $Uri
     )

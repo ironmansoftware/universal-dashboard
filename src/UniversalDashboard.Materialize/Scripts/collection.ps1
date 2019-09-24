@@ -1,7 +1,7 @@
 function New-UDCollection {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         [ScriptBlock]$Content,
         [Parameter()]
@@ -43,7 +43,7 @@ function New-UDCollectionItem {
     [CmdletBinding(DefaultParameterSetName = 'content')]
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         [ScriptBlock]$Content,
         [Parameter(ParameterSetName = 'content')]
