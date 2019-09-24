@@ -310,8 +310,8 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.page-footer .footer-copyright' = @{
-            'background-color' = $PrimaryBackgroundColor
+            'background-color' = $PrimaryColor
         }
-        
+
     }
 }
