@@ -4,16 +4,14 @@
 $FontColorDark = "#111111"
 $FontColorLight = "#FFFFFF"
 
-$PrimaryColor = "#3F51B5"
-$PrimaryColorDark = "#2C387E"
-$PrimaryColorLight = "#6573C3"
-
 $BackgroundColorPrimary = "#EEEEEE"
 $BackgroundColorLighter = "#FAFAFA"
 $BackgroundColorDarker = "#BDBDBD"
 $BackgroundColorBright = "#FFFFFF"
-$BackgroundTransparent = "rgb(255, 255, 255, 0)"
 
+$PrimaryColor = "#3F51B5"
+$PrimaryColorDark = "#2C387E"
+$PrimaryColorLight = "#6573C3"
 
 $PrimaryFontColor = $FontColorDark
 $AlternateFontColor = $FontColorLight
@@ -21,8 +19,6 @@ $PrimaryBackgroundColor = $BackgroundColorPrimary
 $AlternativeBackgroundColor = $BackgroundColorLighter
 $AlternativeBackgroundColor2 = $BackgroundColorDarker
 $AlternativeBackgroundColor3 = $BackgroundColorBright
-
-
 
 @{
     Name = "Default"
@@ -314,7 +310,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.page-footer .footer-copyright' = @{
-            'background-color' = $BackgroundColorPrimary
+            'background-color' = $PrimaryBackgroundColor
         }
         
     }
