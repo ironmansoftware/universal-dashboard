@@ -1,7 +1,7 @@
 function New-UDSwitch {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         $OnText = "On",
         [Parameter()]

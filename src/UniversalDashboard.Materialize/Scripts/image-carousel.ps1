@@ -3,7 +3,7 @@ function New-UDImageCarousel {
         [Parameter()]
 		[ScriptBlock]$Items,
 	    [Parameter()]
-	    [string]$Id = (New-Guid).ToString(),
+	    [string]$Id = ([Guid]::NewGuid()).ToString(),
 	    [Parameter()]
 	    [switch]$ShowIndicators,
 	    [Parameter()]
@@ -63,7 +63,7 @@ function New-UDImageCarouselItem {
 	    [Parameter()]
 	    [string]$TextPosition,
 	    [Parameter()]
-	    [string]$Id = (New-Guid).ToString(),
+	    [string]$Id = ([Guid]::NewGuid()).ToString(),
 	    [Parameter()]
 	    [string]$Title,
 	    [Parameter()]

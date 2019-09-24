@@ -2,7 +2,7 @@ function New-UDRow {
     [CmdletBinding(DefaultParameterSetName = 'static')]
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter(ParameterSetName = "static", Position = 0)]
         [ScriptBlock]$Columns,
         [Parameter(ParameterSetName = "dynamic")]

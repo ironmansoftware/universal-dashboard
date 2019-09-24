@@ -1,7 +1,7 @@
 function New-UDTable {
 	param(
 		[Parameter()]
-	    [string]$Id = (New-Guid),
+	    [string]$Id = ([Guid]::NewGuid()),
 		[Parameter()]
 	    [string]$Title,
 	    [Parameter(Mandatory = $true)]

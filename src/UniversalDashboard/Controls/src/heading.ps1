@@ -1,7 +1,7 @@
 function New-UDHeading {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter(ParameterSetName = "Content")]
         [ScriptBlock]$Content,
         [Parameter(ParameterSetName = "Text")]

@@ -1,7 +1,7 @@
 function New-UDButton {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         $Text,
         [Parameter()]

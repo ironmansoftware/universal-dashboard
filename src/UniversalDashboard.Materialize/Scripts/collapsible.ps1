@@ -1,7 +1,7 @@
 function New-UDCollapsible {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter(Mandatory = $true, Position = 0)]
         [ScriptBlock]$Items,
         [Parameter()]
@@ -33,7 +33,7 @@ function New-UDCollapsibleItem {
     [CmdletBinding(DefaultParameterSetName = "content")]
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
 		[String]$Title,
 		[Parameter()]

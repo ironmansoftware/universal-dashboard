@@ -1,7 +1,7 @@
 function New-UDFab {
     param(
         [Parameter()]
-        [string] $Id = (New-Guid),
+        [string] $Id = ([Guid]::NewGuid()),
         [Parameter()]
         [ScriptBlock]$Content,
         [Parameter()]
@@ -61,7 +61,7 @@ function New-UDFab {
 function New-UDFabButton {
     param(
         [Parameter()]
-        [string] $Id = (New-Guid),
+        [string] $Id = ([Guid]::NewGuid()),
         [Parameter()]
         [UniversalDashboard.Models.DashboardColor]$ButtonColor,
         [Parameter()]

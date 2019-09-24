@@ -30,7 +30,7 @@ function New-UDMuCheckBox {
         [string]$LabelPlacement,
 
         [Parameter(Position = 8)]
-        [string]$Id = (New-Guid).ToString()
+        [string]$Id = ([Guid]::NewGuid()).ToString()
 
     )
 

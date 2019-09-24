@@ -1,7 +1,7 @@
 function New-UDRadio {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         [String]$Label,
         [Parameter()]

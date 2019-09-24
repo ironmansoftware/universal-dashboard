@@ -2,7 +2,7 @@ function New-UDMuCard {
     [CmdletBinding()]
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
 
         [Parameter()]
         [string]$ClassName,
@@ -111,7 +111,7 @@ function New-UDMuCardToolbar {
     [CmdletBinding()]
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
 
         [Parameter()]
         [string]$ClassName,
@@ -171,7 +171,7 @@ function New-UDMuCardHeader {
     [CmdletBinding()]
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
 
         [Parameter()]
         [string]$ClassName,
@@ -229,7 +229,7 @@ function New-UDMuCardBody {
     [CmdletBinding()]
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
 
         [Parameter()]
         [string]$ClassName,
@@ -288,7 +288,7 @@ function New-UDMuCardExpand {
     [CmdletBinding()]
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
 
         [Parameter()]
         [string]$ClassName,
@@ -345,7 +345,7 @@ function New-UDMuCardFooter {
     [CmdletBinding()]
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
 
         [Parameter()]
         [string]$ClassName,
@@ -401,7 +401,7 @@ function New-UDMuCardMedia {
     [OutputType([Hashtable])]
     param(
         [Parameter()]
-        [string]$Id = (New-Guid).ToString(),
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
 
         [Parameter()]
         [ValidateSet("img", "video", "audio")]       

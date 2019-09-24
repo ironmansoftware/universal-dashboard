@@ -1,7 +1,7 @@
 function New-UDCheckbox {
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         $Label,
         [Parameter()]

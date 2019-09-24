@@ -1,6 +1,6 @@
 function New-UDMuPaper {
     param(
-        [Parameter()][string]$Id = (New-Guid).ToString(),
+        [Parameter()][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter()][ScriptBlock]$Content,
         [Parameter()][switch]$IsEndPoint,
         [Parameter()][string]$Width = '500',

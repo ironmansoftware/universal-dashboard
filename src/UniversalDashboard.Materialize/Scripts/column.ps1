@@ -2,7 +2,7 @@ function New-UDColumn {
     [CmdletBinding(DefaultParameterSetName = 'content')]
     param(
         [Parameter()]
-        [String]$Id = (New-Guid),
+        [String]$Id = ([Guid]::NewGuid()),
 
         [Parameter()]
         [Alias('Size')]
