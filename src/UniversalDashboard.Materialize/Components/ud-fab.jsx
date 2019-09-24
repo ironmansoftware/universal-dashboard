@@ -55,7 +55,7 @@ export default class UDFab extends React.Component {
 }
 
 class UDFabButton extends React.Component {
-    onClick() {
+    onClick(e) {
         if (this.props.onClick) {
             UniversalDashboard.publish('element-event', {
                 type: "clientEvent",
@@ -64,6 +64,8 @@ class UDFabButton extends React.Component {
                 eventData: ''
             });
         }
+
+        e.stopPropagation()
     }
 
     render() {

@@ -6,7 +6,7 @@ function Find-Object {
         $InputObject,
         [Parameter(Mandatory)]
         $FilterText
-        )
+	)
 
         Process {
             $results = $InputObject.psobject.Properties | Where { $InputObject.($_.Name) -match $FilterText }
@@ -1402,10 +1402,18 @@ function Update-UDDashboard {
 		[Parameter(ParameterSetName = "Content", Mandatory = $true)]
 		[ScriptBlock]$Content,
 		[Parameter(ParameterSetName = "FilePath", Mandatory = $true)]
-		[string]$FilePath
+		[string]$FilePath,
+		[Parameter()]
+		[Switch]$AllowTLs10
 	)
 
 	Process {
+
+		if (-not $AllowTls10)
+		{
+			[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+		}
+		
 		if ($PSCmdlet.ParameterSetName -eq "Content") {
 			$Body = $Content.ToString()
 		}
