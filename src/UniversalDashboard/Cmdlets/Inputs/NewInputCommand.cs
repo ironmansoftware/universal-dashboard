@@ -149,6 +149,19 @@ namespace UniversalDashboard.Cmdlets.Inputs
 			{
 				var fields = Content.Invoke().Select(m => m.BaseObject).OfType<Field>().ToArray();
 				input.Fields = fields;
+
+                var paramBlockFields = GetFieldsFromParamBlock().ToArray();
+                foreach(var field in paramBlockFields)
+                {
+                    var contentField = input.Fields.FirstOrDefault(m => m.Name.Equals(field.Name, StringComparison.OrdinalIgnoreCase));
+                    if (contentField != null)
+                    {
+                        contentField.Required = field.Required;
+                        contentField.Endpoint = field.Endpoint;
+                        contentField.ValidationEndpoint = field.ValidationEndpoint;
+                        contentField.ValidationErrorMessage = field.ValidationErrorMessage;
+                    }
+                }
 			}
 
 			Log.Debug(JsonConvert.SerializeObject(input));
