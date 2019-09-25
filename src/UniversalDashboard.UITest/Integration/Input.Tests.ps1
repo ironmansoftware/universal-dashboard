@@ -13,8 +13,42 @@ $Server = Start-UDDashboard -Port 10001 -Dashboard (New-UDDashboard -Title "Test
 $Driver = Start-SeFirefox
 
 Describe "Input" {
+    Context "uses correct type" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDInput -Title "Simple Form" -Id "Form" -Content {
+                New-UDInputField -Name 'checkbox' -Type 'checkbox'
+                New-UDInputField -Name 'textbox' -Type 'textbox'
+            } -Endpoint {
+                param($checkbox, $textbox)
 
-    
+                $Cache:Data = @{
+                    checkbox = $checkbox 
+                    textbox = $textbox
+                }
+            }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should set correct value types" {
+
+            $Element = Find-SeElement -Id "textbox" -Driver $Driver
+            Send-SeKeys -Element $Element -Keys "hello"
+
+            $Element = Find-SeElement -Id "checkbox" -Driver $Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+
+            $Button = Find-SeElement -Id "btnForm" -Driver $Driver
+            Invoke-SeClick $Button
+
+            Start-Sleep 2
+            
+            $Cache:Data.textbox.GetType().Name | Should be "string"
+            $Cache:Data.checkbox.GetType().Name | Should be "boolean"
+        }
+    }
+
     Context "drops to pipeline" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
