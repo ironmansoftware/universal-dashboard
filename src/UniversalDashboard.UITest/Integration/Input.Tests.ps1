@@ -25,7 +25,9 @@ Describe "Input" {
                     checkbox = $checkbox 
                     textbox = $textbox
                 }
-                
+            }
+        }
+        
         $Server.DashboardService.SetDashboard($Dashboard)
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
         

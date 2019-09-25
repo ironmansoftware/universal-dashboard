@@ -45,6 +45,8 @@ Describe "Grid" {
             $Element = Find-SeElement -ClassName "page-right" -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
 
+            Start-Sleep 1
+
             $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
             $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[7] 
             $Element[0].Text | should be "3"
