@@ -48,6 +48,18 @@ namespace UniversalDashboard.Cmdlets.Inputs
             {
                 DefaultValue = Values[0];
             }
+
+            var type = typeof(string);
+            switch(Type.ToLower())
+            {
+                case "checkbox":
+                    type = typeof(bool);
+                    break;
+                case "date":
+                    type = typeof(DateTime);
+                    break;
+            }
+
 			var field = new Field
 			{
 				Name = Name,
@@ -58,7 +70,8 @@ namespace UniversalDashboard.Cmdlets.Inputs
                 Type = Type,
                 OkText = OkText,
                 CancelText = CancelText,
-                ClearText = ClearText
+                ClearText = ClearText,
+                DotNetType = type.FullName
 			};
 
 			Log.Debug(JsonConvert.SerializeObject(field));
