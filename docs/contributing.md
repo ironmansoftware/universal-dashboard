@@ -21,10 +21,10 @@ By the default, the build will execute in the Debug configuration. If you are pr
 .\build.ps1 -Configuration Release
 ```
 
-When building the module, PlatyPS is used to generate the MAML help files from markdown. This is a time consuming process due to performance issues with the PlatyPS module. You can avoid building the hep with the `-NoHelp` switch.
+When building the module, PlatyPS is used to generate the MAML help files from markdown. This is a time consuming process due to performance issues with the PlatyPS module. You can avoid building the hep with the `-Minimal` switch.
 
 ```
-.\build.ps1 -NoHelp
+.\build.ps1 -Minimal
 ```
 
 The output from the build will be staged into the `.\src\output`. 
