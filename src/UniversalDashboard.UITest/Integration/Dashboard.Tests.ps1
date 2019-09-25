@@ -49,12 +49,12 @@ Describe "Dashboard" {
 
         It 'should navigate custom navigation' {
             $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
-            Invoke-SeClick $Element
+            Invoke-SeClick $Element -JavaScriptClick -Driver $Driver
 
             Start-Sleep 1
 
             $Element = Find-SeElement -LinkText "My First Page" -Driver $Driver
-            Invoke-SeClick $Element
+            Invoke-SeClick $Element -JavaScriptClick -Driver $Driver
 
             Start-Sleep 1
 
