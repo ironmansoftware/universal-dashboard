@@ -25,12 +25,10 @@ Describe "Input" {
                     checkbox = $checkbox 
                     textbox = $textbox
                 }
-            }
-        }
-
+                
         $Server.DashboardService.SetDashboard($Dashboard)
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
+        
         It "should set correct value types" {
 
             $Element = Find-SeElement -Id "textbox" -Driver $Driver
@@ -48,7 +46,38 @@ Describe "Input" {
             $Cache:Data.checkbox.GetType().Name | Should be "boolean"
         }
     }
+    
+    Context "validate with content\endpoint" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDInput -Title 'Request' -Validate -Content {
+                New-UDInputField -Type 'textbox' -Name 'MyField'
+                New-UDInputField -Type 'textbox' -Name 'MyField2'
+            } -Endpoint {
+                param (
+                    [Parameter(Mandatory)]
+                    $MyField,
+                    [Parameter(Mandatory)]
+                    $MyField2
+                )
+            }
+        }
+    
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
+        It "should validate required" {
+            $Element = Find-SeElement -Id 'MyField' -Driver $Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            Send-SeKeys -Element $Element -Keys ''
+
+            $Element = Find-SeElement -Id 'MyField2' -Driver $Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+            Send-SeKeys -Element $Element -Keys 'a'
+
+            (Find-SeElement -Id 'MyFieldtooltip' -Driver $Driver).getAttribute("textContent") | should be 'MyField is required.'
+        }    
+    }
+    
     Context "drops to pipeline" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDInput -Title "Simple Form" -Id "Form" -Endpoint {
