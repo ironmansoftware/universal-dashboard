@@ -1,5 +1,117 @@
 Describe "Grid" {
 
+    
+    Context "server side processing" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
+                $data = @(
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                )
+
+                if ($filterText -ne $null -and $filterText -ne "") {
+                    $data = $data | Where  {$_.day -eq $filterText -or $_.jpg -eq $filterText -or $_.mp4 -eq $filterText }
+                }
+        
+                $sortDescending = -not $sortAscending
+                $data = $data | Sort-Object -Property $sortColumn -Descending:$sortDescending
+        
+                $total = $data.length
+                $data = $data | Select-Object -First $take -Skip $skip
+
+                $data | Out-UDGridData -TotalItems $total
+            } 
+        }
+
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should page data" {
+
+            $Element = Find-SeElement -ClassName "page-right" -Driver $Driver
+            Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
+
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[7] 
+            $Element[0].Text | should be "3"
+        }
+
+        It "should have data" {
+
+            $Driver.Navigate().Refresh()
+
+            Start-Sleep 1
+
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $Element.Length | Should be 3
+            $Element[0].Text | should be "1"
+            $Element[1].Text | should be "10"
+            $Element[2].Text | should be "30"
+        }
+
+        It "should sort data" {
+
+            $Driver.Navigate().Refresh()
+            
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
+            $Element[0].Text | should be "1"
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
+            $Element[0].Text | should be "1"
+
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+            $header = $element[0]
+            Invoke-SeClick $header
+
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
+            $Element[0].Text | should be "3"
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
+            $Element[0].Text | should be "3"
+            
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+            $header = $element[0]
+            Invoke-SeClick $header
+
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
+            $Element[0].Text | should be "1"
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
+            $Element[0].Text | should be "1"
+        }
+
+        It "should filter data" {
+
+            $Driver.Navigate().Refresh()
+            
+            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
+
+            Send-SeKeys -Element $Element[0] -Keys "2"
+            Sleep 1
+            Send-SeKeys -Element $Element[0] -Keys "0"
+
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element.Length | Should be 6
+        }
+    }
+
+    
+
     Context "refresh doesnt reset filter" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -RefreshInterval 5 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
@@ -211,99 +323,6 @@ Describe "Grid" {
             Start-Sleep 1
 
             $Element.Text.Contains("No results found") | Should be $true
-        }
-    }
-
-    Context "server side processing" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                )
-
-                if ($filterText -ne $null -and $filterText -ne "") {
-                    $data = $data | Where  {$_.day -eq $filterText -or $_.jpg -eq $filterText -or $_.mp4 -eq $filterText }
-                }
-        
-                $sortDescending = -not $sortAscending
-                $data = $data | Sort-Object -Property $sortColumn -Descending:$sortDescending
-        
-                $total = $data.length
-                $data = $data | Select-Object -First $take -Skip $skip
-
-                $data | Out-UDGridData -TotalItems $total
-            } 
-        }
-
-        Set-TestDashboard -Dashboard $dashboard
-
-        It "should have data" {
-
-            Start-Sleep 1
-
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-            $Element.Length | Should be 2
-            $Element[0].Text | should be "1"
-            $Element[1].Text | should be "10"
-            $Element[2].Text | should be "30"
-        }
-
-        It "should sort data" {
-            
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
-
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
-            $header = $element[0]
-            Invoke-SeClick $header
-
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "3"
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "3"
-            
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
-            $header = $element[0]
-            Invoke-SeClick $header
-
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
-        }
-
-        It "should filter data" {
-            
-            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
-
-            Send-SeKeys -Element $Element[0] -Keys "2"
-            Sleep 1
-            Send-SeKeys -Element $Element[0] -Keys "0"
-
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element.Length | Should be 6
         }
     }
 
