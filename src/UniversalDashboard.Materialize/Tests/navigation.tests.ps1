@@ -11,12 +11,12 @@ Describe "Navigation" {
             Start-Sleep 1
 
             $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
-            Invoke-SeClick $Element
+            Invoke-SeClick $Element -JavaScriptClick -Driver $Driver
 
             Start-Sleep 1
 
             $Element = Find-SeElement -LinkText "Page2" -Driver $Driver
-            Invoke-SeClick $Element
+            Invoke-SeClick $Element -JavaScriptClick -Driver $Driver
 
             Start-Sleep 1
 
