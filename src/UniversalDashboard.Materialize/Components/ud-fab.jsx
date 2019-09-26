@@ -47,6 +47,7 @@ export default class UDFab extends React.Component {
                     id={this.props.id}
                     floating
                     large={this.props.size === "large"}
+                    small={this.props.size === "small"}
                     icon={icon}
                 >
                     {children}
@@ -85,6 +86,7 @@ class UDFabButton extends React.Component {
                     id={this.props.id}
                     floating
                     large={this.props.size === "large"}
+                    small={this.props.size === "small"}
                     style={style}
                 >            
                     {icon}
