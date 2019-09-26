@@ -50,7 +50,7 @@ function New-UDFab {
 
         id = $id
         content = $Children
-        size = $Size
+        size = $Size.tolower()
         backgroundColor = $ButtonColor.HtmlColor
         color = $IconColor.HtmlColor
         expandDirection = $ExpandDirection
@@ -92,7 +92,7 @@ function New-UDFabButton {
         isPlugin = $true 
 
         id = $id
-        size = $Size
+        size = $Size.tolower()
         backgroundColor = $ButtonColor.HtmlColor
         color = $IconColor.HtmlColor
         icon = $iconName
