@@ -23,7 +23,7 @@ export default class UdFooter extends React.Component {
             var fontColor = this.props.footer.fontColor ? this.props.footer.fontColor : this.props.fontColor;
 
             return <footer className="page-footer ud-footer" style={{backgroundColor: backgroundColor, color: fontColor}}>
-                <div className="footer-copyright">
+                <div className="footer-copyright" style={{backgroundColor: backgroundColor, color: fontColor}}>>
                     <div className="container">
                         {this.props.footer.copyright}
                         <div className="right">

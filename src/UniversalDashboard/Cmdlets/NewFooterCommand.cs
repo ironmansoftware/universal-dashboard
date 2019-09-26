@@ -27,7 +27,7 @@ namespace UniversalDashboard.Cmdlets.Formatting
 			var footer = new Footer();
 
 			footer.BackgroundColor = BackgroundColor?.HtmlColor;
-			footer.FontColor = BackgroundColor?.HtmlColor;
+			footer.FontColor = FontColor?.HtmlColor;
 			footer.Links = Links;
 			footer.Copyright = Copyright;
 

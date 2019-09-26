@@ -7,10 +7,13 @@ namespace UniversalDashboard.Models
     {
 		[JsonProperty("links")]
 		public Hashtable[] Links { get; set; }
+        
         [JsonProperty("copyright")]
         public string Copyright {get;set;}
-        [JsonProperty("title")]
+        
+        [JsonProperty("backgroundColor")]
         public string BackgroundColor {get;set;}
+        
         [JsonProperty("fontColor")]
         public string FontColor {get;set;}
 
