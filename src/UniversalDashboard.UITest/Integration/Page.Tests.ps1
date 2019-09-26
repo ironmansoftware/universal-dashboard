@@ -158,12 +158,12 @@ Describe "New-UDPage" {
 
         It "should navigate to page with spaces" {
             $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
-            Invoke-SeClick $Element
+            Invoke-SeClick $Element -JavaScriptClick -Driver $Driver
 
             Start-Sleep 1
 
             $Element = Find-SeElement -LinkText "Page with spaces" -Driver $Driver
-            Invoke-SeClick $Element
+            Invoke-SeClick $Element -JavaScriptClick -Driver $Driver
 
             Start-Sleep 1
 

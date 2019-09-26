@@ -187,9 +187,17 @@ export default class UdGrid extends React.Component {
     }
 
     onPageChanged(x) {
-        this.setState({
-            currentPage: x
-        })
+        if (this.props.serverSideProcessing)
+        {
+            const { pageSize, sortColumn, sortAscending, filterText } = this.state;
+            this.loadData(x, pageSize, sortColumn, sortAscending, filterText);
+        }
+        else
+        {
+            this.setState({
+                currentPage: x
+            })
+        }
     }
 
     onExportData() {
@@ -389,9 +397,9 @@ class GridToolbar extends React.Component {
             }
 
             pagination = <ul className="pagination"  style={{display: 'inline-block'}} >
-                <li className={this.props.activePage === 1 ? "disabled" : ""} style={this.props.activePage > 1 ? cursor : {}}><a onClick={() => this.props.activePage > 1 && this.props.onPageChanged(this.props.activePage - 1)}><UdIcon icon="ChevronLeft" /></a></li>
+                <li className={this.props.activePage === 1 ? "disabled" : ""} style={this.props.activePage > 1 ? cursor : {}}><a className="page-left" onClick={() => this.props.activePage > 1 && this.props.onPageChanged(this.props.activePage - 1)}><UdIcon icon="ChevronLeft" /></a></li>
                     {pages}
-                <li className={this.props.activePage === this.props.totalPages ? "disabled" : ""}  style={this.props.activePage < this.props.totalPages ? cursor : {}}><a onClick={() => this.props.activePage < this.props.totalPages && this.props.onPageChanged(this.props.activePage + 1)}><UdIcon icon="ChevronRight" /></a></li>
+                <li className={this.props.activePage === this.props.totalPages ? "disabled" : ""}  style={this.props.activePage < this.props.totalPages ? cursor : {}}><a className="page-right" onClick={() => this.props.activePage < this.props.totalPages && this.props.onPageChanged(this.props.activePage + 1)}><UdIcon icon="ChevronRight" /></a></li>
             </ul>
         }
 
