@@ -5,7 +5,7 @@ function New-UDCollapsible {
         [Parameter(Mandatory = $true, Position = 0)]
         [ScriptBlock]$Items,
         [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$BackgroundColor = 'White',
+        [UniversalDashboard.Models.DashboardColor]$BackgroundColor = 'Transparent',
         [Parameter()]
         [UniversalDashboard.Models.DashboardColor]$FontColor = 'Black',
         [Parameter()]
