@@ -58,6 +58,14 @@ namespace UniversalDashboard.Models
 
 				return new DashboardColor(iColorInt);
 			}
+			else if ((hexOrName.ToLower()).Equals("transparent"))
+			{
+				var color = Color.FromArgb(0, 0, 0, 0);
+
+				log.Debug($"Parse - color = {color}");
+
+				return new DashboardColor(color);
+			}
 			else
 			{
 				var color = Color.FromName(hexOrName);
