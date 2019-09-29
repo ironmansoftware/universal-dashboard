@@ -136,10 +136,10 @@ class UDSideNavItem extends React.Component {
             if (!url.startsWith("/")) {
                 url = "/" + url;
             }
-            this.props.history.push(`${url.replace(/ /g, "-")}`);      
+            this.props.history.push(`${window.baseUrl + url.replace(/ /g, "-")}`);      
         }
         else if (this.props.name != null) {
-          this.props.history.push(`/${this.props.name.replace(/ /g, "-")}`);      
+          this.props.history.push(window.baseUrl + `/${this.props.name.replace(/ /g, "-")}`);      
         }
 
         if (!this.props.fixed) {
