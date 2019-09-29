@@ -8,6 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security;
 using System.IO;
 using System.Reflection;
+using System.Net;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -57,7 +58,9 @@ namespace UniversalDashboard.Cmdlets
 
 		[Parameter()]
 		public SwitchParameter Force { get; set; }
-
+		[Parameter()]
+		public IPAddress ListenAddress { get; set; } = IPAddress.Any;
+		
         protected override void EndProcessing()
 	    {
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
@@ -148,6 +151,7 @@ namespace UniversalDashboard.Cmdlets
 			options.EndpointInitialSessionState = Dashboard.EndpointInitialSessionState;
 			options.UpdateToken = UpdateToken;
 			options.PublishedFolders = PublishedFolder;
+			options.ListenAddress = ListenAddress;
 
             try
 		    {

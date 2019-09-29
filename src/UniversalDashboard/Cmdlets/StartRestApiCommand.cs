@@ -7,6 +7,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Management.Automation.Runspaces;
 using System.Linq;
 using UniversalDashboard.Services;
+using System.Net;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -47,6 +48,9 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter()]
 		public SwitchParameter Force { get; set; }
 
+		[Parameter()]
+		public IPAddress ListenAddress { get; set; } = IPAddress.Any;
+
 
         protected override void EndProcessing()
 		{
@@ -81,6 +85,7 @@ namespace UniversalDashboard.Cmdlets
 			options.Password = CertificateFilePassword;
 			options.EndpointInitialSessionState = EndpointInitialization;
 			options.PublishedFolders = PublishedFolder;
+			options.ListenAddress = ListenAddress;
 
             try
             {
