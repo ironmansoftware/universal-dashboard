@@ -1,4 +1,4 @@
-param($MilestoneName = "2.5.0")
+param($MilestoneName = "2.6.2")
 
 [System.Net.ServicePointManager]::SecurityProtocol = @("Tls12","Tls11","Tls","Ssl3")
 

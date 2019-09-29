@@ -140,14 +140,14 @@ namespace UniversalDashboard
                 Log.Error(exception.Message);
             }
 
-            _memoryCache.Remove(Context.ConnectionId);
-
             var sessionId = _memoryCache.Get(Context.ConnectionId);
             if (sessionId != null)
             {
                 _memoryCache.Remove(sessionId);
                 _dashboardService.EndpointService.EndSession(sessionId as string);
             }
+
+            _memoryCache.Remove(Context.ConnectionId);
         }
 
         public async Task SetSessionId(string sessionId)
