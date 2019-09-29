@@ -99,7 +99,7 @@ namespace UniversalDashboard
 				});
 				builder = builder.UseKestrel(options =>
 				{
-					options.Listen(IPAddress.Any, dashboardOptions.Port, listenOptions =>
+					options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port, listenOptions =>
 					{
 						if (dashboardOptions.Certificate != null)
 						{

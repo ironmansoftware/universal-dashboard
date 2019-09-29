@@ -4,6 +4,7 @@ using UniversalDashboard.Models;
 using System.Security.Cryptography.X509Certificates;
 using System.Security;
 using System.Management.Automation.Runspaces;
+using System.Net;
 
 namespace UniversalDashboard
 {
@@ -19,5 +20,6 @@ namespace UniversalDashboard
         public string UpdateToken { get; set; }
         public Dictionary<Guid, string> ElementScripts { get; set; }
         public PublishedFolder[] PublishedFolders { get; set; }
+        public IPAddress ListenAddress { get; set; }
     }
 }
