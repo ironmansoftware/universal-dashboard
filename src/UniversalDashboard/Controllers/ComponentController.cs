@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Http.Features;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models.Basics;
 using System.Security;
+using StackExchange.Profiling;
 
 namespace UniversalDashboard.Controllers
 {
@@ -80,13 +81,16 @@ namespace UniversalDashboard.Controllers
                     executionContext.ConnectionId = _memoryCache.Get(executionContext.SessionId) as string;
                 }
 
-                return await Task.Run(() =>
+                using (MiniProfiler.Current.Step($"Execute: {endpoint.Name}"))
                 {
-                    var result = _executionService.ExecuteEndpoint(executionContext, endpoint);
-                    var actionResult = ConvertToActionResult(result);
+                    return await Task.Run(() =>
+                    {
+                        var result = _executionService.ExecuteEndpoint(executionContext, endpoint);
+                        var actionResult = ConvertToActionResult(result);
 
-                    return actionResult;
-                });
+                        return actionResult;
+                    });
+                }
             }
             catch (Exception ex) {
                 Log.Warn("RunScript() " + ex.Message + Environment.NewLine + ex.StackTrace);

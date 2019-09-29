@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
@@ -15,7 +13,6 @@ using NLog.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using UniversalDashboard.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
-using UniversalDashboard.Controllers;
 using System.IO;
 using UniversalDashboard.Utilities;
 
@@ -70,6 +67,8 @@ namespace UniversalDashboard
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
+
+            services.AddMiniProfiler();
 
             var serviceDescriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType.Name == "IRegistryPolicyResolver");
             services.Remove(serviceDescriptor);
@@ -151,6 +150,8 @@ namespace UniversalDashboard
 			app.UseWebSockets();
 
 			app.UseSession();
+
+            app.UseMiniProfiler();
 
             app.UseMvc();
 		}
