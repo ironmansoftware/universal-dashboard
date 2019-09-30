@@ -29,6 +29,7 @@ export const UniversalDashboardService = {
     unsubscribe: PubSub.unsubscribe,
     publish: PubSub.publishSync,
     toaster: toaster,
+    connectionId: '',
     renderComponent: function(component, history, dynamicallyLoaded) {
 
         if (component == null) return <React.Fragment/>;

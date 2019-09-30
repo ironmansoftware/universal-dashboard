@@ -10,7 +10,9 @@ namespace UniversalDashboard.Interfaces
         Endpoint GetByUrl(string url, string method, Dictionary<string, object> matchedVariables);
         IEnumerable<Endpoint> GetScheduledEndpoints();
         void Register(Endpoint callback);
-        void StartSession(string sessionId);
-        void EndSession(string sessionId);
+        void StartSession(string sessionId, string connectionId);
+        void EndSession(string sessionId, string connectionId);
+        Dictionary<string, Endpoint> Endpoints { get; }
+        Dictionary<string, SessionState> Sessions { get; }
     }
 }
