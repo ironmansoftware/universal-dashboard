@@ -4,6 +4,7 @@ namespace UniversalDashboard.Models
 {
 	public class InputAction
     {
+		public static string Clear => "clear";
 		public static string Toast => "toast";
 	    public static string Redirect => "redirect";
 		public static string Content => "content";
