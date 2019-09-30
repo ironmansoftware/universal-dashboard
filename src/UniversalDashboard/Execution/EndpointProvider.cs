@@ -117,7 +117,7 @@ namespace UniversalDashboard.Execution
                     {
                         if (!_sessionLocks.ContainsKey(callback.SessionId))
                         {
-                            StartSession(callback.SessionId, string.Empty);
+                            StartSession(callback.SessionId, callback.SessionId);
                         }
                     }
 
