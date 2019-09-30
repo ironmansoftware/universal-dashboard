@@ -4,7 +4,7 @@ using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Cmdlets.Inputs
 {
-	[Cmdlet(VerbsCommon.New, "UDInputAction")]
+	[Cmdlet(VerbsCommon.New, "UDInputAction", DefaultParameterSetName = "clear")]
     public class NewInputActionCommand : PSCmdlet
     {
 		[Parameter(Mandatory = true, ParameterSetName = "toast")]
@@ -19,7 +19,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
 		[Parameter(Mandatory = true, ParameterSetName = "content")]
 		public object Content { get; set; }
 
-		[Parameter(ParameterSetName = "toast")]
+		[Parameter()]
 		public SwitchParameter ClearInput { get; set; }
 
 		protected override void EndProcessing()
@@ -32,6 +32,12 @@ namespace UniversalDashboard.Cmdlets.Inputs
 			    inputAction.Text = Toast;
 				inputAction.ClearInput = ClearInput;
 			    inputAction.Duration = Duration;
+		    }
+
+			if (ParameterSetName == "clear")
+		    {
+				inputAction.Type = InputAction.Clear;
+				inputAction.ClearInput = ClearInput;
 		    }
 
 		    if (ParameterSetName == "redirect")

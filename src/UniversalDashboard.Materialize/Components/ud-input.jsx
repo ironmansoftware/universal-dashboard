@@ -68,6 +68,37 @@ export default class Input extends React.Component {
         });
     }
 
+    clearInput()
+    {
+        var fields = this.state.fields.map(function(x) {
+            if (x.type == "checkbox") {
+                x.value = false;
+            }
+
+            if (x.type == "textbox") {
+                x.value = '';
+            }
+
+            if (x.type == "select") {
+                x.value = '';
+            }
+
+            if (x.type == "password") {
+                x.value = '';
+            }
+
+            if (x.type == "textarea") {
+                x.value = '';
+            }
+
+            return x;
+        })
+
+        this.setState({
+            fields: fields
+        })
+    }
+
     onSubmit(e) {
         e.preventDefault();
 
@@ -97,37 +128,15 @@ export default class Input extends React.Component {
                 }
 
                 res.map(function(x) {
+                    if (x.type === "clear") {
+                        this.clearInput();
+                    }
+
                     if (x.type === "toast") {
                         M.toast({html: x.text, displayLength: x.duration});
 
                         if (x.clearInput) {
-                            var fields = this.state.fields.map(function(x) {
-                                if (x.type == "checkbox") {
-                                    x.value = false;
-                                }
-
-                                if (x.type == "textbox") {
-                                    x.value = '';
-                                }
-
-                                if (x.type == "select") {
-                                    x.value = '';
-                                }
-
-                                if (x.type == "password") {
-                                    x.value = '';
-                                }
-
-                                if (x.type == "textarea") {
-                                    x.value = '';
-                                }
-
-                                return x;
-                            })
-
-                            this.setState({
-                                fields: fields
-                            })
+                            this.clearInput();
                         }
                     }
     
