@@ -144,7 +144,7 @@ namespace UniversalDashboard
             if (sessionId != null)
             {
                 _memoryCache.Remove(sessionId);
-                _dashboardService.EndpointService.EndSession(sessionId as string);
+                _dashboardService.EndpointService.EndSession(sessionId as string, Context.ConnectionId);
             }
 
             _memoryCache.Remove(Context.ConnectionId);
@@ -154,11 +154,10 @@ namespace UniversalDashboard
         {
             Log.Debug($"SetSessionId({sessionId})");
 
-            await Task.FromResult(0);
-
             _memoryCache.Set(Context.ConnectionId, sessionId);
-            _memoryCache.Set(sessionId, Context.ConnectionId);
-            _dashboardService.EndpointService.StartSession(sessionId);
+            _dashboardService.EndpointService.StartSession(sessionId, Context.ConnectionId);
+
+            await Clients.All.SendAsync("setConnectionId", Context.ConnectionId);
         }
 
         public Task Reload()

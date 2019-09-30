@@ -11,7 +11,6 @@ namespace UniversalDashboard.Execution
 {
     public class EndpointService : IEndpointService
     {
-        private readonly MemoryCache _endpointCache;
         private readonly List<Endpoint> _restEndpoints;
         private readonly List<Endpoint> _scheduledEndpoints;
         private static readonly Logger logger = LogManager.GetLogger("EndpointService");
@@ -21,6 +20,9 @@ namespace UniversalDashboard.Execution
         private readonly object sessionLock = new object();
 
         private static IEndpointService _instance;
+
+        public Dictionary<string, Endpoint> Endpoints { get; private set; }
+        public Dictionary<string, SessionState> Sessions { get; private set; }
 
         public static IEndpointService Instance
         {
@@ -37,29 +39,54 @@ namespace UniversalDashboard.Execution
 
         private EndpointService() 
         {
-            _endpointCache = new MemoryCache(new MemoryCacheOptions());
+            Endpoints = new Dictionary<string, Endpoint>();
+            Sessions = new Dictionary<string, SessionState>();
+
             _restEndpoints = new List<Endpoint>();
             _scheduledEndpoints = new List<Endpoint>();
         }
 
-        public MemoryCache EndpointCache => _endpointCache;
-
-        public void StartSession(string sessionId)
+        public void StartSession(string sessionId, string connectionId)
         {
             lock(sessionLock)
             {
-                if (_sessionLocks.ContainsKey(sessionId)) return;
-                _endpointCache.Set(Constants.SessionState + sessionId, new SessionState());
-                _sessionLocks.Add(sessionId, new object());
+                if (_sessionLocks.ContainsKey(sessionId)) 
+                {
+                    lock(_sessionLocks[sessionId])
+                    {
+                        var session = Sessions[sessionId];
+                        session.ConnectionIds.Add(connectionId);
+                    }
+                }
+                else 
+                {
+                    Sessions.Add(sessionId, new SessionState {
+                        ConnectionIds = new List<string> {
+                            connectionId
+                        }
+                    });
+                    _sessionLocks.Add(sessionId, new object());
+                }
             }   
         }
 
-        public void EndSession(string sessionId)
+        public void EndSession(string sessionId, string connectionId)
         {
             lock(sessionLock)
             {
-                _endpointCache.Remove(Constants.SessionState + sessionId);
-                _sessionLocks.Remove(sessionId);
+                var session = Sessions[sessionId];
+                if (session.ConnectionIds.Count <= 1)
+                {
+                    Sessions.Remove(sessionId);
+                    _sessionLocks.Remove(sessionId);
+                }
+                else 
+                {
+                    lock(_sessionLocks[sessionId])
+                    {
+                        session.ConnectionIds.Remove(connectionId);
+                    }
+                }
             }
         }
 
@@ -82,7 +109,7 @@ namespace UniversalDashboard.Execution
 
                 if (callback.SessionId == null)
                 {
-                    _endpointCache.Set(callback.Name, callback);
+                    Endpoints.Add(callback.Name, callback);
                 }
                 else
                 {
@@ -90,16 +117,16 @@ namespace UniversalDashboard.Execution
                     {
                         if (!_sessionLocks.ContainsKey(callback.SessionId))
                         {
-                            StartSession(callback.SessionId);
+                            StartSession(callback.SessionId, string.Empty);
                         }
                     }
 
                     lock(_sessionLocks[callback.SessionId])
                     {
-                        if (_endpointCache.TryGetValue(Constants.SessionState + callback.SessionId, out SessionState sessionState))
+                        if (Sessions.ContainsKey(callback.SessionId))
                         {
-                            sessionState.Endpoints.Add(callback);
-                            _endpointCache.Set(Constants.SessionState + callback.SessionId, sessionState);
+                            var session = Sessions[callback.SessionId];
+                            session.Endpoints.Add(callback.Name, callback);
                         }
                     }
                 }
@@ -130,24 +157,23 @@ namespace UniversalDashboard.Execution
 
             if (sessionId == null)
             {
-                if (_endpointCache.TryGetValue(name, out object result))
+                if (Endpoints.ContainsKey(name))
                 {
+                    Endpoints.Remove(name);
                     logger.Debug("Endpoint found. Removing endpoint.");
-                    _endpointCache.Remove(name);
                 }
             }
             else
             {
-                if (_endpointCache.TryGetValue(Constants.SessionState + sessionId, out SessionState sessionState))
+                if (Sessions.ContainsKey(sessionId))
                 {
-                    var endpoint = sessionState.Endpoints.FirstOrDefault(m => m.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true);
-                    if (endpoint != null)
+                    var session = Sessions[sessionId];
+                    if (session.Endpoints.ContainsKey(name))
                     {
                         logger.Debug("Session endpoint found. Removing endpoint.");
-                        lock(sessionState.SyncRoot)
+                        lock(session.SyncRoot)
                         {
-                            sessionState.Endpoints.Remove(endpoint);
-                            _endpointCache.Set(Constants.SessionState + sessionId, sessionState);
+                            session.Endpoints.Remove(name);
                         }
                     }
                 }
@@ -157,25 +183,23 @@ namespace UniversalDashboard.Execution
         public Endpoint Get(string name, string sessionId)
         {
             logger.Debug($"Get() {name} {sessionId}");
-
-            Endpoint callback;
             if (sessionId != null)
             {
-                if (_endpointCache.TryGetValue(Constants.SessionState + sessionId, out SessionState sessionState))
+                if (Sessions.ContainsKey(sessionId))
                 {
-                    var endpoint = sessionState.Endpoints.FirstOrDefault(m => m.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true);
-                    if (endpoint != null)
+                    var session = Sessions[sessionId];
+                    if (session.Endpoints.ContainsKey(name))
                     {
                         logger.Debug("Found session endpoint.");
-                        return endpoint;
+                        return session.Endpoints[name];
                     }
                 }
             }
 
-            if (_endpointCache.TryGetValue(name, out callback))
+            if (Endpoints.ContainsKey(name))
             {
                 logger.Debug("Found endpoint.");
-                return callback;
+                return Endpoints[name];
             }
 
             return null;

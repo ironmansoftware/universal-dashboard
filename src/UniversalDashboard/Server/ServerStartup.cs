@@ -68,8 +68,6 @@ namespace UniversalDashboard
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
 
-            services.AddMiniProfiler();
-
             var serviceDescriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType.Name == "IRegistryPolicyResolver");
             services.Remove(serviceDescriptor);
         }
@@ -123,11 +121,11 @@ namespace UniversalDashboard
 				ContentTypeProvider = provider
 			});
 
-      var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
+            var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
 
-      if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) {
-        app.UseHttpsRedirection();
-      }
+            if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) {
+                app.UseHttpsRedirection();
+            }
 
 			if (dashboardService?.DashboardOptions?.PublishedFolders != null) {
 				foreach(var publishedFolder in dashboardService.DashboardOptions.PublishedFolders) {
@@ -147,11 +145,10 @@ namespace UniversalDashboard
             {
                 routes.MapHub<DashboardHub>("/dashboardhub");
             });
+            
 			app.UseWebSockets();
 
 			app.UseSession();
-
-            app.UseMiniProfiler();
 
             app.UseMvc();
 		}

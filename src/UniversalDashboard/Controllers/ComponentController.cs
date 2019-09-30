@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Http.Features;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models.Basics;
 using System.Security;
-using StackExchange.Profiling;
+using Microsoft.Extensions.Primitives;
 
 namespace UniversalDashboard.Controllers
 {
@@ -29,7 +29,6 @@ namespace UniversalDashboard.Controllers
     public class ComponentController : Controller
     {
         private static readonly Logger Log = LogManager.GetLogger(nameof(ComponentController));
-
         private readonly IExecutionService _executionService;
         private readonly IDashboardService _dashboardService;
         private readonly AutoReloader _autoReloader;
@@ -74,23 +73,19 @@ namespace UniversalDashboard.Controllers
                 ExecutionContext executionContext = new ExecutionContext(endpoint, variables, parameters, HttpContext?.User);
                 executionContext.NoSerialization = noSerialization;
 
-                if (HttpContext.Session.TryGetValue("SessionId", out byte[] sessionIdBytes))
+                if (HttpContext.Request.Headers.TryGetValue("UDConnectionId", out StringValues connectionId))
                 {
-                    var sessionId = new Guid(sessionIdBytes);
-                    executionContext.SessionId = sessionId.ToString();
-                    executionContext.ConnectionId = _memoryCache.Get(executionContext.SessionId) as string;
+                    executionContext.SessionId = _memoryCache.Get(connectionId) as string;
+                    executionContext.ConnectionId = connectionId;
                 }
 
-                using (MiniProfiler.Current.Step($"Execute: {endpoint.Name}"))
+                return await Task.Run(() =>
                 {
-                    return await Task.Run(() =>
-                    {
-                        var result = _executionService.ExecuteEndpoint(executionContext, endpoint);
-                        var actionResult = ConvertToActionResult(result);
+                    var result = _executionService.ExecuteEndpoint(executionContext, endpoint);
+                    var actionResult = ConvertToActionResult(result);
 
-                        return actionResult;
-                    });
-                }
+                    return actionResult;
+                });
             }
             catch (Exception ex) {
                 Log.Warn("RunScript() " + ex.Message + Environment.NewLine + ex.StackTrace);

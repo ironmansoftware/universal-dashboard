@@ -127,8 +127,14 @@ export default class UdDashboard extends React.Component {
         });
 
         connection.on('write', (message) => {
-            console.log(message);
             PubSub.publish("write", message);
+        });
+
+        connection.on('setConnectionId', (id) => {
+            UniversalDashboard.connectionId = id;
+            this.setState({
+                loading: false
+            })
         });
 
         PubSub.subscribe('element-event', function(e, data) {
@@ -221,7 +227,6 @@ export default class UdDashboard extends React.Component {
 
             this.setState({
                 dashboard: dashboard,
-                loading: false,
                 sessionId:  json.sessionId,
                 authenticated: json.authenticated,
                 design: dashboard.design,

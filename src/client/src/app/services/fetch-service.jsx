@@ -2,7 +2,10 @@ import {getApiPath} from 'config'
 
 export const fetchGet = function(url, success, history) {
     fetch(getApiPath() + url, {
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+            'UDConnectionId': UniversalDashboard.connectionId
+        }
     })
     .then(function(response){
         UniversalDashboard.invokeMiddleware('GET', url, history, response);
@@ -36,7 +39,8 @@ export const fetchPost = function(url, data, success) {
         method: 'post',
         headers: {
           'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'UDConnectionId': UniversalDashboard.connectionId
         },
         body: JSON.stringify(data),
         credentials: 'include'
@@ -62,7 +66,8 @@ export const fetchPostFormData = function(url, data, success) {
     fetch(getApiPath() + url, {
         method: 'post',
         headers: {
-          'Accept': 'application/json, text/plain, */*'//,
+          'Accept': 'application/json, text/plain, */*',
+          'UDConnectionId': UniversalDashboard.connectionId
           //'Content-Type': 'multipart/form-data'
         },
         body: data,
@@ -90,7 +95,8 @@ export const fetchDelete = function(url, data, success) {
         method: 'delete',
         headers: {
           'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'UDConnectionId': UniversalDashboard.connectionId
         },
         body: JSON.stringify(data),
         credentials: 'include'
@@ -117,7 +123,8 @@ export const fetchPut = function(url, data, success) {
         method: 'put',
         headers: {
           'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'UDConnectionId': UniversalDashboard.connectionId
         },
         body: JSON.stringify(data),
         credentials: 'include'
@@ -145,7 +152,8 @@ export const fetchPostRaw = function(url, data, success) {
         method: 'post',
         headers: {
           'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'text/plain'
+          'Content-Type': 'text/plain',
+          'UDConnectionId': UniversalDashboard.connectionId
         },
         body: data,
         credentials: 'include'
