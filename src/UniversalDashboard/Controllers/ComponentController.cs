@@ -31,17 +31,17 @@ namespace UniversalDashboard.Controllers
         private static readonly Logger Log = LogManager.GetLogger(nameof(ComponentController));
         private readonly IExecutionService _executionService;
         private readonly IDashboardService _dashboardService;
-        private readonly AutoReloader _autoReloader;
         private readonly IMemoryCache _memoryCache;
         private readonly StateRequestService _stateRequestService;
+        private readonly ConnectionManager _connectionManager;
 
-        public ComponentController(IExecutionService executionService, IDashboardService dashboardService, IMemoryCache memoryCache, AutoReloader autoReloader, StateRequestService stateRequestService)
+        public ComponentController(IExecutionService executionService, IDashboardService dashboardService, IMemoryCache memoryCache, StateRequestService stateRequestService, ConnectionManager connectionManager)
         {
             _executionService = executionService;
             _dashboardService = dashboardService;
-            _autoReloader = autoReloader;
             _memoryCache = memoryCache;
             _stateRequestService = stateRequestService;
+            _connectionManager = connectionManager;
         }
 
         private async Task<IActionResult> RunScript(Endpoint endpoint, Dictionary<string, object> parameters = null, bool noSerialization = false)
@@ -51,7 +51,8 @@ namespace UniversalDashboard.Controllers
                     {"Request", Request},
                     {"Response", Response},
                     {"User", HttpContext?.User?.Identity?.Name},
-                    {"MemoryCache", _memoryCache}
+                    {"MemoryCache", _memoryCache},
+                    {"UDConnectionManager", _connectionManager }
                 };
 
                 try
@@ -75,7 +76,7 @@ namespace UniversalDashboard.Controllers
 
                 if (HttpContext.Request.Headers.TryGetValue("UDConnectionId", out StringValues connectionId))
                 {
-                    executionContext.SessionId = _memoryCache.Get(connectionId) as string;
+                    executionContext.SessionId = _connectionManager.GetSessionId(connectionId);
                     executionContext.ConnectionId = connectionId;
                 }
 

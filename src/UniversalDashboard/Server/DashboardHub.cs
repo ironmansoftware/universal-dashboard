@@ -111,17 +111,19 @@ namespace UniversalDashboard
     public class DashboardHub : Hub {
         private IExecutionService _executionService;
         private readonly StateRequestService _stateRequestService;
-        private readonly IMemoryCache _memoryCache;
+        private readonly ConnectionManager _connectionManager;
         private readonly IDashboardService _dashboardService;
+        private readonly IMemoryCache _memoryCache;
         private static readonly Logger _logger = LogManager.GetLogger(nameof(DashboardHub));
 
-        public DashboardHub(IExecutionService executionService, IMemoryCache memoryCache, StateRequestService stateRequestService, IDashboardService dashboardService) {
+        public DashboardHub(IExecutionService executionService, ConnectionManager connectionManager, StateRequestService stateRequestService, IDashboardService dashboardService, IMemoryCache memoryCache) {
             Log.Debug("DashboardHub constructor");
 
             _executionService = executionService;
             _stateRequestService = stateRequestService;
-            _memoryCache = memoryCache;
+            _connectionManager = connectionManager;
             _dashboardService = dashboardService;
+            _memoryCache = memoryCache;
         }
 
         public override async Task OnConnectedAsync()
@@ -140,21 +142,20 @@ namespace UniversalDashboard
                 Log.Error(exception.Message);
             }
 
-            var sessionId = _memoryCache.Get(Context.ConnectionId);
+            var sessionId = _connectionManager.GetSessionId(Context.ConnectionId);
             if (sessionId != null)
             {
-                _memoryCache.Remove(sessionId);
                 _dashboardService.EndpointService.EndSession(sessionId as string, Context.ConnectionId);
             }
 
-            _memoryCache.Remove(Context.ConnectionId);
+            _connectionManager.RemoveConnection(Context.ConnectionId);
         }
 
         public async Task SetSessionId(string sessionId)
         {
             Log.Debug($"SetSessionId({sessionId})");
 
-            _memoryCache.Set(Context.ConnectionId, sessionId);
+            _connectionManager.AddConnection(new Connection { Id = Context.ConnectionId, SessionId = sessionId });
             _dashboardService.EndpointService.StartSession(sessionId, Context.ConnectionId);
 
             await Clients.All.SendAsync("setConnectionId", Context.ConnectionId);
@@ -176,10 +177,12 @@ namespace UniversalDashboard
 
         public async Task UnregisterEvent(string eventId)
         {
+            await Task.CompletedTask;
+
             Log.Debug($"UnregisterEvent() {eventId}");
 
-            await Task.CompletedTask;
-            if (_memoryCache.TryGetValue(Context.ConnectionId, out string sessionId))
+            var sessionId = _connectionManager.GetSessionId(Context.ConnectionId);
+            if (sessionId != null)
             {
                 _dashboardService.EndpointService.Unregister(eventId, sessionId);
             }
@@ -214,13 +217,14 @@ namespace UniversalDashboard
             {
                 variables.Add("EventData", eventData);
             }
+
+            variables.Add("UDConnectionManager", _connectionManager);
             variables.Add("EventId", eventId);
-		
             variables.Add("MemoryCache", _memoryCache);
 
             try
             {
-                _memoryCache.TryGetValue(Context.ConnectionId, out string sessionId);
+                var sessionId = _connectionManager.GetSessionId(Context.ConnectionId);
 
                 var endpoint = _dashboardService.EndpointService.Get(eventId, sessionId);
                 if (endpoint == null)
@@ -249,7 +253,6 @@ namespace UniversalDashboard
                     }
                     catch (Exception ex)
                     {
-                        
                         _logger.Error("Failed to execute action. " + ex.Message);
                         throw;
                     }

@@ -10,7 +10,32 @@ Get-UDDashboard | Stop-UDDashboard
 
 $Global:MyVariable = "Test"
 
+$Server = Start-UDDashboard -Port 10001 -Dashboard (New-UDDashboard -Title "Test" -Content {}) 
+$Driver = Start-SeFirefox
+
 Describe "Variable Scoping" {
+
+    Context "Variable set for session variable" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDElement -Tag "div" -Endpoint {
+                $Session:SessionId = $SessionID
+
+                New-UDElement -Tag 'div' -Id "output" -Endpoint {
+                    $Session:SessionId
+                }          
+            }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        Start-sleep 2
+
+        It "should read session id from session variable" {
+            (Find-SeElement -Id 'output' -Driver $Driver).Text | should not be ""
+        }
+    }
+
     Context "Invoke-Command test" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDButton -Text 'Patch' -Id 'button' -OnClick (
@@ -26,18 +51,13 @@ Describe "Variable Scoping" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
-        $Driver = Start-SeFirefox
+        $Server.DashboardService.SetDashboard($Dashboard)
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should start processes with click" {
             Find-SeElement -Id "button" -Driver $Driver | Invoke-SeClick 
             (Find-SeElement -Id 'child' -Driver $Driver).Text | should be "child"
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard $Server
     }
 
     Context "Variable set global" {
@@ -47,13 +67,11 @@ Describe "Variable Scoping" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
+        $Server.DashboardService.SetDashboard($Dashboard)
 
         It "should return global variable" {
             (Invoke-RestMethod http://localhost:10001/api/internal/component/element/element) | should be "Test"
         }
-
-        Stop-UDDashboard $Server
     }
 
     Context "Variable set local variable" {
@@ -66,13 +84,11 @@ Describe "Variable Scoping" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
+        $Server.DashboardService.SetDashboard($Dashboard)
 
         It "should return local variable" {
             (Invoke-RestMethod http://localhost:10001/api/internal/component/element/element) | should be "localVariable"
         }
-
-        Stop-UDDashboard $Server
     }
     
     Context "Variable set loop variable" {
@@ -85,7 +101,7 @@ Describe "Variable Scoping" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
+        $Server.DashboardService.SetDashboard($Dashboard)
 
         It "should return loop variable" {
             1..5 | ForEach-Object {
@@ -93,8 +109,6 @@ Describe "Variable Scoping" {
             }
             
         }
-
-        Stop-UDDashboard $Server
     }
 
     Context "Variable set for process" {
@@ -115,10 +129,8 @@ Describe "Variable Scoping" {
             } 
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard
-        $Driver = Start-SeFirefox
+        $Server.DashboardService.SetDashboard($Dashboard)
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
 
         It "should stop processes with click" {
             Get-Process Notepad* | % {
@@ -138,24 +150,8 @@ Describe "Variable Scoping" {
 
             (Get-Process Notepad* | Measure-Object).Count | Should be 0
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard $Server
     }
-
-    Context "Variable set for session variable" {
-        $Dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDElement -Tag "div" -Endpoint {
-                $Session:Variables = @("1", "2,", "3")
-            }
-            New-UDElement -Tag 'div' -Id "output"
-
-            foreach($Variable in $Session:Variables) {
-                New-UDButton -Text "ClickMe" -Id "btnClick$Variable" -OnClick {
-                    Set-UDElement -Id "output" -Content { $Varible }
-                }
-            }            
-        }
-    }
-
 }
+
+Stop-SeDriver $Driver
+Stop-UDDashboard -Server $Server 

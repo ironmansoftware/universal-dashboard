@@ -55,6 +55,7 @@ namespace UniversalDashboard
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddSingleton(ExecutionService.MemoryCache);
+            services.AddSingleton(new ConnectionManager());
             services.AddMvc().AddJsonOptions(x => {
                 x.SerializerSettings.ContractResolver = new CustomContractResolver();
             });
