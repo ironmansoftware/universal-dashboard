@@ -25,9 +25,9 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
     Definition = @{
 
         #UD ELEMENTS
-        UDDashboard = @{
+            UDDashboard = @{
             BackgroundColor = $PrimaryBackgroundColor
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
         }
 
         UDNavBar = @{
@@ -43,45 +43,45 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         UDCard = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
         }
 
         UDChart = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
         }
 
         UDMonitor = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
         }
 
         UDTable = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
         }
 
         UDGrid = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
         }
 
         UDCounter = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
         }
 
         UDInput = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
         }
-    
+
         #CSS ELEMENTS
         'main' = @{
-            'padding-left' = "50px"
-            'padding-right' = "50px"
-            'padding-top' = "50px"
-            'padding-bottom' = "50px"
+            'padding-left' = "12px"
+            'padding-right' = "12px"
+            'padding-top' = "30px"
+            'padding-bottom' = "12px"
         }
 
         'p' = @{
@@ -165,8 +165,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.sidenav' = @{
-            'background-color' = $PrimaryBackgroundColor
-            'color' = $AlternateFontColor
+            'background-color' = "#7380c9"
         }
 
         '.sidenav a:hover' = @{
@@ -193,14 +192,17 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.sidenav .divider' = @{
-            'background-color' = $PrimaryColorDark
+            'background-color' = $AlternativeBackgroundColor2
+            'color' = $AlternativeBackgroundColor3
+            'padding' = "1px"
+            'margin' = "0px 0 0"
         }
 
         '.sidenav .collapsible-header' = @{
             'color'= $AlternateFontColor
-            'font-size' = 'large'
+            'font-size' = '14px'
         }
-    
+
         '.sidenav .collapsible-header:hover' = @{
             'color'= $AlternateFontColor
         }
@@ -219,7 +221,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         'input:not([type]), input[type="date"]:not(.browser-default), input[type="datetime-local"]:not(.browser-default), input[type="datetime"]:not(.browser-default), input[type="email"]:not(.browser-default), input[type="number"]:not(.browser-default), input[type="password"]:not(.browser-default), input[type="search"]:not(.browser-default), input[type="tel"]:not(.browser-default), input[type="text"]:not(.browser-default), input[type="time"]:not(.browser-default), input[type="url"]:not(.browser-default), textarea.materialize-textarea' = @{
-            'color'= $PrimaryFontColor 
+            'color'= $PrimaryFontColor
             'border-bottom' = "1px solid $PrimaryBackgroundColor"
         }
 
@@ -233,7 +235,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.switch label' = @{
-            'color'= $PrimaryFontColor 
+            'color'= $PrimaryFontColor
         }
 
         '.switch label input[type=checkbox]:checked+.lever' = @{
@@ -269,9 +271,9 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         '.dropdown-content' = @{
             'background-color' = $AlternativeBackgroundColor
         }
-        
+
         '.dropdown-content li>a, .dropdown-content li>span' = @{
-            'color' = $PrimaryFontColor 
+            'color' = $PrimaryFontColor
         }
 
         '.select-dropdown.dropdown-content li.selected' = @{
@@ -279,13 +281,13 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.select-wrapper input.select-dropdown' = @{
-            'color' = $PrimaryFontColor 
+            'color' = $PrimaryFontColor
             'border-bottom' = "1px solid $PrimaryColorDark"
             'border-block-end-color' = $PrimaryColorDark
         }
 
         '.select-dropdown li span' = @{
-            'color' = $PrimaryFontColor 
+            'color' = $PrimaryFontColor
         }
 
         '[type=radio].with-gap:checked+span:after, [type=radio]:checked+span:after' = @{
@@ -311,6 +313,30 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         '.page-footer .footer-copyright' = @{
             'background-color' = $PrimaryColor
         }
+    'tr'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      = @{
+        'border-bottom' = "1px $AlternativeBackgroundColor"
+    }
+    '.row .col'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               = @{
+        'padding' = "0.25rem"
+    }
+    'img'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     = @{
+        'padding-top'   = "12px"
+        'padding-left'   = "12px"
+        'padding-right'   = "12px"
+        'padding-bottom'   = "12px"
+    }
+    '.sidenav .collapsible-header, .sidenav.fixed .collapsible-header'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        = @{
+        "background-color" = $PrimaryColor
+        "display"          = "block"
+        "font-size"        = "14px"
+        "font-weight"      = "500"
+        "height"           = "48px"
+        "line-height"      = "48px"
+        "padding"          = "0 32px"
+    }
+    '.sidenav .collapsible li, .sidenav.fixed .collapsible li' = @{
+        "padding-left" = "0 !important"
+    }
 
     }
 }
