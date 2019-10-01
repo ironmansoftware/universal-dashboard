@@ -1,23 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using System;
-using Dbg = System.Management.Automation;
+﻿using System;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
-using Microsoft.PowerShell.Commands;
-using Microsoft.Extensions.Caching.Memory;
 using System.IO;
 using NLog;
 
 namespace UniversalDashboard.Execution
 {
     /// <summary>
-    /// This provider is the data accessor for shell variables. It uses
-    /// the HashtableProvider as the base class to get a hashtable as
-    /// a data store.
+    /// This is the session scope driver provider.null 
     /// </summary>
     [CmdletProvider("Session", ProviderCapabilities.ShouldProcess)]
     [OutputType(typeof(PSVariable), ProviderCmdlet = ProviderCmdlet.SetItem)]
@@ -27,21 +19,7 @@ namespace UniversalDashboard.Execution
     [OutputType(typeof(PSVariable), ProviderCmdlet = ProviderCmdlet.NewItem)]
     public sealed class SessionDriveVariableProvider : ContainerCmdletProvider, IContentCmdletProvider
     {
-        private readonly IMemoryCache _memoryCache;
         private static readonly Logger Logger = LogManager.GetLogger(nameof(SessionDriveVariableProvider));
-
-        #region Constructor
-
-        /// <summary>
-        /// The constructor for the provider that exposes variables to the user
-        /// as drives.
-        /// </summary>
-        public SessionDriveVariableProvider()
-        {
-            _memoryCache = ExecutionService.MemoryCache;
-        } // constructor
-
-        #endregion Constructor
 
         #region DriveCmdletProvider overrides
 
@@ -68,7 +46,7 @@ namespace UniversalDashboard.Execution
             return drives;
         } // InitializeDefaultDrives
 
-        private string ConnectionId 
+        private string SessionId 
         {
             get
             {
@@ -78,26 +56,39 @@ namespace UniversalDashboard.Execution
 
         protected override void GetItem(string name)
         {
-            var item = _memoryCache.Get(ConnectionId + name.ToLower());
-            if (item != null)
+            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
             {
-                base.WriteItemObject(item, name.ToLower(), false);
+                var value = EndpointService.Instance.Sessions[SessionId].GetVariableValue(name);
+                if (value != null)
+                {
+                    base.WriteItemObject(value, name.ToLower(), false);
+                }
             }
         }
 
         protected override void NewItem(string path, string itemTypeName, object newItemValue)
         {
-            _memoryCache.Set(ConnectionId + path.ToLower(), newItemValue);
+            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            {
+                EndpointService.Instance.Sessions[SessionId].SetVariable(path, newItemValue);
+            }
         }
 
         protected override void SetItem(string name, object value)
         {
-            _memoryCache.Set(ConnectionId + name.ToLower(), value);
+            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            {
+                EndpointService.Instance.Sessions[SessionId].SetVariable(name, value);
+            }
         }
 
         protected override bool ItemExists(string path)
         {
-            return _memoryCache.TryGetValue(ConnectionId + path.ToLower(), out object val);
+            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            {
+                return EndpointService.Instance.Sessions[SessionId].SessionVariables.ContainsKey(path.ToLower());
+            }
+            return false;
         }
 
         protected override bool IsValidPath(string path)
@@ -107,7 +98,10 @@ namespace UniversalDashboard.Execution
 
         public void ClearContent(string path)
         {
-            _memoryCache.Remove(ConnectionId + path.ToLower());
+            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            {
+                EndpointService.Instance.Sessions[SessionId].RemoveVariable(path);
+            }
         }
 
         public object ClearContentDynamicParameters(string path)
@@ -119,7 +113,12 @@ namespace UniversalDashboard.Execution
         {
             Logger.Debug($"GetContentReader - {path} ");
 
-            return new MemoryCacheContentReaderWriter(ConnectionId + path.ToLower(), _memoryCache);
+            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            {
+                return new SessionStateReaderWriter(path.ToLower(), EndpointService.Instance.Sessions[SessionId]);
+            }
+
+            return null;
         }
 
         public object GetContentReaderDynamicParameters(string path)
@@ -131,7 +130,12 @@ namespace UniversalDashboard.Execution
         {
             Logger.Debug($"GetContentWriter - {path} ");
 
-            return new MemoryCacheContentReaderWriter(ConnectionId + path.ToLower(), _memoryCache);
+            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            {
+                return new SessionStateReaderWriter(path.ToLower(), EndpointService.Instance.Sessions[SessionId]);
+            }
+
+            return null;
         }
 
         public object GetContentWriterDynamicParameters(string path)
@@ -139,5 +143,59 @@ namespace UniversalDashboard.Execution
             throw new NotImplementedException();
         }
         #endregion DriveCmdletProvider overrides
-    } // VariableProvider
+    }
+
+    public class SessionStateReaderWriter : IContentWriter, IContentReader
+    {
+        private readonly string _name;
+        private readonly Models.SessionState _sessionState;
+
+        public SessionStateReaderWriter(string name, Models.SessionState sessionState)
+        {
+            _name = name; 
+            _sessionState = sessionState;
+        }
+
+        public void Close()
+        {
+            
+        }
+
+        public void Dispose()
+        {
+        }
+
+        public IList Read(long readCount)
+        {
+            var value = _sessionState.GetVariableValue(_name);
+            if (value != null)
+            {
+                return new ArrayList
+                {
+                    value
+                };
+            }
+
+            return null;
+        }
+
+        public void Seek(long offset, SeekOrigin origin)
+        {
+            
+        }
+
+        public IList Write(IList content)
+        {
+            if (content.Count == 1)
+            {
+                _sessionState.SetVariable(_name,  content[0]);
+            }
+            else
+            {
+                _sessionState.SetVariable(_name,  content);
+            }
+            
+            return content;
+        }
+    }
 }
