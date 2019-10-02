@@ -17,7 +17,7 @@ New-UDPage -Name "Getting Started" -Content {
                 New-UDHeading -Size 4 -Text "2. Create your first dashboard"
                 New-UDParagraph -Text "You can use the New-UDDashboard command to create your first dashboard."
                 New-UDElement -Tag 'pre' -Content {
-                    '$Dashbard = New-UDDashboard -Title "Hello, World!" -Content { New-UDHeading -Text "Hello, World!" } -Size 1'
+                    '$Dashboard = New-UDDashboard -Title "Hello, World!" -Content { New-UDHeading -Text "Hello, World!" -Size 1 } '
                 } -Attributes @{ style = @{ backgroundColor = "#f8f8f8";  padding = '30px'}}
                 New-UDHeading -Size 4 -Text "3. Start your dashboard"
                 New-UDParagraph -Text "You can use the Start-UDDashboard command to start the web server in PowerShell."
