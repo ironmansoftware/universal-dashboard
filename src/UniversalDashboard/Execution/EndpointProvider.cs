@@ -60,7 +60,7 @@ namespace UniversalDashboard.Execution
                 }
                 else 
                 {
-                    Sessions.Add(sessionId, new SessionState {
+                    Sessions.Add(sessionId, new SessionState(sessionId) {
                         ConnectionIds = new List<string> {
                             connectionId
                         }
