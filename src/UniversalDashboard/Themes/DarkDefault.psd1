@@ -171,8 +171,8 @@
         'img' = @{
             'float'= "left"
         }
-        '.pagination li.active' = @{
-            'background-color' = "#FFFFFF"
+        '.pagination li.active'= @{
+            'background-color' = "#252525"
         }
         
         '.sidenav .collapsible-header'= @{
