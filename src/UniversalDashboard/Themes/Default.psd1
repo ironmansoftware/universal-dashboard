@@ -80,7 +80,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         'main' = @{
             'padding-left' = "12px"
             'padding-right' = "12px"
-            'padding-top' = "30px"
+            'padding-top' = "12px"
             'padding-bottom' = "12px"
         }
 
