@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Management.Automation.Provider;
-using Microsoft.Extensions.Caching.Memory;
 using System.IO;
+using System.Collections.Generic;
 
 namespace UniversalDashboard.Execution
 {
@@ -16,18 +16,14 @@ namespace UniversalDashboard.Execution
     [OutputType(typeof(PSVariable), ProviderCmdlet = ProviderCmdlet.NewItem)]
     public sealed class GlobalCachedVariableProvider : ContainerCmdletProvider, IContentCmdletProvider
     {
-        private readonly IMemoryCache _memoryCache;
+        public static readonly Dictionary<string, object> Cache;
 
         #region Constructor
 
-        /// <summary>
-        /// The constructor for the provider that exposes variables to the user
-        /// as drives.
-        /// </summary>
-        public GlobalCachedVariableProvider()
+        static GlobalCachedVariableProvider()
         {
-            _memoryCache = ExecutionService.MemoryCache;
-        } // constructor
+            Cache = new Dictionary<string, object>();
+        }
 
         #endregion Constructor
 
@@ -49,24 +45,40 @@ namespace UniversalDashboard.Execution
         } // InitializeDefaultDrives
 
         protected override void GetItem(string name) {
-            var item = _memoryCache.Get(name);
-            if (item != null) {
+
+            if (Cache.ContainsKey(name.ToLower()))
+            {
+                var item = Cache[name.ToLower()];
                 base.WriteItemObject(item, name, false);
             }
         }
 
         protected override void NewItem(string path, string itemTypeName, object newItemValue)
         {
-            _memoryCache.Set(path.ToLower(), newItemValue);
+            if (Cache.ContainsKey(path.ToLower()))
+            {
+                Cache[path.ToLower()] = newItemValue;
+            }
+            else 
+            {
+                Cache.Add(path.ToLower(), newItemValue);
+            }
         }
 
         protected override void SetItem(string name, object value) {
-            _memoryCache.Set(name.ToLower(), value);
+            if (Cache.ContainsKey(name.ToLower()))
+            {
+                Cache[name.ToLower()] = value;
+            }
+            else 
+            {
+                Cache.Add(name.ToLower(), value);
+            }
         }
 
         protected override bool ItemExists(string path)
         {
-            return _memoryCache.TryGetValue(path.ToLower(), out object val);
+            return Cache.ContainsKey(path.ToLower());
         }
 
         protected override bool IsValidPath(string path) {
@@ -75,7 +87,7 @@ namespace UniversalDashboard.Execution
 
         public void ClearContent(string path)
         {
-            _memoryCache.Remove(path.ToLower());
+            Cache.Remove(path.ToLower());
         }
 
         public object ClearContentDynamicParameters(string path)
@@ -85,7 +97,7 @@ namespace UniversalDashboard.Execution
 
         public IContentReader GetContentReader(string path)
         {
-            return new MemoryCacheContentReaderWriter(path.ToLower(), _memoryCache);
+            return new MemoryCacheContentReaderWriter(path.ToLower(), Cache);
         }
 
         public object GetContentReaderDynamicParameters(string path)
@@ -95,7 +107,7 @@ namespace UniversalDashboard.Execution
 
         public IContentWriter GetContentWriter(string path)
         {
-            return new MemoryCacheContentReaderWriter(path.ToLower(), _memoryCache);
+            return new MemoryCacheContentReaderWriter(path.ToLower(), Cache);
         }
 
         public object GetContentWriterDynamicParameters(string path)
@@ -108,9 +120,9 @@ namespace UniversalDashboard.Execution
     internal class MemoryCacheContentReaderWriter : IContentWriter, IContentReader
     {
         private readonly string _key;
-        private readonly IMemoryCache _memoryCache;
+        private readonly Dictionary<string, object> _memoryCache;
 
-        public MemoryCacheContentReaderWriter(string key, IMemoryCache memoryCache)
+        public MemoryCacheContentReaderWriter(string key, Dictionary<string, object> memoryCache)
         {
             _key = key;
             _memoryCache = memoryCache;
@@ -128,7 +140,7 @@ namespace UniversalDashboard.Execution
 
         public IList Read(long readCount)
         {
-            if (_memoryCache.TryGetValue(_key, out object value))
+            if (_memoryCache.TryGetValue(_key.ToLower(), out object value))
             {
                 return new ArrayList
                 {
@@ -146,13 +158,23 @@ namespace UniversalDashboard.Execution
 
         public IList Write(IList content)
         {
+            object value;
             if (content.Count == 1)
             {
-                _memoryCache.Set(_key, content[0]);
+                value = content[0];
             }
             else
             {
-                _memoryCache.Set(_key, content);
+                value = content;
+            }
+
+            if (_memoryCache.ContainsKey(_key.ToLower()))
+            {
+                _memoryCache[_key.ToLower()] = value;
+            }
+            else 
+            {
+                _memoryCache.Add(_key.ToLower(), value);
             }
             
             return content;

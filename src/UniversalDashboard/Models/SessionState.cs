@@ -4,8 +4,9 @@ namespace UniversalDashboard.Models
 {
     public class SessionState
     {
-        public SessionState()
+        public SessionState(string id)
         {
+            Id = id;
             Endpoints = new Dictionary<string, Endpoint>();
             SessionVariables = new Dictionary<string, object>();
             ConnectionIds = new List<string>();
@@ -13,6 +14,7 @@ namespace UniversalDashboard.Models
         }
 
         public object SyncRoot { get; set; }
+        public string Id { get; set; }
         public List<string> ConnectionIds { get; set; }
         public Dictionary<string, Endpoint> Endpoints { get; set; }
         public Dictionary<string, object> SessionVariables { get; set; }
