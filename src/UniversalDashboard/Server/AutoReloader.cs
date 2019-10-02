@@ -22,7 +22,7 @@ namespace UniversalDashboard
 			_host = host;
         }
 
-		public void StartWatchingFile(string fileName, int port, string reloadKey) {
+		public void StartWatchingFile(string fileName, int port, string reloadKey, bool https) {
 			var fileInfo = new FileInfo(fileName);
 
             var fileSystemWatcher = new FileSystemWatcher(fileInfo.DirectoryName);
@@ -32,7 +32,8 @@ namespace UniversalDashboard
 			_dashboards.Add(fileInfo.FullName, new DashboardInfo {
 				FileSystemWatcher = fileSystemWatcher,
 				Port = port,
-				ReloadKey = reloadKey
+				ReloadKey = reloadKey,
+				Https = https
 			});
 		}
 
@@ -61,7 +62,9 @@ namespace UniversalDashboard
 			{
 				var dashboardInfo = _dashboards.First(m => m.Key.Equals(e.FullPath, StringComparison.OrdinalIgnoreCase)).Value;
 
-				var reloadRequest = WebRequest.CreateHttp($"http://localhost:{dashboardInfo.Port}/api/internal/dashboard/reload");
+				var scheme = dashboardInfo.Https ? "https" : "http";
+
+				var reloadRequest = WebRequest.CreateHttp($"{scheme}://localhost:{dashboardInfo.Port}/api/internal/dashboard/reload");
 				reloadRequest.Headers.Add("x-ud-reload-token", dashboardInfo.ReloadKey);
 				reloadRequest.Method = "GET";
 				var response = reloadRequest.GetResponse();
@@ -104,6 +107,7 @@ namespace UniversalDashboard
 		public int Port {get;set;}
 		public FileSystemWatcher FileSystemWatcher {get;set;}
 		public string ReloadKey {get;set;}
+		public bool Https { get; set; }
 	}
 
 
