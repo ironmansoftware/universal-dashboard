@@ -16,6 +16,14 @@ Describe "Cache" {
         }
     }
 
+    Context "Clear-UDCache" {
+        It "Should work with XML" {
+            $cache:data = [xml]"<data><xpath></xpath><xpath></xpath><xpath></xpath></data>"
+            Clear-UDCache
+            $Cache:data | Should be $null
+        }
+    }
+
     Context "Xml in counter" {
         $TempFile = [System.IO.Path]::GetTempFileName()
         "<data><xpath></xpath><xpath></xpath><xpath></xpath></data>" | Out-File $TempFile
