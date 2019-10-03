@@ -154,6 +154,7 @@ $manifestParameters = @{
 						"Show-UDModal",
 						"Hide-UDModal",
 						"Select-UDElement",
+						"Set-UDClipboard",
 						"Hide-UDToast"
 						"Publish-UDFolder"
 						"New-UDEndpointInitialization"
