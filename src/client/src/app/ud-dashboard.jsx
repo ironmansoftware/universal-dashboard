@@ -130,6 +130,32 @@ export default class UdDashboard extends React.Component {
             document.getElementById(ID).focus();
         });
 
+        connection.on('clipboard', (Data) => {
+            var textArea = document.createElement("textarea");
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            textArea.style.padding = 0;
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            textArea.style.background = 'transparent';
+            textArea.value = Data;
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                var successful = document.execCommand('copy');
+            } catch (err) {
+            console.log('Unable to copy to clipboard');
+            }
+        
+            document.body.removeChild(textArea);
+        });
+
         connection.on('write', (message) => {
             PubSub.publish("write", message);
         });
