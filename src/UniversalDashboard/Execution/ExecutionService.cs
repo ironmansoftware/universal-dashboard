@@ -59,9 +59,10 @@ namespace UniversalDashboard.Execution
 
         public object ExecuteEndpoint(ExecutionContext context, Endpoint endpoint)
         {
-            var script = endpoint.ScriptBlock.ToString();
+            var scriptBuilder = new StringBuilder();
             var scriptBlockAst = endpoint.ScriptBlock.Ast as ScriptBlockAst;
             
+            string header = string.Empty;
             if (scriptBlockAst.ParamBlock == null && context.Parameters.Any())
             {
                 if (Log.IsDebugEnabled)
@@ -92,8 +93,24 @@ namespace UniversalDashboard.Execution
                 paramBlockBuilder.Remove(paramBlockBuilder.Length - 1, 1);
                 paramBlockBuilder.Append(")");
                 paramBlockBuilder.AppendLine();
+                header = paramBlockBuilder.ToString();
 
-                script = paramBlockBuilder.ToString() + scriptBlockAst.EndBlock.ToString();
+            }
+            else if (scriptBlockAst.ParamBlock != null)
+            {
+                header = scriptBlockAst.ParamBlock.ToString();
+            }
+
+            scriptBuilder.AppendLine(header);
+            
+            if (_dashboardService.Debugger.ShouldBreak(endpoint.Name))
+            {
+                scriptBuilder.AppendLine("Wait-Debugger");
+            }
+
+            foreach(var statement in scriptBlockAst.EndBlock.Statements)
+            {
+                scriptBuilder.AppendLine(statement.ToString());
             }
 
             Collection<PSObject> output;
@@ -104,6 +121,7 @@ namespace UniversalDashboard.Execution
                 {
                     runspaceRef.Runspace.ResetRunspaceState();
                     Runspace.DefaultRunspace = runspaceRef.Runspace;
+                    runspaceRef.Runspace.Name = endpoint.Name;
                     ps.Runspace = runspaceRef.Runspace;
 
                     var host = (UDHost)_host.GetValue(ps.Runspace);
@@ -138,7 +156,7 @@ namespace UniversalDashboard.Execution
                         SetVariable(ps, "ClaimsPrincipal", context.User);
                     }
 
-                    ps.AddStatement().AddScript(script);
+                    ps.AddStatement().AddScript(scriptBuilder.ToString());
 
                     foreach (var parameter in context.Parameters)
                     {

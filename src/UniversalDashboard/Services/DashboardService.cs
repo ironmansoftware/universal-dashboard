@@ -23,6 +23,7 @@ namespace UniversalDashboard.Services
             StartTime = DateTime.UtcNow;
             Properties = new Dictionary<string, object>();
             DashboardOptions = dashboardOptions;
+            Debugger = new Debugger();
         }
         
         public Dashboard Dashboard { get; private set; }
@@ -32,6 +33,7 @@ namespace UniversalDashboard.Services
 		public string UpdateToken {get;set;}
 		public string ReloadToken {get;set;}
         public DateTime StartTime { get; private set; }
+        public Debugger Debugger { get; private set; }
 
         public IEndpointService EndpointService
         {

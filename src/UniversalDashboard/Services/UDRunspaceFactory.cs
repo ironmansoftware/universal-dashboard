@@ -1,25 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Host;
 using System.Management.Automation.Runspaces;
 using System.Reflection;
-using System.Threading;
 using NLog;
 using UniversalDashboard.Interfaces;
-using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Services
 {
     public class RunspaceReference : IRunspaceReference {
 		private IUDRunspaceFactory _factory;
+        private readonly string _runspaceName;
 
 		public RunspaceReference(IUDRunspaceFactory factory, Runspace runspace) {
 			_factory = factory;
 			Runspace = runspace;
+            _runspaceName = runspace.Name;
 		}
 
 		public Runspace Runspace {get;}
@@ -33,6 +30,7 @@ namespace UniversalDashboard.Services
             {
                 if (disposing)
                 {
+                    Runspace.Name = _runspaceName;
 					_factory.ReturnRunspace(Runspace);
                 }
 

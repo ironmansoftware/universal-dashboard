@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UniversalDashboard.Models;
+using UniversalDashboard.Services;
 
 namespace UniversalDashboard.Interfaces
 {
@@ -15,5 +16,6 @@ namespace UniversalDashboard.Interfaces
         string ReloadToken { get; set; }
         DateTime StartTime { get; }
         IEndpointService EndpointService { get; }
+        Debugger Debugger { get; }
     }
 }
