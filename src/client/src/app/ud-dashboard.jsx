@@ -130,7 +130,7 @@ export default class UdDashboard extends React.Component {
             document.getElementById(ID).focus();
         });
 
-        connection.on('clipboard', (data) => {
+        connection.on('clipboard', (Data) => {
             var textArea = document.createElement("textarea");
             textArea.style.position = 'fixed';
             textArea.style.top = 0;
@@ -142,7 +142,7 @@ export default class UdDashboard extends React.Component {
             textArea.style.outline = 'none';
             textArea.style.boxShadow = 'none';
             textArea.style.background = 'transparent';
-            textArea.value = data;
+            textArea.value = Data;
             document.body.appendChild(textArea);
             textArea.focus();
             textArea.select();
