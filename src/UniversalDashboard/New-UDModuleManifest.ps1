@@ -153,6 +153,7 @@ $manifestParameters = @{
 						"Invoke-UDRedirect",
 						"Show-UDModal",
 						"Hide-UDModal",
+						"Select-UDElement",
 						"Hide-UDToast"
 						"Publish-UDFolder"
 						"New-UDEndpointInitialization"

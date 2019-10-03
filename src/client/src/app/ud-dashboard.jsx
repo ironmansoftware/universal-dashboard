@@ -126,6 +126,10 @@ export default class UdDashboard extends React.Component {
             }
         });
 
+        connection.on('select', (ID) => {
+            document.getElementById(ID).focus();
+        });
+
         connection.on('write', (message) => {
             PubSub.publish("write", message);
         });
