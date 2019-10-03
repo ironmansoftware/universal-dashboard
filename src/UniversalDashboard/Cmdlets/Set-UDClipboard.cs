@@ -10,13 +10,13 @@ namespace UniversalDashboard.Cmdlets
 		//private readonly Logger Log = LogManager.GetLogger(nameof(InvokeRedirectCommand));
 
         [Parameter(Mandatory = true)]
-		public string data { get; set; }
+		public string Data { get; set; }
 
         protected override void EndProcessing()
         {
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
             var connectionId = this.GetVariableValue("ConnectionId") as string;   
-            hub.Clipboard(connectionId, data).Wait();
+            hub.Clipboard(connectionId, Data).Wait();
 		}
 	}
 }
