@@ -138,7 +138,7 @@ namespace UniversalDashboard.Cmdlets
 				WriteWarning("AutoReload does not work on the command line. You must save your file as a script.");
 			}
 
-			var server = new Server(Name, base.MyInvocation.ScriptName, AutoReload, Host, Port);
+			var server = new Server(Name, base.MyInvocation.ScriptName, AutoReload, Host, Port, Certificate != null || CertificateFile != null);
 
 			var options = new DashboardOptions();
 			options.Dashboard = Dashboard;

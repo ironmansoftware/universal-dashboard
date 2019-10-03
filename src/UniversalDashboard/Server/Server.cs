@@ -24,7 +24,7 @@ namespace UniversalDashboard
 {
 	public class Server
 	{
-		public Server(string name, string fileName, bool autoReload, PSHost host, int port)
+		public Server(string name, string fileName, bool autoReload, PSHost host, int port, bool https)
 		{
 			if (string.IsNullOrEmpty(name))
 			{
@@ -46,7 +46,7 @@ namespace UniversalDashboard
 			}
 
 			if (autoReload) {
-				_reloader.StartWatchingFile(fileName, Port, _reloadKey);
+				_reloader.StartWatchingFile(fileName, Port, _reloadKey, https);
 			}
 
 			if (Servers.Any(m => m.Name.Equals(Name, StringComparison.OrdinalIgnoreCase)))

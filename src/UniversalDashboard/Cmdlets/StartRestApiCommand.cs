@@ -74,7 +74,7 @@ namespace UniversalDashboard.Cmdlets
 				}
 			}
 
-			var server = new Server(Name, MyInvocation.ScriptName, AutoReload, Host, Port);
+			var server = new Server(Name, MyInvocation.ScriptName, AutoReload, Host, Port, Certificate != null || CertificateFile != null);
 
             var options = new DashboardOptions();
 			options.StaticEndpoints = Endpoint;
