@@ -55,9 +55,9 @@ namespace UniversalDashboard
             await hub.Clients.Client(clientId).SendAsync("select", ID);
         }
 
-        public static async Task Clipboard(this IHubContext<DashboardHub> hub, string clientId, string data)
+        public static async Task Clipboard(this IHubContext<DashboardHub> hub, string clientId, string Data)
         {
-            await hub.Clients.Client(clientId).SendAsync("clipboard", data);
+            await hub.Clients.Client(clientId).SendAsync("clipboard", Data);
         }
 
         public static async Task SetState(this IHubContext<DashboardHub> hub, string componentId, Element state)
