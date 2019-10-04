@@ -160,6 +160,7 @@ $manifestParameters = @{
 						"New-UDEndpointInitialization"
 						"New-UDSideNav"
 						"New-UDSideNavItem"
+						"Clear-UDCache"
 						)
 }
 
