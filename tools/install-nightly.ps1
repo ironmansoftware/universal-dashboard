@@ -4,6 +4,8 @@ param(
     [switch]$Core
 )
 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 $Url = "https://api.github.com/repos/ironmansoftware/universal-dashboard"
 if ($Enterprise)
 {
