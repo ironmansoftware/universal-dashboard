@@ -155,7 +155,7 @@ namespace UniversalDashboard
             var sessionId = _connectionManager.GetSessionId(Context.ConnectionId);
             if (sessionId != null)
             {
-                _dashboardService.EndpointService.EndSession(sessionId as string, Context.ConnectionId);
+                _dashboardService.EndpointService.EndSession(sessionId as string);
             }
 
             _connectionManager.RemoveConnection(Context.ConnectionId);
@@ -166,7 +166,7 @@ namespace UniversalDashboard
             Log.Debug($"SetSessionId({sessionId})");
 
             _connectionManager.AddConnection(new Connection { Id = Context.ConnectionId, SessionId = sessionId });
-            _dashboardService.EndpointService.StartSession(sessionId, Context.ConnectionId);
+            _dashboardService.EndpointService.StartSession(sessionId);
 
             await Clients.All.SendAsync("setConnectionId", Context.ConnectionId);
         }
