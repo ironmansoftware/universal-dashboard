@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Interfaces
@@ -10,9 +11,9 @@ namespace UniversalDashboard.Interfaces
         Endpoint GetByUrl(string url, string method, Dictionary<string, object> matchedVariables);
         IEnumerable<Endpoint> GetScheduledEndpoints();
         void Register(Endpoint callback);
-        void StartSession(string sessionId, string connectionId);
-        void EndSession(string sessionId, string connectionId);
-        Dictionary<string, Endpoint> Endpoints { get; }
-        Dictionary<string, SessionState> Sessions { get; }
+        void StartSession(string sessionId);
+        void EndSession(string sessionId);
+        ConcurrentDictionary<string, Endpoint> Endpoints { get; }
+        ConcurrentDictionary<string, SessionState> Sessions { get; }
     }
 }

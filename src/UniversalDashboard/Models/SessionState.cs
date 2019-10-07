@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace UniversalDashboard.Models
 {
@@ -7,56 +8,45 @@ namespace UniversalDashboard.Models
         public SessionState(string id)
         {
             Id = id;
-            Endpoints = new Dictionary<string, Endpoint>();
-            SessionVariables = new Dictionary<string, object>();
-            ConnectionIds = new List<string>();
-            SyncRoot = new object();
+            Endpoints = new ConcurrentDictionary<string, Endpoint>();
+            SessionVariables = new ConcurrentDictionary<string, object>();
+            Connections = 1;
         }
 
-        public object SyncRoot { get; set; }
         public string Id { get; set; }
-        public List<string> ConnectionIds { get; set; }
-        public Dictionary<string, Endpoint> Endpoints { get; set; }
-        public Dictionary<string, object> SessionVariables { get; set; }
+        public int Connections { get; set; }
+        public ConcurrentDictionary<string, Endpoint> Endpoints { get; set; }
+        public ConcurrentDictionary<string, object> SessionVariables { get; set; }
 
         public object GetVariableValue(string name)
         {
             name = name.ToLower();
-            lock(SyncRoot)
+            if (SessionVariables.ContainsKey(name))
             {
-                if (SessionVariables.ContainsKey(name))
-                {
-                    return SessionVariables[name];
-                }
-                return null;
+                return SessionVariables[name];
             }
+            return null;
         }
 
         public void SetVariable(string name, object value)
         {
             name = name.ToLower();
-            lock(SyncRoot)
+            if (SessionVariables.ContainsKey(name))
             {
-                if (SessionVariables.ContainsKey(name))
-                {
-                    SessionVariables[name] = value;
-                }
-                else 
-                {
-                    SessionVariables.Add(name, value);
-                }
+                SessionVariables[name] = value;
+            }
+            else 
+            {
+                SessionVariables.TryAdd(name, value);
             }
         }
 
         public void RemoveVariable(string name)
         {
             name = name.ToLower();
-            lock(SyncRoot)
+            if (SessionVariables.ContainsKey(name))
             {
-                if (SessionVariables.ContainsKey(name))
-                {
-                    SessionVariables.Remove(name);
-                }
+                SessionVariables.TryRemove(name, out object value);
             }
         }
     }

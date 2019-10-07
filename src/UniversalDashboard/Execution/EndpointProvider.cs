@@ -6,6 +6,7 @@ using System.Linq;
 using NLog;
 using UniversalDashboard.Interfaces;
 using System.Text.RegularExpressions;
+using System.Collections.Concurrent;
 
 namespace UniversalDashboard.Execution
 {
@@ -15,14 +16,10 @@ namespace UniversalDashboard.Execution
         private readonly List<Endpoint> _scheduledEndpoints;
         private static readonly Logger logger = LogManager.GetLogger("EndpointService");
 
-        private Dictionary<string, object> _sessionLocks = new Dictionary<string, object>();
-
-        private readonly object sessionLock = new object();
-
         private static IEndpointService _instance;
 
-        public Dictionary<string, Endpoint> Endpoints { get; private set; }
-        public Dictionary<string, SessionState> Sessions { get; private set; }
+        public ConcurrentDictionary<string, Endpoint> Endpoints { get; private set; }
+        public ConcurrentDictionary<string, SessionState> Sessions { get; private set; }
 
         public static IEndpointService Instance
         {
@@ -39,54 +36,36 @@ namespace UniversalDashboard.Execution
 
         private EndpointService() 
         {
-            Endpoints = new Dictionary<string, Endpoint>();
-            Sessions = new Dictionary<string, SessionState>();
+            Endpoints = new ConcurrentDictionary<string, Endpoint>();
+            Sessions = new ConcurrentDictionary<string, SessionState>();
 
             _restEndpoints = new List<Endpoint>();
             _scheduledEndpoints = new List<Endpoint>();
         }
 
-        public void StartSession(string sessionId, string connectionId)
+        public void StartSession(string sessionId)
         {
-            lock(sessionLock)
-            {
-                if (_sessionLocks.ContainsKey(sessionId)) 
-                {
-                    lock(_sessionLocks[sessionId])
-                    {
-                        var session = Sessions[sessionId];
-                        session.ConnectionIds.Add(connectionId);
-                    }
-                }
-                else 
-                {
-                    Sessions.Add(sessionId, new SessionState(sessionId) {
-                        ConnectionIds = new List<string> {
-                            connectionId
-                        }
-                    });
-                    _sessionLocks.Add(sessionId, new object());
-                }
-            }   
-        }
-
-        public void EndSession(string sessionId, string connectionId)
-        {
-            lock(sessionLock)
+            if (Sessions.ContainsKey(sessionId)) 
             {
                 var session = Sessions[sessionId];
-                if (session.ConnectionIds.Count <= 1)
-                {
-                    Sessions.Remove(sessionId);
-                    _sessionLocks.Remove(sessionId);
-                }
-                else 
-                {
-                    lock(_sessionLocks[sessionId])
-                    {
-                        session.ConnectionIds.Remove(connectionId);
-                    }
-                }
+                session.Connections++;
+            }
+            else 
+            {
+                Sessions.TryAdd(sessionId, new SessionState(sessionId));
+            }  
+        }
+
+        public void EndSession(string sessionId)
+        {
+            var session = Sessions[sessionId];
+            if (session.Connections <= 1)
+            {
+                Sessions.TryRemove(sessionId, out SessionState value);
+            }
+            else 
+            {
+                session.Connections--;
             }
         }
 
@@ -109,25 +88,19 @@ namespace UniversalDashboard.Execution
 
                 if (callback.SessionId == null)
                 {
-                    Endpoints.Add(callback.Name, callback);
+                    Endpoints.TryAdd(callback.Name, callback);
                 }
                 else
                 {
-                    lock(sessionLock)
+                    if (!Sessions.ContainsKey(callback.SessionId))
                     {
-                        if (!_sessionLocks.ContainsKey(callback.SessionId))
-                        {
-                            StartSession(callback.SessionId, callback.SessionId);
-                        }
+                        StartSession(callback.SessionId);
                     }
 
-                    lock(_sessionLocks[callback.SessionId])
+                    if (Sessions.ContainsKey(callback.SessionId))
                     {
-                        if (Sessions.ContainsKey(callback.SessionId))
-                        {
-                            var session = Sessions[callback.SessionId];
-                            session.Endpoints.Add(callback.Name, callback);
-                        }
+                        var session = Sessions[callback.SessionId];
+                        session.Endpoints.TryAdd(callback.Name, callback);
                     }
                 }
             }
@@ -159,7 +132,7 @@ namespace UniversalDashboard.Execution
             {
                 if (Endpoints.ContainsKey(name))
                 {
-                    Endpoints.Remove(name);
+                    Endpoints.TryRemove(name, out Endpoint endpoint);
                     logger.Debug("Endpoint found. Removing endpoint.");
                 }
             }
@@ -171,10 +144,7 @@ namespace UniversalDashboard.Execution
                     if (session.Endpoints.ContainsKey(name))
                     {
                         logger.Debug("Session endpoint found. Removing endpoint.");
-                        lock(session.SyncRoot)
-                        {
-                            session.Endpoints.Remove(name);
-                        }
+                        session.Endpoints.TryRemove(name, out Endpoint value);
                     }
                 }
             }
