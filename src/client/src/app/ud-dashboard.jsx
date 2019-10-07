@@ -130,7 +130,7 @@ export default class UdDashboard extends React.Component {
             document.getElementById(ID).focus();
         });
 
-        connection.on('clipboard', (Data) => {
+        connection.on('clipboard', (Data, toastOnSuccess, toastOnError) => {
             var textArea = document.createElement("textarea");
             textArea.style.position = 'fixed';
             textArea.style.top = 0;
@@ -149,8 +149,17 @@ export default class UdDashboard extends React.Component {
 
             try {
                 var successful = document.execCommand('copy');
+                if(toastOnSuccess) {
+                    toaster.show({
+                        message: 'Copied to clipboard',
+                    });
+                }
             } catch (err) {
-            console.log('Unable to copy to clipboard');
+                if (toastOnError) {
+                    toaster.show({
+                        message: 'Unable to copy to clipboard',
+                    });
+                }
             }
         
             document.body.removeChild(textArea);
