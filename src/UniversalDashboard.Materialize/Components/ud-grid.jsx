@@ -8,26 +8,17 @@ import {DebounceInput} from 'react-debounce-input';
 import { Dropdown, Button, Row, Col } from 'react-materialize';
 import UdIcon from './ud-icon.jsx';
 
-function strMapToObj(strMap) {
-    if (strMap == undefined) return null;
-    if (strMap._tail != undefined && strMap._tail.array != undefined) {
-        return strMap._tail.array.map(x => strMapToObj(x));
-    } 
-    if (!strMap.__iterate) return strMap;
-
-    let obj = Object.create({});
-    for (let [k,v] of strMap) {
-        // We don’t escape the key '__proto__'
-        // which can cause problems on older engines
-        obj[k] = strMapToObj(v);
-    }
-    return obj;
-}
-
 class CustomColumn extends React.Component {
     render() {
-        var value = strMapToObj(this.props.value);
-        return <CustomCell value={value} dateTimeFormat={this.props.cellProperties.dateTimeFormat} />;
+
+        var value = JSON.parse(JSON.stringify([...this.props.value]))
+        var object = {};
+
+        value.forEach( item => {
+            object[item[0]] = item[1];
+        })
+
+        return <CustomCell value={object} dateTimeFormat={this.props.cellProperties.dateTimeFormat} />;
     }
 }
 
