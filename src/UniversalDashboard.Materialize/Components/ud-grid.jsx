@@ -11,7 +11,15 @@ import UdIcon from './ud-icon.jsx';
 function strMapToObj(strMap) {
     if (strMap == undefined) return null;
     if (strMap._tail != undefined && strMap._tail.array != undefined) {
-        return strMap._tail.array.map(x => strMapToObj(x));
+
+        var items = [];
+        for(var i = 0; i < strMap.size; i++)
+        {
+            var item = strMap.get(i);
+            items.push(strMapToObj(item));
+        }
+
+        return items;
     } 
     if (!strMap.__iterate) return strMap;
 
