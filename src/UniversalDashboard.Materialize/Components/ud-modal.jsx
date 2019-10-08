@@ -64,6 +64,11 @@ export default class UdModal extends React.Component {
     }
 
     onClose() {
+        this.setState({
+            content: null, 
+            header: null, 
+            footer: null
+        });
         this._instance.close();
     }
 
