@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Suspense} from 'react';
 import {getApiPath} from 'config'
 import renderComponent from './../services/render-service.jsx';
 
@@ -47,6 +47,6 @@ export default class LazyElement extends React.Component {
             });
         }
 
-        return element;
+        return <Suspense fallback='loading...'>{element}</Suspense>
     }
 }
