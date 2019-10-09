@@ -35,7 +35,7 @@ export const UniversalDashboardService = {
         if (component == null) return <React.Fragment/>;
 
         if (Array.isArray(component)) {
-            return component.map(x => this.renderComponent(x, history));
+            return component.map(x => x.type ? this.renderComponent(x, history) : x);
         }
 
         var existingComponent = this.components.find(x => x.type === component.type);
