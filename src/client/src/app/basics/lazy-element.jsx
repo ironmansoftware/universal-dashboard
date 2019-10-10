@@ -47,6 +47,6 @@ export default class LazyElement extends React.Component {
             });
         }
 
-        return element;
+        return <Suspense fallback={<span/>}>{element}</Suspense>;
     }
 }
