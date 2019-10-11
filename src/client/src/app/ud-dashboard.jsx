@@ -391,12 +391,14 @@ export default class UdDashboard extends React.Component {
                             />
                 </header>,
                 <main style={{background: this.state.dashboard.backgroundColor, color: this.state.dashboard.fontColor}}>
-                    <Switch>
-                        {staticPages}
-                        {dynamicPages}
-                        <Route exact path={window.baseUrl + `/`} render={this.redirectToHomePage.bind(this)} />
-                        <Route path={window.baseUrl + `/`} render={() => <NotFound/>} />
-                    </Switch>
+                    <Suspense fallback={<span/>}>
+                        <Switch>
+                            {staticPages}
+                            {dynamicPages}
+                            <Route exact path={window.baseUrl + `/`} render={this.redirectToHomePage.bind(this)} />
+                            <Route path={window.baseUrl + `/`} render={() => <NotFound/>} />
+                        </Switch>
+                    </Suspense>
                 </main>,
                 <Suspense fallback={<div></div>}>
                     <UdModalComponent />
