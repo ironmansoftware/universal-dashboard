@@ -383,7 +383,7 @@ namespace UniversalDashboard.Controllers
 
             SetQueryStringValues(variables);
 
-            if (!await TryProcessBodyAsForm(Request, variables))
+            if (!await TryProcessBodyAsFormOrMultipart(Request, variables))
             { 
                 //If we made it here we either have a non-form content type
                 //or the request was made with the default content type of form
@@ -402,16 +402,31 @@ namespace UniversalDashboard.Controllers
 			return StatusCode(404);
 		}
 
-        private async Task<bool> TryProcessBodyAsForm(HttpRequest request, Dictionary<string,object> variables)
+        private async Task<bool> TryProcessBodyAsFormOrMultipart(HttpRequest request, Dictionary<string,object> variables)
         {
             if (HttpContext.Request.HasFormContentType)
             {
+                if (HttpContext.Request.ContentType == "multipart/form-data") {
+                    Log.Debug("HasMultipartcontenttype");
+
+                    var filePath = Path.GetTempFileName();
+                    Log.Debug($"Got path {filePath}");
+
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        await HttpContext.Request.Body.CopyToAsync(stream);
+                    }
+                    return true;
+                }
+                else {
+                    Log.Debug(HttpContext.Request.ContentType);
+                }
                 Log.Debug("HasFormContentType");
 
                 var form = await Request.ReadFormAsync(new FormOptions() { BufferBody = true });
 
                 if (form != null && form.Any())
-                {
+                {   
                     foreach (var value in form)
                     {
                         if (value.Value.Count == 1) {
@@ -448,7 +463,7 @@ namespace UniversalDashboard.Controllers
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
 
-            if (!await TryProcessBodyAsForm(Request, variables))
+            if (!await TryProcessBodyAsFormOrMultipart(Request, variables))
             { 
                 //If we made it here we either have a non-form content type
                 //or the request was made with the default content type of form
@@ -479,7 +494,7 @@ namespace UniversalDashboard.Controllers
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
 
-            if (!await TryProcessBodyAsForm(Request, variables))
+            if (!await TryProcessBodyAsFormOrMultipart(Request, variables))
             {
                 //If we made it here we either have a non-form content type
                 //or the request was made with the default content type of form
