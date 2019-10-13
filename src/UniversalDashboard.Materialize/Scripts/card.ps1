@@ -5,6 +5,9 @@ function New-UDCard {
         [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
         [String]$Title,
+        [Parameter()]
+        [ValidateSet('left', 'center', 'right')]
+        [String]$TitleAlignment = 'left',
         [Parameter(ParameterSetName = 'content')]
         [ScriptBlock]$Content,
         [Parameter(ParameterSetName = 'endpoint')]
@@ -69,7 +72,7 @@ function New-UDCard {
         }
 
         New-UDElement -Tag "div" -Attributes @{ className = 'card-content' } -Content {
-            New-UDElement -Tag 'span' -Attributes @{ className = "card-title $activatorClass" } -Content { 
+            New-UDElement -Tag 'span' -Attributes  @{ className = "card-title $TitleAlignment-align $activatorClass" } -Content { 
                 $Title 
 
                 if ($Reveal -ne $null) {
