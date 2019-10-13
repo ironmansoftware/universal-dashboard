@@ -253,7 +253,14 @@ function Out-UDTableData {
 					}
 					else
 					{
-						$Data.$itemProperty
+						try 
+						{
+							$Data.$itemProperty
+						}
+						catch 
+						{
+							""
+						}
 					}
 				}
 			}

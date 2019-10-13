@@ -1,4 +1,25 @@
 Describe "Table" {
+
+    Context "Null row" {
+        Set-TestDashboard -Content {
+            New-UDTable -Title "Top GitHub Issues" -Id "Table" -Headers @("Id", "Name") -Endpoint {
+                @(
+                    [PSCustomObject]@{ Id = 1; Name = "test" }
+                    [PSCustomObject]@{ Id = 2; Name = "test2" }
+                    [PSCustomObject]@{ Id = 3; Name = $null }
+                ) | Out-UDTableData -Property @('Id', 'Name')
+            }
+        }
+
+        It "should show table" {
+
+            Start-Sleep 2
+
+            $Element = Find-SeElement -Id "Table" -Driver $Driver
+            $Element.Text.Contains("test2") | should be true
+        }
+    }
+
     Context "Error in table" {
         Set-TestDashboard -Content {
             New-UDTable -Title "Top GitHub Issues" -Id "Table" -Headers @("Id", "Title", "Description", "Comments", "Date") -Endpoint {
