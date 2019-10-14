@@ -174,7 +174,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.sidenav' = @{
-            'background-color' = $PrimaryBackgroundColor
+            'background-color' = $PrimaryColor # $PrimaryBackgroundColor
             'color' = $AlternateFontColor
         }
 
