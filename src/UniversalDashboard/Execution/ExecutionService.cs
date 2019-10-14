@@ -199,7 +199,7 @@ namespace UniversalDashboard.Execution
                 return json;
             }
 
-            return output.Where(m => m != null).Select(m => m.BaseObject);
+            return output.Where(m => m != null).Select(m => m.BaseObject).ToList();
         }
 
         private string ReplaceIfNotReplaced(string script, string valueToReplace, string replacementValue)
