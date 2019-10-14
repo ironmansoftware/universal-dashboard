@@ -84,6 +84,15 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             'padding-bottom' = "50px"
         }
 
+        '@media screen and (max-width: 600px)' = @{
+            'main' = @{
+                'padding-left' = "3px"
+                'padding-right' = "3px"
+                'padding-top' = "3px"
+                'padding-bottom' ="3px"
+            }
+        }
+
         'p' = @{
             'color' = "$PrimaryFontColor  !important"
         }
@@ -165,7 +174,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.sidenav' = @{
-            'background-color' = $PrimaryBackgroundColor
+            'background-color' = $PrimaryColor
             'color' = $AlternateFontColor
         }
 
