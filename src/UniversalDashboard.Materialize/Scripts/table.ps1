@@ -60,7 +60,7 @@ function New-UDTable {
 					New-UDElement -Tag 'tbody' -Content $Content
 				}
 				else {
-					New-UDElement -Tag 'tbody' -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -ArgumentList $ArgumentList -Id "$Id-tbody'
+					New-UDElement -Tag 'tbody' -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -ArgumentList $ArgumentList -Id "$Id-tbody"
 				}
 
 				
