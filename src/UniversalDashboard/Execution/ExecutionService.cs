@@ -167,16 +167,19 @@ namespace UniversalDashboard.Execution
                     {
                         output = ps.Invoke();
 
-                        if (ps.HadErrors)
+                        if (!context.IgnoreNonTerminatingErrors)
                         {
-                            if (ps.Streams.Error.Any()) {
-                                var error = ps.Streams.Error[0].Exception.Message;
+                            if (ps.HadErrors)
+                            {
+                                if (ps.Streams.Error.Any()) {
+                                    var error = ps.Streams.Error[0].Exception.Message;
 
-                                foreach(var errorRecord in ps.Streams.Error) {
-                                    Log.Warn($"Error executing endpoint {endpoint.Name}. {errorRecord} {Environment.NewLine} {errorRecord.ScriptStackTrace}");
+                                    foreach(var errorRecord in ps.Streams.Error) {
+                                        Log.Warn($"Error executing endpoint {endpoint.Name}. {errorRecord} {Environment.NewLine} {errorRecord.ScriptStackTrace}");
+                                    }
+
+                                    return new { Error = new Error { Message = error } };
                                 }
-
-                                return new { Error = new Error { Message = error } };
                             }
                         }
                     }

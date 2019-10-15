@@ -25,5 +25,6 @@ namespace UniversalDashboard.Execution {
         public ClaimsPrincipal User { get; set; }
         public string ConnectionId { get; set; }
         public string SessionId { get; set; }
+        public bool IgnoreNonTerminatingErrors { get; set; }
     }
 }
