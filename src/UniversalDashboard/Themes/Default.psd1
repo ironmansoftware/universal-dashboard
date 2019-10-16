@@ -94,7 +94,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         'p' = @{
-            'color' = "$PrimaryFontColor  !important"
+            'color' = $PrimaryFontColor
         }
 
         '.tabs' = @{
