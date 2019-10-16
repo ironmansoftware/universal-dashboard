@@ -24,4 +24,17 @@ Describe "Navbar" {
             Find-SeElement -Driver $Driver -ClassName 'ud-navbar'  | Get-SeElementCssValue -Name 'color' | Should be 'rgb(255, 255, 255)'
         }
     }
+    
+    Context "logo" {
+        $Logo = New-UDImage -Path "$PSScriptRoot/assets/logo.png" -Height 50 -Width 50 -Id 'image'
+        Set-TestDashboard -Dashboard (
+            New-UDDashboard -Title 'test' -Content {
+
+            } -NavBarLogo $Logo
+        )
+
+        It "should have a logo" {
+            Find-SeElement -Driver $Driver -Id 'image' | should not be $null
+        }
+    }
 }
