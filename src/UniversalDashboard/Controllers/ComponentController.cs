@@ -429,10 +429,7 @@ namespace UniversalDashboard.Controllers
                 using (MemoryStream stream = new MemoryStream())
                 {
                     await HttpContext.Request.Body.CopyToAsync(stream);
-                    foreach (var header in HttpContext.Request.Headers) {
-                        Log.Debug(header);
-
-                    } 
+                    
                     if (stream != null) {
                         variables.Add("File", stream.ToArray());
                         Log.Debug("File from RESTAPI found.");
