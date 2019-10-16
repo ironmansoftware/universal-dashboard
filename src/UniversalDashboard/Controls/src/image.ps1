@@ -43,5 +43,7 @@ function New-UDImage {
         $Attributes.'width' = $Width
     }
 
+    $Attributes["id"] = $Id
+
     New-UDElement -Tag 'img' -Attributes $Attributes
 }
