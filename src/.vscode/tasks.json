@@ -4,13 +4,26 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Build Minimal",
+            "command": "./build.ps1",
+            "type": "shell",
+            "args": [
+                "-Minimal"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Build Debug",
             "command": "./build.ps1",
             "type": "shell",
             "args": [
                 "-Configuration",
-                "Debug",
-                "-NoHelp"
+                "Debug"
             ],
             "group": "build",
             "presentation": {
