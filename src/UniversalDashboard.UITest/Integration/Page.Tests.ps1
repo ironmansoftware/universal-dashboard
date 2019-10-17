@@ -278,12 +278,12 @@ Describe "New-UDPage" {
 
         It "should navigate to page with hyphens" {
             $Element = Find-SeElement -Id "sidenavtrigger" -Driver $Driver
-            Invoke-SeClick $Element
+            Invoke-SeClick $Element -Driver $Driver -JavaScriptClick
 
             Start-Sleep 1
 
             $Element = Find-SeElement -LinkText "Page-with-hyphens" -Driver $Driver
-            Invoke-SeClick $Element
+            Invoke-SeClick $Element -Driver $Driver -JavaScriptClick
 
             Start-Sleep 1
 
