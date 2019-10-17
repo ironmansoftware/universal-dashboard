@@ -36,10 +36,19 @@ Describe "Https" {
             Stop-UDDashboard -Server $Dashboard
         }
 
-        It "should redirect HTTP" {
-            $Dashboard = Start-UDDashboard -Port 10001 -Certificate $Cert
+        It "should redirect HTTPS" {
+            $Dashboard = Start-UDDashboard -Port 10001 -HttpsPort 10002 -Certificate $Cert
 
-            $Request = Invoke-WebRequest http://localhost:10001/dashboard
+            try 
+            {
+                $Request = Invoke-WebRequest http://localhost:10001/dashboard
+            }
+            catch 
+            {
+                $_.Exception.Response.StatusCode | should be 308
+            }
+
+            $Request = Invoke-WebRequest https://localhost:10002/dashboard
             $Request.StatusCode | Should be 200
 
             Stop-UDDashboard -Server $Dashboard

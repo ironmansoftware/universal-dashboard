@@ -19,6 +19,7 @@ using UniversalDashboard.Execution;
 using UniversalDashboard.Utilities;
 using UniversalDashboard.Interfaces;
 using System.Management.Automation.Runspaces;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace UniversalDashboard
 {
@@ -99,19 +100,39 @@ namespace UniversalDashboard
 				});
 				builder = builder.UseKestrel(options =>
 				{
-					options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port, listenOptions =>
+					// If we have a certificate configured
+					if (dashboardOptions.Certificate != null || dashboardOptions.CertificateFile != null)
 					{
-						if (dashboardOptions.Certificate != null)
-						{
-							listenOptions.UseHttps(dashboardOptions.Certificate);
-						}
+						Action<ListenOptions> listenOptionsAction = (ListenOptions listenOptions) => {
+								if (dashboardOptions.Certificate != null)
+								{
+									listenOptions.UseHttps(dashboardOptions.Certificate);
+								}
 
-						if (dashboardOptions.CertificateFile != null)
-						{
-							listenOptions.UseHttps(dashboardOptions.CertificateFile, SecureStringToString(dashboardOptions.Password));
-						}
+								if (dashboardOptions.CertificateFile != null)
+								{
+									listenOptions.UseHttps(dashboardOptions.CertificateFile, SecureStringToString(dashboardOptions.Password));
+								}
+						};
 						
-					});
+						// If the ports are different, listen on HTTP and HTTPS
+						if (dashboardOptions.Port != dashboardOptions.HttpsPort)
+						{
+							options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port);
+							options.Listen(dashboardOptions.ListenAddress, dashboardOptions.HttpsPort, listenOptionsAction);
+						}
+						// If the ports are the same, just listen on the port and configure HTTPS
+						else
+						{
+							options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port, listenOptionsAction);
+						}
+					}
+					// If no certificate is configured, just listen on the port
+					else
+					{
+						options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port);
+					}
+
 					options.Limits.MaxRequestBodySize = null;
 				});
 

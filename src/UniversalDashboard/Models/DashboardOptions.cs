@@ -12,6 +12,7 @@ namespace UniversalDashboard
         public Dashboard Dashboard { get; set; }
         public IEnumerable<Endpoint> StaticEndpoints { get; set; } 
         public int Port { get; set; } 
+        public int HttpsPort { get; set; } 
         public bool Wait { get; set; }
         public X509Certificate2 Certificate { get; set; }
         public string CertificateFile { get; set; } 

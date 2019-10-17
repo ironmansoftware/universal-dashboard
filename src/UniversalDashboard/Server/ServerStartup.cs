@@ -59,6 +59,22 @@ namespace UniversalDashboard
                 x.SerializerSettings.ContractResolver = new CustomContractResolver();
             });
 
+            if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) 
+            {
+                    if (dashboardService.DashboardOptions.Port == dashboardService.DashboardOptions.HttpsPort)
+                    {
+                        Logger.Warn("Port and HTTPS port are the same. HTTPS Redirection will not work. Select two different ports.");   
+                    }
+                    else 
+                    {
+                        services.AddHttpsRedirection(options =>
+                        {
+                            options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                            options.HttpsPort = dashboardService.DashboardOptions.HttpsPort;
+                        });
+                    }
+            }
+
             services.AddScoped<IFilterProvider, EncFilterProvider>();
 
             services.AddSession(options =>
@@ -126,7 +142,15 @@ namespace UniversalDashboard
             var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
 
             if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) {
-                app.UseHttpsRedirection();
+
+                if (dashboardService.DashboardOptions.Port == dashboardService.DashboardOptions.HttpsPort)
+                {
+                    Logger.Warn("Port and HTTPS port are the same. HTTPS Redirection will not work. Select two different ports.");   
+                }
+                else 
+                {
+                    app.UseHttpsRedirection();
+                }
             }
 
 			if (dashboardService?.DashboardOptions?.PublishedFolders != null) {
