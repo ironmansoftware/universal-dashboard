@@ -18,6 +18,12 @@ namespace UniversalDashboard.Services
     public class SessionManager : ISessionManager
     {
         public ConcurrentDictionary<string, SessionState> Sessions { get; private set; }
+
+        public SessionManager()
+        {
+            Sessions = new ConcurrentDictionary<string, SessionState>();
+        }
+
         public void StartSession(string id)
         {
             if (Sessions.ContainsKey(id)) 
