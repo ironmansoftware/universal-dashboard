@@ -29,22 +29,16 @@ namespace UniversalDashboard.Execution
     public class ExecutionService : IExecutionService {
         private static readonly Logger Log = LogManager.GetLogger(nameof(ExecutionService));
 		private readonly IUDRunspaceFactory _runspace;
-		private static IMemoryCache _memoryCache;
 		private readonly IDashboardService _dashboardService;
         private readonly IHubContext<DashboardHub> _hubContext;
         private readonly StateRequestService _stateRequestService;
+        private readonly IMemoryCache _memoryCache;
 
-        public static IMemoryCache MemoryCache {
-            get {
-                if (_memoryCache == null) {
-                    _memoryCache = new MemoryCache(new MemoryCacheOptions {
-                    });
-                }
-                return _memoryCache;
-            }
-        }
-
-        public ExecutionService(IDashboardService dashboardService, IHubContext<DashboardHub> hubContext, StateRequestService stateRequestService)
+        public ExecutionService(
+            IDashboardService dashboardService, 
+            IHubContext<DashboardHub> hubContext, 
+            StateRequestService stateRequestService,
+            IMemoryCache memoryCache)
 		{
 			Log.Debug("ExecutionService constructor");
 
@@ -52,6 +46,7 @@ namespace UniversalDashboard.Execution
 			_dashboardService = dashboardService;
             _hubContext = hubContext;
             _stateRequestService = stateRequestService;
+            _memoryCache = memoryCache;
         }
 
         private static readonly Type _runspaceBase = typeof(Runspace).Assembly.GetType("System.Management.Automation.Runspaces.RunspaceBase");
@@ -140,7 +135,7 @@ namespace UniversalDashboard.Execution
                     }
 
                     SetVariable(ps, "DashboardHub", _hubContext);
-                    SetVariable(ps, "Cache", MemoryCache);
+                    SetVariable(ps, "Cache", _memoryCache);
                     SetVariable(ps, "StateRequestService", _stateRequestService);
                     SetVariable(ps, "ConnectionId", context.ConnectionId);
                     SetVariable(ps, Constants.SessionId, context.SessionId);
