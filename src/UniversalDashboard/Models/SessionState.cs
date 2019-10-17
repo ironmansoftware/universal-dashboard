@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace UniversalDashboard.Models
@@ -11,12 +12,14 @@ namespace UniversalDashboard.Models
             Endpoints = new ConcurrentDictionary<string, Endpoint>();
             SessionVariables = new ConcurrentDictionary<string, object>();
             Connections = 1;
+            LastTouched = DateTime.UtcNow;
         }
 
         public string Id { get; set; }
         public int Connections { get; set; }
         public ConcurrentDictionary<string, Endpoint> Endpoints { get; set; }
         public ConcurrentDictionary<string, object> SessionVariables { get; set; }
+        public DateTime LastTouched { get; set; }
 
         public object GetVariableValue(string name)
         {

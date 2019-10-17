@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using NLog;
 using NLog.Fluent;
 using UniversalDashboard.Execution;
@@ -155,7 +154,7 @@ namespace UniversalDashboard
             var sessionId = _connectionManager.GetSessionId(Context.ConnectionId);
             if (sessionId != null)
             {
-                _dashboardService.EndpointService.EndSession(sessionId as string);
+                _dashboardService.EndpointService.SessionManager.EndSession(sessionId as string);
             }
 
             _connectionManager.RemoveConnection(Context.ConnectionId);
@@ -166,7 +165,7 @@ namespace UniversalDashboard
             Log.Debug($"SetSessionId({sessionId})");
 
             _connectionManager.AddConnection(new Connection { Id = Context.ConnectionId, SessionId = sessionId });
-            _dashboardService.EndpointService.StartSession(sessionId);
+            _dashboardService.EndpointService.SessionManager.StartSession(sessionId);
 
             await Clients.All.SendAsync("setConnectionId", Context.ConnectionId);
         }
