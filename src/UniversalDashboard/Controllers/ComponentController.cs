@@ -422,24 +422,27 @@ namespace UniversalDashboard.Controllers
                     }
                     return true;
                 }
+		return false;
             }
-            if (HttpContext.Request.ContentType.Contains("image/") || HttpContext.Request.ContentType.Contains("file/")) 
-            {
-                Log.Debug("HasFileOrImageContenttype");
-                using (MemoryStream stream = new MemoryStream())
+	    if (HttpContext.Request.Method == "POST") {
+                //file upload only avaliable in POST method.
+                if (HttpContext.Request.ContentType.Contains("image/") || HttpContext.Request.ContentType.Contains("file/")) 
                 {
-                    await HttpContext.Request.Body.CopyToAsync(stream);
-                    
-                    if (stream != null) {
-                        variables.Add("File", stream.ToArray());
-                        Log.Debug("File from RESTAPI found.");
-                        return true;
-                    }
-                    else 
+                    Log.Debug("HasFileOrImageContenttype");
+                    using (MemoryStream stream = new MemoryStream())
                     {
-                        Log.Debug("Filestream is empty.");
-                        //return it true, to prevent it from processing it as RAW
-                        return true;
+                        await HttpContext.Request.Body.CopyToAsync(stream);
+                        if (stream != null) {
+                            variables.Add("File", stream.ToArray());
+                            Log.Debug("File from RESTAPI found.");
+                            return true;
+                        }
+                        else 
+                        {
+                            Log.Debug("Filestream is empty.");
+                            //return it true, to prevent it from processing it as RAW
+                            return true;
+                        }
                     }
                 }
             }
