@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation.Runspaces;
+using Microsoft.Extensions.DependencyInjection;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 
@@ -34,6 +35,7 @@ namespace UniversalDashboard.Services
 		public string ReloadToken {get;set;}
         public DateTime StartTime { get; private set; }
         public Debugger Debugger { get; private set; }
+        public ServiceProvider ServiceProvider { get; set; }
 
         public IEndpointService EndpointService
         {

@@ -21,7 +21,6 @@ namespace UniversalDashboard
     internal class ServerStartup
 	{
 		private static readonly Logger Logger = LogManager.GetLogger(nameof(ServerStartup));
-
 		public IConfigurationRoot Configuration { get; }
 		private AutoReloader _reloader;
 
@@ -71,6 +70,8 @@ namespace UniversalDashboard
 
             var serviceDescriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType.Name == "IRegistryPolicyResolver");
             services.Remove(serviceDescriptor);
+
+            dashboardService.ServiceProvider = services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, ILoggerFactory loggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime lifetime)
