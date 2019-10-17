@@ -2,6 +2,9 @@
 using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Impl;
+using Quartz.Impl.Matchers;
+using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading;
@@ -12,10 +15,11 @@ namespace UniversalDashboard.Execution
 {
     public class ScheduledEndpointManager : IHostedService
     {
-        private IScheduler _scheduler;
+        private static IScheduler _scheduler;
         private readonly IExecutionService _executionService;
         private readonly IMemoryCache _memoryCache;
         private readonly IDashboardService _dashboardService;
+        public readonly Guid Id = Guid.NewGuid();
 
         public ScheduledEndpointManager(IExecutionService executionService, IMemoryCache memoryCache, IDashboardService dashboardService)
         {
@@ -35,35 +39,36 @@ namespace UniversalDashboard.Execution
             };
             var factory = new StdSchedulerFactory(props);
 
+            if (_scheduler != null)
+            {
+                await _scheduler.Shutdown(false);
+                _scheduler = null;
+            }
+
             _scheduler = await factory.GetScheduler();
             await _scheduler.Start();
 
             foreach (var endpoint in endpoints.Where(m => m.Schedule != null))
             {
                 var dataMap = new JobDataMap();
-                var job = JobBuilder.Create<ScheduledEndpointJob>()
-                .UsingJobData(dataMap)
-                .Build();
+                IJobDetail job;
+
+                dataMap.Add(nameof(ScheduledEndpointJob.Endpoint), endpoint);
+                dataMap.Add(nameof(ScheduledEndpointJob.ExecutionService), _executionService);
+                dataMap.Add(nameof(ScheduledEndpointJob.MemoryCache), _memoryCache);
 
                 if (endpoint.Schedule.Consecutive)
                 {
-                    dataMap.Add(nameof(ScheduledEndpointJobConsecutive.Endpoint), endpoint);
-                    dataMap.Add(nameof(ScheduledEndpointJobConsecutive.ExecutionService), _executionService);
-                    dataMap.Add(nameof(ScheduledEndpointJobConsecutive.MemoryCache), _memoryCache);
                     job = JobBuilder.Create<ScheduledEndpointJobConsecutive>()
                     .UsingJobData(dataMap)
                     .Build();
                 }
                 else
                 {
-                    dataMap.Add(nameof(ScheduledEndpointJob.Endpoint), endpoint);
-                    dataMap.Add(nameof(ScheduledEndpointJob.ExecutionService), _executionService);
-                    dataMap.Add(nameof(ScheduledEndpointJob.MemoryCache), _memoryCache);
                     job = JobBuilder.Create<ScheduledEndpointJob>()
                     .UsingJobData(dataMap)
                     .Build();
                 }
-
 
                 ITrigger trigger = null;
                 if (endpoint.Schedule.Cron != null)
@@ -129,7 +134,6 @@ namespace UniversalDashboard.Execution
                                     .RepeatForever())
                                 .Build();
                         }
-
                     }
                 }
                 await _scheduler.ScheduleJob(job, trigger);
@@ -140,6 +144,30 @@ namespace UniversalDashboard.Execution
         {
             if (_scheduler != null)
                 await _scheduler.Shutdown(false);
+        }
+
+        public async Task<IEnumerable<object>> GetUpcomingJobs() 
+        {
+            var list = new List<object>();
+            var jobGroups = await _scheduler.GetJobGroupNames();
+
+            foreach (string group in jobGroups)
+            {
+                var groupMatcher = GroupMatcher<JobKey>.GroupContains(group);
+                var jobKeys = await _scheduler.GetJobKeys(groupMatcher);
+                foreach (var jobKey in jobKeys)
+                {
+                    var detail = await _scheduler.GetJobDetail(jobKey);
+                    var triggers = await _scheduler.GetTriggersOfJob(jobKey);
+
+                    list.Add(new {
+                        Detail = detail,         
+                        Triggers = triggers
+                    });
+                }
+            }
+
+            return list;
         }
     }
 }

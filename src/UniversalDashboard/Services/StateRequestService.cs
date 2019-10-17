@@ -7,21 +7,26 @@ namespace UniversalDashboard.Services
 {
     public class StateRequestService
     {
-        private static MemoryCache memoryCache = new MemoryCache(new MemoryCacheOptions());
+        private readonly IMemoryCache _memoryCache;
 
         public AutoResetEvent EventAvailable = new AutoResetEvent(false);
 
+        public StateRequestService(IMemoryCache memoryCache)
+        {
+            _memoryCache = memoryCache;
+        }
+
         public void Set(string requestId, Element state)
         {
-            memoryCache.Set(requestId, state, TimeSpan.FromSeconds(5));
+            _memoryCache.Set(requestId, state, TimeSpan.FromSeconds(5));
             EventAvailable.Set();
         }
 
         public bool TryGet(string requestId, out Element element)
         {
-            if (memoryCache.TryGetValue(requestId, out element))
+            if (_memoryCache.TryGetValue(requestId, out element))
             {
-                memoryCache.Remove(requestId);
+                _memoryCache.Remove(requestId);
                 return true;
             }
 

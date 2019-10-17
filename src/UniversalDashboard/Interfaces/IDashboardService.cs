@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using UniversalDashboard.Models;
 using UniversalDashboard.Services;
 
@@ -17,5 +18,6 @@ namespace UniversalDashboard.Interfaces
         DateTime StartTime { get; }
         IEndpointService EndpointService { get; }
         Debugger Debugger { get; }
+        ServiceProvider ServiceProvider { get; set; }
     }
 }

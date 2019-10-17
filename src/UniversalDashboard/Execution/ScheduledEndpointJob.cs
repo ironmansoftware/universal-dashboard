@@ -24,23 +24,9 @@ namespace UniversalDashboard.Execution
             ExecutionService.ExecuteEndpoint(executionContext, Endpoint);
         }
     }
+
     [DisallowConcurrentExecution]
-    public class ScheduledEndpointJobConsecutive : IJob
+    public class ScheduledEndpointJobConsecutive : ScheduledEndpointJob
     {
-        public Endpoint Endpoint { get; set; }
-        public IExecutionService ExecutionService { get; set; }
-        public IMemoryCache MemoryCache { get; set; }
-
-        public async Task Execute(IJobExecutionContext context)
-        {
-            await Task.FromResult(0);
-
-            var variables = new Dictionary<string, object> {
-                    {"MemoryCache", MemoryCache}
-                };
-
-            ExecutionContext executionContext = new ExecutionContext(Endpoint, variables, new Dictionary<string, object>(), null);
-            ExecutionService.ExecuteEndpoint(executionContext, Endpoint);
-        }
     }
 }

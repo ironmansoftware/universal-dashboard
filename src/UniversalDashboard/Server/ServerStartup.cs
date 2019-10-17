@@ -21,7 +21,6 @@ namespace UniversalDashboard
     internal class ServerStartup
 	{
 		private static readonly Logger Logger = LogManager.GetLogger(nameof(ServerStartup));
-
 		public IConfigurationRoot Configuration { get; }
 		private AutoReloader _reloader;
 
@@ -54,11 +53,27 @@ namespace UniversalDashboard
             services.AddTransient<IExecutionService, ExecutionService>();
 			services.AddCors();
 			services.AddDirectoryBrowser();
-			services.AddSingleton(ExecutionService.MemoryCache);
+			services.AddMemoryCache();
             services.AddSingleton(new ConnectionManager());
             services.AddMvc().AddJsonOptions(x => {
                 x.SerializerSettings.ContractResolver = new CustomContractResolver();
             });
+
+            if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) 
+            {
+                    if (dashboardService.DashboardOptions.Port == dashboardService.DashboardOptions.HttpsPort)
+                    {
+                        Logger.Warn("Port and HTTPS port are the same. HTTPS Redirection will not work. Select two different ports.");   
+                    }
+                    else 
+                    {
+                        services.AddHttpsRedirection(options =>
+                        {
+                            options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                            options.HttpsPort = dashboardService.DashboardOptions.HttpsPort;
+                        });
+                    }
+            }
 
             services.AddScoped<IFilterProvider, EncFilterProvider>();
 
@@ -71,6 +86,8 @@ namespace UniversalDashboard
 
             var serviceDescriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType.Name == "IRegistryPolicyResolver");
             services.Remove(serviceDescriptor);
+
+            dashboardService.ServiceProvider = services.BuildServiceProvider();
         }
 
         public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, ILoggerFactory loggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime lifetime)
@@ -125,7 +142,15 @@ namespace UniversalDashboard
             var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
 
             if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) {
-                app.UseHttpsRedirection();
+
+                if (dashboardService.DashboardOptions.Port == dashboardService.DashboardOptions.HttpsPort)
+                {
+                    Logger.Warn("Port and HTTPS port are the same. HTTPS Redirection will not work. Select two different ports.");   
+                }
+                else 
+                {
+                    app.UseHttpsRedirection();
+                }
             }
 
 			if (dashboardService?.DashboardOptions?.PublishedFolders != null) {

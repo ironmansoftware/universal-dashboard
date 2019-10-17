@@ -32,7 +32,7 @@ Describe "New-UDCard" {
     }
 
     It "should set title class" {
-        (New-UDCard -Title "title").Content[0].Content[0].Attributes.className | Should be "card-title left-align"
+        (New-UDCard -Title "title").Content[0].Content[0].Attributes.className | Should be "card-title left-align "
     }
 
     It "should set background color" {
