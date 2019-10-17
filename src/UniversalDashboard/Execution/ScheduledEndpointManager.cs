@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
+using UniversalDashboard.Services;
 
 namespace UniversalDashboard.Execution
 {
@@ -138,6 +139,26 @@ namespace UniversalDashboard.Execution
                 }
                 await _scheduler.ScheduleJob(job, trigger);
             }
+
+            if (_dashboardService.Dashboard != null)
+            {
+                var dataMap = new JobDataMap();
+                dataMap.Add(nameof(SessionTimeoutJob.IdleTimeout), _dashboardService.Dashboard.IdleTimeout);
+
+                var job = JobBuilder.Create<SessionTimeoutJob>()
+                .UsingJobData(dataMap)
+                .Build();
+
+                var trigger = TriggerBuilder.Create()
+                                .StartNow()
+                                .WithSimpleSchedule(x => x
+                                    .WithIntervalInSeconds(60)
+                                    .RepeatForever())
+                                .Build();
+
+                await _scheduler.ScheduleJob(job, trigger);
+            }
+
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)

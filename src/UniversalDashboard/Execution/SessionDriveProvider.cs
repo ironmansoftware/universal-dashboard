@@ -56,9 +56,9 @@ namespace UniversalDashboard.Execution
 
         protected override void GetItem(string name)
         {
-            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            if (EndpointService.Instance.SessionManager.SessionExists(SessionId))
             {
-                var value = EndpointService.Instance.Sessions[SessionId].GetVariableValue(name);
+                var value = EndpointService.Instance.SessionManager.GetSession(SessionId).GetVariableValue(name);
                 if (value != null)
                 {
                     base.WriteItemObject(value, name.ToLower(), false);
@@ -68,25 +68,25 @@ namespace UniversalDashboard.Execution
 
         protected override void NewItem(string path, string itemTypeName, object newItemValue)
         {
-            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            if (EndpointService.Instance.SessionManager.SessionExists(SessionId))
             {
-                EndpointService.Instance.Sessions[SessionId].SetVariable(path, newItemValue);
+                EndpointService.Instance.SessionManager.GetSession(SessionId).SetVariable(path, newItemValue);
             }
         }
 
         protected override void SetItem(string name, object value)
         {
-            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            if (EndpointService.Instance.SessionManager.SessionExists(SessionId))
             {
-                EndpointService.Instance.Sessions[SessionId].SetVariable(name, value);
+                EndpointService.Instance.SessionManager.GetSession(SessionId).SetVariable(name, value);
             }
         }
 
         protected override bool ItemExists(string path)
         {
-            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            if (EndpointService.Instance.SessionManager.SessionExists(SessionId))
             {
-                return EndpointService.Instance.Sessions[SessionId].SessionVariables.ContainsKey(path.ToLower());
+                return EndpointService.Instance.SessionManager.GetSession(SessionId).SessionVariables.ContainsKey(path.ToLower());
             }
             return false;
         }
@@ -98,9 +98,9 @@ namespace UniversalDashboard.Execution
 
         public void ClearContent(string path)
         {
-            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            if (EndpointService.Instance.SessionManager.SessionExists(SessionId))
             {
-                EndpointService.Instance.Sessions[SessionId].RemoveVariable(path);
+                EndpointService.Instance.SessionManager.GetSession(SessionId).RemoveVariable(path);
             }
         }
 
@@ -113,9 +113,9 @@ namespace UniversalDashboard.Execution
         {
             Logger.Debug($"GetContentReader - {path} ");
 
-            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            if (EndpointService.Instance.SessionManager.SessionExists(SessionId))
             {
-                return new SessionStateReaderWriter(path.ToLower(), EndpointService.Instance.Sessions[SessionId]);
+                return new SessionStateReaderWriter(path.ToLower(), EndpointService.Instance.SessionManager.GetSession(SessionId));
             }
 
             return null;
@@ -130,9 +130,9 @@ namespace UniversalDashboard.Execution
         {
             Logger.Debug($"GetContentWriter - {path} ");
 
-            if (EndpointService.Instance.Sessions.ContainsKey(SessionId))
+            if (EndpointService.Instance.SessionManager.SessionExists(SessionId))
             {
-                return new SessionStateReaderWriter(path.ToLower(), EndpointService.Instance.Sessions[SessionId]);
+                return new SessionStateReaderWriter(path.ToLower(), EndpointService.Instance.SessionManager.GetSession(SessionId));
             }
 
             return null;

@@ -122,8 +122,7 @@ Describe "Theme" {
         $Server.DashboardService.SetDashboard($Dashboard)
         It "should generate the correct theme" {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
-
-            $Theme.Content.Contains(".ud-dashboard {`r`n`tbackground-color : #EEEEEE;`r`n`tcolor : #111111;`r`n}`r`n.ud-table {`r`n`tbackground-color : #123123;`r`n}`r`n") | should be $true
+            $Theme.Content.Contains(".ud-dashboard {`r`n`tbackground-color : #234234;`r`n`tcolor : #959595;`r`n}`r`n.ud-table {`r`n`tbackground-color : #123123;`r`n}`r`n") | should be $true
         }
     }
 
