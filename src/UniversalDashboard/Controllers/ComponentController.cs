@@ -383,7 +383,7 @@ namespace UniversalDashboard.Controllers
 
             SetQueryStringValues(variables);
 
-            if (!await TryProcessBodyAsFormOrFile(Request, variables))
+            if (!await TryProcessBodyAsForm(Request, variables))
             { 
                 //If we made it here we either have a non-form content type
                 //or the request was made with the default content type of form
@@ -402,7 +402,7 @@ namespace UniversalDashboard.Controllers
 			return StatusCode(404);
 		}
 
-        private async Task<bool> TryProcessBodyAsFormOrFile(HttpRequest request, Dictionary<string,object> variables)
+        private async Task<bool> TryProcessBodyAsForm (HttpRequest request, Dictionary<string,object> variables)
         {
             if (HttpContext.Request.HasFormContentType)
             {     
@@ -422,9 +422,15 @@ namespace UniversalDashboard.Controllers
                     }
                     return true;
                 }
-		return false;
+		        return false;
             }
-	    if (HttpContext.Request.Method == "POST") {
+            return false;
+	        
+        }
+
+        private async Task<bool> TryProcessFile (HttpRequest request, Dictionary<string,object> variables)
+        {
+            if (HttpContext.Request.Method == "POST") {
                 //file upload only avaliable in POST method.
                 if (HttpContext.Request.ContentType.Contains("image/") || HttpContext.Request.ContentType.Contains("file/")) 
                 {
@@ -470,8 +476,7 @@ namespace UniversalDashboard.Controllers
 
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
-
-            if (!await TryProcessBodyAsFormOrFile(Request, variables))
+            if (!await TryProcessBodyAsForm(Request, variables))
             { 
                 //If we made it here we either have a non-form content type
                 //or the request was made with the default content type of form
@@ -481,6 +486,12 @@ namespace UniversalDashboard.Controllers
             }
 
             var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "POST", variables);
+            
+            if (endpoint.AcceptFileUpload) {
+                if (!await TryProcessBodyAsForm(Request, variables)) {
+                    Log.Debug("Reccieved a file!");
+                }
+            }
             if (endpoint != null)
             {
                 return await RunScript(endpoint, variables);
@@ -503,7 +514,7 @@ namespace UniversalDashboard.Controllers
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
 
-            if (!await TryProcessBodyAsFormOrFile(Request, variables))
+            if (!await TryProcessBodyAsForm(Request, variables))
             {
                 //If we made it here we either have a non-form content type
                 //or the request was made with the default content type of form

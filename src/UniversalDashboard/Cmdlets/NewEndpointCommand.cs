@@ -31,6 +31,9 @@ namespace UniversalDashboard.Cmdlets
 		[ValidateSet("GET", "POST", "DELETE", "PUT")]
 		public string Method { get; set; } = "GET";
 
+        [Parameter(ParameterSetName = "Rest")]
+        public SwitchParameter AcceptFileUpload {get; set;}
+
         [Parameter(Mandatory = true, ParameterSetName = "Scheduled")]
         public EndpointSchedule Schedule { get; set; }
 
@@ -66,7 +69,9 @@ namespace UniversalDashboard.Cmdlets
             {
                 WriteWarning(ex.Message);
             }
-
+            if (AcceptFileUpload) {
+                callback.AcceptFileUpload = true;
+            }
 
             if (EvaluateUrlAsRegex) {
                 callback.UrlRegEx = new Regex(Url);

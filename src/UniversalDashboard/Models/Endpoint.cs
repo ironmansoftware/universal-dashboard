@@ -27,6 +27,7 @@ namespace UniversalDashboard.Models
         public string SessionId { get; set; }
         internal Page Page { get; set; }
         public Regex UrlRegEx { get; set; }
+        public bool AcceptFileUpload {get; set;}
     }
 
     public class Part
