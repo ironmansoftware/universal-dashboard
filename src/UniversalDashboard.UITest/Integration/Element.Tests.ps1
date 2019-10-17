@@ -233,7 +233,7 @@ Describe "Element" {
             }
 
             New-UDElement -Tag "div" -Id "sessionInfo" -Endpoint {
-                $DashboardService.EndpointService.Sessions[$SessionId].Endpoints.Count
+                $DashboardService.EndpointService.SessionManager.GetSession($SessionId).Endpoints.Count
             } -AutoRefresh -RefreshInterval 1
          } 
 
