@@ -73,11 +73,11 @@ Describe "Auto reload" {
 
             Start-Sleep 3
 
-            Invoke-RestMethod http://localhost:10001/api/user | should be "2"
+            Invoke-RestMethod http://localhost:10001/api/autoreload | should be "2"
 
             {
                 Import-Module $ModulePath
-                $Endpoint = New-UDEndpoint -Url "user" -Endpoint {
+                $Endpoint = New-UDEndpoint -Url "autoreload" -Endpoint {
                     "1"
                 }
 
@@ -85,7 +85,7 @@ Describe "Auto reload" {
             }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile -Force
 
             Start-Sleep 3
-            Invoke-RestMethod http://localhost:10001/api/user | should be "1"
+            Invoke-RestMethod http://localhost:10001/api/autoreload | should be "1"
         }
 
         Remove-Item $TempFile
