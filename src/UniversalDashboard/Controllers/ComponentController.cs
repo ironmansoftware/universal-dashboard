@@ -383,7 +383,7 @@ namespace UniversalDashboard.Controllers
 
             SetQueryStringValues(variables);
 
-            if (!await TryProcessBodyAsFormOrFile(Request, variables))
+            if (!await TryProcessBodyAsForm(Request, variables))
             { 
                 //If we made it here we either have a non-form content type
                 //or the request was made with the default content type of form
@@ -402,7 +402,7 @@ namespace UniversalDashboard.Controllers
 			return StatusCode(404);
 		}
 
-        private async Task<bool> TryProcessBodyAsFormOrFile(HttpRequest request, Dictionary<string,object> variables)
+        private async Task<bool> TryProcessBodyAsForm (HttpRequest request, Dictionary<string,object> variables)
         {
             if (HttpContext.Request.HasFormContentType)
             {     
@@ -422,27 +422,29 @@ namespace UniversalDashboard.Controllers
                     }
                     return true;
                 }
-		return false;
+		        return false;
             }
-	    if (HttpContext.Request.Method == "POST") {
-                //file upload only avaliable in POST method.
-                if (HttpContext.Request.ContentType.Contains("image/") || HttpContext.Request.ContentType.Contains("file/")) 
+            return false;
+	        
+        }
+
+        private async Task<bool> TryProcessFile (HttpRequest request, Dictionary<string,object> variables)
+        {
+            if (HttpContext.Request.ContentType.Contains("image/") || HttpContext.Request.ContentType.Contains("file/")) 
+            {
+                Log.Debug("HasFileOrImageContenttype");
+                using (MemoryStream stream = new MemoryStream())
                 {
-                    Log.Debug("HasFileOrImageContenttype");
-                    using (MemoryStream stream = new MemoryStream())
+                    await HttpContext.Request.Body.CopyToAsync(stream);
+                    if (stream != null) {
+                        variables.Add("File", stream.ToArray());
+                        Log.Debug("File from RESTAPI found.");
+                        return true;
+                    }
+                    else 
                     {
-                        await HttpContext.Request.Body.CopyToAsync(stream);
-                        if (stream != null) {
-                            variables.Add("File", stream.ToArray());
-                            Log.Debug("File from RESTAPI found.");
-                            return true;
-                        }
-                        else 
-                        {
-                            Log.Debug("Filestream is empty.");
-                            //return it true, to prevent it from processing it as RAW
-                            return true;
-                        }
+                        Log.Debug("Filestream is empty.");
+                        return false;
                     }
                 }
             }
@@ -470,17 +472,31 @@ namespace UniversalDashboard.Controllers
 
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
-
-            if (!await TryProcessBodyAsFormOrFile(Request, variables))
-            { 
-                //If we made it here we either have a non-form content type
-                //or the request was made with the default content type of form
-                //when it is really something else (probably application/json)
-                Log.Debug("Processing as RAW");
-                ProcessBodyAsRaw(Request, variables);                              
+            
+            if (!HttpContext.Request.ContentType.Contains("image/") && !HttpContext.Request.ContentType.Contains("file/")) 
+            {
+                if (!await TryProcessBodyAsForm(Request, variables))
+                { 
+                    //If we made it here we either have a non-form content type
+                    //or the request was made with the default content type of form
+                    //when it is really something else (probably application/json)
+                    Log.Debug("Processing as RAW");
+                    ProcessBodyAsRaw(Request, variables);                              
+                }
             }
 
+            
             var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "POST", variables);
+ 
+            if (endpoint.AcceptFileUpload) {
+                if (await TryProcessFile(Request, variables)) {
+                    Log.Debug("Reccieved a file!");
+                    
+                }
+                else {
+                    Log.Debug("Endpoint supported file content, but no files present.");
+                }
+            }
             if (endpoint != null)
             {
                 return await RunScript(endpoint, variables);
@@ -503,7 +519,7 @@ namespace UniversalDashboard.Controllers
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
 
-            if (!await TryProcessBodyAsFormOrFile(Request, variables))
+            if (!await TryProcessBodyAsForm(Request, variables))
             {
                 //If we made it here we either have a non-form content type
                 //or the request was made with the default content type of form
