@@ -10,9 +10,7 @@ namespace UniversalDashboard.Services
     {
         public Dictionary<string, string> Frameworks;
         public List<string> Plugins;
-
         public List<string> Assets;
-        public List<string> AutoLoadAssets;
 
         private static AssetService _instance;
 
@@ -33,10 +31,9 @@ namespace UniversalDashboard.Services
             Assets = new List<string>();
             Frameworks = new Dictionary<string, string>();
             Plugins = new List<string>();
-            AutoLoadAssets = new List<string>();
         }
 
-        public string RegisterAsset(string asset, bool autoLoad = false) {
+        public string RegisterAsset(string asset) {
 
             if (asset.StartsWith("http")) {
                 Assets.Add(asset);
@@ -44,15 +41,7 @@ namespace UniversalDashboard.Services
             }
 
             var fileInfo = new FileInfo(asset);
-            if (autoLoad)
-            {
-                AutoLoadAssets.Add(asset);
-            }
-            else
-            {
-                Assets.Add(asset);
-            }
-            
+            Assets.Add(asset);
             return fileInfo.Name;
         }
         

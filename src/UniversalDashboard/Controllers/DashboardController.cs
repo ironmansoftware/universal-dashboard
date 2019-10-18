@@ -50,13 +50,6 @@ namespace UniversalDashboard.Controllers
                 HttpContext.Session.Set("SessionId", sessionId.ToByteArray());
             }
 
-            if (_dashboard.Scripts == null)
-            {
-                _dashboard.Scripts = new string[0];
-            }
-
-            _dashboard.Scripts = _dashboard.Scripts.Concat(AssetService.Instance.AutoLoadAssets).ToArray();
-
 			return Json(
 				new { dashboard = _dashboard, sessionId = sessionId, authenticated = HttpContext.User.Identity.IsAuthenticated }
 			);

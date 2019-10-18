@@ -1441,7 +1441,7 @@ function Register-UDAsset {
 		[IO.FileInfo]$Path,
 		[Parameter(ParameterSetName = "Asset")]
 		[Parameter(ParameterSetName = "Uri")]
-		[Switch]$AutoLoad,
+		[Switch]$Plugin,
 		[Parameter(ParameterSetName = "Framework")]
 		[string]$FrameworkName,
 		[Parameter(ParameterSetName = "Framework")]
@@ -1454,11 +1454,14 @@ function Register-UDAsset {
 		{
 			[UniversalDashboard.Services.AssetService]::Instance.RegisterFramework($FrameworkName, $AssetId)
 		}
+		elseif ($Plugin)
+		{
+			[UniversalDashboard.Services.AssetService]::Instance.RegisterPlugin($Path.FullName)
+		}
 		else 
 		{
-			[UniversalDashboard.Services.AssetService]::Instance.RegisterAsset($Path.FullName, $AutoLoad.IsPresent)
+			[UniversalDashboard.Services.AssetService]::Instance.RegisterAsset($Path.FullName)
 		}
-		
 	}
 }
 
