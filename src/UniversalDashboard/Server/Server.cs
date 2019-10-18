@@ -79,18 +79,21 @@ namespace UniversalDashboard
 
 		public void Start(DashboardOptions dashboardOptions)
 		{
+			IsRestApi = dashboardOptions.Dashboard == null;
+
 			if (!dashboardOptions.DisableTelemetry)
 			{
 				TelemetryClient client = new TelemetryClient();
 				client.InstrumentationKey = "20963fa8-39e9-404f-98f4-b74627b140f4";
-				client.TrackEvent("StartDashboard", new Dictionary<string, string> {
-					{ "Edition", "Community" }
+				client.TrackEvent("Start", new Dictionary<string, string> {
+					{ "Edition", "Community" },
+					{ "Type", IsRestApi ? "REST" : "Dashboard"}
 				});
 			}
 			
 			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolver.OnAssemblyResolve;
 
-			IsRestApi = dashboardOptions.Dashboard == null;
+			
 			Port = dashboardOptions.Port;
 
 			var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
