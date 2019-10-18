@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace UniversalDashboard {
     public class Constants {
+        public static readonly string Edition = "Community";
         public static readonly string AssemblyBasePath = Path.GetDirectoryName(typeof(Constants).GetTypeInfo().Assembly.Location);
         public static readonly string DashboardService = "DashboardService";
         public static readonly string DemoDashboardPath = Path.Combine(AssemblyBasePath, "..", "poshud", "dashboard.ps1");

@@ -22,5 +22,6 @@ namespace UniversalDashboard
         public Dictionary<Guid, string> ElementScripts { get; set; }
         public PublishedFolder[] PublishedFolders { get; set; }
         public IPAddress ListenAddress { get; set; }
+        public bool DisableTelemetry { get; set ;}
     }
 }

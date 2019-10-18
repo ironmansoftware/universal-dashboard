@@ -63,6 +63,9 @@ namespace UniversalDashboard.Cmdlets
 		public SwitchParameter Force { get; set; }
 		[Parameter()]
 		public IPAddress ListenAddress { get; set; } = IPAddress.Any;
+
+		[Parameter()]
+		public SwitchParameter DisableTelemetry { get; set; }
 		
         protected override void EndProcessing()
 	    {
@@ -156,6 +159,7 @@ namespace UniversalDashboard.Cmdlets
 			options.UpdateToken = UpdateToken;
 			options.PublishedFolders = PublishedFolder;
 			options.ListenAddress = ListenAddress;
+			options.DisableTelemetry = DisableTelemetry;
 
             try
 		    {
