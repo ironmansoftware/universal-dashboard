@@ -86,7 +86,7 @@ namespace UniversalDashboard
 				TelemetryClient client = new TelemetryClient();
 				client.InstrumentationKey = "20963fa8-39e9-404f-98f4-b74627b140f4";
 				client.TrackEvent("Start", new Dictionary<string, string> {
-					{ "Edition", "Community" },
+					{ "Edition", Constants.Edition },
 					{ "Type", IsRestApi ? "REST" : "Dashboard"}
 				});
 			}
