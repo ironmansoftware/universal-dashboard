@@ -1433,6 +1433,35 @@ function Update-UDDashboard {
 	}
 }
 
+function Register-UDAsset {
+	param(
+		[Parameter(Mandatory, ValueFromPipeline = $true, ParameterSetName = "Uri")]
+		[string]$Uri,
+		[Parameter(Mandatory, ValueFromPipeline = $true, ParameterSetName = "Asset")]
+		[IO.FileInfo]$Path,
+		[Parameter(ParameterSetName = "Asset")]
+		[Parameter(ParameterSetName = "Uri")]
+		[Switch]$AutoLoad,
+		[Parameter(ParameterSetName = "Framework")]
+		[string]$FrameworkName,
+		[Parameter(ParameterSetName = "Framework")]
+		[string]$AssetId
+	)
+
+	Process 
+	{
+		if ($FrameworkName)
+		{
+			[UniversalDashboard.Services.AssetService]::Instance.RegisterFramework($FrameworkName, $AssetId)
+		}
+		else 
+		{
+			[UniversalDashboard.Services.AssetService]::Instance.RegisterAsset($Path.FullName, $AutoLoad.IsPresent)
+		}
+		
+	}
+}
+
 function Set-UDCacheData {
 	param(
 		[Parameter(Mandatory = $true)]
