@@ -79,16 +79,19 @@ export const UniversalDashboardService = {
         return components;
     },
     provideRoutes: function() {
-        return this.plugins.forEach(x => {
+        var routes = [];
+        this.plugins.forEach(x => {
             try 
             {
-                return x.provideRoutes();
+                routes = routes.concat(x.provideRoutes());
             }
             catch 
             {
 
             }
         })
+
+        return routes;
     },
     invokeMiddleware: function(method, url, history, response) {
         this.plugins.forEach(x => {
