@@ -20,6 +20,7 @@ using UniversalDashboard.Utilities;
 using UniversalDashboard.Interfaces;
 using System.Management.Automation.Runspaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.ApplicationInsights;
 
 namespace UniversalDashboard
 {
@@ -78,6 +79,12 @@ namespace UniversalDashboard
 
 		public void Start(DashboardOptions dashboardOptions)
 		{
+			TelemetryClient client = new TelemetryClient();
+			client.InstrumentationKey = "20963fa8-39e9-404f-98f4-b74627b140f4";
+			client.TrackEvent("StartDashboard", new Dictionary<string, string> {
+				{ "Edition", "Community" }
+			});
+
 			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolver.OnAssemblyResolve;
 
 			IsRestApi = dashboardOptions.Dashboard == null;
