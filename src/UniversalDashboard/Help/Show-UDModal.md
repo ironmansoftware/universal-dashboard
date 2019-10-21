@@ -14,8 +14,8 @@ Shows a modal.
 
 ```
 Show-UDModal [-BottomSheet] [-FixedFooter] [-Footer <ScriptBlock>] [-Header <ScriptBlock>]
- [-Content <ScriptBlock>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
- [<CommonParameters>]
+ [-Content <ScriptBlock>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Height <String>]
+ [-Width <String>] [-Persistent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -176,6 +176,51 @@ The header of the modal.
 
 ```yaml
 Type: ScriptBlock
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+The height of the modal.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Persistent
+Creates a modal that cannot click away from.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Width
+The width of the modal.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases: 
 

@@ -16,8 +16,8 @@ Creates a new dashboard. The result of this cmdlet should be passed to Start-UDD
 ```
 New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <DashboardColor>]
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
- [-FontIconStyle <String>] [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>]
- [-CyclePages] [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
+ [-NavbarLinks <Hashtable[]>] [-Scripts <String[]>] [-Stylesheets <String[]>] [-CyclePages]
+ [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
  [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [-IdleTimeout <TimeSpan>]
  [-Navigation <SideNav>] [<CommonParameters>]
 ```
@@ -26,8 +26,8 @@ New-UDDashboard [-Title <String>] -Content <ScriptBlock> [-NavBarColor <Dashboar
 ```
 New-UDDashboard [-Title <String>] -Pages <Page[]> [-NavBarColor <DashboardColor>]
  [-NavBarFontColor <DashboardColor>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>]
- [-FontIconStyle <String>] [-NavbarLinks <Link[]>] [-Scripts <String[]>] [-Stylesheets <String[]>]
- [-CyclePages] [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
+ [-NavbarLinks <Hashtable[]>] [-Scripts <String[]>] [-Stylesheets <String[]>] [-CyclePages]
+ [-CyclePagesInterval <Int32>] [-Footer <Footer>] [-NavBarLogo <Element>]
  [-EndpointInitialization <InitialSessionState>] [-Theme <Theme>] [-GeoLocation] [-IdleTimeout <TimeSpan>]
  [-Navigation <SideNav>] [<CommonParameters>]
 ```
@@ -159,22 +159,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FontIconStyle
-Choose the style of the icons, filled or line.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-Accepted values: FontAwesome, LineAwesome
-
-Required: False
-Position: Named
-Default value: FontAwesome
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Footer
 Configuration options for the footer. Use New-UDFooter to create the object for these options.
 
@@ -271,7 +255,7 @@ Accept wildcard characters: False
 Links to present on the dashboard. Use New-UDLink to create links.
 
 ```yaml
-Type: Link[]
+Type: Hashtable[]
 Parameter Sets: (All)
 Aliases: 
 

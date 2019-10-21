@@ -13,10 +13,10 @@ Create slide object for the image carousel component
 ## SYNTAX
 
 ```
-New-UDImageCarouselItem [-Text <String>] [-BackgroundColor <String>] [-BackgroundImage <String>]
- [-FontColor <String>] [-BackgroundRepeat <String>] [-BackgroundSize <String>] [-BackgroundPosition <String>]
- [-TitlePosition <String>] [-TextPosition <String>] [-Id <String>] [-Title <String>] [-Url <String>]
- [<CommonParameters>]
+New-UDImageCarouselItem [[-Text] <String>] [[-BackgroundColor] <DashboardColor>] [[-BackgroundImage] <String>]
+ [[-FontColor] <DashboardColor>] [[-BackgroundRepeat] <String>] [[-BackgroundSize] <String>]
+ [[-BackgroundPosition] <String>] [[-TitlePosition] <String>] [[-TextPosition] <String>] [[-Id] <String>]
+ [[-Title] <String>] [[-Url] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,12 +47,12 @@ PS C:\> $Slide3 = @{
 Set slide background color
 
 ```yaml
-Type: String
+Type: DashboardColor
 Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -67,7 +67,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -83,7 +83,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -99,7 +99,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -115,7 +115,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -125,12 +125,12 @@ Accept wildcard characters: False
 Set the color for the title and text parameters
 
 ```yaml
-Type: String
+Type: DashboardColor
 Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -145,7 +145,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -160,7 +160,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -176,7 +176,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -191,7 +191,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -207,7 +207,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -222,7 +222,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

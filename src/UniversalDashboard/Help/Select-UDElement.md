@@ -1,60 +1,45 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: 
+online version: https://go.microsoft.com/fwlink/?LinkID=217032
 schema: 2.0.0
 ---
 
-# New-UDPdf
+# Select-UDElement
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Selects an element. 
 
 ## SYNTAX
 
 ```
-New-UDPdf [[-Id] <String>] [[-FilePath] <String>] [<CommonParameters>]
+Select-UDElement -ID <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Selects an element. 
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Select-UDElement -Id 'textbox'
 ```
 
-{{ Add example description here }}
+Selects the text box with the ID 'textbox'
 
 ## PARAMETERS
 
-### -FilePath
-{{ Fill FilePath Description }}
+### -ID
+The ID of the element to select.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: 
 
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Id
-{{ Fill Id Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 0
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

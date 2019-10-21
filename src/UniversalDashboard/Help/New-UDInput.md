@@ -34,7 +34,6 @@ New-UDInput -Title "User Information" -Endpoint {
 
 Accepts user input and a toast message to the client.
 
-
 ### Custom Input Fields
 ```
 New-UDInput -Title "User Information" -Content {

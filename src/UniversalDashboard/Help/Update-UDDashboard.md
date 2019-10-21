@@ -14,12 +14,13 @@ Updates a running dashboard.
 
 ### Content
 ```
-Update-UDDashboard -Url <Object> -UpdateToken <Object> -Content <ScriptBlock> [<CommonParameters>]
+Update-UDDashboard -Url <Object> -UpdateToken <Object> -Content <ScriptBlock> [-AllowTLs10]
+ [<CommonParameters>]
 ```
 
 ### FilePath
 ```
-Update-UDDashboard -Url <Object> -UpdateToken <Object> -FilePath <String> [<CommonParameters>]
+Update-UDDashboard -Url <Object> -UpdateToken <Object> -FilePath <String> [-AllowTLs10] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,6 +41,21 @@ PS C:\> Update-UDDashboard -UpdateToken 1234 -Url http://localhost:8080 -Content
 Starts a dashboard and updates it using Update-UDDashboard. 
 
 ## PARAMETERS
+
+### -AllowTLs10
+Allows TLS 1.0 for the web request. 
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Content
 The content of the dashboard to update. 

@@ -42,6 +42,7 @@ New-UDCheckbox -Label "Checkbox" -OnChange {
     Show-UDToast -Message $EventData
 }
 ```
+
 Displays a toast message when clicked.
 
 ## PARAMETERS

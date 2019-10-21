@@ -5,60 +5,30 @@ online version:
 schema: 2.0.0
 ---
 
-# New-UDPdf
+# Clear-UDCache
 
 ## SYNOPSIS
-{{ Fill in the Synopsis }}
+Clears the Universal Dashboard cache scope. 
 
 ## SYNTAX
 
 ```
-New-UDPdf [[-Id] <String>] [[-FilePath] <String>] [<CommonParameters>]
+Clear-UDCache [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-{{ Fill in the Description }}
+Clears the Universal Dashboard cache scope. Existing $Cache variables will no longer be present.
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> {{ Add example code here }}
+PS C:\> Clear-UDCache
 ```
 
-{{ Add example description here }}
+Clears the UD cache. 
 
 ## PARAMETERS
-
-### -FilePath
-{{ Fill FilePath Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Id
-{{ Fill Id Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).

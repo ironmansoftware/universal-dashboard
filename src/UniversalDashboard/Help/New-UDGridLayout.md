@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version:https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDGridLayout.md
+online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDGridLayout.md
 schema: 2.0.0
 ---
 
@@ -26,7 +26,7 @@ Layout components using a JSON-based grid system. This uses the react-grid-layou
 ## EXAMPLES
 
 ### Grid Layout
-```powershell
+```
 New-UDGridLayout -Layout "[
       {i: 'a', x: 0, y: 0, w: 1, h: 2, static: true},
       {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
@@ -48,7 +48,7 @@ Content of the layout.
 ```yaml
 Type: ScriptBlock
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 2
@@ -63,7 +63,7 @@ Whether the components are draggable.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -73,11 +73,10 @@ Accept wildcard characters: False
 ```
 
 ### -ExtraExtraSmallBreakpoint
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 13
@@ -87,11 +86,10 @@ Accept wildcard characters: False
 ```
 
 ### -ExtraExtraSmallColumns
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 8
@@ -101,11 +99,10 @@ Accept wildcard characters: False
 ```
 
 ### -ExtraSmallBreakpoint
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 12
@@ -115,11 +112,10 @@ Accept wildcard characters: False
 ```
 
 ### -ExtraSmallColumns
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 7
@@ -134,7 +130,7 @@ The ID of this component.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 0
@@ -144,11 +140,10 @@ Accept wildcard characters: False
 ```
 
 ### -LargeBreakpoint
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 9
@@ -158,11 +153,10 @@ Accept wildcard characters: False
 ```
 
 ### -LargeColumns
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 4
@@ -177,7 +171,7 @@ The JSON layout for this component.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 3
@@ -187,11 +181,10 @@ Accept wildcard characters: False
 ```
 
 ### -MediumBreakpoint
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 10
@@ -201,11 +194,10 @@ Accept wildcard characters: False
 ```
 
 ### -MediumColumns
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 5
@@ -220,7 +212,7 @@ Whether to persist the layout in the user's browser local storage.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -235,7 +227,7 @@ Whether the grid is resizable.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -245,11 +237,10 @@ Accept wildcard characters: False
 ```
 
 ### -RowHeight
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 1
@@ -259,11 +250,10 @@ Accept wildcard characters: False
 ```
 
 ### -SmallBreakpoint
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 11
@@ -273,11 +263,10 @@ Accept wildcard characters: False
 ```
 
 ### -SmallColumns
-
 ```yaml
 Type: Int32
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: 6
@@ -287,7 +276,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -296,6 +285,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS
+

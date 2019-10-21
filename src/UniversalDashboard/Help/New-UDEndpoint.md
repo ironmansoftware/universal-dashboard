@@ -20,7 +20,7 @@ New-UDEndpoint -Endpoint <ScriptBlock> [-ArgumentList <Object[]>] [-Id <String>]
 ### Rest
 ```
 New-UDEndpoint -Endpoint <ScriptBlock> [-ArgumentList <Object[]>] [-Id <String>] -Url <String>
- [-EvaluateUrlAsRegex] [-Method <String>] [<CommonParameters>]
+ [-EvaluateUrlAsRegex] [-Method <String>] [-AcceptFileUpload] [<CommonParameters>]
 ```
 
 ### Scheduled
@@ -68,6 +68,21 @@ PS C:\> Invoke-RestMethod -Uri http://localhost:80/api/process -Body @{Name = "c
 Creates a REST API endpoint that accepts a HTTP POST with a name parameter in the body. Then it starts the server and invokes the endpoint with Invoke-RestMethod.
 
 ## PARAMETERS
+
+### -AcceptFileUpload
+Enabled uploading files to this REST API endpoint. 
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Rest
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -ArgumentList
 Arguments to pass to the endpoint. They will be available via the $ArgumentList variable.

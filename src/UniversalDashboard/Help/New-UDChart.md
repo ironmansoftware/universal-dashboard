@@ -14,7 +14,7 @@ Creates a new chart.
 
 ```
 New-UDChart [-Labels <String[]>] [-Type <ChartType>] [-Title <String>] [-Options <Hashtable>] [-Width <String>]
- [-Height <String>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Links <Link[]>]
+ [-Height <String>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Links <Hashtable[]>]
  [-FilterFields <ScriptBlock>] [-OnClick <Object>] [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>]
  [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>] [<CommonParameters>]
 ```
@@ -205,7 +205,7 @@ Accept wildcard characters: False
 Links to display on the bottom of the chart. Use New-UDLink to generate a link.
 
 ```yaml
-Type: Link[]
+Type: Hashtable[]
 Parameter Sets: (All)
 Aliases: 
 
