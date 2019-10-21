@@ -13,7 +13,7 @@ Forces an element to update its state.
 ## SYNTAX
 
 ```
-Sync-UDElement -Id <String> [-Broadcast] [<CommonParameters>]
+Sync-UDElement -Id <String[]> [-Broadcast] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -60,7 +60,7 @@ Accept wildcard characters: False
 The element to force to update .
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases: 
 

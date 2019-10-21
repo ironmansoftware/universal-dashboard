@@ -1,5 +1,5 @@
 ---
-external help file: UniversalDashboard-help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
 online version: 
 schema: 2.0.0
@@ -8,18 +8,16 @@ schema: 2.0.0
 # New-UDTooltip
 
 ## SYNOPSIS
-
 Creates a tooltip around a control.
 
 ## SYNTAX
 
 ```
 New-UDTooltip [[-Id] <String>] [[-Place] <String>] [[-Type] <String>] [[-Effect] <String>]
- [-TooltipContent] <ScriptBlock> [-Content] <ScriptBlock>
+ [-TooltipContent] <ScriptBlock> [-Content] <ScriptBlock> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 Creates a tooltip around a control.
 
 ## EXAMPLES
@@ -36,7 +34,6 @@ Creates a basic tool tip
 ## PARAMETERS
 
 ### -Content
-
 The content that is hovered that will display the tooltip.
 
 ```yaml
@@ -52,7 +49,6 @@ Accept wildcard characters: False
 ```
 
 ### -Effect
-
 Float or solid effect
 
 ```yaml
@@ -69,7 +65,6 @@ Accept wildcard characters: False
 ```
 
 ### -Id
-
 Id of the tooltip
 
 ```yaml
@@ -85,7 +80,6 @@ Accept wildcard characters: False
 ```
 
 ### -Place
-
 Where to place the tooltip.
 
 ```yaml
@@ -102,7 +96,6 @@ Accept wildcard characters: False
 ```
 
 ### -TooltipContent
-
 The content within the tooltip
 
 ```yaml
@@ -118,14 +111,13 @@ Accept wildcard characters: False
 ```
 
 ### -Type
-
 The style of the tooltype
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 Aliases: 
-Accepted values: dark, success, warnign, error, info, light
+Accepted values: dark, success, warning, error, info, light
 
 Required: False
 Position: 2
@@ -134,10 +126,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### None
-
 
 ## OUTPUTS
 

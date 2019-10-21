@@ -14,27 +14,27 @@ Creates a schedule for an endpoint.
 
 ### EverySecond
 ```
-New-UDEndpointSchedule -Every <Int32> [-Second] [-Repeat] [-Consecutive] [<CommonParameters>]
+New-UDEndpointSchedule -Every <Int32> [-Repeat <Int32>] [-Consecutive] [-Second] [<CommonParameters>]
 ```
 
 ### EveryMinute
 ```
-New-UDEndpointSchedule -Every <Int32> [-Minute] [-Repeat] [-Consecutive] [<CommonParameters>]
+New-UDEndpointSchedule -Every <Int32> [-Repeat <Int32>] [-Consecutive] [-Minute] [<CommonParameters>]
 ```
 
 ### EveryHour
 ```
-New-UDEndpointSchedule -Every <Int32> [-Hour] [-Repeat] [-Consecutive] [<CommonParameters>]
+New-UDEndpointSchedule -Every <Int32> [-Repeat <Int32>] [-Consecutive] [-Hour] [<CommonParameters>]
 ```
 
 ### EveryDay
 ```
-New-UDEndpointSchedule -Every <Int32> [-Day] [-Repeat] [-Consecutive] [<CommonParameters>]
+New-UDEndpointSchedule -Every <Int32> [-Repeat <Int32>] [-Consecutive] [-Day] [<CommonParameters>]
 ```
 
 ### Cron
 ```
-New-UDEndpointSchedule [-Cron <String>] [-Consecutive] [<CommonParameters>]
+New-UDEndpointSchedule [-Consecutive] [-Cron <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -74,15 +74,14 @@ PS C:\> $Endpoint = New-UDEndpoint -Schedule $Schedule -Endpoint {
 
 Gets the current date every 30 seconds 10 times.
 
-
 ## PARAMETERS
 
-### -Cron
-A CRON expression to run the schedule under.
+### -Consecutive
+Disables concurrently running this schedule. Ie, it does not allow the schedule to run multiple instances.
 
 ```yaml
-Type: String
-Parameter Sets: Cron
+Type: SwitchParameter
+Parameter Sets: (All)
 Aliases: 
 
 Required: False
@@ -92,12 +91,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Consecutive
-Disables concurrently running this schedule. Ie, it does not allow the schedule to run multiple instances.
+### -Cron
+A CRON expression to run the schedule under.
 
 ```yaml
-Type: Switch
-Parameter Sets: Cron, EveryDay, EveryHour, EveryMinute, EverySecond
+Type: String
+Parameter Sets: Cron
 Aliases: 
 
 Required: False
@@ -167,6 +166,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Repeat
+If set to 0 this means repeat forever, if not set it will also repeat forever. Otherwise it will run the schedule x amount of times.
+
+```yaml
+Type: Int32
+Parameter Sets: EverySecond, EveryMinute, EveryHour, EveryDay
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Second
 Switches the Every value to seconds.
 
@@ -176,21 +190,6 @@ Parameter Sets: EverySecond
 Aliases: 
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Repeat
-If set to 0 this means repeat forever, if not set it will also repeat forever. Otherwise it will run the schedule x amount of times.
-
-```yaml
-Type: Int32
-Parameter Sets: EveryDay, EveryHour, EveryMinute, EverySecond
-Aliases: 
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

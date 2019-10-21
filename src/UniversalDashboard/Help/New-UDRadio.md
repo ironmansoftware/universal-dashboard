@@ -40,7 +40,6 @@ New-UDRadio -Label 'Option 3' -Group 'Group 1' -OnChange { Show-UDToast -Message
 
 Creates three options for a radio group with onChange event handlers.
 
-
 ### Multiple groupos
 ```
 New-UDRadio -Label 'Option 1' -Group 'Group 1'

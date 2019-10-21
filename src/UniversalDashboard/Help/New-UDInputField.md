@@ -143,7 +143,7 @@ The type of field.
 Type: String
 Parameter Sets: (All)
 Aliases: 
-Accepted values: textbox, checkbox, select, radioButtons, password, textarea, switch, date, file
+Accepted values: textbox, checkbox, select, radioButtons, password, textarea, switch, date, file, time, binaryFile
 
 Required: False
 Position: Named

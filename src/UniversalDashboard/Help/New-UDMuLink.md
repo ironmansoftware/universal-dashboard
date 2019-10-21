@@ -1,7 +1,7 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version:
+online version: 
 schema: 2.0.0
 ---
 
@@ -30,7 +30,7 @@ New-UDMuLink [-Id <String>] [-url <String>] [-underline <String>] [-style <Hasht
 ## EXAMPLES
 
 ### Example 1
-```powershell
+```
 PS C:\> {{ Add example code here }}
 ```
 
@@ -44,7 +44,7 @@ Set the Html class name
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -59,7 +59,7 @@ Enter id for this object
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -74,7 +74,7 @@ The object or object to make as link
 ```yaml
 Type: ScriptBlock
 Parameter Sets: content
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -89,7 +89,7 @@ Open the result in new window or in the current window
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -104,7 +104,7 @@ The css propertis for this object
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -119,7 +119,7 @@ The text to show as link
 ```yaml
 Type: String
 Parameter Sets: text
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -134,7 +134,7 @@ Show line under the text or content
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 Accepted values: none, hover, always
 
 Required: False
@@ -150,7 +150,7 @@ Enter url, this can be remote or local
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: 
 
 Required: False
 Position: Named
@@ -165,7 +165,7 @@ The pre configure style
 ```yaml
 Type: String
 Parameter Sets: text
-Aliases:
+Aliases: 
 Accepted values: h1, h2, h3, h4, h5, h6, subtitle1, subtitle2, body1, body2, caption, button, overline, srOnly, inherit
 
 Required: False
@@ -176,7 +176,7 @@ Accept wildcard characters: False
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -185,6 +185,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## OUTPUTS
 
 ### System.Object
+
 ## NOTES
 
 ## RELATED LINKS
+

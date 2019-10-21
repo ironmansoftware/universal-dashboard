@@ -13,10 +13,9 @@ Creates a tree view control.
 ## SYNTAX
 
 ```
-New-UDTreeView -Node <TreeNode> [-OnNodeClicked <Object>] [-BackgroundColor <DashboardColor>]
- [-FontColor <DashboardColor>] [-ActiveBackgroundColor <DashboardColor>] [-ToggleColor <DashboardColor>]
- [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>]
- [<CommonParameters>]
+New-UDTreeView [[-Id] <String>] [-Node] <Hashtable> [[-OnNodeClicked] <Object>]
+ [[-BackgroundColor] <DashboardColor>] [[-FontColor] <DashboardColor>]
+ [[-ActiveBackgroundColor] <DashboardColor>] [[-ToggleColor] <DashboardColor>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -48,37 +47,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ArgumentList
-Arguments to pass to the endpoint. They will be available via the $ArgumentList variable.
-
-```yaml
-Type: Object[]
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AutoRefresh
-Whether this control auto refreshes. 
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -93,22 +62,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Endpoint
-The endpoint to call when populating the contents of this control. 
-
-```yaml
-Type: ScriptBlock
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -123,7 +77,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -138,7 +92,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -148,12 +102,12 @@ Accept wildcard characters: False
 The root node for this tree view. 
 
 ```yaml
-Type: TreeNode
+Type: Hashtable
 Parameter Sets: (All)
 Aliases: 
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -168,22 +122,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RefreshInterval
-The number of seconds between auto refreshes. 
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -198,7 +137,7 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
-Position: Named
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

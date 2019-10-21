@@ -15,8 +15,8 @@ Starts a REST API server.
 ```
 Start-UDRestApi [-Endpoint <Endpoint[]>] [-Name <String>] [-Port <Int32>] [-Wait]
  [-Certificate <X509Certificate2>] [-CertificateFile <String>] [-CertificateFilePassword <SecureString>]
- [-EndpointInitialization <InitialSessionState>] [-AutoReload] [-PublishedFolder <PublishedFolder[]>]
- [<CommonParameters>]
+ [-EndpointInitialization <InitialSessionState>] [-AutoReload] [-PublishedFolder <PublishedFolder[]>] [-Force]
+ [-ListenAddress <IPAddress>] [-DisableTelemetry] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -98,6 +98,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DisableTelemetry
+Disables telemetry collection.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Endpoint
 An array of endpoints created with New-UDEndpoint. 
 
@@ -118,6 +133,36 @@ The initial session state for endpoints of this dashboard. Use New-UDEndpointIni
 
 ```yaml
 Type: InitialSessionState
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Starts a REST API and stops any servers listening on that port. 
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ListenAddress
+The IP Address to listen on.
+
+```yaml
+Type: IPAddress
 Parameter Sets: (All)
 Aliases: 
 

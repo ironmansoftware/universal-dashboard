@@ -1,44 +1,55 @@
 ---
 external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
-online version: https://github.com/ironmansoftware/universal-dashboard/blob/master/src/UniversalDashboard/Help/New-UDTabContainer.md
+online version: https://go.microsoft.com/fwlink/?LinkID=217032
 schema: 2.0.0
 ---
 
-# New-UDTabContainer
+# Set-UDClipboard
 
 ## SYNOPSIS
-Creates a tab container.
+Sets the contents of the clipboard.
 
 ## SYNTAX
 
 ```
-New-UDTabContainer -Tabs <ScriptBlock> [-Id <String>] [<CommonParameters>]
+Set-UDClipboard -Data <String> [-toastOnSuccess] [-toastOnError] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Creates a tab container. Use New-UDTab to create tabs within the tab container.
+Sets the contents of the clipboard.
 
 ## EXAMPLES
 
-### Basic Tabs
+### Example 1
 ```
-New-UDTabContainer -Tabs {
-    New-UDTab -Text 'Tab 1' -Content { New-UDHeading -Text 'Tab 1 Content' }
-    New-UDTab -Text 'Tab 2' -Content { New-UDHeading -Text 'Tab 2 Content' }
-    New-UDTab -Text 'Tab 3' -Content { New-UDHeading -Text 'Tab 3 Content' }
-}
+PS C:\> Set-UDClipboard -Data 'Some text'
 ```
 
-Creates a tab container with 3 tabs.
+Sets 'Some text' into the clipboard.
 
 ## PARAMETERS
 
-### -Id
-ID of this component.
+### -Data
+The text to set into the clipboard.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -toastOnError
+Creates a toast when it fails to set the clipboard text.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 
@@ -49,15 +60,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Tabs
-The tabs for this container. Use New-UDTab to create the tabs.
+### -toastOnSuccess
+Creates a toast when it succeeds to set the clipboard text.
 
 ```yaml
-Type: ScriptBlock
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

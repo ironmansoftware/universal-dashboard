@@ -16,7 +16,7 @@ Creates a live updating chart that shows a single type of data on a running time
 New-UDMonitor [-Type <ChartType>] -Title <String> [-DataPointHistory <Int32>] [-Options <Hashtable>]
  [-ChartBackgroundColor <DashboardColor[]>] [-ChartBorderColor <DashboardColor[]>]
  [-BackgroundColor <DashboardColor>] [-Width <String>] [-Height <String>] [-FontColor <DashboardColor>]
- [-BorderWidth <Int32>] [-Label <String[]>] [-Links <Link[]>] [-FilterFields <ScriptBlock>]
+ [-BorderWidth <Int32>] [-Label <String[]>] [-Links <Hashtable[]>] [-FilterFields <ScriptBlock>]
  [-Endpoint <ScriptBlock>] [-ArgumentList <Object[]>] [-AutoRefresh] [-RefreshInterval <Int32>] [-Id <String>]
  [<CommonParameters>]
 ```
@@ -238,7 +238,7 @@ Accept wildcard characters: False
 Links to display on the bottom of the monitor. Use New-UDLink to generate a link.
 
 ```yaml
-Type: Link[]
+Type: Hashtable[]
 Parameter Sets: (All)
 Aliases: 
 

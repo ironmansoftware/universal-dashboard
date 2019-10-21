@@ -1,5 +1,5 @@
 ---
-external help file: UniversalDashboard-help.xml
+external help file: UniversalDashboard.Community-help.xml
 Module Name: UniversalDashboard.Community
 online version: 
 schema: 2.0.0
@@ -8,24 +8,21 @@ schema: 2.0.0
 # New-UDSplitPane
 
 ## SYNOPSIS
-
 Creates a split pane between two controls that you can adjust the size of.
 
 ## SYNTAX
 
 ```
 New-UDSplitPane [[-Id] <String>] [-Content] <ScriptBlock> [[-Direction] <String>] [[-MinimumSize] <Int32>]
- [[-DefaultSize] <Int32>]
+ [[-DefaultSize] <Int32>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-
 Creates a split pane between two controls that you can adjust the size of.
 
 ## EXAMPLES
 
 ### Vertical Pane
-
 ```
 New-UDSplitPane -Content {
     New-UDCard -Title 'Side 1' -Content {}
@@ -36,7 +33,6 @@ New-UDSplitPane -Content {
 Creates a vertical split pane. 
 
 ### Horizontal Pane
-
 ```
 New-UDSplitPane -Content {
     New-UDCard -Title 'Side 1' -Content {}
@@ -49,7 +45,6 @@ Creates a horizontal split pane.
 ## PARAMETERS
 
 ### -Content
-
 The controls to create the split pane for. This is should contain exactly two controls.
 
 ```yaml
@@ -65,7 +60,6 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultSize
-
 The default size in pixels of the top or left component.
 
 ```yaml
@@ -81,7 +75,6 @@ Accept wildcard characters: False
 ```
 
 ### -Direction
-
 Whether you want a split panel that is vertical or horizontal
 
 ```yaml
@@ -98,7 +91,6 @@ Accept wildcard characters: False
 ```
 
 ### -Id
-
 Id of the split pane. 
 
 ```yaml
@@ -114,7 +106,6 @@ Accept wildcard characters: False
 ```
 
 ### -MinimumSize
-
 Minimum size in pixels of the panes. 
 
 ```yaml
@@ -129,10 +120,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
+
 ## INPUTS
 
 ### None
-
 
 ## OUTPUTS
 
