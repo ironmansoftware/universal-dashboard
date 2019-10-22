@@ -59,7 +59,7 @@ namespace UniversalDashboard.Utilities
                 {
                     if (value is PSObject psObject)
                     {
-                        writer.WriteRaw(JsonConvert.SerializeObject(psObject.BaseObject));
+                        writer.WriteRawValue(JsonConvert.SerializeObject(psObject.BaseObject));
                     }
                 }
             }
