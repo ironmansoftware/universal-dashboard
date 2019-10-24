@@ -167,7 +167,7 @@ namespace UniversalDashboard
             _connectionManager.AddConnection(new Connection { Id = Context.ConnectionId, SessionId = sessionId });
             _dashboardService.EndpointService.SessionManager.StartSession(sessionId);
 
-            await Clients.All.SendAsync("setConnectionId", Context.ConnectionId);
+            await Clients.Client(Context.ConnectionId).SendAsync("setConnectionId", Context.ConnectionId);
         }
 
         public Task Reload()
