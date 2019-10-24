@@ -26,6 +26,11 @@ namespace UniversalDashboard
 {
 	public class Server
 	{
+		static Server()
+		{
+			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolver.OnAssemblyResolve;
+		}
+		
 		public Server(string name, string fileName, bool autoReload, PSHost host, int port, bool https)
 		{
 			if (string.IsNullOrEmpty(name))
@@ -90,9 +95,6 @@ namespace UniversalDashboard
 					{ "Type", IsRestApi ? "REST" : "Dashboard"}
 				});
 			}
-			
-			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolver.OnAssemblyResolve;
-
 			
 			Port = dashboardOptions.Port;
 
