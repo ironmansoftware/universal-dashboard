@@ -49,9 +49,9 @@ namespace UniversalDashboard
             await hub.Clients.Client(clientId).SendAsync("redirect", url, newWindow);
         }
 
-        public static async Task Select(this IHubContext<DashboardHub> hub, string clientId, string ID)
+        public static async Task Select(this IHubContext<DashboardHub> hub, string clientId, string ID, bool scrollToElement)
         {
-            await hub.Clients.Client(clientId).SendAsync("select", ID);
+            await hub.Clients.Client(clientId).SendAsync("select", ID, scrollToElement);
         }
 
         public static async Task Clipboard(this IHubContext<DashboardHub> hub, string clientId, string Data, bool toastOnSuccess, bool toastOnError)
