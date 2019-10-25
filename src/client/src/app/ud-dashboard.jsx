@@ -126,8 +126,11 @@ export default class UdDashboard extends React.Component {
             }
         });
 
-        connection.on('select', (ID) => {
+        connection.on('select', (ID, scrollToElement) => {
             document.getElementById(ID).focus();
+            if (scrollToElement) {
+                document.getElementById(ID).scrollIntoView();
+            }
         });
 
         connection.on('clipboard', (Data, toastOnSuccess, toastOnError) => {
