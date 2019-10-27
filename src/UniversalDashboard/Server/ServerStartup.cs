@@ -111,6 +111,10 @@ namespace UniversalDashboard
                     if (asset != null)
                     {
                         var response = context.HttpContext.Response;
+                        if (provider.TryGetContentType(asset, out string mimeType))
+                        {
+                            response.ContentType = mimeType;
+                        }
                         response.StatusCode = 200;
                         var file = File.ReadAllBytes(asset);
                         await response.Body.WriteAsync(file, 0, file.Length);

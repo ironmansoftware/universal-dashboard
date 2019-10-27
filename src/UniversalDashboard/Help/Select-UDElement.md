@@ -13,7 +13,7 @@ Selects an element.
 ## SYNTAX
 
 ```
-Select-UDElement -ID <String> [<CommonParameters>]
+Select-UDElement -ID <String> [<CommonParameters>] -ScrollToElement [Switch]
 ```
 
 ## DESCRIPTION
@@ -23,10 +23,10 @@ Selects an element.
 
 ### Example 1
 ```
-PS C:\> Select-UDElement -Id 'textbox'
+PS C:\> Select-UDElement -Id 'textbox' -ScrollToElement
 ```
 
-Selects the text box with the ID 'textbox'
+Selects the text box with the ID 'textbox' and scrolls to the position on page.
 
 ## PARAMETERS
 
@@ -39,6 +39,20 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ScrollToElemenet
+
+```yaml
+Type: Switch
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
