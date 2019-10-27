@@ -167,10 +167,8 @@ $manifestParameters = @{
 New-ModuleManifest @manifestParameters
 
 if ($prerelease -ne $null) {
-	Update-ModuleManifest -Path "$outputDirectory\UniversalDashboard.Community.psd1" -RequireLicenseAcceptance -Prerelease $prerelease
-} else {
-	Update-ModuleManifest -Path "$outputDirectory\UniversalDashboard.Community.psd1" -RequireLicenseAcceptance
-}
+	Update-ModuleManifest -Path "$outputDirectory\UniversalDashboard.Community.psd1" -Prerelease $prerelease
+} 
 
 if ($Configuration -eq "Debug") {
     @("UniversalDashboard.psm1", "UniversalDashboardServer.psm1", "UniversalDashboard.Community.psd1", "UniversalDashboard.Controls.psm1") | ForEach-Object {
