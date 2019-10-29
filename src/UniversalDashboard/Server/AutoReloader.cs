@@ -29,12 +29,21 @@ namespace UniversalDashboard
             fileSystemWatcher.Changed += OnFileChanged;
 			fileSystemWatcher.EnableRaisingEvents = true;
 
-			_dashboards.Add(fileInfo.FullName, new DashboardInfo {
-				FileSystemWatcher = fileSystemWatcher,
-				Port = port,
-				ReloadKey = reloadKey,
-				Https = https
-			});
+			try
+			{
+				_dashboards.Add(fileInfo.FullName, new DashboardInfo {
+					FileSystemWatcher = fileSystemWatcher,
+					Port = port,
+					ReloadKey = reloadKey,
+					Https = https
+				});
+			}
+			catch (Exception ex)
+			{
+				Log.Warn(ex, "Failed to watch file because already watching file.");
+			}
+
+			
 		}
 
 		public void StopWatchingFile(string fileName) {
