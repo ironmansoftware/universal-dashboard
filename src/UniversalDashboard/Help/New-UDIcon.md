@@ -44,7 +44,7 @@ Create icon that has spin animation.
 New-UDIcon -Icon angry -Size 3x -Style @{color = '#000'} -Id 'test-icon-button' -Regular
 ```
 
-Create angey icon that have a size of 3 and black color, and also this icon is from the FontAwesome regular pack ( semi light ) style.
+Create angry icon that have a size of 3 and black color, and also this icon is from the FontAwesome regular pack ( semi light ) style.
 
 ## PARAMETERS
 
