@@ -3,6 +3,7 @@ using UniversalDashboard.Models;
 using Quartz;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UniversalDashboard.Interfaces;
 
 namespace UniversalDashboard.Execution
 {
@@ -14,14 +15,12 @@ namespace UniversalDashboard.Execution
 
         public async Task Execute(IJobExecutionContext context)
         {
-            await Task.FromResult(0);
-
             var variables = new Dictionary<string, object> {
                     {"MemoryCache", MemoryCache}
                 };
 
             ExecutionContext executionContext = new ExecutionContext(Endpoint, variables, new Dictionary<string, object>(), null);
-            ExecutionService.ExecuteEndpoint(executionContext, Endpoint);
+            await ExecutionService.ExecuteEndpointAsync(executionContext, Endpoint);
         }
     }
 

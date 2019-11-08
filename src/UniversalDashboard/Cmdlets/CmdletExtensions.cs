@@ -34,13 +34,13 @@ namespace UniversalDashboard.Cmdlets
             throw new Exception($"Expected UDEndpoint or ScriptBlock but got {obj.GetType()}");
         }
 
-        public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
+        public static PowerShellEndpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
         {
             if (endpoint == null) return null;
 
             var logger = LogManager.GetLogger("CallbackCmdlet");
 
-            var callback = new Endpoint();
+            var callback = new PowerShellEndpoint();
             callback.Name = id;
             callback.ScriptBlock = endpoint;
 

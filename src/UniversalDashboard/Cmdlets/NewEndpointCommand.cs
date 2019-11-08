@@ -39,7 +39,7 @@ namespace UniversalDashboard.Cmdlets
 
 	    protected override void EndProcessing()
 	    {
-            var callback = new Endpoint
+            var callback = new PowerShellEndpoint
             {
                 Name = Id,
                 Url = Url,

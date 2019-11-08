@@ -80,13 +80,10 @@ namespace UniversalDashboard.Controllers
                     executionContext.ConnectionId = connectionId;
                 }
 
-                return await Task.Run(() =>
-                {
-                    var result = _executionService.ExecuteEndpoint(executionContext, endpoint);
-                    var actionResult = ConvertToActionResult(result);
+                var result = await _executionService.ExecuteEndpointAsync(executionContext, endpoint);
+                var actionResult = ConvertToActionResult(result);
 
-                    return actionResult;
-                });
+                return actionResult;
             }
             catch (Exception ex) {
                 Log.Warn("RunScript() " + ex.Message + Environment.NewLine + ex.StackTrace);

@@ -21,8 +21,8 @@ namespace UniversalDashboard.Models
 		[JsonProperty("error", NullValueHandling = NullValueHandling.Ignore)]
 		public Error Error { get; set; }
 
-		[JsonProperty("hasCallback")]
-		public bool HasCallback => Callback?.ScriptBlock != null;
+        [JsonProperty("hasCallback")]
+        public bool HasCallback => Callback.HasCallback;
 
 		public string ToJson() {
 			return JsonConvert.SerializeObject(this);

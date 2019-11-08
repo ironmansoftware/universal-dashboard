@@ -50,7 +50,7 @@ namespace UniversalDashboard
             });
             services.AddTransient<StateRequestService>();
             services.AddSingleton<IHostedService, ScheduledEndpointManager>();
-            services.AddTransient<IExecutionService, ExecutionService>();
+            services.AddTransient<IExecutionService, PowerShellExecutionService>();
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddMemoryCache();

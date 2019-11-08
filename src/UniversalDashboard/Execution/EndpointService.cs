@@ -46,7 +46,7 @@ namespace UniversalDashboard.Execution
 
         public void Register(Endpoint callback)
         {
-            if (callback.ScriptBlock == null)
+            if (!callback.HasCallback)
             {
                 return;
             }
