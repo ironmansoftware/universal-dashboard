@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
@@ -10,9 +11,9 @@ namespace UniversalDashboard.Execution
     {
         private readonly ILanguageExecutionService[] executionServices;
 
-        public ExecutionService(ILanguageExecutionService[] executionServices)
+        public ExecutionService(IEnumerable<ILanguageExecutionService> executionServices)
         {
-            this.executionServices = executionServices;
+            this.executionServices = executionServices.ToArray();
         }
 
         public async Task<object> ExecuteEndpointAsync(ExecutionContext context, AbstractEndpoint endpoint)
