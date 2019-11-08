@@ -22,7 +22,7 @@ namespace UniversalDashboard.Models
 		public Error Error { get; set; }
 
         [JsonProperty("hasCallback")]
-        public bool HasCallback => Callback.HasCallback;
+        public bool HasCallback => Callback?.HasCallback == true;
 
 		public string ToJson() {
 			return JsonConvert.SerializeObject(this);
