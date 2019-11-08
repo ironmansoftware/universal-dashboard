@@ -1,22 +1,13 @@
 ﻿using System.Collections.Generic;
-using System.Management.Automation;
 using System.Text.RegularExpressions;
+using UniversalDashboard.Common.Models;
 
 namespace UniversalDashboard.Models
 {
-    public class Endpoint
+    public abstract class AbstractEndpoint
     {
-        public Endpoint()
-        {
-
-        }
-
-        public Endpoint(ScriptBlock scriptBlock)
-        {
-            ScriptBlock = scriptBlock;
-        }
-
-		public ScriptBlock ScriptBlock { get; set; }
+        public abstract bool HasCallback { get; }
+        public abstract Language Language { get; }
 		public Dictionary<string, object> Variables { get; set; }
         public object[] ArgumentList { get; set; }
         public string Name { get; set; }
@@ -25,7 +16,7 @@ namespace UniversalDashboard.Models
         public Part[] Parts { get; set; }
         public EndpointSchedule Schedule { get; set; }
         public string SessionId { get; set; }
-        internal Page Page { get; set; }
+        public Page Page { get; set; }
         public Regex UrlRegEx { get; set; }
         public bool AcceptFileUpload {get; set;}
     }

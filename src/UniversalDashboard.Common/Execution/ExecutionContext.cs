@@ -5,7 +5,7 @@ using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Execution {
     public class ExecutionContext {
-        public ExecutionContext(Endpoint endpoint, Dictionary<string,object> variables, Dictionary<string,object> parameters, ClaimsPrincipal user) {
+        public ExecutionContext(AbstractEndpoint endpoint, Dictionary<string,object> variables, Dictionary<string,object> parameters, ClaimsPrincipal user) {
             Endpoint = endpoint;
             Variables = variables;
             Parameters = parameters;
@@ -21,7 +21,7 @@ namespace UniversalDashboard.Execution {
         public bool NoSerialization { get; set; }
         public Dictionary<string, object> Variables {get;set;}
         public Dictionary<string, object> Parameters {get;set;}
-        public Endpoint Endpoint {get;set;}
+        public AbstractEndpoint Endpoint {get;set;}
         public ClaimsPrincipal User { get; set; }
         public string ConnectionId { get; set; }
         public string SessionId { get; set; }

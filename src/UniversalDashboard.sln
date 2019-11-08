@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard", "UniversalDashboard\UniversalDashboard.csproj", "{2B55B58C-49FC-4838-94EA-476D64A7345B}"
 EndProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A666D7E6
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Server", "UniversalDashboard.Server\UniversalDashboard.Server.csproj", "{ECA5AC7B-9166-470A-B99C-234241794D3E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Common", "UniversalDashboard.Common\UniversalDashboard.Common.csproj", "{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{ECA5AC7B-9166-470A-B99C-234241794D3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECA5AC7B-9166-470A-B99C-234241794D3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECA5AC7B-9166-470A-B99C-234241794D3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -201,7 +201,7 @@ namespace UniversalDashboard
             }
         }
 
-        public Task ClientEvent(string eventId, string eventName, string eventData, string location) {
+        public async Task ClientEvent(string eventId, string eventName, string eventData, string location) {
             _logger.Debug($"ClientEvent {eventId} {eventName}");
 
             var variables = new Dictionary<string, object>();
@@ -246,26 +246,26 @@ namespace UniversalDashboard
                 executionContext.ConnectionId = Context.ConnectionId;
                 executionContext.SessionId = sessionId;
 
-                return Task.Run(() =>
+                try
                 {
-                    try
+                    dynamic result = await _executionService.ExecuteEndpointAsync(executionContext, endpoint);
+                    if (result.Error is Error error)
                     {
-                        dynamic result = _executionService.ExecuteEndpoint(executionContext, endpoint);
-                        if (result.Error is Error error)
-                        {
-                            Clients.Client(Context.ConnectionId).SendAsync("showError", new { message = error.Message });
-                        }
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                        Clients.Client(Context.ConnectionId).SendAsync("showError", new { message = error.Message });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    }
 
-                    }
-                    catch (RuntimeBinderException) {
-                        
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.Error("Failed to execute action. " + ex.Message);
-                        throw;
-                    }
-                });
+                }
+                catch (RuntimeBinderException)
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error("Failed to execute action. " + ex.Message);
+                    throw;
+                }
             }
             catch (Exception ex)
             {
