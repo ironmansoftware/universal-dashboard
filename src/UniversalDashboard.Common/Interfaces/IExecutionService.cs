@@ -7,11 +7,11 @@ namespace UniversalDashboard.Interfaces
 {
     public interface IExecutionService
     {
-        Task<object> ExecuteEndpointAsync(ExecutionContext context, Endpoint endpoint);
+        Task<object> ExecuteEndpointAsync(ExecutionContext context, AbstractEndpoint endpoint);
     }
 
     public interface ILanguageExecutionService {
         Language Language { get; }
-		Task<object> ExecuteEndpointAsync(ExecutionContext context, Endpoint endpoint);
+		Task<object> ExecuteEndpointAsync(ExecutionContext context, AbstractEndpoint endpoint);
     }
 }

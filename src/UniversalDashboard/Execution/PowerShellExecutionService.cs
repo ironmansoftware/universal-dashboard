@@ -53,7 +53,7 @@ namespace UniversalDashboard.Execution
 
         public Language Language => Language.PowerShell;
 
-        public async Task<object> ExecuteEndpointAsync(ExecutionContext context, Endpoint endpoint)
+        public async Task<object> ExecuteEndpointAsync(ExecutionContext context, AbstractEndpoint endpoint)
         {
             return await Task.Run(() =>
             {
@@ -61,14 +61,14 @@ namespace UniversalDashboard.Execution
             });
         }
 
-        public object ExecuteEndpoint(ExecutionContext context, Endpoint endpoint)
+        public object ExecuteEndpoint(ExecutionContext context, AbstractEndpoint endpoint)
         {
             if (endpoint.Language != Common.Models.Language.PowerShell)
             {
                 throw new Exception($"Invalid language {endpoint.Language}");
             }
 
-            var psEndpoint = endpoint as PowerShellEndpoint;
+            var psEndpoint = endpoint as Endpoint;
 
             var scriptBuilder = new StringBuilder();
             var scriptBlockAst = psEndpoint.ScriptBlock.Ast as ScriptBlockAst;

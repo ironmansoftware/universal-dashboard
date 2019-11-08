@@ -3,14 +3,14 @@ using UniversalDashboard.Common.Models;
 
 namespace UniversalDashboard.Models
 {
-    public class PowerShellEndpoint : Endpoint
+    public class Endpoint : AbstractEndpoint
     {
-        public PowerShellEndpoint()
+        public Endpoint()
         {
 
         }
 
-        public PowerShellEndpoint(ScriptBlock scriptBlock)
+        public Endpoint(ScriptBlock scriptBlock)
         {
             ScriptBlock = scriptBlock;
         }

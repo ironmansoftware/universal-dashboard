@@ -11,7 +11,7 @@ namespace UniversalDashboard.Models
 		[JsonProperty("id")]
 		public string Id { get; set; }
 		[JsonIgnore]
-		public Endpoint Callback { get; set; }
+		public AbstractEndpoint Callback { get; set; }
 		[JsonProperty("refreshInterval")]
 		public int RefreshInterval { get; set; }
 		[JsonProperty("autoRefresh")]

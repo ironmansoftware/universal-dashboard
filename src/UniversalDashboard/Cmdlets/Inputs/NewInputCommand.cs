@@ -63,7 +63,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
                     var mandatoryProperty = parameterAttribute?.NamedArguments?.FirstOrDefault(m => m.ArgumentName.Equals("Mandatory", StringComparison.OrdinalIgnoreCase))?.Argument;
                     var isMandatory = (bool?)mandatoryProperty?.SafeGetValue() == true;
 
-                    var endpoint = new PowerShellEndpoint(ScriptBlock.Create($"param({parameter.ToString()})"));
+                    var endpoint = new Endpoint(ScriptBlock.Create($"param({parameter.ToString()})"));
                     endpoint.Name = Guid.NewGuid().ToString();
                     endpoint.SessionId = SessionId;
 

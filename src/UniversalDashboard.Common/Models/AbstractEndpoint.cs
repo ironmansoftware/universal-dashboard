@@ -4,7 +4,7 @@ using UniversalDashboard.Common.Models;
 
 namespace UniversalDashboard.Models
 {
-    public abstract class Endpoint
+    public abstract class AbstractEndpoint
     {
         public abstract bool HasCallback { get; }
         public abstract Language Language { get; }
