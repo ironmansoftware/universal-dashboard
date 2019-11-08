@@ -6,7 +6,7 @@ using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Execution
 {
-    public class ExecutionService
+    public class ExecutionService : IExecutionService
     {
         private readonly ILanguageExecutionService[] executionServices;
 
@@ -15,7 +15,7 @@ namespace UniversalDashboard.Execution
             this.executionServices = executionServices;
         }
 
-        public async Task<object> ExecuteEndpointAsync(ExecutionContext context, Endpoint endpoint)
+        public async Task<object> ExecuteEndpointAsync(ExecutionContext context, AbstractEndpoint endpoint)
         {
             var executionService = this.executionServices.FirstOrDefault(m => m.Language == endpoint.Language);
 

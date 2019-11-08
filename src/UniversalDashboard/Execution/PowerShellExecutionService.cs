@@ -25,7 +25,7 @@ namespace UniversalDashboard.Execution
         public object Result { get; set; }
     }
 
-    public class PowerShellExecutionService : IExecutionService {
+    public class PowerShellExecutionService : ILanguageExecutionService {
         private static readonly Logger Log = LogManager.GetLogger(nameof(PowerShellExecutionService));
 		private readonly IUDRunspaceFactory _runspace;
 		private readonly IDashboardService _dashboardService;
