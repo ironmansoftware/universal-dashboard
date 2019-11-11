@@ -21,6 +21,8 @@ using UniversalDashboard.Interfaces;
 using System.Management.Automation.Runspaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.ApplicationInsights;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace UniversalDashboard
 {
@@ -184,7 +186,11 @@ namespace UniversalDashboard
 				this.Running = false;
                 Console.WriteLine("Stopp..ing");
 
-				this.host.StopAsync(TimeSpan.FromSeconds(5)).Wait();
+				var task = Task.Run(async () => {
+					await this.host.StopAsync(TimeSpan.FromSeconds(5));
+				});
+
+				while(!task.IsCompleted) { Thread.Sleep(100); }
 
                 Console.WriteLine("Disposing");
                 this.host.Dispose();
