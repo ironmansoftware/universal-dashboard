@@ -10,13 +10,13 @@ namespace UniversalDashboard.Cmdlets
 		//private readonly Logger Log = LogManager.GetLogger(nameof(SelectUDElementCommand));
 
         [Parameter(Mandatory = true)]
-		public string jsscript { get; set; }
+		public string JavaScript { get; set; }
 
         protected override void EndProcessing()
         {
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
             var connectionId = this.GetVariableValue("ConnectionId") as string;   
-            hub.InvokeJavaScript(connectionId, jsscript).Wait();
+            hub.InvokeJavaScript(connectionId, JavaScript).Wait();
 		}
 	}
 }
