@@ -183,7 +183,8 @@ namespace UniversalDashboard
 			{
 				this.Running = false;
                 Console.WriteLine("Stopp..ing");
-				this.host.StopAsync().Wait();
+
+				this.host.StopAsync(TimeSpan.FromSeconds(5));
 
                 Console.WriteLine("Disposing");
                 this.host.Dispose();
