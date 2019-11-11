@@ -9,7 +9,7 @@ namespace UniversalDashboard.Models
         public SessionState(string id)
         {
             Id = id;
-            Endpoints = new ConcurrentDictionary<string, Endpoint>();
+            Endpoints = new ConcurrentDictionary<string, AbstractEndpoint>();
             SessionVariables = new ConcurrentDictionary<string, object>();
             Connections = 1;
             LastTouched = DateTime.UtcNow;
@@ -17,7 +17,7 @@ namespace UniversalDashboard.Models
 
         public string Id { get; set; }
         public int Connections { get; set; }
-        public ConcurrentDictionary<string, Endpoint> Endpoints { get; set; }
+        public ConcurrentDictionary<string, AbstractEndpoint> Endpoints { get; set; }
         public ConcurrentDictionary<string, object> SessionVariables { get; set; }
         public DateTime LastTouched { get; set; }
 

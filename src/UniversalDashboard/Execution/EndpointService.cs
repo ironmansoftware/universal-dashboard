@@ -13,13 +13,13 @@ namespace UniversalDashboard.Execution
 {
     public class EndpointService : IEndpointService
     {
-        private readonly List<Endpoint> _restEndpoints;
-        private readonly List<Endpoint> _scheduledEndpoints;
+        private readonly List<AbstractEndpoint> _restEndpoints;
+        private readonly List<AbstractEndpoint> _scheduledEndpoints;
         private static readonly Logger logger = LogManager.GetLogger("EndpointService");
 
         private static IEndpointService _instance;
 
-        public ConcurrentDictionary<string, Endpoint> Endpoints { get; private set; }
+        public ConcurrentDictionary<string, AbstractEndpoint> Endpoints { get; private set; }
         public ISessionManager SessionManager { get; private set; }
 
         public static IEndpointService Instance
@@ -37,14 +37,14 @@ namespace UniversalDashboard.Execution
 
         private EndpointService() 
         {
-            Endpoints = new ConcurrentDictionary<string, Endpoint>();
+            Endpoints = new ConcurrentDictionary<string, AbstractEndpoint>();
             SessionManager = new SessionManager();
 
-            _restEndpoints = new List<Endpoint>();
-            _scheduledEndpoints = new List<Endpoint>();
+            _restEndpoints = new List<AbstractEndpoint>();
+            _scheduledEndpoints = new List<AbstractEndpoint>();
         }
 
-        public void Register(Endpoint callback)
+        public void Register(AbstractEndpoint callback)
         {
             if (!callback.HasCallback)
             {
@@ -107,7 +107,7 @@ namespace UniversalDashboard.Execution
             {
                 if (Endpoints.ContainsKey(name))
                 {
-                    Endpoints.TryRemove(name, out Endpoint endpoint);
+                    Endpoints.TryRemove(name, out AbstractEndpoint endpoint);
                     logger.Debug("Endpoint found. Removing endpoint.");
                 }
             }
@@ -119,13 +119,13 @@ namespace UniversalDashboard.Execution
                     if (session.Endpoints.ContainsKey(name))
                     {
                         logger.Debug("Session endpoint found. Removing endpoint.");
-                        session.Endpoints.TryRemove(name, out Endpoint value);
+                        session.Endpoints.TryRemove(name, out AbstractEndpoint value);
                     }
                 }
             }
         }
 
-        public Endpoint Get(string name, string sessionId)
+        public AbstractEndpoint Get(string name, string sessionId)
         {
             logger.Debug($"Get() {name} {sessionId}");
             if (sessionId != null)
@@ -150,7 +150,7 @@ namespace UniversalDashboard.Execution
             return null;
         }
 
-        public Endpoint GetByUrl(string url, string method, Dictionary<string, object> matchedVariables)
+        public AbstractEndpoint GetByUrl(string url, string method, Dictionary<string, object> matchedVariables)
         {
             foreach(var endpoint in _restEndpoints.Where(m => m.Method.Equals(method, StringComparison.OrdinalIgnoreCase)))
             {
@@ -200,12 +200,12 @@ namespace UniversalDashboard.Execution
             return null;
         }
 
-        public IEnumerable<Endpoint> GetScheduledEndpoints()
+        public IEnumerable<AbstractEndpoint> GetScheduledEndpoints()
         {
             return _scheduledEndpoints;
         }
 
-        private bool IsMatch(Endpoint callback, string url, Dictionary<string, object> matchedVariables)
+        private bool IsMatch(AbstractEndpoint callback, string url, Dictionary<string, object> matchedVariables)
         {
             if (callback.Parts == null) return false;
 
