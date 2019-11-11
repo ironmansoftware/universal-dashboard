@@ -54,6 +54,11 @@ namespace UniversalDashboard
             await hub.Clients.Client(clientId).SendAsync("select", ID, scrollToElement);
         }
 
+        public static async Task InvokeJavaScript(this IHubContext<DashboardHub> hub, string clientId, string JavaScript)
+        {
+            await hub.Clients.Client(clientId).SendAsync("invokejavascript", JavaScript);
+        }
+
         public static async Task Clipboard(this IHubContext<DashboardHub> hub, string clientId, string Data, bool toastOnSuccess, bool toastOnError)
         {
             await hub.Clients.Client(clientId).SendAsync("clipboard", Data, toastOnSuccess ,toastOnError);
