@@ -79,7 +79,5 @@ if (-not $NoClose)
     Stop-SeDriver $Driver
 }
 
-Write-Host "Finished tests. "
-
 
 
