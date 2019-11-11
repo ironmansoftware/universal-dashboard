@@ -75,7 +75,7 @@ if ($OutputTestResultXml) {
 
 if (-not $NoClose) 
 {
-    Stop-UDDashboard -Port 10001
+    Get-UDDashboard | Stop-UDDashboard
     Stop-SeDriver $Driver
 }
 
