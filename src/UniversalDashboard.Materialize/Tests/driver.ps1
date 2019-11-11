@@ -75,9 +75,13 @@ if ($OutputTestResultXml) {
 
 if (-not $NoClose) 
 {
+    Write-Host "Stopping dashboard"
     Get-UDDashboard | Stop-UDDashboard
+    Write-Host "Stopping server"
     Stop-SeDriver $Driver
 }
+
+Write-Host "Finished tests. "
 
 
 
