@@ -133,6 +133,10 @@ export default class UdDashboard extends React.Component {
             }
         });
 
+        connection.on('invokejavascript', (jsscript) => {
+            eval(jsscript);
+        });
+
         connection.on('clipboard', (Data, toastOnSuccess, toastOnError) => {
             var textArea = document.createElement("textarea");
             textArea.style.position = 'fixed';
