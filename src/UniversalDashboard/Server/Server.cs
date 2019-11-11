@@ -153,7 +153,7 @@ namespace UniversalDashboard
 
 			builder = builder
                 .UseSetting("detailedErrors", "true")
-                .UseLibuv()
+                .UseSockets()
                 .UseStartup<ServerStartup>()
 				.CaptureStartupErrors(true);
 
