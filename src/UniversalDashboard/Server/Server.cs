@@ -182,15 +182,20 @@ namespace UniversalDashboard
 			if (this.Running && this.host != null)
 			{
 				this.Running = false;
+                Console.WriteLine("Stopp..ing");
 				this.host.StopAsync().Wait();
-				
-				this.host.Dispose();
 
+                Console.WriteLine("Disposing");
+                this.host.Dispose();
+
+                Console.WriteLine("Disposing service");
                 DashboardService.Dispose();
 
-				Servers.Remove(this);
+                Console.WriteLine("Removing");
+                Servers.Remove(this);
 
-				_reloader.StopWatchingFile(FileName);
+                Console.WriteLine("Stop watching!");
+                _reloader.StopWatchingFile(FileName);
 			}
 		}
 
