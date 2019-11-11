@@ -182,6 +182,8 @@ namespace UniversalDashboard
 			if (this.Running && this.host != null)
 			{
 				this.Running = false;
+				this.host.StopAsync().Wait();
+				
 				this.host.Dispose();
 
                 DashboardService.Dispose();
