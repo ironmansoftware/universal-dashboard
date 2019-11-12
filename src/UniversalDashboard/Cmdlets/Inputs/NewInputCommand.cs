@@ -67,7 +67,8 @@ namespace UniversalDashboard.Cmdlets.Inputs
                     endpoint.Name = Guid.NewGuid().ToString();
                     endpoint.SessionId = SessionId;
 
-                    Execution.EndpointService.Instance.Register(endpoint);
+                    var hostState = this.GetHostState();
+                    hostState.EndpointService.Register(endpoint);
 
                     field.Required = isMandatory;
                     field.Endpoint = endpoint;
@@ -132,7 +133,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
 			var input = new Input
 			{
 				Id = Id,
-				Callback = Endpoint.GenerateCallback(Id, SessionState, ArgumentList),
+				Callback = Endpoint.GenerateCallback(Id, this, SessionState, ArgumentList),
 				Title = Title,
 				BackgroundColor = BackgroundColor?.HtmlColor,
 				FontColor = FontColor?.HtmlColor,

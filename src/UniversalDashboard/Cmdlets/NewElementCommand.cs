@@ -2,19 +2,16 @@ using Newtonsoft.Json;
 using NLog;
 using UniversalDashboard.Models;
 using System.Management.Automation;
-using UniversalDashboard.Models.Enums;
 using UniversalDashboard.Models.Basics;
 using System.Collections;
 using System.Linq;
 using System.Collections.Generic;
-using System.IO;
 using UniversalDashboard.Services;
-using UniversalDashboard.Interfaces;
 using UniversalDashboard.Utilities;
 
 namespace UniversalDashboard.Cmdlets
 {
-	[Cmdlet(VerbsCommon.New, "UDElement")]
+    [Cmdlet(VerbsCommon.New, "UDElement")]
     public class NewElementCommand : CallbackCmdlet
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(NewElementCommand));

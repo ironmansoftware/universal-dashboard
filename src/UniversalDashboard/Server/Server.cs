@@ -3,30 +3,21 @@ using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using UniversalDashboard.Services;
 using System.Collections.Generic;
-using System.Net;
 using System.Linq;
 using System.IO;
-using UniversalDashboard.Models;
 using System.Management.Automation.Host;
-using System.Security.Cryptography.X509Certificates;
 using System.Security;
 using System.Runtime.InteropServices;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.DotNet.PlatformAbstractions;
-using System.Runtime.Loader;
-using UniversalDashboard.Execution;
 using UniversalDashboard.Utilities;
 using UniversalDashboard.Interfaces;
-using System.Management.Automation.Runspaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.ApplicationInsights;
-using System.Threading.Tasks;
-using System.Threading;
+using UniversalDashboard.Cmdlets;
 
 namespace UniversalDashboard
 {
-	public class Server
+    public class Server
 	{
 		static Server()
 		{
@@ -110,7 +101,29 @@ namespace UniversalDashboard
 				.ConfigureServices((y) =>
 				{
 					DashboardService = new DashboardService(dashboardOptions, _reloadKey);
-					y.Add(new ServiceDescriptor(typeof(IDashboardService), DashboardService));
+
+                    foreach(var endpoint in CmdletExtensions.HostState.EndpointService.Endpoints)
+                    {
+                        DashboardService.EndpointService.Register(endpoint.Value);
+                    }
+
+                    foreach (var endpoint in CmdletExtensions.HostState.EndpointService.ScheduledEndpoints)
+                    {
+                        DashboardService.EndpointService.Register(endpoint);
+                    }
+
+
+                    foreach (var endpoint in CmdletExtensions.HostState.EndpointService.RestEndpoints)
+                    {
+                        DashboardService.EndpointService.Register(endpoint);
+                    }
+
+
+                    CmdletExtensions.HostState.EndpointService.Endpoints.Clear();
+                    CmdletExtensions.HostState.EndpointService.RestEndpoints.Clear();
+                    CmdletExtensions.HostState.EndpointService.ScheduledEndpoints.Clear();
+
+                    y.Add(new ServiceDescriptor(typeof(IDashboardService), DashboardService));
                     
 					if (_reloader != null)
 						y.Add(new ServiceDescriptor(typeof(AutoReloader), _reloader));

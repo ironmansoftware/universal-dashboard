@@ -128,7 +128,7 @@ namespace UniversalDashboard.Execution
             string json;
             using (var ps = PowerShell.Create())
 			{
-                using (var runspaceRef =  _runspace.GetRunspace())
+                using (var runspaceRef = _runspace.GetRunspace())
                 {
                     runspaceRef.Runspace.ResetRunspaceState();
                     Runspace.DefaultRunspace = runspaceRef.Runspace;
@@ -137,7 +137,7 @@ namespace UniversalDashboard.Execution
 
                     var host = (UDHost)_host.GetValue(ps.Runspace);
                     var ui = (UDHostUserInterface)host.UI;
-                    
+
                     if (endpoint.Variables != null)
                     {
                         Log.Debug("Scope variables--------------");
@@ -150,6 +150,9 @@ namespace UniversalDashboard.Execution
                         SetVariables(ps.Runspace, context.Variables);
                     }
 
+                    var hostState = host.PrivateData.BaseObject as HostState;
+                    hostState.EndpointService = _dashboardService.EndpointService;
+                    
                     SetVariable(ps, "DashboardHub", _hubContext);
                     SetVariable(ps, "Cache", _memoryCache);
                     SetVariable(ps, "StateRequestService", _stateRequestService);

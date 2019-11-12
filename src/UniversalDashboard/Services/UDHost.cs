@@ -9,6 +9,7 @@ using System.Management.Automation;
 using System.Management.Automation.Host;
 using System.Management.Automation.Runspaces;
 using System.Security;
+using UniversalDashboard.Execution;
 using UniversalDashboard.Models.Enums;
 
 namespace UniversalDashboard.Services
@@ -58,6 +59,15 @@ namespace UniversalDashboard.Services
         {
 
         }
+
+        public override PSObject PrivateData
+        {
+            get
+            {
+                return _hostStateProxy ?? (_hostStateProxy = PSObject.AsPSObject(new HostState()));
+            }
+        }
+        private PSObject _hostStateProxy;
     }
 
     public class UDHostUserInterface : PSHostUserInterface
