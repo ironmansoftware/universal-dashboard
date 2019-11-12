@@ -46,6 +46,7 @@ export const fetchPost = function(url, data, success) {
         credentials: 'include'
       })
       .then(function(response){
+        if (response.status === 200) {
             var jsonresponse = response.json;
 
             if (jsonresponse == null ) {
@@ -54,6 +55,10 @@ export const fetchPost = function(url, data, success) {
             else {
                 return jsonresponse;
             };
+            
+        } else {
+            throw new Error(response.statusText);
+        }
     })
     .then(success)
     .catch(function(e) {
