@@ -126,10 +126,15 @@ export default class UdDashboard extends React.Component {
             }
         });
 
-        connection.on('select', (ID, scrollToElement) => {
-            document.getElementById(ID).focus();
-            if (scrollToElement) {
-                document.getElementById(ID).scrollIntoView();
+        connection.on('select', (ParameterSetName, ID, scrollToElement) => {
+            if (ParameterSetName == "ToTop") {
+                window.scrollTo({ top: 0, behavior: 'smooth'});
+            }
+            if (ParameterSetName == "Normal") {
+                document.getElementById(ID).focus();
+                if (scrollToElement) {
+                    document.getElementById(ID).scrollIntoView();
+                }
             }
         });
 

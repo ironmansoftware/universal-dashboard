@@ -9,17 +9,25 @@ namespace UniversalDashboard.Cmdlets
     {
 		//private readonly Logger Log = LogManager.GetLogger(nameof(SelectUDElementCommand));
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true,ParameterSetName = "Normal")]
 		public string ID { get; set; }
 
-        [Parameter]
+        [Parameter(ParameterSetName = "Normal")]
         public SwitchParameter ScrollToElement { get; set; }
 
+        [Parameter(ParameterSetName = "ToTop")]
+        public SwitchParameter ToTop { get; set; }
         protected override void EndProcessing()
         {
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
             var connectionId = this.GetVariableValue("ConnectionId") as string;   
-            hub.Select(connectionId, ID, ScrollToElement.IsPresent).Wait();
+            if (ParameterSetName == "Normal") {
+                
+                hub.Select(connectionId, ParameterSetName, ID, ScrollToElement.IsPresent).Wait();
+            }
+            if (ParameterSetName == "ToTop") {
+                hub.Select(connectionId, ParameterSetName, null, false).Wait();    
+            }
 		}
 	}
 }
