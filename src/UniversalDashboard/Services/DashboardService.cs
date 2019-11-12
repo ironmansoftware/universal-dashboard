@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation.Runspaces;
+using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using UniversalDashboard.Cmdlets;
 using UniversalDashboard.Execution;
 using UniversalDashboard.Interfaces;
@@ -40,9 +42,7 @@ namespace UniversalDashboard.Services
         public DateTime StartTime { get; private set; }
         public Debugger Debugger { get; private set; }
         public ServiceProvider ServiceProvider { get; set; }
-
         public IEndpointService EndpointService { get; }
-
         public Dictionary<string, object> Properties { get; }
 
         public void SetDashboard(Dashboard dashboard)
@@ -72,6 +72,16 @@ namespace UniversalDashboard.Services
             CmdletExtensions.HostState.EndpointService.Endpoints.Clear();
             CmdletExtensions.HostState.EndpointService.RestEndpoints.Clear();
             CmdletExtensions.HostState.EndpointService.ScheduledEndpoints.Clear();
+
+            if (ServiceProvider != null)
+            {
+                var manager = ServiceProvider.GetServices<IHostedService>().First(m => m is ScheduledEndpointManager) as ScheduledEndpointManager;
+
+                var source = new CancellationTokenSource();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                manager.StartAsync(source.Token);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            }
         }
 
         public void SetRestEndpoints(Endpoint[] endpoints)
