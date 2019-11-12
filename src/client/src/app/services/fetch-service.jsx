@@ -47,7 +47,15 @@ export const fetchPost = function(url, data, success) {
       })
       .then(function(response){
         if (response.status === 200) {
-            return response.json();
+            var jsonresponse = response.json;
+
+            if (jsonresponse == null ) {
+                return true;
+            }
+            else {
+                return jsonresponse;
+            };
+            
         } else {
             throw new Error(response.statusText);
         }
