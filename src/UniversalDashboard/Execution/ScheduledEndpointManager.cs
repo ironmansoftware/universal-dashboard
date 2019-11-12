@@ -152,7 +152,7 @@ namespace UniversalDashboard.Execution
                 var trigger = TriggerBuilder.Create()
                                 .StartNow()
                                 .WithSimpleSchedule(x => x
-                                    .WithIntervalInSeconds(60)
+                                    .WithIntervalInSeconds((int)_dashboardService.Dashboard.IdleTimeout.TotalSeconds)
                                     .RepeatForever())
                                 .Build();
 

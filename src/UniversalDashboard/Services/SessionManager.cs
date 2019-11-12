@@ -1,3 +1,4 @@
+using NLog;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace UniversalDashboard.Services
 
     public class SessionManager : ISessionManager
     {
+        private readonly Logger logger = LogManager.GetLogger(nameof(SessionManager));
         public ConcurrentDictionary<string, SessionState> Sessions { get; private set; }
 
         public SessionManager()
@@ -71,6 +73,7 @@ namespace UniversalDashboard.Services
 
             toRemove.ForEach(x => {
                 Sessions.TryRemove(x, out SessionState value);
+                logger.Debug($"Session {x} timed out. Last touched: {value.LastTouched}");
             });
         }
     }   
