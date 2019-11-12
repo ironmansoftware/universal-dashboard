@@ -24,8 +24,6 @@ Describe "Api" {
         Stop-UDRestApi $Server
     }
 
-    Wait-Debugger
-
     Context "Special Characters" {
         $Server = Start-UDRestApi -Port 10001 -Endpoint @(
             New-UDEndpoint -Url "/recherches" -Method "GET" -Endpoint {

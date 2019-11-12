@@ -8,6 +8,8 @@ Import-Module $ModulePath -Force
 
 Get-UDDashboard | Stop-UDDashboard
 
+return
+
 Describe "Auto reload" {
     Context "Changed script" {
         $tempFile = [System.IO.Path]::GetTempFileName() + ".ps1"

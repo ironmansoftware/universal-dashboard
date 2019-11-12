@@ -21,6 +21,8 @@ using UniversalDashboard.Interfaces;
 using System.Management.Automation.Runspaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.ApplicationInsights;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace UniversalDashboard
 {
@@ -153,7 +155,7 @@ namespace UniversalDashboard
 
 			builder = builder
                 .UseSetting("detailedErrors", "true")
-                .UseLibuv()
+                .UseSockets()
                 .UseStartup<ServerStartup>()
 				.CaptureStartupErrors(true);
 
@@ -182,13 +184,14 @@ namespace UniversalDashboard
 			if (this.Running && this.host != null)
 			{
 				this.Running = false;
-				this.host.Dispose();
+                
+				this.host.StopAsync().ConfigureAwait(false);
 
                 DashboardService.Dispose();
 
-				Servers.Remove(this);
+                Servers.Remove(this);
 
-				_reloader.StopWatchingFile(FileName);
+                _reloader.StopWatchingFile(FileName);
 			}
 		}
 

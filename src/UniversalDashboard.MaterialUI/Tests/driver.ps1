@@ -84,6 +84,6 @@ if ($StopSelenium)
 
 if (-not $NoClose) 
 {
-    Stop-UDDashboard -Port 10000
+    Get-UDDashboard | Stop-UDDashboard
     Stop-SeDriver $Driver
 }
