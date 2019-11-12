@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Quartz;
-using UniversalDashboard.Execution;
 
 namespace UniversalDashboard.Services
 {
@@ -11,7 +10,11 @@ namespace UniversalDashboard.Services
         public async Task Execute(IJobExecutionContext context)
         {
             await Task.CompletedTask;
-            EndpointService.Instance.SessionManager.ClearTimedOutSessions(IdleTimeout);
+
+            foreach (var server in Server.Servers)
+            {
+                server.DashboardService.EndpointService.SessionManager.ClearTimedOutSessions(IdleTimeout);
+            }
         }
     }
 }

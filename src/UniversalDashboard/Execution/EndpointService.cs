@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Caching.Memory;
-using UniversalDashboard.Models;
+﻿using UniversalDashboard.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,35 +12,20 @@ namespace UniversalDashboard.Execution
 {
     public class EndpointService : IEndpointService
     {
-        private readonly List<AbstractEndpoint> _restEndpoints;
-        private readonly List<AbstractEndpoint> _scheduledEndpoints;
+        public List<AbstractEndpoint> RestEndpoints { get; private set; }
+        public List<AbstractEndpoint> ScheduledEndpoints { get; private set; }
         private static readonly Logger logger = LogManager.GetLogger("EndpointService");
-
-        private static IEndpointService _instance;
-
         public ConcurrentDictionary<string, AbstractEndpoint> Endpoints { get; private set; }
         public ISessionManager SessionManager { get; private set; }
 
-        public static IEndpointService Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new EndpointService();
-                }
-
-                return _instance;
-            }
-        }
-
-        private EndpointService() 
+      
+        public EndpointService() 
         {
             Endpoints = new ConcurrentDictionary<string, AbstractEndpoint>();
             SessionManager = new SessionManager();
 
-            _restEndpoints = new List<AbstractEndpoint>();
-            _scheduledEndpoints = new List<AbstractEndpoint>();
+            RestEndpoints = new List<AbstractEndpoint>();
+            ScheduledEndpoints = new List<AbstractEndpoint>();
         }
 
         public void Register(AbstractEndpoint callback)
@@ -55,7 +39,7 @@ namespace UniversalDashboard.Execution
 
             if (callback.Schedule != null)
             {
-                _scheduledEndpoints.Add(callback);
+                ScheduledEndpoints.Add(callback);
             }
             else if (string.IsNullOrEmpty(callback.Url))
             {
@@ -88,14 +72,14 @@ namespace UniversalDashboard.Execution
                         throw new Exception("Duplicate variable name in URL.");
                 }
 
-                var existingEndpoint = _restEndpoints.FirstOrDefault(m => m.Method == callback.Method && m.Url.Equals(callback.Url, StringComparison.OrdinalIgnoreCase));
+                var existingEndpoint = RestEndpoints.FirstOrDefault(m => m.Method == callback.Method && m.Url.Equals(callback.Url, StringComparison.OrdinalIgnoreCase));
 
                 if (existingEndpoint != null)
                 {
-                    _restEndpoints.Remove(existingEndpoint);
+                    RestEndpoints.Remove(existingEndpoint);
                 }
 
-                _restEndpoints.Add(callback);
+                RestEndpoints.Add(callback);
             }
         }
 
@@ -152,7 +136,7 @@ namespace UniversalDashboard.Execution
 
         public AbstractEndpoint GetByUrl(string url, string method, Dictionary<string, object> matchedVariables)
         {
-            foreach(var endpoint in _restEndpoints.Where(m => m.Method.Equals(method, StringComparison.OrdinalIgnoreCase)))
+            foreach(var endpoint in RestEndpoints.Where(m => m.Method.Equals(method, StringComparison.OrdinalIgnoreCase)))
             {
                 Dictionary<string, object> variables = new Dictionary<string, object>();
 
@@ -202,7 +186,7 @@ namespace UniversalDashboard.Execution
 
         public IEnumerable<AbstractEndpoint> GetScheduledEndpoints()
         {
-            return _scheduledEndpoints;
+            return ScheduledEndpoints;
         }
 
         private bool IsMatch(AbstractEndpoint callback, string url, Dictionary<string, object> matchedVariables)

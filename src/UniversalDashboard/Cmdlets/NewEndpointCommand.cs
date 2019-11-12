@@ -82,7 +82,8 @@ namespace UniversalDashboard.Cmdlets
 
             if (callback.Schedule == null) 
             {
-                Execution.EndpointService.Instance.Register(callback);
+                var state = this.GetHostState();
+                state.EndpointService.Register(callback);
             }
             
             WriteObject(callback);

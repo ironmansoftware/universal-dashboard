@@ -29,7 +29,7 @@ namespace UniversalDashboard.Cmdlets
                 Id = Id,
                 Fixed = Fixed.IsPresent,
                 None = None.IsPresent,
-                Callback = Endpoint.TryGenerateEndpoint(Id, SessionState),
+                Callback = Endpoint.TryGenerateEndpoint(Id, this, SessionState),
                 Width = Width
             };
 
@@ -86,7 +86,7 @@ namespace UniversalDashboard.Cmdlets
                 Background = Background,
                 Url = Url,
                 Icon = Icon.GetIconName(),
-                Callback = OnClick.TryGenerateEndpoint(Id, SessionState)
+                Callback = OnClick.TryGenerateEndpoint(Id, this, SessionState)
             });
         }
     }

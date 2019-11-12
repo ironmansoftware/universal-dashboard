@@ -215,10 +215,6 @@ Describe "Api" {
             Invoke-RestMethod -Uri 'http://localhost:10001/api/nodes(agent=1234)' -Method GET | Should be 1234
         }
 
-        It "should add endpoints after startup" {
-            Invoke-RestMethod -Uri 'http://localhost:10001/api/afterstartup' -Method GET | Should be "After Startup"
-        }
-
         It "should use body for delete"  {
             $result = Invoke-RestMethod -Uri http://localhost:10001/api/delete/body -Method DELETE -Body "test"
             $result | Should be "test"

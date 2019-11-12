@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation.Runspaces;
 using Microsoft.Extensions.DependencyInjection;
+using UniversalDashboard.Cmdlets;
+using UniversalDashboard.Execution;
 using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 
@@ -11,6 +13,8 @@ namespace UniversalDashboard.Services
 	public class DashboardService : IDashboardService
 	{
 		public DashboardService(DashboardOptions dashboardOptions, string reloadToken) {
+            EndpointService = new EndpointService();
+
             if (dashboardOptions.Dashboard != null) 
             {
                 SetDashboard(dashboardOptions.Dashboard);
@@ -37,13 +41,7 @@ namespace UniversalDashboard.Services
         public Debugger Debugger { get; private set; }
         public ServiceProvider ServiceProvider { get; set; }
 
-        public IEndpointService EndpointService
-        {
-            get
-            {
-                return Execution.EndpointService.Instance;
-            }
-        }
+        public IEndpointService EndpointService { get; }
 
         public Dictionary<string, object> Properties { get; }
 
@@ -53,6 +51,27 @@ namespace UniversalDashboard.Services
 
 			Dashboard = dashboard;
 			SetRunspaceFactory(Dashboard.EndpointInitialSessionState);
+
+            foreach (var endpoint in CmdletExtensions.HostState.EndpointService.Endpoints)
+            {
+                EndpointService.Register(endpoint.Value);
+            }
+
+            foreach (var endpoint in CmdletExtensions.HostState.EndpointService.ScheduledEndpoints)
+            {
+                EndpointService.Register(endpoint);
+            }
+
+
+            foreach (var endpoint in CmdletExtensions.HostState.EndpointService.RestEndpoints)
+            {
+                EndpointService.Register(endpoint);
+            }
+
+
+            CmdletExtensions.HostState.EndpointService.Endpoints.Clear();
+            CmdletExtensions.HostState.EndpointService.RestEndpoints.Clear();
+            CmdletExtensions.HostState.EndpointService.ScheduledEndpoints.Clear();
         }
 
         public void SetRestEndpoints(Endpoint[] endpoints)

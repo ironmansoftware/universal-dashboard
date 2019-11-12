@@ -19,12 +19,12 @@ namespace UniversalDashboard.Cmdlets
 
         protected Endpoint GenerateCallback(string id)
         {
-            return Endpoint.GenerateCallback(id, SessionState, ArgumentList);
+            return Endpoint.GenerateCallback(id, this, SessionState, ArgumentList);
         }
 
         protected Endpoint GenerateCallback(string id, ScriptBlock endpoint, object[] argumentList)
         {
-            return endpoint.GenerateCallback(id, SessionState, argumentList);
+            return endpoint.GenerateCallback(id, this, SessionState, argumentList);
         }
     }
 }

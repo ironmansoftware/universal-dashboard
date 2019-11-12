@@ -13,7 +13,27 @@ namespace UniversalDashboard.Cmdlets
     {
         public static string[] SkippedVariables = new[] { "args", "input", "psboundparameters", "pscommandpath", "foreach", "myinvocation", "psscriptroot", "DefaultVIServer", "DefaultVIServers"  };
 
-        public static Endpoint TryGenerateEndpoint(this object obj, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
+        internal static HostState HostState;
+
+        static CmdletExtensions()
+        {
+            HostState = new HostState
+            {
+                EndpointService = new EndpointService()
+            };
+        }
+
+        public static HostState GetHostState(this PSCmdlet cmdlet)
+        {
+            if (cmdlet.Host.Name != "UDHost")
+            {
+                return HostState;
+            }
+
+            return cmdlet.Host.PrivateData.BaseObject as HostState;
+        }
+
+        public static Endpoint TryGenerateEndpoint(this object obj, string id, PSCmdlet cmdlet, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
         {
             if (obj == null)
             {
@@ -28,13 +48,13 @@ namespace UniversalDashboard.Cmdlets
 
             if (obj is ScriptBlock scriptBlock)
             {
-                return GenerateCallback(scriptBlock, id, sessionState);
+                return GenerateCallback(scriptBlock, id, cmdlet, sessionState);
             }
 
             throw new Exception($"Expected UDEndpoint or ScriptBlock but got {obj.GetType()}");
         }
 
-        public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
+        public static Endpoint GenerateCallback(this ScriptBlock endpoint, string id, PSCmdlet cmdlet, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
         {
             if (endpoint == null) return null;
 
@@ -69,7 +89,8 @@ namespace UniversalDashboard.Cmdlets
             callback.SessionId = sessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
             callback.Page = sessionState.PSVariable.Get(Constants.UDPage)?.Value as Page;
 
-            EndpointService.Instance.Register(callback);
+            var hostState = cmdlet.GetHostState();
+            hostState.EndpointService.Register(callback);
 
             return callback;
         }
