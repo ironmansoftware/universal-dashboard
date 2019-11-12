@@ -10,6 +10,12 @@ namespace UniversalDashboard
     class DashboardManager
     {
         private Server _server;
+        private readonly bool _dontSetExecutionPolicy;
+
+        public DashboardManager(bool dontSetExecutionPolicy)
+        {
+            _dontSetExecutionPolicy = dontSetExecutionPolicy;
+        }
 
         public void Start()
         {
@@ -24,7 +30,11 @@ namespace UniversalDashboard
                 {
                     var modulePath = Path.Combine(assemblyBasePath, "..\\UniversalDashboard.Community.psd1");
 
-                    powerShell.AddStatement().AddScript("Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process");
+                    if (!_dontSetExecutionPolicy)
+                    {
+                        powerShell.AddStatement().AddScript("Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process");
+                    }
+                    
                     powerShell.AddStatement().AddScript($"Import-Module '{modulePath}'");
                     powerShell.AddStatement().AddScript($". '{dashboardScript}'");
 

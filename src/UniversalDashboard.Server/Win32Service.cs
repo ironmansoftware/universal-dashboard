@@ -7,9 +7,16 @@ namespace UniversalDashboard
         public string ServiceName => "Universal Dashboard";
         private DashboardManager _dashboardManager;
 
+        private readonly bool _dontSetExecutionPolicy;
+
+        public UniversalDashboardService(bool dontSetExecutionPolicy)
+        {
+            _dontSetExecutionPolicy = dontSetExecutionPolicy;
+        }
+
         public void Start(string[] startupArguments, ServiceStoppedCallback serviceStoppedCallback)
         {
-            _dashboardManager = new DashboardManager();
+            _dashboardManager = new DashboardManager(_dontSetExecutionPolicy);
             _dashboardManager.Start();
         }
 
