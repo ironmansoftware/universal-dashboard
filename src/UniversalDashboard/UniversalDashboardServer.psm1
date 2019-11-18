@@ -1469,7 +1469,9 @@ function Publish-UDDashboard {
 		[Parameter(Mandatory = $true)]
 		[string]$DashboardFile,
 		[Parameter()]
-		[string]$TargetPath = $PSScriptRoot
+		[string]$TargetPath = $PSScriptRoot,
+		[Parameter(ParameterSetName = 'Service')]
+		[Switch]$DontSetExecutionPolicy
 	)
 
 	$DashboardFile = Resolve-Path $DashboardFile
@@ -1526,7 +1528,13 @@ function Publish-UDDashboard {
 
 		$binPath = [System.IO.Path]::Combine($TargetPath, "net472", "UniversalDashboard.Server.exe")
 
-		sc.exe create UniversalDashboard DisplayName= "PowerShell Universal Dashboard" binPath= "$binPath --run-as-service" start= "$ServiceStart"
+		$args = "$binPath --run-as-service";
+		if ($DontSetExecutionPolicy)
+		{
+			$args += " --dont-set-execution-policy"
+		}
+
+		sc.exe create UniversalDashboard DisplayName= "PowerShell Universal Dashboard" binPath= "$args" start= "$ServiceStart"
 
 		Write-Verbose "Starting service UniversalDashboard"
 		sc.exe start UniversalDashboard
