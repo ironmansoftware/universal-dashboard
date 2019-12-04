@@ -155,12 +155,12 @@ Describe "Grid" {
             Start-Sleep 1
             Send-SeKeys -Element $Element[0] -Keys "0"
 
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0]
+            $Grid = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Grid[0]
             $Element.Length | Should be 6
 
-            $pagination  = Find-SeElement -ClassName "pagination" -Driver $Driver | Select-Object -First 1
-            $pagination.FindElementsByTagName('li').Count | should be 0
+            $pagination  = Find-SeElement -ClassName "pagination" -Driver $Grid[0] | Select-Object -First 1
+            $pagination | should be $null
         }
     }
     

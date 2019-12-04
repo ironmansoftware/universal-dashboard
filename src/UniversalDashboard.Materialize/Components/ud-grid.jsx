@@ -164,7 +164,15 @@ export default class UdGrid extends React.Component {
 
         this.setState({ data, currentPage, recordCount, hasError: false, sortColumn, sortAscending , filterText});
 
-        this.filter(filterText, data);
+        if (this.props.serverSideProcessing)
+        {
+            this.setState({filteredData: data})
+        }
+        else 
+        {
+            this.filter(filterText, data);
+        }
+        
     }
 
     onSort(sortProperties) {
