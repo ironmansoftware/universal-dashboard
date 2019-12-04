@@ -52,6 +52,7 @@ export default class UdGrid extends React.Component {
     
         this.state = {
           data: [],
+          filteredData: [],
           currentPage: 1,
           pageSize: props.pageSize,
           recordCount: 0,
@@ -160,7 +161,18 @@ export default class UdGrid extends React.Component {
         if (Object.prototype.toString.call( data ) !== '[object Array]' ) {
             data = []
         }
+
         this.setState({ data, currentPage, recordCount, hasError: false, sortColumn, sortAscending , filterText});
+
+        if (this.props.serverSideProcessing)
+        {
+            this.setState({filteredData: data})
+        }
+        else 
+        {
+            this.filter(filterText, data);
+        }
+        
     }
 
     onSort(sortProperties) {
@@ -242,6 +254,29 @@ export default class UdGrid extends React.Component {
         }
     }
 
+    filter(filter, data) {
+        if (filter !== "")
+        {
+            var filteredData = data.filter(x => {
+                return Object.keys(x).find(y => {
+                    var value = x[y];
+                    const filterToLower = filter.toLowerCase();
+                    return value && value.toString().toLowerCase().indexOf(filterToLower) > -1;
+                }) != null
+            });
+
+            this.setState({ filteredData, filterText: filter, recordCount: filteredData.length });
+        }
+        else 
+        {
+            this.setState({filteredData: data, filterText: filter, recordCount: data.length })
+        }
+    }
+
+    onLocalFilter(e) {
+        this.filter(e.target.value, this.state.data);
+    }
+
     render() {
         if (this.state.hasError) {
             return [<ErrorCard message={this.state.errorMessage} title={this.props.title} id={this.props.id} key={this.props.id} />, <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>]
@@ -288,34 +323,30 @@ export default class UdGrid extends React.Component {
             SettingsToggle: () => <span />,
             Pagination: () => <span />
         }
-        var serverFilterControl = <DebounceInput name="filter" className="griddle-filter" type="text" placeholder={this.props.filterText} value={this.state.filterText} onChange={this.onFilter.bind(this)} debounceTimeout={300} />
+        var serverFilterControl = null;
 
         if (!this.props.serverSideProcessing) {
             gridPlugins = [plugins.LocalPlugin]
-            serverFilterControl = null;
-            if (this.props.noFilter) {
-                components = {
-                    ...components,
-                    Filter: () => <span/>
-                }
-            }
             serverSort = this.onLocalSort.bind(this);
+            serverFilter = this.onLocalFilter.bind(this);
         } else {
             serverSort = this.onSort.bind(this);
             serverFilter = this.onFilter.bind(this);
             serverPrev = this.onPreviousPage.bind(this);
             serverNext = this.onNextPage.bind(this);
             serverGetPage = this.onGetPage.bind(this);
+        }
 
-            if (this.props.noFilter) {
-                serverFilter = null;
-                serverFilterControl = null;
-            }
+        serverFilterControl = <DebounceInput name="filter" className="griddle-filter" type="text" placeholder={this.props.filterText} value={this.state.filterText} onChange={serverFilter} debounceTimeout={300} />
 
-            components = {
-                ...components,
-                Filter: () => <span/>
-            }
+        if (this.props.noFilter) {
+            serverFilter = null;
+            serverFilterControl = null;
+        }
+
+        components = {
+            ...components,
+            Filter: () => <span/>
         }
 
         return (
@@ -328,7 +359,7 @@ export default class UdGrid extends React.Component {
                     <div className="progress"><div className="indeterminate"></div></div> :
                     rowDefinition ? 
                     [<Griddle 
-                        data={this.state.data}
+                        data={this.state.filteredData}
                         plugins={gridPlugins}
 						textProperties={{filterPlaceholder: this.props.filterText}}
                         sortProperties={[{
