@@ -39,6 +39,11 @@ function New-UDTextbox {
         $Attributes.disabled = $true
     }
 
+    $LabelClassName = ""
+    if($Value){
+        $LabelClassName = "active"
+    }
+
     New-UDElement -Tag "div" -Attributes @{ className = 'input-field'} -Content {
 
         if ($PSBoundParameters.ContainsKey('Icon')) {
@@ -50,8 +55,9 @@ function New-UDTextbox {
         New-UDElement -Id $Id -Tag "input" -Attributes $Attributes
 
         if ($PSBoundParameters.ContainsKey('Label')) {
-            New-UDElement -Tag "label" -Attributes @{
+            New-UDElement -Tag "label" -Attributes @{                
                 'for' = $Id 
+                className = $LabelClassName
             } -Content { $Label }
         }
     }
