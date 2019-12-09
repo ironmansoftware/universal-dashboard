@@ -132,16 +132,16 @@ export default class UdGrid extends React.Component {
                 }
 
                 if (json.data.length === 1 && json.data[0] === null) {
-                    return
+                    json.data = []
                 }
 
                 if (json.data.length == 1 && typeof json.data[0] === 'string')  {
-                    return;
+                    json.data = []
                 }
 
                 if (Object.prototype.toString.call( json.data ) === '[object Array]' && json.data.length === 1) {
                     if (Object.prototype.toString.call( json.data[0] ) === '[object Array]' && json.data[0].length === 0)
-                        return;
+                        json.data = []
                 }
 
                 this.updateTableState({
@@ -451,6 +451,7 @@ class GridToolbar extends React.Component {
                     flat
                     tooltip="Refresh"
                     tooltipOptions={{position: 'bottom'}}
+                    id="grid-btn-refresh"
                     />
                 <Button 
                     icon={<UdIcon icon="Download" />} 

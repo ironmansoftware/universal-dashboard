@@ -1,6 +1,57 @@
 Describe "Grid" {
 
-    
+    Context "Refresh" {
+
+
+
+        $Cache:data = @(
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+        )
+
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+                $data = $Cache:data
+                $data | Out-UDGridData 
+            }
+        }
+
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should set grid to single item" {
+            $Cache:data =  @([PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"})
+
+            $Button = Find-SeElement -Driver $Driver -Id 'grid-btn-refresh'
+            Invoke-SeClick -Element $Button
+
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
+            $Element.Length | Should be 1
+        }
+
+        It "should set grid to empty" {
+            $Cache:data =  @()
+
+            $Button = Find-SeElement -Driver $Driver -Id 'grid-btn-refresh'
+            Invoke-SeClick -Element $Button
+
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
+            $Element.Length | Should be 0
+        }
+        
+        It "should set grid to empty if null" {
+            $Cache:data =  $null
+
+            $Button = Find-SeElement -Driver $Driver -Id 'grid-btn-refresh'
+            Invoke-SeClick -Element $Button
+
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
+            $Element.Length | Should be 0
+        }
+    }
+
     Context "Grid" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
             New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
