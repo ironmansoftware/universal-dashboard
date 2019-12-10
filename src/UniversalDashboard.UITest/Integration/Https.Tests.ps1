@@ -27,6 +27,17 @@ $Cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -DnsNa
 Describe "Https" {
     Context "From store" {
 
+        It "should serve HTTPS - REST API" {
+            $Endpoint = New-UDEndpoint -Url "/test" -Endpoint {}
+
+            $Server = Start-UDRestApi -Port 10001 -Certificate $Cert -Endpoint $Endpoint
+
+            $Request = Invoke-WebRequest https://localhost:10001/test
+            $Request.StatusCode | Should be 200
+
+            Stop-UDRestApi -Server $Server
+        }
+
         It "should serve HTTPS" {
             $Dashboard = Start-UDDashboard -Port 10001 -Certificate $Cert
 
