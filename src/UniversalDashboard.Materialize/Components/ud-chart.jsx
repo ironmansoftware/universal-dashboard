@@ -35,8 +35,19 @@ export default class UdChart extends React.Component {
             type: "clientEvent",
             eventId: this.props.id + "onClick",
             eventName: 'onClick',
-            eventData: JSON.stringify(elements.map(x => x._view))
+            eventData: JSON.stringify(elements.map(this.mapChartData))
         });
+    }
+
+    mapChartData(element) {
+        var label = element._chart.data.labels[element._index];
+        var value = element._chart.data.datasets[element._datasetIndex].data[element._index];
+
+        return {
+            ...element._view, 
+            label, 
+            value
+        }
     }
 
     componentWillUnmount() {

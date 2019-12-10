@@ -50,7 +50,6 @@ export default class UdElement extends React.Component {
 
     componentWillUnmount() {
         if (this.pubSubToken != null) {
-            console.log(this.pubSubToken);
             PubSub.unsubscribe(this.pubSubToken);
         }
     }

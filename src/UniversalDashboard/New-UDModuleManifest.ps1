@@ -97,7 +97,8 @@ $manifestParameters = @{
 		"New-UDSplitPane"
 		"New-UDTreeNode"
 		"New-UDTreeView"
-		"New-UDTooltip"
+        "New-UDTooltip"
+        "Invoke-UDEvent"
 
 		#Material UI
 		'New-UDMuAvatar'
@@ -117,7 +118,8 @@ $manifestParameters = @{
 		'New-UDMuListItem'
 		'New-UDMuPaper'
 		'New-UDPdf'
-		'New-UDMuTypography'
+        'New-UDMuTypography'
+        
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 

@@ -18,6 +18,11 @@ namespace UniversalDashboard.Cmdlets
         {
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
 
+            if (hub == null)
+            {
+                throw new System.Exception("Cannot call Sync-UDElement out side of an endpoint block.");
+            }
+
             foreach(var id in Id) 
             {
                 if (Broadcast)

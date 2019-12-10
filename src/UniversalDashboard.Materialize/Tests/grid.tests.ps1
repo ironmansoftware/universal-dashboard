@@ -1,5 +1,219 @@
 Describe "Grid" {
 
+    Context "Refresh" {
+
+
+
+        $Cache:data = @(
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+        )
+
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+                $data = $Cache:data
+                $data | Out-UDGridData 
+            }
+        }
+
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should set grid to single item" {
+            $Cache:data =  @([PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"})
+
+            $Button = Find-SeElement -Driver $Driver -Id 'grid-btn-refresh'
+            Invoke-SeClick -Element $Button
+
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
+            $Element.Length | Should be 1
+        }
+
+        It "should set grid to empty" {
+            $Cache:data =  @()
+
+            $Button = Find-SeElement -Driver $Driver -Id 'grid-btn-refresh'
+            Invoke-SeClick -Element $Button
+
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
+            $Element.Length | Should be 0
+        }
+        
+        It "should set grid to empty if null" {
+            $Cache:data =  $null
+
+            $Button = Find-SeElement -Driver $Driver -Id 'grid-btn-refresh'
+            Invoke-SeClick -Element $Button
+
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
+            $Element.Length | Should be 0
+        }
+    }
+
+    Context "Grid" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+                $data = @(
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                )
+
+                $data | Out-UDGridData 
+            }
+
+            New-UDGrid -Title "Grid" -Id "SingleItemGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+                [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"} | Out-UDGridData 
+            }
+
+            New-UDGrid -Title "Grid" -Id "NoPagingGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+                $data = @(
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                )
+
+                $data | Out-UDGridData 
+            } -NoPaging
+
+            New-UDGrid -Title "Grid" -Id "PageSizeGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+                $data = @(
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+                )
+
+                $data | Sort-Object -Property day | Out-UDGridData 
+            } -PageSize 5
+        }
+
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should not page when NoPaging set" {
+            $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
+            $Element.Length | Should be 18
+        }
+
+        It "should set page size" {
+            $Element = Find-SeElement -Id "PageSizeGrid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
+            $Element.Length | Should be 5
+        }
+
+        It "should headings" {
+            $Element = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Element[0]
+            $Element.Length | Should be 3
+            $Element[0].Text.Contains('day') | should be $true
+            $Element[1].Text | should be "jpg"
+            $Element[2].Text | should be "mp4"
+        }
+
+        It "should have data" {
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $Element.Length | Should be 3
+            $Element[0].Text | should be "1"
+            $Element[1].Text | should be "10"
+            $Element[2].Text | should be "30"
+        }
+
+        It "should sort data" {
+            
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+            $header = $element[0]
+            Invoke-SeClick $header
+
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
+            $Element[0].Text | should be "1"
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
+            $Element[0].Text | should be "1"
+            
+            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+            $header = $element[0]
+            Invoke-SeClick $header
+
+            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
+            $Element[0].Text | should be "3"
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
+            $Element[0].Text | should be "3"
+        }
+
+        It "should have data in single item grid" {
+            $Element = Find-SeElement -Id "SingleItemGrid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $Element.Length | Should be 3
+            $Element[0].Text | should be "1"
+            $Element[1].Text | should be "10"
+            $Element[2].Text | should be "30"
+        }
+
+        It "should filter data" {
+            
+            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
+
+            Send-SeKeys -Element $Element[0] -Keys "2"
+            Start-Sleep 1
+            Send-SeKeys -Element $Element[0] -Keys "0"
+
+            $Grid = Find-SeElement -Id "Grid" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Grid[0]
+            $Element.Length | Should be 6
+
+            $pagination  = Find-SeElement -ClassName "pagination" -Driver $Grid[0] | Select-Object -First 1
+            $pagination | should be $null
+        }
+    }
     
     Context "server side processing" {
         $dashboard = New-UDDashboard -Title "Test" -Content {New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
@@ -328,165 +542,6 @@ Describe "Grid" {
         }
     }
 
-    Context "Grid" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                )
-
-                $data | Out-UDGridData 
-            }
-
-            New-UDGrid -Title "Grid" -Id "SingleItemGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
-                [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"} | Out-UDGridData 
-            }
-
-            New-UDGrid -Title "Grid" -Id "NoPagingGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                )
-
-                $data | Out-UDGridData 
-            } -NoPaging
-
-            New-UDGrid -Title "Grid" -Id "PageSizeGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                )
-
-                $data | Sort-Object -Property day | Out-UDGridData 
-            } -PageSize 5
-        }
-
-        Set-TestDashboard -Dashboard $dashboard
-
-        It "should not page when NoPaging set" {
-            $Element = Find-SeElement -Id "NoPagingGrid" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
-            $Element.Length | Should be 18
-        }
-
-        It "should set page size" {
-            $Element = Find-SeElement -Id "PageSizeGrid" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0] 
-            $Element.Length | Should be 5
-        }
-
-        It "should headings" {
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Element[0]
-            $Element.Length | Should be 3
-            $Element[0].Text.Contains('day') | should be $true
-            $Element[1].Text | should be "jpg"
-            $Element[2].Text | should be "mp4"
-        }
-
-        It "should have data" {
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-            $Element.Length | Should be 3
-            $Element[0].Text | should be "1"
-            $Element[1].Text | should be "10"
-            $Element[2].Text | should be "30"
-        }
-
-        It "should sort data" {
-            
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
-            $header = $element[0]
-            Invoke-SeClick $header
-
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "1"
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "1"
-            
-            $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
-            $header = $element[0]
-            Invoke-SeClick $header
-
-            $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
-            $Element[0].Text | should be "3"
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
-            $Element[0].Text | should be "3"
-        }
-
-        It "should have data in single item grid" {
-            $Element = Find-SeElement -Id "SingleItemGrid" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-            $Element.Length | Should be 3
-            $Element[0].Text | should be "1"
-            $Element[1].Text | should be "10"
-            $Element[2].Text | should be "30"
-        }
-
-        It "should filter data" {
-            
-            $Element = Find-SeElement -ClassName "griddle-filter" -Driver $Driver
-
-            Send-SeKeys -Element $Element[0] -Keys "2"
-            Start-Sleep 1
-            Send-SeKeys -Element $Element[0] -Keys "0"
-
-            $Element = Find-SeElement -Id "Grid" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Element[0]
-            $Element.Length | Should be 6
-        }
-    }
 
     Context "default sort" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
