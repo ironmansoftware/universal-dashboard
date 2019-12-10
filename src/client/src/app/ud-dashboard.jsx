@@ -77,10 +77,11 @@ export default class UdDashboard extends React.Component {
             });
         });
 
-        connection.on('removeElement', (componentId) => {
+        connection.on('removeElement', (componentId, parentId) => {
             PubSub.publish(componentId, {
                 type: "removeElement",
-                componentId: componentId
+                componentId: componentId,
+                parentId: parentId
             });
         });
 
