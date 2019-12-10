@@ -15,6 +15,9 @@ namespace UniversalDashboard.Cmdlets
 
         [Parameter(Mandatory = true)]
         public string Id { get; set; }
+        [Parameter()]
+        public string ParentId { get; set; }
+
         [Parameter]
         public SwitchParameter Broadcast { get; set; }
 
@@ -24,12 +27,12 @@ namespace UniversalDashboard.Cmdlets
 
             if (Broadcast)
             {
-                hub.RemoveElement(Id).Wait();
+                hub.RemoveElement(Id, ParentId).Wait();
             }
             else
             {
                 var connectionId = this.GetVariableValue("ConnectionId") as string;   
-                hub.RemoveElement(Id).Wait();
+                hub.RemoveElement(Id, ParentId).Wait();
             }
         }
     }
