@@ -17,4 +17,13 @@ Describe "Textbox" {
             Find-SeElement -ClassName 'active' -Driver $Driver | should be $true
         }
     }
+
+    Context "textbox placeholder" {
+        Set-TestDashboard -Content {
+            New-UDTextbox -Id 'EndTimestamp' -Label 'EndTimestamp' -Placeholder (Get-Date).ToString('yyyy.MM.dd HH:mm:ss.fff')  
+        }
+        It "should be active" {
+            Find-SeElement -ClassName 'active' -Driver $Driver | should be $true
+        }
+    }
 }

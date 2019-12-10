@@ -40,7 +40,7 @@ function New-UDTextbox {
     }
 
     $LabelClassName = ""
-    if($Value){
+    if($Value -Or $Placeholder){
         $LabelClassName = "active"
     }
 
