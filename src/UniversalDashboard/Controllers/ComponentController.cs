@@ -543,7 +543,7 @@ namespace UniversalDashboard.Controllers
             var element = (Element)jobject.ToObject(typeof(Element));
 
             _stateRequestService.Set(requestId, element);
-            return Ok();
+            return Json(new { message = "Session state set" });
         }
 
         private void SetQueryStringValues(Dictionary<string, object> variables)
