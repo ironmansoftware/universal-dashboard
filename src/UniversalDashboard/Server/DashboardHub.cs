@@ -84,14 +84,14 @@ namespace UniversalDashboard
             await hub.Clients.Client(clientId).SendAsync("addElement", parentComponentId, element);
         }
 
-        public static async Task RemoveElement(this IHubContext<DashboardHub> hub, string clientId, string componentId)
+        public static async Task RemoveElement(this IHubContext<DashboardHub> hub, string clientId, string componentId, string parentId)
         {
-            await hub.Clients.Client(clientId).SendAsync("removeElement", componentId);
+            await hub.Clients.Client(clientId).SendAsync("removeElement", componentId, parentId);
         }
 
-        public static async Task RemoveElement(this IHubContext<DashboardHub> hub, string componentId)
+        public static async Task RemoveElement(this IHubContext<DashboardHub> hub, string componentId, string parentId)
         {
-            await hub.Clients.All.SendAsync("removeElement", componentId);
+            await hub.Clients.All.SendAsync("removeElement", componentId, parentId);
         }
 
         public static async Task ClearElement(this IHubContext<DashboardHub> hub, string clientId, string componentId)

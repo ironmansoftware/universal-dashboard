@@ -24,6 +24,8 @@ namespace UniversalDashboard.Cmdlets
 
 		[Parameter]
 		public int Port { get; set; } = 80;
+		[Parameter]
+		public int? HttpsPort { get; set; }
 
 		[Parameter]
 		public SwitchParameter Wait { get; set; }
@@ -81,6 +83,7 @@ namespace UniversalDashboard.Cmdlets
             var options = new DashboardOptions();
 			options.StaticEndpoints = Endpoint;
 			options.Port = Port;
+			options.HttpsPort = HttpsPort.HasValue ? HttpsPort.Value : Port;
 			options.Wait = Wait;
 			options.Certificate = Certificate;
 			options.CertificateFile = CertificateFile;
