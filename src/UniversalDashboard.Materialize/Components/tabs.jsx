@@ -1,10 +1,12 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import M from 'materialize-css';
 
 export default class TabContainer extends React.Component {
 
     componentDidMount() {
         M.Tabs.init(this.element);
+        var instance = M.Tabs.getInstance(this.element);
+        instance.updateTabIndicator();
     }
 
     renderTabHeaders() {
@@ -38,13 +40,13 @@ export default class TabContainer extends React.Component {
 
         return (
             <Fragment>
-            <div>
-              <ul className="tabs" ref={x => this.element = x}>
-                {headers}
-              </ul>
-            </div>
-            {content}
-          </Fragment>
+                <div>
+                    <ul className="tabs" ref={x => this.element = x}>
+                        {headers}
+                    </ul>
+                </div>
+                {content}
+            </Fragment>
 
         )
     }
