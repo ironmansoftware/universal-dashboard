@@ -1,6 +1,7 @@
 require('materialize-css/dist/css/materialize.min.css');
 
 import TabContainer from './tabs';
+import UDTable from "./ud-table";
 import UDButton from './ud-button';
 import UDChart from './ud-chart';
 import UDCounter from './ud-counter';
@@ -22,6 +23,7 @@ import UDGridLayout from './ud-grid-layout';
 import UDFab from './ud-fab';
 import UDTreeView from './ud-treeview';
 
+UniversalDashboard.register("ud-table", UDTable);
 UniversalDashboard.register("ud-button", UDButton);
 UniversalDashboard.register("ud-chart", UDChart);
 UniversalDashboard.register("ud-counter", UDCounter);

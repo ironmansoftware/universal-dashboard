@@ -240,34 +240,37 @@ function Out-UDTableData {
 		[Parameter()]
 	    [string]$DateTimeFormat = "lll"
 	)
-
+    Begin {
+        $output = @()
+    }
 	Process {
-		New-UDElement -Tag 'tr' -Content {
-			foreach($itemProperty in $Property) {
-				New-UDElement -Tag 'td' -Content {
-					if ($Data.$itemProperty -is [System.DateTime]) {
-						$DateTimeComponent = New-Object -TypeName UniversalDashboard.Models.DateTimeComponent
-						$DateTimeComponent.DateTimeFormat = $DateTimeFormat
-						$DateTimeComponent.Value = $Data.$itemProperty.ToString("O")
-						$DateTimeComponent
-					}
-					else
-					{
-						try 
-						{
-							$Data.$itemProperty
-						}
-						catch 
-						{
-							""
-						}
-					}
-				}
-			}
-		}
-	}
+        $tempout = @()
+        foreach($itemProperty in $Property) {
+            if ($Data.$itemProperty -is [System.DateTime]) {
+                $DateTimeComponent = New-Object -TypeName UniversalDashboard.Models.DateTimeComponent
+                $DateTimeComponent.DateTimeFormat = $DateTimeFormat
+                $DateTimeComponent.Value = $Data.$itemProperty.ToString("O")
+                $DateTimeComponent
+            }
+            else
+            {
+                try 
+                {
+                    $tempout += $Data.$itemProperty
+                }
+                catch 
+                {
+                    ""
+                }
+            }   
+        }
+        
+        $output = $output + $tempout
+    }
+    End {
+        return $output | ConvertTo-JsonEx -Depth 10
+    }
 }
-
 function Set-UDCookie {
 	param(
 		[Parameter(Mandatory = $true)]

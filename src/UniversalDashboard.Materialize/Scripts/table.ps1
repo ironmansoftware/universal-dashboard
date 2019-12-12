@@ -27,46 +27,45 @@ function New-UDTable {
 		[ScriptBlock]$Content
 	)
 
-	$Actions = $null
-	if ($Links -ne $null) {
-		$Actions = New-UDElement -Tag 'div' -Content {
-			$Links
-		} -Attributes @{
-			className = 'card-action'
-		}
-	}
+	Begin {
+        if ($null -ne $Links) {
+            $hasActions = $true
+        }
 
-	New-UDElement -Tag "div" -Id $Id -Attributes @{
-		className = 'card ud-table' 
-		style = @{
-			backgroundColor = $BackgroundColor.HtmlColor
-			color = $FontColor.HtmlColor
-		}
-	} -Content {
-		New-UDElement -Tag "div" -Attributes @{
-			className = 'card-content'
-		} -Content {
-			New-UDElement -Tag 'span' -Content { $Title } -Attributes @{ className="card-title"}
-			New-UDElement -Tag 'table' -Content {
-				New-UDElement -Tag 'thead' -Content {
-					New-UDElement -Tag 'tr' -Content {
-						foreach($header in $Headers) {
-							New-UDElement -Tag 'th' -Content { $header }
-						}
-					}
-				}
+        if ($null -ne $Endpoint) {
+            if ($Endpoint -is [scriptblock]) {
+                $Endpoint = New-UDEndpoint -Endpoint $Endpoint -Id $Id
+            }
+            elseif ($Endpoint -isnot [UniversalDashboard.Models.Endpoint]) {
+                throw "Endpoint must be a script block or UDEndpoint"
+            }
+        }
+    }
 
-				if ($Content -ne $null) {
-					New-UDElement -Tag 'tbody' -Content $Content
-				}
-				else {
-					New-UDElement -Tag 'tbody' -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -ArgumentList $ArgumentList -Id "$Id-tbody"
-				}
+    Process {
+        
+    }
 
-				
-			} -Attributes @{ className = $Style }
-		}
-		$Actions
-	}
+    End {
+        @{
+            type = 'ud-table'
+            isPlugin = $true
+            assetId = $assetId
+
+            id = $Id
+            hasAction = $hasActions
+            links = $Links
+            title = $Title
+            backgroundColor = $BackgroundColor.HtmlColor
+            fontColor = $FontColor.HtmlColor
+
+            header = $Headers
+            content = $Content
+            endpoint = $Endpoint.Name
+            autoRefresh = $AutoRefresh.IsPresent
+            refreshInterval = $RefreshInterval
+            argumentList = $ArgumentList
+        }
+    }
 }
 
