@@ -57,6 +57,11 @@ namespace UniversalDashboard.Execution
         private HostState HostState => Host.PrivateData.BaseObject as HostState;
         protected override void GetItem(string name)
         {
+            if (HostState?.EndpointService?.SessionManager == null)
+            {
+                throw new Exception("You cannot call the $Session provider outside of an endpoint.");
+            }
+            
             if (HostState.EndpointService.SessionManager.SessionExists(SessionId))
             {
                 var value = HostState.EndpointService.SessionManager.GetSession(SessionId).GetVariableValue(name);
@@ -69,6 +74,11 @@ namespace UniversalDashboard.Execution
 
         protected override void NewItem(string path, string itemTypeName, object newItemValue)
         {
+            if (HostState?.EndpointService?.SessionManager == null)
+            {
+                throw new Exception("You cannot call the $Session provider outside of an endpoint.");
+            }
+
             if (HostState.EndpointService.SessionManager.SessionExists(SessionId))
             {
                 HostState.EndpointService.SessionManager.GetSession(SessionId).SetVariable(path, newItemValue);
@@ -77,6 +87,11 @@ namespace UniversalDashboard.Execution
 
         protected override void SetItem(string name, object value)
         {
+            if (HostState?.EndpointService?.SessionManager == null)
+            {
+                throw new Exception("You cannot call the $Session provider outside of an endpoint.");
+            }
+
             if (HostState.EndpointService.SessionManager.SessionExists(SessionId))
             {
                 HostState.EndpointService.SessionManager.GetSession(SessionId).SetVariable(name, value);
@@ -85,6 +100,11 @@ namespace UniversalDashboard.Execution
 
         protected override bool ItemExists(string path)
         {
+            if (HostState?.EndpointService?.SessionManager == null)
+            {
+                throw new Exception("You cannot call the $Session provider outside of an endpoint.");
+            }
+
             if (HostState.EndpointService.SessionManager.SessionExists(SessionId))
             {
                 return HostState.EndpointService.SessionManager.GetSession(SessionId).SessionVariables.ContainsKey(path.ToLower());
@@ -99,6 +119,11 @@ namespace UniversalDashboard.Execution
 
         public void ClearContent(string path)
         {
+            if (HostState?.EndpointService?.SessionManager == null)
+            {
+                throw new Exception("You cannot call the $Session provider outside of an endpoint.");
+            }
+
             if (HostState.EndpointService.SessionManager.SessionExists(SessionId))
             {
                 HostState.EndpointService.SessionManager.GetSession(SessionId).RemoveVariable(path);
@@ -113,6 +138,11 @@ namespace UniversalDashboard.Execution
         public IContentReader GetContentReader(string path)
         {
             Logger.Debug($"GetContentReader - {path} ");
+
+            if (HostState?.EndpointService?.SessionManager == null)
+            {
+                throw new Exception("You cannot call the $Session provider outside of an endpoint.");
+            }
 
             if (HostState.EndpointService.SessionManager.SessionExists(SessionId))
             {
@@ -130,6 +160,11 @@ namespace UniversalDashboard.Execution
         public IContentWriter GetContentWriter(string path)
         {
             Logger.Debug($"GetContentWriter - {path} ");
+
+            if (HostState?.EndpointService?.SessionManager == null)
+            {
+                throw new Exception("You cannot call the $Session provider outside of an endpoint.");
+            }
 
             if (HostState.EndpointService.SessionManager.SessionExists(SessionId))
             {
