@@ -28,7 +28,7 @@ namespace UniversalDashboard.Cmdlets
         public SwitchParameter EvaluateUrlAsRegex { get; set; }
 
 		[Parameter(ParameterSetName = "Rest")]
-		[ValidateSet("GET", "POST", "DELETE", "PUT")]
+		[ValidateSet("GET", "POST", "DELETE", "PUT", "PATCH")]
 		public string Method { get; set; } = "GET";
 
         [Parameter(ParameterSetName = "Rest")]
