@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using UniversalDashboard.Utilities;
@@ -8,10 +9,12 @@ namespace UniversalDashboard.Services
 {
     public class AssetService
     {
-        public Dictionary<string, string> Frameworks;
-        public List<string> Plugins;
+        public ConcurrentDictionary<string, string> Frameworks;
+        public IEnumerable<string> Plugins => _plugins.Keys;
+        public IEnumerable<string> Assets => _assets.Keys;
 
-        public List<string> Assets;
+        private ConcurrentDictionary<string, string> _plugins;
+        private ConcurrentDictionary<string, string> _assets;
 
         private static AssetService _instance;
 
@@ -29,33 +32,33 @@ namespace UniversalDashboard.Services
 
         private AssetService()
         {
-            Assets = new List<string>();
-            Frameworks = new Dictionary<string, string>();
-            Plugins = new List<string>();
+            _assets = new ConcurrentDictionary<string, string>();
+            Frameworks = new ConcurrentDictionary<string, string>();
+            _plugins = new ConcurrentDictionary<string, string>();
         }
 
         public string RegisterAsset(string asset) {
 
             if (asset.StartsWith("http")) {
-                Assets.Add(asset);
+                _assets.TryAdd(asset, string.Empty);
                 return asset.Split('/').Last();
             }
 
             var fileInfo = new FileInfo(asset);
-            Assets.Add(asset);
+            _assets.TryAdd(asset, string.Empty);
             return fileInfo.Name;
         }
         
         public string RegisterScript(string asset) {
 
             var fileInfo = new FileInfo(asset);
-            Assets.Add(asset);
+            _assets.TryAdd(asset, string.Empty);
             return fileInfo.Name;
         }
 
         public string RegisterStylesheet(string asset) {
             var fileInfo = new FileInfo(asset);
-            Assets.Add(asset);
+            _assets.TryAdd(asset, string.Empty);
             return fileInfo.Name;
         }
 
@@ -63,25 +66,25 @@ namespace UniversalDashboard.Services
         {
             if (Frameworks.ContainsKey(name))
             {
-                Frameworks.Remove(name);
+                Frameworks.TryRemove(name, out string value);
             }
 
-            Frameworks.Add(name, rootAsset);
+            Frameworks.TryAdd(name, rootAsset);
         }
 
         public void RegisterPlugin(string rootAsset)
         {
-            if (Plugins.Contains(rootAsset))
+            if (_plugins.ContainsKey(rootAsset))
             {
-                Plugins.Remove(rootAsset);
+                _plugins.TryRemove(rootAsset, out string value);
             }
 
-            Plugins.Add(rootAsset);
+            _plugins.TryAdd(rootAsset, string.Empty);
         }
 
         public void ClearRegistration()
         {
-            Assets.Clear();
+            _assets.Clear();
             Frameworks.Clear();
         }
 
@@ -89,7 +92,7 @@ namespace UniversalDashboard.Services
         {
             try
             {
-                return Assets.FirstOrDefault(m => {
+                return _assets.Keys.FirstOrDefault(m => {
                     if (m.StartsWith("http"))
                     {
                         return m.Split('/').Last().Equals(fileName);

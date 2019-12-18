@@ -5,7 +5,7 @@ online version: https://go.microsoft.com/fwlink/?LinkID=217032
 schema: 2.0.0
 ---
 
-# Invoke-UDElement
+# Invoke-UDEvent
 
 ## SYNOPSIS
 Performs a clientside "click" event on the specified id, if the element is clickable.
@@ -13,7 +13,7 @@ Performs a clientside "click" event on the specified id, if the element is click
 ## SYNTAX
 
 ```
-Invoke-UDElement -id <String> -event <string> [<CommonParameters>]
+Invoke-UDEvent -id <String> -event <string> [<CommonParameters>]
 ```
 
 
@@ -24,7 +24,7 @@ Performs a clientside "click" event on the specified id, if the element is click
 
 ### Example 1
 ```
-PS C:\> Invoke-UDElement -id "someid" -event "onClick"
+PS C:\> Invoke-UDEvent -id "someid" -event "onClick"
 ```
 
 Performs a clientside "click" event on the specified id, if the element is clickable.

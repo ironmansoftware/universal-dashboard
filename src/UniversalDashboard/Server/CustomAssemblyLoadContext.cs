@@ -92,8 +92,6 @@ namespace UniversalDashboard
 			log.Debug("Loading files in native directory: " + nativePath);
 
 			if (!Directory.Exists(nativePath)) {
-				log.Warn("Native file path does not exist. Universal Dashboard may not work. " + nativePath);
-
 				return;
 			}
 

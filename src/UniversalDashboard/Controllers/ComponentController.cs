@@ -504,7 +504,38 @@ namespace UniversalDashboard.Controllers
 			return StatusCode(404);
 		}
 
-		[HttpPut]
+        [HttpPatch]
+        [Route("/api/{*parts}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> PatchEndpoint()
+        {
+            var parts = HttpContext.GetRouteValue("parts") as string;
+
+            Log.Info($"PatchEndpoint - {parts}");
+
+            var variables = new Dictionary<string, object>();
+            SetQueryStringValues(variables);
+
+            if (!await TryProcessBodyAsForm(Request, variables))
+            {
+                //If we made it here we either have a non-form content type
+                //or the request was made with the default content type of form
+                //when it is really something else (probably application/json)
+                ProcessBodyAsRaw(Request, variables);
+            }
+
+            var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "PATCH", variables);
+            if (endpoint != null)
+            {
+                return await RunScript(endpoint, variables);
+            }
+
+            Log.Info("Did not match endpoint.");
+
+            return StatusCode(404);
+        }
+
+        [HttpPut]
 		[Route("/api/{*parts}")]
 		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public async Task<IActionResult> PutEndpoint()
@@ -543,7 +574,7 @@ namespace UniversalDashboard.Controllers
             var element = (Element)jobject.ToObject(typeof(Element));
 
             _stateRequestService.Set(requestId, element);
-            return Ok();
+            return Json(new { message = "Session state set" });
         }
 
         private void SetQueryStringValues(Dictionary<string, object> variables)

@@ -85,6 +85,10 @@ Describe "Api" {
                 param($test)
                 @("Adam", "Bill", "Frank", $test) | ConvertTo-Json
             }
+            New-UDEndpoint -Url "user" -Method "PATCH" -Endpoint {
+                param($test)
+                @("Adam", "Bill", "Frank", $test) | ConvertTo-Json
+            }
             New-UDEndpoint -Url "project" -Method "GET" -Endpoint {
                 
                 Set-UDContentType "application/xml"
@@ -187,6 +191,14 @@ Describe "Api" {
 
         It "returns users from the put endpoint" -Skip {
             $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method PUT -Body @{Test="xyz"}
+            $users[0] | Should be "Adam"
+            $users[1] | Should be "Bill"
+            $users[2] | Should be "Frank"
+            $users[3] | Should be "xyz"
+        }
+
+        It "returns users from the patch endpoint" -Skip {
+            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method Patch -Body @{Test="xyz"}
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
