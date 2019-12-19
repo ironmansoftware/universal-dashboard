@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improved Error message when access the $Session scope outside of an endpoint (#1369) by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed warning about missing folder when starting dashboard (#1373) by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed issue where Enable-UDLogging would not work after running Disable-UDLogging (#1389) by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed the help for Set-UDCookie by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed (Enterprise)
 
