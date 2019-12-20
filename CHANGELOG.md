@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+### Added (Enterprise)
+### Changed
+### Changed (Enterprise)
+### Removed
+### Removed (Enterprise)
+
+## 2.8.1 (12-20-2019)
+
+### Added
 
 - Add support for the PATCH verb for REST APIs (#1365) by [adamdriscoll](https://github.com/adamdriscoll)
 - Invoke-UDEndpoint can now trigger scheduled endpoints (#1381) by [BoSen29](https://github.com/BoSen29)
