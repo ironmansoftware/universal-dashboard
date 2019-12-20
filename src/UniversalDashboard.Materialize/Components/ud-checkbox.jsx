@@ -7,7 +7,8 @@ export default class UDCheckbox extends React.Component {
         super(props);
 
         this.state = {
-            checked: props.checked
+            checked: props.checked,
+            hidden: false
         }
     }
 
@@ -27,6 +28,22 @@ export default class UDCheckbox extends React.Component {
                 }
             });
         } 
+        else if (event.type === "setState") {
+            this.setState({
+                checked: event.state.attributes.checked,
+                hidden: event.state.attributes.hidden
+            });
+        }
+        else if (event.type === "clearElement") {
+            this.setState({
+                checked: false
+            });
+        }
+        else if (event.type === "removeElement") {
+            this.setState({
+                hidden: true
+            });
+        }
     }
 
     onChanged(e) {
@@ -50,6 +67,11 @@ export default class UDCheckbox extends React.Component {
     }
 
     render() {
+
+        if (this.state.hidden) {
+            return null;
+        }
+
         return <Checkbox 
                     checked={this.state.checked} 
                     label={this.props.label}
