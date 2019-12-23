@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed issue where authorization policies would run too frequently by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed issue where role-based access would not work when using Start-UDRestAPI by [adamdriscoll](https://github.com/adamdriscoll)
-- Fixed issue where the $ClaimsPrincipal variable would not be defined in a claims policy. 
+- Fixed issue where the $ClaimsPrincipal variable would not be defined in a claims policy by [adamdriscoll](https://github.com/adamdriscoll)
 ### Removed
 
 ### Removed (Enterprise)
