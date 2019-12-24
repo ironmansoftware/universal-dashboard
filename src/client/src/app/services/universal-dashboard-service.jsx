@@ -18,6 +18,7 @@ export const UniversalDashboardService = {
             component
         });
     },
+    renderDashboard: () => null,
     design: false,
     get: fetchGet,
     post: fetchPost,

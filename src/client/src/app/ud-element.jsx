@@ -4,8 +4,8 @@ import PubSub from 'pubsub-js';
 import {fetchGet, fetchPost} from './services/fetch-service.jsx';
 import {getApiPath} from 'config';
 import ReactInterval from 'react-interval';
-import ErrorCard from './error-card.jsx';
 import $ from 'jquery';
+import LazyElement from './basics/lazy-element.jsx';
 
 export default class UdElement extends React.Component {
     constructor() {
@@ -264,11 +264,17 @@ class UDElementContent extends React.Component {
         }
 
         if (this.state.hasError) {
-            return <ErrorCard message={this.state.errorMessage} />
+            return <LazyElement component={{
+                type: 'error',
+                message: this.state.errorMessage
+            }} />
         }
 
         if (this.props.error) {
-            return <ErrorCard message={this.props.error.message} />
+            return <LazyElement component={{
+                type: 'error',
+                message: this.state.errorMessage
+            }} />
         }
 
         if (this.state.loading) {
