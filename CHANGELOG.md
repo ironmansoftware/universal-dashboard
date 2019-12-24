@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added (Enterprise)
 ### Changed
 ### Changed (Enterprise)
+
+- Changed how authorization policies are run. by [adamdriscoll](https://github.com/adamdriscoll)
+
 ### Removed
 ### Removed (Enterprise)
 
