@@ -183,7 +183,6 @@ function connectWebSocket(sessionId, location, setLoading) {
     });
 }
 
-
 function loadStylesheet(url) {
     var styles = document.createElement('link');
     styles.rel = 'stylesheet';

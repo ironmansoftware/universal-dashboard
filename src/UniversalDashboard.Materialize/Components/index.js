@@ -26,6 +26,7 @@ import UDTreeView from './ud-treeview';
 import ErrorCard from './error-card';
 import UdPage from './ud-page';
 import Loading from './loading';
+import NotFound from './not-found';
 
 import {
     Route,
