@@ -1,5 +1,6 @@
 using System.Collections;
 using Newtonsoft.Json;
+using UniversalDashboard.Services;
 
 namespace UniversalDashboard.Models
 {
@@ -18,6 +19,23 @@ namespace UniversalDashboard.Models
         public string FontColor {get;set;}
 
         [JsonProperty("type")]
-        public override string Type => "footer";
+        public override string Type => "ud-footer";
+
+        //TODO: This is temporary and we should eventually move this into a ps1 file.
+		[JsonProperty("assetId")]
+		public string AssetId {
+			get 
+			{
+				if (AssetService.Instance.Frameworks.ContainsKey("Materialize"))
+				{
+					return AssetService.Instance.Frameworks["Materialize"];
+				}
+
+				return null;
+			}
+		}
+
+		[JsonProperty("isPlugin")]
+		public bool IsPlugin => true;
     }
 }

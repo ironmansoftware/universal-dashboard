@@ -14,6 +14,6 @@ namespace UniversalDashboard.Models
       public new string Height { get; set; }
 
       [JsonProperty("type")]
-      public new string Type => "Monitor";
+      public new string Type => "ud-monitor";
     }
 }

@@ -12,9 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added (Enterprise)
 ### Changed
+
+- Extracted materialize from the core UD client libraries by [adamdriscoll](https://github.com/adamdriscoll)
+
 ### Changed (Enterprise)
 
-- Changed how authorization policies are run. by [adamdriscoll](https://github.com/adamdriscoll)
+- Changed how authorization policies are run by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Removed
 ### Removed (Enterprise)
