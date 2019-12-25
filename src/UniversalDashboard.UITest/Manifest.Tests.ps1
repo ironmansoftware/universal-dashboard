@@ -2,7 +2,6 @@ param([Switch]$Release)
 
 Import-Module "$PSScriptRoot\TestFramework.psm1" -Force
 
-$BrowserPort = Get-BrowserPort -Release:$Release
 $ModulePath = Get-ModulePath -Release:$Release
 
 Import-Module $ModulePath -Force
@@ -11,7 +10,7 @@ Get-UDDashboard | Stop-UDDashboard
 Describe "Manifest" {
 
     It "should have correct version" {
-        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.8.0"
+        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.8.2"
     }
 
     It "should have correct exported commands" {
