@@ -14,10 +14,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Extracted materialize from the core UD client libraries by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed JavaScript error when loading page by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed (Enterprise)
 
 - Changed how authorization policies are run by [adamdriscoll](https://github.com/adamdriscoll)
+- Admin mode is now a toolbar rather than a floating action button by [adamdriscoll](https://github.com/adamdriscoll)
+- Updated the look and feel of the admin mode licensing and diagnostics pages by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Removed
 ### Removed (Enterprise)
