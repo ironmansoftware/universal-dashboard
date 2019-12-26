@@ -284,11 +284,7 @@ function Dashboard({history}) {
     }
 
     if (loading) {
-        return <Suspense fallback={<div></div>}>
-                    <LazyElement component={{
-                        type: 'loading'
-                    }} />
-                </Suspense>
+        return <div />
     }
 
     try
