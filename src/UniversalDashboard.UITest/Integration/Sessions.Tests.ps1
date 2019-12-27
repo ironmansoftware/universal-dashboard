@@ -11,7 +11,6 @@ Get-UDDashboard | Stop-UDDashboard
 $Server = Start-UDDashboard -Port 10001 -Dashboard (New-UDDashboard -Title "Test" -Content {}) 
 $Driver = Start-SeFirefox
 
-Enable-UDLogging
 Describe "Sessions" {
 
     Context "Should remove sessions" {
