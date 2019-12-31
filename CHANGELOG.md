@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Extracted materialize from the core UD client libraries by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed JavaScript error when loading page by [adamdriscoll](https://github.com/adamdriscoll)
+- Updated tests to correctly validate #1404 by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed (Enterprise)
 
