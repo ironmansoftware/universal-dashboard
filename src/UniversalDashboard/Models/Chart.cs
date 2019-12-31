@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Drawing;
+using UniversalDashboard.Services;
 
 namespace UniversalDashboard.Models
 {
@@ -33,7 +34,7 @@ namespace UniversalDashboard.Models
 		[JsonProperty("borderWidth")]
 		public int BorderWidth { get; set; }
 		[JsonProperty("type")]
-		public override string Type => "chart";
+		public override string Type => "ud-chart";
 		[JsonProperty("links")]
 		public Hashtable[] Links { get;set;}
 		[JsonProperty("filterFields")]
@@ -42,6 +43,23 @@ namespace UniversalDashboard.Models
 		public Endpoint OnClick {get;set;}
         [JsonProperty("clickable")]
         public bool Clickable { get; set; }
+
+		//TODO: This is temporary and we should eventually move this into a ps1 file.
+		[JsonProperty("assetId")]
+		public string AssetId {
+			get 
+			{
+				if (AssetService.Instance.Frameworks.ContainsKey("Materialize"))
+				{
+					return AssetService.Instance.Frameworks["Materialize"];
+				}
+
+				return null;
+			}
+		}
+
+		[JsonProperty("isPlugin")]
+		public bool IsPlugin => true;
 	}
 
 	public enum ChartType

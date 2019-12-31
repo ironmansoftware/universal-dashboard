@@ -89,6 +89,10 @@ Describe "Api" {
                 param($test)
                 @("Adam", "Bill", "Frank", $test) | ConvertTo-Json
             }
+            New-UDEndpoint -Url "/plop/:Guid/SomePart" -Method PATCH -Endpoint {
+                param([String]$Guid,$Body)
+                "MEH"
+            }
             New-UDEndpoint -Url "project" -Method "GET" -Endpoint {
                 
                 Set-UDContentType "application/xml"
@@ -197,12 +201,17 @@ Describe "Api" {
             $users[3] | Should be "xyz"
         }
 
-        It "returns users from the patch endpoint" -Skip {
+        It "returns users from the patch endpoint" {
             $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method Patch -Body @{Test="xyz"}
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
             $users[3] | Should be "xyz"
+        }
+
+        It "returns users from the patch endpoint with parameters" {
+            $result = Invoke-RestMethod -Uri http://localhost:10001/api/plop/asdf-asdf-adsf-adsf/SomePart -Method Patch -Body @{Test="xyz"}
+            $result | should be "Meh"
         }
 
         It "returns users from query string" {

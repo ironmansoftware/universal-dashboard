@@ -47,8 +47,6 @@ namespace UniversalDashboard.Cmdlets
 				level = LogLevel.Debug;
 			}
 
-
-
 			if (!string.IsNullOrEmpty(FilePath))
 			{
 				var resolvedPath = GetUnresolvedProviderPathFromPSPath(FilePath);
@@ -73,6 +71,7 @@ namespace UniversalDashboard.Cmdlets
 
 			}
 
+			LogManager.EnableLogging();
 			LogManager.Configuration = config;
 		}
 	}
