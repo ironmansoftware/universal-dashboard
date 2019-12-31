@@ -5,36 +5,36 @@ online version:
 schema: 2.0.0
 ---
 
-# Set-UDContentType
+# Set-UDCookie
 
 ## SYNOPSIS
-Sets the content-type HTTP header for a HTTP response.
+Sets a response cookie in the UD response. 
 
 ## SYNTAX
 
 ```
-Set-UDContentType [-ContentType] <Object> [<CommonParameters>]
+Set-UDContentType -Name <string> -Value <string> [-CookieOptions] <Microsoft.AspNetCore.Http.CookieOptions> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Sets the content-type HTTP header for a HTTP response. This should be in control's Endpoint script blocks.
+Sets a response cookie in the UD response. 
 
 ## EXAMPLES
 
 ### Example 1
 ```
-PS C:\> Set-UDContentType -ContentType "application/xml"
+PS C:\> Set-UDCookie -Name 'MyCookie' -Value 'CookieValue'
 ```
 
-Sets the content type to XML if an endpoint wanted to return XML.
+Sets a response cookie. 
 
 ## PARAMETERS
 
-### -ContentType
-The content type to set.
+### -Name
+The name of the cookie
 
 ```yaml
-Type: Object
+Type: String
 Parameter Sets: (All)
 Aliases: 
 
@@ -44,6 +44,37 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Value
+The value of the cookie
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CookieOptions
+Additional cookie options to set. 
+
+```yaml
+Type: Microsoft.AspNetCore.Http.CookieOptions
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).

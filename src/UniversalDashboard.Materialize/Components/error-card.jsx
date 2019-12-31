@@ -4,7 +4,7 @@ import {Card, Row, Col} from 'react-materialize';
 export default class ErrorCard extends React.Component {
     render() {
 
-        var icon = UniversalDashboard.renderComponent({type: 'icon', icon:'exclamation-triangle', color: 'red'})
+        var icon = UniversalDashboard.renderComponent({type: 'icon', icon:'ExclamationTriangle', color: 'red'})
 
         return <Card title={this.props.title} id={this.props.id}>
                     <Row>
