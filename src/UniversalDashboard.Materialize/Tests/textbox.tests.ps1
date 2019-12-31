@@ -1,5 +1,15 @@
 Describe "Textbox" {
 
+    Context "textbox disabled" {
+        Set-TestDashboard -Content {
+            New-UDTextbox -Id 'EndTimestamp' -Label 'EndTimestamp' -Disabled   
+        }        
+        It "should be disabled" {
+            $textbox = Find-SeElement -Id 'EndTimestamp' -Driver $Driver
+            $textbox.Enabled | should be $false
+        }
+    }
+
     Context "textbox no value" {
         Set-TestDashboard -Content {
             New-UDTextbox -Id 'EndTimestamp' -Label 'EndTimestamp'   
