@@ -1,11 +1,12 @@
-import React,{Suspense, useState, useEffect} from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 
-import {getApiPath} from 'config';
-import {fetchGet} from './services/fetch-service.jsx';
+import { getApiPath } from 'config';
+import { fetchGet } from './services/fetch-service.jsx';
 import PubSub from 'pubsub-js';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
 import toaster from './services/toaster';
+import setUDClipboard from "./services/clipboard";
 import LazyElement from './basics/lazy-element.jsx';
 
 var connection;
@@ -20,7 +21,7 @@ function connectWebSocket(sessionId, location, setLoading) {
     connection.on('reload', data => {
         window.location.reload(true);
     });
-    
+
     connection.on('setState', (componentId, state) => {
         PubSub.publish(componentId, {
             type: "setState",
@@ -99,7 +100,7 @@ function connectWebSocket(sessionId, location, setLoading) {
 
     connection.on('select', (ParameterSetName, ID, scrollToElement) => {
         if (ParameterSetName == "ToTop") {
-            window.scrollTo({ top: 0, behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         if (ParameterSetName == "Normal") {
             document.getElementById(ID).focus();
@@ -114,38 +115,40 @@ function connectWebSocket(sessionId, location, setLoading) {
     });
 
     connection.on('clipboard', (Data, toastOnSuccess, toastOnError) => {
-        var textArea = document.createElement("textarea");
-        textArea.style.position = 'fixed';
-        textArea.style.top = 0;
-        textArea.style.left = 0;
-        textArea.style.width = '2em';
-        textArea.style.height = '2em';
-        textArea.style.padding = 0;
-        textArea.style.border = 'none';
-        textArea.style.outline = 'none';
-        textArea.style.boxShadow = 'none';
-        textArea.style.background = 'transparent';
-        textArea.value = Data;
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
+        let data = Data
+        setUDClipboard(data, toastOnSuccess, toastOnError)
+        // var textArea = document.createElement("textarea");
+        // textArea.style.position = 'fixed';
+        // textArea.style.top = 0;
+        // textArea.style.left = 0;
+        // textArea.style.width = '2em';
+        // textArea.style.height = '2em';
+        // textArea.style.padding = 0;
+        // textArea.style.border = 'none';
+        // textArea.style.outline = 'none';
+        // textArea.style.boxShadow = 'none';
+        // textArea.style.background = 'transparent';
+        // textArea.value = Data;
+        // document.body.appendChild(textArea);
+        // textArea.focus();
+        // textArea.select();
 
-        try {
-            var successful = document.execCommand('copy');
-            if(toastOnSuccess) {
-                toaster.show({
-                    message: 'Copied to clipboard',
-                });
-            }
-        } catch (err) {
-            if (toastOnError) {
-                toaster.show({
-                    message: 'Unable to copy to clipboard',
-                });
-            }
-        }
-    
-        document.body.removeChild(textArea);
+        // try {
+        //     var successful = document.execCommand('copy');
+        //     if (toastOnSuccess) {
+        //         toaster.show({
+        //             message: 'Copied to clipboard',
+        //         });
+        //     }
+        // } catch (err) {
+        //     if (toastOnError) {
+        //         toaster.show({
+        //             message: 'Unable to copy to clipboard',
+        //         });
+        //     }
+        // }
+
+        // document.body.removeChild(textArea);
     });
 
     connection.on('write', (message) => {
@@ -157,13 +160,13 @@ function connectWebSocket(sessionId, location, setLoading) {
         setLoading(false);
     });
 
-    PubSub.subscribe('element-event', function(e, data) {
+    PubSub.subscribe('element-event', function (e, data) {
         if (data.type === "requestStateResponse") {
             connection.invoke("requestStateResponse", data.requestId, data.state)
         }
 
         if (data.type === "clientEvent") {
-            connection.invoke("clientEvent", data.eventId, data.eventName, data.eventData, location).catch(function(e) {
+            connection.invoke("clientEvent", data.eventId, data.eventName, data.eventData, location).catch(function (e) {
                 toaster.show({
                     message: e.message,
                     icon: 'fa fa-times-circle',
@@ -201,18 +204,18 @@ function loadJavascript(url, onLoad) {
 }
 
 function loadData(setDashboard, setLocation, history, location, setLoading) {
-    fetchGet("/api/internal/dashboard", function(json) {
+    fetchGet("/api/internal/dashboard", function (json) {
 
         var dashboard = json.dashboard;
 
         if (dashboard.stylesheets)
-        dashboard.stylesheets.map(loadStylesheet);
+            dashboard.stylesheets.map(loadStylesheet);
 
         if (dashboard.scripts)
             dashboard.scripts.map(loadJavascript);
 
         if (dashboard.geolocation) {
-            getLocation(setLocation);            
+            getLocation(setLocation);
         }
 
         connectWebSocket(json.sessionId, location, setLoading);
@@ -226,7 +229,7 @@ function loadData(setDashboard, setLocation, history, location, setLoading) {
 
 function getLocation(setLocation) {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             var name = "location";
 
             var positionJson = {
@@ -248,10 +251,10 @@ function getLocation(setLocation) {
 
             setLocation(value);
         });
-    } 
+    }
 }
 
-function Dashboard({history}) {
+function Dashboard({ history }) {
     const [dashboard, setDashboard] = useState(null);
     const [hasError, setHasError] = useState(false);
     const [error, setError] = useState(null);
@@ -261,45 +264,40 @@ function Dashboard({history}) {
     useEffect(() => {
         if (dashboard) return;
 
-        try 
-        {
-            loadData(setDashboard, setLocation, history, location, setLoading) 
+        try {
+            loadData(setDashboard, setLocation, history, location, setLoading)
         }
-        catch (err)
-        {
+        catch (err) {
             setError(err);
             setHasError(true);
         }
     });
 
-    if (hasError) 
-    {
+    if (hasError) {
         return <Suspense fallback={<div></div>}>
-                    <LazyElement component={{
-                        type: 'error',
-                        message: error.message,
-                        location: error.stackTrace
-                    }} />
-                </Suspense>
+            <LazyElement component={{
+                type: 'error',
+                message: error.message,
+                location: error.stackTrace
+            }} />
+        </Suspense>
     }
 
     if (loading) {
         return <div />
     }
 
-    try
-    {
+    try {
         var component = UniversalDashboard.renderDashboard({
-            dashboard: dashboard, 
+            dashboard: dashboard,
             history: history
         });
-    
+
         var pluginComponents = UniversalDashboard.provideDashboardComponents();
-    
-        return  [component, pluginComponents]
+
+        return [component, pluginComponents]
     }
-    catch (err)
-    {
+    catch (err) {
         setError(err);
         setHasError(true);
     }
