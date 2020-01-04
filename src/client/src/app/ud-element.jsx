@@ -1,8 +1,8 @@
 import React from 'react';
 import renderComponent from './services/render-service.jsx';
 import PubSub from 'pubsub-js';
-import {fetchGet, fetchPost} from './services/fetch-service.jsx';
-import {getApiPath} from 'config';
+import { fetchGet, fetchPost } from './services/fetch-service.jsx';
+import { getApiPath } from 'config';
 import ReactInterval from 'react-interval';
 import $ from 'jquery';
 import LazyElement from './basics/lazy-element.jsx';
@@ -19,8 +19,7 @@ export default class UdElement extends React.Component {
     isGuid(str) {
         if (str == null) { return false }
 
-        if (str[0] === "{") 
-        {
+        if (str[0] === "{") {
             str = str.substring(1, str.length - 1);
         }
         var regexGuid = /^(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1}$/gi;
@@ -36,6 +35,10 @@ export default class UdElement extends React.Component {
 
     onIncomingEvent(eventName, event) {
         if (event.type === "removeElement") {
+            if (this.props.tag == 'input') {
+                let inputComp = $(`#${this.props.id}`)
+                inputComp[0].parentElement.remove()
+            }
             this.setState({
                 hidden: true
             })
@@ -54,7 +57,7 @@ export default class UdElement extends React.Component {
         }
     }
 
-    render() {   
+    render() {
         if (this.state.hidden) {
             return null;
         }
@@ -67,8 +70,8 @@ class UDElementContent extends React.Component {
         super(props);
 
         this.state = {
-            content : props.content,
-            tag : props.tag,
+            content: props.content,
+            tag: props.tag,
             attributes: props.attributes,
             events: props.events,
             loading: true,
@@ -77,12 +80,11 @@ class UDElementContent extends React.Component {
         }
     }
 
-    loadData()
-    { 
-        fetchGet("/api/internal/component/element/" + this.props.id, function(data) {
+    loadData() {
+        fetchGet("/api/internal/component/element/" + this.props.id, function (data) {
             if (data.error) {
                 this.setState({
-                    hasError: true, 
+                    hasError: true,
                     errorMessage: data.error.message
                 })
                 return;
@@ -104,10 +106,9 @@ class UDElementContent extends React.Component {
         if (this.props.hasCallback) {
             this.loadData();
         }
-        else 
-        {
+        else {
             if (this.props.js) {
-                $.getScript(getApiPath() + "/api/internal/javascript/" + this.props.js, function() {
+                $.getScript(getApiPath() + "/api/internal/javascript/" + this.props.js, function () {
                     this.setState({
                         loading: false
                     })
@@ -126,7 +127,7 @@ class UDElementContent extends React.Component {
         this.state.attributes.value = val;
 
         this.setState({
-            attributes : this.state.attributes
+            attributes: this.state.attributes
         });
     }
 
@@ -136,10 +137,10 @@ class UDElementContent extends React.Component {
         this.state.attributes.checked = val;
 
         this.setState({
-            attributes : this.state.attributes
+            attributes: this.state.attributes
         });
 
-        for(var i = 0; i < this.state.events.length; i++) {
+        for (var i = 0; i < this.state.events.length; i++) {
             if (this.state.events[i].event === 'onChange') {
 
                 var event = this.state.events[i];
@@ -157,14 +158,14 @@ class UDElementContent extends React.Component {
     componentWillUnmount() {
         if (!this.props.preventUnregister) {
             if (this.state.events != null) {
-                for(var i = 0; i < this.state.events.length; i++) {
+                for (var i = 0; i < this.state.events.length; i++) {
                     PubSub.publish('element-event', {
                         type: "unregisterEvent",
                         eventId: this.state.events[i].id
                     });
                 }
             }
-    
+
             if (this.props.hasCallback) {
                 PubSub.publish('element-event', {
                     type: "unregisterEvent",
@@ -183,6 +184,7 @@ class UDElementContent extends React.Component {
         else if (event.type === "requestState") {
             fetchPost(`/api/internal/component/element/sessionState/${event.requestId}`, this.state);
         } else if (event.type === "removeElement") {
+
             this.setState({
                 hidden: true
             })
@@ -215,7 +217,7 @@ class UDElementContent extends React.Component {
             val = new Array();
 
             if (this.refs.element.selectedOptions) {
-                for(var item in  this.refs.element.selectedOptions) {
+                for (var item in this.refs.element.selectedOptions) {
                     if (isNaN(item)) continue;
                     var value = this.refs.element.selectedOptions[item].value;
                     val.push(value);
@@ -232,7 +234,7 @@ class UDElementContent extends React.Component {
                 val = JSON.stringify(val);
             }
 
-            for(var i = 0; i < this.state.events.length; i++) {
+            for (var i = 0; i < this.state.events.length; i++) {
                 if (this.state.events[i].event === 'onChange') {
                     event = this.state.events[i];
                 }
@@ -289,12 +291,12 @@ class UDElementContent extends React.Component {
         }
 
         var children = null;
-        
+
         if (this.state.content && this.state.content.map) {
-            children = this.state.content.map(function(x) {
+            children = this.state.content.map(function (x) {
                 if (x.type != null) {
                     return renderComponent(x, this.props.history);
-                } 
+                }
                 return x;
             }.bind(this));
         }
@@ -313,8 +315,8 @@ class UDElementContent extends React.Component {
         }
 
         if (this.state.events != null && this.state.events.map) {
-            this.state.events.map(function(event) {
-                attributes[event.event] = function(e) {
+            this.state.events.map(function (event) {
+                attributes[event.event] = function (e) {
                     this.onUserEvent(event, e);
                 }.bind(this);
                 return null;
@@ -340,7 +342,7 @@ class UDElementContent extends React.Component {
 
         this.element = React.createElement(this.state.tag, attributes, children);
 
-    return [this.element, 
-            <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>];
+        return [this.element,
+        <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)} />];
     }
 }

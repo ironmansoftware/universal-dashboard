@@ -164,7 +164,7 @@
           'background-color' = "#FFFFFF"
       }
       
-      '.sidenav .collapsible-header'= @{
+      '.sidenav .collapsible-header, .sidenav .collapsible li, ul:not(.browser-default)'= @{
           'color'= "#fff !important"
           'background-color' = "#1c1c1c !important"
       }
