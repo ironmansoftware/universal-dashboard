@@ -30,7 +30,7 @@ Describe "Set-UDClipboard" {
         Set-TestDashboard -Dashboard $dashboard
 
         It "should set clipboard with You just copy me!! text" {
-            Find-SeElement -Driver $Driver -Id "btnClipboard" | Invoke-SeClick
+            Find-SeElement -Driver $Driver -Id "btnClipboard" | Invoke-SeClick 
             Start-Sleep 2
             Get-Clipboard | Should be 'You just copy me!!'
         }
@@ -49,7 +49,7 @@ Describe "Set-UDClipboard" {
         Set-TestDashboard -Dashboard $dashboard
 
         It "should set clipboard with hello text" {
-             $Element = Find-SeElement -Id "textToCopy1" -Driver $Driver
+            $Element = Find-SeElement -Id "textToCopy1" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "hello"
             Start-Sleep 2
             Find-SeElement -Driver $Driver -Id "btnClipboard" | Invoke-SeClick
