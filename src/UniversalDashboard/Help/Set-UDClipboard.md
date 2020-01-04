@@ -23,10 +23,65 @@ Sets the contents of the clipboard.
 
 ### Example 1
 ```
-PS C:\> Set-UDClipboard -Data 'Some text'
+New-UDHeading -Size 5 -Text 'You just copy me!!'
+New-UDButton -Floating -Icon clipboard -OnClick {
+    Set-UDClipboard -Data 'You just copy me!!'
+} 
 ```
 
-Sets 'Some text' into the clipboard.
+Sets 'You just copy me!!' into the clipboard.
+
+### Example 2
+```
+New-UDTextbox -Label "Textbox" -Placeholder "Enter your name" -Id 'textToCopy'
+New-UDButton -Icon clipboard -OnClick {
+    $Element = Get-UDElement -Id 'textToCopy'
+    $text = $Element.Attributes.value
+    Set-UDClipboard -Data $text
+} 
+```
+
+Sets text box value into the clipboard.
+
+### Example 3
+```
+New-UDTextbox -Label "Textbox" -Placeholder "Enter your name" -Id 'textToCopySuccess'
+New-UDButton -Icon clipboard -OnClick {
+    $Element = Get-UDElement -Id 'textToCopySuccess'
+    $text = $Element.Attributes.value
+    Set-UDClipboard -Data $text -toastOnSuccess
+} 
+```
+
+Sets text box value into the clipboard and show toast message on success.
+
+### Example 4
+```
+New-UDTextbox -Label "Textbox" -Placeholder "Enter your name" -Id 'textToCopyFail'
+New-UDButton -Icon clipboard -OnClick {
+    $Element = Get-UDElement -Id 'textToCopyFailed'
+    $text = $Element.Attributes.value
+    Set-UDClipboard -Data $text -toastOnError
+} 
+```
+
+Sets text box value into the clipboard and show toast message on failed.
+
+### Example 5
+```
+New-UDButton -Text "Show Modal" -OnClick {
+    Show-UDModal -Header {
+        New-UDHeading -Size 4 -Text "This is the text to copy"
+    } -Content {
+        'This is the text to copy'
+        New-UDButton -Floating -Icon clipboard -OnClick {
+            Set-UDClipboard -Data 'This is the text to copy' 
+        } 
+    }
+}
+```
+
+Shows a modal with button that set text in the clipboard.
 
 ## PARAMETERS
 
