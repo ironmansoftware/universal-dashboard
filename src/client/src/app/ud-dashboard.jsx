@@ -6,8 +6,9 @@ import PubSub from 'pubsub-js';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
 import toaster from './services/toaster';
-import setUDClipboard from "./services/clipboard";
 import LazyElement from './basics/lazy-element.jsx';
+import copy from 'copy-to-clipboard'
+
 
 var connection;
 
@@ -116,7 +117,22 @@ function connectWebSocket(sessionId, location, setLoading) {
 
     connection.on('clipboard', (Data, toastOnSuccess, toastOnError) => {
         let data = Data
-        setUDClipboard(data, toastOnSuccess, toastOnError)
+        try {
+            let isCopyed = data !== null || data !== '' ? copy(data) : false
+            if (toastOnSuccess && isCopyed) {
+                toaster.show({
+                    message: 'Copied to clipboard',
+                });
+            }
+        } catch (err) {
+            if (toastOnError) {
+                toaster.show({
+                    message: 'Unable to copy to clipboard',
+                });
+            }
+        }
+
+        // setUDClipboard(data, toastOnSuccess, toastOnError)
         // var textArea = document.createElement("textarea");
         // textArea.style.position = 'fixed';
         // textArea.style.top = 0;
