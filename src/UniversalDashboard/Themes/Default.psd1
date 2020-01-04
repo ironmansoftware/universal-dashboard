@@ -205,6 +205,10 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             'background-color' = $PrimaryColorDark
         }
 
+        '.sidenav .collapsible-body' = @{
+            'background-color' = $PrimaryColor
+        }
+
         '.sidenav .collapsible-header' = @{
             'color'= $AlternateFontColor
             'font-size' = 'large'
