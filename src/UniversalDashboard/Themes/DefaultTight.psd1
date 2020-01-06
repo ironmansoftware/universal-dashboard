@@ -224,9 +224,10 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             'background-color' = $PrimaryColorDark
         }
 
-        '.sidenav .collapsible-header' = @{
+        '.sidenav .collapsible-header, .sidenav .collapsible li, .sidenav.fixed .collapsible li, ul:not(.browser-default)' = @{
             'color'= $AlternateFontColor
             'font-size' = 'large'
+			'background-color' = $PrimaryColor
         }
     
         '.sidenav .collapsible-header:hover' = @{

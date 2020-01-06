@@ -1,12 +1,14 @@
-import React,{Suspense, useState, useEffect} from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 
-import {getApiPath} from 'config';
-import {fetchGet} from './services/fetch-service.jsx';
+import { getApiPath } from 'config';
+import { fetchGet } from './services/fetch-service.jsx';
 import PubSub from 'pubsub-js';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
 import toaster from './services/toaster';
 import LazyElement from './basics/lazy-element.jsx';
+import copy from 'copy-to-clipboard'
+
 
 var connection;
 
@@ -99,7 +101,7 @@ function connectWebSocket(sessionId, location, setLoading) {
 
     connection.on('select', (ParameterSetName, ID, scrollToElement) => {
         if (ParameterSetName == "ToTop") {
-            window.scrollTo({ top: 0, behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
         if (ParameterSetName == "Normal") {
             document.getElementById(ID).focus();
@@ -114,25 +116,10 @@ function connectWebSocket(sessionId, location, setLoading) {
     });
 
     connection.on('clipboard', (Data, toastOnSuccess, toastOnError) => {
-        var textArea = document.createElement("textarea");
-        textArea.style.position = 'fixed';
-        textArea.style.top = 0;
-        textArea.style.left = 0;
-        textArea.style.width = '2em';
-        textArea.style.height = '2em';
-        textArea.style.padding = 0;
-        textArea.style.border = 'none';
-        textArea.style.outline = 'none';
-        textArea.style.boxShadow = 'none';
-        textArea.style.background = 'transparent';
-        textArea.value = Data;
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-
+        let data = Data
         try {
-            var successful = document.execCommand('copy');
-            if(toastOnSuccess) {
+            let isCopyed = data !== null || data !== '' ? copy(data) : false
+            if (toastOnSuccess && isCopyed) {
                 toaster.show({
                     message: 'Copied to clipboard',
                 });
@@ -144,8 +131,6 @@ function connectWebSocket(sessionId, location, setLoading) {
                 });
             }
         }
-
-        document.body.removeChild(textArea);
     });
 
     connection.on('write', (message) => {
@@ -157,13 +142,13 @@ function connectWebSocket(sessionId, location, setLoading) {
         setLoading(false);
     });
 
-    PubSub.subscribe('element-event', function(e, data) {
+    PubSub.subscribe('element-event', function (e, data) {
         if (data.type === "requestStateResponse") {
             connection.invoke("requestStateResponse", data.requestId, data.state)
         }
 
         if (data.type === "clientEvent") {
-            connection.invoke("clientEvent", data.eventId, data.eventName, data.eventData, location).catch(function(e) {
+            connection.invoke("clientEvent", data.eventId, data.eventName, data.eventData, location).catch(function (e) {
                 toaster.show({
                     message: e.message,
                     icon: 'fa fa-times-circle',
@@ -201,12 +186,12 @@ function loadJavascript(url, onLoad) {
 }
 
 function loadData(setDashboard, setLocation, history, location, setLoading) {
-    fetchGet("/api/internal/dashboard", function(json) {
+    fetchGet("/api/internal/dashboard", function (json) {
 
         var dashboard = json.dashboard;
 
         if (dashboard.stylesheets)
-        dashboard.stylesheets.map(loadStylesheet);
+            dashboard.stylesheets.map(loadStylesheet);
 
         if (dashboard.scripts)
             dashboard.scripts.map(loadJavascript);
@@ -226,7 +211,7 @@ function loadData(setDashboard, setLocation, history, location, setLoading) {
 
 function getLocation(setLocation) {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             var name = "location";
 
             var positionJson = {
@@ -251,7 +236,7 @@ function getLocation(setLocation) {
     }
 }
 
-function Dashboard({history}) {
+function Dashboard({ history }) {
     const [dashboard, setDashboard] = useState(null);
     const [hasError, setHasError] = useState(false);
     const [error, setError] = useState(null);
@@ -265,8 +250,7 @@ function Dashboard({history}) {
         {
             loadData(setDashboard, setLocation, history, location, setLoading)
         }
-        catch (err)
-        {
+        catch (err) {
             setError(err);
             setHasError(true);
         }
@@ -287,8 +271,7 @@ function Dashboard({history}) {
         return <div />
     }
 
-    try
-    {
+    try {
         var component = UniversalDashboard.renderDashboard({
             dashboard: dashboard,
             history: history
@@ -298,8 +281,7 @@ function Dashboard({history}) {
 
         return  [component, pluginComponents]
     }
-    catch (err)
-    {
+    catch (err) {
         setError(err);
         setHasError(true);
     }

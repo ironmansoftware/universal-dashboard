@@ -5,6 +5,7 @@ import LazyElement from './../basics/lazy-element.jsx';
 import PubSub from 'pubsub-js';
 import toaster from './toaster';
 
+
 export const UniversalDashboardService = {
     components: [],
     plugins: [],
@@ -33,7 +34,7 @@ export const UniversalDashboardService = {
     connectionId: '',
     renderComponent: function (component, history, dynamicallyLoaded) {
 
-        if (component == null) return null;
+        if (component == null) return <React.Fragment />;
 
         if (Array.isArray(component)) {
             return component.map(x => x.type ? this.renderComponent(x, history) : x);
