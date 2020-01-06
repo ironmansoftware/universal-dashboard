@@ -12,6 +12,9 @@ $BackgroundColorBright = "#FFFFFF"
 $PrimaryColor = "#3F51B5"
 $PrimaryColorDark = "#2C387E"
 $PrimaryColorLight = "#6573C3"
+$SecondaryColor = '#dd2c00'
+$SecondaryColorLight = '#e35633'
+$SecondaryColorDark = '#9a1e00'
 
 $PrimaryFontColor = $FontColorDark
 $AlternateFontColor = $FontColorLight
@@ -21,121 +24,119 @@ $AlternativeBackgroundColor2 = $BackgroundColorDarker
 $AlternativeBackgroundColor3 = $BackgroundColorBright
 
 @{
-    Name = "Default"
+    Name       = "Default"
     Definition = @{
 
         #UD ELEMENTS
-        UDDashboard = @{
+        UDDashboard                            = @{
             BackgroundColor = $PrimaryBackgroundColor
-            FontColor = $PrimaryFontColor 
+            FontColor       = $PrimaryFontColor 
         }
 
-        UDNavBar = @{
+        UDNavBar                               = @{
             BackgroundColor = $PrimaryColor
-            FontColor = $AlternateFontColor
+            FontColor       = $AlternateFontColor
         }
 
-        UDFooter = @{
+        UDFooter                               = @{
             BackgroundColor = $PrimaryColor
-            FontColor = $AlternateFontColor
-            "margin-top" = "20px"
+            FontColor       = $AlternateFontColor
+            "margin-top"    = "20px"
         }
 
-        UDCard = @{
+        UDCard                                 = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor       = $PrimaryFontColor 
         }
 
-        UDChart = @{
+        UDChart                                = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor       = $PrimaryFontColor 
         }
 
-        UDMonitor = @{
+        UDMonitor                              = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor       = $PrimaryFontColor 
         }
 
-        UDTable = @{
-            BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+        UDTable                                = @{
+            BackgroundColor = $PrimaryColor
+            FontColor       = $AlternateFontColor 
         }
 
-        UDGrid = @{
+        UDGrid                                 = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor       = $AlternativeBackgroundColor3
         }
 
-        UDCounter = @{
+        UDCounter                              = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor       = $PrimaryFontColor 
         }
 
-        UDInput = @{
+        UDInput                                = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor       = $PrimaryFontColor 
         }
     
+        UDTabs = @{
+            BackgroundColor = $AlternativeBackgroundColor3
+            Height = 'auto'
+            BoxShadow = 'unset'
+        }
+
+        UDTab = @{
+            FontColor = $PrimaryColor
+            # No need for backgroundColor it inherit UDTabs backgroundColor
+        }
+
+        UDTabActive = @{
+            ActiveFontColor = $AlternateFontColor
+            ActiveBackgroundColor = $PrimaryColor
+        }
+
+        UDTabIcon = @{
+            FontColor = $PrimaryColor
+            Height = 'auto'
+            LineHeight = 'inherit'
+        }
+
+        UDTabActiveIcon = @{
+            ActiveFontColor = $AlternateFontColor
+        }
+
+        UDTabIndicator = @{
+            IndicatorColor = $SecondaryColor
+        }
+
         #CSS ELEMENTS
-        'main' = @{
-            'padding-left' = "50px"
-            'padding-right' = "50px"
-            'padding-top' = "50px"
+        'main'                                 = @{
+            'padding-left'   = "50px"
+            'padding-right'  = "50px"
+            'padding-top'    = "50px"
             'padding-bottom' = "50px"
         }
 
         '@media screen and (max-width: 600px)' = @{
             'main' = @{
-                'padding-left' = "3px"
-                'padding-right' = "3px"
-                'padding-top' = "3px"
-                'padding-bottom' ="3px"
+                'padding-left'   = "3px"
+                'padding-right'  = "3px"
+                'padding-top'    = "3px"
+                'padding-bottom' = "3px"
             }
         }
 
-        'p' = @{
+        'p'                                    = @{
             'color' = $PrimaryFontColor
         }
 
-        '.tabs' = @{
-            'color'= $PrimaryColor
-            'background-color' = $AlternativeBackgroundColor3
-        }
-
-        '.tabs .tab' = @{
-            'color' = $PrimaryColor
-        }
-
-        '.tabs .tab a:hover' = @{
-            'background-color' = $PrimaryColorDark
-            'color'= $AlternateFontColor
-        }
-
-        '.tabs .tab a.active' = @{
-            'background-color' = $PrimaryColor
-            'color'= $AlternateFontColor
-        }
-
-        '.tabs .tab a:focus.active' = @{
-            'background-color' = $PrimaryColor
-            'color'= $AlternateFontColor
-        }
-
-        '.tabs .indicator' = @{
-            'background-color' = $PrimaryColorDark
-        }
-
-        '.tabs .tab a' = @{
-            'color' = $PrimaryColor
-        }
-
         '.btn' = @{
-            'color' = $AlternateFontColor
+            'color'            = $AlternateFontColor
             'background-color' = $PrimaryColor
         }
 
         '.btn:hover' = @{
-            'color' = $AlternateFontColor
+            'color'            = $AlternateFontColor
             'background-color' = $PrimaryColorDark
         }
 
@@ -160,7 +161,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '[type="checkbox"]:checked + span:not(.lever)::before' = @{
-            "border-right" = "2px solid $PrimaryColor"
+            "border-right"  = "2px solid $PrimaryColor"
             "border-bottom" = "2px solid $PrimaryColor"
         }
 
@@ -169,22 +170,22 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.pagination li.active' = @{
-            'color' = "$PrimaryFontColor  !important"
+            'color'            = "$PrimaryFontColor  !important"
             'background-color' = $PrimaryColor
         }
 
         '.sidenav' = @{
             'background-color' = $PrimaryColor
-            'color' = $AlternateFontColor
+            'color'            = $AlternateFontColor
         }
 
         '.sidenav a:hover' = @{
             'background-color' = $PrimaryColor
-            'color'= $AlternateFontColor
+            'color'            = $AlternateFontColor
         }
 
         '.sidenav li>a' = @{
-            'color' = $AlternateFontColor
+            'color'            = $AlternateFontColor
             'background-color' = $PrimaryColor
         }
 
@@ -197,7 +198,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.sidenav .subheader' = @{
-            'color'= $AlternateFontColor
+            'color'     = $AlternateFontColor
             'font-size' = 'large'
         }
 
@@ -210,12 +211,12 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.sidenav .collapsible-header' = @{
-            'color'= $AlternateFontColor
+            'color'     = $AlternateFontColor
             'font-size' = 'large'
         }
     
         '.sidenav .collapsible-header:hover' = @{
-            'color'= $AlternateFontColor
+            'color' = $AlternateFontColor
         }
 
         '.sidenav li.active' = @{
@@ -228,25 +229,25 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         '.progress .determinate, .progress .indeterminate' = @{
             'background-color' = $PrimaryColor
-            'border-bottom' = "1px solid $PrimaryBackgroundColor"
+            'border-bottom'    = "1px solid $PrimaryBackgroundColor"
         }
 
         'input:not([type]), input[type="date"]:not(.browser-default), input[type="datetime-local"]:not(.browser-default), input[type="datetime"]:not(.browser-default), input[type="email"]:not(.browser-default), input[type="number"]:not(.browser-default), input[type="password"]:not(.browser-default), input[type="search"]:not(.browser-default), input[type="tel"]:not(.browser-default), input[type="text"]:not(.browser-default), input[type="time"]:not(.browser-default), input[type="url"]:not(.browser-default), textarea.materialize-textarea' = @{
-            'color'= $PrimaryFontColor 
+            'color'         = $PrimaryFontColor 
             'border-bottom' = "1px solid $PrimaryBackgroundColor"
         }
 
         'input:not([type]):not([readonly]):focus, input[type=date]:not([readonly]):not(.browser-default):focus, input[type=datetime-local]:not([readonly]):not(.browser-default):focus, input[type=datetime]:not([readonly]):not(.browser-default):focus, input[type=email]:not([readonly]):not(.browser-default):focus, input[type=number]:not([readonly]):not(.browser-default):focus, input[type=password]:not([readonly]):not(.browser-default):focus, input[type=search]:not([readonly]):not(.browser-default):focus, input[type=tel]:not([readonly]):not(.browser-default):focus, input[type=text]:not([readonly]):not(.browser-default):focus, input[type=time]:not([readonly]):not(.browser-default):focus, input[type=url]:not([readonly]):not(.browser-default):focus, textarea:not([readonly]).materialize-textarea:focus' = @{
-            'color'= $PrimaryColor
+            'color'         = $PrimaryColor
             'border-bottom' = "1px solid $PrimaryColorDark"
         }
 
         'input:not([type]):not([readonly]):focus + label, input[type=date]:not([readonly]):not(.browser-default):focus + label, input[type=datetime-local]:not([readonly]):not(.browser-default):focus + label, input[type=datetime]:not([readonly]):not(.browser-default):focus + label, input[type=email]:not([readonly]):not(.browser-default):focus + label, input[type=number]:not([readonly]):not(.browser-default):focus + label, input[type=password]:not([readonly]):not(.browser-default):focus + label, input[type=search]:not([readonly]):not(.browser-default):focus + label, input[type=tel]:not([readonly]):not(.browser-default):focus + label, input[type=text]:not([readonly]):not(.browser-default):focus + label, input[type=time]:not([readonly]):not(.browser-default):focus + label, input[type=url]:not([readonly]):not(.browser-default):focus + label, textarea:not([readonly]).materialize-textarea:focus + label' = @{
-            'color'= $PrimaryColor
+            'color' = $PrimaryColor
         }
 
         '.switch label' = @{
-            'color'= $PrimaryFontColor 
+            'color' = $PrimaryFontColor 
         }
 
         '.switch label input[type=checkbox]:checked+.lever' = @{
@@ -258,21 +259,21 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating)' = @{
-            'color' = $PrimaryColor
+            'color'              = $PrimaryColor
             '-webkit-transition' = "color .3s ease"
-            'transition'= "color .3s ease"
+            'transition'         = "color .3s ease"
         }
 
         '.card .card-action a:not(.btn):not(.btn-floating):not(.btn-large):not(.btn-small):not(.btn-large)' = @{
-            'color' = $PrimaryColor
+            'color'              = $PrimaryColor
             '-webkit-transition' = "color .3s ease"
-            'transition'= "color .3s ease"
+            'transition'         = "color .3s ease"
         }
 
         '.card .card-action a:not(.btn):not(.btn-floating):not(.btn-large):not(.btn-small):not(.btn-large):hover' = @{
-            'color' = $PrimaryColorDark
+            'color'              = $PrimaryColorDark
             '-webkit-transition' = "color .3s ease"
-            'transition'= "color .3s ease"
+            'transition'         = "color .3s ease"
         }
 
         'a' = @{
@@ -292,8 +293,8 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
 
         '.select-wrapper input.select-dropdown' = @{
-            'color' = $PrimaryFontColor 
-            'border-bottom' = "1px solid $PrimaryColorDark"
+            'color'                  = $PrimaryFontColor 
+            'border-bottom'          = "1px solid $PrimaryColorDark"
             'border-block-end-color' = $PrimaryColorDark
         }
 
@@ -305,7 +306,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             'background-color' = $PrimaryColor
         }
 
-        '[type=radio].with-gap:checked+span:after, [type=radio].with-gap:checked+span:before, [type=radio]:checked+span:after' =@{
+        '[type=radio].with-gap:checked+span:after, [type=radio].with-gap:checked+span:before, [type=radio]:checked+span:after' = @{
             'border' = "2px solid $PrimaryColorDark"
         }
 
@@ -315,10 +316,10 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         'pre' = @{
             'background-color' = $AlternativeBackgroundColor3
-            'padding-left' = "5px"
-            'padding-right' = "5px"
-            'padding-top' = "5px"
-            'padding-bottom' = "5px"
+            'padding-left'     = "5px"
+            'padding-right'    = "5px"
+            'padding-top'      = "5px"
+            'padding-bottom'   = "5px"
         }
 
         '.page-footer .footer-copyright' = @{

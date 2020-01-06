@@ -10,7 +10,7 @@ module.exports = (env) => {
 
   return {
     entry: {
-      'index' : __dirname + '/components/index.js'
+      'index': __dirname + '/components/index.js'
     },
     output: {
       path: BUILD_DIR,
@@ -20,12 +20,28 @@ module.exports = (env) => {
       library: 'udmaterialize',
       libraryTarget: 'var'
     },
-    module : {
-      rules : [
+    module: {
+      rules: [
         { test: /\.css$/, loader: "style-loader!css-loader" },
-        { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader'},
-        { test: /\.(eot|ttf|woff2?|otf|svg)$/, loader:'file-loader' }
+        { test: /\.(js|jsx)$/, exclude: [/node_modules/, /public/], loader: 'babel-loader' },
+        { test: /\.(eot|ttf|woff2?|otf|svg)$/, loader: 'file-loader' }
       ]
+    },
+    optimization: {
+      nodeEnv: "production",
+      splitChunks: {
+        chunks: "async",
+        minSize: 30000,
+        maxSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 5,
+        maxInitialRequests: 3,
+        automaticNameDelimiter: "-",
+        automaticNameMaxLength: 15,
+        name: true,
+      },
+      removeEmptyChunks: true,
+      noEmitOnErrors: false,
     },
     externals: {
       UniversalDashboard: 'UniversalDashboard',
@@ -42,7 +58,7 @@ module.exports = (env) => {
       historyApiFallback: true,
       port: 10000,
       // hot: true,
-      compress:true,
+      compress: true,
       publicPath: '/',
       stats: "minimal"
     },

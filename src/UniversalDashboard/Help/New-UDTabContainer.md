@@ -32,6 +32,89 @@ New-UDTabContainer -Tabs {
 
 Creates a tab container with 3 tabs.
 
+### Tab as endpoint
+```
+New-UDTabContainer -Tabs {
+
+    New-UDTab -Text 'Tab 1' -Content { 
+        $number = 0..50 | Get-Random     
+        New-UDHeading -Text "Tab $number Content"
+    } -IsEndpoint -RefreshWhenActive
+    
+    New-UDTab -Text 'Tab 2' -Content { 
+        $number = 0..50 | Get-Random 
+        New-UDHeading -Text "Tab $number Content" 
+    } -IsEndpoint
+
+    New-UDTab -Text 'Tab 3' -Content { 
+        $number = 0..50 | Get-Random 
+        New-UDHeading -Text "Tab $number Content" 
+    } -IsEndpoint -RefreshWhenActive
+}
+```
+
+Creates a tab container with 3 tabs and tab content is an endpoint.
+
+### Tabs with icons and text
+```
+New-UDTabContainer -Tabs {
+
+    New-UDTab -Text 'Tab 1' -Content { 
+        New-UDHeading -Text "Gitkraken Tab"
+    } -Icon (New-UDIcon -Icon gitkraken)
+    
+    New-UDTab -Text 'Tab 2' -Content { 
+        New-UDHeading -Text "Github Tab" 
+    } -Icon (New-UDIcon -Icon github)
+
+    New-UDTab -Text 'Tab 3' -Content {  
+        New-UDHeading -Text "Gitlab Tab" 
+    } -Icon (New-UDIcon -Icon gitlab)
+}
+```
+
+Creates a tab container with 3 tabs and icons.
+
+### Tabs with icons and text in stacked position
+```
+New-UDTabContainer -Tabs {
+
+    New-UDTab -Text 'Tab 1' -Content { 
+        New-UDHeading -Text "Gitkraken Tab"
+    } -Icon (New-UDIcon -Icon gitkraken) -Stacked
+    
+    New-UDTab -Text 'Tab 2' -Content { 
+        New-UDHeading -Text "Github Tab" 
+    } -Icon (New-UDIcon -Icon github) -Stacked
+
+    New-UDTab -Text 'Tab 3' -Content {  
+        New-UDHeading -Text "Gitlab Tab" 
+    } -Icon (New-UDIcon -Icon gitlab) -Stacked
+}
+```
+
+Creates a tab container with 3 tabs and icons.
+
+### Tabs with icons only
+```
+New-UDTabContainer -Tabs {
+
+    New-UDTab -Content { 
+        New-UDHeading -Text "Gitkraken Tab"
+    } -Icon (New-UDIcon -Icon gitkraken)
+    
+    New-UDTab -Content { 
+        New-UDHeading -Text "Github Tab" 
+    } -Icon (New-UDIcon -Icon github)
+
+    New-UDTab -Content {  
+        New-UDHeading -Text "Gitlab Tab" 
+    } -Icon (New-UDIcon -Icon gitlab)
+}
+```
+
+Creates a tab container with 3 tabs and icons only no labels.
+
 ## PARAMETERS
 
 ### -Id

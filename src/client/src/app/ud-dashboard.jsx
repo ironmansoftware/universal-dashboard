@@ -246,7 +246,8 @@ function Dashboard({ history }) {
     useEffect(() => {
         if (dashboard) return;
 
-        try {
+        try
+        {
             loadData(setDashboard, setLocation, history, location, setLoading)
         }
         catch (err) {
@@ -255,14 +256,15 @@ function Dashboard({ history }) {
         }
     });
 
-    if (hasError) {
-        return <Suspense fallback={<div></div>}>
-            <LazyElement component={{
-                type: 'error',
-                message: error.message,
-                location: error.stackTrace
-            }} />
-        </Suspense>
+    if (hasError)
+    {
+        return <Suspense fallback={null}>
+                    <LazyElement component={{
+                        type: 'error',
+                        message: error.message,
+                        location: error.stackTrace
+                    }} />
+                </Suspense>
     }
 
     if (loading) {
@@ -277,7 +279,7 @@ function Dashboard({ history }) {
 
         var pluginComponents = UniversalDashboard.provideDashboardComponents();
 
-        return [component, pluginComponents]
+        return  [component, pluginComponents]
     }
     catch (err) {
         setError(err);
