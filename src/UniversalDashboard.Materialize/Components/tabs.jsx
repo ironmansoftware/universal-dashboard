@@ -1,54 +1,43 @@
-import React, { Fragment } from 'react';
-import M from 'materialize-css';
+import React, { useEffect, useState } from 'react';
+import { TabBar, Tab } from '@rmwc/tabs'
 
-export default class TabContainer extends React.Component {
-
-    componentDidMount() {
-        M.Tabs.init(this.element);
-        var instance = M.Tabs.getInstance(this.element);
-        instance.updateTabIndicator();
-    }
-
-    renderTabHeaders() {
-
-        var tabIndex = 0;
-
-        return this.props.tabs.map(x => {
-            tabIndex++;
-            return (
-                <li class="tab"><a href={`#${this.props.id}${tabIndex}`}>{x.text}</a></li>
-            )
-        });
-    }
-
-    renderTabContent() {
-        var tabIndex = 0;
-
-        return this.props.tabs.map(x => {
-            tabIndex++;
-            return (
-                <div id={`${this.props.id}${tabIndex}`} className="col s12">
-                    {UniversalDashboard.renderComponent(x.content)}
-                </div>
-            )
-        });
-    }
-
-    render() {
-        var headers = this.renderTabHeaders();
-        var content = this.renderTabContent();
-
-        return (
-            <Fragment>
-                <div>
-                    <ul className="tabs" ref={x => this.element = x}>
-                        {headers}
-                    </ul>
-                </div>
-                {content}
-            </Fragment>
-
-        )
-    }
+const TabPanel = ({ content, ...props }) => {
+    console.log('TabPanel Props: ', props)
+    console.log('TabPanel Content: ', content)
+    return <div>{UniversalDashboard.renderComponent(content)}</div>
 }
+
+const TabContainer = props => {
+    const { tabs } = props
+    const [activeTabIndex, setActiveTabIndex] = useState(0)
+    const [activeTabPanel, setActiveTabPanel] = useState(tabs[0])
+
+    const refreshTabPanel = (id, tab) => {
+        UniversalDashboard.get(`/api/internal/component/element/${id}`, data => {
+            setActiveTabPanel({ ...tab, content: data })
+        })
+    }
+
+    return (
+        <div>
+            <TabBar
+                activeTabIndex={activeTabIndex}
+                onActivate={evt => setActiveTabIndex(evt.detail.index)}
+            >
+                {
+                    tabs.map(tab => <Tab
+                        id={tab.id}
+                        label={tab.label}
+                        stacked={tab.icon && tab.stacked || undefined}
+                        onInteraction={evt => tab.refreshWhenActive && tab.isEndpoint ? refreshTabPanel(evt.detail.tabId, tab) : setActiveTabPanel(tab)}
+                        icon={tab.icon && UniversalDashboard.renderComponent(tab.icon)} />
+                    )
+                }
+            </TabBar>
+            <TabPanel {...activeTabPanel} />
+        </div>
+    )
+}
+
+export default TabContainer
 

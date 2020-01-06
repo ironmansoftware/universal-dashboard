@@ -20,7 +20,7 @@ function connectWebSocket(sessionId, location, setLoading) {
     connection.on('reload', data => {
         window.location.reload(true);
     });
-    
+
     connection.on('setState', (componentId, state) => {
         PubSub.publish(componentId, {
             type: "setState",
@@ -144,7 +144,7 @@ function connectWebSocket(sessionId, location, setLoading) {
                 });
             }
         }
-    
+
         document.body.removeChild(textArea);
     });
 
@@ -212,7 +212,7 @@ function loadData(setDashboard, setLocation, history, location, setLoading) {
             dashboard.scripts.map(loadJavascript);
 
         if (dashboard.geolocation) {
-            getLocation(setLocation);            
+            getLocation(setLocation);
         }
 
         connectWebSocket(json.sessionId, location, setLoading);
@@ -248,7 +248,7 @@ function getLocation(setLocation) {
 
             setLocation(value);
         });
-    } 
+    }
 }
 
 function Dashboard({history}) {
@@ -261,9 +261,9 @@ function Dashboard({history}) {
     useEffect(() => {
         if (dashboard) return;
 
-        try 
+        try
         {
-            loadData(setDashboard, setLocation, history, location, setLoading) 
+            loadData(setDashboard, setLocation, history, location, setLoading)
         }
         catch (err)
         {
@@ -272,9 +272,9 @@ function Dashboard({history}) {
         }
     });
 
-    if (hasError) 
+    if (hasError)
     {
-        return <Suspense fallback={<div></div>}>
+        return <Suspense fallback={null}>
                     <LazyElement component={{
                         type: 'error',
                         message: error.message,
@@ -290,12 +290,12 @@ function Dashboard({history}) {
     try
     {
         var component = UniversalDashboard.renderDashboard({
-            dashboard: dashboard, 
+            dashboard: dashboard,
             history: history
         });
-    
+
         var pluginComponents = UniversalDashboard.provideDashboardComponents();
-    
+
         return  [component, pluginComponents]
     }
     catch (err)
