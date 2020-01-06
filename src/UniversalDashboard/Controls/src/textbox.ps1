@@ -20,16 +20,16 @@ function New-UDTextbox {
 
     If ($Autofocus) {
         $Attributes = @{
-            type = $type
-            value = $Value
+            type        = $type
+            value       = $Value
             placeholder = $Placeholder
-            autofocus = "true"
+            autofocus   = "true"
         }
     }
     else {
         $Attributes = @{
-            type = $type
-            value = $Value
+            type        = $type
+            value       = $Value
             placeholder = $Placeholder
         }
     }
@@ -41,12 +41,12 @@ function New-UDTextbox {
 
     $LabelClassName = ""
 
-    if($Value -Or $Placeholder){
+    if ($Value -Or $Placeholder) {
 
         $LabelClassName = "active"
     }
 
-    New-UDElement -Tag "div" -Attributes @{ className = 'input-field'} -Content {
+    New-UDElement -Tag "div" -Attributes @{ className = 'input-field' } -Content {
 
         if ($PSBoundParameters.ContainsKey('Icon')) {
             New-UDElement -Tag "i" -Attributes @{
@@ -58,7 +58,7 @@ function New-UDTextbox {
 
         if ($PSBoundParameters.ContainsKey('Label')) {
             New-UDElement -Tag "label" -Attributes @{                
-                'for' = $Id 
+                'for'     = $Id 
                 className = $LabelClassName
             } -Content { $Label }
         }
