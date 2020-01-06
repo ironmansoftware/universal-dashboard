@@ -76,6 +76,15 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             FontColor = $PrimaryFontColor 
         }
     
+        UDImageCarouselIndicator = @{
+            Width = '10px'
+            Hieght = '10px'
+        }
+        
+        UDImageCarouselIndicatorActive = @{
+            BackgroundColor = $PrimaryColor
+        }
+
         #CSS ELEMENTS
         'main' = @{
             'padding-left' = "50px"

@@ -26,10 +26,10 @@ Add image carousel to UniversalDashboard you can set the carousel to be full scr
 ### Example 1
 ```
 New-UDImageCarousel -Items {
-        New-UDImageCarouselItem -ImageSource https://miro.medium.com/max/1200/1*ooLsaroMXlzi0OwBYCiFSA.jpeg -Url 'http://gitkraken.com'
-        New-UDImageCarouselItem -ImageSource https://github.githubassets.com/images/modules/explore/social.jpg -Url 'http://github.com'
-        New-UDImageCarouselItem -ImageSource https://miro.medium.com/max/1200/1*fuvJn5MgjGfMpOcHfvw_MA.png -Url 'http://gitlab.com'
-} -ShowIndicators
+        New-UDImageCarouselItem -ImageSource https://hdqwalls.com/wallpapers/deadpool-baby-yoda-c6.jpg -Url 'https://hdqwalls.com/wallpapers/deadpool-baby-yoda-c6.jpg'
+        New-UDImageCarouselItem -ImageSource https://hdqwalls.com/wallpapers/black-widow4k-5b.jpg -Url 'https://hdqwalls.com/wallpapers/black-widow4k-5b.jpg'
+        New-UDImageCarouselItem -ImageSource https://hdqwalls.com/wallpapers/batman-fire-4k-xv.jpg -Url 'https://hdqwalls.com/wallpapers/batman-fire-4k-xv.jpg'
+} -Indicators
 ```
 
 Create new image carousel with 3 slides and with fixed button on every slide.
