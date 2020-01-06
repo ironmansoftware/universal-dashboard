@@ -6,20 +6,20 @@ function New-UDImageCarousel {
 	    [string]$Id = ([Guid]::NewGuid()).ToString(),
 	    [Parameter()]
 	    [switch]$ShowIndicators,
+	    # [Parameter()]
+	    # [switch]$AutoCycle,
 	    [Parameter()]
-	    [switch]$AutoCycle,
-	    [Parameter()]
-	    [int]$Speed,
-	    [Parameter()]
-	    [string]$Width,
-	    [Parameter()]
-	    [string]$Height,
-	    [Parameter()]
-	    [switch]$FullWidth,
-	    [Parameter()]
-	    [switch]$FixButton,
-	    [Parameter()]
-	    [string]$ButtonText
+	    [switch]$FullWidth
+	    # [Parameter()]
+	    # [int]$Speed,
+	    # [Parameter()]
+	    # [string]$Width,
+	    # [Parameter()]
+	    # [string]$Height,
+	    # [Parameter()]
+	    # [switch]$FixButton,
+	    # [Parameter()]
+	    # [string]$ButtonText
     )
 
     End {
@@ -30,14 +30,14 @@ function New-UDImageCarousel {
 
             items = $Items.Invoke()
             id = $id 
-            showIndicators = $ShowIndicators.IsPresent
-            autoCycle = $AutoCycle.IsPresent
-            speed = $Speed
-            width = $Width
-            height = $Height
+            indicators = $ShowIndicators.IsPresent
             fullWidth = $FullWidth.IsPresent
-            fixButton = $FixButton.IsPresent
-            buttonText = $ButtonText
+            # autoCycle = $AutoCycle.IsPresent
+            # speed = $Speed
+            # width = $Width
+            # height = $Height
+            # fixButton = $FixButton.IsPresent
+            # buttonText = $ButtonText
         }
     }
 }
@@ -45,45 +45,33 @@ function New-UDImageCarousel {
 function New-UDImageCarouselItem {
     param(
         [Parameter()]
-		[string]$Text,
-	    [Parameter()]
-	    [UniversalDashboard.Models.DashboardColor]$BackgroundColor = "#000",
-	    [Parameter()]
-	    [string]$BackgroundImage,
-	    [Parameter()]
-	    [UniversalDashboard.Models.DashboardColor]$FontColor = "#fff",
-	    [Parameter()]
-	    [string]$BackgroundRepeat,
-	    [Parameter()]
-	    [string]$BackgroundSize,
-	    [Parameter()]
-	    [string]$BackgroundPosition,
-	    [Parameter()]
-	    [string]$TitlePosition,
-	    [Parameter()]
-	    [string]$TextPosition,
+		[hashtable]$Style,
 	    [Parameter()]
 	    [string]$Id = ([Guid]::NewGuid()).ToString(),
 	    [Parameter()]
-	    [string]$Title,
+	    [string]$ImageSource,
 	    [Parameter()]
 	    [string]$Url
     )
 
     End {
-        @{
-            text = $Text 
-            backgroundColor = $BackgroundColor.HtmlColor
-            backgroundImage = $BackgroundImage
-            fontColor = $FontColor.HtmlColor
-            backgroundRepeat = $BackgroundRepeat
-            backgroundSize = $BackgroundSize
-            backgroundPosition = $BackgroundPosition
-            titlePosition = $TitlePosition
-            textPosition = $TextPosition
-            id = $id
-            title = $Title
-            url = $Url
+        @{			
+			# all those properties can be replace with the Style property
+			# ----
+            # backgroundColor = $BackgroundColor.HtmlColor
+            # backgroundImage = $BackgroundImage
+            # fontColor = $FontColor.HtmlColor
+            # backgroundRepeat = $BackgroundRepeat
+            # backgroundSize = $BackgroundSize
+            # backgroundPosition = $BackgroundPosition
+            # titlePosition = $TitlePosition
+            # textPosition = $TextPosition
+			# ----
+			# style = $Style
+			id = $id
+            # title = $Title
+			url = $Url
+			imageSource = $ImageSource
         }
     }
 }
