@@ -66,7 +66,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         UDGrid                                 = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor       = $AlternativeBackgroundColor3
+            FontColor       = $PrimaryFontColor
         }
 
         UDCounter                              = @{
@@ -83,7 +83,9 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             BackgroundColor = $AlternativeBackgroundColor3
             Height = 'auto'
             BoxShadow = 'unset'
+
         }
+
 
         UDTab = @{
             FontColor = $PrimaryColor
@@ -107,6 +109,15 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         UDTabIndicator = @{
             IndicatorColor = $SecondaryColor
+        }
+
+        UDImageCarouselIndicator = @{
+            Width = '10px'
+            Hieght = '10px'
+        }
+        
+        UDImageCarouselIndicatorActive = @{
+            BackgroundColor = $PrimaryColor
         }
 
         #CSS ELEMENTS
