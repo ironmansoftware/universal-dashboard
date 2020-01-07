@@ -186,15 +186,15 @@ Describe "Api" {
         }
 
         It "returns users from the post endpoint" {
-            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method POST -Body @{Test="xyz"}
+            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method POST -Body @{Test="xyz"} -ContentType 'application/x-www-form-urlencoded'
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
             $users[3] | Should be "xyz"
         }
 
-        It "returns users from the put endpoint" -Skip {
-            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method PUT -Body @{Test="xyz"}
+        It "returns users from the put endpoint" {
+            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method PUT -Body @{Test="xyz"} -ContentType 'application/x-www-form-urlencoded'
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"
@@ -202,7 +202,7 @@ Describe "Api" {
         }
 
         It "returns users from the patch endpoint" {
-            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method Patch -Body @{Test="xyz"}
+            $users = Invoke-RestMethod -Uri http://localhost:10001/api/user -Method Patch -Body @{Test="xyz"} -ContentType 'application/x-www-form-urlencoded'
             $users[0] | Should be "Adam"
             $users[1] | Should be "Bill"
             $users[2] | Should be "Frank"

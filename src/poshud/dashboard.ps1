@@ -1,7 +1,7 @@
 . (Join-Path $PSScriptRoot "utils.ps1")
 
 $NavBarLinks = @((New-UDLink -Text "Buy Universal Dashboard" -Url "https://ironmansoftware.com/product/powershell-universal-dashboard/" -Icon heart_o),
-                 (New-UDLink -Text "Documentation" -Url "https://docs.universaldashboard.io" -Icon book))
+    (New-UDLink -Text "Documentation" -Url "https://docs.universaldashboard.io" -Icon book))
 
 $Pages = @()
 $Pages += . (Join-Path $PSScriptRoot "pages\home.ps1")
@@ -13,36 +13,36 @@ $Pages += New-UDComponentPage -Command 'Invoke-UDRedirect'
 
 $Components = @()
 @('New-UDButton', 
-  'New-UDCard', 
-  'New-UDCheckbox', 
-  "New-UDChart",
-  'New-UDCollapsible',
-  'New-UDCollection',
-  'New-UDCounter',
-  'New-UDElement',
-  'New-UDFab',
-  'New-UDGrid',
-  'New-UDGridLayout',
-  'New-UDHeading',
-  'New-UDHtml',
-  'New-UDIcon',
-  'New-UDIFrame',
-  'New-UDImage',
-  'New-UDImageCarousel',
-  'New-UDInput',
-  'New-UDLink',
-  'New-UDMonitor',
-  'New-UDPreloader',
-  'New-UDRadio',
-  'New-UDRow',
-  'New-UDSelect',
-  'New-UDSplitPane',
-  'New-UDSwitch',
-  'New-UDTabContainer',
-  'New-UDTable',
-  'New-UDTooltip',
-  'New-UDTextbox',
-  'New-UDTreeview') | Sort-Object | ForEach-Object {
+    'New-UDCard', 
+    'New-UDCheckbox', 
+    "New-UDChart",
+    'New-UDCollapsible',
+    'New-UDCollection',
+    'New-UDCounter',
+    'New-UDElement',
+    'New-UDFab',
+    'New-UDGrid',
+    'New-UDGridLayout',
+    'New-UDHeading',
+    'New-UDHtml',
+    'New-UDIcon',
+    'New-UDIFrame',
+    'New-UDImage',
+    'New-UDImageCarousel',
+    'New-UDInput',
+    'New-UDLink',
+    'New-UDMonitor',
+    'New-UDPreloader',
+    'New-UDRadio',
+    'New-UDRow',
+    'New-UDSelect',
+    'New-UDSplitPane',
+    'New-UDSwitch',
+    'New-UDTabContainer',
+    'New-UDTable',
+    'New-UDTooltip',
+    'New-UDTextbox',
+    'New-UDTreeview') | Sort-Object | ForEach-Object {
     $Page = New-UDComponentPage -Command $_
     $Components += New-UDSideNavItem -Text $_.Split('-')[1].Substring(2) -Url $_
     $Pages += $Page
@@ -50,6 +50,7 @@ $Components = @()
 
 $Pages += (New-UDComponentPage -Command "Show-UDModal")
 $Pages += (New-UDComponentPage -Command "Show-UDToast")
+$Pages += (New-UDComponentPage -Command "Set-UDClipboard")
 
 $Navigation = New-UDSideNav -Content {
     New-UDSideNavItem -Text "Home" -Url "Home" -Icon home
@@ -65,6 +66,7 @@ $Navigation = New-UDSideNav -Content {
     New-UDSideNavItem -SubHeader -Text "Utilities" -Icon wrench -Children {
 
         New-UDSideNavItem -Text "Modals" -Url "Show-UDModal"
+        New-UDSideNavItem -Text "Clipboard" -Url "Set-UDClipboard"
         New-UDSideNavItem -Text 'Scheduled Endpoints' -Url 'Scheduled-Endpoints'
         New-UDSideNavItem -Text "Toasts" -Url "Show-UDToast"
         New-UDSideNavItem -Text 'Redirect' -Url 'Invoke-UDRedirect'

@@ -61,7 +61,7 @@ namespace UniversalDashboard
 
         public static async Task Clipboard(this IHubContext<DashboardHub> hub, string clientId, string Data, bool toastOnSuccess, bool toastOnError)
         {
-            await hub.Clients.Client(clientId).SendAsync("clipboard", Data, toastOnSuccess ,toastOnError);
+            await hub.Clients.Client(clientId).SendAsync("clipboard", Data, toastOnSuccess, toastOnError);
         }
 
         public static async Task SetState(this IHubContext<DashboardHub> hub, string componentId, Element state)
@@ -69,7 +69,7 @@ namespace UniversalDashboard
             await hub.Clients.All.SendAsync("setState", componentId, state);
         }
 
-        public static async  Task SetState(this IHubContext<DashboardHub> hub, string clientId, string componentId, Element state)
+        public static async Task SetState(this IHubContext<DashboardHub> hub, string clientId, string componentId, Element state)
         {
             await hub.Clients.Client(clientId).SendAsync("setState", componentId, state);
         }
@@ -79,7 +79,7 @@ namespace UniversalDashboard
             await hub.Clients.All.SendAsync("addElement", parentComponentId, element);
         }
 
-        public static async  Task AddElement(this IHubContext<DashboardHub> hub, string clientId, string parentComponentId, object[] element)
+        public static async Task AddElement(this IHubContext<DashboardHub> hub, string clientId, string parentComponentId, object[] element)
         {
             await hub.Clients.Client(clientId).SendAsync("addElement", parentComponentId, element);
         }
@@ -122,7 +122,8 @@ namespace UniversalDashboard
         }
     }
 
-    public class DashboardHub : Hub {
+    public class DashboardHub : Hub
+    {
         private IExecutionService _executionService;
         private readonly StateRequestService _stateRequestService;
         private readonly ConnectionManager _connectionManager;
@@ -130,7 +131,8 @@ namespace UniversalDashboard
         private readonly IMemoryCache _memoryCache;
         private static readonly Logger _logger = LogManager.GetLogger(nameof(DashboardHub));
 
-        public DashboardHub(IExecutionService executionService, ConnectionManager connectionManager, StateRequestService stateRequestService, IDashboardService dashboardService, IMemoryCache memoryCache) {
+        public DashboardHub(IExecutionService executionService, ConnectionManager connectionManager, StateRequestService stateRequestService, IDashboardService dashboardService, IMemoryCache memoryCache)
+        {
             Log.Debug("DashboardHub constructor");
 
             _executionService = executionService;
@@ -148,7 +150,8 @@ namespace UniversalDashboard
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             await Task.FromResult(0);
-            if (exception == null) {
+            if (exception == null)
+            {
                 Log.Debug("Disconnected");
             }
             else
@@ -206,7 +209,8 @@ namespace UniversalDashboard
             }
         }
 
-        public async Task ClientEvent(string eventId, string eventName, string eventData, string location) {
+        public async Task ClientEvent(string eventId, string eventName, string eventData, string location)
+        {
             _logger.Debug($"ClientEvent {eventId} {eventName}");
 
             var variables = new Dictionary<string, object>();
@@ -217,11 +221,12 @@ namespace UniversalDashboard
                 variables.Add("user", userName);
             }
 
-            if (!string.IsNullOrEmpty(location)) {
+            if (!string.IsNullOrEmpty(location))
+            {
                 location = Encoding.UTF8.GetString(Convert.FromBase64String(location));
                 var locationObject = JsonConvert.DeserializeObject<Location>(location);
                 variables.Add("Location", locationObject);
-			}
+            }
 
             if (bool.TryParse(eventData, out bool data))
             {
