@@ -243,6 +243,8 @@ namespace UniversalDashboard.Services
             _cssMap.Add("udtabindicator", ToClasses(".mdc-tab-indicator--active .mdc-tab-indicator__content"));
             _cssMap.Add("udtabicon", ToClasses(".mdc-tab .mdc-tab__icon"));
             _cssMap.Add("udtabactiveicon", ToClasses("button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab > div.mdc-tab__content > i", ".mdc-tab .mdc-tab__icon"));
+            _cssMap.Add("udimagecarouselindicator", ToClasses(".slider .indicators .indicator-item", ".slider .indicators .indicator-item.active"));
+            _cssMap.Add("udimagecarouselindicatoractive", ToClasses(".slider .indicators .indicator-item.active"));
 
             // Properties
             _cssMap.Add("backgroundcolor", ToClasses("background-color"));
@@ -254,6 +256,8 @@ namespace UniversalDashboard.Services
             _cssMap.Add("boxshadow", ToClasses("box-shadow"));
             _cssMap.Add("height", ToClasses("height"));
             _cssMap.Add("lineheight", ToClasses("line-height"));
+            _cssMap.Add("width", ToClasses("width"));
+            _cssMap.Add("height", ToClasses("height"));
 
         }
     }
