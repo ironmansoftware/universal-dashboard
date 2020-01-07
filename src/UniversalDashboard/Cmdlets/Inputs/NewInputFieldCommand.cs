@@ -28,6 +28,9 @@ namespace UniversalDashboard.Cmdlets.Inputs
         public string[] Placeholder { get; set; }
 
         [Parameter()]
+        public SwitchParameter Disabled { get; set; }
+
+        [Parameter()]
         [ValidateSet("textbox", "checkbox", "select", "radioButtons", "password", "textarea", "switch", "date", "file", "time", "binaryFile")]
         public string Type { get; set; }
 
@@ -67,6 +70,7 @@ namespace UniversalDashboard.Cmdlets.Inputs
 				ValidOptions = Values,
 				Value = DefaultValue,
                 Placeholder = Placeholder,
+                Disabled = Disabled.IsPresent,
                 Type = Type,
                 OkText = OkText,
                 CancelText = CancelText,

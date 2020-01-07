@@ -75,6 +75,7 @@ export default class UdInputField extends React.Component {
             name: this.props.name,
             type: this.props.type,
             value: this.props.value,
+            disabled: this.props.disabled,
             placeholder: this.props.placeholder,
             validOptions: this.props.validOptions,
             validating: this.props.validating,
@@ -121,6 +122,7 @@ export default class UdInputField extends React.Component {
                 id={field.name} name={field.name} 
                 onChange={e => this.onTextFieldChange(field, e) } 
                 value={field.value} 
+                disabled={field.disabled}
                 onBlur={e => this.onValidateField(field, e)} 
                 onKeyDown={this.onKeyDown.bind(this)}  
                 label={field.placeholder ? field.placeholder[0] : field.name}
@@ -134,6 +136,7 @@ export default class UdInputField extends React.Component {
                 name={field.name}
                 onChange={e => this.onTextFieldChange(field, e) } 
                 value={field.value}  
+                disabled={field.disabled}
                 label={field.placeholder ? field.placeholder[0] : field.name}
             />
         }
@@ -145,7 +148,7 @@ export default class UdInputField extends React.Component {
                 value = String(field.value).toLowerCase() === "true";
             }
 
-            return <Checkbox id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } checked={value} label={field.placeholder ? field.placeholder[0] : field.name} />
+            return <Checkbox id={field.name} name={field.name} disabled={field.disabled} onChange={e => this.onCheckboxChanged(field, e) } checked={value} label={field.placeholder ? field.placeholder[0] : field.name} />
         }
 
         if (field.type === 'date') {
@@ -165,6 +168,7 @@ export default class UdInputField extends React.Component {
                     className="ud-input">{field.placeholder ? field.placeholder[0] : field.name}</label>,
                 <DatePicker  
                     className="ud-input"
+                    disabled={field.disabled}
                     options={options} onChange={function(e) {  
                         const moment = require('moment');
                         let m = moment(e);
@@ -186,11 +190,11 @@ export default class UdInputField extends React.Component {
 
             return [
                 <label id={field.name + 'label'} htmlFor={field.name} style={{color: this.props.fontColor}}>{field.placeholder ? field.placeholder[0] : field.name}</label>,
-                <TimePicker id={field.name} options={options} onChange={function(e) {   
+                <TimePicker id={field.name} options={options} disabled={field.disabled} onChange={function(e) {   
                     var val = this.get('select');
                     comp.onTextFieldChange({name: comp.props.name},  {target: {value: val}});
                 }} />
-            ]
+            ] 
         }
 
         if (field.type == 'switch') {
@@ -207,7 +211,7 @@ export default class UdInputField extends React.Component {
                 value = String(field.value).toLowerCase() === "true";
             }
 
-            return <Switch id={field.name} name={field.name} onChange={e => this.onCheckboxChanged(field, e) } checked={value} offLabel={off} onLabel={on} />
+            return <Switch id={field.name} name={field.name} disabled={field.disabled} onChange={e => this.onCheckboxChanged(field, e) } checked={value} offLabel={off} onLabel={on} />
         }
 
         if (field.type == 'select') {
@@ -218,7 +222,7 @@ export default class UdInputField extends React.Component {
                 });
             }
             
-            return <Select label={field.placeholder ? field.placeholder[0] : field.name} onChange={e => this.onSelectChanged(field, e) } value={field.value}>
+            return <Select label={field.placeholder ? field.placeholder[0] : field.name} disabled={field.disabled} onChange={e => this.onSelectChanged(field, e) } value={field.value}>
                 {options}
             </Select>
         }
