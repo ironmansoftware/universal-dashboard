@@ -190,6 +190,10 @@
                 'background-color' = "#bababa"
             }
 
+            '.sidenav .collapsible-body' = @{
+                'background-color' = $PrimaryColor
+            }
+
             '.sidenav .collapsible-header'= @{
                 'color'= "#fff !important"
                 'background-color' = "#1c1c1c !important"
