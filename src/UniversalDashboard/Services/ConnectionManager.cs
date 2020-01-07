@@ -1,42 +1,37 @@
-﻿using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Services
 {
     public class ConnectionManager
     {
-        public Dictionary<string, Connection> Connections { get; private set; }
+        public ConcurrentDictionary<string, Connection> Connections { get; private set; }
         private static object Sync = new object();
 
         public ConnectionManager()
         {
-            Connections = new Dictionary<string, Connection>();
+            Connections = new ConcurrentDictionary<string, Connection>();
         }
 
         public void AddConnection(Connection connection)
         {
-            lock(Sync)
+            if (!Connections.ContainsKey(connection.Id.ToLower()))
             {
-                Connections.Add(connection.Id.ToLower(), connection);
+                Connections.TryAdd(connection.Id.ToLower(), connection);
             }
         }
 
         public void RemoveConnection(string id)
         {
-            lock(Sync)
-            {
-                Connections.Remove(id.ToLower());
-            }
+            Connections.TryRemove(id.ToLower(), out Connection value);
         }
 
         public string GetSessionId(string id)
         {
-            lock(Sync)
+            if (Connections.ContainsKey(id.ToLower()))
             {
-                if (Connections.ContainsKey(id.ToLower()))
-                {
-                    return Connections[id.ToLower()].SessionId;
-                }
+                return Connections[id.ToLower()].SessionId;
             }
 
             return null;
