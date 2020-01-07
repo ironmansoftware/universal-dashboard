@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added support for Set-UDElement, Remove-UDElement and Clear-UDElement events on New-UDCheckbox (#1368) by [BoSen29](https://github.com/BoSen29)
+- Added support for UDTab load data when his the active tab (#1392, #1169) by [alongvili](https://github.com/alongvili)
+
 
 ### Added (Enterprise)
 ### Changed
@@ -16,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extracted materialize from the core UD client libraries by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed JavaScript error when loading page by [adamdriscoll](https://github.com/adamdriscoll)
 - Updated tests to correctly validate #1404 by [adamdriscoll](https://github.com/adamdriscoll)
+- Fix Set-UDClipboard doesn't work inside modals. (#1292) by [alongvili](https://github.com/alongvili)
+- Fix Remove-UDElement on textbox doesn't remove label (#1378) by [alongvili](https://github.com/alongvili)
+- Fix New-CarouselItem URL parameter not functioning (#1417) by [alongvili](https://github.com/alongvili)
+- Fix UDMUChip -OnDelete parameter not working (#1423) by [alongvili](https://github.com/alongvili)
 
 ### Changed (Enterprise)
 
