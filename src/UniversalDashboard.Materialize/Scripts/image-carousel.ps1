@@ -55,17 +55,6 @@ function New-UDImageCarouselItem {
 
 	End {
 		@{			
-			# all those properties can be replace with the Style property
-			# ----
-			# backgroundColor = $BackgroundColor.HtmlColor
-			# backgroundImage = $BackgroundImage
-			# fontColor = $FontColor.HtmlColor
-			# backgroundRepeat = $BackgroundRepeat
-			# backgroundSize = $BackgroundSize
-			# backgroundPosition = $BackgroundPosition
-			# titlePosition = $TitlePosition
-			# textPosition = $TextPosition
-			# ----
 			style       = $Style
 			id          = $id
 			url         = $Url
