@@ -65,6 +65,8 @@ namespace UniversalDashboard.Models
 
 		[JsonProperty("value")]
 		public object Value { get; set; }
+		[JsonProperty("disabled")]
+		public object Disabled { get; set; }
 		[JsonProperty("links")]
 		public Hashtable[] Links { get;set;}
         [JsonProperty("okText")]
