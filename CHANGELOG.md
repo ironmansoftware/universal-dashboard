@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix Remove-UDElement on textbox doesn't remove label (#1378) by [alongvili](https://github.com/alongvili)
 - Fix New-CarouselItem URL parameter not functioning (#1417) by [alongvili](https://github.com/alongvili)
 - Fix UDMUChip -OnDelete parameter not working (#1423) by [alongvili](https://github.com/alongvili)
+- Connection management now uses a ConcurrentDictionary rather than locks by [adamdriscoll](https://github.com/adamdriscoll)
+
 
 ### Changed (Enterprise)
 

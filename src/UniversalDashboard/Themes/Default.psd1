@@ -66,7 +66,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         UDGrid                                 = @{
             BackgroundColor = $AlternativeBackgroundColor3
-            FontColor = $PrimaryFontColor 
+            FontColor       = $PrimaryFontColor
         }
 
         UDCounter                              = @{

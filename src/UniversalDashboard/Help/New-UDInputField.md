@@ -18,7 +18,7 @@ New-UDInputField -Name <String> [-Values <Object[]>] [-DefaultValue <Object>] [-
 ```
 
 ## DESCRIPTION
-Creates input fields for New-UDInput. This cmdlet should be used within New-UDInput's -Component parameter.
+Creates input fields for New-UDInput. This cmdlet should be used within New-UDInput's -Content parameter.
 
 ## EXAMPLES
 
