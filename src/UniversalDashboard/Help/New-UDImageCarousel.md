@@ -26,10 +26,10 @@ Add image carousel to UniversalDashboard you can set the carousel to be full scr
 ### Example 1
 ```
 New-UDImageCarousel -Items {
-        New-UDImageCarouselItem -BackgroundImage https://i0.wp.com/ironmansoftware.com/wp-content/uploads/2019/01/azure.png -BackgroundRepeat = 'no-repeat' -BackgroundSize = 'cover' -BackgroundColor  = '#3f51b5'
-        New-UDImageCarouselItem -BackgroundImage https://i2.wp.com/ironmansoftware.com/wp-content/uploads/2019/01/component.png -BackgroundRepeat = 'no-repeat' -BackgroundSize = 'cover' -BackgroundColor  = '#3f51b5'
-        New-UDImageCarouselItem -BackgroundImage https://i1.wp.com/ironmansoftware.com/wp-content/uploads/2019/01/dsl.png -BackgroundRepeat = 'no-repeat' -BackgroundSize = 'cover' -BackgroundColor  = '#3f51b5'
-}  -Height 650px -FullWidth -FixButton -ButtonText 'GO TO..' -ShowIndicators
+        New-UDImageCarouselItem -ImageSource https://hdqwalls.com/wallpapers/deadpool-baby-yoda-c6.jpg -Url 'https://hdqwalls.com/wallpapers/deadpool-baby-yoda-c6.jpg'
+        New-UDImageCarouselItem -ImageSource https://hdqwalls.com/wallpapers/black-widow4k-5b.jpg -Url 'https://hdqwalls.com/wallpapers/black-widow4k-5b.jpg'
+        New-UDImageCarouselItem -ImageSource https://hdqwalls.com/wallpapers/batman-fire-4k-xv.jpg -Url 'https://hdqwalls.com/wallpapers/batman-fire-4k-xv.jpg'
+} -Indicators
 ```
 
 Create new image carousel with 3 slides and with fixed button on every slide.

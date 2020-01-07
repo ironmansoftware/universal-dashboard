@@ -1,89 +1,64 @@
 function New-UDImageCarousel {
-    param(
-        [Parameter()]
+	param(
+		[Parameter()]
 		[ScriptBlock]$Items,
-	    [Parameter()]
-	    [string]$Id = ([Guid]::NewGuid()).ToString(),
-	    [Parameter()]
-	    [switch]$ShowIndicators,
-	    [Parameter()]
-	    [switch]$AutoCycle,
-	    [Parameter()]
-	    [int]$Speed,
-	    [Parameter()]
-	    [string]$Width,
-	    [Parameter()]
-	    [string]$Height,
-	    [Parameter()]
-	    [switch]$FullWidth,
-	    [Parameter()]
-	    [switch]$FixButton,
-	    [Parameter()]
-	    [string]$ButtonText
-    )
+		[Parameter()]
+		[string]$Id = ([Guid]::NewGuid()).ToString(),
+		[Parameter()]
+		[alias("ShowIndicators")] 
+		[switch]$Indicators,
+		[Parameter()]
+		[alias("FullWidth")]
+		[switch]$FullScreen,
+		[Parameter()]
+		[alias("Speed")]
+		[int]$Interval = 6000,
+		[Parameter()]
+		[int]$Duration = 500,
+		[Parameter()]
+		[int]$Height = 400
+	)
 
-    End {
-        @{
-            type = "image-carousel"
-            isPlugin = $true
-            assetId = $AssetId
+	End {
 
-            items = $Items.Invoke()
-            id = $id 
-            showIndicators = $ShowIndicators.IsPresent
-            autoCycle = $AutoCycle.IsPresent
-            speed = $Speed
-            width = $Width
-            height = $Height
-            fullWidth = $FullWidth.IsPresent
-            fixButton = $FixButton.IsPresent
-            buttonText = $ButtonText
-        }
-    }
+		$Options = @{
+			duration   = $Duration
+			height     = $Height 
+			interval   = $Interval
+			indicators = $Indicators.IsPresent
+		}
+
+		@{
+			type       = "image-carousel"
+			isPlugin   = $true
+			assetId    = $AssetId
+			items      = $Items.Invoke()
+			id         = $id 
+			fullscreen = $FullScreen.IsPresent
+			options    = $Options
+		}
+	}
 }
 
 function New-UDImageCarouselItem {
-    param(
-        [Parameter()]
-		[string]$Text,
-	    [Parameter()]
-	    [UniversalDashboard.Models.DashboardColor]$BackgroundColor = "#000",
-	    [Parameter()]
-	    [string]$BackgroundImage,
-	    [Parameter()]
-	    [UniversalDashboard.Models.DashboardColor]$FontColor = "#fff",
-	    [Parameter()]
-	    [string]$BackgroundRepeat,
-	    [Parameter()]
-	    [string]$BackgroundSize,
-	    [Parameter()]
-	    [string]$BackgroundPosition,
-	    [Parameter()]
-	    [string]$TitlePosition,
-	    [Parameter()]
-	    [string]$TextPosition,
-	    [Parameter()]
-	    [string]$Id = ([Guid]::NewGuid()).ToString(),
-	    [Parameter()]
-	    [string]$Title,
-	    [Parameter()]
-	    [string]$Url
-    )
+	param(
+		[Parameter()]
+		[hashtable]$Style,
+		[Parameter()]
+		[string]$Id = ([Guid]::NewGuid()).ToString(),
+		[Parameter()]
+		[alias("BackgroundImage")]
+		[string]$ImageSource,
+		[Parameter()]
+		[string]$Url
+	)
 
-    End {
-        @{
-            text = $Text 
-            backgroundColor = $BackgroundColor.HtmlColor
-            backgroundImage = $BackgroundImage
-            fontColor = $FontColor.HtmlColor
-            backgroundRepeat = $BackgroundRepeat
-            backgroundSize = $BackgroundSize
-            backgroundPosition = $BackgroundPosition
-            titlePosition = $TitlePosition
-            textPosition = $TextPosition
-            id = $id
-            title = $Title
-            url = $Url
-        }
-    }
+	End {
+		@{			
+			style       = $Style
+			id          = $id
+			url         = $Url
+			imageSource = $ImageSource
+		}
+	}
 }
