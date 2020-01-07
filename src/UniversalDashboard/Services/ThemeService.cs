@@ -257,7 +257,6 @@ namespace UniversalDashboard.Services
             _cssMap.Add("height", ToClasses("height"));
             _cssMap.Add("lineheight", ToClasses("line-height"));
             _cssMap.Add("width", ToClasses("width"));
-            _cssMap.Add("height", ToClasses("height"));
 
         }
     }
