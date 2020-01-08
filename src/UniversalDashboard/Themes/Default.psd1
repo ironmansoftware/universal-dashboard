@@ -59,9 +59,9 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             FontColor       = $PrimaryFontColor 
         }
 
-        UDTable                                = @{
-            BackgroundColor = $PrimaryColor
-            FontColor       = $AlternateFontColor 
+        UDTable                              = @{
+            BackgroundColor = $AlternativeBackgroundColor3
+            FontColor       = $PrimaryFontColor 
         }
 
         UDGrid                                 = @{
@@ -113,7 +113,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         UDImageCarouselIndicator = @{
             Width = '10px'
-            Hieght = '10px'
+            Height = '10px'
         }
         
         UDImageCarouselIndicatorActive = @{
