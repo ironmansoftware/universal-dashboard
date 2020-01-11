@@ -6,7 +6,7 @@ Import-Module $ModulePath -Force
 Describe "New-UDTab" {
     It "should support text parameter" {
         $Image = New-UDTab -Text 'hi' -Content {}
-        $Image.Text | should be "hi"
+        $Image.Label | should be "hi"
     }
 
     It "should be plugin" {
