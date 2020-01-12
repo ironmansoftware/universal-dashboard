@@ -254,7 +254,7 @@ Describe "Element" {
              Start-Sleep 3
 
              (Find-SeElement -Driver $Driver -Id "changer").Text | should not be $ChangerText
-             (Find-SeElement -Driver $Driver -Id "sessionInfo").Text | should be "1"
+             (Find-SeElement -Driver $Driver -Id "sessionInfo").Text | should be "2"
          }
     }
 
