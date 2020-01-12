@@ -36,7 +36,7 @@ Describe "paper" {
 
         It 'has elevation of 4' {
             $element = Find-SeElement -Id 'paper-container' -Driver $Driver
-            (Get-SeElementAttribute -Element $element -Attribute 'class') -match '.jss8' | should be $true
+            (Get-SeElementAttribute -Element $element -Attribute 'class') -match '.MuiPaper-elevation4' | should be $true
         }
     }
     Context "endpoint" {
