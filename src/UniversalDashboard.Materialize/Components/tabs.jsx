@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { TabBar, Tab } from '@rmwc/tabs'
 
 const TabPanel = ({ content, ...props }) => {
-    console.log('TabPanel Props: ', props)
-    console.log('TabPanel Content: ', content)
     return <div>{UniversalDashboard.renderComponent(content)}</div>
 }
 
