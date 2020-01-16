@@ -3,6 +3,7 @@
 
 $FontColorDark = "#FFFFFF"
 $FontColorLight = "#FFFFFF"
+$FontFamily = '"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'
 
 $BackgroundColorPrimary = "#393F47"
 $BackgroundColorLighter = "#252525"
@@ -11,6 +12,7 @@ $BackgroundColorBright = "#272C33"
 
 $PrimaryColor = "#272C33"
 $PrimaryColorDark = "#272C33"
+$PrimaryColorLight = "#404040"
 
 $PrimaryFontColor = $FontColorDark
 $AlternateFontColor = $FontColorLight
@@ -26,7 +28,8 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         #UD ELEMENTS
         UDDashboard = @{
             BackgroundColor = $PrimaryBackgroundColor
-            FontColor = $PrimaryFontColor 
+            FontColor = $PrimaryFontColor
+            $FontFamily = $FontFamily
         }
 
         UDNavBar = @{
@@ -74,6 +77,49 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             BackgroundColor = $AlternativeBackgroundColor3
             FontColor = $PrimaryFontColor 
         }
+
+        UDTabs = @{
+            BackgroundColor = $AlternativeBackgroundColor3
+            Height = 'auto'
+            BoxShadow = 'unset'
+            FontFamily = $FontFamily
+
+        }
+
+        UDTab = @{
+            FontColor = $PrimaryColor
+            FontFamily = $FontFamily
+            # No need for backgroundColor it inherit UDTabs backgroundColor
+        }
+
+        UDTabActive = @{
+            ActiveFontColor = $AlternateFontColor
+            ActiveBackgroundColor = $PrimaryColor
+        }
+
+        UDTabIcon = @{
+            FontColor = $PrimaryColor
+            Height = 'auto'
+            LineHeight = 'inherit'
+        }
+
+        UDTabActiveIcon = @{
+            ActiveFontColor = $AlternateFontColor
+        }
+
+        UDTabIndicator = @{
+            IndicatorColor = $PrimaryColorDark
+        }
+
+        UDImageCarouselIndicator = @{
+            Width = '10px'
+            Height = '10px'
+        }
+        
+        UDImageCarouselIndicatorActive = @{
+            BackgroundColor = $PrimaryColor
+        }
+           
     
         #CSS ELEMENTS
         'main' = @{

@@ -248,6 +248,7 @@ namespace UniversalDashboard.Services
 
             // Properties
             _cssMap.Add("backgroundcolor", ToClasses("background-color"));
+            _cssMap.Add("fontfamily", ToClasses("font-family"));
             _cssMap.Add("fontcolor", ToClasses("color"));
             _cssMap.Add("activefontcolor", ToClasses("color"));
             _cssMap.Add("activebackgroundcolor", ToClasses("background-color"));
