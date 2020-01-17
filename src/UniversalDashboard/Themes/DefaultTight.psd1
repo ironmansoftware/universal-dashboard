@@ -3,6 +3,7 @@
 
 $FontColorDark = "#111111"
 $FontColorLight = "#FFFFFF"
+$FontFamily = '"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'
 
 $BackgroundColorPrimary = "#EEEEEE"
 $BackgroundColorLighter = "#FAFAFA"
@@ -30,6 +31,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         UDDashboard = @{
             BackgroundColor = $PrimaryBackgroundColor
             FontColor = $PrimaryFontColor 
+            $FontFamily = $FontFamily
         }
 
         UDNavBar = @{
@@ -88,6 +90,48 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         UDInput = @{
             BackgroundColor = $AlternativeBackgroundColor3
             FontColor = $PrimaryFontColor 
+        }
+
+        UDTabs = @{
+            BackgroundColor = $AlternativeBackgroundColor3
+            Height = 'auto'
+            BoxShadow = 'unset'
+            FontFamily = $FontFamily
+
+        }
+
+        UDTab = @{
+            FontColor = $PrimaryColor
+            FontFamily = $FontFamily
+            # No need for backgroundColor it inherit UDTabs backgroundColor
+        }
+
+        UDTabActive = @{
+            ActiveFontColor = $AlternateFontColor
+            ActiveBackgroundColor = $PrimaryColor
+        }
+
+        UDTabIcon = @{
+            FontColor = $PrimaryColor
+            Height = 'auto'
+            LineHeight = 'inherit'
+        }
+
+        UDTabActiveIcon = @{
+            ActiveFontColor = $AlternateFontColor
+        }
+
+        UDTabIndicator = @{
+            IndicatorColor = $PrimaryColorDark
+        }
+
+        UDImageCarouselIndicator = @{
+            Width = '10px'
+            Height = '10px'
+        }
+        
+        UDImageCarouselIndicatorActive = @{
+            BackgroundColor = $PrimaryColor
         }
     
         #CSS ELEMENTS
