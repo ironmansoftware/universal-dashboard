@@ -15,6 +15,45 @@ Describe "Element" {
     $Driver = Start-SeFirefox
     Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
+    Context "Get-UDELement" {
+        $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
+           New-UDTab -Text 'General' -Content {
+               New-UDCard -Content {
+                   New-UDTextbox -Id "Option1" -Label "Name" -Type text
+                   New-UDTextbox -Id "Option2" -Label "Description" -Type text 
+               }
+           }
+           
+           New-UDTab -Text 'Different Tab' -Content {
+               New-UDButton -Text "Create A Thing" -Id 'btnCreate' -Icon folder_plus -OnClick {
+                   # Get Input Data
+                   $Cache:Name = ((Get-UDElement -Id 'Option1').Attributes["value"])
+                   $Cache:Description = ((Get-UDElement -Id 'Option2').Attributes["value"])   
+               }
+           }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should get element content" {
+            $Element = Find-SeElement -Driver $Driver -Id 'Option1' 
+            Send-SeKeys -Element $Element -Keys "Hello"
+
+            $Element = Find-SeElement -Driver $Driver -Id 'Option2' 
+            Send-SeKeys -Element $Element -Keys "World"
+
+            $Element = Find-SeElement -Driver $Driver -Id 'btnCreate'
+            Invoke-SeClick -Element $Element 
+
+            Start-Sleep 1
+
+            $Cache:Name | Should be 'Hello'
+            $Cache:Description | Should be 'World'
+        }
+   }
+
+
     Context "Endpoint" {
         $Dashboard = New-UDDashboard -Content {
             New-UDElement -Tag "div" -Id "testElement" -Endpoint {
@@ -260,5 +299,4 @@ Describe "Element" {
 
     Get-UDDashboard | Stop-UDDashboard
     Stop-SeDriver $Driver
-
 }
