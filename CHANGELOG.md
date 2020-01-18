@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for Set-UDElement, Remove-UDElement and Clear-UDElement events on New-UDCheckbox (#1368) by [BoSen29](https://github.com/BoSen29)
 - Added support for UDTab load data when his the active tab (#1392, #1169) by [alongvili](https://github.com/alongvili)
 - Allow Specification of Font in Themes
+- Added -RenderWhenActive to New-UDTabContainer to only render tabs when they are active by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Added (Enterprise)
 ### Changed
