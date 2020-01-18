@@ -12,7 +12,6 @@ const UDTab = props => {
     const [tabContent, setTabContent] = useState(props.content)
     const tabRef = useRef()
     useEffect(() => {
-        console.log('udtab', props)
         const pubSubToken = UniversalDashboard.subscribe(props.id, events);
         return () => UniversalDashboard.unsubscribe(pubSubToken);
     }, [props.id]);

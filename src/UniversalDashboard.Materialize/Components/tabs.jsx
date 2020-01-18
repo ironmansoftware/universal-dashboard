@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TabBar, Tab } from '@rmwc/tabs'
 
 const TabPanel = ({ content, ...props }) => {
-    return <div>{UniversalDashboard.renderComponent(content)}</div>
+    return <div style={{display: props.display }}>{UniversalDashboard.renderComponent(content)}</div>
 }
 
 const TabContainer = props => {
@@ -32,7 +32,19 @@ const TabContainer = props => {
                     )
                 }
             </TabBar>
-            <TabPanel {...activeTabPanel} />
+            {
+                props.renderOnClick ? 
+
+                <TabPanel {...activeTabPanel} display="block"/>
+
+                :
+
+                tabs.map(tab => {
+                    let display = activeTabPanel.id === tab.id ? "block" : "none"
+                    return <TabPanel {...tab} display={display} />
+                })
+            }
+            
         </div>
     )
 }

@@ -17,20 +17,23 @@ Describe "Element" {
 
     Context "Get-UDELement" {
         $dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Content {
-           New-UDTab -Text 'General' -Content {
-               New-UDCard -Content {
-                   New-UDTextbox -Id "Option1" -Label "Name" -Type text
-                   New-UDTextbox -Id "Option2" -Label "Description" -Type text 
-               }
-           }
-           
-           New-UDTab -Text 'Different Tab' -Content {
-               New-UDButton -Text "Create A Thing" -Id 'btnCreate' -Icon folder_plus -OnClick {
-                   # Get Input Data
-                   $Cache:Name = ((Get-UDElement -Id 'Option1').Attributes["value"])
-                   $Cache:Description = ((Get-UDElement -Id 'Option2').Attributes["value"])   
-               }
-           }
+
+            New-UDTabContainer -Tabs {
+                New-UDTab -Text 'General' -Content {
+                    New-UDCard -Content {
+                        New-UDTextbox -Id "Option1" -Label "Name" -Type text
+                        New-UDTextbox -Id "Option2" -Label "Description" -Type text 
+                    }
+                }
+                
+                New-UDTab -Text 'Different Tab' -Content {
+                    New-UDButton -Text "Create A Thing" -Id 'btnCreate' -Icon folder_plus -OnClick {
+                        # Get Input Data
+                        $Cache:Name = ((Get-UDElement -Id 'Option1').Attributes["value"])
+                        $Cache:Description = ((Get-UDElement -Id 'Option2').Attributes["value"])   
+                    }
+                }
+            }
         }
 
         $Server.DashboardService.SetDashboard($Dashboard)
@@ -43,16 +46,15 @@ Describe "Element" {
             $Element = Find-SeElement -Driver $Driver -Id 'Option2' 
             Send-SeKeys -Element $Element -Keys "World"
 
-            $Element = Find-SeElement -Driver $Driver -Id 'btnCreate'
-            Invoke-SeClick -Element $Element 
+            $Element = Find-SeElement -Driver $Driver -Id 'btnCreate' 
+            Invoke-SeClick -Element $Element -JavaSCriptClick  -Driver $Driver
 
-            Start-Sleep 1
+            Start-Sleep 2
 
             $Cache:Name | Should be 'Hello'
             $Cache:Description | Should be 'World'
         }
    }
-
 
     Context "Endpoint" {
         $Dashboard = New-UDDashboard -Content {
