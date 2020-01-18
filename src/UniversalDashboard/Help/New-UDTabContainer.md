@@ -13,7 +13,7 @@ Creates a tab container.
 ## SYNTAX
 
 ```
-New-UDTabContainer -Tabs <ScriptBlock> [-Id <String>] [<CommonParameters>]
+New-UDTabContainer -Tabs <ScriptBlock> [-Id <String>] [-RenderOnActive <SwitchParameter>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -32,28 +32,39 @@ New-UDTabContainer -Tabs {
 
 Creates a tab container with 3 tabs.
 
-### Tab as endpoint
+### Tabs only rendered when active.
+```
+New-UDTabContainer -Tabs {
+    New-UDTab -Text 'Tab 1' -Content { New-UDHeading -Text 'Tab 1 Content' }
+    New-UDTab -Text 'Tab 2' -Content { New-UDHeading -Text 'Tab 2 Content' }
+    New-UDTab -Text 'Tab 3' -Content { New-UDHeading -Text 'Tab 3 Content' }
+} -RenderWhenActive
+```
+
+On renders a tab when the tab is the active tab. If the tab isn't active, the content isn't renderd. This helps with the performance of dashboards. 
+
+### Dynamic Tabs
 ```
 New-UDTabContainer -Tabs {
 
     New-UDTab -Text 'Tab 1' -Content { 
         $number = 0..50 | Get-Random     
         New-UDHeading -Text "Tab $number Content"
-    } -IsEndpoint -RefreshWhenActive
+    } -Dynamic -RefreshWhenActive
     
     New-UDTab -Text 'Tab 2' -Content { 
         $number = 0..50 | Get-Random 
         New-UDHeading -Text "Tab $number Content" 
-    } -IsEndpoint
+    } -Dynamic
 
     New-UDTab -Text 'Tab 3' -Content { 
         $number = 0..50 | Get-Random 
         New-UDHeading -Text "Tab $number Content" 
-    } -IsEndpoint -RefreshWhenActive
+    } -Dynamic -RefreshWhenActive
 }
 ```
 
-Creates a tab container with 3 tabs and tab content is an endpoint.
+Creates a tab container with 3 tabs and tab content is dynamic. 
 
 ### Tabs with icons and text
 ```
@@ -126,6 +137,21 @@ Parameter Sets: (All)
 Aliases: 
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RenderWhenActive
+Only render tabs when active. 
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

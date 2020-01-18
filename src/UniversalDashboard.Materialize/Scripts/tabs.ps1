@@ -4,16 +4,19 @@ function New-UDTabContainer {
         [Parameter(Mandatory)]
         [ScriptBlock]$Tabs,
         [Parameter()]
-        [string]$Id = ([Guid]::NewGuid()).ToString()
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
+        [Parameter()]
+        [Switch]$RenderOnActive
     )
 
     End {
         @{
-            isPlugin = $true
-            assetId  = $AssetId
-            type     = "tab-container"
-            tabs     = $Tabs.Invoke()
-            id       = $id
+            isPlugin        = $true
+            assetId         = $AssetId
+            type            = "tab-container"
+            tabs            = $Tabs.Invoke()
+            id              = $id
+            renderOnClick   = $RenderOnActive.IsPresent
         }
     }
 }
@@ -28,7 +31,8 @@ function New-UDTab {
         [Parameter()]
         [string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter()]
-        [switch]$IsEndpoint,
+        [Alias('IsEndpoint')]
+        [switch]$Dynamic,
         [Parameter()]
         [object]$Icon,
         [Parameter()]
@@ -55,7 +59,7 @@ function New-UDTab {
             id       = $Id
             stacked = $Stacked.IsPresent
             refreshWhenActive = $RefreshWhenActive.IsPresent
-            isEndpoint = $IsEndpoint.IsPresent
+            dynamic = $Dynamic.IsPresent
         }
     }
 }

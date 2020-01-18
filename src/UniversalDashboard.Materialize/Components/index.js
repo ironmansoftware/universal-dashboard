@@ -3,6 +3,7 @@ import React, { useState, Suspense } from 'react';
 require('materialize-css/dist/css/materialize.min.css');
 require('material-components-web/dist/material-components-web.min.css');
 
+import Tab from './tab';
 import TabContainer from './tabs';
 import UDButton from './ud-button';
 import UDChart from './ud-chart';
@@ -29,6 +30,7 @@ import UdPage from './ud-page';
 import Loading from './loading';
 import NotFound from './not-found';
 
+
 import {
     Route,
     Redirect,
@@ -42,6 +44,7 @@ UniversalDashboard.register("ud-button", UDButton);
 UniversalDashboard.register("ud-chart", UDChart);
 UniversalDashboard.register("ud-counter", UDCounter);
 UniversalDashboard.register("tab-container", TabContainer);
+UniversalDashboard.register("tab", Tab);
 UniversalDashboard.register("image-carousel", UdImageCarousel);
 UniversalDashboard.register("ud-errorcard", UDErrorCard);
 UniversalDashboard.register("ud-grid", UDGrid);
