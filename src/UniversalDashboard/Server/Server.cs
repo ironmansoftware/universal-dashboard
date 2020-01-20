@@ -178,6 +178,9 @@ namespace UniversalDashboard
 
 			host = builder.Build();
 
+			Servers.Add(this);
+			this.Running = true;
+
 			if (dashboardOptions.Wait)
 			{
 				this.host.Run();
@@ -186,10 +189,6 @@ namespace UniversalDashboard
 			{
 				this.host.Start();
 			}
-			
-			this.Running = true;
-
-			Servers.Add(this);
 		}
 
 		public void Stop()
