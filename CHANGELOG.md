@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix UDMUChip -OnDelete parameter not working (#1423) by [alongvili](https://github.com/alongvili)
 - Connection management now uses a ConcurrentDictionary rather than locks by [adamdriscoll](https://github.com/adamdriscoll)
 - Changed Active Tab Color and Font Slightly to be more uniform with rest of dashboard
+- Fixed issue where Get-UDDashboard wouldn't return anything when hosting in IIS by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed (Enterprise)
 
