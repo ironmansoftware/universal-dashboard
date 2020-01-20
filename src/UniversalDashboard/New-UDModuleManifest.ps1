@@ -8,10 +8,6 @@ Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -E
 $version = "2.8.2"
 #$prerelease = "-beta2"
 
-$ReleaseNotes = "
-	For release notes, see: https://docs.universaldashboard.io/updates/v2.7.0
-"
-
 $manifestParameters = @{
 	Guid = 'c7894dd1-357e-4474-b8e1-b416afd70c2d'
 	Path = "$outputDirectory\UniversalDashboard.Community.psd1"
@@ -22,7 +18,7 @@ $manifestParameters = @{
 	Description = "Cross-platform module for developing websites and REST APIs."
 	ModuleVersion = $version
 	Tags = @("dashboard", "web", "linux", "windows", "asp.net", "website", "REST")
-	ReleaseNotes = $ReleaseNotes
+	ReleaseNotes = "https://github.com/ironmansoftware/universal-dashboard/blob/master/CHANGELOG.md"
 	LicenseUri = "https://github.com/ironmansoftware/universal-dashboard/blob/master/LICENSE"
 	ProjectUri = "https://github.com/ironmansoftware/universal-dashboard"
 	IconUri = 'https://raw.githubusercontent.com/ironmansoftware/universal-dashboard/master/images/logo.png'
