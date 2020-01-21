@@ -5,7 +5,7 @@ param(
 
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
-$version = "2.8.2"
+$version = "2.8.3"
 #$prerelease = "-beta2"
 
 $manifestParameters = @{
@@ -13,7 +13,7 @@ $manifestParameters = @{
 	Path = "$outputDirectory\UniversalDashboard.Community.psd1"
 	Author = "Adam Driscoll"
 	CompanyName = "Ironman Software, LLC"
-	Copyright = "2019 Ironman Software, LLC"
+	Copyright = "2020 Ironman Software, LLC"
 	RootModule = "UniversalDashboard.psm1"
 	Description = "Cross-platform module for developing websites and REST APIs."
 	ModuleVersion = $version
