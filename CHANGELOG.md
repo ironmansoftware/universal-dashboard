@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed issue with DarkRounded theme - https://github.com/ironmansoftware/universal-dashboard/issues/1467
 
+### Changed (Enterprise)
+
+- Authorization policies can now be assigned to endpoints - https://github.com/ironmansoftware/universal-dashboard/issues/1442
+
 ## 2.8.2 (1-20-2019)
 
 ### Added
