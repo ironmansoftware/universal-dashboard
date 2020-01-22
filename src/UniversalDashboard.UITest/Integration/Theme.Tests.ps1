@@ -13,6 +13,12 @@ $Driver = Start-SeFirefox
 
 Describe "Theme" {
 
+    Context "DarkRounded" {
+        It "serializes correctly" {
+            Get-UDTheme -Name 'DarkRounded' | Should not be $null
+        }
+    }
+
     Context "Controls" {
 
         $AzureTheme = Get-UDTheme -Name 'Azure'
