@@ -19,6 +19,8 @@ $AlternativeBackgroundColor = $BackgroundColorLighter
 $AlternativeBackgroundColor2 = $BackgroundColorDarker
 $AlternativeBackgroundColor3 = $BackgroundColorBright
 
+$FontFamily = '"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'
+
 @{
     Name = "DarkDefault"
     Definition = @{
@@ -75,37 +77,39 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             FontColor = $PrimaryFontColor 
         }
     
-        "nav.mdc-tab-bar , .mdc-tab-bar" = @{
-            'color'= $PrimaryColor
-            'background-color' = $AlternativeBackgroundColor3
+        UDTabs = @{
+            BackgroundColor = $AlternativeBackgroundColor3
+            Height = 'auto'
+            BoxShadow = 'unset'
+            FontFamily = $FontFamily
+
         }
 
-        ".mdc-tab .mdc-tab__text-label" = @{
-            'color' = "$PrimaryFontColor !important"
+        UDTab = @{
+            FontColor = $PrimaryColor
+            FontFamily = $FontFamily
+            # No need for backgroundColor it inherit UDTabs backgroundColor
         }
 
-        '.mdc-tab .mdc-tab__text-label:hover' = @{
-            'background-color' = $AlternativeBackgroundColor
-            'color'= $AlternateFontColor
+        UDTabActive = @{
+            ActiveFontColor = $AlternateFontColor
+            ActiveBackgroundColor = $PrimaryColor
         }
 
-        "button.mdc-tab--active.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused.mdc-tab--active.mdc-tab , button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab > div.mdc-tab__content > span , button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab" = @{
-            'background-color' = "#1c1c1c"
-            'color'= $AlternateFontColor
+        UDTabIcon = @{
+            FontColor = $PrimaryColor
+            Height = 'auto'
+            LineHeight = 'inherit'
         }
 
-        '.mdc-tab .mdc-tab__text-label:focus.active' = @{
-            'background-color' = $AlternativeBackgroundColor
-            'color'= $AlternateFontColor
+        UDTabActiveIcon = @{
+            ActiveFontColor = $AlternateFontColor
         }
 
-        ".mdc-tab-indicator--active .mdc-tab-indicator__content" = @{
-            'background-color' = "#FFFFFF"
+        UDTabIndicator = @{
+            IndicatorColor = $PrimaryColorDark
         }
 
-        '.mdc-tab .mdc-tab__text-label a' = @{
-            'color' = "#FFFFFF"
-        }
 
         #CSS ELEMENTS
         'main' = @{
