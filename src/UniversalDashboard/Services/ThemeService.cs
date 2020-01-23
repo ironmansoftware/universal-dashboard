@@ -247,7 +247,7 @@ namespace UniversalDashboard.Services
             _cssMap.Add("udtab", ToClasses(".mdc-tab.mdc-tab__text-label"));
             _cssMap.Add("udtabactive", ToClasses("button.mdc-tab--active.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused.mdc-tab--active.mdc-tab", "button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab > div.mdc-tab__content > span", "button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab"));
             _cssMap.Add("udtabindicator", ToClasses(".mdc-tab-indicator--active .mdc-tab-indicator__content"));
-            _cssMap.Add("udtabicon", ToClasses(".mdc-tab .mdc-tab__icon"));
+            _cssMap.Add("udtabicon", ToClasses(".mdc-tab.mdc-tab__icon"));
             _cssMap.Add("udtabactiveicon", ToClasses("button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab > div.mdc-tab__content > i", ".mdc-tab .mdc-tab__icon"));
             _cssMap.Add("udimagecarouselindicator", ToClasses(".slider .indicators .indicator-item", ".slider .indicators .indicator-item.active"));
             _cssMap.Add("udimagecarouselindicatoractive", ToClasses(".slider .indicators .indicator-item.active"));
