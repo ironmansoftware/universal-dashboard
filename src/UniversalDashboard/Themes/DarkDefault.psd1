@@ -3,16 +3,14 @@
 
 $FontColorDark = "#FFFFFF"
 $FontColorLight = "#FFFFFF"
-$FontFamily = '"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'
 
-$BackgroundColorPrimary = "#393F47"
-$BackgroundColorLighter = "#252525"
-$BackgroundColorDarker = "#BDBDBD"
-$BackgroundColorBright = "#272C33"
+$BackgroundColorPrimary = "#3c3c3c"
+$BackgroundColorLighter = "#333333"
+$BackgroundColorDarker = "#3c3c3c"
+$BackgroundColorBright = "#333333"
 
-$PrimaryColor = "#272C33"
-$PrimaryColorDark = "#272C33"
-$PrimaryColorLight = "#404040"
+$PrimaryColor = "#333333"
+$PrimaryColorDark = "#212121"
 
 $PrimaryFontColor = $FontColorDark
 $AlternateFontColor = $FontColorLight
@@ -28,8 +26,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         #UD ELEMENTS
         UDDashboard = @{
             BackgroundColor = $PrimaryBackgroundColor
-            FontColor = $PrimaryFontColor
-            $FontFamily = $FontFamily
+            FontColor = $PrimaryFontColor 
         }
 
         UDNavBar = @{
@@ -77,50 +74,39 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             BackgroundColor = $AlternativeBackgroundColor3
             FontColor = $PrimaryFontColor 
         }
-
-        UDTabs = @{
-            BackgroundColor = $AlternativeBackgroundColor3
-            Height = 'auto'
-            BoxShadow = 'unset'
-            FontFamily = $FontFamily
-
-        }
-
-        UDTab = @{
-            FontColor = $PrimaryColor
-            FontFamily = $FontFamily
-            # No need for backgroundColor it inherit UDTabs backgroundColor
-        }
-
-        UDTabActive = @{
-            ActiveFontColor = $AlternateFontColor
-            ActiveBackgroundColor = $PrimaryColor
-        }
-
-        UDTabIcon = @{
-            FontColor = $PrimaryColor
-            Height = 'auto'
-            LineHeight = 'inherit'
-        }
-
-        UDTabActiveIcon = @{
-            ActiveFontColor = $AlternateFontColor
-        }
-
-        UDTabIndicator = @{
-            IndicatorColor = $PrimaryColorDark
-        }
-
-        UDImageCarouselIndicator = @{
-            Width = '10px'
-            Height = '10px'
-        }
-        
-        UDImageCarouselIndicatorActive = @{
-            BackgroundColor = $PrimaryColor
-        }
-           
     
+        "nav.mdc-tab-bar , .mdc-tab-bar" = @{
+            'color'= $PrimaryColor
+            'background-color' = $AlternativeBackgroundColor3
+        }
+
+        ".mdc-tab .mdc-tab__text-label" = @{
+            'color' = "$PrimaryFontColor !important"
+        }
+
+        '.mdc-tab .mdc-tab__text-label:hover' = @{
+            'background-color' = $AlternativeBackgroundColor
+            'color'= $AlternateFontColor
+        }
+
+        "button.mdc-tab--active.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused.mdc-tab--active.mdc-tab , button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab > div.mdc-tab__content > span , button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab" = @{
+            'background-color' = "#1c1c1c"
+            'color'= $AlternateFontColor
+        }
+
+        '.mdc-tab .mdc-tab__text-label:focus.active' = @{
+            'background-color' = $AlternativeBackgroundColor
+            'color'= $AlternateFontColor
+        }
+
+        ".mdc-tab-indicator--active .mdc-tab-indicator__content" = @{
+            'background-color' = "#FFFFFF"
+        }
+
+        '.mdc-tab .mdc-tab__text-label a' = @{
+            'color' = "#FFFFFF"
+        }
+
         #CSS ELEMENTS
         'main' = @{
             'padding-left' = "50px"
@@ -142,37 +128,13 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             'color' = "$PrimaryFontColor !important"
         }
 
-        '.tabs' = @{
-            'color'= $PrimaryColor
-            'background-color' = $AlternativeBackgroundColor3
+        'a' = @{
+            'color' = "$PrimaryFontColor !important"
         }
 
-        '.tabs .tab' = @{
-            'color' = $AlternativeBackgroundColor
-        }
-
-        '.tabs .tab a:hover' = @{
-            'background-color' = $AlternativeBackgroundColor
-            'color'= $AlternateFontColor
-        }
-
-        '.tabs .tab a.active' = @{
-            'background-color' = "#1c1c1c"
-            'color'= $AlternateFontColor
-        }
-
-        '.tabs .tab a:focus.active' = @{
-            'background-color' = $AlternativeBackgroundColor
-            'color'= $AlternateFontColor
-        }
-
-        '.tabs .indicator' = @{
-            'background-color' = "#FFFFFF"
-        }
-
-        '.tabs .tab a' = @{
-            'color' = "#FFFFFF"
-        }
+        'h1, h2, h3, h4, h5, h6' = @{
+            'color' = "$PrimaryFontColor !important"
+        }        
 
         '[type="radio"]:checked + span::after' = @{
             'background-color' = "#FFFFFF"
@@ -250,10 +212,6 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             'background-color' = $PrimaryColorDark
         }
 
-        '.sidenav .collapsible-body' = @{
-            'background-color' = $PrimaryColor
-        }
-
         '.sidenav .collapsible-header' = @{
             'color'= $AlternateFontColor
             'font-size' = 'large'
@@ -320,10 +278,6 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
             'transition'= "color .3s ease"
         }
 
-        'a' = @{
-            'color' = $PrimaryFontColor
-        }
-
         '.dropdown-content' = @{
             'background-color' = $AlternativeBackgroundColor
         }
@@ -371,7 +325,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         }
         '.modal' = @{
             'color' = $PrimaryFontColor
-            'background-color' = $PrimaryColor
+            'background-color' = "$BackgroundColorPrimary"
         }
         '.modal h' = @{
             'color' = "$PrimaryFontColor !important"
@@ -384,7 +338,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         '.collapsible-header'= @{
             'color' = "#FFFFFF"
-            'background-color' = "#272C33"
+            'background-color' = "$BackgroundColorLighter"
             'border-bottom' = '1px solid #1c1c1c;'
             'border-bottom-width' = '1px;'
             'border-bottom-style' = 'solid;'
@@ -397,7 +351,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
 
         '.collapsible-body' = @{
             'border-bottom' = 'none'
-            "background-color" = "#272C33"
+            "background-color" = "$PrimaryColor"
         }
 
         '.collection .collection-item' = @{
