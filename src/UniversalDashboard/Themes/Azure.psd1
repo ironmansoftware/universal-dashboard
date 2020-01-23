@@ -1,3 +1,10 @@
+$FontFamily = '"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif'
+
+$PrimaryColor = "#1C1C1C"
+$PrimaryColorDark =  "#FFFFFF"
+$AlternativeBackgroundColor3 = "#252525"
+$AlternateFontColor = "#FFFFFF"
+
 @{
   Name = "Azure"
   Definition = @{
@@ -6,11 +13,11 @@
           FontColor = "#FFFFFF"
       }
       UDNavBar = @{
-          BackgroundColor =  "#1C1C1C"
-          FontColor = "#FFFFFF"
+          BackgroundColor =  $PrimaryColor
+          FontColor = $AlternateFontColor
       }
       UDFooter = @{
-          BackgroundColor =  "#1C1C1C"
+          BackgroundColor =  $PrimaryColor
           FontColor = "#FFFFFF"
           "margin-top" = "4% !important"
       }
@@ -48,33 +55,38 @@
           'color' = '#FFFFFF !important'
       }
 
-      '.tabs'= @{
-          'color'= "#FFFFFF"
-          'background-color' = "#252525"
-      }
-      '.tabs .tab'= @{
-          'color' = "#252525"
-      }
+      UDTabs = @{
+        BackgroundColor = $AlternativeBackgroundColor3
+        Height = 'auto'
+        BoxShadow = 'unset'
+        FontFamily = $FontFamily
 
-      '.tabs .tab a:hover' = @{
-          'background-color' = "#252525"
-          'color'= "#FFFFFF"
-      }
+    }
 
-      '.tabs .tab a.active'= @{
-          'background-color' = "#1c1c1c"
-          'color'= "#FFFFFF"
-      }
-      '.tabs .tab a:focus.active'= @{
-          'background-color' = "#252525"
-          'color'= "#FFFFFF"
-      }
-      '.tabs .indicator'= @{
-          'background-color' = "#FFFFFF"
-              }
-      '.tabs .tab a' = @{
-          'color' = "#FFFFFF"
-      }
+    UDTab = @{
+        FontColor = $PrimaryColor
+        FontFamily = $FontFamily
+        # No need for backgroundColor it inherit UDTabs backgroundColor
+    }
+
+    UDTabActive = @{
+        ActiveFontColor = $AlternateFontColor
+        ActiveBackgroundColor = $PrimaryColor
+    }
+
+    UDTabIcon = @{
+        FontColor = $PrimaryColor
+        Height = 'auto'
+        LineHeight = 'inherit'
+    }
+
+    UDTabActiveIcon = @{
+        ActiveFontColor = $AlternateFontColor
+    }
+
+    UDTabIndicator = @{
+        IndicatorColor = $PrimaryColorDark
+    }
 
       '[type="radio"]:checked + span::after' = @{
           'background-color' = "#FFFFFF"

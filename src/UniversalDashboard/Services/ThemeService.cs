@@ -209,6 +209,12 @@ namespace UniversalDashboard.Services
                     continue;
                 }
 
+                if (value == null)
+                {
+                    Logger.Warn($"Value of key {identifier} is null");
+                    continue;
+                }
+
                 throw new InvalidCastException("Value of hashtable is not a hashtable or string");
             }
         }
@@ -238,7 +244,7 @@ namespace UniversalDashboard.Services
             _cssMap.Add("udrow", ToClasses(".ud-row"));
             _cssMap.Add("udtable", ToClasses(".ud-table"));
             _cssMap.Add("udtabs", ToClasses("nav.mdc-tab-bar", ".mdc-tab-bar"));
-            _cssMap.Add("udtab", ToClasses(".mdc-tab .mdc-tab__text-label"));
+            _cssMap.Add("udtab", ToClasses(".mdc-tab.mdc-tab__text-label"));
             _cssMap.Add("udtabactive", ToClasses("button.mdc-tab--active.mdc-ripple-upgraded.mdc-ripple-upgraded--background-focused.mdc-tab--active.mdc-tab", "button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab > div.mdc-tab__content > span", "button.mdc-tab--active.mdc-ripple-upgraded.mdc-tab--active.mdc-tab"));
             _cssMap.Add("udtabindicator", ToClasses(".mdc-tab-indicator--active .mdc-tab-indicator__content"));
             _cssMap.Add("udtabicon", ToClasses(".mdc-tab .mdc-tab__icon"));

@@ -12,10 +12,12 @@ $Server = Start-UDDashboard -Dashboard $dash -Port 10001
 $Driver = Start-SeFirefox
 
 Describe "Theme" {
-
-    Context "DarkRounded" {
-        It "serializes correctly" {
-            Get-UDTheme -Name 'DarkRounded' | Should not be $null
+    Context "ThemeService" {
+        It "should generate all themes successfully" {
+            $ThemeService = [UniversalDashboard.Services.ThemeService]::new()
+            Get-UDTheme | ForEach-Object {
+                $ThemeService.Create($_) | Should not be $null
+            }
         }
     }
 
@@ -32,11 +34,20 @@ Describe "Theme" {
             } -Endpoint {
 
             }
+
+            New-UDTabContainer -Tabs {
+                New-UDTab -Text "Hi" -Content {
+
+                }
+                New-UDTab -Text "Bye" -Content {
+                    
+                }
+            }
         } 
 
         $Server.DashboardService.SetDashboard($Dashboard)
         Enter-SeUrl -Driver $Driver -Url "http://localhost:10001"
-        
+
         It "should have the correct UDInput colors" {
             $Element = Find-SeElement -Driver $Driver -Id Textbox 
             $Element | Get-SeElementCssValue -Name 'color' | Should be 'rgb(255, 255, 255)'
