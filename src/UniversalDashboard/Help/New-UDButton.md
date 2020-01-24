@@ -67,6 +67,24 @@ New-UDButton -Text "Button" -OnClick {
 
 Creats a button that shows a toast message when clicked. 
 
+### Button sizes
+````
+New-UDButton -Text "Big" -Height 300 -Width "100"
+````
+
+Creates a button with height of 300px and 100% width. 
+Note: the "px" will be appended automatically if not specified.
+
+### Custom styles
+````
+New-UDButton -Text "Custom" -Style @{
+    Font-Size = 36 px
+    Height = 300 px
+}
+````
+
+Creates a button, with font-size 36 and height of 300 pixels. Will be prioritized over the -height param.
+
 ## PARAMETERS
 
 ### -BackgroundColor
@@ -201,6 +219,51 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Height
+Sets the height, either by pixel or percentage.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Width
+Sets the width, either by pixel or percentage.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Style
+Sets the style of the button, will be prioritized over the other stylespecific parameters, ie -height.
+
+```yaml
+Type: Hashtable
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
