@@ -8,17 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added 
 
-- Community edition now exposes the $Session variable that was added in 2.8.2 Enterprise
+- Community edition now exposes the $Session variable that was added in 2.8.2 Enterprise by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed
 
-- Fixed issue with DarkRounded theme - https://github.com/ironmansoftware/universal-dashboard/issues/1467
-- Fixed issue with Azure theme - https://github.com/ironmansoftware/universal-dashboard/issues/1464
-- Fixed issue with non-Default themes throwing exceptions - https://github.com/ironmansoftware/universal-dashboard/issues/1471
+- Fixed issue with DarkRounded theme - https://github.com/ironmansoftware/universal-dashboard/issues/1467 by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed issue with Azure theme - https://github.com/ironmansoftware/universal-dashboard/issues/1464 by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed issue with non-Default themes throwing exceptions - https://github.com/ironmansoftware/universal-dashboard/issues/1471 by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed (Enterprise)
 
-- Authorization policies can now be assigned to endpoints - https://github.com/ironmansoftware/universal-dashboard/issues/1442
+- Authorization policies can now be assigned to endpoints - https://github.com/ironmansoftware/universal-dashboard/issues/1442 by [adamdriscoll](https://github.com/adamdriscoll)
 
 ## 2.8.2 (1-20-2019)
 
