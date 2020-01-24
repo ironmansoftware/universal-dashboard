@@ -54,6 +54,9 @@ namespace UniversalDashboard.Services
 
         public SessionState GetSession(string id)
         {
+            if (string.IsNullOrEmpty(id)) return null;
+            if (!Sessions.ContainsKey(id)) return null;
+
             var session = Sessions[id];
             session.LastTouched = DateTime.UtcNow;
             return session;
