@@ -6,9 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased 
 
+### Added 
+
+- Community edition now exposes the $Session variable that was added in 2.8.2 Enterprise
+
 ### Changed
 
 - Fixed issue with DarkRounded theme - https://github.com/ironmansoftware/universal-dashboard/issues/1467
+- Fixed issue with Azure theme - https://github.com/ironmansoftware/universal-dashboard/issues/1464
+- Fixed issue with non-Default themes throwing exceptions - https://github.com/ironmansoftware/universal-dashboard/issues/1471
 
 ### Changed (Enterprise)
 
