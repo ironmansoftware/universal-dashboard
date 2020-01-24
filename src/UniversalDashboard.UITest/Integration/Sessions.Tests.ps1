@@ -13,6 +13,20 @@ $Driver = Start-SeFirefox
 
 Describe "Sessions" {
 
+    Context "should have session object" {
+        $Dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDElement -Tag 'div' -Id 'session' -Endpoint { $Session.Id }
+        }
+
+        $Server.DashboardService.SetDashboard($Dashboard)
+        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
+
+        It "should have session object" {
+            $Element = Find-SeElement -Driver $Driver -Id 'session'
+            $Element.Text | should not be ""
+        }
+    } 
+
     Context "Should remove sessions" {
         $Dashboard = New-UDDashboard -Title "Test" -Content {
             

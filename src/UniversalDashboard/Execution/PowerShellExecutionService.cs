@@ -161,6 +161,8 @@ namespace UniversalDashboard.Execution
                     SetVariable(ps, "ArgumentList", context.Endpoint.ArgumentList?.ToList());
                     SetVariable(ps, Constants.UDPage, context.Endpoint.Page);
 
+                    SetVariable(ps, "Session", _dashboardService.EndpointService.SessionManager.GetSession(context.SessionId));
+
                     ui.HubContext = _hubContext;
                     ui.ConnectionId = context.ConnectionId;
 
