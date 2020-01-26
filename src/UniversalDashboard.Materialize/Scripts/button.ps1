@@ -20,7 +20,15 @@ function New-UDButton {
         [Parameter()] 
         [UniversalDashboard.Models.DashboardColor]$FontColor,
         [Parameter()]
-        [Switch]$Disabled
+        [Switch]$Disabled,
+        [Parameter()]
+        [Hashtable]$Style,
+        [Parameter()]
+        [string]
+        $Height,
+        [Parameter()]
+        [string]
+        $Width
     )
 
     if ($null -ne $OnClick) {
@@ -29,6 +37,31 @@ function New-UDButton {
         }
         elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
             throw "OnClick must be a script block or UDEndpoint"
+        }
+    }
+
+    if ((!($Style.BackgroundColor)) -and ($BackgroundColor)) {
+        $Style += @{BackgroundColor = $BackgroundColor.HtmlColor}
+    }
+    if ((!($Style.Color)) -and ($FontColor)) {
+        $Style += @{Color = $FontColor.HtmlColor}
+    }
+    if ((!($Style.Width)) -and ($Width)) {
+        #check if the width is numerical, to append with "px" or if it is string, and not to be appended
+        if ($Width -match "^[\d\.]+$") {
+            $Style += @{Width = "$($Width)px"}
+        }
+        else {
+            $Style += @{Width = $Width}
+        }
+    }
+    if ((!($Style.Heigth)) -and ($Height)) {
+        #check if the width is numerical, to append with "px" or if it is string, and not to be appended
+        if ($Height -match "^[\d\.]+$") {
+            $Style += @{Height = "$($Height)px"}
+        }
+        else {
+            $Style += @{Height = $Height}
         }
     }
 
@@ -50,5 +83,6 @@ function New-UDButton {
         text = $Text 
         backgroundColor = $BackgroundColor.HtmlColor 
         fontColor = $FontColor.HtmlColor
+        style = $Style
     }
 }

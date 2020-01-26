@@ -7,14 +7,13 @@ export default class UDButton extends React.Component {
         super(props);
 
         this.state = {
-            backgroundColor: this.props.backgroundColor,
-            fontColor: this.props.fontColor,
             floating: this.props.floating,
             flat: this.props.flat,
             icon: this.props.icon,
             text: this.props.text,
             disabled: this.props.disabled,
-            hidden: this.props.hidden      
+            hidden: this.props.hidden,      
+            style: this.props.style
         }
     }
 
@@ -64,11 +63,6 @@ export default class UDButton extends React.Component {
             return null;
         }
 
-        var style = {
-            backgroundColor: this.state.backgroundColor,
-            color: this.state.fontColor
-        }
-
         var icon = null; 
         if (this.state.icon) {
             icon = <UdIcon icon={this.state.icon} style={{marginRight: this.state.floating || !this.state.text ? 'unset' : '5px'}}/>
@@ -81,7 +75,7 @@ export default class UDButton extends React.Component {
                     flat={this.state.flat} 
                     disabled={this.state.disabled}
                     floating={this.state.floating} 
-                    style={style}
+                    style={this.state.style}
                 >
                     {icon}
                     {this.state.text}
