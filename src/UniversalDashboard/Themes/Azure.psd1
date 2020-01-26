@@ -95,12 +95,7 @@ $AlternateFontColor = "#FFFFFF"
       '.pagination li a'= @{
           'color' = "#FFFFFF !important"
       }
-      ".ud-navbar"= @{
-          'width' = "100%"
-          'position' = "fixed"
-          'z-index'= "9999"
-      }
-      
+
       'input:not([type]), input[type="date"]:not(.browser-default), input[type="datetime-local"]:not(.browser-default), input[type="datetime"]:not(.browser-default), input[type="email"]:not(.browser-default), input[type="number"]:not(.browser-default), input[type="password"]:not(.browser-default), input[type="search"]:not(.browser-default), input[type="tel"]:not(.browser-default), input[type="text"]:not(.browser-default), input[type="time"]:not(.browser-default), input[type="url"]:not(.browser-default), textarea.materialize-textarea' = @{
           'border-bottom' = "1px solid #FFFFFF"
           'color'= "#FFFFFF"
@@ -201,10 +196,5 @@ $AlternateFontColor = "#FFFFFF"
           'color' = "#FFFFFF"
           'background-color' = "#333333"
       }
-      'header, nav, section' = @{
-          'display' = "block"
-          'margin-bottom' = "5%"
-      }
-
   }
 }
