@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed (Enterprise)
 
 - Authorization policies can now be assigned to endpoints - https://github.com/ironmansoftware/universal-dashboard/issues/1442 by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed Azure theme to work with Admin Toolbar - #1465 - by [adamdriscoll](https://github.com/adamdriscoll)
 
 ## 2.8.2 (1-20-2019)
 
