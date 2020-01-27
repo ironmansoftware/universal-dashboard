@@ -36,6 +36,11 @@ export const UniversalDashboardService = {
 
         if (component == null) return <React.Fragment />;
 
+        if (component.$$typeof === Symbol.for('react.element'))
+        {
+            return component;
+        }
+
         if (Array.isArray(component)) {
             return component.map(x => x.type ? this.renderComponent(x, history) : x);
         }
