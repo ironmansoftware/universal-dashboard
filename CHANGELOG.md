@@ -12,9 +12,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added styling support to UD-Button by [BoSen29](https://github.com/BoSen29)
 
 ### Changed
+
 - Fixed issue with DarkRounded theme - https://github.com/ironmansoftware/universal-dashboard/issues/1467 by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed issue with Azure theme - https://github.com/ironmansoftware/universal-dashboard/issues/1464 by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed issue with non-Default themes throwing exceptions - https://github.com/ironmansoftware/universal-dashboard/issues/1471 by [adamdriscoll](https://github.com/adamdriscoll)
+- UniversalDashboard.renderComponent will now return already rendered components by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed (Enterprise)
 
