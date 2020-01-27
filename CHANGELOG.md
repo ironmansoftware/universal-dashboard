@@ -15,12 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed issue with DarkRounded theme - https://github.com/ironmansoftware/universal-dashboard/issues/1467 by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed issue with Azure theme - https://github.com/ironmansoftware/universal-dashboard/issues/1464 by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed issue with non-Default themes throwing exceptions - https://github.com/ironmansoftware/universal-dashboard/issues/1471 by [adamdriscoll](https://github.com/adamdriscoll)
-- Fixed issue where the tabs on the Admin diagnostics page would not use the correct theme - https://github.com/ironmansoftware/universal-dashboard/issues/1472 by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed (Enterprise)
 
+- Fixed issue where the tabs on the Admin diagnostics page would not use the correct theme - https://github.com/ironmansoftware/universal-dashboard/issues/1472 by [adamdriscoll](https://github.com/adamdriscoll)
 - Authorization policies can now be assigned to endpoints - https://github.com/ironmansoftware/universal-dashboard/issues/1442 by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed Azure theme to work with Admin Toolbar - #1465 - by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed issue where the signout link was missing - https://github.com/ironmansoftware/universal-dashboard/issues/1481 by [adamdriscoll](https://github.com/adamdriscoll)
 
 ## 2.8.2 (1-20-2019)
 
