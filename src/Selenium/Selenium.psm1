@@ -1,8 +1,8 @@
 $Module = Import-Module Selenium -MinimumVersion '3.0.0' -ErrorAction Ignore -Scope Global
 if ($Null -eq $Module)
 {
-    Install-Module Selenium -AllowPrerelease -Force -Scope CurrentUser
-    Import-Module Selenium -Scope Global
+    Install-Module Selenium -AllowPrerelease -Force -Scope CurrentUser -ErrorAction Ignore
+    Import-Module Selenium -Scope Global -ErrorAction Ignore
 }
 
 function Get-SeElementCssValue {
