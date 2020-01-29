@@ -7,7 +7,7 @@ param(
 
 $Env:Debug = -not $Release
 
-Import-Module (Join-Path $PSScriptRoot "../../Selenium/Selenium.psm1") -Force
+. (Join-Path $PSScriptRoot "../../Selenium/Selenium.ps1")
 Import-Module (Join-Path $PSScriptRoot "../../output/UniversalDashboard.Community.psd1") -Force 
 
 $Env:Debug = -not $Release

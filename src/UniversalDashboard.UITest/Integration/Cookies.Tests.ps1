@@ -1,6 +1,6 @@
 param([Switch]$Release)
 
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+. "$PSScriptRoot\..\TestFramework.ps1"
 $ModulePath = Get-ModulePath -Release:$Release
 $BrowserPort = Get-BrowserPort -Release:$Release
 
@@ -37,12 +37,12 @@ Describe "Cookies" {
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
         $Driver = Start-SeFirefox
-        Remove-SeCookie -Driver $Driver
+        Remove-SeCookie -DeleteAllCookies -Target $Driver
         
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
-        Set-SeCookie -Drive $Driver -Name "Test" -Value "CookieValue"
+        Set-SeCookie -Target $Driver -Name "Test" -Value "CookieValue"
 
         It "should have set cookie" {
             $Element = Find-SeElement -Name "Name" -Driver $Driver
@@ -56,7 +56,7 @@ Describe "Cookies" {
 
             Start-Sleep 1
 
-            Get-SeCookie $Driver | Where Name -eq "Hello" | Select -Expand Value | Should be "Adam"
+            Get-SeCookie $Driver | Where-Object Name -eq "Hello" | Select-Object -Expand Value | Should be "Adam"
         }
 
         It "should get cookie" {
@@ -84,10 +84,11 @@ Describe "Cookies" {
             
             Start-Sleep 1
 
-            Get-SeCookie $Driver | Where Name -eq "Hello" | Should be $null
+            Get-SeCookie $Driver | Where-Object Name -eq "Hello" | Should be $null
         }
 
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
+        Stop-SeDriver $Driver
+        Stop-UDDashboard -Server $Server 
     }
 }
+
