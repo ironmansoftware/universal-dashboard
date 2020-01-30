@@ -70,7 +70,7 @@ Describe "Input" {
         It "should validate required" {
             $Element = Find-SeElement -Id 'MyField' -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
-            Send-SeKeys -Element $Element -Keys ''
+            $Element.SendKeys('')
 
             $Element = Find-SeElement -Id 'MyField2' -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
@@ -256,7 +256,7 @@ Describe "Input" {
 
             $Element = Find-SeElement -Id 'SomeOtherField' -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
-            Send-SeKeys -Element $Element -Keys ''
+            $Element.SendKeys('')
 
             $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
