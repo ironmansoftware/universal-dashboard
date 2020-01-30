@@ -12,7 +12,7 @@ Describe "Modal" {
             $Element = Find-SeElement -Driver $Driver -Id 'button' 
             Invoke-SeClick -Element $Element 
 
-            Start-Sleep 1
+            Start-Sleep 3
 
             Find-SeElement -Driver $Driver -Id 'modal-content' | Should not be $null
         }
@@ -32,7 +32,7 @@ Describe "Modal" {
             $Element = Find-SeElement -Driver $Driver -Id 'button' 
             Invoke-SeClick -Element $Element 
 
-            Start-Sleep 1
+            Start-Sleep 3
 
             Find-SeElement -Driver $Driver -Id 'modal-content' | Should not be $null
 

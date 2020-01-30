@@ -2,7 +2,7 @@ param([Switch]$Release)
 
 $Env:Debug = -not $Release
 
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+. "$PSScriptRoot\..\TestFramework.ps1"
 $ModulePath = Get-ModulePath -Release:$Release
 $BrowserPort = Get-BrowserPort -Release:$Release
 
@@ -221,6 +221,8 @@ Describe "Dashboard" {
     Context "Update dashboard" {
 
         Get-UDDashboard | Stop-UDDashboard 
+
+        Start-Sleep 1
 
         $dashboard = New-UDDashboard -Title "Test" -Content {
         } 

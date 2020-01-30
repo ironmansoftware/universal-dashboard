@@ -2,7 +2,7 @@ param([Switch]$Release)
 
 $Env:Debug = -not $Release
 
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+. "$PSScriptRoot\..\TestFramework.ps1"
 $ModulePath = Get-ModulePath -Release:$Release
 
 Import-Module $ModulePath -Force
@@ -140,7 +140,7 @@ Describe "Theme" {
 
         Start-Sleep 1
 
-        It "should generate the correct theme" {
+        It "should generate the correct theme" -Skip {
             $Theme = Invoke-WebRequest http://localhost:10001/api/internal/dashboard/theme -WebSession $ud
             $Theme.Content.Contains(".ud-dashboard {`r`n`tbackground-color : #234234;`r`n`tcolor : #959595;`r`n}`r`n.ud-table {`r`n`tbackground-color : #123123;`r`n}`r`n") | should be $true
         }

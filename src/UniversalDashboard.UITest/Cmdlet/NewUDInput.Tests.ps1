@@ -1,6 +1,6 @@
 param([Switch]$Release)
 
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+. "$PSScriptRoot\..\TestFramework.ps1"
 $ModulePath = Get-ModulePath -Release:$Release
 Import-Module $ModulePath -Force
 

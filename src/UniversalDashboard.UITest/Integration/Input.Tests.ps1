@@ -2,7 +2,7 @@ param([Switch]$Release)
 
 $Env:Debug = -not $Release
 
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+. "$PSScriptRoot\..\TestFramework.ps1"
 $ModulePath = Get-ModulePath -Release:$Release
 $BrowserPort = Get-BrowserPort -Release:$Release
 
@@ -70,7 +70,7 @@ Describe "Input" {
         It "should validate required" {
             $Element = Find-SeElement -Id 'MyField' -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
-            Send-SeKeys -Element $Element -Keys ''
+            $Element.SendKeys('')
 
             $Element = Find-SeElement -Id 'MyField2' -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
@@ -164,7 +164,7 @@ Describe "Input" {
 
         It "should include new line charts" {
             $Element = Find-SeElement -Id "test" -Driver $Driver
-            Send-SeKeys -Element $Element -Keys "16`r`n17`r`n18"
+            Send-SeKeys -Element $Element -Keys "16`r17`r18"
 
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick $Button
@@ -256,7 +256,7 @@ Describe "Input" {
 
             $Element = Find-SeElement -Id 'SomeOtherField' -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver
-            Send-SeKeys -Element $Element -Keys ''
+            $Element.SendKeys('')
 
             $Element = Find-SeElement -Id 'EmailAddress' -Driver $Driver
             Invoke-SeClick -Element $Element -JavaScriptClick -Driver $Driver

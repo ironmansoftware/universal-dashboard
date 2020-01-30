@@ -5,7 +5,7 @@ param(
     [Switch]$StopSelenium
 )
 
-Import-Module (Join-Path $PSScriptRoot "../../Selenium/Selenium.psm1") -Force
+. (Join-Path $PSScriptRoot "../../Selenium/Selenium.ps1")
 #Don't auto-load the materialize from UD
 $Global:UDNoMaterialize = $false
 $Global:UDNoMaterialUI = $false

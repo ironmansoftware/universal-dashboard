@@ -56,8 +56,8 @@
         }
 
         It "should support new line in card" {
-            $Element = Find-SeElement -Id "MultiLineCard" -Driver $Driver
-            $Br = Find-SeElement -Tag "br" -Element $Element
+            $Element = Find-SeElement -Id "MultiLineCard" -Driver $Driver 
+            $Br = Find-SeElement -Tag "br" -Element $Element -By TagName
             $Br | should not be $null
         }
 

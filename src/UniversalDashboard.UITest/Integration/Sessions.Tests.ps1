@@ -1,6 +1,6 @@
 param([Switch]$Release)
 
-Import-Module "$PSScriptRoot\..\TestFramework.psm1" -Force
+. "$PSScriptRoot\..\TestFramework.ps1"
 $ModulePath = Get-ModulePath -Release:$Release
 $BrowserPort = Get-BrowserPort -Release:$Release
 
@@ -49,5 +49,4 @@ Describe "Sessions" {
     }
 }
 
-Stop-SeDriver $Driver
 Stop-UDDashboard -Server $Server 
