@@ -14,6 +14,11 @@ var connection;
 
 function connectWebSocket(sessionId, location, setLoading) {
 
+    if (connection) 
+    {
+        setLoading(false);
+    }
+
     connection = new HubConnectionBuilder()
         .withUrl(getApiPath() + '/dashboardhub')
         .configureLogging(LogLevel.Information)
@@ -196,15 +201,15 @@ function loadData(setDashboard, setLocation, history, location, setLoading) {
         if (dashboard.scripts)
             dashboard.scripts.map(loadJavascript);
 
-        if (dashboard.geolocation) {
-            getLocation(setLocation);
-        }
-
         connectWebSocket(json.sessionId, location, setLoading);
 
         UniversalDashboard.design = dashboard.design;
 
         setDashboard(dashboard);
+
+        if (dashboard.geolocation) {
+            getLocation(setLocation);
+        }
     }, history);
 }
 
