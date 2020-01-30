@@ -17,3 +17,5 @@ function Get-SeElementCssValue {
         $Element.GetCssValue($Name)
     }
 }
+
+. (Join-Path ((get-module Selenium).Path | Split-Path) "SeleniumClasses.ps1")

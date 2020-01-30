@@ -1,5 +1,5 @@
 . "$PSScriptRoot\..\Selenium\Selenium.ps1"
-. (Join-Path ((get-module Selenium).Path | Split-Path) "SeleniumClasses.ps1")
+
 function Get-TestData {
     $Data = $null
     if ($Cache:StateCollection.TryTake([ref]$Data, 5000)) {
