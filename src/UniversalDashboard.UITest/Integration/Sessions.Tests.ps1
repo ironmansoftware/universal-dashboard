@@ -49,5 +49,4 @@ Describe "Sessions" {
     }
 }
 
-Stop-SeDriver $Driver
 Stop-UDDashboard -Server $Server 

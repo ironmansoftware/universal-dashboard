@@ -164,7 +164,7 @@ Describe "Input" {
 
         It "should include new line charts" {
             $Element = Find-SeElement -Id "test" -Driver $Driver
-            Send-SeKeys -Element $Element -Keys "16`r`n17`r`n18"
+            Send-SeKeys -Element $Element -Keys "16`r17`r18"
 
             $Button = Find-SeElement -Id "btnForm" -Driver $Driver
             Invoke-SeClick $Button
