@@ -222,6 +222,8 @@ Describe "Dashboard" {
 
         Get-UDDashboard | Stop-UDDashboard 
 
+        Start-Sleep 1
+
         $dashboard = New-UDDashboard -Title "Test" -Content {
         } 
 
