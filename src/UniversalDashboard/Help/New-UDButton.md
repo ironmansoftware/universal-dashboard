@@ -69,7 +69,7 @@ Creats a button that shows a toast message when clicked.
 
 ### Button sizes
 ````
-New-UDButton -Text "Big" -Height 300 -Width "100"
+New-UDButton -Text "Big" -Height 300 -Width "100%"
 ````
 
 Creates a button with height of 300px and 100% width. 
