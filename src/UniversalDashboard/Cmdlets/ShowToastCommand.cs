@@ -93,7 +93,7 @@ namespace UniversalDashboard.Cmdlets
                     theme = Theme,
                     icon = Icon == FontAwesomeIcons.None ? "" : $"fa fa-{Icon.ToString().Replace("_", "-")}",
                     iconColor = IconColor?.HtmlColor,
-                    replaceToast = ReplaceToast.IsPresent,
+                    displayMode = ReplaceToast.IsPresent ? 2 : 0,
                     rtl = RightToLeft.IsPresent,
                     balloon = Balloon.IsPresent,
                     overlay = Overlay.IsPresent,

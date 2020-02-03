@@ -19,6 +19,10 @@ Describe "Toast" {
                 Start-Sleep 1
                 Hide-UDToast -Id "Hide"
             }
+
+            New-UDButton -Text "Replace Toast" -Id "btnReplace" -OnClick {
+                Show-UDToast -Title "Shipped!" -Message "You order has shipped!" -Id "Replace" -Duration 5000 -Position "bottomLeft" -Icon user -ReplaceToast
+            }
         } 
 
         $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
@@ -46,6 +50,14 @@ Describe "Toast" {
             $Element = Find-SeElement -Driver $Driver -Id 'Hide' 
             $Text = $Element.Text
             $Text | Should be $null
+        }
+
+        It "should replace toast" {
+            Find-SeElement -Driver $Driver -Id 'btnReplace' | Invoke-SeClick
+
+            Start-Sleep -Seconds 3
+
+            (Find-SeElement -Driver $Driver -Id 'Replace' | Measure-Object).Count | should be 1
         }
 
        Stop-SeDriver $Driver
