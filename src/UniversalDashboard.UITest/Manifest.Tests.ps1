@@ -62,7 +62,6 @@ Describe "Manifest" {
         Get-Command 'Out-UDGridData' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Out-UDMonitorData' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Out-UDTableData' -ErrorAction SilentlyContinue | Should not be $null
-        Get-Command 'Publish-UDDashboard' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Remove-UDCookie' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Set-UDContentType' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Set-UDCookie' -ErrorAction SilentlyContinue | Should not be $null
@@ -120,7 +119,7 @@ Describe "Manifest" {
         Get-Command 'New-UDGridLayout' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Clear-UDCache' -ErrorAction SilentlyContinue | Should not be $null
         
-        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 129
+        (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 128
     }
 
     It "should require .NET 4.7" -Skip  {

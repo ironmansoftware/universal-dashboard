@@ -81,7 +81,6 @@ $manifestParameters = @{
 		"New-UDSwitch",
 		"New-UDRadio",
 		"New-UDTextbox",
-		"Publish-UDDashboard",
 		"New-UDImage"
 		"New-UDFab"
 		"New-UDFabButton"
