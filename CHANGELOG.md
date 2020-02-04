@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added login-page and login-card CSS classes so you can customize them via themes by [adamdriscoll](https://github.com/adamdriscoll)
 
+### Changed
+
+- Fixed an is where -ReplaceToast on Show-UDToast would not replace a toast (https://github.com/ironmansoftware/universal-dashboard/issues/1449) by [adamdriscoll](https://github.com/adamdriscoll)
+
 ### Changed (Enterprise)
 
 - Fixed issue where the login button wouldn't change font color by [adamdriscoll](https://github.com/adamdriscoll)
