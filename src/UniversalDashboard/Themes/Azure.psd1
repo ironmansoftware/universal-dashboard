@@ -15,6 +15,7 @@ $AlternateFontColor = "#FFFFFF"
       UDNavBar = @{
           BackgroundColor =  $PrimaryColor
           FontColor = $AlternateFontColor
+          'z-index' = '9999'
       }
       UDFooter = @{
           BackgroundColor =  $PrimaryColor
