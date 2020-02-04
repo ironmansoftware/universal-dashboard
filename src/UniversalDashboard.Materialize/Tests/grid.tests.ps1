@@ -1,5 +1,37 @@
 Describe "Grid" {
 
+
+    Context "default sort" {
+        $dashboard = New-UDDashboard -Title "Test" -Content {
+            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+                $data = @(
+                    [PSCustomObject]@{"day" = 1; jpg = "A"; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
+                    [PSCustomObject]@{"day" = 2; jpg = "b"; mp4= "200"}
+                    [PSCustomObject]@{"day" = 3; jpg = "C"; mp4= "10"}
+                )
+
+                $data | Out-UDGridData 
+            } -Links @(
+                (New-UDLink -Text "Other link" -Url "http://www.google.com")
+            )
+        }
+
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should have sorted correctly" {
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+            $Element[1].Text | should be "30"
+            
+            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
+            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[1] 
+            $Element[1].Text | should be "20"
+        }
+
+        Wait-Debugger
+    }
+
+
     Context "Refresh" {
 
 
@@ -539,35 +571,6 @@ Describe "Grid" {
             Start-Sleep 1
 
             $Element.Text.Contains("No results found") | Should be $true
-        }
-    }
-
-
-    Context "default sort" {
-        $dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
-                $data = @(
-                    [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
-                    [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "200"}
-                    [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
-                )
-
-                $data | Out-UDGridData 
-            } -Links @(
-                (New-UDLink -Text "Other link" -Url "http://www.google.com")
-            )
-        }
-
-        Set-TestDashboard -Dashboard $dashboard
-
-        It "should have sorted correctly" {
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
-            $Element[1].Text | should be "30"
-            
-            $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-            $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[1] 
-            $Element[1].Text | should be "20"
         }
     }
 
