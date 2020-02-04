@@ -25,6 +25,12 @@ Describe "Theme" {
 
         $AzureTheme = Get-UDTheme -Name 'Azure'
 
+        $Nav = New-UDSideNav -Content {
+            New-UDSideNavItem -Text "1" -OnClick {}
+            New-UDSideNavItem -Text "2" -OnClick {}
+            New-UDSideNavItem -Text "3" -OnClick {}
+        } -Fixed
+
         $Dashboard = New-UdDashboard -Title "Theme" -Theme $AzureTheme -Content {
             New-UDInput -Title "Input" -Content {
                 New-UDInputField -Name 'Textbox' -Type textbox
@@ -43,7 +49,7 @@ Describe "Theme" {
                     
                 }
             }
-        } 
+        } -Navigation $Nav
 
         $Server.DashboardService.SetDashboard($Dashboard)
         Enter-SeUrl -Driver $Driver -Url "http://localhost:10001"
