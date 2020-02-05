@@ -7,6 +7,9 @@ Import-Module $ModulePath -Force
 
 Get-UDRestApi | Stop-UDRestApi
 Get-UDDashboard | Stop-UDDashboard
+
+Enable-uDLOgging
+
 Describe "Api" {
 
     Context "script block with requires" {
@@ -275,3 +278,5 @@ Describe "Api" {
         }
     }
 }
+
+Disable-UDLogging
