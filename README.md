@@ -1,6 +1,6 @@
 # Universal Dashboard 
 
-[Documentation](https://docs.universaldashboard.io) | [Licensing](https://ironmansoftware.com/product/powershell-universal-dashboard/) | [Live Preview](https://poshud.com/) | [YouTube Videos](https://www.youtube.com/playlist?list=PL-0mHH7DlSiSZ4ozleNTUSXNkF6dlySVz) | [Forums](https://forums.universaldashboard.io/) | [Changelog](https://github.com/adamdriscoll/universal-dashboard-documentation/tree/master/updates)
+[Documentation](https://docs.universaldashboard.io) | [Licensing](https://ironmansoftware.com/product/powershell-universal-dashboard/) | [Live Preview](https://poshud.com/) | [YouTube Videos](https://www.youtube.com/playlist?list=PL-0mHH7DlSiSZ4ozleNTUSXNkF6dlySVz) | [Forums](https://forums.universaldashboard.io/) | [Changelog](https://github.com/ironmansoftware/universal-dashboard/blob/master/CHANGELOG.md)
 
 [![Build Status](https://dev.azure.com/ironmansoftware/universal-dashboard/_apis/build/status/ironmansoftware.universal-dashboard?branchName=master)](https://dev.azure.com/ironmansoftware/universal-dashboard/_build/latest?definitionId=1&branchName=master)
 
