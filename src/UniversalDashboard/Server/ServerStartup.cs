@@ -92,10 +92,8 @@ namespace UniversalDashboard
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
 
-            
-
-            //var serviceDescriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType.Name == "IRegistryPolicyResolver");
-            //services.Remove(serviceDescriptor);
+            var serviceDescriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType.Name == "IRegistryPolicyResolver");
+            services.Remove(serviceDescriptor);
 
             dashboardService.ServiceProvider = services.BuildServiceProvider();
         }
