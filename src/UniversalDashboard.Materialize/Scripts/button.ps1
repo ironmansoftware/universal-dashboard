@@ -41,7 +41,7 @@ function New-UDButton {
     }
 
     if ((!($Style.BackgroundColor)) -and ($BackgroundColor)) {
-        $Style += @{BackgroundColor = $BackgroundColor.HtmlColor}
+        $Style += @{"Background-Color" = $BackgroundColor.HtmlColor}
     }
     if ((!($Style.Color)) -and ($FontColor)) {
         $Style += @{Color = $FontColor.HtmlColor}
