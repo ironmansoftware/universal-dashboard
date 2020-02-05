@@ -95,14 +95,6 @@ Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net472\publish\*"
 
 Copy-Item "$PSScriptRoot\client\src\public\*" $client -Recurse
 
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\UniversalDashboard.Server.dll" $netstandard20
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\UniversalDashboard.Server.deps.json" $netstandard20
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\netstandard2.0\publish\DasMulli.Win32.ServiceUtils.dll" $netstandard20
-
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net472\publish\UniversalDashboard.Server.exe" $net472
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net472\publish\UniversalDashboard.Server.exe.config" $net472
-Copy-Item "$PSScriptRoot\UniversalDashboard.Server\bin\$Configuration\net472\publish\DasMulli.Win32.ServiceUtils.dll" $net472
-
 Copy-Item "$PSScriptRoot\web.config" $outputDirectory
 Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboard.psm1" $outputDirectory
 Copy-Item "$PSScriptRoot\UniversalDashboard\UniversalDashboardServer.psm1" $outputDirectory
@@ -117,8 +109,6 @@ Copy-Item "$PSScriptRoot\UniversalDashboard.Materialize\output\UniversalDashboar
 Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard.MaterialUI" $childModules -Recurse -Container
 
 # End Copy Child Modules 
-
-. "$PSScriptRoot\CorFlags.exe" /32BITREQ-  "$outputDirectory\net472\UniversalDashboard.Server.exe" 
 
 . (Join-Path $PSScriptRoot 'UniversalDashboard\New-UDModuleManifest.ps1') -outputDirectory $outputDirectory
 
