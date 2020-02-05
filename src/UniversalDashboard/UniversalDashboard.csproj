@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.10.0" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="4.7.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.3.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.1.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
@@ -52,7 +53,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.3" />
     <PackageReference Include="Microsoft.Extensions.Logging.Filter" Version="1.1.2" />
-    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0-preview-06" />
+    <PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
 
