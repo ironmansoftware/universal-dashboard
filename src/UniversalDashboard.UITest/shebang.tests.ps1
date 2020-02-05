@@ -7,6 +7,7 @@ if ($Pester -eq $null) {
 }
 
 $Env:Debug = -not $Release
+$Env:UDDATAPROTECTIONPATH = $Env:TEMP
 
 if (-not $Release) {
     Import-Module "$PSScriptRoot\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"

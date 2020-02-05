@@ -15,6 +15,7 @@ using UniversalDashboard.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.IO;
 using UniversalDashboard.Utilities;
+using Microsoft.AspNetCore.DataProtection;
 
 namespace UniversalDashboard
 {
@@ -39,6 +40,12 @@ namespace UniversalDashboard
 			_reloader = autoReloaderService?.ImplementationInstance as AutoReloader;
 
             var dashboardService = services.FirstOrDefault(m => m.ServiceType == typeof(IDashboardService)).ImplementationInstance as IDashboardService;
+
+            var dpPath = Environment.ExpandEnvironmentVariables("%UDDATAPROTECTIONPATH");
+            if (dpPath != "%UDDATAPROTECTIONPATH")
+            {
+                services.AddDataProtection().PersistKeysToFileSystem(new DirectoryInfo(dpPath));
+            }
 
             services.AddResponseCompression();
 			services.AddSignalR(hubOptions =>
@@ -84,6 +91,8 @@ namespace UniversalDashboard
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
+
+            
 
             //var serviceDescriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType.Name == "IRegistryPolicyResolver");
             //services.Remove(serviceDescriptor);
