@@ -27,7 +27,7 @@ namespace UniversalDashboard
 			{
 				if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 				{
-					Assembly.LoadFrom(Path.Combine(assemblyBasePath, "runtimes", "win", "lib", "netstandard2.0", "Microsoft.Win32.Registry.dll"))
+					Assembly.LoadFrom(Path.Combine(assemblyBasePath, "runtimes", "win", "lib", "netstandard2.0", "Microsoft.Win32.Registry.dll"));
 				}
 			}
 			catch {}
