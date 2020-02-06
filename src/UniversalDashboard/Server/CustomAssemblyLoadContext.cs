@@ -23,6 +23,15 @@ namespace UniversalDashboard
 		{
 			var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
 
+			try 
+			{
+				if (System.Runtime.InteropServices.RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+				{
+					Assembly.LoadFrom(Path.Combine(assemblyBasePath, "runtimes", "win", "lib", "netstandard2.0", "Microsoft.Win32.Registry.dll"))
+				}
+			}
+			catch {}
+			
 			try
 			{
 				var fileInfo = new FileInfo(unmanagedDllName);
