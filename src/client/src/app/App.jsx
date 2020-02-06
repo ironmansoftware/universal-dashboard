@@ -56,7 +56,7 @@ export default class App extends React.Component {
                         <article className="v-box">
                             <Spinner name="folding-cube" style={{width: '150px', height: '150px', color: '#0689B7'}}/>
                         </article>
-                        
+                        <span>{this.state.loadingMessage}</span>
                     </div>
         }
 

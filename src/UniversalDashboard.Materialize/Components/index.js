@@ -30,6 +30,8 @@ import UdPage from './ud-page';
 import Loading from './loading';
 import NotFound from './not-found';
 
+import SimpleTable from './ud-mui-grid';
+
 
 import {
     Route,
@@ -47,7 +49,7 @@ UniversalDashboard.register("tab-container", TabContainer);
 UniversalDashboard.register("tab", Tab);
 UniversalDashboard.register("image-carousel", UdImageCarousel);
 UniversalDashboard.register("ud-errorcard", UDErrorCard);
-UniversalDashboard.register("ud-grid", UDGrid);
+UniversalDashboard.register("ud-grid", SimpleTable);
 UniversalDashboard.register("ud-footer", UdFooter);
 UniversalDashboard.register("ud-link", UDLink);
 UniversalDashboard.register("ud-monitor", UdMonitor);

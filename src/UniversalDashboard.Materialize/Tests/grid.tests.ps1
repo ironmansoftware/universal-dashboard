@@ -18,6 +18,8 @@ Describe "Grid" {
 
         Set-TestDashboard -Dashboard $dashboard
 
+        Wait-Debugger
+
         It "should set grid to single item" {
             $Cache:data =  @([PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"})
 

@@ -1,6 +1,10 @@
 import React from 'react';
 import UdNavigation from './ud-navigation.jsx';
 
+import Typography from '@material-ui/core/Typography';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+
 export default class UdNavbar extends React.Component {
 
     signOut() {
@@ -37,6 +41,17 @@ export default class UdNavbar extends React.Component {
         if (href != null) {
             href = window.baseUrl + `/${dPage.name.replace(/ /g, "-")}`;
         }
+
+        return <AppBar style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">
+            <Toolbar>
+                <a href={href}>
+                    <Typography variant="h6">
+                        {this.props.text}
+                    </Typography>
+                </a>
+            </Toolbar>
+        </AppBar>
+      
 
         return <nav style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">
                     <UdNavigation 

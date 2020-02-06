@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.9.1",
     "@material/tab": "^4.0.0",
     "@material/tab-bar": "^4.0.0",
     "@material/tab-indicator": "^4.0.0",
@@ -24,6 +25,7 @@
     "griddle-react": "1.13.1",
     "jquery": "^3.4.1",
     "material-components-web": "^4.0.0",
+    "material-table": "^1.57.1",
     "materialize-css": "1.0.0",
     "moment": "2.24.0",
     "numeral": "2.0.6",

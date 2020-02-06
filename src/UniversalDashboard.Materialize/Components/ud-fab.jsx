@@ -92,4 +92,5 @@ class UDFabButton extends React.Component {
                     {icon}
                 </Button>
     }
-}
+}                    small={this.props.size === "small"}
+                    small={this.props.size === "small"}
