@@ -20,6 +20,21 @@ function Set-TestDashboard {
 
 Describe "New-UDPage" {
 
+    Context "dynamic page with title" {
+        $Page1 = New-UDPage -Name "Page" -Title 'Xyz' -Endpoint {
+            New-UDCard -Text "Home" -Id "Home"
+        }
+
+        $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1)
+        
+        Set-TestDashboard -Dashboard $dashboard
+
+        It "should have a custom title" {
+            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort/Page"
+            (Find-SeElement -Tag "title" -Driver $Driver).Text | Should not be "Xyz"
+        }
+    }
+
     Context "page with spaces and endpoint" {
         $Page1 = New-UDPage -Name "Page" -Content {
             New-UDCard -Text "Home" -Id "Home"

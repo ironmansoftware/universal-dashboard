@@ -126,7 +126,7 @@ class Materialize extends React.Component {
             }
 
             return <Route key={x.url} path={window.baseUrl + x.url} render={props => (
-                <UdPage onTitleChanged={component.setTitle.bind(component)} id={x.id} dynamic={true} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key} />
+                <UdPage onTitleChanged={component.setTitle.bind(component)} id={x.id} dynamic={true} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key} />
             )} />
         })
 
