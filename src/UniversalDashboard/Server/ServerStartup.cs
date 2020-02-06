@@ -214,6 +214,12 @@ namespace UniversalDashboard
             catch (Exception e)
             {
                 Logger.Error(e, $"Unhandled exception: {e.Message} {e.StackTrace}");
+
+                if (e.InnerException != null)
+                {
+                    Logger.Error(e.InnerException, $"{e.InnerException.Message} {e.InnerException.StackTrace}");
+                }
+
                 throw;
             }
         }
