@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.IO;
 using UniversalDashboard.Utilities;
 using Microsoft.AspNetCore.DataProtection;
+using System.Threading.Tasks;
 
 namespace UniversalDashboard
 {
@@ -110,6 +111,7 @@ namespace UniversalDashboard
 
 			loggerFactory.AddNLog();
 			app.UseResponseCompression();
+            app.UseMiddleware<ErrorLoggingMiddleware>();
             app.UseStatusCodePages(async context => {
 
                 if (context.HttpContext.Response.StatusCode == 404 && !context.HttpContext.Request.Path.StartsWithSegments("/api"))
@@ -191,4 +193,29 @@ namespace UniversalDashboard
             app.UseMvc();
 		}
 	}
+
+    public class ErrorLoggingMiddleware
+    {
+        private readonly NLog.ILogger Logger = LogManager.GetLogger("UnhandledException");
+
+        private readonly RequestDelegate _next;
+
+        public ErrorLoggingMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task Invoke(HttpContext context)
+        {
+            try
+            {
+                await _next(context);
+            }
+            catch (Exception e)
+            {
+                Logger.Error(e, $"Unhandled exception: {e.Message} {e.StackTrace}");
+                throw;
+            }
+        }
+    }
 }
