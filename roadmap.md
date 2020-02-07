@@ -12,6 +12,8 @@ We should be able to completely plug in a framework that changes the control set
 - New-UDTable 
 - New-UDInput
 - New-UDChart
+- New-UDRow
+- New-UDColumn
 - More? 
 
 
@@ -26,8 +28,14 @@ As part of the framework support, we will isolate the core UD module. This will 
 - Remove-UDElement
 - Add-UDElement
 - Clear-UDElement 
+- Sync-UDElement
 - New-UDPage
 - New-UDDashboard 
+- Show-UDModal
+- Hide-UDModal
+- Show-UDToast
+- Hide-UDToast
+- Invoke-UDRedirect
 - More? 
 
 ## Theme Support
@@ -48,7 +56,7 @@ An example theme will be something like. We will better define the colors need t
 }
 ```
 
-Themes should still support CSS but it should not be built into the box. 
+Themes should still support CSS but should not be used by the in-box themes.
 
 ## Material UI Framework 
 
