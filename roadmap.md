@@ -97,3 +97,7 @@ There has been some desire in the community for more cmdlets for managing endpoi
 
 - Invoke-UDElement - Run endpoints synchronously and asynchronously from other endpoints
 - Get-UDElement - Return elements registered with the system
+
+### Improved Grid
+
+The existing grid has a lot of problems and has been notoriously had to support. There are better options and we should consider implementing a solid React control that supports more features and doesn't require so much code on the UD side. 
