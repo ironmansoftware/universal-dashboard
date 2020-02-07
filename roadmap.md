@@ -56,6 +56,10 @@ As part of the move to a framework model, we should remove Materialize as the de
 
 For the first v3 version, we should look to replicate the existing required components. 
 
+## Ant Design Framework 
+
+As another option for UD, we should ensure that the upcoming Ant Design framework is fully supported by UD v3. 
+
 ## Remove Role Support
 
 Roles don't work with any authentication type besides endpoint based auth. We should remove roles and focus on authorization policies since they work everywhere. 
