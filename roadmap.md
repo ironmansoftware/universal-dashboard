@@ -1,3 +1,7 @@
+# Roadmap
+
+This roadmap document serves as a general direction for Universal Dashboard. If you have changes you would like to see in the general direction of Universal Dashboard, please submit a PR. 
+
 # v3 - Late 2020 
 
 ## Framework Support 
