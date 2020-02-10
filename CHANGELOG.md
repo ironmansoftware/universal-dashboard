@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed an is where -ReplaceToast on Show-UDToast would not replace a toast (https://github.com/ironmansoftware/universal-dashboard/issues/1449) by [adamdriscoll](https://github.com/adamdriscoll)
 - Changed web.config to use PowerShell.exe rather than UD.Server.exe by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed an issue where -background color of buttons wouldn't work by [BoSen29](https://github.com/BoSen29)
 
 ### Changed (Enterprise)
 
