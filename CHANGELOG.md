@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed (Enterprise)
 
 - Fixed issue where the login button wouldn't change font color by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed issue where $Session would be $null when using authorization policies and Windows Auth by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Removed 
 
