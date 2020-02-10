@@ -101,6 +101,7 @@ There has been some desire in the community for more cmdlets for managing endpoi
 
 - Invoke-UDElement - Run endpoints synchronously and asynchronously from other endpoints
 - Get-UDElement - Return elements registered with the system
+- Deny/Allow Ip(s) Globally or per Endpoint for REST Endpoints.
 
 ### Improved Grid
 
