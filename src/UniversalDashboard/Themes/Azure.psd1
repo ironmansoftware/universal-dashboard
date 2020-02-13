@@ -15,7 +15,6 @@ $AlternateFontColor = "#FFFFFF"
       UDNavBar = @{
           BackgroundColor =  $PrimaryColor
           FontColor = $AlternateFontColor
-          'z-index' = '9999'
       }
       UDFooter = @{
           BackgroundColor =  $PrimaryColor
@@ -96,7 +95,6 @@ $AlternateFontColor = "#FFFFFF"
       '.pagination li a'= @{
           'color' = "#FFFFFF !important"
       }
-
       'input:not([type]), input[type="date"]:not(.browser-default), input[type="datetime-local"]:not(.browser-default), input[type="datetime"]:not(.browser-default), input[type="email"]:not(.browser-default), input[type="number"]:not(.browser-default), input[type="password"]:not(.browser-default), input[type="search"]:not(.browser-default), input[type="tel"]:not(.browser-default), input[type="text"]:not(.browser-default), input[type="time"]:not(.browser-default), input[type="url"]:not(.browser-default), textarea.materialize-textarea' = @{
           'border-bottom' = "1px solid #FFFFFF"
           'color'= "#FFFFFF"
@@ -127,9 +125,11 @@ $AlternateFontColor = "#FFFFFF"
 
       '.sidenav'= @{
           'background-color' = "#1c1c1c"
-          'z-index' = "0"
+          'z-index' = "9999"
           'color'= "#FFF"
+          "position" = "fixed"
       }
+
 
       '.sidenav a:hover'= @{
           'background-color' = "#1e353f"
@@ -199,3 +199,4 @@ $AlternateFontColor = "#FFFFFF"
       }
   }
 }
+  
