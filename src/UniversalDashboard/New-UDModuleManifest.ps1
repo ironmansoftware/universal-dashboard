@@ -5,7 +5,7 @@ param(
 
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
-$version = "2.8.3"
+$version = "2.9.0"
 #$prerelease = "-beta2"
 
 $manifestParameters = @{
