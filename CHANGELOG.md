@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed issue where the login button wouldn't change font color by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed issue where $Session would be $null when using authorization policies and Windows Auth by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed a [security issue](https://www.linkedin.com/feed/update/urn:li:activity:6634158707653570560) with AdminMode by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Removed 
 
