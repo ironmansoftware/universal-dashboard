@@ -1,30 +1,16 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation.Runspaces;
 using Newtonsoft.Json;
-using UniversalDashboard.Models.Basics;
 
 namespace UniversalDashboard.Models
 {
-	public class Dashboard
+    public class Dashboard
     {
 		[JsonProperty("id")]
 		public Guid Id { get; set;}
-        [JsonProperty("title")]
-        public string Title { get; set; }
 		[JsonIgnore]
 		public Theme[] Themes { get; set; }
-        [JsonProperty("navBarColor")]
-        public string NavBarColor { get; set; }
-        [JsonProperty("navBarFontColor")]
-        public string NavBarFontColor { get; set; }
-        [JsonProperty("backgroundColor")]
-        public string BackgroundColor { get; set; }
-        [JsonProperty("fontColor")]
-        public string FontColor { get; set; }
-        [JsonProperty("navbarLinks")]
-        public IEnumerable<Hashtable> NavbarLinks { get; set; }
         [JsonProperty("scripts")]
         public string[] Scripts { get; set; }
         [JsonProperty("stylesheets")]
@@ -37,10 +23,6 @@ namespace UniversalDashboard.Models
         public int CyclePagesInterval { get; set; }
         [JsonProperty("error")]
         public string Error { get; set; }
-        [JsonProperty("footer")]
-        public Footer Footer { get; set; }
-        [JsonProperty("navBarLogo")]
-        public Element NavBarLogo { get; set; }
 		[JsonIgnore]
 		public InitialSessionState EndpointInitialSessionState { get; set; }
 		public bool Demo { get; set; }
@@ -50,9 +32,5 @@ namespace UniversalDashboard.Models
         public string FilterText { get; set; }
 		[JsonIgnore]
 		public TimeSpan IdleTimeout { get; set; }
-        [JsonProperty("navigation")]
-        public SideNav Navigation { get; set; }
-        [JsonProperty("frameworkAssetId")]
-        public string FrameworkAssetId { get; set; }
     }
 }

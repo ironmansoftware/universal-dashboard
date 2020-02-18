@@ -63,7 +63,7 @@ namespace UniversalDashboard.Controllers
             var page = HttpContext.GetRouteValue("pageName") as string;
 
             Log.Debug($"Index - Page = {page}");
-            return _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
+            return _dashboard.Pages.FirstOrDefault(m => m.Url?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
         }
 
 		[Route("theme")]
@@ -94,27 +94,6 @@ namespace UniversalDashboard.Controllers
                 if (_dashboard?.Themes?.FirstOrDefault() != null)
                 {
                     stringBuilder.AppendLine(_dashboard?.Themes?.FirstOrDefault()?.RenderedContent);
-                }
-
-                if (_dashboard?.Navigation != null)
-                {
-                    stringBuilder.AppendLine($@"side-nav {{
-                            width: {_dashboard.Navigation.Width}px;
-                        }}");
-                }
-
-                if (_dashboard?.Navigation?.Fixed == true)
-                {
-                    stringBuilder.AppendLine($@"
-                        header, main, footer {{
-                          padding-left: {_dashboard.Navigation.Width}px;
-                        }}
-
-                        @media only screen and (max-width : 992px) {{
-                          header, main, footer {{
-                            padding-left: 0;
-                          }}
-                        }}");
                 }
 
                 return new ContentResult()

@@ -9,7 +9,6 @@ import toaster from './services/toaster';
 import LazyElement from './basics/lazy-element.jsx';
 import copy from 'copy-to-clipboard'
 
-
 var connection;
 
 function connectWebSocket(sessionId, location, setLoading) {
@@ -276,15 +275,15 @@ function Dashboard({ history }) {
         return <div />
     }
 
-    try {
-        var component = UniversalDashboard.renderDashboard({
-            dashboard: dashboard,
-            history: history
-        });
+    try 
+    {
+        var routes = dashboard.pages.map(x => {
+            return UniversalDashboard.renderComponent(x);
+        })
 
         var pluginComponents = UniversalDashboard.provideDashboardComponents();
 
-        return  [component, pluginComponents]
+        return  [routes, pluginComponents]
     }
     catch (err) {
         setError(err);

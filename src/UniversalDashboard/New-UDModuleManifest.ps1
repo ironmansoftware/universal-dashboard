@@ -5,8 +5,8 @@ param(
 
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
-$version = "2.9.0"
-#$prerelease = "-beta2"
+$version = "3.0.0"
+$prerelease = "-alpha1"
 
 $manifestParameters = @{
 	Guid = 'c7894dd1-357e-4474-b8e1-b416afd70c2d'
@@ -26,115 +26,28 @@ $manifestParameters = @{
     DotNetFrameworkVersion = '4.7'
 	PowerShellVersion = '5.0'
 	FunctionsToExport = @(
-		"Out-UDChartData", 
-		"Out-UDGridData", 
-		"Out-UDTableData", 
-		"New-UDChartDataset",
-		"Out-UDMonitorData",
 		"Get-UDCookie",
 		"Set-UDCookie",
 		"Remove-UDCookie",
-		"New-UDPolarChartDataset",
-		"New-UDDoughnutChartDataset",
-		"New-UDRadarChartDataset",
-		"New-UDBarChartDataset",
-		"New-UDLineChartDataset",
-		"New-UDChartOptions",
-		"New-UDLogarithmicChartAxis",
-		"New-UDCategoryChartAxis",
-		"New-UDLinearChartAxis",
-		"New-UDPolarChartOptions",
-		"New-UDDoughnutChartOptions",
-		"New-UDBarChartOptions",
-		"New-UDLineChartOptions",
-		"New-UDChartTooltipOptions",
-		"New-UDChartTitleOptions",
-		"New-UDChartLegendLabelOptions",
-		"New-UDChartLegendOptions",
-		"New-UDChartLayoutOptions",
-		"Set-UDContentType",
-		"Get-UDContentType",
 		"Update-UDDashboard",
-		"New-UDGrid", 
-		"New-UDTable",
-		"New-UDRow", 
-		"New-UDColumn", 
-		"New-UDCard",
-		"New-UDCollapsible",
-		"New-UDCollapsibleItem",
-		"New-UDLayout",
-		"New-UDParagraph",
-		"New-UDHeading",
-		"New-UDLink",
-		"New-UDIFrame",
-		"New-UDIcon",
-		"New-UDPreloader",
-		"New-UDSelect",
-		"New-UDSelectOption",
-		"New-UDSelectGroup",
-		"New-UDCollection",
-		"New-UDCollectionItem",
-		"New-UDSpan", 
-		"New-UDCheckbox", 
 		"Write-UDLog",
-		"New-UDButton",
-		"New-UDSwitch",
-		"New-UDRadio",
-		"New-UDTextbox",
-		"New-UDImage"
-		"New-UDFab"
-		"New-UDFabButton"
-		"New-UDTab"
-		"New-UDTabContainer"
 		"New-UDGridLayout"
-		"New-UDImageCarousel"
-		"New-UDImageCarouselItem"
-		"New-UDSplitPane"
-		"New-UDTreeNode"
-		"New-UDTreeView"
-        "New-UDTooltip"
 		"Invoke-UDEvent"
-
-		#Material UI
-		'New-UDMuAvatar'
-		'New-UDMuButton'
-		'New-UDMuCard'
-		'New-UDMuCardToolbar'
-		'New-UDMuCardHeader'
-		'New-UDMuCardBody'
-		'New-UDMuCardExpand'
-		'New-UDMuCardFooter'
-		'New-UDMuCardMedia'
-		'New-UDMuCheckBox'
-		'New-UDMuChip'
-		'New-UDIconButton'
-		'New-UDMuLink'
-		'New-UDMuList'
-		'New-UDMuListItem'
-		'New-UDMuPaper'
-		'New-UDPdf'
-        'New-UDMuTypography'
         
 	)
-	CmdletsToExport = @("New-UDChart", 
+	CmdletsToExport = @(
 						"New-UDDashboard", 
 						"Get-UDDashboard",
 						"Start-UDDashboard", 
 						"Stop-UDDashboard", 
-						"New-UDMonitor", 
 						"New-UDHtml",
-						"New-UDCounter", 
 						"New-UDPage",
 						"Enable-UDLogging",
 						"Disable-UDLogging",
-						"New-UDInput",
-						"New-UDInputAction",
 						"New-UDEndpoint",
 						"Start-UDRestApi",
 						"Stop-UDRestApi",
 						"Get-UDRestApi",
-						"New-UDInputField",
-						"New-UDFooter",
 						"New-UDElement",
 						"New-UDTheme",
 						"Get-UDTheme"
@@ -144,20 +57,14 @@ $manifestParameters = @{
 						"Clear-UDElement",
 						"Get-UDElement",
 						"New-UDEndpointSchedule",
-						"Show-UDToast",
 						"Sync-UDElement",
 						"ConvertTo-JsonEx",
 						"Invoke-UDRedirect",
-						"Show-UDModal",
-						"Hide-UDModal",
 						"Select-UDElement",
                         "Set-UDClipboard",
                         "Invoke-UDJavaScript",
-						"Hide-UDToast"
 						"Publish-UDFolder"
 						"New-UDEndpointInitialization"
-						"New-UDSideNav"
-						"New-UDSideNavItem"
 						"Clear-UDCache"
 						)
 }

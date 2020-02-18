@@ -1,19 +1,11 @@
-using Newtonsoft.Json;
 using NLog;
-using UniversalDashboard.Models;
 using System.Management.Automation;
-using UniversalDashboard.Models.Enums;
-using UniversalDashboard.Models.Basics;
-using System.Collections;
-using System.Linq;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.SignalR;
-using System.Security.Claims;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace UniversalDashboard.Cmdlets
 {
-	[Cmdlet(VerbsCommon.Clear, "UDElement")]
+    [Cmdlet(VerbsCommon.Clear, "UDElement")]
     public class ClearElementCommand : PSCmdlet
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(ClearElementCommand));

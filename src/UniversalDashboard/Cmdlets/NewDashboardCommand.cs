@@ -5,7 +5,6 @@ using NLog;
 using System;
 using UniversalDashboard.Services;
 using System.Linq;
-using UniversalDashboard.Models.Basics;
 using System.Management.Automation.Runspaces;
 using System.Collections.Generic;
 using System.Collections;
@@ -27,22 +26,6 @@ namespace UniversalDashboard.Cmdlets
 		public Page[] Pages { get; set; }
 
 		[Parameter]
-		[Alias("Color")]
-		public DashboardColor NavBarColor { get; set; }
-
-	    [Parameter]
-	    public DashboardColor NavBarFontColor { get; set; }
-
-		[Parameter]
-	    public DashboardColor BackgroundColor { get; set; }
-
-	    [Parameter]
-	    public DashboardColor FontColor { get; set; }
-
-        [Parameter]
-		public Hashtable[] NavbarLinks { get; set; }
-
-		[Parameter]
 		public string[] Scripts { get; set; }
 
 		[Parameter]
@@ -53,12 +36,7 @@ namespace UniversalDashboard.Cmdlets
 
 		[Parameter]
 		public int CyclePagesInterval { get; set; } = 10;
-
-		[Parameter]
-		public Footer Footer {get;set;}
-		[Parameter]
-		public Element NavBarLogo {get;set;}
-
+		
 		[Parameter]
 		public InitialSessionState EndpointInitialization { get; set; }
 
@@ -71,11 +49,6 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter]
 		public TimeSpan IdleTimeout { get; set; } = TimeSpan.FromMinutes(25);
 
-        [Parameter]
-        public SideNav Navigation { get; set; } 
-
-		internal string DefaultFramework { get; set; } = "Materialize";
-
         protected override void EndProcessing()
 	    {
 			if (EndpointInitialization == null)
@@ -84,28 +57,13 @@ namespace UniversalDashboard.Cmdlets
 			}
 
 			var dashboard = new Dashboard();
-			dashboard.Title = Title;
-			dashboard.NavBarColor = NavBarColor?.HtmlColor;
-		    dashboard.NavBarFontColor = NavBarFontColor?.HtmlColor;
-		    dashboard.BackgroundColor = BackgroundColor?.HtmlColor;
-            dashboard.FontColor = FontColor?.HtmlColor;
-		    dashboard.NavbarLinks = NavbarLinks;
 			dashboard.Scripts = Scripts;
 			dashboard.Stylesheets = Stylesheets;
 			dashboard.CyclePages = CyclePages;
 			dashboard.CyclePagesInterval = CyclePagesInterval;
-			dashboard.Footer = Footer;
-			dashboard.NavBarLogo = NavBarLogo;
 			dashboard.EndpointInitialSessionState = EndpointInitialization;
 			dashboard.GeoLocation = GeoLocation;
 			dashboard.IdleTimeout = IdleTimeout;
-            dashboard.Navigation = Navigation;
-
-			if (!AssetService.Instance.Frameworks.ContainsKey(DefaultFramework)) {
-				throw new Exception($"Invalid DefaultFramework specified. Valid frameworks are {AssetService.Instance.Frameworks.Keys.Aggregate((x,y) => x + ", " + y )}");
-			}
-
-			dashboard.FrameworkAssetId = AssetService.Instance.Frameworks[DefaultFramework];
 
             if (Theme != null) {
 				var themeService = new ThemeService();
@@ -121,7 +79,7 @@ namespace UniversalDashboard.Cmdlets
 		    if (ParameterSetName == "Content")
 		    {
 				var page = new Page();
-				page.Name = "home";
+				page.Url = "home";
 				dashboard.Pages.Add(page);
 
 				try

@@ -17,11 +17,6 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
             _dashboardService = dashboardService;
         }
 
-        [Route("framework")]
-        public IActionResult Framework() {
-            return Index(_dashboardService.Dashboard.FrameworkAssetId);
-        }
-
         [Route("plugin")]
         public IActionResult Plugin() {
             var stringBuilder = new StringBuilder();

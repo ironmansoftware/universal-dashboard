@@ -27,25 +27,22 @@ export default class App extends React.Component {
     }
 
     componentWillMount() {
-        this.loadJavascript(getApiPath() + "/api/internal/javascript/framework", function() {
+        var styles = document.createElement('link');
+        styles.rel = 'stylesheet';
+        styles.type = 'text/css';
+        styles.media = 'screen';
+        styles.href = getApiPath() + "/api/internal/dashboard/theme";
+        document.getElementsByTagName('head')[0].appendChild(styles);
 
-            var styles = document.createElement('link');
-            styles.rel = 'stylesheet';
-            styles.type = 'text/css';
-            styles.media = 'screen';
-            styles.href = getApiPath() + "/api/internal/dashboard/theme";
-            document.getElementsByTagName('head')[0].appendChild(styles);
+        this.setState({
+            loadingMessage: "Loading plugins..."
+        })
 
+        this.loadJavascript(getApiPath() + "/api/internal/javascript/plugin", function() {
             this.setState({
-                loadingMessage: "Loading plugins..."
+                loading: false
             })
-
-            this.loadJavascript(getApiPath() + "/api/internal/javascript/plugin", function() {
-                this.setState({
-                    loading: false
-                })
-            }.bind(this));
-        }.bind(this))
+        }.bind(this));
     }
 
     render () {

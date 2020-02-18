@@ -26,7 +26,6 @@ import UDGridLayout from './ud-grid-layout';
 import UDFab from './ud-fab';
 import UDTreeView from './ud-treeview';
 import ErrorCard from './error-card';
-import UdPage from './ud-page';
 import Loading from './loading';
 import NotFound from './not-found';
 
@@ -115,29 +114,7 @@ class Materialize extends React.Component {
 
     render() {
         var { dashboard } = this.props;
-
-        var component = this;
-
-        var dynamicPages = dashboard.pages.map(function (x) {
-            if (!x.dynamic) return null;
-
-            if (!x.url.startsWith("/")) {
-                x.url = "/" + x.url;
-            }
-
-            return <Route key={x.url} path={window.baseUrl + x.url} render={props => (
-                <UdPage onTitleChanged={component.setTitle.bind(component)} id={x.id} dynamic={true} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key} />
-            )} />
-        })
-
-        var staticPages = dashboard.pages.map(function (x) {
-            if (x.dynamic) return null;
-
-            return <Route key={x.name} exact path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
-                <UdPage onTitleChanged={component.setTitle.bind(component)} dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key} />
-            )} />
-        })
-
+        
         return [<header>
             <UDNavbar backgroundColor={dashboard.navBarColor}
                 fontColor={dashboard.navBarFontColor}
@@ -154,9 +131,7 @@ class Materialize extends React.Component {
         <main style={{ background: dashboard.backgroundColor, color: dashboard.fontColor }}>
             <Suspense fallback={<span />}>
                 <Switch>
-                    {staticPages}
-                    {dynamicPages}
-                    <Route exact path={window.baseUrl + `/`} render={() => redirectToHomePage(dashboard)} />
+                    {dashboard.pages.map(x => UniversalDashboard.renderComponent(x))}
                     <Route path={window.baseUrl + `/`} render={() => <NotFound />} />
                 </Switch>
             </Suspense>

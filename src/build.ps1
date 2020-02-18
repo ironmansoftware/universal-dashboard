@@ -28,10 +28,7 @@ if (-not $Minimal)
 & dotnet restore "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" 
   
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f netstandard2.0
-& dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard.Server\UniversalDashboard.Server.csproj" -f netstandard2.0 
-
 & dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f net472
-& dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard.Server\UniversalDashboard.Server.csproj" -f net472
 
 $public = Join-Path $PSScriptRoot ".\client\src\public"
 if ((Test-Path $public)) {
@@ -50,18 +47,6 @@ if (-not $Minimal)
 
 & npm run build
 Pop-Location
-
-# Build Child Modules 
-
-Push-Location "$PSScriptRoot\UniversalDashboard.Materialize"
-.\build.ps1
-Pop-Location
-
-Push-Location "$PSScriptRoot\UniversalDashboard.MaterialUI"
-.\build.ps1
-Pop-Location
-
-# End Build Child Modules
 
 $outputDirectory = Join-Path $PSScriptRoot "output"
 if ((Test-Path $outputDirectory)) {
@@ -102,13 +87,6 @@ Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net472\UniversalD
 Copy-Item "$PSScriptRoot\poshud" $poshud -Recurse -Container
 
 Copy-Item "$PSScriptRoot\..\LICENSE" "$outputDirectory\LICENSE.txt" 
-
-# Copy Child Modules
-
-Copy-Item "$PSScriptRoot\UniversalDashboard.Materialize\output\UniversalDashboard.Materialize" $childModules -Recurse -Container
-Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard.MaterialUI" $childModules -Recurse -Container
-
-# End Copy Child Modules 
 
 . (Join-Path $PSScriptRoot 'UniversalDashboard\New-UDModuleManifest.ps1') -outputDirectory $outputDirectory
 

@@ -12,14 +12,13 @@ using UniversalDashboard.Models;
 using UniversalDashboard.Models.Basics;
 using UniversalDashboard.Services;
 using System.Text;
-using UniversalDashboard.Models.Enums;
 using Microsoft.CSharp.RuntimeBinder;
 
 namespace UniversalDashboard
 {
     public static class DashboardHubContextExtensions
     {
-        public static async Task ShowModal(this IHubContext<DashboardHub> hub, string clientId, Modal modal)
+        public static async Task ShowModal(this IHubContext<DashboardHub> hub, string clientId, object modal)
         {
             await hub.Clients.Client(clientId).SendAsync("showModal", modal);
         }
@@ -112,13 +111,6 @@ namespace UniversalDashboard
         public static async Task SyncElement(this IHubContext<DashboardHub> hub, string componentId)
         {
             await hub.Clients.All.SendAsync("syncElement", componentId);
-        }
-
-        // PS Host
-
-        public static async Task Write(this IHubContext<DashboardHub> hub, string clientId, string message, MessageType messageType)
-        {
-            await hub.Clients.Client(clientId).SendAsync("write", message, messageType);
         }
     }
 
