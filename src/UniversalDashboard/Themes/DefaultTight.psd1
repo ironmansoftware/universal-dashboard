@@ -31,7 +31,7 @@ $AlternativeBackgroundColor3 = $BackgroundColorBright
         UDDashboard = @{
             BackgroundColor = $PrimaryBackgroundColor
             FontColor = $PrimaryFontColor 
-            $FontFamily = $FontFamily
+            FontFamily = $FontFamily
         }
 
         UDNavBar = @{
