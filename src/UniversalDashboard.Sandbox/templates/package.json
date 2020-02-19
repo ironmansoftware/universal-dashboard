@@ -6,7 +6,7 @@
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
       "build": "webpack -p --env production",
-      "dev": "webpack -p --env development"
+      "dev": "webpack-dev-server --config webpack.config.js -p --env development"
     },
     "author": "",
     "license": "ISC",
@@ -34,7 +34,8 @@
       "remove-webpack-plugin": "^1.2.2",
       "uglifyjs-webpack-plugin": "^2.2.0",
       "webpack": "^4.41.5",
-      "webpack-cli": "^3.3.10"
+      "webpack-cli": "^3.3.10",
+      "webpack-dev-server": "3.10.1"
     }
   }
   

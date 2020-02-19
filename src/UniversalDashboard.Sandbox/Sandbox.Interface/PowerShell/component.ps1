@@ -1,4 +1,4 @@
-function New-UDComponent {
+function New-UDSandbox {
 
     param(
         [string]$Id = [Guid]::NewGuid().ToString()
@@ -8,6 +8,6 @@ function New-UDComponent {
         assetId = $AssetId
         id = $Id
         isPlugin = $true 
-        type = 'ud-component'
+        type = 'ud-sandbox'
     }
 }

@@ -22,6 +22,8 @@ function New-UDComponentModule {
         New-Item -Path $PowerShell -ItemType Directory | Out-Null
         $JavaScript = Join-Path $Path "JavaScript"
         New-Item -Path $JavaScript -ItemType Directory | Out-Null
+        $Examples = Join-Path $Path "Examples"
+        New-Item -Path $Examples -ItemType Directory | Out-Null
 
         $Templates = Join-Path $PSScriptRoot "templates"
         Copy-Item (Join-Path $Templates "component.jsx") $JavaScript 
@@ -58,8 +60,6 @@ function Import-UDManifest {
             throw "Directory does not contain UDManifest.json"
         }
 
-        $Root = Split-Path $Manifest -Parent
-
         Get-Content $Manifest -Raw | ConvertFrom-Json
     }
 }
@@ -88,6 +88,8 @@ function Invoke-UDComponentBuild {
     {
         New-Item -Path $UdBuildFolder -ItemType Directory | Out-Null
     }
+
+    Remove-Item (Join-Path $UdBuildFolder "public") -Force -Recurse -ErrorAction SilentlyContinue
 
     $templatesFolder = Join-Path $PSScriptRoot "templates"
     $PackageJson = Get-Content (Join-Path $templatesFolder "package.json") -Encoding UTF8 -Raw | ConvertFrom-Json
@@ -125,7 +127,7 @@ function Invoke-UDComponentBuild {
     Copy-Item (Join-Path $Directory '*.psm1') $OutputPath -Container -Force -Recurse
 }
 
-function Start-UDComponentTestServer {
+function Start-UDSandboxServer {
     param(
         [Parameter()]
         $Path
@@ -174,12 +176,18 @@ function Start-UDComponentTestServer {
 
     & npm install
 
-    Start-Process npm -ArgumentList ("run", "dev")
+    Start-Process npm -ArgumentList ("run", "dev") -NoNewWindow
 
     Pop-Location
 
+    Import-Module (Join-Path $PSScriptRoot "../output/UniversalDashboard.Community.psd1")
+    Import-Module (Join-Path $PSScriptRoot "Sandbox.Interface/output/UniversalDashboard.Sandbox.Interface.psm1")
     Import-Module (Get-ChildItem (Join-Path $Path "*.debug.psm1")) -Force
-    Start-UDDashboard -Dashboard (New-UDDashboard -Pages @(
-        
-    ))
+    Start-UDDashboard -Dashboard (
+        New-UDDashboard -Pages @(
+            New-UDPage -Url '/' -Endpoint {
+                New-UDSandbox
+            }
+        )
+    ) -Port 10001
 }
