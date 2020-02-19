@@ -1,4 +1,4 @@
-function New-UDMuButton {
+function New-UDButton {
     param
     (
         [Parameter (Position = 0)]

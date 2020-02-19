@@ -19,6 +19,10 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
 
         [Route("framework")]
         public IActionResult Framework() {
+            if (_dashboardService.Dashboard.FrameworkAssetId.StartsWith("http")) {
+                return Redirect(_dashboardService.Dashboard.FrameworkAssetId);
+            }
+
             return Index(_dashboardService.Dashboard.FrameworkAssetId);
         }
 

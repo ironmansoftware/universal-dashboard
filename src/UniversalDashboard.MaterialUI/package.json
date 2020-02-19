@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -p --env production",
-    "dev": "webpack -p --env development"
+    "dev": "webpack-dev-server --config webpack.config.js -p --env development"
   },
   "author": "",
   "license": "ISC",
@@ -20,7 +20,8 @@
     "react-interval": "^2.1.1",
     "react-pdf": "^4.1.0",
     "typeface-roboto": "0.0.75",
-    "typeface-roboto-condensed": "0.0.75"
+    "typeface-roboto-condensed": "0.0.75",
+    "react-hot-loader": "^4.12.19"
   },
   "devDependencies": {
     "@babel/core": "7.7.7",
@@ -44,6 +45,7 @@
     "remove-webpack-plugin": "^1.2.2",
     "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "3.10.1"
   }
 }

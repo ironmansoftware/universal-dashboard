@@ -20,6 +20,9 @@ const styles = theme => ({
 export class UdButton extends React.Component {
 
   handleClick = () => {
+
+    if (this.props.onClick == null) return;
+
     UniversalDashboard.publish("element-event", {
       type: "clientEvent",
       eventId: this.props.id + "onClick",
