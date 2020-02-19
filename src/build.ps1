@@ -48,6 +48,10 @@ if (-not $Minimal)
 & npm run build
 Pop-Location
 
+Push-Location "$PSScriptRoot\UniversalDashboard.MaterialUI"
+.\build.ps1
+Pop-Location
+
 $outputDirectory = Join-Path $PSScriptRoot "output"
 if ((Test-Path $outputDirectory)) {
 	Remove-Item $outputDirectory -Force -Recurse
@@ -87,6 +91,8 @@ Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net472\UniversalD
 Copy-Item "$PSScriptRoot\poshud" $poshud -Recurse -Container
 
 Copy-Item "$PSScriptRoot\..\LICENSE" "$outputDirectory\LICENSE.txt" 
+
+Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard.MaterialUI" $childModules -Recurse -Container
 
 . (Join-Path $PSScriptRoot 'UniversalDashboard\New-UDModuleManifest.ps1') -outputDirectory $outputDirectory
 

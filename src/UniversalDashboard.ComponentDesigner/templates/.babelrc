@@ -1,0 +1,20 @@
+{
+  "presets" : [
+    [
+      "@babel/preset-env", {
+        "targets":{
+          "browsers":[
+            ">1.0%",
+            "not dead"
+          ]
+        }
+      }
+    ],
+    "babel-preset-react-app"
+  ],
+  "plugins": [
+    ["minify-dead-code-elimination", { "optimizeRawSize": true }],
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-dynamic-import",
+  ]
+}

@@ -1,3 +1,4 @@
+import AppBar from './appbar';
 import Chip from "./chips";
 import Icon from "./icon";
 import Paper from "./paper";
@@ -17,6 +18,7 @@ import UDAvatar from "./avatar";
 import UDCheckBox from "./checkbox";
 // import Pdf from "./pdf"; //this version has a bug render text not correct.
 
+UniversalDashboard.register("mu-appbar", AppBar);
 UniversalDashboard.register("mu-chip", Chip);
 UniversalDashboard.register("mu-icon", Icon);
 UniversalDashboard.register("mu-paper", Paper);
