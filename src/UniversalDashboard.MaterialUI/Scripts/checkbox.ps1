@@ -1,4 +1,4 @@
-function New-UDMuCheckBox {
+function New-UDCheckBox {
     param
     (
         [Parameter (Position = 0)]

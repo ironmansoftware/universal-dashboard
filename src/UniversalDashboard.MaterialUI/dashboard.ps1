@@ -26,6 +26,34 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         }
     }
 
+    New-UDPage -Name 'Checkbox' -Content {
+        New-UDCheckBox -Label 'Demo' -Id 'chkLabel' -OnChange {}
+
+        New-UDCheckBox -Label 'Demo' -Id 'chkLabelPlacementStart' -OnChange {} -LabelPlacement start
+
+        New-UDCheckBox -Label 'Demo' -Id 'chkLabelPlacementTop' -OnChange {} -LabelPlacement top
+        
+        New-UDCheckBox -Label 'Demo' -Id 'chkLabelPlacementBottom' -OnChange {} -LabelPlacement bottom
+
+        New-UDCheckBox -Label 'Demo' -Id 'chkLabelPlacementEnd' -OnChange {} -LabelPlacement end
+
+        $Icon = New-UDIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon' -Regular
+        $CheckedIcon = New-UDIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon-checked' 
+        New-UDCheckBox -Id 'btnCustomIcon' -Icon $Icon -CheckedIcon $CheckedIcon -OnChange {} -Style @{color = '#2196f3'}
+
+        New-UDCheckBox -Id 'chkChange' -OnChange {
+            Set-TestData -Data "OnChange"
+        }
+
+        New-UDCheckBox -Id 'chkStyle' -Style @{color = 'pink'} -Label "I'm in love"
+
+        New-UDCheckBox -Id 'chkDisabled' -Disabled
+
+        New-UDCheckBox -Id 'chkChecked' -Checked
+
+        New-UDCheckBox -Id 'chkCheckedDisabled' -Checked -Disabled
+    }
+
     New-UDPage -Name "Preloader" -Content {
         New-UDProgress -Circular 
     }
