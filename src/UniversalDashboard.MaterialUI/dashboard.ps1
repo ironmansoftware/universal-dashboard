@@ -68,6 +68,21 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         }
     }
 
+    New-UDPage -Name 'Floating Action Button' -Content {
+        New-UDFloatingActionButton -Id 'fabIcon' -Icon user 
+
+        New-UDFloatingActionButton -Id 'fabClick' -Icon user -OnClick {
+            Set-TestData -Data "fabClick"
+        }
+
+        New-UDFloatingActionButton -Id 'fabSmall' -Icon user -Size small 
+
+        New-UDFloatingActionButton -Id 'fabMedium' -Icon user -Size medium
+
+        New-UDFloatingActionButton -Id 'fabLarge' -Icon user -Size large
+    }
+
+
     New-UDPage -Name "Preloader" -Content {
         New-UDProgress -Circular 
     }

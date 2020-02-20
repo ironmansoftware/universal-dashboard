@@ -19,6 +19,7 @@ import UDAvatar from "./avatar";
 import UDCheckBox from "./checkbox";
 import Progress from './progress';
 import ExpansionPanelGroup from './expansion-panel';
+import FloatingActionButton from './floating-action-button';
 
 import {
     Route,
@@ -48,6 +49,8 @@ UniversalDashboard.register("mu-avatar", UDAvatar);
 UniversalDashboard.register("mu-checkbox", UDCheckBox);
 UniversalDashboard.register("mu-progress", Progress);
 UniversalDashboard.register('mu-expansion-panel-group', ExpansionPanelGroup);
+UniversalDashboard.register('mu-fab', FloatingActionButton);
+
 // UniversalDashboard.register("ud-pdf", Pdf);
 
 // Framework Support

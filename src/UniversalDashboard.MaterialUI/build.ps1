@@ -67,6 +67,7 @@ $manifestParameters = @{
         "New-UDProgress"
         "New-UDExpansionPanelGroup"
         "New-UDExpansionPanel"
+        "New-UDFloatingActionButton"
     )
     RequiredModules   = @()
 }
