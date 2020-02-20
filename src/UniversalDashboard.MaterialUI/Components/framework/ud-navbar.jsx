@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -24,31 +24,33 @@ const useStyles = makeStyles({
     },
   });
 
-    function onItemClick(props) {
-        if (props.type === "side-nav-item" && props.hasCallback) {
-            PubSub.publish('element-event', {
-                type: "clientEvent",
-                eventId: props.id,
-                eventName: 'onClick'
-            });
-        }
-        else if (props.url != null && (props.url.startsWith("http") || props.url.startsWith("https"))) 
-        {
-            window.location.href = props.url;
-        }
-        else if (props.url != null) {
-            var url = props.url;
-            if (!url.startsWith("/")) {
-                url = "/" + url;
-            }
-            props.history.push(`${window.baseUrl + url.replace(/ /g, "-")}`);      
-        }
-        else if (props.name != null) {
-            props.history.push(window.baseUrl + `/${props.name.replace(/ /g, "-")}`);      
-        }
 
-        props.setOpen(false);
+
+function onItemClick(props) {
+    if (props.type === "side-nav-item" && props.hasCallback) {
+        PubSub.publish('element-event', {
+            type: "clientEvent",
+            eventId: props.id,
+            eventName: 'onClick'
+        });
     }
+    else if (props.url != null && (props.url.startsWith("http") || props.url.startsWith("https"))) 
+    {
+        window.location.href = props.url;
+    }
+    else if (props.url != null) {
+        var url = props.url;
+        if (!url.startsWith("/")) {
+            url = "/" + url;
+        }
+        props.history.push(`${window.baseUrl + url.replace(/ /g, "-")}`);      
+    }
+    else if (props.name != null) {
+        props.history.push(window.baseUrl + `/${props.name.replace(/ /g, "-")}`);      
+    }
+
+    props.setOpen(false);
+}
 
 function renderSideNavItem(item) {
 
@@ -81,6 +83,31 @@ function renderSideNavItem(item) {
     }
 }
 
+
+function renderCustomNavigation(props) {
+    if (props.none) { return <div/> }
+
+    var children = [];
+    if (props.content) {
+        children = props.content.map(item => {
+            return renderSideNavItem(item)
+        })
+    }
+
+    const classes = useStyles();
+    
+    return (
+    <div
+        className={classes.list}
+        role="presentation"
+    >
+        <List>
+            {children}
+        </List> 
+    </div>
+    )
+}
+
 function renderDefaultNavigation(props) {
     if (!props.pages || props.pages.length === 1) return <div/>;
 
@@ -104,6 +131,13 @@ function renderDefaultNavigation(props) {
 export default function UdNavbar(props) {
 
     const [open, setOpen] = useState(false);
+    const [content, setContent] = useState([]);
+
+    useEffect(() => {
+        if (props.customNavigation && props.content === null) {
+            UniversalDashboard.get(`/api/internal/component/element/${props.id}`, (data) => setContent(data));
+        }
+    }, [true]);
 
     var links = null;
     if (props.links) {
@@ -137,14 +171,24 @@ export default function UdNavbar(props) {
     {
         var links = null;
         if (props.customNavigation) {
-            links = renderCustomNavigation({...props, setOpen });
+            if (!props.none)
+            {
+                if (content != null)
+                {
+                    props.content = content;
+                }
+
+                links = renderCustomNavigation({...props, setOpen });
+                drawer = <Drawer open={props.fixed ? true : open} onClose={() => setOpen(false)} variant={props.fixed ? "permanent" : "temporary"}>
+                        {links}
+                </Drawer>
+            }          
         } else {
             links = renderDefaultNavigation({...props, setOpen});
+            drawer = <Drawer open={open} onClose={() => setOpen(false)}>
+                    {links}
+            </Drawer>
         }
-
-        drawer = <Drawer open={open} onClose={() => setOpen(false)}>
-             {links}
-        </Drawer>
 
         menuButton = <IconButton edge="start" color="inherit" aria-label="menu" onClick={() => setOpen(true)} >
             <MenuIcon />
@@ -162,18 +206,4 @@ export default function UdNavbar(props) {
             </Toolbar>
         </AppBar>
     ]
-
-        // return <nav style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">
-        //             <UdNavigation 
-        //                 pages={this.props.pages} 
-        //                 togglePaused={this.props.togglePaused} 
-        //                 showPauseToggle={this.props.showPauseToggle} 
-        //                 {...this.props.navigation} 
-        //                 customNavigation={this.props.navigation != null}
-        //                 history={this.props.history}/>
-
-        //             <ul id="nav-mobile" className="right hide-on-med-and-down">
-        //                 {links}
-        //             </ul>
-        //         </nav>;
 }
