@@ -38,7 +38,7 @@ $manifestParameters = @{
     Path              = "$OutputPath\UniversalDashboard.MaterialUI.psd1"
     Author            = "Adam Driscoll"
     CompanyName       = "Ironman Software, LLC"
-    Copyright         = "2019 Ironman Software, LLC"
+    Copyright         = "2020 Ironman Software, LLC"
     RootModule        = "UniversalDashboard.MaterialUI.psm1"
     Description       = "Material UI bundle for Universal Dashboard."
     ModuleVersion     = $version
@@ -46,21 +46,21 @@ $manifestParameters = @{
     ReleaseNotes      = "Initial release"
     FunctionsToExport = @(
         "New-UDChip", 
-        "New-UDMuPaper", 
+        "New-UDPaper", 
         "New-UDIconButton", 
         "New-UDMuList", 
         "New-UDMuListItem", 
         "New-UDPdf", 
         "New-UDMuExpandListItem", 
         "New-UDButton", 
-        "New-UDMuCard", 
-        "New-UDMuCardMedia" , 
-        "New-UDMuTypography", 
-        "New-UDMuCardToolbar"
-        "New-UDMuCardHeader"
-        "New-UDMuCardBody"
-        "New-UDMuCardExpand"
-        "New-UDMuCardFooter"
+        "New-UDCard", 
+        "New-UDCardMedia" , 
+        "New-UDTypography", 
+        "New-UDCardToolbar"
+        "New-UDCardHeader"
+        "New-UDCardBody"
+        "New-UDCardExpand"
+        "New-UDCardFooter"
         "New-UDMuLink"
         "New-UDAvatar"
         "New-UDCheckBox"
@@ -70,6 +70,7 @@ $manifestParameters = @{
         "New-UDFloatingActionButton"
         "New-UDTab"
         "New-UDTabs"
+        "New-UDGrid"
     )
     RequiredModules   = @()
 }

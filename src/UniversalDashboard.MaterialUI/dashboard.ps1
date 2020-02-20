@@ -41,6 +41,89 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         }
     }
 
+    New-UDPage -Name 'Card' -Content {
+
+        New-UDCard -Id 'SimpleCard' -Title "Hey" -Content { 
+            "Content" 
+        } -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4'
+
+        # $ToolBarProps = @{
+        #     # icon        = New-UDIcon -Icon server -Size lg -FixedWidth -Style @{color = '#000'} 
+        #     Style       = @{backgroundColor = '#fff'; color = '#000';flexGrow = 1}
+        #     Content     = {New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Style @{ color = '#000'}) -OnClick {Show-UDToast -Message 'test'}}
+        #     Title       = New-UDTypography -Variant h5 -Text 'Universal Dashboard'
+        #     ShowButtons = $false
+        #     Id = 'toolbar'
+        # }
+        # $ToolBar = New-UDCardToolbar @ToolBarProps
+
+        # $HeaderProps = @{
+        #     Style = @{backgroundColor = '#bbdefb'; display = 'flex'; flexDirection = 'row'}
+        #     Content = {
+        #         New-UDCardMedia -Component video -Source "http://media.w3.org/2010/05/bunny/movie.mp4" 
+        #     }
+        #     IsEndPoint = $false 
+        #     AutoRefresh = $false
+        #     RefreshInterval = 6
+        #     Id = 'header'
+        # }
+        # $Header = New-UDCardHeader  @HeaderProps
+
+        # $BodyProps = @{
+        #     Style = @{backgroundColor = '#fff'; justifyContent = "center"}
+        #     Content = {
+        #         New-UDTypography -Variant h3 -Text "$(get-date -Format 'HH:mm:ss')" -Style @{ color = '#000' } -Align center
+        #     }
+        #     IsEndPoint = $true 
+        #     AutoRefresh = $true
+        #     RefreshInterval = 1
+        #     Id = 'body'
+        # }
+        # $Body = New-UDCardBody @BodyProps
+            
+        # $Expand = New-UDCardExpand -Style @{backgroundColor = '#f8f8f8'; color = '#000'; justifyContent = "center"} -Content {
+        #     New-UDTypography -Variant h2 -Text "YOU EXPAND ME!" -Style @{ color = '#000'; margin = '40px' } -Align center
+        # } -Id 'expand'
+
+
+        # $Footer = New-UDCardFooter -Id 'footer' -Style @{backgroundColor = '#fff'; color = '#000'; justifyContent = "center"} -Content {
+            
+        #     $ButtonStyle = @{color = '#fff'}
+        #     $Icons = @(
+        #         New-UDIcon -Icon github -Size lg -Style $ButtonStyle
+        #         New-UDIcon -Icon gitlab -Size lg -Style $ButtonStyle
+        #         New-UDIcon -Icon git    -Size lg -Style $ButtonStyle
+        #     )
+            
+        #     foreach ($Icon in $Icons) {
+        #         $ButtonProps = @{
+        #             Text = $Icon.icon.ToUpper()
+        #             Size = "medium"
+        #             Icon = $Icon
+        #             OnClick = {Show-UDToast -Message 'test'}
+        #         }
+        #         New-UDButton @ButtonProps
+        #     }
+        # } 
+        # $CardProps = @{
+        #     Id              = 'ud-card-demo'
+        #     Elevation       = 24    
+        #     ShowToolBar     = $true
+        #     ToolBar         = $ToolBar
+        #     Header          = $Header
+        #     Body            = $Body
+        #     Expand          = $Expand
+        #     Footer          = $Footer
+        #     Style           = @{ display = "flex"; justifyContent = "center"; backgroundColor = '#fff' }
+        # }
+
+        # New-UDGrid -Container -Content {
+        #     New-UDGrid -Item -LargeSize 8 -Content {
+        #         New-UDCard @CardProps
+        #     }
+        # }
+    }
+
     New-UDPage -Name 'Checkbox' -Content {
         New-UDCheckBox -Label 'Demo' -Id 'chkLabel' -OnChange {}
 
@@ -112,6 +195,43 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDFloatingActionButton -Id 'fabLarge' -Icon user -Size large
     }
 
+    New-UDPage -Name "Grid" -Content {
+        New-UDGrid -Container -Content {
+            New-UDGrid -Item -SmallSize 6 -Content {
+                New-UDPaper -Content { "sm-6" }
+            }
+            New-UDGrid -Item -SmallSize 6 -Content {
+                New-UDPaper -Content { "sm-6" }
+            }
+            New-UDGrid -Item -LargeSize 12 -Content {
+                New-UDPaper -Content { "lg-6" }
+            }
+        }
+    }
+
+    New-UDPage -Name "Paper" -Content {
+        New-UDPaper -Content {
+            New-UDHeading -Text "hi" -Id 'paperContent'
+        }
+
+        New-UDPaper -Content {
+            New-UDHeading -Text "hi" -Id 'hi'
+        } -Style @{
+            backgroundColor = '#90caf9'
+        } -Id 'paperStyle'
+
+        New-UDPaper -Content {
+            New-UDHeading -Text "hi" -Id 'hi'
+        } -Style @{
+            backgroundColor = '#90caf9'
+        } -Id 'paperElevation' -Elevation 4
+
+        New-UDPaper -Content {
+            New-UDHeading -Text "$(0..10 | get-random)" -Id 'dynamic'
+        } -Style @{
+            backgroundColor = '#90caf9'
+        } -Id 'paperEndpoint' -IsEndPoint -AutoRefresh -RefreshInterval 1
+    }
 
     New-UDPage -Name "Preloader" -Content {
         New-UDProgress -Circular 

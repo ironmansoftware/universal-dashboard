@@ -1,115 +1,26 @@
+Enter-SeUrl -Target $Driver -Url "http://localhost:10000/card"
+
 Describe "card" {
-
-    Context "content" {
-
-        Set-TestDashboard {
-           
-            $ToolBarProps = @{
-                # icon        = New-UDIcon -Icon server -Size lg -FixedWidth -Style @{color = '#000'} 
-                Style       = @{backgroundColor = '#fff'; color = '#000';flexGrow = 1}
-                Content     = {New-UDIconButton -Icon (New-UDIcon -Icon github -Size sm -Style @{ color = '#000'}) -OnClick {Show-UDToast -Message 'test'}}
-                Title       = New-UDMuTypography -Variant h5 -Text 'Universal Dashboard'
-                ShowButtons = $false
-                Id = 'toolbar'
-            }
-            $ToolBar = New-UDMuCardToolbar @ToolBarProps
-
-            $HeaderProps = @{
-                Style = @{backgroundColor = '#bbdefb'; display = 'flex'; flexDirection = 'row'}
-                Content = {
-                    New-UDMuCardMedia -Component video -Source "http://media.w3.org/2010/05/bunny/movie.mp4" 
-                }
-                IsEndPoint = $false 
-                AutoRefresh = $false
-                RefreshInterval = 6
-                Id = 'header'
-            }
-            $Header = New-UDMuCardHeader  @HeaderProps
-
-            $BodyProps = @{
-                Style = @{backgroundColor = '#fff'; justifyContent = "center"}
-                Content = {
-                    New-UDMuTypography -Variant h3 -Text "$(get-date -Format 'HH:mm:ss')" -Style @{ color = '#000' } -Align center
-                }
-                IsEndPoint = $true 
-                AutoRefresh = $true
-                RefreshInterval = 1
-                Id = 'body'
-            }
-            $Body = New-UDMuCardBody @BodyProps
-                
-            $Expand = New-UDMuCardExpand -Style @{backgroundColor = '#f8f8f8'; color = '#000'; justifyContent = "center"} -Content {
-                New-UDMuTypography -Variant h2 -Text "YOU EXPAND ME!" -Style @{ color = '#000'; margin = '40px' } -Align center
-            } -Id 'expand'
-
-
-            $Footer = New-UDMuCardFooter -Id 'footer' -Style @{backgroundColor = '#fff'; color = '#000'; justifyContent = "center"} -Content {
-                
-                $ButtonStyle = @{color = '#fff'}
-                $Icons = @(
-                    New-UDIcon -Icon github -Size lg -Style $ButtonStyle
-                    New-UDIcon -Icon gitlab -Size lg -Style $ButtonStyle
-                    New-UDIcon -Icon git    -Size lg -Style $ButtonStyle
-                )
-                
-                foreach ($Icon in $Icons) {
-                    $ButtonProps = @{
-                        Text = $Icon.icon.ToUpper()
-                        Variant = "flat"
-                        Size = "medium"
-                        Icon = $Icon
-                        OnClick = {Show-UDToast -Message 'test'}
-                    }
-                    New-UDMuButton @ButtonProps
-                }
-            } 
-
-
-            $CardProps = @{
-                Id              = 'ud-card-demo'
-                Elevation       = 24    
-                ShowToolBar     = $true
-                ToolBar         = $ToolBar
-                Header          = $Header
-                Body            = $Body
-                Expand          = $Expand
-                Footer          = $Footer
-                Style           = @{ display = "flex"; justifyContent = "center"; backgroundColor = '#fff' }
-            }
-            
-            New-UDRow -Columns {
-                New-UDColumn -LargeSize 8 -LargeOffset 2 -Content {
-                    
-                        New-UDMuCard @CardProps
-                   
-                }
-            }
-
-
-        }
-        
-        It 'has toolbar with content' {
-            $element = Find-SeElement -Id 'toolbar' -Driver $Driver
-            $element.Text | should not be $null
-        }
-        It 'has header with content' {
-            $element = Find-SeElement -Id 'header' -Driver $Driver
-            $element.Text | should not be $null
-        }
-        It 'has body with content' {
-            $element = Find-SeElement -Id 'body' -Driver $Driver
-            $element.Text | should not be $null
-        }
-        It 'has expand with content' {
-            $button = Find-SeElement -id 'ud-card-expand-button' -Driver $Driver
-            Invoke-SeClick -Element $button -Driver $Driver
-            $element = Find-SeElement -Id 'expand' -Driver $Driver
-            $element.Text | should not be $null
-        }
-        It 'has footer with content' {
-            $element = Find-SeElement -Id 'footer' -Driver $Driver
-            $element.FindElementsByTagName('button').count | should be 4
-        }
+    It 'has toolbar with content' {
+        $element = Find-SeElement -Id 'toolbar' -Driver $Driver
+        $element.Text | should not be $null
     }
-
+    It 'has header with content' {
+        $element = Find-SeElement -Id 'header' -Driver $Driver
+        $element.Text | should not be $null
+    }
+    It 'has body with content' {
+        $element = Find-SeElement -Id 'body' -Driver $Driver
+        $element.Text | should not be $null
+    }
+    It 'has expand with content' {
+        $button = Find-SeElement -id 'ud-card-expand-button' -Driver $Driver
+        Invoke-SeClick -Element $button -Driver $Driver
+        $element = Find-SeElement -Id 'expand' -Driver $Driver
+        $element.Text | should not be $null
+    }
+    It 'has footer with content' {
+        $element = Find-SeElement -Id 'footer' -Driver $Driver
+        $element.FindElementsByTagName('button').count | should be 4
+    }
 }
