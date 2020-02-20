@@ -237,6 +237,29 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDProgress -Circular 
     }
 
+    New-UDPage -Name 'Table' -Content {
+
+        $Data = @(
+            [PSCustomObject]@{Dessert = 'Frozen yoghurt'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            [PSCustomObject]@{Dessert = 'Ice cream sandwich'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            [PSCustomObject]@{Dessert = 'Eclair'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            [PSCustomObject]@{Dessert = 'Cupcake'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            [PSCustomObject]@{Dessert = 'Gingerbread'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+        ) | Out-UDTableContent
+
+        New-UDTable -Id 'defaultTable' -Content {
+            $Data
+        }
+
+        New-UDTable -Size small -Id 'smallTable' -Content {
+            $Data
+        }
+
+        New-UDTable -StickyHeader -Id 'stickyHeaderTable' -Content {
+            $Data
+        }
+    }
+
     New-UDPage -Name "Tabs" -Id 'Tabs' -Content {
         New-UDTabs -Tabs {
             New-UDTab -Text "Tab1" -Id 'Tab1' -Content {

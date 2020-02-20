@@ -29,7 +29,7 @@ export function internalRenderComponent(component, history) {
             </Suspense>
     }
 
-    return null;
+    return component;
 }
 
 export default function renderComponent(component, history, dynamicallyLoaded) {

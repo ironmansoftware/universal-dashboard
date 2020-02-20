@@ -22,6 +22,8 @@ import ExpansionPanelGroup from './expansion-panel';
 import FloatingActionButton from './floating-action-button';
 import Tabs from './tabs';
 import Grid from './grid';
+import Table from './table';
+
 
 import {
     Route,
@@ -54,6 +56,7 @@ UniversalDashboard.register('mu-expansion-panel-group', ExpansionPanelGroup);
 UniversalDashboard.register('mu-fab', FloatingActionButton);
 UniversalDashboard.register('mu-tabs', Tabs);
 UniversalDashboard.register('mu-grid', Grid);
+UniversalDashboard.register('mu-table', Table);
 
 // UniversalDashboard.register("ud-pdf", Pdf);
 
