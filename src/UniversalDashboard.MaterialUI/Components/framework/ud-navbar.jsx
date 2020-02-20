@@ -12,8 +12,6 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import Drawer from '@material-ui/core/Drawer';
 
@@ -26,9 +24,7 @@ const useStyles = makeStyles({
     },
   });
 
-    function onItemClick(props, e) {
-        e.preventDefault(); 
-
+    function onItemClick(props) {
         if (props.type === "side-nav-item" && props.hasCallback) {
             PubSub.publish('element-event', {
                 type: "clientEvent",
@@ -50,6 +46,8 @@ const useStyles = makeStyles({
         else if (props.name != null) {
             props.history.push(window.baseUrl + `/${props.name.replace(/ /g, "-")}`);      
         }
+
+        props.setOpen(false);
     }
 
 function renderSideNavItem(item) {
@@ -62,7 +60,7 @@ function renderSideNavItem(item) {
 
     if(item.children == null) 
     {
-        return <ListItem button onClick={(e) => onItemClick(item, e)}>
+        return <ListItem button onClick={() => onItemClick(item)}>
             <ListItemText>{linkText}</ListItemText>
         </ListItem>
     }
@@ -88,7 +86,7 @@ function renderDefaultNavigation(props) {
 
     var links = props.pages.map(function(x, i) {
         if (x.name == null) return null;
-        return renderSideNavItem(x);
+        return renderSideNavItem({...x, history: props.history, setOpen: props.setOpen});
     })
 
     const classes = useStyles();
@@ -139,9 +137,9 @@ export default function UdNavbar(props) {
     {
         var links = null;
         if (props.customNavigation) {
-            links = renderCustomNavigation(props);
+            links = renderCustomNavigation({...props, setOpen });
         } else {
-            links = renderDefaultNavigation(props);
+            links = renderDefaultNavigation({...props, setOpen});
         }
 
         drawer = <Drawer open={open} onClose={() => setOpen(false)}>

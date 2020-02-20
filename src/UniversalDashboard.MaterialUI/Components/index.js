@@ -48,11 +48,12 @@ UniversalDashboard.register("mu-avatar", UDAvatar);
 UniversalDashboard.register("mu-checkbox", UDCheckBox);
 // UniversalDashboard.register("ud-pdf", Pdf);
 
-// Legacy
-import UdPage from './legacy/ud-page';
-import UDNavbar from './legacy/ud-navbar';
-import UdFooter from './legacy/ud-footer';
-import PageCycler from './legacy/page-cycler';
+// Framework Support
+import UdPage from './framework/ud-page';
+import UDNavbar from './framework/ud-navbar';
+import UdFooter from './framework/ud-footer';
+import PageCycler from './framework/page-cycler';
+import UDModal from './framework/ud-modal';
 
 function getDefaultHomePage(dashboard) {
     return dashboard.pages.find(function (page) {
@@ -151,9 +152,9 @@ class Materialize extends React.Component {
                 </Switch>
             </Suspense>
         </main>,
-        // <Suspense fallback={<div></div>}>
-        //     <UDModal />
-        // </Suspense>,
+        <Suspense fallback={<div></div>}>
+            <UDModal />
+        </Suspense>,
         <UdFooter backgroundColor={dashboard.navBarColor} fontColor={dashboard.navBarFontColor} footer={dashboard.footer} />,
         <Route path={window.baseUrl + `/`} render={function (x) {
             return <Suspense fallback={<div></div>}>
