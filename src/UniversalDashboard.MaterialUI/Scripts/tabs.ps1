@@ -31,22 +31,17 @@ function New-UDTab {
         [Parameter()]
         [string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter()]
-        [Alias('IsEndpoint')]
         [switch]$Dynamic,
         [Parameter()]
         [object]$Icon,
-        [Parameter()]
-        [switch]$RefreshWhenActive,
         [Parameter()]
         [switch]$Stacked
     )
 
     End {
 
-        if ($null -ne $Content) {
-            if ($IsEndpoint) {
-                $TabEndpoint = New-UDEndpoint -Id $Id -Endpoint $Content 
-            }
+        if ($null -ne $Content -and $Dynamic) {
+            New-UDEndpoint -Id $Id -Endpoint $Content | Out-Null
         }
 
         @{
@@ -58,7 +53,6 @@ function New-UDTab {
             content  = $Content.Invoke()
             id       = $Id
             stacked = $Stacked.IsPresent
-            refreshWhenActive = $RefreshWhenActive.IsPresent
             dynamic = $Dynamic.IsPresent
         }
     }

@@ -16,13 +16,29 @@ const UDTabs = (props) => {
 
     const { tabs } = props
     const [value, setValue] = React.useState(0);
+    const [activeTabPanel, setActiveTabPanel] = React.useState({});
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    if (props.renderOnClick && activeTabPanel.value !== value)
+    {
+        const tab = props.tabs[value];
+        if (tab.dynamic)
+        {
+            UniversalDashboard.get(`/api/internal/component/element/${tab.id}`, data => {
+                setActiveTabPanel({ ...tab, content: data, value })
+            })
+        }
+        else 
+        {
+            setActiveTabPanel({...tab, value});
+        }
+    }
+
     return (
-        <div>
+        <div id={props.id} key={props.id}>
             <Paper square>
                 <Tabs
                     value={value}
@@ -30,13 +46,17 @@ const UDTabs = (props) => {
                     textColor="primary"
                     onChange={handleChange}
                 >
-                    {tabs.map(tab => <Tab label={tab.label} />)}
+                    {tabs.map(tab => <Tab label={tab.label} id={tab.id}/>)}
                 </Tabs>
             </Paper>
-            {tabs.map((tab, i) => {
-                let display = value == i ? "block" : "none"
-                return <TabPanel {...tab} display={display}/>
-            })}
+            {
+                props.renderOnClick ? 
+                <TabPanel key={value} {...activeTabPanel} display="block"/> :
+                tabs.map((tab, i) => {
+                    let display = value == i ? "block" : "none"
+                    return <TabPanel {...tab} display={display}/>
+                })
+            }
         </div>
     );
 }

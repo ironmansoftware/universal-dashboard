@@ -18,7 +18,6 @@ if($PSBoundParameters.keys -contains 'FileName'){
 $Dashboard = . (Join-Path $PSScriptRoot "../dashboard.ps1")
 $files = Publish-UDFolder -Path $PSScriptRoot -RequestPath "/files"
 $Driver = Start-SeFirefox
-Enter-SeUrl -Url "http://localhost:10000" -Driver $Driver #DevSkim: ignore DS137138 
 $Global:StateCollection = New-Object -TypeName 'System.Collections.Concurrent.BlockingCollection[object]'
 
 <# 
