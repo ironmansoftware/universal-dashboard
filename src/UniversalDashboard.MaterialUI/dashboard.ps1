@@ -54,6 +54,16 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDCheckBox -Id 'chkCheckedDisabled' -Checked -Disabled
     }
 
+    New-UDPage -Name 'Expansion Panel' -Content {
+        New-UDExpansionPanelGroup -Items {
+            New-UDExpansionPanel -Title "Hello" -Id 'expTitle' -Content {}
+
+            New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Content {
+                New-UDElement -Tag 'div' -id 'expContentDiv' -Content { "Hello" }
+            }
+        }
+    }
+
     New-UDPage -Name "Preloader" -Content {
         New-UDProgress -Circular 
     }

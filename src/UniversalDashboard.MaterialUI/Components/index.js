@@ -18,6 +18,7 @@ import UDLink from "./link";
 import UDAvatar from "./avatar";
 import UDCheckBox from "./checkbox";
 import Progress from './progress';
+import ExpansionPanelGroup from './expansion-panel';
 
 import {
     Route,
@@ -46,6 +47,7 @@ UniversalDashboard.register("mu-link", UDLink);
 UniversalDashboard.register("mu-avatar", UDAvatar);
 UniversalDashboard.register("mu-checkbox", UDCheckBox);
 UniversalDashboard.register("mu-progress", Progress);
+UniversalDashboard.register('mu-expansion-panel-group', ExpansionPanelGroup);
 // UniversalDashboard.register("ud-pdf", Pdf);
 
 // Framework Support
@@ -54,6 +56,7 @@ import UDNavbar from './framework/ud-navbar';
 import UdFooter from './framework/ud-footer';
 import PageCycler from './framework/page-cycler';
 import UDModal from './framework/ud-modal';
+
 
 function getDefaultHomePage(dashboard) {
     return dashboard.pages.find(function (page) {
