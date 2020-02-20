@@ -15,10 +15,6 @@ steps:
   displayName: Start Integration Tests
   errorActionPreference: continue
 
-- powershell: .\src\UniversalDashboard.Materialize\Tests\driver.ps1 -OutputTestResultXml -Release
-  displayName: Materialize Tests
-  errorActionPreference: continue
-
 - powershell: .\src\UniversalDashboard.MaterialUI\Tests\driver.ps1 -OutputTestResultXml
   displayName: MaterialUI Tests
   errorActionPreference: continue
