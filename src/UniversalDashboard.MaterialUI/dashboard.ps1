@@ -1,4 +1,19 @@
 New-UDDashboard -Title "Dashboard" -Pages @(
+
+    New-UDPage -Name "Avatar" -Content {
+        New-UDMuAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent'
+
+        New-UDMuAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarStyle' -Style @{width = 80; height = 80}
+
+        $AvatarProps = @{
+            Image = 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4'
+            Alt = 'alon gvili avatar'
+            Id = 'avatarSquare'
+            Style = @{width = 150; height = 150; borderRadius = '4px'}
+        }
+        New-UDMuAvatar @AvatarProps 
+    }
+
     New-UDPage -Name "Button" -Content {
 
         New-UDButton -Text 'Submit' -Id 'btnDefault' 
