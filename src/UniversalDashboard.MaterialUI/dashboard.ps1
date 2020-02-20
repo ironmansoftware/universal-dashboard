@@ -1,9 +1,9 @@
 New-UDDashboard -Title "Dashboard" -Pages @(
 
     New-UDPage -Name "Avatar" -Content {
-        New-UDMuAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent'
+        New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent'
 
-        New-UDMuAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarStyle' -Style @{width = 80; height = 80}
+        New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarStyle' -Style @{width = 80; height = 80}
 
         $AvatarProps = @{
             Image = 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4'
@@ -11,7 +11,7 @@ New-UDDashboard -Title "Dashboard" -Pages @(
             Id = 'avatarSquare'
             Style = @{width = 150; height = 150; borderRadius = '4px'}
         }
-        New-UDMuAvatar @AvatarProps 
+        New-UDAvatar @AvatarProps 
     }
 
     New-UDPage -Name "Button" -Content {
@@ -67,6 +67,21 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDCheckBox -Id 'chkChecked' -Checked
 
         New-UDCheckBox -Id 'chkCheckedDisabled' -Checked -Disabled
+    }
+
+    New-UDPage -Name 'Chips' -Content {
+        New-UDChip -Label "my Label" -Id "chipLabel"
+
+        $Icon = New-UDIcon -Icon 'user' -Size sm -Style @{color = '#fff'}
+        New-UDChip -Label "Demo User" -Id "chipIcon" -Icon $Icon -OnClick {Show-UDToast -Message 'test'} -Clickable -Style @{backgroundColor = '#00838f'}
+
+        New-UDChip -Label "my Label" -Id "chipClick" -OnClick {
+            Set-TestData -Data "chipClick"
+        }
+
+        New-UDChip -Label "my Label" -Id "chipDelete" -OnDelete {
+            Set-TestData -Data "chipDelete"
+        } 
     }
 
     New-UDPage -Name 'Expansion Panel' -Content {
