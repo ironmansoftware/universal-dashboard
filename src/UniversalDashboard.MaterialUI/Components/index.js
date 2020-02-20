@@ -31,8 +31,6 @@ import {
     Switch
 } from 'react-router-dom'
 
-// import Pdf from "./pdf"; //this version has a bug render text not correct.
-
 UniversalDashboard.register("mu-chip", Chip);
 UniversalDashboard.register("mu-icon", Icon);
 UniversalDashboard.register("mu-paper", Paper);
@@ -57,8 +55,6 @@ UniversalDashboard.register('mu-fab', FloatingActionButton);
 UniversalDashboard.register('mu-tabs', Tabs);
 UniversalDashboard.register('mu-grid', Grid);
 UniversalDashboard.register('mu-table', Table);
-
-// UniversalDashboard.register("ud-pdf", Pdf);
 
 // Framework Support
 import UdPage from './framework/ud-page';

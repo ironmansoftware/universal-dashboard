@@ -1,4 +1,4 @@
-function New-UDMuLink {
+function New-UDLink {
     param(
         [Parameter (HelpMessage="Enter id for this object")][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter (HelpMessage="Enter url, this can be remote or local")][string]$url,

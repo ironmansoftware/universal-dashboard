@@ -280,6 +280,32 @@ New-UDDashboard -Title "Dashboard" -Pages @(
             }
         }
     }
+    
+    New-UDPage -Name 'Link' -Content { 
+        $BodyProps = @{
+            Style = @{backgroundColor = '#fff'; justifyContent = "center"}
+            Content = {
+                New-UDTypography -Variant h3 -Text "$(get-date -Format 'HH:mm:ss')" -Style @{ color = '#000' } -Align center
+            }
+            Id = 'body'
+        }
+        $Body = New-UDCardBody @BodyProps
+            
+        $CardProps = @{
+            Id              = 'ud-card-demo'
+            Elevation       = 24    
+            Body            = $Body
+            Style           = @{ display = "flex"; justifyContent = "center";backgroundColor = '#fff' }
+        }
+        
+        $Card = New-UDCard @CardProps
+        New-UDLink -Content {
+            $card
+        } -Id 'card-link' -url '#'         
+
+
+        New-UDLink -text 'demo' -Id 'demo-link' -url '#' -variant body1 -ClassName 'gvili' -style @{color = 'red'}   
+    }
 
     New-UDPage -Name "Paper" -Content {
         New-UDPaper -Content {

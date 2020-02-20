@@ -50,7 +50,6 @@ $manifestParameters = @{
         "New-UDIconButton", 
         "New-UDMuList", 
         "New-UDMuListItem", 
-        "New-UDPdf", 
         "New-UDMuExpandListItem", 
         "New-UDButton", 
         "New-UDCard", 
@@ -61,7 +60,7 @@ $manifestParameters = @{
         "New-UDCardBody"
         "New-UDCardExpand"
         "New-UDCardFooter"
-        "New-UDMuLink"
+        "New-UDLink"
         "New-UDAvatar"
         "New-UDCheckBox"
         "New-UDProgress"
