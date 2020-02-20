@@ -86,4 +86,18 @@ New-UDDashboard -Title "Dashboard" -Pages @(
     New-UDPage -Name "Preloader" -Content {
         New-UDProgress -Circular 
     }
+
+    New-UDPage -Name "Tabs" -Content {
+        New-UDTabs -Tabs {
+            New-UDTab -Text "Tab1" -Content {
+                New-UDElement -Tag div -Id 'tab1Content' -Content { "Tab1Content"}
+            }
+            New-UDTab -Text "Tab2" -Content {
+                New-UDElement -Tag div -Id 'tab2Content' -Content { "Tab2Content"}
+            }
+            New-UDTab -Text "Tab3" -Content {
+                New-UDElement -Tag div -Id 'tab3Content' -Content { "Tab3Content"}
+            }
+        }
+    }
 )

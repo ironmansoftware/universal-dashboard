@@ -20,6 +20,7 @@ import UDCheckBox from "./checkbox";
 import Progress from './progress';
 import ExpansionPanelGroup from './expansion-panel';
 import FloatingActionButton from './floating-action-button';
+import Tabs from './tabs';
 
 import {
     Route,
@@ -50,6 +51,7 @@ UniversalDashboard.register("mu-checkbox", UDCheckBox);
 UniversalDashboard.register("mu-progress", Progress);
 UniversalDashboard.register('mu-expansion-panel-group', ExpansionPanelGroup);
 UniversalDashboard.register('mu-fab', FloatingActionButton);
+UniversalDashboard.register('mu-tabs', Tabs);
 
 // UniversalDashboard.register("ud-pdf", Pdf);
 
@@ -59,6 +61,7 @@ import UDNavbar from './framework/ud-navbar';
 import UdFooter from './framework/ud-footer';
 import PageCycler from './framework/page-cycler';
 import UDModal from './framework/ud-modal';
+
 
 
 function getDefaultHomePage(dashboard) {
