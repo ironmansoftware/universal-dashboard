@@ -76,6 +76,7 @@ $manifestParameters = @{
         "New-UDTableCell"
         "New-UDTableHeader"
         "New-UDTableBody"
+        "Out-UDTableContent"
     )
     RequiredModules   = @()
 }

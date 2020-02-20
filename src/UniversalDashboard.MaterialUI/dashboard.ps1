@@ -209,6 +209,41 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         }
     }
 
+    New-UDPage -Name "Icon Button" -Content {
+        New-UDPaper -Content {
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'iconButtonContent' 
+        }
+
+        New-UDPaper -Content {
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'iconButtonIcon' 
+        }
+
+        New-UDPaper -Content {
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm )  -Id 'iconButtonStyle' -Style @{backgroundColor = '#000'; color='rgb(33, 150, 243)'}
+        }
+
+        New-UDPaper -Content {
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size xs -Style @{color = '#000'})  -Id 'iconButtonxs' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'iconButtonsm' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size lg -Style @{color = '#000'})  -Id 'iconButtonlg' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 2x -Style @{color = '#000'})  -Id 'iconButton2x' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 3x -Style @{color = '#000'})  -Id 'iconButton3x' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 4x -Style @{color = '#000'})  -Id 'iconButton4x' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 5x -Style @{color = '#000'})  -Id 'iconButton5x' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 6x -Style @{color = '#000'})  -Id 'iconButton6x' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 7x -Style @{color = '#000'})  -Id 'iconButton7x' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 8x -Style @{color = '#000'})  -Id 'iconButton8x' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 9x -Style @{color = '#000'})  -Id 'iconButton9x' 
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size 10x -Style @{color = '#000'})  -Id 'iconButton10x' 
+        }
+
+        New-UDPaper -Content {
+            New-UDIconButton -Icon (New-UDIcon -Icon user -Size lg)  -Id 'iconButtonOnClick' -Style @{backgroundColor = '#c9c9c9'; color='rgb(33, 150, 243)'} -OnClick {
+                Set-TestData -Data "OnClick"
+            }
+        }
+    }
+
     New-UDPage -Name "Paper" -Content {
         New-UDPaper -Content {
             New-UDHeading -Text "hi" -Id 'paperContent'
