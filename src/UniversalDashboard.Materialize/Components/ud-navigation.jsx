@@ -1,7 +1,9 @@
+/** @jsx jsx */
 import React from 'react';
 import {Link} from 'react-router-dom';
 import UdIcon from './ud-icon';
 import cx from 'classnames';
+import {jsx} from '@theme-ui/core'
 
 import { SideNav, SideNavItem, Button, Collapsible, CollapsibleItem} from 'react-materialize';
 
@@ -55,7 +57,7 @@ export default class UdNavigation extends React.Component {
                           ]
         }
 
-        return <SideNav ref={x => this.sideNav = x} trigger={<a style={{cursor: 'pointer'}} id='sidenavtrigger'><UdIcon icon="Bars" /></a>} options={{closeOnClick: true}}>
+        return <SideNav sx={{ bg: 'primary', color: 'text'}} ref={x => this.sideNav = x} trigger={<a style={{cursor: 'pointer'}} id='sidenavtrigger'><UdIcon icon="Bars" /></a>} options={{closeOnClick: true}}>
             {links}
             {pauseToggle}
         </SideNav> 
@@ -99,7 +101,7 @@ export default class UdNavigation extends React.Component {
         }
         
         return (
-            <SideNav ref={x => this.sideNav = x} style={{width: this.props.width}} fixed={this.props.fixed} trigger={<a style={{cursor: 'pointer'}} id='sidenavtrigger'><UdIcon icon="Bars" /></a>} options={{closeOnClick: true}}>
+            <SideNav ref={x => this.sideNav = x} style={{width: this.props.width}} sx={{ bg: 'primary', color: 'text' }} fixed={this.props.fixed} trigger={<a style={{cursor: 'pointer'}} id='sidenavtrigger'><UdIcon icon="Bars" /></a>} options={{closeOnClick: true}}>
                 {children}
             </SideNav>
         )

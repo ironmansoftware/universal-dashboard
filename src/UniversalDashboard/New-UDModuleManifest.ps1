@@ -94,6 +94,7 @@ $manifestParameters = @{
 		"New-UDTreeView"
         "New-UDTooltip"
 		"Invoke-UDEvent"
+		"New-UDToggleColorMode"
 
 		#Material UI
 		'New-UDMuAvatar'

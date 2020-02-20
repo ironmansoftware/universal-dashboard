@@ -3,7 +3,7 @@ import React, { Suspense, useState, useEffect } from 'react';
 import { getApiPath } from 'config';
 import { fetchGet } from './services/fetch-service.jsx';
 import PubSub from 'pubsub-js';
-import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 import toaster from './services/toaster';
 import LazyElement from './basics/lazy-element.jsx';

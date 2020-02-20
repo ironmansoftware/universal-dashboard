@@ -23,67 +23,16 @@ Creates a new button. Buttons come in different shapes and sizes and can be conf
 
 ## EXAMPLES
 
-### Raised Button
-```
-New-UDButton -Text "Button"
-```
 
-Creates a basic, raised button.
 
-### Button with Icon
+### Button Colors using variant parameter and value of primary or secondary
 ```
-New-UDButton -Text "Button" -Icon cloud
-```
-
-Creates a basic, raised button with an icon.
-
-### Button Colors
-```
-New-UDButton -Text "Button" -BackgroundColor "red" -FontColor "white"
+New-UDButton -Text "Button" -Variant primary
+New-UDButton -Text "Button" -Variant secondary
 ```
 
 Creates a red button with white text.
 
-### Floating
-```
-New-UDButton -Floating -Icon plus
-```
-
-Creates a circular, floating button with a plus icon.
-
-### Flat
-```
-New-UDButton -Flat -Text "Button"
-```
-
-Creates a flat button
-
-### OnClick Event Handler
-```
-New-UDButton -Text "Button" -OnClick {
-    Show-UDToast -Message "Ouch!"
-}
-```
-
-Creats a button that shows a toast message when clicked. 
-
-### Button sizes
-````
-New-UDButton -Text "Big" -Height 300 -Width "100%"
-````
-
-Creates a button with height of 300px and 100% width. 
-Note: the "px" will be appended automatically if not specified.
-
-### Custom styles
-````
-New-UDButton -Text "Custom" -Style @{
-    Font-Size = 36 px
-    Height = 300 px
-}
-````
-
-Creates a button, with font-size 36 and height of 300 pixels. Will be prioritized over the -height param.
 
 ## PARAMETERS
 
@@ -270,7 +219,7 @@ Accept wildcard characters: False
 ```
 
 ### -Text
-The test to display on the button.
+The text to display on the button.
 
 ```yaml
 Type: Object

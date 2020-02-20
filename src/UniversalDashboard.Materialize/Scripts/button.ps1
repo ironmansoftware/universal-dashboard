@@ -3,7 +3,7 @@ function New-UDButton {
         [Parameter()]
         [String]$Id = ([Guid]::NewGuid()),
         [Parameter()]
-        $Text,
+        [String]$Text,
         [Parameter()]
         [object]$OnClick,
         [Parameter()]
@@ -28,7 +28,10 @@ function New-UDButton {
         $Height,
         [Parameter()]
         [string]
-        $Width
+        $Width,
+        [Parameter()]
+        [ValidateSet("primary","secondary")]
+        [string]$Variant
     )
 
     if ($null -ne $OnClick) {
@@ -40,12 +43,6 @@ function New-UDButton {
         }
     }
 
-    if ((!($Style.BackgroundColor)) -and ($BackgroundColor)) {
-        $Style += @{"Background-Color" = $BackgroundColor.HtmlColor}
-    }
-    if ((!($Style.Color)) -and ($FontColor)) {
-        $Style += @{Color = $FontColor.HtmlColor}
-    }
     if ((!($Style.Width)) -and ($Width)) {
         #check if the width is numerical, to append with "px" or if it is string, and not to be appended
         if ($Width -match "^[\d\.]+$") {
@@ -84,5 +81,6 @@ function New-UDButton {
         backgroundColor = $BackgroundColor.HtmlColor 
         fontColor = $FontColor.HtmlColor
         style = $Style
+        variant = $Variant
     }
 }

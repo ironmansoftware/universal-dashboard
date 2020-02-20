@@ -4,7 +4,7 @@ function New-UDComponentPage {
     )
 
     New-UDPage -Name $Command -Content {
-
+        
         $Help = Get-Help $Command -Full
         $OnlineVersion = $Help.relatedLinks.navigationLink | Where-Object linkText -eq 'Online Version:' | Select-Object -ExpandProperty uri
 
@@ -21,6 +21,7 @@ function New-UDComponentPage {
                         Invoke-UDRedirect -Url $ArgumentList[0] -OpenInNewWindow 
                     } -ArgumentList $OnlineVersion
                 ) -BackgroundColor 'white' -FontColor 'black'
+                New-UDToggleColorMode
             }
     
             New-UDRow -Columns {

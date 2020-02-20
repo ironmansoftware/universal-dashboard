@@ -1,9 +1,11 @@
+/** @jsx jsx */
 import React from 'react'
 import { icon } from '@fortawesome/fontawesome-svg-core/index.es'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index.es'
 import findSolidIcon from './faSolid'
 import findRegularIcon from './faRegular'
 import classNames from "classnames"
+import {jsx} from '@theme-ui/core'
 
 export default class UDIcon extends React.Component {
 
@@ -57,7 +59,7 @@ export default class UDIcon extends React.Component {
 
     render(){
         return (
-            <FontAwesomeIcon className={classNames(this.props.className, "ud-mu-icon")} {...this.props} icon={this.state.icon} data-tooltip={this.props.dataTooltip}/>
+            <FontAwesomeIcon className={classNames(this.props.className, "ud-mu-icon")} {...this.props} sx={{color: 'primary'}} icon={this.state.icon} data-tooltip={this.props.dataTooltip}/>
         )
     }
 }

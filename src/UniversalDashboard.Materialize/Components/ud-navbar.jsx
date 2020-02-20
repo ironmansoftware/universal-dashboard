@@ -1,5 +1,7 @@
+/** @jsx jsx */
 import React from 'react';
 import UdNavigation from './ud-navigation.jsx';
+import {jsx} from '@theme-ui/core'
 
 export default class UdNavbar extends React.Component {
 
@@ -38,7 +40,7 @@ export default class UdNavbar extends React.Component {
             href = window.baseUrl + `/${dPage.name.replace(/ /g, "-")}`;
         }
 
-        return <nav style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">
+        return <nav sx={{ bg: 'primary', color: 'bg' }} className="ud-navbar">
                     <UdNavigation 
                         pages={this.props.pages} 
                         togglePaused={this.props.togglePaused} 
@@ -48,8 +50,8 @@ export default class UdNavbar extends React.Component {
                         history={this.props.history}/>
 
                    
-                    <a href={href} style={{paddingLeft: '10px', fontSize: '2.1rem'}}>
-                        {logo}  <span id="udtitle">{this.props.text}</span>
+                    <a href={href} style={{paddingLeft: '10px'}}>
+                        {logo}  <span id="udtitle" sx={{ color: 'bg', variant: 'text.heading' }}>{this.props.text}</span>
                     </a>
                     {
                         this.props.authenticated ?
