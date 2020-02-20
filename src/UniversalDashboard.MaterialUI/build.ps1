@@ -52,7 +52,7 @@ $manifestParameters = @{
         "New-UDMuListItem", 
         "New-UDPdf", 
         "New-UDMuExpandListItem", 
-        "New-UDMuButton", 
+        "New-UDButton", 
         "New-UDMuCard", 
         "New-UDMuCardMedia" , 
         "New-UDMuTypography", 

@@ -1,36 +1,47 @@
+Enter-SeUrl -Target $Driver -Url "http://localhost:10000/button"
+
 Describe "button" {
-    Context "label" {
-        Set-TestDashboard {
-            New-UDMuButton -Text 'Submit' -Id 'button' -variant flat
-        }
 
-        It 'has a label' {
-            (Find-SeElement -Id 'button' -Driver $Driver).Text | should be "Submit"
-        }
+    It 'has default variant' {
+        $Element = Find-SeElement -Id 'btnDefault' -Driver $Driver
+        $Element.GetAttribute("class").Contains('MuiButton-contained') | should be $true
     }
 
-    Context "icon" {
-        Set-TestDashboard {
-            $Icon = New-UDIcon -Icon 'github'
-            New-UDMuButton -Text "Submit" -Id "button" -variant flat -Icon $Icon -OnClick {Show-UDToast -Message 'test'}  
-        }
-
-        It 'has an icon' {
-            Find-SeElement -ClassName 'fa-github' -Driver $Driver | should not be $null
-        }
+    It 'has full width' {
+        $Element = Find-SeElement -Id 'btnFullWidth' -Driver $Driver        
+        $Element.GetAttribute("class").Contains('MuiButton-fullWidth') | should be $true
     }
 
-    Context "should click" {
-        Set-TestDashboard {
-            $Icon = New-UDIcon -Icon 'github'
-            New-UDMuButton -Text "Submit" -Id "button" -variant flat -Icon $Icon -OnClick {
-                Set-TestData -Data "OnClick"
-            }
-        }
+    It 'has text variant' {
+        $Element = Find-SeElement -Id 'btnText' -Driver $Driver
+        $Element.GetAttribute("class").Contains('MuiButton-text') | should be $true
+    }
+    
+    It 'has outlined variant' {
+        $Element = Find-SeElement -Id 'btnOutlined' -Driver $Driver
+        $Element.GetAttribute("class").Contains('MuiButton-outlined') | should be $true
+    }
 
-        It "should click and have test data" {
-            Find-SeElement -Id 'button' -Driver $Driver | Invoke-SeClick
-            Get-TestData | Should be "OnClick"
-        }
+    It 'has a label' {
+        (Find-SeElement -Id 'btnLabel' -Driver $Driver).Text | should be "Submit"
+    }
+
+    It 'has an icon' {
+        Find-SeElement -ClassName 'fa-github' -Driver $Driver | should not be $null
+    }
+
+    It "should click and have test data" {
+        Find-SeElement -Id 'btnClick' -Driver $Driver | Invoke-SeClick
+        Get-TestData | Should be "OnClick"
+    }
+
+    It 'has small size' {
+        $Element = Find-SeElement -Id 'btnSmall' -Driver $Driver
+        $Element.GetAttribute("class").Contains('MuiButton-sizeSmall') | should be $true
+    }
+    
+    It 'has small large' {
+        $Element = Find-SeElement -Id 'btnLarge' -Driver $Driver
+        $Element.GetAttribute("class").Contains('MuiButton-sizeLarge') | should be $true
     }
 }

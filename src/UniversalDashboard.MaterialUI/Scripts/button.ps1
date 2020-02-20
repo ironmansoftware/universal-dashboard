@@ -8,8 +8,8 @@ function New-UDButton {
         [PSTypeName('UniversalDashboard.Icon')]$Icon,
 
         [Parameter (Position = 2)]
-        [ValidateSet("text", "outlined", "contained", "flat", "raised")]
-        [string]$Variant,
+        [ValidateSet("text", "outlined", "contained")]
+        [string]$Variant = "contained",
 
         [Parameter (Position = 3)]
         [ValidateSet("left", "right")]

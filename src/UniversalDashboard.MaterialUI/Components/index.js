@@ -1,5 +1,3 @@
-import {hot} from "react-hot-loader/root";
-
 import React, { useState, Suspense } from 'react';
 
 import Chip from "./chips";
@@ -19,6 +17,7 @@ import Typography from "./typography";
 import UDLink from "./link";
 import UDAvatar from "./avatar";
 import UDCheckBox from "./checkbox";
+import Progress from './progress';
 
 import {
     Route,
@@ -46,6 +45,7 @@ UniversalDashboard.register("mu-typography", Typography);
 UniversalDashboard.register("mu-link", UDLink);
 UniversalDashboard.register("mu-avatar", UDAvatar);
 UniversalDashboard.register("mu-checkbox", UDCheckBox);
+UniversalDashboard.register("mu-progress", Progress);
 // UniversalDashboard.register("ud-pdf", Pdf);
 
 // Framework Support
@@ -84,7 +84,7 @@ function redirectToHomePage(dashboard) {
     }
 }
 
-class Materialize extends React.Component {
+class MaterialUI extends React.Component {
     constructor(props) {
         super(props);
 
@@ -165,4 +165,4 @@ class Materialize extends React.Component {
     }
 }
 
-UniversalDashboard.renderDashboard = ({ dashboard, history }) => <Materialize dashboard={dashboard} history={history} />;
+UniversalDashboard.renderDashboard = ({ dashboard, history }) => <MaterialUI dashboard={dashboard} history={history} />;

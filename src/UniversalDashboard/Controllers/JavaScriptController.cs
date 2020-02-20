@@ -23,6 +23,11 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
                 return Redirect(_dashboardService.Dashboard.FrameworkAssetId);
             }
 
+            if (Path.IsPathRooted(_dashboardService.Dashboard.FrameworkAssetId))
+            {
+                return PhysicalFile(_dashboardService.Dashboard.FrameworkAssetId, "text/javascript");
+            }
+
             return Index(_dashboardService.Dashboard.FrameworkAssetId);
         }
 
