@@ -209,6 +209,43 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         }
     }
 
+    New-UDPage -Name 'Icon' -Content {
+        New-UDPaper -Content {
+            New-UDIcon -Icon user -Size 3x -Style @{color = '#000'} -Id 'iconContent' 
+        }
+
+        New-UDPaper -Id 'iconSolid'  -Content {
+            New-UDIcon -Icon angry -Size 3x -Style @{color = '#000'} 
+        }
+
+        New-UDPaper -Id 'iconRegular' -Content {
+            New-UDIcon -Icon angry -Size 3x -Style @{color = '#000'} -Regular
+        }
+
+        New-UDPaper -Id 'iconFallback' -Content {
+            New-UDIcon -Icon box -Size 3x -Style @{color = '#000'} -Regular
+        }
+
+        New-UDPaper -Id 'iconStyle' -Content {
+            New-UDIcon -Icon user -Size 3x -Style @{color='rgb(33, 150, 243)'}
+        }
+
+        New-UDPaper -Content {
+            New-UDIcon -Icon angry -Size xs -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size sm -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size lg -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 2x -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 3x -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 4x -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 5x -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 6x -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 7x -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 8x -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 9x -Style @{color = '#000'}  
+            New-UDIcon -Icon angry -Size 10x -Style @{color = '#000'}
+        }
+    }
+
     New-UDPage -Name "Icon Button" -Content {
         New-UDPaper -Content {
             New-UDIconButton -Icon (New-UDIcon -Icon user -Size sm -Style @{color = '#000'})  -Id 'iconButtonContent' 
