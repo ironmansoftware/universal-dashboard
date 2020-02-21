@@ -8,7 +8,7 @@ pool:
 
 steps:
 
-- powershell: .\Selenium\Selenium.ps1 
+- powershell: .\src\Selenium\Selenium.ps1 
   displayName: Install Selenium
   errorActionPreference: continue
 
