@@ -1,12 +1,5 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
 
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 Describe "Error" {
     Context "Components" {
         #Create a dashboard to test
@@ -28,9 +21,7 @@ Describe "Error" {
             }
         }
         
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        #Open firefox
-        $Driver = Start-SeFirefox
+        $Server = Start-UDDashboard -Force -Port 10001 -Dashboard $dashboard 
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 5
@@ -55,9 +46,6 @@ Describe "Error" {
             $Target = Find-SeElement -Driver $Driver -Id "Grid"
             $Target.Text | Should be "Grid`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
     Context "Page" {
@@ -67,16 +55,12 @@ Describe "Error" {
             }
         )
         
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
+        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should show error for whole page" {
             $Target = Find-SeElement -Driver $Driver -Id "Page"
             $Target.Text | Should be "An error occurred on this page`r`nThe term 'New-UDTest' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again." 
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 }

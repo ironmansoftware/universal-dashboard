@@ -1,12 +1,5 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-Import-Module $ModulePath -Force
 
-Push-Location $PSScriptRoot
-
-Get-UDDashboard | Stop-UDDashboard
 Describe "EndpointInitialization" {
 
     Context "Autoload" {
@@ -27,10 +20,10 @@ Describe "EndpointInitialization" {
         }.ToString() | Out-File -FilePath $tempModule
 
         Import-Module $tempModule
-        Import-Module ".\TestModule.psm1"
+        Import-Module "$PSScriptRoot\TestModule.psm1"
 
         $dashboard = New-UDDashboard -Title "Test" -Content {} 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Endpoint @(
+        Start-UDDashboard -Force -Port 10001 -Dashboard $dashboard -Endpoint @(
             New-UDEndpoint -Url '/module1_a' -Endpoint {
                 Get-Number 
             }
@@ -61,10 +54,7 @@ Describe "EndpointInitialization" {
             Invoke-RestMethod "http://localhost:10001/api/module2_a" | Should be "42"
         }
 
-        Remove-Item $tempModule -Force
-        Stop-UDDashboard -Server $Server 
-
-        
+        Remove-Item $tempModule -Force        
     }
 
     Context "Variables" {
@@ -91,7 +81,7 @@ Describe "EndpointInitialization" {
 
         $dashboard = New-UDDashboard -Title "Test" -Content {} -EndpointInitialization $Initialization
         
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -Endpoint @(
+        Start-UDDashboard -Force -Port 10001 -Dashboard $dashboard -Endpoint @(
             New-UDEndpoint -Url '/module1_b' -Endpoint {
                 Get-Number 
             }
@@ -130,7 +120,6 @@ Describe "EndpointInitialization" {
         }
 
         Remove-Item $tempModule -Force
-        Stop-UDDashboard -Server $Server 
     }
 }
 

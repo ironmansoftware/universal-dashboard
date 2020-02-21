@@ -1,22 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
-$Driver = Start-SeFirefox
-$Server = Start-UDDashboard -Port 10001 
-
-function Set-TestDashboard {
-    param($Dashboard)
-
-    $Server.DashboardService.SetDashboard($Dashboard)
-    Enter-SeUrl -Url "http://localhost:$BrowserPort" -Driver $Driver 
-}
 
 Describe "Set-UDClipboard" {
 
@@ -27,7 +9,7 @@ Describe "Set-UDClipboard" {
             } 
         }
         
-        Set-TestDashboard -Dashboard $dashboard
+        Start-UDDashboard -Dashboard $dashboard -Port 10001 -Force
 
         It "should set clipboard with You just copy me!! text" {
             Find-SeElement -Driver $Driver -Id "btnClipboard" | Invoke-SeClick 
@@ -46,7 +28,7 @@ Describe "Set-UDClipboard" {
             } 
         }
         
-        Set-TestDashboard -Dashboard $dashboard
+        Start-UDDashboard -Dashboard $dashboard -Port 10001 -Force
 
         It "should set clipboard with hello text" {
             $Element = Find-SeElement -Id "textToCopy1" -Driver $Driver
@@ -57,7 +39,4 @@ Describe "Set-UDClipboard" {
             Get-Clipboard | Should be 'hello'
         }
     }
-
-    Stop-SeDriver $Driver
-    Stop-UDDashboard $Server
 }

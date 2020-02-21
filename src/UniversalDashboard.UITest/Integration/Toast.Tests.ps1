@@ -1,12 +1,5 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
 
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 Describe "Toast" {
     Context "Show toasts" {
         $Dashboard = New-UdDashboard -Title "Making Toast" -Content {
@@ -25,8 +18,7 @@ Describe "Toast" {
             }
         } 
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
@@ -59,9 +51,6 @@ Describe "Toast" {
 
             (Find-SeElement -Driver $Driver -Id 'Replace' | Measure-Object).Count | should be 1
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 }
 

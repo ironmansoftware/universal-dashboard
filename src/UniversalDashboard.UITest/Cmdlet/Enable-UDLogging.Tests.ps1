@@ -1,8 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-Import-Module $ModulePath -Force
 
 Describe "Enable-UDLogging" {
 

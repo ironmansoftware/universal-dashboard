@@ -1,15 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
-$Server = Start-UDDashboard -Port 10001 -Dashboard (New-UDDashboard -Title "Test" -Content {}) 
-$Driver = Start-SeFirefox
 
 Describe "Sessions" {
 
@@ -18,7 +7,7 @@ Describe "Sessions" {
             New-UDElement -Tag 'div' -Id 'session' -Endpoint { $Session.Id }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have session object" {
@@ -32,7 +21,7 @@ Describe "Sessions" {
             
         } -IdleTimeout ([TimeSpan]::FromSeconds(5))
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-sleep 2
@@ -48,5 +37,3 @@ Describe "Sessions" {
         }
     }
 }
-
-Stop-UDDashboard -Server $Server 

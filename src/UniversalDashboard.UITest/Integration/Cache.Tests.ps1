@@ -1,12 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 
 Describe "Cache" {
     Context "Xml" {

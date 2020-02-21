@@ -1,12 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 
 Describe "Scheduled Endpoint" {
 
@@ -49,7 +41,7 @@ Describe "Scheduled Endpoint" {
             $Cache:EverySecondNumber
         }
 
-        $Server = Start-UDRestApi -Endpoint @($Endpoint, $EverySecond) -Port 10001
+        Start-UDRestApi -Endpoint @($Endpoint, $EverySecond) -Port 10001 -Force
 
         It "should update number in background" {
 
@@ -59,8 +51,6 @@ Describe "Scheduled Endpoint" {
 
             $Result | Should not be $Result2
         }
-
-        Stop-UDRestApi -Server $Server
     }
 
 }
