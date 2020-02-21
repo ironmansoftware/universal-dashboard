@@ -1,5 +1,5 @@
 . "$PSScriptRoot\..\Selenium\Selenium.ps1"
-
+Import-Module "$PSScriptRoot\..\output\Modules\UniversalDashboard.MaterialUI\UniversalDashboard.MaterialUI.psd1"
 function Get-TestData {
     $Data = $null
     if ($Cache:StateCollection.TryTake([ref]$Data, 5000)) {
