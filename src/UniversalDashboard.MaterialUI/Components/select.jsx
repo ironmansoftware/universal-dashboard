@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -19,6 +19,14 @@ const useStyles = makeStyles(theme => ({
 const UDSelect = (props) => {
     const classes = useStyles();
     const groups = props.options.filter(m => m.type === 'mu-select-group');
+
+    const onChange = (event) => {
+        props.setState({ value : event.target.value})
+
+        if (props.onChange) {
+            props.notifyOfEvent('onChange', event.target.value)
+        }
+    }
 
     let defaultValue = null;
     let options = [];
@@ -44,7 +52,7 @@ const UDSelect = (props) => {
     return (
         <FormControl className={classes.formControl} key={props.id}>
             <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
-            <Select defaultValue={defaultValue} input={<Input id={props.id} />} value={props.value} onChange={event => props.setState({ value : event.target.value})}>
+            <Select defaultValue={defaultValue} input={<Input id={props.id} />} value={props.value} onChange={onChange}>
                 {options}
             </Select>
         </FormControl>

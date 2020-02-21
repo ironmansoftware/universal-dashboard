@@ -39,18 +39,18 @@ export const withComponentFeatures = (component) => {
         UniversalDashboard.unsubscribe(token)
     }
 
-    const notifyOfEvent = (id, eventName, value) => {
-        UniversalDashboard.publish('element-event', {
-            type: "clientEvent",
-            eventId: id,
-            eventName: eventName,
-            eventData: value
-        });
-    }
-
-
-    const highLevelComponent = (props) => {
+    const highOrderComponent = (props) => {
         const [componentState, setComponentState] = useState(props);
+
+        const notifyOfEvent = (eventName, value) => {
+            UniversalDashboard.publish('element-event', {
+                type: "clientEvent",
+                eventId: props.id,
+                eventName: eventName,
+                eventData: value
+            });
+        }
+    
 
         const incomingEvent = (type, event) => {
             if (type == "setState")
@@ -121,5 +121,5 @@ export const withComponentFeatures = (component) => {
         return component({...componentState, ...additionalProps})
     }
 
-    return highLevelComponent;
+    return highOrderComponent;
 }
