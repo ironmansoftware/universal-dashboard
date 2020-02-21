@@ -29,4 +29,8 @@ Describe "tabs" {
 
         $Tab1Text | should not be $Tab1TextNew
     }
+
+    It 'has vertical tabs' {
+        (Find-SeElement -Id 'verticalTabs' -Driver $Driver).FindElementByClassName('MuiTabs-flexContainerVertical') | should not be $null
+    }
 }

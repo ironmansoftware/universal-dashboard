@@ -5,14 +5,26 @@ import Tab from '@material-ui/core/Tab';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 
+const useStyles = makeStyles(theme => ({
+    root: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.paper,
+      display: 'flex',
+      height: 224,
+    },
+    tabs: {
+      borderRight: `1px solid ${theme.palette.divider}`,
+    },
+  }));
+
 const TabPanel = (props) => {
     return (
         <div style={{display: props.display }}>{UniversalDashboard.renderComponent(props.content)}</div>
     )
 }
 
-const UDTabs = (props) => {
-    const theme = useTheme();    
+const UDTabs = (props) => {  
+    const classes = useStyles();
 
     const { tabs } = props
     const [value, setValue] = React.useState(0);
@@ -37,14 +49,19 @@ const UDTabs = (props) => {
         }
     }
 
+    const root = props.orientation === 'vertical' ? classes.root : "";
+    const tabsClass = props.orientation === 'vertical' ? classes.tabs : "";
+
     return (
-        <div id={props.id} key={props.id}>
+        <div id={props.id} key={props.id} className={root}>
             <Paper square>
                 <Tabs
                     value={value}
                     indicatorColor="primary"
                     textColor="primary"
                     onChange={handleChange}
+                    orientation={props.orientation}
+                    className={tabsClass}
                 >
                     {tabs.map(tab => <Tab label={tab.label} id={tab.id}/>)}
                 </Tabs>

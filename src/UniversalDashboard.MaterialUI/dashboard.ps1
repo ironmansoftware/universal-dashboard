@@ -493,6 +493,18 @@ New-UDDashboard -Title "Dashboard" -Pages @(
                 New-UDElement -Tag div -Id 'DynamicTab3Content' -Content { Get-Date }
             }
         }
+
+        New-UDTabs -Id 'verticalTabs' -Orientation 'vertical' -Tabs {
+            New-UDTab -Text "Tab1" -Content {
+                New-UDElement -Tag div -Content { Get-Date } 
+            }
+            New-UDTab -Text "Tab2" -Content {
+                New-UDElement -Tag div -Content { Get-Date } 
+            }
+            New-UDTab -Text "Tab3" -Content {
+                New-UDElement -Tag div -Content { Get-Date } 
+            }
+        }
     }
 
     New-UDPage -Name 'Textbox' -Content {

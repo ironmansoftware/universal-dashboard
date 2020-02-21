@@ -6,7 +6,10 @@ function New-UDTabs {
         [Parameter()]
         [string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter()]
-        [Switch]$RenderOnActive
+        [Switch]$RenderOnActive,
+        [Parameter()]
+        [ValidateSet('horizontal', 'vertical')]
+        [string]$Orientation = "horizontal"
     )
 
     End {
@@ -17,6 +20,7 @@ function New-UDTabs {
             tabs            = $Tabs.Invoke()
             id              = $id
             renderOnClick   = $RenderOnActive.IsPresent
+            orientation     = $Orientation
         }
     }
 }
