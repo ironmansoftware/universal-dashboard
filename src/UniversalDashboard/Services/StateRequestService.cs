@@ -2,6 +2,7 @@
 using UniversalDashboard.Models.Basics;
 using System;
 using System.Threading;
+using System.Collections;
 
 namespace UniversalDashboard.Services
 {
@@ -16,13 +17,13 @@ namespace UniversalDashboard.Services
             _memoryCache = memoryCache;
         }
 
-        public void Set(string requestId, Element state)
+        public void Set(string requestId, Hashtable state)
         {
             _memoryCache.Set(requestId, state, TimeSpan.FromSeconds(5));
             EventAvailable.Set();
         }
 
-        public bool TryGet(string requestId, out Element element)
+        public bool TryGet(string requestId, out Hashtable element)
         {
             if (_memoryCache.TryGetValue(requestId, out element))
             {

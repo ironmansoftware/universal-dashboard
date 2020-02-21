@@ -22,6 +22,7 @@ using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models.Basics;
 using System.Security;
 using Microsoft.Extensions.Primitives;
+using System.Collections;
 
 namespace UniversalDashboard.Controllers
 {
@@ -571,7 +572,7 @@ namespace UniversalDashboard.Controllers
         [Authorize]
         public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]JObject jobject)
         {
-            var element = (Element)jobject.ToObject(typeof(Element));
+            var element = (Hashtable)jobject.ToObject(typeof(Hashtable));
 
             _stateRequestService.Set(requestId, element);
             return Json(new { message = "Session state set" });

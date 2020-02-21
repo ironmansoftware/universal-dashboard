@@ -20,32 +20,25 @@ namespace UniversalDashboard.Cmdlets
 
         [Parameter(Mandatory = true)]
 		public string Id { get; set; }
+
         [Parameter]
-        public Hashtable Attributes { get; set; }
-        [Parameter]
-		public ScriptBlock Content { get; set; }
+        public Hashtable Properties { get; set; }
+
         [Parameter]
         public SwitchParameter Broadcast { get; set; }
 
         protected override void EndProcessing()
         {
-            var element = new Element
-            {
-                Id = Id,
-                Attributes = Attributes,
-                Content = Content?.Invoke().Select(m => m.BaseObject).ToArray()
-            };
-
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
 
             if (Broadcast)
             {
-                hub.SetState(Id, element).Wait();
+                hub.SetState(Id, Properties).Wait();
             }
             else
             {
                 var connectionId = this.GetVariableValue("ConnectionId") as string;   
-                hub.SetState(connectionId, Id, element).Wait();
+                hub.SetState(connectionId, Id, Properties).Wait();
             }
 
 

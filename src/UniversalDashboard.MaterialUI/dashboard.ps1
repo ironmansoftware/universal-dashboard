@@ -402,6 +402,42 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDProgress -Id 'progressLinearIndeterminate'
     }
 
+    New-UDPage -Name 'Select' -Content {
+        New-UDSelect -Label '1-3' -Id 'select' -Option {
+            New-UDSelectOption -Name "One" -Value 1
+            New-UDSelectOption -Name "Two" -Value 2
+            New-UDSelectOption -Name "Three" -Value 3
+        } -DefaultValue 2 -OnChange { Set-TestData $EventData }
+
+        New-UDSelect -Id 'selectGrouped' -Option {
+            New-UDSelectGroup -Name "Category 1" -Option {
+                New-UDSelectOption -Name "One" -Value 1
+                New-UDSelectOption -Name "Two" -Value 2
+                New-UDSelectOption -Name "Three" -Value 3
+            }
+            New-UDSelectGroup -Name "Category 2" -Option {
+                New-UDSelectOption -Name "Four" -Value 4
+                New-UDSelectOption -Name "Five" -Value 5
+                New-UDSelectOption -Name "Six" -Value 6
+            }
+        } -DefaultValue 2 -OnChange { Set-TestData $EventData }
+
+        New-UDButton -Text 'Get State' -OnClick {
+            $State = Get-UDElement -Id 'select'
+            Show-UDToast -Message ($State | ConvertTo-Json)
+        }
+
+        New-UDButton -Text 'Set State' -OnClick {
+            $Select = New-UDSelect -Label '10-12' -Id 'select' -Option {
+                New-UDSelectOption -Name "Ten" -Value 10
+                New-UDSelectOption -Name "Eleven" -Value 11
+                New-UDSelectOption -Name "Twelve" -Value 12
+            } -DefaultValue 10 -OnChange { Set-TestData $EventData }
+
+            Set-UDElement -Id 'select' -Properties $Select
+        }
+    }
+
     New-UDPage -Name 'Table' -Content {
 
         $Data = @(

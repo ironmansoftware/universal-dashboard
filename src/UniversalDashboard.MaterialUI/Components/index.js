@@ -23,6 +23,7 @@ import FloatingActionButton from './floating-action-button';
 import Tabs from './tabs';
 import Grid from './grid';
 import Table from './table';
+import Select from './select';
 
 
 import {
@@ -55,6 +56,7 @@ UniversalDashboard.register('mu-fab', FloatingActionButton);
 UniversalDashboard.register('mu-tabs', Tabs);
 UniversalDashboard.register('mu-grid', Grid);
 UniversalDashboard.register('mu-table', Table);
+UniversalDashboard.register('mu-select', Select);
 
 // Framework Support
 import UdPage from './framework/ud-page';

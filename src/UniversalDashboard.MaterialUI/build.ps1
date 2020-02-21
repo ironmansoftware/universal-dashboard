@@ -77,6 +77,9 @@ $manifestParameters = @{
         "Out-UDTableContent"
         "New-UDRow"
         "New-UDColumn"
+        "New-UDSelect"
+        "New-UDSelectOption"
+        "New-UDSelectGroup"
     )
     RequiredModules   = @()
 }
