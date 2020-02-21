@@ -394,8 +394,12 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         } -Id 'paperEndpoint' -IsEndPoint -AutoRefresh -RefreshInterval 1
     }
 
-    New-UDPage -Name "Preloader" -Content {
-        New-UDProgress -Circular 
+    New-UDPage -Name "Progress" -Content {
+        New-UDProgress -Circular -Id 'progressCircularIndeterminate'
+
+        New-UDProgress -PercentComplete 75 -Id 'progressLinearDeterminate'
+
+        New-UDProgress -Id 'progressLinearIndeterminate'
     }
 
     New-UDPage -Name 'Table' -Content {

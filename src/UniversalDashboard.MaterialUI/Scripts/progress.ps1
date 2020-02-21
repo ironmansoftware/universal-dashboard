@@ -29,6 +29,7 @@ function New-UDProgress {
                 isPlugin = $true 
                 type = "mu-progress"
           
+                variant = $PSCmdlet.ParameterSetName
                 percentComplete = $PercentComplete
                 backgroundColor = $BackgroundColor.HtmlColor
                 progressColor = $ProgressColor.HtmlColor

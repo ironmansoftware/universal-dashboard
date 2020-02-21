@@ -5,8 +5,8 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 export default function Progress(props) {
 
     if (props.circular) {
-        return <CircularProgress />
+        return <CircularProgress id={props.id}/>
     }
 
-    return <LinearProgress />
+    return <LinearProgress variant={props.variant} value={props.percentComplete} id={props.id}/>
 }
