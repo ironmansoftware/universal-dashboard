@@ -1,13 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\TestFramework.ps1"
-
-$BrowserPort = Get-BrowserPort -Release:$Release
-$ModulePath = Get-ModulePath -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 
 Describe "GeoLocation" {
     Context "Should return location for user" {
@@ -42,8 +33,7 @@ Describe "GeoLocation" {
             
         } -GeoLocation
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
+        Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 30
 
@@ -51,8 +41,5 @@ Describe "GeoLocation" {
             $Element = Find-SeElement -Driver $Driver -Id "Timestamp" 
             $Element.Text | Should -contain ((Get-Date).Year.ToString())
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 }

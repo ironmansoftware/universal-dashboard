@@ -1,34 +1,23 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
-return
 
 Describe "Auto reload" {
     Context "Changed script" {
         $tempFile = [System.IO.Path]::GetTempFileName() + ".ps1"
 
+        $ModulePath = (Get-Module UniversalDashboard.Community).Path
+
         {
             Import-Module $ModulePath
             
             $dashboard = New-UDDashboard -Title "Test" -Content {
-                New-UDCard -Title "Test" -Text "My text" -Id "Card" -Links @(
-                    New-UDLink -Text "My Link" -Url "http://www.google.com"
-                )
+                
             }
     
-            $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -AutoReload
+            Start-UDDashboard -Force -Port 10001 -Dashboard $dashboard -AutoReload
         }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile 
 
         . $TempFile
 
-        $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "auto reloads" {
@@ -41,7 +30,7 @@ Describe "Auto reload" {
                     )
                 }
         
-                $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -AutoReload
+                Start-UDDashboard -Force -Port 10001 -Dashboard $dashboard -AutoReload
             }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile -Force
 
             Start-Sleep 5
@@ -52,9 +41,6 @@ Describe "Auto reload" {
         }
 
         Remove-Item $TempFile
-        Stop-SeDriver $Driver
-        Get-UDRestApi | Stop-UDRestApi
-        Get-UDDashboard | Stop-UDDashboard
     }
 
     Context "Changed REST API script" {
@@ -66,7 +52,7 @@ Describe "Auto reload" {
                 "2"
             }
 
-            $Server = Start-UDRestApi -Port 10001 -Endpoint $Endpoint -AutoReload
+            Start-UDRestApi -Force -Port 10001 -Endpoint $Endpoint -AutoReload
         }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile 
 
         . $TempFile
@@ -83,7 +69,7 @@ Describe "Auto reload" {
                     "1"
                 }
 
-                $Server = Start-UDRestApi -Port 10001 -Endpoint $Endpoint -AutoReload
+                Start-UDRestApi -Port 10001 -Endpoint $Endpoint -AutoReload -Force
             }.ToString().Replace('$ModulePath', "'$ModulePath'") | Out-File $tempFile -Force
 
             Start-Sleep 3
@@ -91,7 +77,5 @@ Describe "Auto reload" {
         }
 
         Remove-Item $TempFile
-        Get-UDRestApi | Stop-UDRestApi        
-        Get-UDDashboard | Stop-UDDashboard 
     }
 }

@@ -1,53 +1,23 @@
+Enter-SeUrl -Target $Driver -Url "http://localhost:10000/chips"
+
 Describe "chips" {
-    Context "label" {
-        Set-TestDashboard {
-            New-UDMuChip -Label "my Label" -Id "chip"
-        }
-
-        It 'has a label' {
-            (Find-SeElement -Id 'chip' -Driver $Driver).Text | should be "my Label"
-        }
+    It 'has a label' {
+        (Find-SeElement -Id 'chipLabel' -Driver $Driver).Text | should be "my Label"
     }
 
-    Context "icon" {
-        Set-TestDashboard {
-            $Icon = New-UDIcon -Icon 'user' -Size sm -Style @{color = '#fff'}
-            New-UDMuChip -Label "Demo User" -Id "chip" -Icon $Icon -OnClick {Show-UDToast -Message 'test'} -Clickable -Style @{backgroundColor = '#00838f'}
-        }
-
-        It 'has an icon' {
-            Find-SeElement -ClassName 'fa-user' -Driver $Driver | should not be $null
-        }
+    It 'has an icon' {
+        $Element = Find-SeElement -Id 'chipIcon' -Driver $Driver
+        $Element.FindElementByTagName("svg").GetAttribute("data-icon") | Should be "user"
     }
 
-    Context "should click" {
-        Set-TestDashboard {
-            New-UDMuChip -Label "my Label" -Id "chip" -OnClick {
-                Set-TestData -Data "OnClick"
-            }
-        }
-
-        It "should click and have test data" {
-            Find-SeElement -Id 'chip' -Driver $Driver | Invoke-SeClick
-            Get-TestData | Should be "OnClick"
-        }
+    It "should click and have test data" {
+        Find-SeElement -Id 'chipClick' -Driver $Driver | Invoke-SeClick
+        Get-TestData | Should be "chipClick"
     }
 
-    Context "should delete" {
-        Set-TestDashboard {
-            $Icon = New-UDIcon -Icon 'user_circle' -Size sm -Style @{color = '#fff'}
-            New-UDMuChip -Label "my Label" -Id "chip" -Icon $Icon -OnDelete {
-                Set-TestData -Data "OnDelete"
-            } -Style @{backgroundColor = '#00838f'} 
-            $Icon = New-UDIcon -Icon 'user_circle' -Size sm -Style @{color = '#2196f3'}
-            New-UDMuChip -Label "my Label" -Id "dmeo" -Icon $Icon -OnDelete {
-                Set-TestData -Data "OnDelete"
-            } -Style @{borderColor = '#2196f3'} -Variant outlined
-        }
-
-        It "should click delete and have test data" {
-            Find-SeElement -TagName 'svg' -Driver $Driver | Invoke-SeClick
-            Get-TestData | Should be "OnDelete"
-        }
+    It "should click delete and have test data" {
+        $Element = Find-SeElement -Id 'chipDelete' -Driver $Driver
+        $Element.FindElementByClassName("MuiChip-deleteIcon") | Invoke-SeClick
+        Get-TestData | Should be "chipDelete"
     }
 }

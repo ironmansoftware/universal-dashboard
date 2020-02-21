@@ -1,5 +1,8 @@
 param([Switch]$Release)
 
+#TODO
+return
+
 . "$PSScriptRoot\..\TestFramework.ps1"
 $ModulePath = Get-ModulePath -Release:$Release
 $BrowserPort = Get-BrowserPort -Release:$Release

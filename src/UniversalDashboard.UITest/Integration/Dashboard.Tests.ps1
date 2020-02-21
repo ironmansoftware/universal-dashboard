@@ -1,17 +1,5 @@
-param([Switch]$Release)
-
-$Env:Debug = -not $Release
 
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
-$Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-$Driver = Start-SeFirefox
 
 $Cache:StateCollection = New-Object -TypeName 'System.Collections.Concurrent.BlockingCollection[object]'
 
@@ -29,7 +17,8 @@ Describe "Dashboard" {
         }
         
         $Dashboard = New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
+
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 1
@@ -73,8 +62,8 @@ Describe "Dashboard" {
             } -Fixed
             
             $Dashboard = New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
-        
-            $Server.DashboardService.SetDashboard($Dashboard)
+            Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
+
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
             Start-Sleep 1
@@ -97,8 +86,8 @@ Describe "Dashboard" {
             $Navigation = New-UDSideNav -None
             
             $Dashboard = New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
-        
-            $Server.DashboardService.SetDashboard($Dashboard)
+            Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
+
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
             Find-SeElement -Id 'sidenavtrigger' -Driver $Driver | Should be $null
@@ -116,8 +105,8 @@ Describe "Dashboard" {
             } -Fixed
             
             $Dashboard = New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
-        
-            $Server.DashboardService.SetDashboard($Dashboard)
+            Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
+
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
             $Element = Find-SeElement -Id "section" -Driver $Driver
@@ -146,7 +135,8 @@ Describe "Dashboard" {
             } -Fixed
             
             $Dashboard = New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
-            $Server.DashboardService.SetDashboard($Dashboard)
+            Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
+
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
             Find-SeElement -ClassName "subheader" -Driver $Driver | Should not be $null
@@ -162,8 +152,8 @@ Describe "Dashboard" {
             } -Fixed
             
             $Dashboard = New-UDDashboard -Title "Navigation" -Pages @($Page1, $Page2) -Navigation $Navigation
-            
-            $Server.DashboardService.SetDashboard($Dashboard)
+            Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
+
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
             Start-Sleep 1
@@ -198,7 +188,7 @@ Describe "Dashboard" {
             } 
         } -EndpointInitialization $Init -Scripts "https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have title text" {
@@ -219,15 +209,10 @@ Describe "Dashboard" {
     }
 
     Context "Update dashboard" {
-
-        Get-UDDashboard | Stop-UDDashboard 
-
-        Start-Sleep 1
-
         $dashboard = New-UDDashboard -Title "Test" -Content {
         } 
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard -UpdateToken "UpdateToken"
+        Start-UDDashboard -Port 10001 -Dashboard $dashboard -UpdateToken "UpdateToken" -Force
 
         Start-Sleep 1
 
@@ -247,6 +232,3 @@ Describe "Dashboard" {
         }
     }
 }
-
-Stop-SeDriver $Driver
-Get-UDDashboard | Stop-UDDashboard

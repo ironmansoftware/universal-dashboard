@@ -1,10 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 
 Describe "Get-UDDashboard" {
     It "returns running dashboards" {

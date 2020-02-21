@@ -82,9 +82,7 @@ export class UdPaper extends React.Component {
         square={square}  
       >
         
-        {content.map(element => {
-          return UniversalDashboard.renderComponent(element) 
-        })}
+        {UniversalDashboard.renderComponent(content)}
 
       </Paper>
       <ReactInterval

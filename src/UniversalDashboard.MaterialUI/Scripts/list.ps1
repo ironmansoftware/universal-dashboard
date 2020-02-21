@@ -1,4 +1,4 @@
-function New-UDMuList {
+function New-UDList {
     param(
         [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter ()][scriptblock]$Content,
@@ -21,7 +21,7 @@ function New-UDMuList {
 }
 
 
-function New-UDMuListItem {
+function New-UDListItem {
     [CmdletBinding()]
     param(
         [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),

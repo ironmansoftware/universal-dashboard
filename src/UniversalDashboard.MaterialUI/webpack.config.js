@@ -17,7 +17,7 @@ module.exports = (env) => {
     },
     output: {
       path: BUILD_DIR,
-      filename: isDev ? '[name].bundle.js' : '[name].[hash].bundle.js',
+      filename: isDev ? 'materialui.[name].bundle.js' : '[name].[hash].bundle.js',
       sourceMapFilename: '[name].[hash].bundle.map',
       publicPath: "",
       library: 'materialui',
@@ -52,6 +52,15 @@ module.exports = (env) => {
     plugins: [
       // new RemoveWebpackPlugin(BUILD_DIR)
     ],
-    devtool: "source-map"
+    devtool: "source-map",
+    devServer: {
+      disableHostCheck: true,
+      historyApiFallback: true,
+      port: 10000,
+      // hot: true,
+      compress: true,
+      publicPath: '/',
+      stats: "minimal"
+    },
   };
 }

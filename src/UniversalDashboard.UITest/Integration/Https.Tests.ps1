@@ -1,11 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -20,8 +13,8 @@ Add-Type @"
         }
     }
 "@
-[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 
+[System.Net.ServicePointManager]::CertificatePolicy = New-Object TrustAllCertsPolicy
 $Cert = New-SelfSignedCertificate -CertStoreLocation Cert:\CurrentUser\My -DnsName localhost
 
 Describe "Https" {
@@ -30,25 +23,21 @@ Describe "Https" {
         It "should serve HTTPS - REST API" {
             $Endpoint = New-UDEndpoint -Url "/test" -Endpoint {}
 
-            $Server = Start-UDRestApi -Port 10001 -Certificate $Cert -Endpoint $Endpoint
+            Start-UDRestApi -Port 10001 -Certificate $Cert -Endpoint $Endpoint -Force
 
             $Request = Invoke-WebRequest https://localhost:10001/test
             $Request.StatusCode | Should be 200
-
-            Stop-UDRestApi -Server $Server
         }
 
         It "should serve HTTPS" {
-            $Dashboard = Start-UDDashboard -Port 10001 -Certificate $Cert
+            Start-UDDashboard -Port 10001 -Certificate $Cert -Force
 
             $Request = Invoke-WebRequest https://localhost:10001/dashboard
             $Request.StatusCode | Should be 200
-
-            Stop-UDDashboard -Server $Dashboard
         }
 
         It "should redirect HTTPS" {
-            $Dashboard = Start-UDDashboard -Port 10001 -HttpsPort 10002 -Certificate $Cert
+            Start-UDDashboard -Port 10001 -HttpsPort 10002 -Certificate $Cert -Force
 
             try 
             {
@@ -61,12 +50,8 @@ Describe "Https" {
 
             $Request = Invoke-WebRequest https://localhost:10002/dashboard
             $Request.StatusCode | Should be 200
-
-            Stop-UDDashboard -Server $Dashboard
         }
     }
-
-    Get-UDDashboard | Stop-UDDashboard
 
     Context "From file" {
         It "should serve HTTPS" {''
@@ -76,12 +61,10 @@ Describe "Https" {
 
             Export-PfxCertificate -Cert $Cert -Password $CertPassword -Force -FilePath $CertPath
 
-            $Dashboard = Start-UDDashboard -Port 10001 -CertificateFile $CertPath -CertificateFilePassword $CertPassword
+            Start-UDDashboard -Port 10001 -CertificateFile $CertPath -CertificateFilePassword $CertPassword -Force
 
             $Request = Invoke-WebRequest https://localhost:10001/dashboard
             $Request.StatusCode | Should be 200
-
-            Stop-UDDashboard -Server $Dashboard
 
             Remove-Item $CertPath -Force
         }

@@ -1,22 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-
-$Driver = Start-SeFirefox
-$Server = Start-UDDashboard -Port 10001 
-
-function Set-TestDashboard {
-    param($Dashboard)
-
-    $Server.DashboardService.SetDashboard($Dashboard)
-    Enter-SeUrl -Url "http://localhost:$BrowserPort" -Driver $Driver 
-}
 
 Describe "New-UDSplitPane" {
 
@@ -28,7 +10,7 @@ Describe "New-UDSplitPane" {
             }
         }
         
-        Set-TestDashboard -Dashboard $dashboard
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
 
         It "should create a split pane" {
             Find-SeElement -Driver $Driver -ClassName "Resizer" | Should not be $null
@@ -43,7 +25,7 @@ Describe "New-UDSplitPane" {
             }
         }
         
-        Set-TestDashboard -Dashboard $dashboard
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
 
         It "should create a split pane" {
             Find-SeElement -Driver $Driver -ClassName "horizontal" | Should not be $null
@@ -60,13 +42,10 @@ Describe "New-UDSplitPane" {
             New-UDElement -Content {} -Id 'test' -Tag div
         }
         
-        Set-TestDashboard -Dashboard $dashboard
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
 
         It "should not blow up dashboard" {
             Find-SeElement -Driver $Driver -Id "test" | Should not be $null
         }
     }
-
-    Stop-SeDriver $Driver
-    Stop-UDDashboard $Server
 }

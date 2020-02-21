@@ -1,4 +1,4 @@
-function New-UDMuAvatar {
+function New-UDAvatar {
     param(
         [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter ()][string]$Image,

@@ -1,12 +1,6 @@
-param([Switch]$Release)
 
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
 
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 Describe "Sync-UDElement" {
     Context "Sync Counter" {
         $Dashboard = New-UdDashboard -Title "Sync Counter" -Content {
@@ -24,8 +18,7 @@ Describe "Sync-UDElement" {
             }
         } 
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard
-        $Driver = Start-SeFirefox
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
@@ -40,9 +33,6 @@ Describe "Sync-UDElement" {
 
             (Find-SeElement -Driver $Driver -Id 'Counter').Text | Should not be $Text
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 }
 

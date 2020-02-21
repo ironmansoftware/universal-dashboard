@@ -1,12 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 
 Describe "DynamicDashboard" {
     Context "Should work" {
@@ -30,18 +22,13 @@ Describe "DynamicDashboard" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
+        Start-UDDashboard -Port 10001 -Dashboard $dashboard -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        Start-Sleep 2
 
         It "should produced 30 items" {
             $Element = Find-SeElement -ClassName "ud-monitor" -Driver $Driver
             ($Element | Measure-Object).Count | should be 30
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 }
+

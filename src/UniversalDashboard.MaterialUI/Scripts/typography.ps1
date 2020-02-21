@@ -1,4 +1,4 @@
-function New-UDMuTypography {
+function New-UDTypography {
     [CmdletBinding(DefaultParameterSetName = "text")]
     param(
         [Parameter()]
@@ -8,7 +8,7 @@ function New-UDMuTypography {
         [ValidateSet ("h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", "caption", "button", "overline", "srOnly", "inherit", "display4", "display3", "display2", "display1", "headline", "title", "subheading")]
 		[string]$Variant,
 
-		[Parameter(ParameterSetName = "text")]
+		[Parameter(ParameterSetName = "text", Position = 0)]
 		[string]$Text,
 
         [Parameter(ParameterSetName = "endpoint")]
@@ -34,14 +34,14 @@ function New-UDMuTypography {
 		[Switch]$NoWrap,
 
         [Parameter()]
-		[Switch]$IsParagraph,
+		[Switch]$Paragraph,
 
         [Parameter(ParameterSetName = "endpoint")]
 		[switch]$AutoRefresh,
 
         [Parameter(ParameterSetName = "endpoint")]
-		[int]$RefreshInterval = 5
-
+        [int]$RefreshInterval = 5
+        
     )
 
     End {
@@ -67,7 +67,7 @@ function New-UDMuTypography {
             className = $ClassName
             variant = $Variant
             noWrap = $NoWrap.IsPresent
-            isParagraph = $IsParagraph.IsPresent
+            isParagraph = $Paragraph.IsPresent
             text = $Text
             style = $Style
             align = $Align

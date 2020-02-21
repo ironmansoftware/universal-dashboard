@@ -1,5 +1,8 @@
 . "$PSScriptRoot\..\Selenium\Selenium.ps1"
 
+Import-Module "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
+Import-Module "$PSScriptRoot\..\output\Modules\UniversalDashboard.MaterialUI\UniversalDashboard.MaterialUI.psd1"
+
 function Get-TestData {
     $Data = $null
     if ($Cache:StateCollection.TryTake([ref]$Data, 5000)) {
@@ -10,15 +13,10 @@ function Get-TestData {
     }
 }
 
-function Get-ModulePath {
-    param([Switch]$Release)
-
-    $Env:Debug = (-not $Release.IsPresent)
-    "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
+if ($null -eq $Global:Driver)
+{
+    $Global:Driver = Start-SeFirefox
+    $Driver = $Global:Driver
 }
 
-function Get-BrowserPort {
-    param([Switch]$Release)
-
-    10001
-}
+$BrowserPort = 10001

@@ -1,23 +1,13 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 
 Describe "Start-UDDashboard" {
     It "starts the default dashboard" {
-        Start-UDDashboard -Port 10000 | Should not be $null
+        Start-UDDashboard -Port 10000 -Dashboard (New-UDDashboard -Title 'hey' -Content{}) -Force | Should not be $null
     }
 
-    Get-UDDashboard | Stop-UDDashboard
-
     It "starts a dashboard" {
-
-        $Dashboard = New-UDDashboard -Title "Test" -Content { New-UDCard -Title "Test"}
-        
-        Start-UDDashboard -Dashboard $Dashboard -Port 10000 | Should not be $null
+        $Dashboard = New-UDDashboard -Title "Test" -Content { }
+        Start-UDDashboard -Dashboard $Dashboard -Port 10000 -Force | Should not be $null
     }
 
 }

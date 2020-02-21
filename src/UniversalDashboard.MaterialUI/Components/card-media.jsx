@@ -1,26 +1,22 @@
 import React from "react";
 import classNames from "classnames"
-import { CardMedia, withStyles } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
+import { CardMedia } from "@material-ui/core";
 
-const UDCardMedia = withStyles(theme => ({
+const useStyles = makeStyles(theme => ({
   media: {
     objectFit: "cover",
     backgroundColor: "transparent"
     // height: "100%"
   }
-}))(props => {
-  const {
-    classes,
-    component,
-    alt,
-    height,
-    image,
-    title,
-    source,
-    children
-  } = props;
+}));
+
+
+const UDCardMedia = (props) => {
+  const classes = useStyles();
+  const { component, alt, height, image, title, source } = props;
+
   return (
-    <>
       <CardMedia
         className={classNames(classes.media, "ud-mu-cardmedia")}
         component={component}
@@ -31,9 +27,7 @@ const UDCardMedia = withStyles(theme => ({
         src={source}
         controls={component === ("video" || "audio") ? true : false}
       />
-      {children}
-    </>
   );
-});
+}
 
 export default UDCardMedia;

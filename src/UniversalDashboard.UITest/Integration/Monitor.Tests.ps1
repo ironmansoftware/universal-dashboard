@@ -1,12 +1,4 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 Describe "Monitor" {
 
     Context "Filter fields" {
@@ -28,18 +20,13 @@ Describe "Monitor" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
-
+        
         It "should filter" {
             $Element = Find-SeElement -Name "Text" -Driver $Driver
             Send-SeKeys -Element $Element -Keys "Test"
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "Single-dataset" {
@@ -51,11 +38,9 @@ Describe "Monitor" {
             )
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
-
+        
         It "should have Monitor" {
             Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
         }
@@ -63,9 +48,6 @@ Describe "Monitor" {
         It "should have link" {
             Find-SeElement -LinkText "HEY" -Driver $Driver | Should not be $null
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "Multi-dataset" {
@@ -78,17 +60,12 @@ Describe "Monitor" {
             }
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-        Start-Sleep 2
-
+        
         It "should have Monitor" {
             Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
         }
-
-       Stop-SeDriver $Driver
-       Stop-UDDashboard -Server $Server 
     }
 
     Context "Min\max" {
@@ -106,19 +83,13 @@ Describe "Monitor" {
             } -Options $options
         }
 
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $dashboard 
-        $Driver = Start-SeFirefox
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
         Start-Sleep 2
 
         It "should have Monitor" {
             Find-SeElement -Id "Monitor" -Driver $Driver | Should not be $null
         }
-
-        
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 
 }

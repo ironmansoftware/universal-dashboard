@@ -1,16 +1,4 @@
-param([Switch]$Release)
-
-$Env:Debug = -not $Release
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
-$Server = Start-UDDashboard -Port 10001 -Dashboard (New-UDDashboard -Title "Test" -Content {}) 
-$Driver = Start-SeFirefox
 
 Describe "Input" {
     Context "uses correct type" {
@@ -28,7 +16,7 @@ Describe "Input" {
             }
         }
         
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
         
         It "should set correct value types" {
@@ -64,7 +52,7 @@ Describe "Input" {
             }
         }
     
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should validate required" {
@@ -89,7 +77,7 @@ Describe "Input" {
             }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should not spin forever if an item is dropped to the pipeline that isn't UDInputAction" {
@@ -110,7 +98,7 @@ Describe "Input" {
             }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have helper text" {
@@ -130,7 +118,7 @@ Describe "Input" {
             }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 4
@@ -157,7 +145,7 @@ Describe "Input" {
             }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 4
@@ -184,7 +172,7 @@ Describe "Input" {
             }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 1
@@ -237,7 +225,7 @@ Describe "Input" {
             } -Validate
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should validate with custom error message (Endpoint)" {
@@ -337,7 +325,7 @@ Describe "Input" {
             } 
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
     
         It "should select date" {
@@ -507,7 +495,7 @@ Describe "Input" {
             }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
     
         It "should output text" {
@@ -624,7 +612,7 @@ Describe "Input" {
             }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should have different submit text" {
@@ -652,7 +640,7 @@ Describe "Input" {
             } 
         }
     
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "have cleared input on toast" {
@@ -692,7 +680,7 @@ Describe "Input" {
             } 
         }
     
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "have cleared input on toast" {
@@ -724,7 +712,7 @@ Describe "Input" {
             }
         }
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 1
@@ -759,7 +747,7 @@ Describe "Input" {
             }
         )
 
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
     
 
@@ -791,7 +779,7 @@ Describe "Input" {
             }
         }
     
-        $Server.DashboardService.SetDashboard($Dashboard)
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         Start-Sleep 1
@@ -810,6 +798,3 @@ Describe "Input" {
         }
     }
 }
-
-Stop-SeDriver $Driver
-Stop-UDDashboard -Server $Server 

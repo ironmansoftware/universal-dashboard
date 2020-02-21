@@ -1,12 +1,5 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
 
-Import-Module $ModulePath -Force
-
-Get-UDRestApi | Stop-UDRestApi
-Get-UDDashboard | Stop-UDDashboard
 Describe "PublishedFolders" {
     Context "published  folder via rest api" {
         $TempPath = [IO.Path]::GetTempPath()
@@ -17,15 +10,13 @@ Describe "PublishedFolders" {
 
             "Test" | Out-File $TempFile -Force -Encoding ascii
 
-            $Server = Start-UDRestApi -Port 10001 -PublishedFolder @(
+            Start-UDRestApi -Port 10001 -Force -PublishedFolder @(
                 Publish-UDFolder -Path $TempPath -RequestPath "/temp"
             )
     
             It "should return the content of $TempFile" {
                 (Invoke-WebRequest "http://localhost:10001/temp/myFile.$_").Content | Should be "Test`r`n"
             }
-            
-            Stop-UDRestApi $Server
         }
 
 
@@ -40,7 +31,7 @@ Describe "PublishedFolders" {
 
             "Test" | Out-File $TempFile -Force -Encoding ascii
 
-            $Server = Start-UDDashboard -Port 10001 -PublishedFolder @(
+            Start-UDDashboard -Force -Port 10001 -PublishedFolder @(
                 Publish-UDFolder -Path $TempPath -RequestPath "/temp"
             ) -Dashboard (
                 New-UDDashboard -Title "Hey" -Content {}
@@ -49,8 +40,6 @@ Describe "PublishedFolders" {
             It "should publish folder and return the content of $TempFile" {
                 (Invoke-WebRequest "http://localhost:10001/temp/myFile.$_").Content | Should be "Test`r`n"
             }
-
-            Stop-UDDashboard $Server
         }
     }
 }

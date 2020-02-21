@@ -1,19 +1,12 @@
-param([Switch]$Release, [Switch]$Integration)
-
 $Pester = Import-Module Pester  -PassThru -ErrorAction Ignore
 if ($Pester -eq $null) {
 	Install-Module Pester -Scope CurrentUser -Force
 	Import-Module Pester -Force
 }
 
-$Env:Debug = -not $Release
+return
 
-if (-not $Release) {
-    Import-Module "$PSScriptRoot\..\UniversalDashboard\bin\debug\UniversalDashboard.Community.psd1"
-} else {
-    Import-Module "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
-}
-
+Import-Module "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
 $OutputPath = "$PSScriptRoot\test-results" 
 
 Remove-Item $OutputPath -Recurse -ErrorAction SilentlyContinue -Force
@@ -31,29 +24,15 @@ function Invoke-PesterTest {
     }
 }
 
-#Unit
 Get-ChildItem (Join-Path $PSScriptRoot "Cmdlet") | ForEach-Object {
     Invoke-PesterTest -FileName ($_.Name) -Subfolder "Cmdlet" -Release:$Release
 }
 
-if (-not $Integration) {
-    return
-}
-
-#Integration
 Get-ChildItem (Join-Path $PSScriptRoot "Integration") | ForEach-Object {
     Invoke-PesterTest -FileName ($_.Name) -Subfolder "Integration" -Release:$Release
 }
 
 Invoke-PesterTest -FileName Manifest.Tests.ps1 -Release:$Release
 
-
 Get-Process firefox -ErrorAction SilentlyContinue | Stop-Process
 Stop-Service -Name UniversalDashboard -ErrorAction SilentlyContinue
-
-if ($null -ne $env:APPVEYOR_JOB_ID) {
-    Get-ChildItem $OutputPath | ForEach-Object {
-        $wc = New-Object 'System.Net.WebClient'
-        $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", ($_.FullName))
-    }
-}

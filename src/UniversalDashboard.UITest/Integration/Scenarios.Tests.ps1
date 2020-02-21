@@ -1,12 +1,5 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\..\TestFramework.ps1"
-$ModulePath = Get-ModulePath -Release:$Release
-$BrowserPort = Get-BrowserPort -Release:$Release
 
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 Describe "Scenarios" {
 
     Context "466" {
@@ -40,9 +33,8 @@ Describe "Scenarios" {
         } -AutoRefresh -RefreshInterval 1
 
         $Dashboard = New-UDDashboard -Title "Dashboard" -Pages $Page
-        $Server = Start-UDDashboard -Port 10001 -Dashboard $Dashboard -Endpoint $ScheduledEndpoint
+        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force -Endpoint $ScheduledEndpoint
 
-        $Driver = Start-SeFirefox
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should refresh card" {
@@ -61,8 +53,5 @@ Describe "Scenarios" {
                 $ElementTexts[$i] | should not be $NewElementTexts[$i]
             }
         }
-
-        Stop-SeDriver $Driver
-        Stop-UDDashboard -Server $Server 
     }
 }

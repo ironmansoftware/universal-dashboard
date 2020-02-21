@@ -42,7 +42,7 @@ export const UniversalDashboardService = {
         }
 
         if (Array.isArray(component)) {
-            return component.map(x => x.type ? this.renderComponent(x, history) : x);
+            return component.map(x => this.renderComponent(x, history));
         }
 
         var existingComponent = this.components.find(x => x.type === component.type);

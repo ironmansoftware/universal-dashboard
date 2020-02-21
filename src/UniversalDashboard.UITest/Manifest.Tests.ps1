@@ -1,16 +1,9 @@
-param([Switch]$Release)
-
 . "$PSScriptRoot\TestFramework.ps1"
 
-$ModulePath = Get-ModulePath -Release:$Release
-
-Import-Module $ModulePath -Force
-
-Get-UDDashboard | Stop-UDDashboard
 Describe "Manifest" {
 
     It "should have correct version" {
-        (Get-Module 'UniversalDashboard.Community').Version | Should be "2.8.3"
+        (Get-Module 'UniversalDashboard.Community').Version | Should be "3.0.0"
     }
 
     It "should have correct exported commands" {
