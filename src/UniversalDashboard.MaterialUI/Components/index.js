@@ -26,6 +26,7 @@ import Table from './table';
 import Select from './select';
 import Textbox from './textbox';
 import UDSwitch from './switch';
+import UDTreeView from './treeview';
 
 import {
     Route,
@@ -60,6 +61,7 @@ UniversalDashboard.register('mu-table', Table);
 UniversalDashboard.register('mu-select', Select);
 UniversalDashboard.register('mu-textbox', Textbox);
 UniversalDashboard.register('mu-switch', UDSwitch);
+UniversalDashboard.register('mu-treeview', UDTreeView);
 
 // Framework Support
 import UdPage from './framework/ud-page';
@@ -67,8 +69,6 @@ import UDNavbar from './framework/ud-navbar';
 import UdFooter from './framework/ud-footer';
 import PageCycler from './framework/page-cycler';
 import UDModal from './framework/ud-modal';
-
-
 
 function getDefaultHomePage(dashboard) {
     return dashboard.pages.find(function (page) {

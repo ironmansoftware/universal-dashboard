@@ -513,4 +513,21 @@ New-UDDashboard -Title "Dashboard" -Pages @(
             Show-UDToast -Message ($State | ConvertTo-Json)
         }
     }
+
+    New-UDPage -Name 'TreeView' -Content {
+        New-UDTreeView -Node {
+            New-UDTreeNode -Id 'Root' -Name 'Root' -Children {
+                New-UDTreeNode -Id 'Level1' -Name 'Level 1' -Children {
+                    New-UDTreeNode -Id 'Level2' -Name 'Level 2'
+                }
+                New-UDTreeNode -Name 'Level 1' -Children {
+                    New-UDTreeNode -Name 'Level 2'
+                }
+                New-UDTreeNode -Name 'Level 1' -Children {
+                    New-UDTreeNode -Name 'Level 2'
+                }   
+            }
+            New-UDTreeNode -Id 'Root2' -Name 'Root 2'
+        }
+    }
 )
