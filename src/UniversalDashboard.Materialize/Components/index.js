@@ -1,4 +1,6 @@
+/** @jsx jsx */
 import React, { useState, Suspense } from 'react';
+import { jsx } from '@theme-ui/core'
 
 require('materialize-css/dist/css/materialize.min.css');
 require('material-components-web/dist/material-components-web.min.css');
@@ -151,7 +153,7 @@ class Materialize extends React.Component {
                 navigation={dashboard.navigation}
             />
         </header>,
-        <main style={{ background: dashboard.backgroundColor, color: dashboard.fontColor }}>
+        <main sx={{ backgroundColor: 'bg', color: 'text' }}>
             <Suspense fallback={<span />}>
                 <Switch>
                     {staticPages}

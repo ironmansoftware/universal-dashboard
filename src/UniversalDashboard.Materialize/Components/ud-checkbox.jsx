@@ -1,5 +1,7 @@
+/** @jsx jsx */
 import React from 'react';
 import {Checkbox} from 'react-materialize';
+import { jsx } from '@theme-ui/core'
 
 export default class UDCheckbox extends React.Component {
 
@@ -73,6 +75,7 @@ export default class UDCheckbox extends React.Component {
         }
 
         return <Checkbox 
+        sx={{ variant: 'forms.checkbox' }}
                     checked={this.state.checked} 
                     label={this.props.label}
                     id={this.props.id}

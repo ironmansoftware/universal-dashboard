@@ -20,7 +20,7 @@ function New-UDComponentPage {
                     New-UDEndpoint -Endpoint {
                         Invoke-UDRedirect -Url $ArgumentList[0] -OpenInNewWindow 
                     } -ArgumentList $OnlineVersion
-                ) -BackgroundColor 'white' -FontColor 'black'
+                ) -Variant primary
                 New-UDToggleColorMode
             }
     
