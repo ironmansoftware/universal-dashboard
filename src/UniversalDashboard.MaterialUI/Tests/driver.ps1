@@ -1,3 +1,5 @@
+#Requires -Modules Selenium
+
 param(
     [string]$FileName,
     [Switch]$OutputTestResultXml,
@@ -5,7 +7,6 @@ param(
     [Switch]$StopSelenium
 )
 
-. (Join-Path $PSScriptRoot "../../Selenium/Selenium.ps1")
 Import-Module (Join-Path $PSScriptRoot "../../output/UniversalDashboard.Community.psd1") -Force 
 Import-Module (Join-Path $PSScriptRoot "../output/UniversalDashboard.MaterialUI/UniversalDashboard.MaterialUI.psd1") -Force
 

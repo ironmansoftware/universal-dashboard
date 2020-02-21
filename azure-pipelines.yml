@@ -7,6 +7,11 @@ pool:
   vmImage: 'vs2017-win2016'
 
 steps:
+
+- powershell: .\Selenium\Selenium.ps1 
+  displayName: Install Selenium
+  errorActionPreference: continue
+
 - powershell: .\src\build.ps1 -Configuration Release
   displayName: Start Building The Module
   errorActionPreference: continue
