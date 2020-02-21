@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased (v3)
 
+### Added 
+
+- Support for vertical tabs in New-UDTabs by [adamdriscoll](https://github.com/adamdriscoll)
+
 ### Changed
 
 - UD now uses Material UI by default by [adamdriscoll](https://github.com/adamdriscoll)
