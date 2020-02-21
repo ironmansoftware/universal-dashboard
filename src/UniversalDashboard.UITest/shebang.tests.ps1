@@ -4,6 +4,8 @@ if ($Pester -eq $null) {
 	Import-Module Pester -Force
 }
 
+return
+
 Import-Module "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
 $OutputPath = "$PSScriptRoot\test-results" 
 
