@@ -25,7 +25,7 @@ import Grid from './grid';
 import Table from './table';
 import Select from './select';
 import Textbox from './textbox';
-
+import UDSwitch from './switch';
 
 import {
     Route,
@@ -59,6 +59,7 @@ UniversalDashboard.register('mu-grid', Grid);
 UniversalDashboard.register('mu-table', Table);
 UniversalDashboard.register('mu-select', Select);
 UniversalDashboard.register('mu-textbox', Textbox);
+UniversalDashboard.register('mu-switch', UDSwitch);
 
 // Framework Support
 import UdPage from './framework/ud-page';

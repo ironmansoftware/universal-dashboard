@@ -438,6 +438,14 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         }
     }
 
+    New-UDPage -Name 'Switch' -Content {
+        New-UDSwitch -Id 'switchOff'
+        New-UDSwitch -Id 'switchOffExplicit' -Checked $false
+        New-UDSwitch -Id 'switchOn' -Checked $true
+        New-UDSwitch -Id 'switchOnChange' -OnChange { Set-TestData $EventData }
+        New-UDSwitch -Id 'switchDisabled' -Disabled
+    }
+
     New-UDPage -Name 'Table' -Content {
 
         $Data = @(
