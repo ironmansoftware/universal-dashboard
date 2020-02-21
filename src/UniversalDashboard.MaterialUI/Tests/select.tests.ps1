@@ -1,17 +1,30 @@
 Enter-SeUrl -Target $Driver -Url "http://localhost:10000/select"
 
 Describe "select" {
+    it 'has options' {
+        $Element = Find-SeElement -Id 'select' -Driver $Driver
+        $Element.FindElementByXPath('../..') | Invoke-SeClick 
 
-    It 'is circular indeterminate' {
-        (Find-SeElement -Id 'progressCircularIndeterminate' -Driver $Driver).GetAttribute("class").Contains("MuiCircularProgress-indeterminate") | should be $true
+        (Find-SeElement -TagName 'li' -Driver $Driver | Measure-Object).Count | should be 3
     }
 
-    It 'is linear indeterminate' {
-        (Find-SeElement -Id 'progressLinearIndeterminate' -Driver $Driver).GetAttribute("class").Contains("MuiLinearProgress-indeterminate") | should be $true
+    it 'has options with categories' {
+        Find-SeElement -TagName body -Driver $Driver | Invoke-SeClick
+        Start-Sleep 1
+        $Element = Find-SeElement -Id 'selectGrouped' -Driver $Driver
+        $Element.FindElementByXPath('../..') | Invoke-SeClick 
+
+        (Find-SeElement -TagName 'li' -Driver $Driver | Measure-Object).Count | should be 8
     }
 
-    It 'is linear determinate' {
-        (Find-SeElement -Id 'progressLinearDeterminate' -Driver $Driver).GetAttribute("class").Contains("MuiLinearProgress-determinate") | should be $true
-        (Find-SeElement -Id 'progressLinearDeterminate' -Driver $Driver).GetAttribute("aria-valuenow") | should be "75"
+    it 'has onClick' {
+        Find-SeElement -TagName body -Driver $Driver | Invoke-SeClick
+        Start-Sleep 1
+        $Element = Find-SeElement -Id 'select' -Driver $Driver
+        $Element.FindElementByXPath('../..') | Invoke-SeClick 
+
+        Find-SeElement -TagName 'li' -Driver $Driver | Select-Object -First 1 | Invoke-SeClick 
+
+        Get-TestData | should be "1"
     }
 }

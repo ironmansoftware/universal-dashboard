@@ -45,7 +45,7 @@ export const withComponentFeatures = (component) => {
         const notifyOfEvent = (eventName, value) => {
             UniversalDashboard.publish('element-event', {
                 type: "clientEvent",
-                eventId: props.id,
+                eventId: props.id + eventName,
                 eventName: eventName,
                 eventData: value
             });

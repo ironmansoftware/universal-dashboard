@@ -486,4 +486,23 @@ New-UDDashboard -Title "Dashboard" -Pages @(
             }
         }
     }
+
+    New-UDPage -Name 'Textbox' -Content {
+        New-UDTextbox -Label 'text' -Id 'txtLabel'
+
+        New-UDTextbox -Label 'textValue' -Id 'txtValue' -Value 'value'
+
+        New-UDTextbox -Label 'text' -Placeholder 'placeholder' -Id 'txtPlaceholder'
+
+        New-UDTextbox -Label 'password' -Id 'txtPassword' -Type 'password'
+
+        New-UDTextbox -Label 'email' -Id 'txtEmail' -Type 'email'
+
+        New-UDTextbox -Label 'disabled' -Id 'txtDisabled' -Disabled
+
+        New-UDButton -Text 'Get State' -OnClick {
+            $State = Get-UDElement -Id 'txtLabel'
+            Show-UDToast -Message ($State | ConvertTo-Json)
+        }
+    }
 )

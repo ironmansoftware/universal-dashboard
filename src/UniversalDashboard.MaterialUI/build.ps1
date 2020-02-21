@@ -80,6 +80,7 @@ $manifestParameters = @{
         "New-UDSelect"
         "New-UDSelectOption"
         "New-UDSelectGroup"
+        "New-UDTextbox"
     )
     RequiredModules   = @()
 }
