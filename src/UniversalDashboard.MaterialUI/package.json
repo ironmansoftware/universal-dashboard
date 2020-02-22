@@ -17,10 +17,11 @@
     "@material-ui/system": "^4.7.1",
     "classnames": "^2.2.6",
     "eslint-loader": "^3.0.3",
+    "material-table": "^1.57.2",
+    "react-hot-loader": "^4.12.19",
     "react-interval": "^2.1.1",
     "typeface-roboto": "0.0.75",
-    "typeface-roboto-condensed": "0.0.75",
-    "react-hot-loader": "^4.12.19"
+    "typeface-roboto-condensed": "0.0.75"
   },
   "devDependencies": {
     "@babel/core": "7.7.7",
