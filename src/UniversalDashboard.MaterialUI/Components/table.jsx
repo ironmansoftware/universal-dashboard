@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import MaterialTable from 'material-table';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -18,6 +18,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import SortArrowIcon from '@material-ui/icons/ArrowUpward';
 import ThirdStateCheckIcon from '@material-ui/icons/Remove';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
+import { CircularProgress } from '@material-ui/core';
+import { withComponentFeatures } from './universal-dashboard';
 
 const icons = {
     Add: AddIcon,
@@ -38,27 +40,58 @@ const icons = {
     ThirdStateCheck: ThirdStateCheckIcon,
     ViewColumn: ViewColumnIcon
 }
+const TableCell = (props) => {
+
+    const [content, setContent] = useState({ loading: true})
+
+    useEffect(() => {
+        props.post(props.endpoint, props.rowData).then(x => setContent(x));
+
+        return () => {}
+    }, true)
+
+    if (content.loading)
+    {
+        return <CircularProgress />
+    }
+
+    return props.render(content);
+}
 
 const UDTable = (props) => {
 
     const columns = props.columns.map(column => {
+
+        var render = null;
+        if (column.render)
+        {
+            render = (rowData) => <TableCell {...props} endpoint={column.render} rowData={rowData} />
+        }
+
         return { 
             field: column.field, 
             title: column.title, 
             filtering: column.filter, 
             sorting: column.sort, 
             search: column.search,
-            render: column.component
+            render
         }
     })
 
     return (
         <MaterialTable 
+            id={props.id}
             title={props.title}
             icons={icons}
             columns={columns} 
+            options={{
+                exportButton: props.export,
+                sorting: props.sort, 
+                filtering: props.filter,
+                search: props.search
+              }}
             data={props.data} />
     );
 }
 
-export default UDTable;
+export default withComponentFeatures(UDTable);

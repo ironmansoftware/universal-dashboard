@@ -8,7 +8,6 @@ param(
 )
 
 Import-Module (Join-Path $PSScriptRoot "../../output/UniversalDashboard.Community.psd1") -Force 
-Import-Module (Join-Path $PSScriptRoot "../output/UniversalDashboard.MaterialUI/UniversalDashboard.MaterialUI.psd1") -Force
 
 if($PSBoundParameters.keys -contains 'FileName'){
     $Tests = Get-ChildItem $PSScriptRoot -Filter $FileName

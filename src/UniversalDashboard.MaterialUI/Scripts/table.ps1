@@ -15,9 +15,7 @@ function New-UDTable {
         [Parameter()]
         [Switch]$Search,
         [Parameter()]
-        [Switch]$Export,
-        [Parameter()]
-        [ScriptBlock]$OnExport
+        [Switch]$Export
     )
 
     if ($null -eq $Columns)
@@ -50,7 +48,7 @@ function New-UDTable {
 
         title = $Title
         columns = $Columns
-        data = $Data | ConvertTo-Json -Depth 1 | ConvertFrom-Json
+        data = $Data #| ConvertTo-Json -Depth 1 | ConvertFrom-Json
         sort = $Sort.IsPresent
         filter = $Filter.IsPresent
         search = $Search.IsPresent
@@ -61,12 +59,14 @@ function New-UDTable {
 function New-UDTableColumn 
 {
     param(
+        [Parameter()]
+        [string]$Id = [Guid]::NewGuid().ToString(),
         [Parameter(Mandatory)]
         [string]$Field, 
         [Parameter()]
         [string]$Title,
         [Parameter()]
-        [ScriptBlock]$Render,
+        [Endpoint]$Render,
         [Parameter()]
         [bool]$Sort = $true,
         [Parameter()]
@@ -80,13 +80,19 @@ function New-UDTableColumn
         $Title = $Field
     }
 
+    if ($Render)
+    {
+        $Render.Register($Id, $PSCmdlet)
+    }
+
     @{
+        id = $Id 
         field = $Field.ToLower()
         title = $Title 
         sort  = $Sort 
         filter = $Filter 
         search = $Search
-        render = $Render
+        render = $Render.Name
     }
 }
 

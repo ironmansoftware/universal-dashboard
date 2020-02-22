@@ -5,16 +5,43 @@ import LazyElement from './../basics/lazy-element.jsx';
 import PubSub from 'pubsub-js';
 import toaster from './toaster';
 
+var components = []
+
+const renderComponent = (component, history, dynamicallyLoaded) => {
+    if (component == null) return <React.Fragment />;
+
+    if (component.$$typeof === Symbol.for('react.element'))
+    {
+        return component;
+    }
+
+    if (Array.isArray(component)) {
+        return component.map(x => renderComponent(x, history));
+    }
+
+    var existingComponent = components.find(x => x.type === component.type);
+    if (existingComponent != null) {
+        return React.createElement(existingComponent.component, {
+            ...component,
+            key: component.id,
+            history
+        });
+    } else if (component.isPlugin && !dynamicallyLoaded) {
+        return <LazyElement component={component} key={component.id} history={history} />
+    }
+
+    return internalRenderComponent(component, history);
+}
 
 export const UniversalDashboardService = {
-    components: [],
+    components,
     plugins: [],
     registerPlugin: function (plugin) {
         this.plugins.push(plugin);
     },
     register: function (type, component) {
-        var existingComponent = this.components.find(x => x.type === type);
-        if (!existingComponent) this.components.push({
+        var existingComponent = components.find(x => x.type === type);
+        if (!existingComponent) components.push({
             type,
             component
         });
@@ -32,32 +59,7 @@ export const UniversalDashboardService = {
     publish: PubSub.publishSync,
     toaster: toaster,
     connectionId: '',
-    renderComponent: function (component, history, dynamicallyLoaded) {
-
-        if (component == null) return <React.Fragment />;
-
-        if (component.$$typeof === Symbol.for('react.element'))
-        {
-            return component;
-        }
-
-        if (Array.isArray(component)) {
-            return component.map(x => this.renderComponent(x, history));
-        }
-
-        var existingComponent = this.components.find(x => x.type === component.type);
-        if (existingComponent != null) {
-            return React.createElement(existingComponent.component, {
-                ...component,
-                key: component.id,
-                history
-            });
-        } else if (component.isPlugin && !dynamicallyLoaded) {
-            return <LazyElement component={component} key={component.id} history={history} />
-        }
-
-        return internalRenderComponent(component, history);
-    },
+    renderComponent,
     provideDashboardComponents: function (state) {
 
         var components = [];

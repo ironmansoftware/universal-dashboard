@@ -469,14 +469,17 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDTable -Id 'customColumnsTable' -Data $Data -Columns $Columns
 
         $Columns = @(
-            New-UDTableColumn -Field Dessert -Title Dessert -Component (New-UDButton -Text "Click for Dessert!")
+            New-UDTableColumn -Field Dessert -Title Dessert -Render { 
+                $Item = $Body | ConvertFrom-Json 
+                New-UDButton -Text "Click for Dessert!" -OnClick { Show-UDToast -Message $Item.Dessert } 
+            }
             New-UDTableColumn -Field Calories -Title Calories 
             New-UDTableColumn -Field Fat -Title Fat 
             New-UDTableColumn -Field Carbs -Title Carbs 
             New-UDTableColumn -Field Protein -Title Protein 
         )
 
-        New-UDTable -Id 'customColumnsTable' -Data $Data -Columns $Columns
+        New-UDTable -Id 'customColumnsTableRender' -Data $Data -Columns $Columns -Sort -Export
     }
 
     New-UDPage -Name "Tabs" -Id 'Tabs' -Content {
