@@ -78,6 +78,19 @@ const UDTable = (props) => {
         }
     })
 
+    var data = props.data;
+    if (props.loadData) {
+        data = (query) => {
+            return new Promise((resolve, reject) => {
+                props.loadData(query).then(x => resolve({
+                    data: x,
+                    page: 1,
+                    totalCount: x.length
+                }))
+            });
+        }
+    }
+
     return (
         <div id={props.id} key={props.id}>
             <MaterialTable 
@@ -90,7 +103,7 @@ const UDTable = (props) => {
                     filtering: props.filter,
                     search: props.search
                 }}
-                data={props.data} />
+                data={data} />
         </div>
     );
 }

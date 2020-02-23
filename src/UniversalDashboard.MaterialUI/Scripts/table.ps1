@@ -4,9 +4,12 @@ function New-UDTable {
         [string]$Id = [Guid]::NewGuid().ToString(),
         [Parameter()]
         [string]$Title = "",
-        [Parameter(Mandatory)]
+        [Parameter(Mandatory, ParameterSetName = "Static")]
         [object[]]$Data,
-        [Parameter()]
+        [Parameter(Mandatory, ParameterSetName = "Dynamic")]
+        [Endpoint]$LoadData,
+        [Parameter(ParameterSetName = "Static")]
+        [Parameter(Mandatory, ParameterSetName = "Dynamic")]
         [Hashtable[]]$Columns,
         [Parameter()]
         [Switch]$Sort,
@@ -38,7 +41,9 @@ function New-UDTable {
         }
     }
 
-    
+    if ($LoadData) {
+        $LoadData.Register($Id, $PSCmdlet)
+    }
 
     @{
         id = $Id 
@@ -53,6 +58,7 @@ function New-UDTable {
         filter = $Filter.IsPresent
         search = $Search.IsPresent
         export = $Export.IsPresent 
+        loadData = $LoadData
     }
 }
 
