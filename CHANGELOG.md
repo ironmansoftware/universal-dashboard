@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added 
 
 - Support for vertical tabs in New-UDTabs by [adamdriscoll](https://github.com/adamdriscoll)
+- New-UDDynamic for specifying dynamic sections of pages by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed
 

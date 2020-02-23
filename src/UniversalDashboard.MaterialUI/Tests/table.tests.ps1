@@ -45,5 +45,4 @@ Describe "Table" {
         $After = $Element.FindElementByTagName('tbody').FindElementsByTagName('td')[0].Text
         $Before | Should not be $After
     }
-
 }

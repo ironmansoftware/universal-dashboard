@@ -500,7 +500,6 @@ New-UDDashboard -Title "Dashboard" -Pages @(
 
             New-UDTable -Id 'dynamicTable' -Data $DynamicData
         } -AutoRefresh -AutoRefreshInterval 2
-
         New-UDDynamic -Content {
             $DynamicData = @(
                 @{Dessert = 'Frozen yoghurt'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}

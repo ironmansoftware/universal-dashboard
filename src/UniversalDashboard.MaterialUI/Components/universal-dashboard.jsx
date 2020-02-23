@@ -59,7 +59,6 @@ export const withComponentFeatures = (component) => {
 
     const highOrderComponent = (props) => {
         const [componentState, setComponentState] = useState(props);
-        
         useEffect(() => {
             setComponentState(props);
         }, [props.version])
