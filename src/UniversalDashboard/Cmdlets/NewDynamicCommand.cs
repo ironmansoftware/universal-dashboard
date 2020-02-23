@@ -25,7 +25,7 @@ namespace UniversalDashboard
 
             WriteObject(new Dictionary<string, object> {
                 { "id", Id },
-                { "autoRefresh", AutoRefresh },
+                { "autoRefresh", AutoRefresh.IsPresent },
                 { "autoRefreshInterval", AutoRefreshInterval},
                 { "type", "dynamic"},
                 { "isPlugin", true }
