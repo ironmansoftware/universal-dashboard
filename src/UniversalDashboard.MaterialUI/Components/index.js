@@ -27,6 +27,7 @@ import Select from './select';
 import Textbox from './textbox';
 import UDSwitch from './switch';
 import UDTreeView from './treeview';
+import UDDynamic from './dynamic';
 
 import {
     Route,
@@ -62,6 +63,7 @@ UniversalDashboard.register('mu-select', Select);
 UniversalDashboard.register('mu-textbox', Textbox);
 UniversalDashboard.register('mu-switch', UDSwitch);
 UniversalDashboard.register('mu-treeview', UDTreeView);
+UniversalDashboard.register('dynamic', UDDynamic);
 
 // Framework Support
 import UdPage from './framework/ud-page';
