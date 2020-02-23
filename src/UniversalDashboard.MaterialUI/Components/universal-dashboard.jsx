@@ -47,8 +47,22 @@ export const withComponentFeatures = (component) => {
         UniversalDashboard.unsubscribe(token)
     }
 
+    const render = (component, history) => {
+        // set props version
+        if (!component.version)
+        {
+            component.version = "0";    
+        }
+        
+        return UniversalDashboard.renderComponent(component, history);
+    }
+
     const highOrderComponent = (props) => {
         const [componentState, setComponentState] = useState(props);
+        if (props.version !== componentState.version)
+        {
+            setComponentState(props);
+        }
 
         const notifyOfEvent = (eventName, value) => {
             UniversalDashboard.publish('element-event', {
@@ -59,7 +73,6 @@ export const withComponentFeatures = (component) => {
             });
         }
     
-
         const incomingEvent = (type, event) => {
             if (type == "setState")
                 setComponentState({
@@ -117,7 +130,7 @@ export const withComponentFeatures = (component) => {
         })
 
         const additionalProps = {
-            render: UniversalDashboard.renderComponent,
+            render,
             setState: (state) => {
                 let newComponentState = {
                     ...componentState,
