@@ -65,6 +65,8 @@ $manifestParameters = @{
         "New-UDMuAvatar"
         "New-UDCheckBox"
         "New-UDProgress"
+        "New-UDExpansionPanelGroup"
+        "New-UDExpansionPanel"
     )
     RequiredModules   = @()
 }

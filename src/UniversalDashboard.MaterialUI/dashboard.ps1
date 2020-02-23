@@ -61,6 +61,10 @@ New-UDDashboard -Title "Dashboard" -Pages @(
             New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Content {
                 New-UDElement -Tag 'div' -id 'expContentDiv' -Content { "Hello" }
             }
+
+            New-UDExpansionPanel -Title "Hello" -Id 'expEndpoint' -Endpoint {
+                New-UDElement -Tag 'div' -id 'expEndpointDiv' -Content { "Hello" }
+            }
         }
     }
 
