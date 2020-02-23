@@ -449,24 +449,45 @@ New-UDDashboard -Title "Dashboard" -Pages @(
     New-UDPage -Name 'Table' -Content {
 
         $Data = @(
-            [PSCustomObject]@{Dessert = 'Frozen yoghurt'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
-            [PSCustomObject]@{Dessert = 'Ice cream sandwich'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
-            [PSCustomObject]@{Dessert = 'Eclair'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
-            [PSCustomObject]@{Dessert = 'Cupcake'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
-            [PSCustomObject]@{Dessert = 'Gingerbread'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
-        ) | Out-UDTableContent
+            @{Dessert = 'Frozen yoghurt'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            @{Dessert = 'Ice cream sandwich'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            @{Dessert = 'Eclair'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            @{Dessert = 'Cupcake'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            @{Dessert = 'Gingerbread'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+        ) 
 
-        New-UDTable -Id 'defaultTable' -Content {
-            $Data
-        }
+        New-UDTable -Id 'defaultTable' -Data $Data
 
-        New-UDTable -Size small -Id 'smallTable' -Content {
-            $Data
-        }
+        $Columns = @(
+            New-UDTableColumn -Field Dessert -Title "A Dessert"
+            New-UDTableColumn -Field Calories -Title Calories 
+            New-UDTableColumn -Field Fat -Title Fat 
+            New-UDTableColumn -Field Carbs -Title Carbs 
+            New-UDTableColumn -Field Protein -Title Protein 
+        )
 
-        New-UDTable -StickyHeader -Id 'stickyHeaderTable' -Content {
-            $Data
-        }
+        New-UDTable -Id 'customColumnsTable' -Data $Data -Columns $Columns
+
+        $Data = @(
+            @{Dessert = 'Frozen yoghurt'; Calories = 1; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            @{Dessert = 'Ice cream sandwich'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            @{Dessert = 'Eclair'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            @{Dessert = 'Cupcake'; Calories = 159; Fat = 6.0; Carbs = 24; Protein = 4.0}
+            @{Dessert = 'Gingerbread'; Calories = 200; Fat = 6.0; Carbs = 24; Protein = 4.0}
+        ) 
+
+        $Columns = @(
+            New-UDTableColumn -Field Dessert -Title Dessert -Render { 
+                $Item = $Body | ConvertFrom-Json 
+                New-UDButton -Id "btn$($Item.Dessert)" -Text "Click for Dessert!" -OnClick { Show-UDToast -Message $Item.Dessert } 
+            }
+            New-UDTableColumn -Field Calories -Title Calories 
+            New-UDTableColumn -Field Fat -Title Fat 
+            New-UDTableColumn -Field Carbs -Title Carbs 
+            New-UDTableColumn -Field Protein -Title Protein 
+        )
+
+        New-UDTable -Id 'customColumnsTableRender' -Data $Data -Columns $Columns -Sort -Export
     }
 
     New-UDPage -Name "Tabs" -Id 'Tabs' -Content {

@@ -1,48 +1,98 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import MaterialTable from 'material-table';
 
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import AddIcon from '@material-ui/icons/Add';
+import CheckIcon from '@material-ui/icons/Check';
+import ClearIcon from '@material-ui/icons/Clear';
+import DeleteIcon from '@material-ui/icons/DeleteOutline';
+import DetailPanelIcon from '@material-ui/icons/ChevronRight';
+import EditIcon from '@material-ui/icons/Edit';
+import ExportIcon from '@material-ui/icons/SaveAlt';
+import FilterIcon from '@material-ui/icons/FilterList';
+import FirstPageIcon from '@material-ui/icons/FirstPage';
+import LastPageIcon from '@material-ui/icons/LastPage';
+import NextPageIcon from '@material-ui/icons/ChevronRight';
+import PreviousPageIcon from '@material-ui/icons/ChevronLeft';
+import ResetSearchIcon from '@material-ui/icons/Clear';
+import SearchIcon from '@material-ui/icons/Search';
+import SortArrowIcon from '@material-ui/icons/ArrowUpward';
+import ThirdStateCheckIcon from '@material-ui/icons/Remove';
+import ViewColumnIcon from '@material-ui/icons/ViewColumn';
+import { CircularProgress } from '@material-ui/core';
+import { withComponentFeatures } from './universal-dashboard';
 
-const useStyles = makeStyles({
-    table: {
-      minWidth: 650,
-    },
-  });
+const icons = {
+    Add: AddIcon,
+    Check: CheckIcon,
+    Clear: ClearIcon,
+    Delete: DeleteIcon,
+    DetailPanel: DetailPanelIcon,
+    Edit: EditIcon,
+    Export: ExportIcon,
+    Filter: FilterIcon,
+    FirstPage: FirstPageIcon,
+    LastPage: LastPageIcon,
+    NextPage: NextPageIcon,
+    PreviousPage: PreviousPageIcon,
+    ResetSearch: ResetSearchIcon,
+    Search: SearchIcon,
+    SortArrow: SortArrowIcon,
+    ThirdStateCheck: ThirdStateCheckIcon,
+    ViewColumn: ViewColumnIcon
+}
+const TableCell = (props) => {
+
+    const [content, setContent] = useState({ loading: true})
+
+    useEffect(() => {
+        props.post(props.endpoint, props.rowData).then(x => setContent(x));
+
+        return () => {}
+    }, true)
+
+    if (content.loading)
+    {
+        return <CircularProgress />
+    }
+
+    return props.render(content);
+}
 
 const UDTable = (props) => {
-    const classes = useStyles();
 
-    var header = props.content.find(x => x.type === 'mu-table-header');
-    var body = props.content.find(x => x.type === 'mu-table-body');
+    const columns = props.columns.map(column => {
 
-    var rows = body.rows.map(row => {
-        return (
-            <TableRow>
-                {row.cells.map(cell => <TableCell>{UniversalDashboard.renderComponent(cell.content)}</TableCell>)}
-            </TableRow>
-        )
+        var render = null;
+        if (column.render)
+        {
+            render = (rowData) => <TableCell {...props} endpoint={column.render} rowData={rowData} />
+        }
+
+        return { 
+            field: column.field, 
+            title: column.title, 
+            filtering: column.filter, 
+            sorting: column.sort, 
+            search: column.search,
+            render
+        }
     })
 
     return (
-        <TableContainer component={Paper} id={props.id} key={props.id} >
-            <Table className={classes.table} stickyHeader={props.stickyHeader} size={props.size}>
-                <TableHead>
-                    <TableRow>
-                        {header.headers.map(x => <TableCell>{UniversalDashboard.renderComponent(x.content)}</TableCell>)}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <div id={props.id} key={props.id}>
+            <MaterialTable 
+                title={props.title}
+                icons={icons}
+                columns={columns} 
+                options={{
+                    exportButton: props.export,
+                    sorting: props.sort, 
+                    filtering: props.filter,
+                    search: props.search
+                }}
+                data={props.data} />
+        </div>
     );
 }
 
-export default UDTable;
+export default withComponentFeatures(UDTable);

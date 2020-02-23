@@ -20,6 +20,14 @@ export const withComponentFeatures = (component) => {
         });
     }
 
+    const post = (id, data) => {
+        return new Promise((resolve, reject) => {
+            UniversalDashboard.post(`/api/internal/component/element/${id}`, data, (returnData) => {
+                resolve(returnData)
+            });
+        });
+    }
+
     const subscribeToIncomingEvents = (id, callback) => {
         const incomingEvent = (id, event) => {
 
@@ -99,7 +107,13 @@ export const withComponentFeatures = (component) => {
         
         useEffect(() => {
             const token = subscribeToIncomingEvents(props.id, incomingEvent)
-            return () => unsubscribeFromIncomingEvents(token)
+            return () => {
+                unsubscribeFromIncomingEvents(token)
+                // PubSub.publish('element-event', {
+                //     type: "unregisterEvent",
+                //     eventId: this.props.id
+                // });
+            }
         })
 
         const additionalProps = {
@@ -111,7 +125,8 @@ export const withComponentFeatures = (component) => {
                 }
                 setComponentState(newComponentState);
             },
-            notifyOfEvent
+            notifyOfEvent,
+            post
         }
         
         if (componentState.hidden) {

@@ -2,16 +2,43 @@ function New-UDTable {
     param(
         [Parameter()]
         [string]$Id = [Guid]::NewGuid().ToString(),
+        [Parameter()]
+        [string]$Title = "",
         [Parameter(Mandatory)]
-        [ScriptBlock]$Content, 
+        [object[]]$Data,
         [Parameter()]
-        [Switch]$Dynamic,
+        [Hashtable[]]$Columns,
         [Parameter()]
-        [ValidateSet("small", "medium")]
-        [string]$Size = "medium",
+        [Switch]$Sort,
         [Parameter()]
-        [Switch]$StickyHeader
+        [Switch]$Filter,
+        [Parameter()]
+        [Switch]$Search,
+        [Parameter()]
+        [Switch]$Export
     )
+
+    if ($null -eq $Columns)
+    {
+        $item = $Data | Select-Object -First 1
+
+        if ($item -is [Hashtable])
+        {
+            $Columns = foreach($member in $item.Keys)
+            {
+                New-UDTableColumn -Field $member
+            }
+        }
+        else 
+        {
+            $Columns = foreach($member in $item.PSObject.Properties)
+            {
+                New-UDTableColumn -Field $member.Name
+            }
+        }
+    }
+
+    
 
     @{
         id = $Id 
@@ -19,10 +46,53 @@ function New-UDTable {
         isPlugin = $true 
         type = "mu-table"
 
-        content = $Content.Invoke()
-        dynamic = $Dynamic.IsPresent
-        size = $Size
-        stickyHeader = $StickyHeader.IsPresent
+        title = $Title
+        columns = $Columns
+        data = $Data #| ConvertTo-Json -Depth 1 | ConvertFrom-Json
+        sort = $Sort.IsPresent
+        filter = $Filter.IsPresent
+        search = $Search.IsPresent
+        export = $Export.IsPresent 
+    }
+}
+
+function New-UDTableColumn 
+{
+    param(
+        [Parameter()]
+        [string]$Id = [Guid]::NewGuid().ToString(),
+        [Parameter(Mandatory)]
+        [string]$Field, 
+        [Parameter()]
+        [string]$Title,
+        [Parameter()]
+        [Endpoint]$Render,
+        [Parameter()]
+        [bool]$Sort = $true,
+        [Parameter()]
+        [bool]$Filter = $true,
+        [Parameter()]
+        [bool]$Search = $true
+    )
+
+    if ($null -eq $Title -or $Title -eq '')
+    {
+        $Title = $Field
+    }
+
+    if ($Render)
+    {
+        $Render.Register($Id, $PSCmdlet)
+    }
+
+    @{
+        id = $Id 
+        field = $Field.ToLower()
+        title = $Title 
+        sort  = $Sort 
+        filter = $Filter 
+        search = $Search
+        render = $Render.Name
     }
 }
 

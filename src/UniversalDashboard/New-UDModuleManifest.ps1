@@ -94,27 +94,25 @@ $manifestParameters = @{
 		"New-UDTreeView"
         "New-UDTooltip"
 		"Invoke-UDEvent"
-
-		#Material UI
-		'New-UDMuAvatar'
-		'New-UDMuButton'
-		'New-UDMuCard'
-		'New-UDMuCardToolbar'
-		'New-UDMuCardHeader'
-		'New-UDMuCardBody'
-		'New-UDMuCardExpand'
-		'New-UDMuCardFooter'
-		'New-UDMuCardMedia'
-		'New-UDMuCheckBox'
-		'New-UDMuChip'
+		'New-UDAvatar'
+		'New-UDCardToolbar'
+		'New-UDCardHeader'
+		'New-UDCardBody'
+		'New-UDCardExpand'
+		'New-UDCardFooter'
+		'New-UDCardMedia'
+		'New-UDChip'
 		'New-UDIconButton'
-		'New-UDMuLink'
-		'New-UDMuList'
-		'New-UDMuListItem'
-		'New-UDMuPaper'
-		'New-UDPdf'
-        'New-UDMuTypography'
-        
+		'New-UDList'
+		'New-UDListItem'
+		'New-UDPaper'
+		'New-UDTypography'
+		"New-UDTableColumn"
+		"New-UDExpansionPanelGroup"
+        "New-UDExpansionPanel"
+		"New-UDFloatingActionButton"
+		"New-UDTabs"
+		"New-UDProgress"
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 
