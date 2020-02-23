@@ -79,18 +79,19 @@ const UDTable = (props) => {
     })
 
     return (
-        <MaterialTable 
-            id={props.id}
-            title={props.title}
-            icons={icons}
-            columns={columns} 
-            options={{
-                exportButton: props.export,
-                sorting: props.sort, 
-                filtering: props.filter,
-                search: props.search
-              }}
-            data={props.data} />
+        <div id={props.id} key={props.id}>
+            <MaterialTable 
+                title={props.title}
+                icons={icons}
+                columns={columns} 
+                options={{
+                    exportButton: props.export,
+                    sorting: props.sort, 
+                    filtering: props.filter,
+                    search: props.search
+                }}
+                data={props.data} />
+        </div>
     );
 }
 
