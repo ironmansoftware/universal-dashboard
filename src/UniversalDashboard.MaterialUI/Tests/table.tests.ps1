@@ -28,4 +28,13 @@ Describe "Table" {
         $Element.FindElementByTagName('thead').FindElementsByTagName('th')[0].FindElementByTagName('svg') | Invoke-SeClick
         $Element.FindElementByTagName('tbody').FindElementsByTagName('tr')[0].FindElementsById('btnFrozen yoghurt') | should not be $null
     }
+
+    It 'has auto reloads using dynamic' {
+        $Element = Find-SeElement -Id 'dynamicTable' -Driver $Driver 
+        $Before = $Element.FindElementByTagName('tbody').FindElementsByTagName('td')[0].Text
+        Start-Sleep 2
+        $After = $Element.FindElementByTagName('tbody').FindElementsByTagName('td')[0].Text
+        $Before | Should not be $After
+    }
+
 }
