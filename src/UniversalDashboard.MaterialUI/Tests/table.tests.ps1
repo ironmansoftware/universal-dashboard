@@ -29,7 +29,7 @@ Describe "Table" {
         $Element.FindElementByTagName('tbody').FindElementsByTagName('tr')[0].FindElementsById('btnFrozen yoghurt') | should not be $null
     }
 
-    It 'has auto reloads using dynamic' {
+    It 'auto reloads using dynamic' {
         $Element = Find-SeElement -Id 'dynamicTable' -Driver $Driver 
         $Before = $Element.FindElementByTagName('tbody').FindElementsByTagName('td')[0].Text
         Start-Sleep 2
@@ -37,4 +37,12 @@ Describe "Table" {
         $Before | Should not be $After
     }
 
+    It 'loads data using sync' {
+        $Element = Find-SeElement -Id 'syncTable' -Driver $Driver 
+        $Before = $Element.FindElementByTagName('tbody').FindElementsByTagName('td')[0].Text
+        Find-SeElement -Id 'btnSync' -Driver $Driver | Invoke-SeClick
+        Start-Sleep 1
+        $After = $Element.FindElementByTagName('tbody').FindElementsByTagName('td')[0].Text
+        $Before | Should not be $After
+    }
 }

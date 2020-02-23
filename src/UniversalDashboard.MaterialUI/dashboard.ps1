@@ -500,6 +500,21 @@ New-UDDashboard -Title "Dashboard" -Pages @(
 
             New-UDTable -Id 'dynamicTable' -Data $DynamicData
         } -AutoRefresh -AutoRefreshInterval 2
+        New-UDDynamic -Content {
+            $DynamicData = @(
+                @{Dessert = 'Frozen yoghurt'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+                @{Dessert = 'Ice cream sandwich'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+                @{Dessert = 'Eclair'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+                @{Dessert = 'Cupcake'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+                @{Dessert = 'Gingerbread'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+            ) 
+
+            New-UDTable -Id 'syncTable' -Data $DynamicData
+        } -Id 'dynamicSection'
+
+        New-UDButton -Text 'Sync Table' -Id 'btnSync' -OnClick {
+            Sync-UDElement -Id 'dynamicSection'
+        }
     }
 
     New-UDPage -Name "Tabs" -Id 'Tabs' -Content {

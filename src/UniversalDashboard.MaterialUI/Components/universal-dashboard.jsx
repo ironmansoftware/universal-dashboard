@@ -59,10 +59,9 @@ export const withComponentFeatures = (component) => {
 
     const highOrderComponent = (props) => {
         const [componentState, setComponentState] = useState(props);
-        if (props.version !== componentState.version)
-        {
+        useEffect(() => {
             setComponentState(props);
-        }
+        }, [props.version])
 
         const notifyOfEvent = (eventName, value) => {
             UniversalDashboard.publish('element-event', {
@@ -74,16 +73,16 @@ export const withComponentFeatures = (component) => {
         }
     
         const incomingEvent = (type, event) => {
-            if (type == "setState")
+            if (type === "setState")
                 setComponentState({
                     ...componentState,
                     ...event.state
                 });
     
-            if (type == "getState")
+            if (type === "getState")
                 sendComponentState(event.requestId, componentState);
     
-            if (type == "addElement")
+            if (type === "addElement")
             {
                 let children = componentState.children;
                 if (children == null)
@@ -96,25 +95,20 @@ export const withComponentFeatures = (component) => {
                 setComponentState({children});
             }
     
-            if (type == "clearElement")
+            if (type === "clearElement")
             {
                 setComponentState({children: []});
             }
     
-            if (type == "removeElement")
+            if (type === "removeElement")
             {
                 // This isn't great
                 setComponentState({hidden: true});
             }
     
-            if (type = "syncElement") 
+            if (type === "syncElement") 
             {
-                getComponentData(componentState.id).then(x => setComponentState({
-                    ...componentState, 
-                    ...x
-                })).catch(x => {
-                    //TODO
-                });
+                setComponentState({...componentState, version: Math.random().toString(36).substr(2, 5) })
             }
         }
         

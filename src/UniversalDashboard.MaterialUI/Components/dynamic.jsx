@@ -3,14 +3,15 @@ import { CircularProgress } from '@material-ui/core';
 import { withComponentFeatures } from './universal-dashboard';
 import ReactInterval from 'react-interval';
 
-
-
 const UDDynamic = (props) => {
     const [component, setComponent] = useState({ loading: true });
 
     const loadData = () => {
         props.post(props.id, {}).then(x => {
-            setComponent({...x[0], loading: false, version: Math.random().toString(36).substr(2, 5)});
+            setComponent({...x[0], 
+                loading: false, 
+                version: Math.random().toString(36).substr(2, 5)
+            });
         });
     }
 
@@ -18,7 +19,7 @@ const UDDynamic = (props) => {
         loadData();
 
         return () => {}
-    }, true)
+    }, [props.version])
 
     if (component.loading) {
         return <CircularProgress />
