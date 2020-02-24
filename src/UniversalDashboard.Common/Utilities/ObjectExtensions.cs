@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
+using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Utilities
 {
@@ -18,6 +19,14 @@ namespace UniversalDashboard.Utilities
                     dictionary.Add(key.ToString(), ToDictionary(value));
                 }
 
+                return dictionary;
+            }
+            else if (obj is AbstractEndpoint endpoint)
+            {
+                var dictionary = new Dictionary<string, object>();
+                dictionary.Add("endpoint", true);
+                dictionary.Add("name", endpoint.Name);
+                dictionary.Add("async", endpoint.Asynchronous);
                 return dictionary;
             }
             else if (obj is PSObject psObject)

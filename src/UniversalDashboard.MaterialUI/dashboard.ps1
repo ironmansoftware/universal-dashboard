@@ -459,11 +459,11 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDTable -Id 'defaultTable' -Data $Data
 
         $Columns = @(
-            New-UDTableColumn -Field Dessert -Title "A Dessert"
-            New-UDTableColumn -Field Calories -Title Calories 
-            New-UDTableColumn -Field Fat -Title Fat 
-            New-UDTableColumn -Field Carbs -Title Carbs 
-            New-UDTableColumn -Field Protein -Title Protein 
+            New-UDTableColumn -Property Dessert -Title "A Dessert"
+            New-UDTableColumn -Property Calories -Title Calories 
+            New-UDTableColumn -Property Fat -Title Fat 
+            New-UDTableColumn -Property Carbs -Title Carbs 
+            New-UDTableColumn -Property Protein -Title Protein 
         )
 
         New-UDTable -Id 'customColumnsTable' -Data $Data -Columns $Columns
@@ -477,14 +477,14 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         ) 
 
         $Columns = @(
-            New-UDTableColumn -Field Dessert -Title Dessert -Render { 
+            New-UDTableColumn -Property Dessert -Title Dessert -Render { 
                 $Item = $Body | ConvertFrom-Json 
                 New-UDButton -Id "btn$($Item.Dessert)" -Text "Click for Dessert!" -OnClick { Show-UDToast -Message $Item.Dessert } 
             }
-            New-UDTableColumn -Field Calories -Title Calories 
-            New-UDTableColumn -Field Fat -Title Fat 
-            New-UDTableColumn -Field Carbs -Title Carbs 
-            New-UDTableColumn -Field Protein -Title Protein 
+            New-UDTableColumn -Property Calories -Title Calories 
+            New-UDTableColumn -Property Fat -Title Fat 
+            New-UDTableColumn -Property Carbs -Title Carbs 
+            New-UDTableColumn -Property Protein -Title Protein 
         )
 
         New-UDTable -Id 'customColumnsTableRender' -Data $Data -Columns $Columns -Sort -Export
@@ -514,6 +514,37 @@ New-UDDashboard -Title "Dashboard" -Pages @(
 
         New-UDButton -Text 'Sync Table' -Id 'btnSync' -OnClick {
             Sync-UDElement -Id 'dynamicSection'
+        }
+
+        $Columns = @(
+            New-UDTableColumn -Property Dessert -Title "A Dessert"
+            New-UDTableColumn -Property Calories -Title Calories 
+            New-UDTableColumn -Property Fat -Title Fat 
+            New-UDTableColumn -Property Carbs -Title Carbs 
+            New-UDTableColumn -Property Protein -Title Protein 
+        )
+
+        New-UDTable -Id 'loadDataTable' -Columns $Columns -LoadData {
+            $Query = $Body | ConvertFrom-Json
+
+            <# Query will contain
+                filters: []
+                orderBy: undefined
+                orderDirection: ""
+                page: 0
+                pageSize: 5
+                properties: (5) ["dessert", "calories", "fat", "carbs", "protein"]
+                search: ""
+                totalCount: 0
+            #>
+
+            @(
+                @{Dessert = 'Frozen yoghurt'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+                @{Dessert = 'Ice cream sandwich'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+                @{Dessert = 'Eclair'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+                @{Dessert = 'Cupcake'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+                @{Dessert = 'Gingerbread'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
+            ) | Out-UDTableData -Page 0 -TotalCount 5 -Properties $Query.Properties 
         }
     }
 

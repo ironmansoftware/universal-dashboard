@@ -135,6 +135,15 @@ export const withComponentFeatures = (component) => {
             notifyOfEvent,
             post
         }
+
+        Object.keys(componentState).forEach(x => {
+            if (componentState[x] != null && componentState[x].endpoint)
+            {
+                additionalProps[x] = (data) => {
+                    return post(componentState[x].name, data)
+                }
+            }
+        })
         
         if (componentState.hidden) {
             return <React.Fragment />
