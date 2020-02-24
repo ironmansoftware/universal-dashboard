@@ -30,6 +30,7 @@ import UDTreeView from './treeview';
 import UDDynamic from './dynamic';
 import UDForm from './form';
 import UDDatePicker from './datepicker';
+import UDTimePicker from './timepicker';
 
 import {
     Route,
@@ -68,6 +69,7 @@ UniversalDashboard.register('mu-treeview', UDTreeView);
 UniversalDashboard.register('dynamic', UDDynamic);
 UniversalDashboard.register('mu-form', UDForm);
 UniversalDashboard.register('mu-datepicker', UDDatePicker);
+UniversalDashboard.register('mu-timepicker', UDTimePicker);
 
 // Framework Support
 import UdPage from './framework/ud-page';

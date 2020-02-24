@@ -70,11 +70,6 @@ $manifestParameters = @{
         "New-UDTabs"
         "New-UDGrid"
         "New-UDTable"
-        "New-UDTableRow"
-        "New-UDTableCell"
-        "New-UDTableHeader"
-        "New-UDTableBody"
-        "Out-UDTableContent"
         "New-UDRow"
         "New-UDColumn"
         "New-UDSelect"
@@ -88,6 +83,7 @@ $manifestParameters = @{
         "Out-UDTableData"
         "New-UDForm"
         "New-UDDatePicker"
+        "New-UDTimePicker"
     )
     RequiredModules   = @()
 }
