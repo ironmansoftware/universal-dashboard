@@ -7,20 +7,17 @@ function New-UDSelect {
         [Parameter()]
         [String]$Label,
         [Parameter()]
-        [object]$OnChange,
+        [Endpoint]$OnChange,
         [Parameter()]
-        [object]$DefaultValue,
+        [string]$DefaultValue,
         [Parameter()]
-        [Switch]$Disabled
+        [Switch]$Disabled,
+        [Parameter()]
+        [Switch]$Multiple
     )
 
-    if ($null -ne $OnChange) {
-        if ($OnChange -is [scriptblock]) {
-            $OnChange = New-UDEndpoint -Endpoint $OnChange -Id ($Id + "onChange")
-        }
-        elseif ($OnChange -isnot [UniversalDashboard.Models.Endpoint]) {
-            throw "OnChange must be a script block or UDEndpoint"
-        }
+    if ($OnChange) {
+        $OnChange.Register($Id + "onChange", $PSCmdlet)
     }
 
     @{
@@ -31,9 +28,10 @@ function New-UDSelect {
         id = $id 
         options = $Option.Invoke()
         label = $Label
-        onChange = $OnChange.Name
+        onChange = $OnChange
         defaultValue = $DefaultValue
         disabled = $Disabled.IsPresent
+        multiple = $Multiple.IsPresent
     }
 }
 
@@ -65,8 +63,5 @@ function New-UDSelectOption {
         type = 'mu-select-option'
         name = $Name 
         value = $Value 
-        disabled = $Disabled.IsPresent
-        selected = $Selected.IsPresent
-        icon = $Icon
     }
 }
