@@ -113,6 +113,9 @@ $manifestParameters = @{
 		"New-UDFloatingActionButton"
 		"New-UDTabs"
 		"New-UDProgress"
+		"Out-UDTableData"
+		"New-UDForm"
+		"New-UDDatePicker"
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 
@@ -158,7 +161,6 @@ $manifestParameters = @{
 						"New-UDSideNavItem"
 						"Clear-UDCache"
 						"New-UDDynamic"
-						"Out-UDTableData"
 						)
 }
 

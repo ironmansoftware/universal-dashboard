@@ -195,6 +195,27 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDFloatingActionButton -Id 'fabLarge' -Icon user -Size large
     }
 
+    New-UDPage -Name 'Form' -Content {
+        New-UDForm -Id 'form' -Content {
+            New-UDTextbox -Id 'txtName' 
+            New-UDTextbox -Id 'txtLastName' 
+            New-UDCheckbox -Id 'chkYes' -Label YesOrNo
+
+            New-UDSelect -Label '1-3' -Id 'select' -Option {
+                New-UDSelectOption -Name "One" -Value 1
+                New-UDSelectOption -Name "Two" -Value 2
+                New-UDSelectOption -Name "Three" -Value 3
+            } 
+
+            New-UDSwitch -Id 'switchYes'
+
+            New-UDDatePicker -Id 'dateDate'
+        } -OnSubmit {
+            $Fields = $Body | ConvertFrom-Json
+            Set-TestData $Fields
+        }
+    }
+
     New-UDPage -Name "Grid" -Content {
         New-UDGrid -Container -Content {
             New-UDGrid -Item -SmallSize 6 -Content {

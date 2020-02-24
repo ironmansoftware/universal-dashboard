@@ -4,47 +4,52 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox"
 import CheckBoxIconBlank from "@material-ui/icons/CheckBoxOutlineBlank"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import classNames from "classnames";
+import {FormContext} from './form';
+import {withComponentFeatures} from './universal-dashboard';
 
-export default class UDCheckbox extends React.Component {
-  state = {
-    [this.props.id]: this.props.checked
-  };
+const UDCheckbox = (props) => {
+  const onChange = (event, onFieldChanged) => {
+    onFieldChanged({id: props.id, value: event.target.checked});
 
-  onChangeEvent = (id,event) => {
-    this.setState({ [id]: event.target.checked });
-    UniversalDashboard.publish("element-event", {
-      type: "clientEvent",
-      eventId: id + "onChange",
-      eventName: "",
-      eventData: ""
-    });
-  };
+    props.setState({ value : event.target.value})
 
-  render(){
-      return (
-        <FormControlLabel
-          disabled={this.props.disabled}
-          control={
-            <Checkbox
-              id={this.props.id}
-              className={classNames(this.props.className, "ud-mu-checkbox")}
-              checked={this.state[this.props.id]}
-              onChange={this.onChangeEvent.bind(this, this.props.id)}
-              value={this.props.id}
-              style={!this.props.disabled ? { ...this.props.style } : {color: null}}
-              color="default"
-              icon={
-                !this.props.icon ? <CheckBoxIconBlank/> : UniversalDashboard.renderComponent(this.props.icon)
-              }
-              checkedIcon={
-                !this.props.checkedIcon
-                  ? <CheckBoxIcon/>
-                  : UniversalDashboard.renderComponent(this.props.checkedIcon)
-              }/>
-          }
-          label={!this.props.label ? null : this.props.label}
-          labelPlacement={this.props.labelPlacement}
-        />
-      );
+    if (props.onChange) {
+        props.onChange(event.target.value)
+    }
   }
+
+  return (
+    <FormContext.Consumer>
+      {
+        ({onFieldChange}) => (
+          <FormControlLabel
+          disabled={props.disabled}
+            control={
+              <Checkbox
+                id={props.id}
+                className={classNames(props.className, "ud-mu-checkbox")}
+                checked={props.value}
+                onChange={(event) => onChange(event, onFieldChange)}
+                value={props.value}
+                style={!props.disabled ? { ...props.style } : {color: null}}
+                color="default"
+                icon={
+                  !props.icon ? <CheckBoxIconBlank/> : UniversalDashboard.renderComponent(props.icon)
+                }
+                checkedIcon={
+                  !props.checkedIcon
+                    ? <CheckBoxIcon/>
+                    : UniversalDashboard.renderComponent(props.checkedIcon)
+                }/>
+            }
+            label={!props.label ? null : props.label}
+            labelPlacement={props.labelPlacement}
+          />
+        )
+      }
+    </FormContext.Consumer>
+
+  );
 }
+
+export default withComponentFeatures(UDCheckbox);
