@@ -29,14 +29,14 @@ function New-UDTable {
         {
             $Columns = foreach($member in $item.Keys)
             {
-                New-UDTableColumn -Field $member
+                New-UDTableColumn -Property $member
             }
         }
         else 
         {
             $Columns = foreach($member in $item.PSObject.Properties)
             {
-                New-UDTableColumn -Field $member.Name
+                New-UDTableColumn -Property $member.Name
             }
         }
     }
@@ -68,7 +68,7 @@ function New-UDTableColumn
         [Parameter()]
         [string]$Id = [Guid]::NewGuid().ToString(),
         [Parameter(Mandatory)]
-        [string]$Field, 
+        [string]$Property, 
         [Parameter()]
         [string]$Title,
         [Parameter()]
@@ -83,7 +83,7 @@ function New-UDTableColumn
 
     if ($null -eq $Title -or $Title -eq '')
     {
-        $Title = $Field
+        $Title = $Property
     }
 
     if ($Render)
@@ -93,7 +93,7 @@ function New-UDTableColumn
 
     @{
         id = $Id 
-        field = $Field.ToLower()
+        field = $Property.ToLower()
         title = $Title 
         sort  = $Sort 
         filter = $Filter 
@@ -101,102 +101,36 @@ function New-UDTableColumn
         render = $Render.Name
     }
 }
-
-function New-UDTableCell {
+function Out-UDTableData {
     param(
+        [Parameter(ValueFromPipeline = $true, Mandatory)]
+        [object]$Data,
         [Parameter(Mandatory)]
-        [ScriptBlock]$Content
-    )
-    
-    @{
-        type = 'mu-table-cell'
-        content = $Content.Invoke()
-    }
-}
-
-function New-UDTableHeader {
-    param(
+        [int]$Page,
         [Parameter(Mandatory)]
-        [ScriptBlock]$Headers
-    )
-
-    @{
-        type = 'mu-table-header'
-        headers = $Headers.Invoke()
-    }
-}
-
-function New-UDTableBody {
-    param(
+        [int]$TotalCount,
         [Parameter(Mandatory)]
-        [ScriptBlock]$Rows
-    )
-
-    @{
-        type = 'mu-table-body'
-        rows = $Rows.Invoke()
-    }
-}
-function New-UDTableRow {
-    param(
-        [Parameter(Mandatory)]
-        [ScriptBlock]$Cells
-    )
-
-    @{
-        type = 'mu-table-row'
-        cells = $Cells.Invoke()
-    }
-}
-
-function Out-UDTableContent {
-    param(
-        [Parameter(ValueFromPipeline = $true)]
-        [object]$Data
+        [string[]]$Properties
     )
 
     Begin {
-        $Headers = $null
-        $TableRows = @()
+        $DataPage = @{
+            data = @() 
+            page = $Page 
+            totalCount = $TotalCount
+        }
     }
 
     Process 
     {
-        if ($null -eq $Headers)
-        {
-            $item = $Data | Select-Object -First 1
-            $Headers = New-UDTableHeader -Headers {
-                foreach($member in $item.PSObject.Properties)
-                {
-                    New-UDTableCell -Content { $member.Name }
-                }
-            }
+        $item = @{}
+        foreach($property in $Properties) {
+            $item[$property] = $Data[$property]
         }
-
-        foreach($item in $Data)
-        {
-            $TableRows += New-UDTableRow -Cells {
-                foreach($member in $item.PSObject.Properties)
-                {
-                    New-UDTableCell -Content { 
-                        if ($null -eq $member.value)
-                        {
-                            ""
-                        }
-                        else 
-                        {
-                            $member.value.ToString() 
-                        }
-                    }
-                }
-            }
-        }
+        $DataPage.data += $item
     }
 
     End {
-        $Headers 
-        New-UDTableBody -Rows { 
-            $TableRows
-        }
+        $DataPage
     }
 }

@@ -18,8 +18,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import SortArrowIcon from '@material-ui/icons/ArrowUpward';
 import ThirdStateCheckIcon from '@material-ui/icons/Remove';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
-import { CircularProgress } from '@material-ui/core';
 import { withComponentFeatures } from './universal-dashboard';
+import Skeleton from '@material-ui/lab/Skeleton';
 
 const icons = {
     Add: AddIcon,
@@ -52,10 +52,19 @@ const TableCell = (props) => {
 
     if (content.loading)
     {
-        return <CircularProgress />
+        return <Skeleton />
     }
 
     return props.render(content);
+}
+
+const toLowerCaseKeys = o => {
+    var accum = {};
+    Object.keys(o).forEach(x => {
+        accum[x.toLowerCase()] = o[x]
+    });
+
+    return accum;
 }
 
 const UDTable = (props) => {
@@ -69,7 +78,7 @@ const UDTable = (props) => {
         }
 
         return { 
-            field: column.field, 
+            field: column.field.toLowerCase(), 
             title: column.title, 
             filtering: column.filter, 
             sorting: column.sort, 
@@ -78,17 +87,29 @@ const UDTable = (props) => {
         }
     })
 
-    var data = props.data;
+    var data = null;
     if (props.loadData) {
         data = (query) => {
             return new Promise((resolve, reject) => {
-                props.loadData(query).then(x => resolve({
-                    data: x,
-                    page: 1,
-                    totalCount: x.length
-                }))
+
+                query.properties = columns.map(x => x.field);
+
+                //todo: show error message
+
+                props.loadData(query).then(x => {
+                    var result = x[0].data.map(y => toLowerCaseKeys(y));
+                    resolve({
+                        data: result,
+                        page: x[0].page,
+                        totalCount: x[0].totalCount
+                    })
+                })
             });
         }
+    }
+    else 
+    {
+        data = props.data.map(x => toLowerCaseKeys(x));
     }
 
     return (
@@ -103,7 +124,8 @@ const UDTable = (props) => {
                     filtering: props.filter,
                     search: props.search
                 }}
-                data={data} />
+                data={data} 
+            />
         </div>
     );
 }

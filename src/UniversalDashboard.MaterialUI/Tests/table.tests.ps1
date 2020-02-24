@@ -45,4 +45,10 @@ Describe "Table" {
         $After = $Element.FindElementByTagName('tbody').FindElementsByTagName('td')[0].Text
         $Before | Should not be $After
     }
+
+    
+    It 'has data using loadData' {
+        $Element = Find-SeElement -Id 'loadDataTable' -Driver $Driver 
+        $Element.FindElementByTagName('tbody').FindElementsByTagName('td')[0].Text | should be 'Frozen yoghurt'
+    }
 }

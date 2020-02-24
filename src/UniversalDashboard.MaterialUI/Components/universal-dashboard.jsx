@@ -137,7 +137,7 @@ export const withComponentFeatures = (component) => {
         }
 
         Object.keys(componentState).forEach(x => {
-            if (componentState[x].endpoint)
+            if (componentState[x] != null && componentState[x].endpoint)
             {
                 additionalProps[x] = (data) => {
                     return post(componentState[x].name, data)
