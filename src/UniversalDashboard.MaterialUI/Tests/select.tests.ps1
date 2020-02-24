@@ -25,6 +25,21 @@ Describe "select" {
 
         Find-SeElement -TagName 'li' -Driver $Driver | Select-Object -First 1 | Invoke-SeClick 
 
+        Start-Sleep 1
+
         Get-TestData | should be "1"
+    }
+
+    it 'can select multiple' {
+        Find-SeElement -TagName body -Driver $Driver | Invoke-SeClick
+        Start-Sleep 1
+        $Element = Find-SeElement -Id 'selectMultiple' -Driver $Driver
+        $Element.FindElementByXPath('../..') | Invoke-SeClick 
+
+        Find-SeElement -TagName 'li' -Driver $Driver | Select-Object -First 1 | Invoke-SeClick 
+
+        Start-Sleep 1
+
+        Get-TestData | should be 2
     }
 }

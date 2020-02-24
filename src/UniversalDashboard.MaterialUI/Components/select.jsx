@@ -26,7 +26,7 @@ const UDSelect = (props) => {
         props.setState({ value : event.target.value})
 
         if (props.onChange) {
-            props.notifyOfEvent('onChange', event.target.value)
+            props.onChange(event.target.value);
         }
     }
 
@@ -46,6 +46,10 @@ const UDSelect = (props) => {
         defaultValue = props.defaultValue || props.options[0].value;
         options = props.options.map(x => <MenuItem value={x.value}>{x.name}</MenuItem>)
 
+        if (props.multiple && !Array.isArray(defaultValue)) {
+            defaultValue = [defaultValue];
+        }
+
         if (!props.value) {
             props.setState({value: defaultValue})
         }
@@ -57,7 +61,13 @@ const UDSelect = (props) => {
                 ({onFieldChange}) => (
                     <FormControl className={classes.formControl} key={props.id}>
                         <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
-                        <Select defaultValue={defaultValue} input={<Input id={props.id} />} value={props.value} onChange={event => onChange(event, onFieldChange)}>
+                        <Select 
+                            defaultValue={defaultValue} 
+                            input={<Input id={props.id} />} 
+                            value={props.value} 
+                            onChange={event => onChange(event, onFieldChange)}
+                            multiple={props.multiple}
+                        >
                             {options}
                         </Select>
                     </FormControl>

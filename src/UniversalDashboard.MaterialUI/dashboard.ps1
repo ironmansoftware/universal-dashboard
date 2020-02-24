@@ -431,7 +431,10 @@ New-UDDashboard -Title "Dashboard" -Pages @(
             New-UDSelectOption -Name "One" -Value 1
             New-UDSelectOption -Name "Two" -Value 2
             New-UDSelectOption -Name "Three" -Value 3
-        } -DefaultValue 2 -OnChange { Set-TestData $EventData }
+        } -DefaultValue 2 -OnChange { 
+            $EventData = $Body | ConvertFrom-Json
+            Set-TestData $EventData 
+        }
 
         New-UDSelect -Id 'selectGrouped' -Option {
             New-UDSelectGroup -Name "Category 1" -Option {
@@ -456,10 +459,22 @@ New-UDDashboard -Title "Dashboard" -Pages @(
                 New-UDSelectOption -Name "Ten" -Value 10
                 New-UDSelectOption -Name "Eleven" -Value 11
                 New-UDSelectOption -Name "Twelve" -Value 12
-            } -DefaultValue 10 -OnChange { Set-TestData $EventData }
+            } -DefaultValue 10 -OnChange { 
+                $EventData = $Body | ConvertFrom-Json
+                Set-TestData $EventData 
+            }
 
             Set-UDElement -Id 'select' -Properties $Select
         }
+
+        New-UDSelect -Label '1-3' -Id 'selectMultiple' -Option {
+            New-UDSelectOption -Name "One" -Value 1
+            New-UDSelectOption -Name "Two" -Value 2
+            New-UDSelectOption -Name "Three" -Value 3
+        } -DefaultValue 2 -OnChange { 
+            $EventData = $Body | ConvertFrom-Json
+            Set-TestData $EventData.Length
+        } -Multiple
     }
 
     New-UDPage -Name 'Switch' -Content {
