@@ -86,6 +86,8 @@ $manifestParameters = @{
         "New-UDTreeNode"
         "New-UDTableColumn"
         "Out-UDTableData"
+        "New-UDForm"
+        "New-UDDatePicker"
     )
     RequiredModules   = @()
 }

@@ -11,7 +11,7 @@ function New-UDCheckBox {
         [PSTypeName('UniversalDashboard.Icon')]$CheckedIcon,
 
         [Parameter (Position = 3)]
-        [object]$OnChange,
+        [Endpoint]$OnChange,
 
         [Parameter (Position = 4)]
         [Hashtable]$Style,
@@ -36,13 +36,9 @@ function New-UDCheckBox {
 
     End {
 
-        if ($null -ne $OnChange) {
-            if ($OnChange -is [scriptblock]) {
-                $OnChange = New-UDEndpoint -Endpoint $OnChange -Id ($Id + "onChange")
-            }
-            elseif ($OnChange -isnot [UniversalDashboard.Models.Endpoint]) {
-                throw "OnClick must be a script block or UDEndpoint"
-            }
+        if ($OnChange)
+        {
+            $OnChange.Register($Id + "onChange", $PSCmdlet)
         }
 
         @{

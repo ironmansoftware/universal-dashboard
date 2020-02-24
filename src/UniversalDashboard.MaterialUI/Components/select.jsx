@@ -8,6 +8,7 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { withComponentFeatures } from './universal-dashboard';
+import {FormContext} from './form';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -20,7 +21,8 @@ const UDSelect = (props) => {
     const classes = useStyles();
     const groups = props.options.filter(m => m.type === 'mu-select-group');
 
-    const onChange = (event) => {
+    const onChange = (event, onFieldChange) => {
+        onFieldChange({id: props.id, value : event.target.value})
         props.setState({ value : event.target.value})
 
         if (props.onChange) {
@@ -50,12 +52,19 @@ const UDSelect = (props) => {
     }
 
     return (
-        <FormControl className={classes.formControl} key={props.id}>
-            <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
-            <Select defaultValue={defaultValue} input={<Input id={props.id} />} value={props.value} onChange={onChange}>
-                {options}
-            </Select>
-        </FormControl>
+        <FormContext.Consumer>
+            {
+                ({onFieldChange}) => (
+                    <FormControl className={classes.formControl} key={props.id}>
+                        <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
+                        <Select defaultValue={defaultValue} input={<Input id={props.id} />} value={props.value} onChange={event => onChange(event, onFieldChange)}>
+                            {options}
+                        </Select>
+                    </FormControl>
+                )
+            }
+        </FormContext.Consumer>
+
     )
 }
 

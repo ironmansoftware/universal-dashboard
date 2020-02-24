@@ -5,18 +5,13 @@ function New-UDSwitch {
         [Parameter()]
         [Switch]$Disabled,
         [Parameter()]
-        [object]$OnChange,
+        [Endpoint]$OnChange,
         [Parameter()]
         [bool]$Checked
     )
 
-    if ($null -ne $OnChange) {
-        if ($OnChange -is [scriptblock]) {
-            $OnChange = New-UDEndpoint -Endpoint $OnChange -Id ($Id + "onChange")
-        }
-        elseif ($OnChange -isnot [UniversalDashboard.Models.Endpoint]) {
-            throw "OnChange must be a script block or UDEndpoint"
-        }
+    if ($OnChange) {
+        $OnChange.Register($Id, $PSCmdlet)
     }
 
     @{
@@ -27,6 +22,6 @@ function New-UDSwitch {
 
         disabled = $Disabled.IsPresent 
         checked = $Checked 
-        onChange = $onChange.Name
+        onChange = $onChange
     }
 }
