@@ -463,7 +463,10 @@ New-UDDashboard -Title "Dashboard" -Pages @(
         New-UDSwitch -Id 'switchOff'
         New-UDSwitch -Id 'switchOffExplicit' -Checked $false
         New-UDSwitch -Id 'switchOn' -Checked $true
-        New-UDSwitch -Id 'switchOnChange' -OnChange { Set-TestData $EventData }
+        New-UDSwitch -Id 'switchOnChange' -OnChange { 
+            $EventData = $Body | ConvertFrom-Json
+            Set-TestData $EventData 
+        }
         New-UDSwitch -Id 'switchDisabled' -Disabled
     }
 

@@ -22,6 +22,6 @@ function New-UDSwitch {
 
         disabled = $Disabled.IsPresent 
         checked = $Checked 
-        onChange = $onChange.Name
+        onChange = $onChange
     }
 }

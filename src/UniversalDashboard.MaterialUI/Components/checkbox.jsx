@@ -11,10 +11,10 @@ const UDCheckbox = (props) => {
   const onChange = (event, onFieldChanged) => {
     onFieldChanged({id: props.id, value: event.target.checked});
 
-    props.setState({ value : event.target.value})
+    props.setState({ checked : event.target.checked})
 
     if (props.onChange) {
-        props.onChange(event.target.value)
+        props.onChange(event.target.checked)
     }
   }
 
@@ -28,19 +28,13 @@ const UDCheckbox = (props) => {
               <Checkbox
                 id={props.id}
                 className={classNames(props.className, "ud-mu-checkbox")}
-                checked={props.value}
+                checked={props.checked}
                 onChange={(event) => onChange(event, onFieldChange)}
-                value={props.value}
+                value={props.checked}
                 style={!props.disabled ? { ...props.style } : {color: null}}
                 color="default"
-                icon={
-                  !props.icon ? <CheckBoxIconBlank/> : UniversalDashboard.renderComponent(props.icon)
-                }
-                checkedIcon={
-                  !props.checkedIcon
-                    ? <CheckBoxIcon/>
-                    : UniversalDashboard.renderComponent(props.checkedIcon)
-                }/>
+                icon={ props.icon ? props.render(props.icon) : <CheckBoxIconBlank/> }
+                checkedIcon={ props.checkedIcon ? props.render(props.checkedIcon) :  <CheckBoxIcon/> }/>
             }
             label={!props.label ? null : props.label}
             labelPlacement={props.labelPlacement}

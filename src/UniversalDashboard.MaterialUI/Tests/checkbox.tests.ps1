@@ -40,7 +40,6 @@ Describe "checkbox" {
         Find-SeElement -Id 'demo-checkbox-icon-checked' -Driver $Driver | should not be $null
     }
 
-    
     It "should click and have test data" {
         Find-SeElement -Id 'chkChange' -Driver $Driver | Invoke-SeClick
         Get-TestData | Should be "OnChange"
