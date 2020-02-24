@@ -210,7 +210,10 @@ New-UDDashboard -Title "Dashboard" -Pages @(
             New-UDSwitch -Id 'switchYes'
 
             New-UDDatePicker -Id 'dateDate'
+
+            New-UDTimePicker -Id 'timePicker'
         } -OnSubmit {
+            Show-UDToast -Message $Body
             $Fields = $Body | ConvertFrom-Json
             Set-TestData $Fields
         }
