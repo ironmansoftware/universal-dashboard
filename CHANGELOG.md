@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New-UDForm as a replacement for UDInput by [adamdriscoll](https://github.com/adamdriscoll)
 - Support for vertical tabs in New-UDTabs by [adamdriscoll](https://github.com/adamdriscoll)
 - New-UDDynamic for specifying dynamic sections of pages by [adamdriscoll](https://github.com/adamdriscoll)
+- Multi-Select for New-UDSelect by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed
 
