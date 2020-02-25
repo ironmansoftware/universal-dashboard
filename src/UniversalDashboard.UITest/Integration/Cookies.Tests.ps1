@@ -1,8 +1,11 @@
 . "$PSScriptRoot\..\TestFramework.ps1"
 
+return
+
 Describe "Cookies" {
     Context "Set cookies" {
         $dashboard = New-UDDashboard -Title "Test" -Content {
+
             New-UDInput -Id "Input" -Title "Input Cookie" -Endpoint {
                 param([string]$Name, [string]$Value)
 

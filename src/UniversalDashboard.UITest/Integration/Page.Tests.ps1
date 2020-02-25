@@ -1,10 +1,12 @@
+return 
+
 . "$PSScriptRoot\..\TestFramework.ps1"
 
 Describe "New-UDPage" {
 
     Context "dynamic page with title" {
         $Page1 = New-UDPage -Name "Page" -Title 'Xyz' -Endpoint {
-            New-UDCard -Text "Home" -Id "Home"
+            
         }
 
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1)
@@ -18,11 +20,11 @@ Describe "New-UDPage" {
 
     Context "page with spaces and endpoint" {
         $Page1 = New-UDPage -Name "Page" -Content {
-            New-UDCard -Text "Home" -Id "Home"
+            New-UDElement -Tag "div" -Id "Home"
         }
 
         $Page2 = New-UDPage -Name "Page with Spaces" -Endpoint {
-            New-UDCard -Text "Home2" -Id "Home2"
+            New-UDElement -Tag "div" -Id "Home2"
         }
 
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
@@ -37,11 +39,11 @@ Describe "New-UDPage" {
     Context "cycling" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
-            New-UDCard -Text "Home" -Id "Home"
+            New-UDElement -Tag "div" -Id "Home"
         }
 
         $Page2 = New-UDPage -Url "/some/page" -Endpoint {
-            New-UDCard -Text "Some Page" -Id "Page"
+            New-UDElement -Tag "div" -Id "Page"
         }
         
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2) -CyclePages -CyclePagesInterval 2
@@ -57,11 +59,11 @@ Describe "New-UDPage" {
     Context "AutoReload" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
-            New-UDCard -Text "Home"
+            New-UDElement -Tag "div" -Id 'Home'
         }
 
         $Page2 = New-UDPage -Url "/mypage" -Endpoint {
-            New-UDCard -Text (Get-Date) -Id "page-with-spaces"
+            New-UDElement -Tag "div" -Id 'page-with-spaces' -Content { (Get-Date).ToString() }
         } -AutoRefresh -RefreshInterval 1 
 
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
@@ -82,11 +84,11 @@ Describe "New-UDPage" {
     Context "Titles" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
-            New-UDCard -Text "Home"
+            
         } -Title "My First Page"
 
         $Page2 = New-UDPage -Url "/mypage" -Endpoint {
-            New-UDCard -Text (Get-Date) -Id "page-with-spaces"
+            
         }  
 
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
@@ -108,41 +110,41 @@ Describe "New-UDPage" {
     Context "multi-page" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
-            New-UDCard -Text "Home" -id 'home-page'
+            New-UDElement -Tag "div" -Id 'home-page'
         }
 
         $Page2 = New-UDPage -Name "Page with spaces" -Content {
-            New-UDCard -Text "Page with spaces" -Id "page-with-spaces"
+            New-UDElement -Tag "div" -Id 'page-with-spaces'
         }
 
         $Page3 = New-UDPage -Name "Test" -Content {
-            New-UDCard -Text "TestPage" -Id "Test-Page"
+            New-UDElement -Tag "div" -Id 'Test-Page'
         }
 
         $Page4 = New-UDPage -Url "/level/:test" -Endpoint {
-            New-UDCard -Text "Level 1" -Id "Level1"
+            New-UDElement -Tag "div" -Id 'Level1'
         }
 
         $Page5 = New-UDPage -Url "/level/level2/:test" -Endpoint {
-            New-UDCard -Text "Level 2" -Id "Level2"
+            New-UDElement -Tag "div" -Id 'Level2'
         }
 
         $Page6 = New-UDPage -Name "/parent" -Content {
-            New-UDCard -Text "parent" -Id "parent"
+            New-UDElement -Tag "div" -Id 'parent'
         }
 
         $Page7 = New-UDPage -Name "/parent/child" -Content {
-            New-UDCard -Text "child" -Id "child"
+            New-UDElement -Tag "div" -Id 'child'
         }
 
         $Page8 = New-UDPage -Url "/parameter/:test" -Endpoint {
             param($test)
 
-            New-UDCard -Text $test -Id "parameter"
+            New-UDElement -Tag "div" -Id 'parameter' -Content { $test }
         }
 
         $Page9 = New-UDPage -Url "level1/level2" -Endpoint {
-            New-UDCard -Text "level1/level2" -Id "nofrontslash"
+            New-UDElement -Tag "div" -Id 'nofrontslash'
         }
         
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2, $Page3, $Page5, $Page4, $Page7, $Page6, $Page8, $Page9)
@@ -225,11 +227,11 @@ Describe "New-UDPage" {
     Context "Page with DefaultHomePage parameter" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
-            New-UDCard -Text "Home" -id 'home-page'
+            New-UDElement -Tag "div" -Id 'home-page'
         }
 
         $Page2 = New-UDPage -Name "Test" -DefaultHomePage -Content {
-            New-UDCard -Text "TestPage" -Id "Test-Page"
+            New-UDElement -Tag "div" -Id 'Test-Page' 
         }
         
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)
@@ -238,7 +240,7 @@ Describe "New-UDPage" {
         it "First page should be the one with DefualtHomePage parameter set to true" {
             Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
             Start-Sleep 3
-            (Find-SeElement -Id 'Test-Page' -Driver $Driver).text | Should be 'TestPage'
+            Find-SeElement -Id 'Test-Page' -Driver $Driver | Should not be $null
         }
 
         it "should redirect to home page when dashboard title was clicked" {
@@ -258,11 +260,11 @@ Describe "New-UDPage" {
     Context "single page with hyphen" {
 
         $Page1 = New-UDPage -Name "Home" -Content {
-            New-UDCard -Text "Home"
+            New-UDElement -Tag "div" -Id 'Test-Page' 
         }
 
         $Page2 = New-UDPage -Name "Page-with-hyphens" -Content {
-            New-UDCard -Text "Page-with-hyphens" -Id "page-with-hyphens"
+            New-UDElement -Tag "div" -Id 'page-with-hyphens' 
         }
 
         $dashboard = New-UDDashboard -Title "Test" -Pages @($Page1, $Page2)

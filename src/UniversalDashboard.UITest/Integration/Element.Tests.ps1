@@ -1,3 +1,5 @@
+return 
+
 . "$PSScriptRoot\..\TestFramework.ps1"
 
 Describe "Element" {
