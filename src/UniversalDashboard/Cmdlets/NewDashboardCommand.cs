@@ -13,7 +13,7 @@ using System.Collections;
 namespace UniversalDashboard.Cmdlets
 {
     [Cmdlet(VerbsCommon.New, "UDDashboard")]
-	public class NewDashboardCommand : PSCmdlet
+	public class NewDashboardCommand : PSCmdlet, IDynamicParameters
 	{
 		private readonly Logger Log = LogManager.GetLogger(nameof(NewDashboardCommand));
 
@@ -76,6 +76,13 @@ namespace UniversalDashboard.Cmdlets
 
 		internal string DefaultFramework { get; set; } = "MaterialUI";
 
+		public static RuntimeDefinedParameterDictionary DynamicParameters { get; } = new RuntimeDefinedParameterDictionary();
+
+        public object GetDynamicParameters()
+        {
+            return DynamicParameters;
+        }
+
         protected override void EndProcessing()
 	    {
 			if (EndpointInitialization == null)
@@ -100,6 +107,7 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.GeoLocation = GeoLocation;
 			dashboard.IdleTimeout = IdleTimeout;
             dashboard.Navigation = Navigation;
+			dashboard.Properties = MyInvocation.BoundParameters;
 
 			if (!AssetService.Instance.Frameworks.ContainsKey(DefaultFramework)) {
 				throw new Exception($"Invalid DefaultFramework specified. Valid frameworks are {AssetService.Instance.Frameworks.Keys.Aggregate((x,y) => x + ", " + y )}");

@@ -10,7 +10,7 @@ using UniversalDashboard.Utilities;
 namespace UniversalDashboard.Cmdlets
 {
 	[Cmdlet(VerbsCommon.New, "UDPage")]
-    public class NewPageCommand : CallbackCmdlet
+    public class NewPageCommand : CallbackCmdlet, IDynamicParameters
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(NewPageCommand));
 
@@ -29,7 +29,14 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter(Position = 4)]
 		public string Title { get; set; }
 
-		protected override void EndProcessing()
+		public static RuntimeDefinedParameterDictionary DynamicParameters { get; } = new RuntimeDefinedParameterDictionary();
+
+        public object GetDynamicParameters()
+        {
+            return DynamicParameters;
+        }
+
+        protected override void EndProcessing()
 		{
 			var page = new Page();
 			page.Name = Name;
@@ -40,6 +47,7 @@ namespace UniversalDashboard.Cmdlets
 			page.AutoRefresh = AutoRefresh;
 			page.RefreshInterval = RefreshInterval;
 			page.Title = Title;
+			page.Properties = MyInvocation.BoundParameters;
 
 			if (Content != null && Endpoint != null) {
 				throw new Exception("Content and Endpoint cannot both be specified.");

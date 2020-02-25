@@ -10,7 +10,7 @@ using System.Linq;
 namespace UniversalDashboard.Cmdlets
 {
 	[Cmdlet(VerbsCommon.New, "UDEndpoint", DefaultParameterSetName = "Generic")]
-    public class NewEndpointCommand : PSCmdlet
+    public class NewEndpointCommand : PSCmdlet, IDynamicParameters
     {
 		[Parameter(Mandatory = true)]
 		public ScriptBlock Endpoint { get; set; }
@@ -37,6 +37,13 @@ namespace UniversalDashboard.Cmdlets
         [Parameter(Mandatory = true, ParameterSetName = "Scheduled")]
         public EndpointSchedule Schedule { get; set; }
 
+        public static RuntimeDefinedParameterDictionary DynamicParameters { get; } = new RuntimeDefinedParameterDictionary();
+
+        public object GetDynamicParameters()
+        {
+            return DynamicParameters;
+        }
+
 	    protected override void EndProcessing()
 	    {
             var callback = new Endpoint
@@ -50,6 +57,7 @@ namespace UniversalDashboard.Cmdlets
 		    };
 
             callback.Variables = new Dictionary<string, object>();
+            callback.Properties = MyInvocation.BoundParameters;
 
             try
             {

@@ -12,7 +12,7 @@ using System.Net;
 namespace UniversalDashboard.Cmdlets
 {
     [Cmdlet(VerbsLifecycle.Start, "UDRestApi")]
-    public class StartRestApiCommand : PSCmdlet
+    public class StartRestApiCommand : PSCmdlet, IDynamicParameters
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(StartDashboardCommand));
 
@@ -54,8 +54,14 @@ namespace UniversalDashboard.Cmdlets
 		public IPAddress ListenAddress { get; set; } = IPAddress.Any;
 		[Parameter()]
 		public SwitchParameter DisableTelemetry { get; set; }
-		
 
+		public static RuntimeDefinedParameterDictionary DynamicParameters { get; } = new RuntimeDefinedParameterDictionary();
+
+        public object GetDynamicParameters()
+        {
+            return DynamicParameters;
+        }
+		
         protected override void EndProcessing()
 		{
 			Log.Info($"{Name} - {MyInvocation.ScriptName} - {AutoReload}");
@@ -92,6 +98,7 @@ namespace UniversalDashboard.Cmdlets
 			options.PublishedFolders = PublishedFolder;
 			options.ListenAddress = ListenAddress;
 			options.DisableTelemetry = DisableTelemetry;
+			options.Properties = MyInvocation.BoundParameters;
 
             try
             {
