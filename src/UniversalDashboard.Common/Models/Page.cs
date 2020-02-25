@@ -1,8 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace UniversalDashboard.Models
 {
@@ -26,7 +24,10 @@ namespace UniversalDashboard.Models
 		[JsonProperty("dynamic")]
 		public bool Dynamic { get; set; }
 
-				[JsonProperty("title")]
-				public string Title { get; set; }
+		[JsonProperty("title")]
+		public string Title { get; set; }
+
+		[JsonIgnore]
+		public Dictionary<string, object> Properties { get; set; }
     }
 }

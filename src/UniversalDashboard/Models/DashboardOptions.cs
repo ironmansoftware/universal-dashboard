@@ -23,5 +23,6 @@ namespace UniversalDashboard
         public PublishedFolder[] PublishedFolders { get; set; }
         public IPAddress ListenAddress { get; set; }
         public bool DisableTelemetry { get; set ;}
+        public Dictionary<string, object> Properties { get; set; }
     }
 }
