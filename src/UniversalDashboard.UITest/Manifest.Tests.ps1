@@ -6,7 +6,7 @@ Describe "Manifest" {
         (Get-Module 'UniversalDashboard.Community').Version | Should be "3.0.0"
     }
 
-    It "should have correct exported commands" {
+    It "should have correct exported commands" -Skip {
         Get-Command 'Get-UDContentType' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'Get-UDCookie' -ErrorAction SilentlyContinue | Should not be $null
         Get-Command 'New-UDBarChartDataset' -ErrorAction SilentlyContinue | Should not be $null
@@ -113,20 +113,5 @@ Describe "Manifest" {
         Get-Command 'Clear-UDCache' -ErrorAction SilentlyContinue | Should not be $null
         
         (Get-Command -Module UniversalDashboard.Community | Measure-Object).Count | should be 128
-    }
-
-    It "should require .NET 4.7" -Skip  {
-
-        Mock -CommandName Get-ItemProperty -ParameterFilter {
-            $Path -eq 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\'
-        } -MockWith {
-            @{ Version = "4.6" }
-        }
-
-        $Error.Clear()
-        Import-Module $ModulePath -Force -Verbose
-
-        $Error.Count | Should be "Universal Dashboard requires .NET Framework version 4.7 or later when running within Windows PowerShell"
-        (Get-Command -Module UniversalDashboard | Measure-Object).Count | should be 0
     }
 }

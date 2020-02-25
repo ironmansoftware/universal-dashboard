@@ -1,3 +1,5 @@
+return
+
 
 . "$PSScriptRoot\..\TestFramework.ps1"
 
@@ -98,47 +100,6 @@ Describe "Variable Scoping" {
                 (Invoke-RestMethod "http://localhost:10001/api/internal/component/element/element$_") | should be $_
             }
             
-        }
-    }
-
-    Context "Variable set for process" {
-
-        1..5 | % { Start-Process Notepad }
-
-        $Dashboard = New-UDDashboard -Title "Test" -Content {
-            New-UDTable -Title "Processes" -Headers @("Stop") -Endpoint {
-                Get-Process Notepad* | ForEach-Object {
-                    [PSCustomObject]@{
-                        Stop = New-UDButton -Id "btn$($_.Id)" -Text "Stop" -OnClick (
-                            New-UDEndpoint -Endpoint {
-                                Stop-Process $ArgumentList[0]
-                            } -ArgumentList $_
-                        ) 
-                    }
-                } | Out-UDTableData -Property @("Stop")
-            } 
-        }
-
-        Start-UDDashboard -Dashboard $Dashboard -Port 10001 -Force
-        Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-
-        It "should stop processes with click" {
-            Get-Process Notepad* | % {
-                Find-SeElement -Id "btn$($_.Id)" -Driver $Driver | Invoke-SeClick 
-            }
-
-            (Get-Process Notepad* | Measure-Object).Count | Should be 0
-
-            1..5 | % { Start-Process Notepad }
-
-            Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
-            Start-Sleep 2
-
-            Get-Process Notepad* | % {
-                Find-SeElement -Id "btn$($_.Id)" -Driver $Driver | Invoke-SeClick 
-            }
-
-            (Get-Process Notepad* | Measure-Object).Count | Should be 0
         }
     }
 }

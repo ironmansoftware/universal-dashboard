@@ -1,3 +1,4 @@
+return
 
 . "$PSScriptRoot\..\TestFramework.ps1"
 

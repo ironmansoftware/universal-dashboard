@@ -78,6 +78,7 @@ namespace UniversalDashboard
 		public void Start(DashboardOptions dashboardOptions)
 		{
 			IsRestApi = dashboardOptions.Dashboard == null;
+			Port = dashboardOptions.Port;
 
 			if (!dashboardOptions.DisableTelemetry)
 			{
@@ -196,8 +197,8 @@ namespace UniversalDashboard
 			if (this.Running && this.host != null)
 			{
 				this.Running = false;
-                
-				this.host.StopAsync(TimeSpan.FromSeconds(0)).ConfigureAwait(false);
+
+				this.host.StopAsync(TimeSpan.FromSeconds(1)).Wait();
 
                 DashboardService.Dispose();
 

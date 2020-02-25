@@ -1,4 +1,4 @@
-. "$PSScriptRoot\..\Selenium\Selenium.ps1"
+#requires -Module Selenium
 
 Import-Module "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
 Import-Module "$PSScriptRoot\..\output\Modules\UniversalDashboard.MaterialUI\UniversalDashboard.MaterialUI.psd1"
