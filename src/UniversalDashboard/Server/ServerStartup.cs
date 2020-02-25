@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace UniversalDashboard
 {
-    internal class ServerStartup
+    public class ServerStartup
 	{
 		private static readonly Logger Logger = LogManager.GetLogger(nameof(ServerStartup));
 		public IConfigurationRoot Configuration { get; }
