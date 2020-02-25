@@ -20,6 +20,7 @@ namespace UniversalDashboard.Models
         public Regex UrlRegEx { get; set; }
         public bool AcceptFileUpload {get; set;}
         public bool Asynchronous { get; set; }
+        public Dictionary<string, object> Properties { get; set; }
     }
 
     public class Part

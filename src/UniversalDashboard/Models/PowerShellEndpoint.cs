@@ -26,7 +26,6 @@ namespace UniversalDashboard.Models
 
         public override bool HasCallback => ScriptBlock != null;
 
-		public Dictionary<string, object> Properties { get; set; }
 
         public void Register(string id, PSCmdlet cmdlet)
         {
