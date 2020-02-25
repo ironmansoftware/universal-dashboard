@@ -15,6 +15,7 @@ using UniversalDashboard.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.IO;
 using UniversalDashboard.Utilities;
+using System.Collections.Generic;
 
 namespace UniversalDashboard
 {
@@ -23,6 +24,8 @@ namespace UniversalDashboard
 		private static readonly Logger Logger = LogManager.GetLogger(nameof(ServerStartup));
 		public IConfigurationRoot Configuration { get; }
 		private AutoReloader _reloader;
+        public static List<Action<IServiceCollection>> ConfigureServiceActions { get; } = new List<Action<IServiceCollection>>();
+        public static List<Action<IApplicationBuilder, Microsoft.AspNetCore.Hosting.IHostingEnvironment, ILoggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime>> ConfigureActions { get; } = new List<Action<IApplicationBuilder, Microsoft.AspNetCore.Hosting.IHostingEnvironment, ILoggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime>>();
 
         public ServerStartup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
 		{
@@ -39,6 +42,8 @@ namespace UniversalDashboard
 			_reloader = autoReloaderService?.ImplementationInstance as AutoReloader;
 
             var dashboardService = services.FirstOrDefault(m => m.ServiceType == typeof(IDashboardService)).ImplementationInstance as IDashboardService;
+
+            ConfigureServiceActions.ForEach(x => x(services));
 
             services.AddResponseCompression();
 			services.AddSignalR(hubOptions =>
@@ -143,6 +148,8 @@ namespace UniversalDashboard
                 ServeUnknownFileTypes = true,
 				ContentTypeProvider = provider
 			});
+
+            ConfigureActions.ForEach(x => x(app, env, loggerFactory, lifetime));
 
             var dashboardService = app.ApplicationServices.GetService(typeof(IDashboardService)) as IDashboardService;
 
