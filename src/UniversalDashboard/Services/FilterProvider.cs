@@ -20,6 +20,9 @@ namespace UniversalDashboard
 
         public void OnProvidersExecuting(FilterProviderContext context)
         {
+            var filterRemoval = context.ActionContext.HttpContext.RequestServices.GetService(typeof(IFilterRemoval)) as IFilterRemoval;
+            if (filterRemoval == null || !filterRemoval.ShouldRemove(context)) return;
+
             // remove authorize filters
             var authFilters = context.Results.Where(x => 
             x.Descriptor.Filter.GetType() == typeof(AuthorizeFilter)).ToList();
