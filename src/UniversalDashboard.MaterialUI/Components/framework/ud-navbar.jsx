@@ -1,13 +1,12 @@
 /** @jsx jsx */
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import TaggleColorMode from './togglecolormodes'
+import ToggleColorMode from './togglecolormodes'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -75,7 +74,7 @@ export default function UdNavbar(props) {
                 <Typography variant="h6">
                     {props.text}
                 </Typography>
-                <TaggleColorMode />
+                <ToggleColorMode />
             </Toolbar>
         </AppBar>
     ]
