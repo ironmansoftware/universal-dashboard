@@ -1,7 +1,6 @@
 import React, { Suspense, useState, useEffect } from 'react';
 
 import { getApiPath } from 'config';
-import { fetchGet } from './services/fetch-service.jsx';
 import PubSub from 'pubsub-js';
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
 
@@ -191,7 +190,7 @@ function loadJavascript(url, onLoad) {
 }
 
 function loadData(setDashboard, setLocation, history, location, setLoading) {
-    fetchGet("/api/internal/dashboard", function (json) {
+    UniversalDashboard.get("/api/internal/dashboard", function (json) {
 
         var dashboard = json.dashboard;
 
