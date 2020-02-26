@@ -1,3 +1,5 @@
+$Env:SkipMaterial = $true
+
 Import-Module (Join-Path $PSScriptRoot "../output/UniversalDashboard.Community.psd1")
 Import-Module (Join-Path $PSScriptRoot "UniversalDashboard.MaterialUI.psm1") -Force -ArgumentList $true
 

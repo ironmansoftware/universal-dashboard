@@ -82,6 +82,7 @@ UniversalDashboard.register('mu-drawer', UDDrawer);
 // Framework Support
 import UdPage from './framework/ud-page';
 import UDModal from './framework/ud-modal';
+import UdFooter from './framework/ud-footer';
 
 function getDefaultHomePage(dashboard) {
     return dashboard.pages.find(function (page) {
@@ -112,57 +113,59 @@ function redirectToHomePage(dashboard) {
     }
 }
 
-class MaterialUI extends React.Component {
-    constructor(props) {
-        super(props);
+const MaterialUI = (props) => {
+    var { dashboard } = props;
 
-        this.state = {
-            title: props.dashboard.title
+    var dynamicPages = dashboard.pages.map(function (x) {
+        if (!x.dynamic) return null;
+
+        if (!x.url.startsWith("/")) {
+            x.url = "/" + x.url;
         }
-    }
 
-    setTitle(title) {
-        this.setState({ title });
-    }
+        return <Route key={x.url} path={window.baseUrl + x.url} render={props => (
+            <UdPage 
+                id={x.id} dynamic={true} 
+                {...x} 
+                {...props} 
+                autoRefresh={x.autoRefresh} 
+                refreshInterval={x.refreshInterval} 
+                key={props.location.key} 
+                pages={dashboard.pages}
+            />
+        )} />
+    })
 
-    render() {
-        var { dashboard } = this.props;
+    var staticPages = dashboard.pages.map(function (x) {
+        if (x.dynamic) return null;
 
-        var component = this;
+        return <Route key={x.name} exact path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
+            <UdPage 
+                dynamic={false} 
+                {...x} 
+                {...props} 
+                autoRefresh={x.autoRefresh} 
+                refreshInterval={x.refreshInterval} 
+                key={props.location.key} 
+                pages={dashboard.pages}
+            />
+        )} />
+    })
 
-        var dynamicPages = dashboard.pages.map(function (x) {
-            if (!x.dynamic) return null;
+    return [
+        <Suspense fallback={<span />}>
+            <Switch>
+                {staticPages}
+                {dynamicPages}
+                <Route exact path={window.baseUrl + `/`} render={() => redirectToHomePage(dashboard)} />
+                <Route path={window.baseUrl + `/`} render={() => <NotFound />} />
+            </Switch>
+        </Suspense>,
+        <Suspense fallback={<div></div>}>
+            <UDModal />
+        </Suspense>
+    ]
 
-            if (!x.url.startsWith("/")) {
-                x.url = "/" + x.url;
-            }
-
-            return <Route key={x.url} path={window.baseUrl + x.url} render={props => (
-                <UdPage onTitleChanged={component.setTitle.bind(component)} id={x.id} dynamic={true} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key} />
-            )} />
-        })
-
-        var staticPages = dashboard.pages.map(function (x) {
-            if (x.dynamic) return null;
-
-            return <Route key={x.name} exact path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
-                <UdPage onTitleChanged={component.setTitle.bind(component)} dynamic={false} {...x} {...props} autoRefresh={x.autoRefresh} refreshInterval={x.refreshInterval} key={props.location.key} />
-            )} />
-        })
-
-        return [
-            <Suspense fallback={<span />}>
-                <Switch>
-                    {staticPages}
-                    {dynamicPages}
-                    <Route exact path={window.baseUrl + `/`} render={() => redirectToHomePage(dashboard)} />
-                    <Route path={window.baseUrl + `/`} render={() => <NotFound />} />
-                </Switch>
-            </Suspense>,
-            <Suspense fallback={<div></div>}>
-                <UDModal />
-            </Suspense>]
-    }
 }
 
 UniversalDashboard.renderDashboard = ({ dashboard, history }) => <MaterialUI dashboard={dashboard} history={history} />;

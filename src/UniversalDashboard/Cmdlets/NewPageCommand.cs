@@ -29,6 +29,9 @@ namespace UniversalDashboard.Cmdlets
 		[Parameter(Position = 4)]
 		public string Title { get; set; }
 
+		[Parameter]
+		public SwitchParameter Blank { get; set; }
+
 		public static RuntimeDefinedParameterDictionary DynamicParameters { get; } = new RuntimeDefinedParameterDictionary();
 
         public object GetDynamicParameters()
@@ -48,6 +51,7 @@ namespace UniversalDashboard.Cmdlets
 			page.RefreshInterval = RefreshInterval;
 			page.Title = Title;
 			page.Properties = MyInvocation.BoundParameters;
+			page.Blank = Blank;
 
 			if (Content != null && Endpoint != null) {
 				throw new Exception("Content and Endpoint cannot both be specified.");
