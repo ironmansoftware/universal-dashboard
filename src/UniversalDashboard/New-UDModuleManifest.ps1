@@ -26,6 +26,8 @@ $manifestParameters = @{
     DotNetFrameworkVersion = '4.7'
 	PowerShellVersion = '5.0'
 	FunctionsToExport = @(
+		"New-UDAppBar"
+		"New-UDDrawer"
 		"Out-UDChartData", 
 		"Out-UDGridData", 
 		"Out-UDTableData", 

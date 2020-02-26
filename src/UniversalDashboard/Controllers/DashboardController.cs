@@ -115,28 +115,7 @@ namespace UniversalDashboard.Controllers
                 {
                     stringBuilder.AppendLine(_dashboard?.Themes?.FirstOrDefault()?.RenderedContent);
                 }
-
-                if (_dashboard?.Navigation != null)
-                {
-                    stringBuilder.AppendLine($@"side-nav {{
-                            width: {_dashboard.Navigation.Width}px;
-                        }}");
-                }
-
-                if (_dashboard?.Navigation?.Fixed == true)
-                {
-                    stringBuilder.AppendLine($@"
-                        header, main, footer {{
-                          padding-left: {_dashboard.Navigation.Width}px;
-                        }}
-
-                        @media only screen and (max-width : 992px) {{
-                          header, main, footer {{
-                            padding-left: 0;
-                          }}
-                        }}");
-                }
-
+                
                 return new ContentResult()
                 {
                     Content = stringBuilder.ToString(),

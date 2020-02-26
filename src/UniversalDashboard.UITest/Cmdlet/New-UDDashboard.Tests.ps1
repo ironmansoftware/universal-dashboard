@@ -2,13 +2,9 @@
 
 Describe "New-UDDashboard" {
     It "Should set properties" {
-        $Dashboard = New-UDDashboard -Title "Test" -Content {  } -NavBarColor Black -NavBarFontColor Black -BackgroundColor Black -FontColor Black -GeoLocation 
+        $Dashboard = New-UDDashboard -Title "Test" -Content {  } -GeoLocation 
 
         $Dashboard.Title | Should be "Test"
-        $Dashboard.NavBarColor | should be "rgba(0, 0, 0, 1)"
-        $Dashboard.NavBarFontColor | should be "rgba(0, 0, 0, 1)"
-        $Dashboard.BackgroundColor | should be "rgba(0, 0, 0, 1)"
-        $Dashboard.FontColor | should be "rgba(0, 0, 0, 1)"
         $Dashboard.GeoLocation | should be $true 
     }
 

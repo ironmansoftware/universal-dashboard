@@ -1,69 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ErrorCard from './error-card.jsx';
 import ReactInterval from 'react-interval';
+import UDNavbar from './ud-navbar';
+import UDFooter from './ud-footer';
+import {withComponentFeatures} from '../universal-dashboard';
+import Container from '@material-ui/core/Container';
 
-export default class UdPage extends React.Component {
+const UDPage = (props) => {
 
-    constructor() {
-        super();
+    document.title = props.name;
 
-        this.state = {
-            components: [],
-            hasError: false,
-            errorMessage: ""
-        }
-    }
+    const [components, setComponents] = useState([]);
+    const [hasError, setHasError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    componentDidCatch(error, info) {
-        this.setState({ hasError: true, errorMessage: error.message });
-      }
-
-    componentWillMount() {
-        this.loadData();
-    }
-
-    componentDidMount() {
-        if (this.props.title) {
-            document.title = this.props.title;
-            this.props.onTitleChanged(this.props.title);
-        }
-    }
-
-    loadData() {
-        if (this.props.dynamic) {
-            this.loadDynamicPage();
+    const loadData = () => {
+        if (props.dynamic) 
+        {
+            loadDynamicPage();
         } else {
-            this.loadStaticPage();
-        }
+            loadStaticPage();
+        }        
     }
 
-    loadStaticPage() {
-        UniversalDashboard.get(`/api/internal/dashboard/page/${this.props.name}`, function(json){
+    const loadStaticPage = () => {
+        UniversalDashboard.get(`/api/internal/dashboard/page/${props.name}`, json => {
             if (json.error) {
-                this.setState({
-                    errorMessage: json.error.message,
-                    hasError: true
-                })
+                setErrorMessage(json.error.message);
+                setHasError(true);
             }
             else  {
-                this.setState({
-                    components: json.components,
-                    hasError: false
-                });
+                setComponents(json.components);
+                setHasError(false);
             }
-        }.bind(this));
+        });
     }
     
-    loadDynamicPage() {
-        if (!this.props.match) {
+    const loadDynamicPage = () => {
+        if (!props.match) {
             return;
         }
 
         var queryParams = {};
 
-        for (var k in this.props.match.params) {
-            if (this.props.match.params.hasOwnProperty(k)) {
-                queryParams[k] = this.props.match.params[k];
+        for (var k in props.match.params) {
+            if (props.match.params.hasOwnProperty(k)) {
+                queryParams[k] = props.match.params[k];
             }
         }
 
@@ -72,38 +54,55 @@ export default class UdPage extends React.Component {
             .map(k => esc(k) + '=' + esc(queryParams[k]))
             .join('&');
     
-        UniversalDashboard.get(`/api/internal/component/element/${this.props.id}?${query}`, function(json){
+        UniversalDashboard.get(`/api/internal/component/element/${props.id}?${query}`, json => {
             if (json.error) {
-                this.setState({
-                    errorMessage: json.error.message,
-                    hasError: true
-                })
+                setErrorMessage(json.error.message);
+                setHasError(true);
             }
-            else {
-                this.setState({
-                    components: json,
-                    hasError: false
-                });
+            else  {
+                setComponents(json.components);
+                setHasError(false);
             }
-        }.bind(this));
+        });
     }
 
-    render() {
-        if (this.state.hasError) {
-            return <ErrorCard message={this.state.errorMessage} id={this.props.id} title={"An error occurred on this page"}/>
-        }
+    useEffect(() => {
+        loadData();
+        return () => {}
+    }, true)
 
-        if (!this.state.components || !this.state.components.map) {
-            var parameterName = this.props.dynamic ? "Endpoint" : "Content";
-            return <ErrorCard message={`There was an error with your ${parameterName} for this page. You need to return at least one component from the ${parameterName}.`} />
-        } 
+    
+    if (hasError) {
+        return <ErrorCard message={errorMessage} id={props.id} title={"An error occurred on this page"}/>
+    }
 
-        var childComponents = this.state.components.map(function(x) {
-            return UniversalDashboard.renderComponent(x, this.props.history);
-        }.bind(this));
+    if (!components || !components.map) {
+        var parameterName = props.dynamic ? "Endpoint" : "Content";
+        return <ErrorCard message={`There was an error with your ${parameterName} for this page. You need to return at least one component from the ${parameterName}.`} />
+    } 
 
-        return <div>{childComponents}
-        <ReactInterval timeout={this.props.refreshInterval * 1000} enabled={this.props.autoRefresh} callback={this.loadData.bind(this)}/>
-        </div>;
+    var childComponents = components.map(x => {
+        return props.render(x, props.history);
+    });
+
+    if (props.blank)
+    {
+        return [
+            childComponents,
+            <ReactInterval timeout={props.refreshInterval * 1000} enabled={props.autoRefresh} callback={loadData}/>
+        ]
+    }
+    else 
+    {
+        return [
+            <UDNavbar pages={props.pages} title={props.name} history={props.history} id="defaultNavbar"/>,
+            <Container>
+                {childComponents}
+            </Container>,
+            <ReactInterval timeout={props.refreshInterval * 1000} enabled={props.autoRefresh} callback={loadData}/>,
+           // <UDFooter />
+        ]
     }
 }
+
+export default withComponentFeatures(UDPage);

@@ -29,5 +29,8 @@ namespace UniversalDashboard.Models
 
 		[JsonIgnore]
 		public Dictionary<string, object> Properties { get; set; }
+
+		[JsonProperty("blank")]
+		public bool Blank { get; set; }
     }
 }
