@@ -1,4 +1,4 @@
-New-UDDashboard -Title "Dashboard" -Pages @(
+New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
 
     New-UDPage -Name "Avatar" -Content {
         New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent'

@@ -1,7 +1,8 @@
+/** @jsx jsx */
 import React from 'react';
 import {Button} from 'react-materialize';
 import UdIcon from './ud-icon';
-
+import {jsx} from 'theme-ui'
 export default class UDButton extends React.Component {
     constructor(props) {
         super(props);
@@ -76,6 +77,7 @@ export default class UDButton extends React.Component {
                     disabled={this.state.disabled}
                     floating={this.state.floating} 
                     style={this.state.style}
+                    sx={{bg: 'primary', color: 'text'}}
                 >
                     {icon}
                     {this.state.text}

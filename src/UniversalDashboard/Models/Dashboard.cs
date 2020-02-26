@@ -13,7 +13,7 @@ namespace UniversalDashboard.Models
 		public Guid Id { get; set;}
         [JsonProperty("title")]
         public string Title { get; set; }
-		[JsonIgnore]
+		[JsonProperty("themes")]
 		public Theme[] Themes { get; set; }
         [JsonProperty("navBarColor")]
         public string NavBarColor { get; set; }

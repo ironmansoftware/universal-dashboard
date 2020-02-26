@@ -1,6 +1,7 @@
+/** @jsx jsx */
 import React from 'react';
 import UdLink from './ud-link.jsx'
-
+import {jsx} from 'theme-ui'
 export default class UdFooter extends React.Component {
     render() {
         if (this.props.footer == null) {
@@ -22,8 +23,8 @@ export default class UdFooter extends React.Component {
             var backgroundColor = this.props.footer.backgroundColor ? this.props.footer.backgroundColor : this.props.backgroundColor;
             var fontColor = this.props.footer.fontColor ? this.props.footer.fontColor : this.props.fontColor;
 
-            return <footer className="page-footer ud-footer" style={{backgroundColor: backgroundColor, color: fontColor}}>
-                <div className="footer-copyright" style={{backgroundColor: backgroundColor, color: fontColor}}>
+            return <footer className="page-footer ud-footer" sx={{bg:'primary', color:'text'}}>
+                <div className="footer-copyright" sx={{bg: 'primary', color: 'text'}}>
                     <div className="container">
                         {this.props.footer.copyright}
                         <div className="right">

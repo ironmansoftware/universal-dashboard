@@ -1,10 +1,11 @@
+/** @jsx jsx */
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import ReactInterval from "react-interval";
 import classNames from "classnames"
-
+import {jsx} from 'theme-ui'
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -80,6 +81,7 @@ export class UdPaper extends React.Component {
         height={height}
         width={width}
         square={square}  
+        sx={{ bg: 'secondary', color: 'text'}}
       >
         
         {UniversalDashboard.renderComponent(content)}

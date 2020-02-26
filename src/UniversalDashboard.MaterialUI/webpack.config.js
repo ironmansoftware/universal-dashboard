@@ -44,7 +44,8 @@ module.exports = (env) => {
       $: "$",
       'react': 'react',
       'react-dom': 'reactdom',
-      'react-router-dom': 'reactrouterdom'
+      'react-router-dom': 'reactrouterdom',
+       'theme-ui': 'themeui'
     },
     resolve: {
       extensions: ['.json', '.js', '.jsx'],

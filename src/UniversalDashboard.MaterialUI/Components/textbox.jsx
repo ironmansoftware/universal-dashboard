@@ -1,7 +1,9 @@
+/** @jsx jsx */
 import React from 'react';
 import {withComponentFeatures} from './universal-dashboard';
 import TextField from '@material-ui/core/TextField';
 import {FormContext} from './form';
+import {jsx} from 'theme-ui'
 
 const UDTextField = (props) => {
     return (
@@ -13,7 +15,7 @@ const UDTextField = (props) => {
                         onFieldChange({id: props.id, value: e.target.value})
                     }
 
-                    return <TextField {...props} type={props.textType} onChange={onChange}/>
+                    return <TextField  {...props} sx={{bg: 'primary'}} type={props.textType} onChange={onChange}/>
                 }
             }
         </FormContext.Consumer>
