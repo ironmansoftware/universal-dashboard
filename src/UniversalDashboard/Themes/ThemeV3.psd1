@@ -17,6 +17,25 @@
                 muted      = "#ccc"
             }
         }
-        variants = @{ }
+        avatars = @{
+            small = @{
+                width = '24px'
+                height = '24px'
+                margin = '16px'
+                borderRadius = '50%'
+            }
+            medium = @{
+                width = '48px'
+                height = '48px'
+                margin = '16px'
+                borderRadius = '50%'
+            }
+            large = @{
+                width = '96px'
+                height = '96px'
+                margin = '16px'
+                borderRadius = '50%'
+            }
+        }   
     }
 }

@@ -81,7 +81,7 @@ export class UdPaper extends React.Component {
         height={height}
         width={width}
         square={square}  
-        sx={{ bg: 'secondary', color: 'text'}}
+        sx={{ bg: 'primary', color: 'text'}}
       >
         
         {UniversalDashboard.renderComponent(content)}

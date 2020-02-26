@@ -35,7 +35,7 @@ export default function FloatingActionButton(props) {
 
       return (
         <div className={classes.root}>
-          <Fab sx={{ bg: 'secondary', color: 'text' }} onClick={() => onClick(props)} size={props.size} id={props.id}>
+          <Fab sx={{ bg: 'primary', color: 'text' }} onClick={() => onClick(props)} size={props.size} id={props.id}>
              {icon}
           </Fab>
         </div>

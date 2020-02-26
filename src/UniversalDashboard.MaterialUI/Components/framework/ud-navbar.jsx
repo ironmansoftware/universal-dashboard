@@ -1,11 +1,13 @@
+/** @jsx jsx */
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
+import TaggleColorMode from './togglecolormodes'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import MenuIcon from '@material-ui/icons/Menu';
 import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+
 
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -14,7 +16,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Drawer from '@material-ui/core/Drawer';
-
+import {jsx} from 'theme-ui'
 const useStyles = makeStyles({
     list: {
       width: 250,
@@ -197,12 +199,13 @@ export default function UdNavbar(props) {
 
     return [
         drawer,
-        <AppBar position="static">
+        <AppBar position="static" sx={{bg: 'primary', color: 'text'}}>
             <Toolbar>
                 {menuButton}
                 <Typography variant="h6">
                     {logo} {props.text}
                 </Typography>
+                <TaggleColorMode />
             </Toolbar>
         </AppBar>
     ]

@@ -26,7 +26,7 @@ import { KeyboardTimePicker, MuiPickersUtilsProvider } from '@material-ui/picker
         <FormContext.Consumer>
             {
                 ({onFieldChange}) => (
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils} >
                         <KeyboardTimePicker
                             {...props}
                             value={value}

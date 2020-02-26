@@ -4,6 +4,7 @@ import { getApiPath } from 'config'
 import PubSub from 'pubsub-js'
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
 import { ThemeProvider } from 'theme-ui'
+import { ColorModeProvider } from '@theme-ui/color-modes'
 import toaster from './services/toaster'
 import LazyElement from './basics/lazy-element.jsx'
 import copy from 'copy-to-clipboard'
@@ -192,7 +193,6 @@ function loadJavascript(url, onLoad) {
   document.body.appendChild(jsElm)
 }
 
-
 function loadData(setDashboard, setLocation, history, location, setLoading) {
   UniversalDashboard.get(
     '/api/internal/dashboard',
@@ -289,18 +289,20 @@ function Dashboard({ history }) {
     var pluginComponents = UniversalDashboard.provideDashboardComponents()
 
     console.log(dashboard.themes)
+    const {colors, modes, ...rest} = dashboard.themes[0].definition
     let theme = {
       colors: {
-        ...dashboard.themes[0].definition.colors,
+        ...colors,
         modes: {
-          ...dashboard.themes[0].definition.modes,
+          ...modes,
         },
       },
+      ...rest,
     }
     console.log(theme)
     return (
       <ThemeProvider theme={theme}>
-        {[component, pluginComponents]}
+        <ColorModeProvider>{[component, pluginComponents]}</ColorModeProvider>
       </ThemeProvider>
     )
   } catch (err) {
