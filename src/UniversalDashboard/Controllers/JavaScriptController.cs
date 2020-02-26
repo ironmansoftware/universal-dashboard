@@ -35,6 +35,11 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
         public IActionResult Plugin() {
             var stringBuilder = new StringBuilder();
             foreach(var plugin in AssetService.Instance.Plugins) {
+
+                if (plugin.StartsWith("http")) {
+                    return Redirect(plugin);
+                }
+
                 var pluginContent = System.IO.File.ReadAllText(plugin);
                 stringBuilder.AppendLine(pluginContent);
             }
