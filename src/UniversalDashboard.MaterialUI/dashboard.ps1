@@ -1,5 +1,16 @@
 New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
 
+    New-UDPage -Name 'AppBar' -Content {
+
+        $Drawer = New-UDDrawer -Content {
+            New-UDList -Content {
+                New-UDListItem -Label 'Home'
+            }
+        }
+
+        New-UDAppBar -Content { New-UDTypography -Text 'Hello' } -Drawer $Drawer
+    }
+
     New-UDPage -Name "Avatar" -Content {
         New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent'
 

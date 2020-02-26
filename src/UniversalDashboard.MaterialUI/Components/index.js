@@ -31,6 +31,10 @@ import UDDynamic from './dynamic';
 import UDForm from './form';
 import UDDatePicker from './datepicker';
 import UDTimePicker from './timepicker';
+import UDNavbar from './framework/ud-navbar';
+import UDFooter from './framework/ud-footer';
+import UDAppBar from './appbar';
+import UDDrawer from './drawer';
 
 import {
     Route,
@@ -70,12 +74,13 @@ UniversalDashboard.register('dynamic', UDDynamic);
 UniversalDashboard.register('mu-form', UDForm);
 UniversalDashboard.register('mu-datepicker', UDDatePicker);
 UniversalDashboard.register('mu-timepicker', UDTimePicker);
+UniversalDashboard.register('ud-navbar', UDNavbar);
+UniversalDashboard.register('ud-footer', UDFooter);
+UniversalDashboard.register('mu-appbar', UDAppBar);
+UniversalDashboard.register('mu-drawer', UDDrawer);
 
 // Framework Support
 import UdPage from './framework/ud-page';
-import UDNavbar from './framework/ud-navbar';
-import UdFooter from './framework/ud-footer';
-import PageCycler from './framework/page-cycler';
 import UDModal from './framework/ud-modal';
 
 function getDefaultHomePage(dashboard) {
@@ -112,19 +117,12 @@ class MaterialUI extends React.Component {
         super(props);
 
         this.state = {
-            title: props.dashboard.title,
-            pausePageCycle: false
+            title: props.dashboard.title
         }
     }
 
     setTitle(title) {
         this.setState({ title });
-    }
-
-    togglePageCycle() {
-        this.setState({
-            pausePageCycle: !this.state.pausePageCycle
-        })
     }
 
     render() {
@@ -152,20 +150,7 @@ class MaterialUI extends React.Component {
             )} />
         })
 
-        return [<header>
-            <UDNavbar backgroundColor={dashboard.navBarColor}
-                fontColor={dashboard.navBarFontColor}
-                text={this.state.title}
-                links={dashboard.navbarLinks}
-                logo={dashboard.navBarLogo}
-                pages={dashboard.pages}
-                togglePaused={this.togglePageCycle.bind(this)}
-                showPauseToggle={dashboard.cyclePages}
-                history={this.props.history}
-                navigation={dashboard.navigation}
-            />
-        </header>,
-        <main style={{ background: dashboard.backgroundColor, color: dashboard.fontColor }}>
+        return [
             <Suspense fallback={<span />}>
                 <Switch>
                     {staticPages}
@@ -173,18 +158,10 @@ class MaterialUI extends React.Component {
                     <Route exact path={window.baseUrl + `/`} render={() => redirectToHomePage(dashboard)} />
                     <Route path={window.baseUrl + `/`} render={() => <NotFound />} />
                 </Switch>
-            </Suspense>
-        </main>,
-        <Suspense fallback={<div></div>}>
-            <UDModal />
-        </Suspense>,
-        <UdFooter backgroundColor={dashboard.navBarColor} fontColor={dashboard.navBarFontColor} footer={dashboard.footer} />,
-        <Route path={window.baseUrl + `/`} render={function (x) {
-            return <Suspense fallback={<div></div>}>
-                <PageCycler history={x.history} pages={dashboard.pages} cyclePages={dashboard.cyclePages && !this.state.pausePageCycle} cyclePagesInterval={dashboard.cyclePagesInterval} />
-            </Suspense>
-        }.bind(this)}
-        />]
+            </Suspense>,
+            <Suspense fallback={<div></div>}>
+                <UDModal />
+            </Suspense>]
     }
 }
 

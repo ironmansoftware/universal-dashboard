@@ -45,6 +45,8 @@ $manifestParameters = @{
     Tags              = @("universaldashboard", "material UI", "materialdesign")
     ReleaseNotes      = "Initial release"
     FunctionsToExport = @(
+        "New-UDAppBar"
+        "New-UDDrawer"
         "New-UDChip", 
         "New-UDPaper", 
         "New-UDIconButton", 
