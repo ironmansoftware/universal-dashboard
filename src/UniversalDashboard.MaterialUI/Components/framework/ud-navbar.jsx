@@ -16,6 +16,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Drawer from '@material-ui/core/Drawer';
 import {jsx} from 'theme-ui'
 
+import { withComponentFeatures } from './../universal-dashboard'
+
 const useStyles = makeStyles({
     list: {
       width: 250,
@@ -25,7 +27,7 @@ const useStyles = makeStyles({
     },
   });
 
-export default function UdNavbar(props) {
+const UdNavbar = (props) => {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
@@ -72,10 +74,13 @@ export default function UdNavbar(props) {
             <Toolbar>
                 {menuButton}
                 <Typography variant="h6">
-                    {props.text}
+                    {props.title}
                 </Typography>
                 <ToggleColorMode />
+                {props.children}
             </Toolbar>
         </AppBar>
     ]
 }
+
+export default withComponentFeatures(UdNavbar);

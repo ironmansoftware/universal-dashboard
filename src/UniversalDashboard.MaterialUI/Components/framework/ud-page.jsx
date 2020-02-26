@@ -95,7 +95,7 @@ const UDPage = (props) => {
     else 
     {
         return [
-            <UDNavbar pages={props.pages} title={props.name} history={props.history} />,
+            <UDNavbar pages={props.pages} title={props.name} history={props.history} id="defaultNavbar"/>,
             <Container>
                 {childComponents}
             </Container>,

@@ -41,7 +41,7 @@ const UDAppBar = props => {
   }
 
   return [
-    <AppBar>
+    <AppBar position={props.position}>
         <Toolbar>
             {drawerButton}
             {props.render(props.children)}
