@@ -1,7 +1,6 @@
 import React, { Suspense, useState, useEffect } from 'react'
 
 import { getApiPath } from 'config'
-import { fetchGet } from './services/fetch-service.jsx'
 import PubSub from 'pubsub-js'
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
 import { ThemeProvider } from 'theme-ui'
@@ -9,13 +8,7 @@ import toaster from './services/toaster'
 import LazyElement from './basics/lazy-element.jsx'
 import copy from 'copy-to-clipboard'
 
-<<<<<<< HEAD
 var connection
-=======
-import { getApiPath } from 'config';
-import PubSub from 'pubsub-js';
-import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr';
->>>>>>> c0336193febf2c1565ef336099b02726e36f6526
 
 function connectWebSocket(sessionId, location, setLoading) {
   if (connection) {
@@ -199,14 +192,9 @@ function loadJavascript(url, onLoad) {
   document.body.appendChild(jsElm)
 }
 
-<<<<<<< HEAD
-=======
-function loadData(setDashboard, setLocation, history, location, setLoading) {
-    UniversalDashboard.get("/api/internal/dashboard", function (json) {
->>>>>>> c0336193febf2c1565ef336099b02726e36f6526
 
 function loadData(setDashboard, setLocation, history, location, setLoading) {
-  fetchGet(
+  UniversalDashboard.get(
     '/api/internal/dashboard',
     function(json) {
       var dashboard = json.dashboard
