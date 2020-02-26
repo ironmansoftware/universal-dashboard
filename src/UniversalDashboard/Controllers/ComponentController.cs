@@ -44,7 +44,7 @@ namespace UniversalDashboard.Controllers
             _connectionManager = connectionManager;
         }
 
-        private async Task<IActionResult> RunScript(AbstractEndpoint endpoint, Dictionary<string, object> parameters = null, bool noSerialization = false)
+        public virtual async Task<IActionResult> RunScript(AbstractEndpoint endpoint, Dictionary<string, object> parameters = null, bool noSerialization = false)
         {
             try {
                 var variables = new Dictionary<string, object> {

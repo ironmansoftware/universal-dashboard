@@ -25,6 +25,7 @@ namespace UniversalDashboard
 		public IConfigurationRoot Configuration { get; }
 		private AutoReloader _reloader;
         public static List<Action<IServiceCollection>> ConfigureServiceActions { get; } = new List<Action<IServiceCollection>>();
+        public static List<Action<IMvcBuilder>> ConfigureMvcActions { get; } = new List<Action<IMvcBuilder>>();
         public static List<Action<IApplicationBuilder, Microsoft.AspNetCore.Hosting.IHostingEnvironment, ILoggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime>> ConfigureActions { get; } = new List<Action<IApplicationBuilder, Microsoft.AspNetCore.Hosting.IHostingEnvironment, ILoggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime>>();
 
         public ServerStartup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
@@ -61,9 +62,12 @@ namespace UniversalDashboard
 			services.AddDirectoryBrowser();
 			services.AddMemoryCache();
             services.AddSingleton(new ConnectionManager());
-            services.AddMvc().AddJsonOptions(x => {
+            
+            var mvc = services.AddMvc().AddJsonOptions(x => {
                 x.SerializerSettings.ContractResolver = new CustomContractResolver();
             });
+
+            ConfigureMvcActions.ForEach(x => x(mvc));
 
             if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) 
             {

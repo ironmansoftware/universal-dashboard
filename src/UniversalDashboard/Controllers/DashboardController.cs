@@ -35,9 +35,16 @@ namespace UniversalDashboard.Controllers
 		[Authorize]
 		[HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-			Log.Debug("Index");
+            return await IndexImpl();
+        }
+
+        public virtual async Task<IActionResult> IndexImpl()
+        {
+            await Task.CompletedTask;
+
+            Log.Debug("Index");
 
             Guid sessionId;
             if (HttpContext.Session.TryGetValue("SessionId", out byte[] sessionIdBytes))
@@ -58,12 +65,25 @@ namespace UniversalDashboard.Controllers
         [Authorize]
         [Route("page/{*pageName}")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public Page Page()
+        public async Task<IActionResult> Page()
         {
+            return await PageImpl();
+        }
+
+        public virtual async Task<IActionResult> PageImpl()
+        {
+            await Task.CompletedTask;
+
             var page = HttpContext.GetRouteValue("pageName") as string;
 
             Log.Debug($"Index - Page = {page}");
-            return _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
+            var pageModel = _dashboard.Pages.FirstOrDefault(m => m.Name?.Replace("-", " ").Equals(page?.Replace("-", " "), StringComparison.OrdinalIgnoreCase) == true);
+            if (pageModel != null)
+            {
+                return Json(pageModel);
+            }
+
+            return NotFound();
         }
 
 		[Route("theme")]
@@ -74,7 +94,7 @@ namespace UniversalDashboard.Controllers
             {
                 var stringBuilder = new StringBuilder();
 
-                var siteCss = Path.Combine(Path.GetDirectoryName(GetType().Assembly.Location), "Styles", "site.css");
+                var siteCss = Path.Combine(Path.GetDirectoryName(typeof(DashboardController).Assembly.Location), "Styles", "site.css");
 
                 stringBuilder.AppendLine(System.IO.File.ReadAllText(siteCss));
 
