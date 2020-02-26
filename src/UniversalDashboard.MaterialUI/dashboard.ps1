@@ -1,15 +1,15 @@
 New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
 
     New-UDPage -Name "Avatar" -Content {
-        New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent'
+        New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent' -Variant small
 
-        New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarStyle' -Style @{width = 80; height = 80}
+        New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarStyle' -Variant medium
 
         $AvatarProps = @{
             Image = 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4'
             Alt = 'alon gvili avatar'
             Id = 'avatarSquare'
-            Style = @{width = 150; height = 150; borderRadius = '4px'}
+            variant = 'large'
         }
         New-UDAvatar @AvatarProps 
     }

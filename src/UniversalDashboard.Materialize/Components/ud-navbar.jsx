@@ -1,6 +1,7 @@
+/** @jsx jsx */
 import React from 'react';
 import UdNavigation from './ud-navigation.jsx';
-
+import {jsx} from 'theme-ui'
 export default class UdNavbar extends React.Component {
 
     signOut() {
@@ -38,7 +39,7 @@ export default class UdNavbar extends React.Component {
             href = window.baseUrl + `/${dPage.name.replace(/ /g, "-")}`;
         }
 
-        return <nav style={{backgroundColor: this.props.backgroundColor, color: this.props.fontColor}} className="ud-navbar">
+        return <nav className="ud-navbar" sx={{ bg: 'secondary', color: 'text'}}>
                     <UdNavigation 
                         pages={this.props.pages} 
                         togglePaused={this.props.togglePaused} 

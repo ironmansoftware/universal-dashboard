@@ -4,7 +4,7 @@ function New-UDAvatar {
         [Parameter ()][string]$Image,
         [Parameter ()][string]$Alt,
         [Parameter ()][string]$ClassName,
-        [Parameter ()][hashtable]$Style
+        [Parameter ()][string]$Variant
     )
     End {
         $Avatar = @{
@@ -15,7 +15,7 @@ function New-UDAvatar {
             id       = $Id
             image    = $Image
             alt      = $Alt
-            style    = $Style
+            variant = $Variant
             className = $ClassName
         }
         $Avatar.PSTypeNames.Insert(0, "UniversalDashboard.MaterialUI.Avatar") | Out-Null

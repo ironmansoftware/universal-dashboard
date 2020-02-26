@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import React from "react";
 import Checkbox from "@material-ui/core/Checkbox";
 import CheckBoxIcon from "@material-ui/icons/CheckBox"
@@ -6,6 +7,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel"
 import classNames from "classnames";
 import {FormContext} from './form';
 import {withComponentFeatures} from './universal-dashboard';
+import {jsx} from 'theme-ui'
 
 const UDCheckbox = (props) => {
   const onChange = (event, onFieldChanged) => {
@@ -34,7 +36,8 @@ const UDCheckbox = (props) => {
                 style={!props.disabled ? { ...props.style } : {color: null}}
                 color="default"
                 icon={ props.icon ? props.render(props.icon) : <CheckBoxIconBlank/> }
-                checkedIcon={ props.checkedIcon ? props.render(props.checkedIcon) :  <CheckBoxIcon/> }/>
+                checkedIcon={ props.checkedIcon ? props.render(props.checkedIcon) :  <CheckBoxIcon/> }
+                sx={{ color: 'primary' }}/>
             }
             label={!props.label ? null : props.label}
             labelPlacement={props.labelPlacement}
