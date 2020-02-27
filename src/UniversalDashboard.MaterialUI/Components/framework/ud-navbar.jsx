@@ -68,6 +68,12 @@ const UdNavbar = (props) => {
         </IconButton>
     }
 
+    var children = null;
+    if (props.children)
+    {
+        children = props.render(props.children);
+    }
+
     return [
         drawer,
         <AppBar position="static" sx={{bg: 'primary', color: 'text'}}>
@@ -77,7 +83,7 @@ const UdNavbar = (props) => {
                     {props.title}
                 </Typography>
                 <ToggleColorMode />
-                {props.render(props.children)}
+                {children}
             </Toolbar>
         </AppBar>
     ]
