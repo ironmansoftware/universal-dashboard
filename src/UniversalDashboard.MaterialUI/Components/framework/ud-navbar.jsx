@@ -77,7 +77,7 @@ const UdNavbar = (props) => {
                     {props.title}
                 </Typography>
                 <ToggleColorMode />
-                {props.children}
+                {props.render(props.children)}
             </Toolbar>
         </AppBar>
     ]
