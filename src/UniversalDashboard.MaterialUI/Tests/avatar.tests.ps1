@@ -8,16 +8,15 @@ Describe 'avatar' {
 
     It 'has width of 80' {
         $element = Find-SeElement -Id 'avatarStyle' -Driver $Driver
-        $element.GetCssValue('width') | should be '80px'
+        $element.GetCssValue('width') | should be '48px'
     }
     It 'has height of 80' {
         $element = Find-SeElement -Id 'avatarStyle' -Driver $Driver
-        $element.GetCssValue('height') | should be '80px'
+        $element.GetCssValue('height') | should be '48px'
     }
 
-    
-    It 'has border radius of 4px ( avatar is square not round )' {
-        $element = (Find-SeElement -Id 'avatarSquare' -Driver $Driver).GetAttribute('style') -match "border-radius: (\d\w+)"
-        $Matches[1] | should be '4px'
+    It 'has large variant' {
+        $element = Find-SeElement -Id 'avatarSquare' -Driver $Driver
+        $element.GetCssValue('height') | should be '96px'
     }
 }

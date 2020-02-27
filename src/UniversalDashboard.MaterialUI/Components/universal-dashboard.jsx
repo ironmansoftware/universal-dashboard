@@ -90,20 +90,20 @@ export const withComponentFeatures = (component) => {
                     children = []
                 }
     
-                children = componentState.children.concat(event.elements);
+                children = children.concat(event.elements);
     
-                setComponentState({children});
+                setComponentState({...componentState, children});
             }
     
             if (type === "clearElement")
             {
-                setComponentState({children: []});
+                setComponentState({...componentState, children: []});
             }
     
             if (type === "removeElement")
             {
                 // This isn't great
-                setComponentState({hidden: true});
+                setComponentState({...componentState, hidden: true});
             }
     
             if (type === "syncElement") 

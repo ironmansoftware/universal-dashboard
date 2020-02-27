@@ -30,14 +30,14 @@ Describe "Https" {
         }
 
         It "should serve HTTPS" {
-            Start-UDDashboard -Port 10001 -Certificate $Cert -Force
+            Start-UDDashboard -Port 10001 -Certificate $Cert -Force -Dashboard (New-UDDashboard -Content {})
 
             $Request = Invoke-WebRequest https://localhost:10001/dashboard
             $Request.StatusCode | Should be 200
         }
 
         It "should redirect HTTPS" {
-            Start-UDDashboard -Port 10001 -HttpsPort 10002 -Certificate $Cert -Force
+            Start-UDDashboard -Port 10001 -HttpsPort 10002 -Certificate $Cert -Force -Dashboard (New-UDDashboard -Content {})
 
             try 
             {
@@ -61,7 +61,7 @@ Describe "Https" {
 
             Export-PfxCertificate -Cert $Cert -Password $CertPassword -Force -FilePath $CertPath
 
-            Start-UDDashboard -Port 10001 -CertificateFile $CertPath -CertificateFilePassword $CertPassword -Force
+            Start-UDDashboard -Port 10001 -CertificateFile $CertPath -CertificateFilePassword $CertPassword -Force -Dashboard (New-UDDashboard -Content {})
 
             $Request = Invoke-WebRequest https://localhost:10001/dashboard
             $Request.StatusCode | Should be 200

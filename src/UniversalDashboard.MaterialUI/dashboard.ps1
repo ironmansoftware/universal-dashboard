@@ -1,5 +1,18 @@
 New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
 
+    New-UDPage -Name 'AppBar' -Content {
+
+        # $Drawer = New-UDDrawer -Content {
+        #     New-UDList -Content {
+        #         New-UDListItem -Label 'Home'
+        #     }
+        # }
+
+        New-UDElement -Tag 'main' -Content {
+            New-UDAppBar -Content { New-UDTypography -Text 'Hello' } #-Drawer $Drawer
+        }
+    }
+
     New-UDPage -Name "Avatar" -Content {
         New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent' -Variant small
 
@@ -12,6 +25,12 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
             variant = 'large'
         }
         New-UDAvatar @AvatarProps 
+    }
+
+    New-UDPage -Name 'Blank' -Blank -Content {
+        New-UDCard -Id 'SimpleCard' -Title "Hey" -Content { 
+            "Content" 
+        } -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4'
     }
 
     New-UDPage -Name "Button" -Content {
