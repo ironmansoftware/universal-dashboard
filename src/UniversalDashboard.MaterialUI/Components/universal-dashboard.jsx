@@ -90,7 +90,7 @@ export const withComponentFeatures = (component) => {
                     children = []
                 }
     
-                children = componentState.children.concat(event.elements);
+                children = children.concat(event.elements);
     
                 setComponentState({children});
             }
