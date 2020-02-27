@@ -5,6 +5,7 @@ import PubSub from 'pubsub-js'
 import { HubConnectionBuilder, LogLevel } from '@aspnet/signalr'
 import { ThemeProvider } from 'theme-ui'
 import { ColorModeProvider } from '@theme-ui/color-modes'
+import { base } from '@theme-ui/presets'
 import toaster from './services/toaster'
 import LazyElement from './basics/lazy-element.jsx'
 import copy from 'copy-to-clipboard'
@@ -289,8 +290,9 @@ function Dashboard({ history }) {
     var pluginComponents = UniversalDashboard.provideDashboardComponents()
 
     console.log(dashboard.themes)
-    const {colors, modes, ...rest} = dashboard.themes[0].definition
+    const { colors, modes, ...rest } = dashboard.themes[0].definition
     let theme = {
+      ...base,
       colors: {
         ...colors,
         modes: {
@@ -298,6 +300,13 @@ function Dashboard({ history }) {
         },
       },
       ...rest,
+      styles: {
+        ...base.styles,
+        h1: {
+          ...base.styles.h1,
+          fontSize: [4, 5, 6],
+        },
+      },
     }
     console.log(theme)
     return (

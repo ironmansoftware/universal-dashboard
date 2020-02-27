@@ -181,6 +181,12 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
     }
 
+    New-UDPage -Name 'Typography' -Content {
+        New-UDTypography -Variant h1 -Text "$(get-date -Format 'HH:mm:ss') as h1" -Style @{ color = 'pink' } -Align center 
+        New-UDTypography -Variant h3 -Text "$(get-date -Format 'HH:mm:ss') as h3" -Style @{ color = 'pink' } -Align center
+        New-UDTypography -Variant h5 -Text "$(get-date -Format 'HH:mm:ss') as h5" -Style @{ color = 'pink' } -Align center
+    }
+
     New-UDPage -Name 'Floating Action Button' -Content {
         New-UDFloatingActionButton -Id 'fabIcon' -Icon user 
 

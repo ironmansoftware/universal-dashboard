@@ -36,6 +36,7 @@
                 margin = '16px'
                 borderRadius = '50%'
             }
-        }   
+        }
+           
     }
 }
