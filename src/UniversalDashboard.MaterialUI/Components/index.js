@@ -13,7 +13,7 @@ import UDCardHeader from "./card-header";
 import UDCardBody from "./card-body";
 import UDCardExpand from "./card-expand";
 import UDCardFooter from "./card-footer";
-import Typography from "./typography";
+import UDMuTypography from "./typography";
 import UDLink from "./link";
 import UDAvatar from "./avatar";
 import UDCheckBox from "./checkbox";
@@ -35,6 +35,7 @@ import UDNavbar from './framework/ud-navbar';
 import UDFooter from './framework/ud-footer';
 import UDAppBar from './appbar';
 import UDDrawer from './drawer';
+import Chart from './framework/chart'
 
 import {
     Route,
@@ -56,7 +57,7 @@ UniversalDashboard.register("mu-card-header", UDCardHeader);
 UniversalDashboard.register("mu-card-body", UDCardBody);
 UniversalDashboard.register("mu-card-expand", UDCardExpand);
 UniversalDashboard.register("mu-card-footer", UDCardFooter);
-UniversalDashboard.register("mu-typography", Typography);
+UniversalDashboard.register("mu-typography", UDMuTypography);
 UniversalDashboard.register("mu-link", UDLink);
 UniversalDashboard.register("mu-avatar", UDAvatar);
 UniversalDashboard.register("mu-checkbox", UDCheckBox);
@@ -78,6 +79,7 @@ UniversalDashboard.register('ud-navbar', UDNavbar);
 UniversalDashboard.register('ud-footer', UDFooter);
 UniversalDashboard.register('mu-appbar', UDAppBar);
 UniversalDashboard.register('mu-drawer', UDDrawer);
+UniversalDashboard.register('antv-chart', Chart);
 
 // Framework Support
 import UdPage from './framework/ud-page';

@@ -85,7 +85,8 @@ $manifestParameters = @{
         "Out-UDTableData"
         "New-UDForm"
         "New-UDDatePicker"
-        "New-UDTimePicker"
+        "New-UDTimePicker",
+        "New-AntvChart"
     )
     RequiredModules   = @()
 }

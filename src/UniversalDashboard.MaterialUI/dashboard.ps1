@@ -9,7 +9,7 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         # }
 
         New-UDElement -Tag 'main' -Content {
-            New-UDAppBar -Content { New-UDTypography -Text 'Hello' } #-Drawer $Drawer
+            New-UDAppBar -Content { New-UDTypography -Content {'Hello'} } #-Drawer $Drawer
         }
     }
 
@@ -201,9 +201,28 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
     }
 
     New-UDPage -Name 'Typography' -Content {
-        New-UDTypography -Variant h1 -Text "$(get-date -Format 'HH:mm:ss') as h1" -Style @{ color = 'pink' } -Align center 
-        New-UDTypography -Variant h3 -Text "$(get-date -Format 'HH:mm:ss') as h3" -Style @{ color = 'pink' } -Align center
-        New-UDTypography -Variant h5 -Text "$(get-date -Format 'HH:mm:ss') as h5" -Style @{ color = 'pink' } -Align center
+
+        New-UDCard -Body (
+            New-UDCardBody -Content {
+                New-UDTypography -Variant h1 -Content { 'AlonGvili' } -Align left 
+                New-UDTypography -Variant h3 -Content { 'Demo code for text dynamic scaling' } -Align left 
+            }
+        )  
+
+        New-UDTypography -Variant h1 -Content { (GET-DATE).ToShortDateString() } -Align center 
+        New-UDTypography -Variant h2 -Content { (GET-DATE).ToShortDateString() } -Align center 
+        New-UDTypography -Variant h3 -Content { (GET-DATE).ToShortDateString() } -Align center
+        New-UDTypography -Variant h4 -Content { (GET-DATE).ToShortDateString() } -Align center
+        New-UDTypography -Variant h5 -Content { (GET-DATE).ToShortDateString() } -Align center
+        New-UDTypography -Variant h6 -Content { (GET-DATE).ToShortDateString() } -Align center
+    }
+
+    New-UDPage -Name 'AntV Chart' -Content {
+        New-AntvChart -Content { 
+            # Get-Counter -Counter '\Processor Information(_total)\% Processor Performance' | Select-Object timeStamp, @{n = 'value'; e = { $_.CounterSamples.CookedValue -as [int] }} 
+            # Get-Process | Select-Object Name, @{n = 'cpu'; e = { $_.TotalProcessorTime.TotalMilliseconds -as [double]}} | ConvertTo-Json -Compress
+            (Get-ChildItem -Path . -Recurse -Include '*.js', '*.jsx', '*.ps1', '*.json', '*.cs', '*.psm1', '*.psd1', '*.yml') | Group-Object -Property Extension -NoElement | ConvertTo-Json -Compress
+        } -Title 'Files Group By Extension' -Description 'Total files in project group by extension' -xField 'Name' -yField 'Count'
     }
 
     New-UDPage -Name 'Floating Action Button' -Content {
@@ -334,7 +353,7 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         $BodyProps = @{
             Style = @{backgroundColor = '#fff'; justifyContent = "center"}
             Content = {
-                New-UDTypography -Variant h3 -Text "$(get-date -Format 'HH:mm:ss')" -Style @{ color = '#000' } -Align center
+                New-UDTypography -Variant h3 -Content { (get-date -Format 'HH:mm:ss')} -Style @{ color = '#000' } -Align center
             }
             Id = 'body'
         }

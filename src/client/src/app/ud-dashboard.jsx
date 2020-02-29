@@ -289,7 +289,6 @@ function Dashboard({ history }) {
 
     var pluginComponents = UniversalDashboard.provideDashboardComponents()
 
-    console.log(dashboard.themes)
     const { colors, modes, ...rest } = dashboard.themes[0].definition
     let theme = {
       ...base,
@@ -304,7 +303,15 @@ function Dashboard({ history }) {
         ...base.styles,
         h1: {
           ...base.styles.h1,
-          fontSize: [4, 5, 6],
+          fontSize: [5,7,8],
+        },
+        h3: {
+          ...base.styles.h3,
+          fontSize: [base.styles.h3.fontSize, 4, 5]
+        },
+        h5: {
+          ...base.styles.h5,
+          fontSize: [base.styles.h5.fontSize, 2, 3]
         },
       },
     }

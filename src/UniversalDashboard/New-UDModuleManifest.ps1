@@ -119,6 +119,7 @@ $manifestParameters = @{
 		"New-UDForm"
 		"New-UDDatePicker"
 		"New-UDTimePicker"
+		"New-AntvChart"
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 
