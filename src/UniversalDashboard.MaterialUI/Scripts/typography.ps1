@@ -34,27 +34,11 @@ function New-UDTypography {
 		[Switch]$NoWrap,
 
         [Parameter()]
-		[Switch]$Paragraph,
-
-        [Parameter(ParameterSetName = "endpoint")]
-		[switch]$AutoRefresh,
-
-        [Parameter(ParameterSetName = "endpoint")]
-        [int]$RefreshInterval = 5
+		[Switch]$Paragraph
         
     )
 
     End {
-
-        if($IsEndPoint){
-            $TextEndpoint = New-UDEndpoint -Endpoint $Content -Id $id
-            if($null -ne $Content){
-                $TextContent = $Content.Invoke()
-            }else{
-                $TextContent = $null
-            }
-        }
-        
         $MUTypography = @{
             #This needs to match what is in the register function call of chips.jsx
             type = "mu-typography"
@@ -72,10 +56,7 @@ function New-UDTypography {
             style = $Style
             align = $Align
             content = $TextContent 
-            isEndpoint = $IsEndPoint.IsPresent
             gutterBottom = $GutterBottom.IsPresent
-            refreshInterval = $RefreshInterval
-            autoRefresh = $AutoRefresh.IsPresent
         }
 
         $MUTypography.PSTypeNames.Insert(0, 'UniversalDashboard.MaterialUI.Typography') | Out-Null
