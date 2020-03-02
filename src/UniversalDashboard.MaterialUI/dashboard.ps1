@@ -688,4 +688,22 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
             New-UDTreeNode -Id 'Root2' -Name 'Root 2'
         }
     }
+
+    New-UDPage -Name 'Radio' -Content {
+        New-UDRadioGroup -Label 'group' -Id 'simpleRadio' -Children {
+            New-UDRadio -Value 'Adam' -Label 'Adam'  -Id 'adam'
+            New-UDRadio -Value 'Alon' -Label 'Alon' -Id 'alon'
+            New-UDRadio -Value 'Lee' -Label 'Lee' -Id 'lee'
+        }
+
+        New-UDRadioGroup -Label 'group' -Id 'onChangeRadio' -Children {
+            New-UDRadio -Value 'Adam' -Label 'Adam'  -Id 'adamOnChange'
+            New-UDRadio -Value 'Alon' -Label 'Alon' -Id 'alonOnChange'
+            New-UDRadio -Value 'Lee' -Label 'Lee' -Id 'leeOnChange'
+        } -OnChange { 
+            $EventData = $Body | ConvertFrom-Json 
+
+            Set-TestData $EventData
+        }
+    }
 )
