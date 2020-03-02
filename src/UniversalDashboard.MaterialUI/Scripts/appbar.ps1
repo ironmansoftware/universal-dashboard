@@ -5,7 +5,10 @@ function New-UDAppBar {
         [Parameter()]
         [Hashtable]$Drawer,
         [Parameter()]
-        [ScriptBlock]$Content
+        [ScriptBlock]$Content,
+        [Parameter()]
+        [ValidateSet('absolute', 'fixed', 'relative', 'static', 'sticky')]
+        [string]$Position = 'fixed'
     )
 
     @{
@@ -16,5 +19,6 @@ function New-UDAppBar {
 
         children = & $Content
         drawer = $Drawer
+        position = $Position
     }
 }

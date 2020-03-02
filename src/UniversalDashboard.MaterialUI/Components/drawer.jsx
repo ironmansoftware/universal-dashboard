@@ -15,6 +15,9 @@ const useStyles = makeStyles(theme => ({
   rightIcon: {
     marginLeft: theme.spacing.unit,
   },
+  list: {
+    width: 250,
+  },
 }))
 
 const UDDrawer = props => {
@@ -25,8 +28,10 @@ const UDDrawer = props => {
     }
 
     return (
-        <Drawer open={props.open} onClose={onClose}>
+        <Drawer open={props.open} onClose={onClose} key={props.id} id={props.id}>
+          <div className={classes.list} role="presentation">
             {props.render(props.children)}
+          </div>
         </Drawer>
     )
 }

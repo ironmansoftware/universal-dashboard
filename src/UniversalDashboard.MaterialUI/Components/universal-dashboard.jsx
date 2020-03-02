@@ -132,6 +132,7 @@ export const withComponentFeatures = (component) => {
                 }
                 setComponentState(newComponentState);
             },
+            publish: UniversalDashboard.publish,
             notifyOfEvent,
             post
         }

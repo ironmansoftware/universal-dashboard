@@ -2,8 +2,7 @@ function New-UDList {
     param(
         [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter ()][scriptblock]$Content,
-        [Parameter ()][string]$SubHeader,
-        [Parameter ()][Hashtable]$Style
+        [Parameter ()][string]$SubHeader
     )
     End
     {
@@ -20,25 +19,18 @@ function New-UDList {
     }
 }
 
-
 function New-UDListItem {
     [CmdletBinding()]
     param(
         [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter ()][ValidateSet("Icon","Avatar")][string]$AvatarType,
-		[Parameter ()][object]$OnClick, 
-        [Parameter ()][switch]$IsButton, 
+		[Parameter ()][Endpoint]$OnClick, 
         [Parameter ()][string]$Label, 
         [Parameter ()][scriptblock]$Content, 
-        [Parameter ()][switch]$IsEndPoint, 
-        [Parameter ()][switch]$AutoRefresh,
-        [Parameter ()][int]$RefreshInterval = 5,
         [Parameter ()][string]$SubTitle,
         [Parameter ()][PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
         [Parameter ()][string]$Source,
-        [Parameter ()][scriptblock]$SecondaryAction,
-        [Parameter ()][Hashtable]$LabelStyle,
-        [Parameter ()][Hashtable]$Style
+        [Parameter ()][scriptblock]$SecondaryAction
     )
     # DynamicParam {
         
@@ -76,19 +68,8 @@ function New-UDListItem {
     Process{}
     End 
     {
-        if ($null -ne $OnClick) {
-            if ($OnClick -is [scriptblock]) {
-                $OnClick = New-UDEndpoint -Endpoint $OnClick -Id ($Id + "onClick")
-            }
-            elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
-                throw "OnClick must be a script block or UDEndpoint"
-            }else{
-                $OnClick = $null
-            }
-        }
-
-        if($IsEndPoint){
-            $EndPoint = New-UDEndpoint -Endpoint $Content -Id $Id
+        if ($OnClick) {
+            $OnClick.Register($Id, $PSCmdlet)
         }
 
         if($null -ne $Content){
@@ -117,10 +98,6 @@ function New-UDListItem {
             icon =  $Icon
             source = $Source
             avatarType = $AvatarType
-            isButton = $IsButton.IsPresent
-            isEndpoint = $IsEndPoint.IsPresent
-            refreshInterval = $RefreshInterval
-            autoRefresh = $AutoRefresh.IsPresent
             labelStyle = $LabelStyle
             style = $Style
         }
