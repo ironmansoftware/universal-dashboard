@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import { withComponentFeatures } from './universal-dashboard';
+import { makeStyles } from '@material-ui/core/styles';
 
 const defaultContext = {
     fields: {},
@@ -9,7 +11,16 @@ const defaultContext = {
 
 export const FormContext = React.createContext(defaultContext);
 
+const useStyles = makeStyles(theme => ({
+    formControlPadding: {
+      padding: theme.spacing(1),
+    },
+  }));
+
 const UDForm = (props) => {
+
+    const classes = useStyles();
+
     const [fields, setFields] = useState({});
     const [valid, setValid] = useState(props.onValidate == null);
 
@@ -47,8 +58,12 @@ const UDForm = (props) => {
     return (
         <div id={props.id}>
             <FormContext.Provider value={contextState}>
-                {components}
-                <Button onClick={onSubmit} disabled={!valid}>Submit</Button>
+                <Grid container>
+                    {components.map(x => <Grid item xs={12} className={classes.formControlPadding}>{x}</Grid>)}
+                    <Grid item xs={12}>
+                        <Button onClick={onSubmit} disabled={!valid} className={classes.formControlPadding}>Submit</Button>
+                    </Grid>
+                </Grid>
             </FormContext.Provider>
         </div>
     )

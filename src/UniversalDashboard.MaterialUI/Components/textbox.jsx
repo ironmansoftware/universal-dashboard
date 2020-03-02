@@ -15,7 +15,7 @@ const UDTextField = (props) => {
                         onFieldChange({id: props.id, value: e.target.value})
                     }
 
-                    return <TextField  {...props} type={props.textType} onChange={onChange}/>
+                    return <TextField  {...props} type={props.textType} onChange={onChange} />
                 }
             }
         </FormContext.Consumer>
