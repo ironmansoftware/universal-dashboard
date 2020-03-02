@@ -2,7 +2,9 @@ function New-UDDrawer
 {
     param(
         [Parameter()]
-        [string]$Id = [Guid]::NewGuid()
+        [string]$Id = [Guid]::NewGuid(),
+        [Parameter()]
+        [ScriptBlock]$Children
     )
 
     @{
@@ -10,5 +12,6 @@ function New-UDDrawer
         id = $Id 
         isPlugin = $true 
         assetId = $MUAssetId
+        children = & $Children
     }
 }
