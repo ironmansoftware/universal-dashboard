@@ -36,7 +36,12 @@ const UDForm = (props) => {
     const [fields, setFields] = useReducer(reducer, {});
     const [valid, setValid] = useState(props.onValidate == null);
 
-    const components = props.render(props.content);
+    var components = props.render(props.content);
+
+    if (!components.map)
+    {
+        components = [components];
+    }
 
     const onSubmit = () => {
         props.onSubmit(fields).then(x => {

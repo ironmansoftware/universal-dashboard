@@ -282,6 +282,42 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
             $Fields = $Body | ConvertFrom-Json
             Set-TestData $Fields
         }
+
+        New-UDForm -Id 'custom' -Content {
+            New-UDPaper -Content {
+                New-UDSelect -Label '1-3' -Id 'selection' -Option {
+                    New-UDSelectOption -Name "Dog" -Value 1
+                    New-UDSelectOption -Name "Car" -Value 2
+                    New-UDSelectOption -Name "Lion" -Value 3
+                } -OnChange {
+                    $EventData = $Body | ConvertFrom-Json 
+
+                    Clear-UDElement -Id 'img'
+                    Add-UDElement -ParentId 'img' -Content {
+                        if ($EventData -eq '1')
+                        {
+                            New-UDImage -Url 'https://i.imgur.com/OpB960K.jpg' -Height 150 -Width 150
+                        }
+    
+                        if ($EventData -eq '2')
+                        {
+                            New-UDImage -Url 'https://i.imgur.com/a2lqPca.jpg' -Height 150 -Width 150
+                        }
+    
+                        if ($EventData -eq '3')
+                        {
+                            New-UDImage -Url 'https://i.imgur.com/nAmS2Bt.jpg' -Height 150 -Width 150
+                        }
+                    }
+                }
+
+                New-UDElement -Id 'img' -Tag 'div' -Content {
+                    New-UDImage -Url 'https://i.imgur.com/OpB960K.jpg' -Height 150 -Width 150
+                }
+            }  
+        } -OnSubmit {
+            Show-UDToast -Message $Body -Position bottomRight
+        }
     }
 
     New-UDPage -Name "Grid" -Content {
