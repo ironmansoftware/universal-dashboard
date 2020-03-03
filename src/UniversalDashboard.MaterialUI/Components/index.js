@@ -35,7 +35,7 @@ import UDNavbar from './framework/ud-navbar';
 import UDFooter from './framework/ud-footer';
 import UDAppBar from './appbar';
 import UDDrawer from './drawer';
-import {UDRadioGroup, UDRadio } from './radio';
+import {UDRadioGroupWithContext, UDRadio } from './radio';
 import NotFound from './framework/not-found';
 
 import {
@@ -81,7 +81,7 @@ UniversalDashboard.register('ud-footer', UDFooter);
 UniversalDashboard.register('mu-appbar', UDAppBar);
 UniversalDashboard.register('mu-drawer', UDDrawer);
 UniversalDashboard.register('mu-radio', UDRadio);
-UniversalDashboard.register('mu-radiogroup', UDRadioGroup);
+UniversalDashboard.register('mu-radiogroup', UDRadioGroupWithContext);
 
 // Framework Support
 import UdPage from './framework/ud-page';

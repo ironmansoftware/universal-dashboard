@@ -20,7 +20,7 @@ function New-UDCheckBox {
         [switch]$Disabled,
 
         [Parameter (Position = 6)]
-        [switch]$Checked,
+        [bool]$Checked,
 
         [Parameter (Position = 7)]
         [string]$ClassName,
@@ -50,7 +50,7 @@ function New-UDCheckBox {
             # Command properties.
             id          = $Id
             className   = $ClassName
-            checked     = $Checked.IsPresent
+            checked     = $Checked
             onChange    = $OnChange
             icon        = $Icon
             checkedIcon = $CheckedIcon
@@ -59,6 +59,5 @@ function New-UDCheckBox {
             label       = $Label
             labelPlacement = $LabelPlacement
         }
-
     }
 }

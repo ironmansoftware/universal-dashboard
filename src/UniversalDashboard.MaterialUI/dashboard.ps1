@@ -172,9 +172,9 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
 
         New-UDCheckBox -Id 'chkDisabled' -Disabled
 
-        New-UDCheckBox -Id 'chkChecked' -Checked
+        New-UDCheckBox -Id 'chkChecked' -Checked $true
 
-        New-UDCheckBox -Id 'chkCheckedDisabled' -Checked -Disabled
+        New-UDCheckBox -Id 'chkCheckedDisabled' -Checked $true -Disabled
     }
 
     New-UDPage -Name 'Chips' -Content {
@@ -243,10 +243,80 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
             New-UDDatePicker -Id 'dateDate'
 
             New-UDTimePicker -Id 'timePicker'
+
+            New-UDRadioGroup -Label 'group' -Id 'simpleRadio' -Children {
+                New-UDRadio -Value 'Adam' -Label 'Adam'  -Id 'adam'
+                New-UDRadio -Value 'Alon' -Label 'Alon' -Id 'alon'
+                New-UDRadio -Value 'Lee' -Label 'Lee' -Id 'lee'
+            } -Value 'Adam'
         } -OnSubmit {
             Show-UDToast -Message $Body
             $Fields = $Body | ConvertFrom-Json
             Set-TestData $Fields
+        }
+
+        New-UDForm -Id 'defaultForm' -Content {
+            New-UDTextbox -Id 'txtNameDefault' -Value 'Name'
+            New-UDTextbox -Id 'txtLastNameDefault' -Value 'LastName'
+            New-UDCheckbox -Id 'chkYesDefault' -Label YesOrNo -Checked $true
+
+            New-UDSelect -Label '1-3' -Id 'selectDefault' -Option {
+                New-UDSelectOption -Name "OneDefault" -Value 1
+                New-UDSelectOption -Name "TwoDefault" -Value 2
+                New-UDSelectOption -Name "ThreeDefault" -Value 3
+            } -DefaultValue '1'
+
+            New-UDSwitch -Id 'switchYesDefault' -Checked $true
+
+            New-UDDatePicker -Id 'dateDateDefault' -Value '1-2-2020'
+
+            New-UDTimePicker -Id 'timePickerDefault' -Value '10:30 AM'
+
+            New-UDRadioGroup -Label 'group' -Id 'simpleRadioDefault' -Children {
+                New-UDRadio -Value 'Adam' -Label 'Adam'  -Id 'adamDefault'
+                New-UDRadio -Value 'Alon' -Label 'Alon' -Id 'alonDefault'
+                New-UDRadio -Value 'Lee' -Label 'Lee' -Id 'leeDefault'
+            } -Value 'Adam'
+        } -OnSubmit {
+            Show-UDToast -Message $Body
+            $Fields = $Body | ConvertFrom-Json
+            Set-TestData $Fields
+        }
+
+        New-UDForm -Id 'custom' -Content {
+            New-UDPaper -Content {
+                New-UDSelect -Label '1-3' -Id 'selection' -Option {
+                    New-UDSelectOption -Name "Dog" -Value 1
+                    New-UDSelectOption -Name "Car" -Value 2
+                    New-UDSelectOption -Name "Lion" -Value 3
+                } -OnChange {
+                    $EventData = $Body | ConvertFrom-Json 
+
+                    Clear-UDElement -Id 'img'
+                    Add-UDElement -ParentId 'img' -Content {
+                        if ($EventData -eq '1')
+                        {
+                            New-UDImage -Url 'https://i.imgur.com/OpB960K.jpg' -Height 150 -Width 150
+                        }
+    
+                        if ($EventData -eq '2')
+                        {
+                            New-UDImage -Url 'https://i.imgur.com/a2lqPca.jpg' -Height 150 -Width 150
+                        }
+    
+                        if ($EventData -eq '3')
+                        {
+                            New-UDImage -Url 'https://i.imgur.com/nAmS2Bt.jpg' -Height 150 -Width 150
+                        }
+                    }
+                }
+
+                New-UDElement -Id 'img' -Tag 'div' -Content {
+                    New-UDImage -Url 'https://i.imgur.com/OpB960K.jpg' -Height 150 -Width 150
+                }
+            }  
+        } -OnSubmit {
+            Show-UDToast -Message $Body -Position bottomRight
         }
     }
 

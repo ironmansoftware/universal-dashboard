@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -19,12 +19,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const UDSelectWithContext = (props) => {
+    return (
+        <FormContext.Consumer>
+            {
+                ({onFieldChange}) => <UDSelect {...props} onFieldChange={onFieldChange} />
+            }
+        </FormContext.Consumer>
+
+    )
+}
+
 const UDSelect = (props) => {
     const classes = useStyles();
     const groups = props.options.filter(m => m.type === 'mu-select-group');
 
-    const onChange = (event, onFieldChange) => {
-        onFieldChange({id: props.id, value : event.target.value})
+    const onChange = (event) => {
+        props.onFieldChange({id: props.id, value : event.target.value})
         props.setState({ value : event.target.value})
 
         if (props.onChange) {
@@ -57,27 +68,25 @@ const UDSelect = (props) => {
         }
     }
 
-    return (
-        <FormContext.Consumer>
-            {
-                ({onFieldChange}) => (
-                    <FormControl className={classes.formControl} key={props.id} sx={{bg: 'background', color: 'text'}}>
-                        <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
-                        <Select 
-                            defaultValue={defaultValue} 
-                            input={<Input id={props.id} />} 
-                            value={props.value} 
-                            onChange={event => onChange(event, onFieldChange)}
-                            multiple={props.multiple}
-                        >
-                            {options}
-                        </Select>
-                    </FormControl>
-                )
-            }
-        </FormContext.Consumer>
+    useEffect(() => {
+        props.onFieldChange({id: props.id, value: defaultValue});
+        return () => {}
+    }, true)
 
+    return (
+        <FormControl className={classes.formControl} key={props.id} sx={{bg: 'background', color: 'text'}}>
+            <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
+            <Select 
+                defaultValue={defaultValue} 
+                input={<Input id={props.id} />} 
+                value={props.value} 
+                onChange={event => onChange(event)}
+                multiple={props.multiple}
+            >
+                {options}
+            </Select>
+        </FormControl>
     )
 }
 
-export default withComponentFeatures(UDSelect);
+export default withComponentFeatures(UDSelectWithContext);

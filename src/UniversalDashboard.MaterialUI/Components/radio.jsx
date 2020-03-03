@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import { withComponentFeatures } from './universal-dashboard';
 import {FormContext} from './form';
 import {jsx} from 'theme-ui'
@@ -8,10 +8,20 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-export const UDRadioGroup = withComponentFeatures((props) => {
+export const UDRadioGroupWithContext = withComponentFeatures((props) => { 
+    return (
+        <FormContext.Consumer>
+        {
+            ({onFieldChange}) => <UDRadioGroup {...props} onFieldChange={onFieldChange}/>
+        }
+        </FormContext.Consumer>
+    )
+})
 
-    const onChange = (event, onFieldChange) => {
-        onFieldChange({id: props.id, value : event.target.value})
+const UDRadioGroup = (props) => {
+
+    const onChange = (event) => {
+        props.onFieldChange({id: props.id, value : event.target.value})
         props.setState({ value : event.target.value})
 
         if (props.onChange) {
@@ -19,18 +29,17 @@ export const UDRadioGroup = withComponentFeatures((props) => {
         }
     }
 
+    useEffect(() => {
+        props.onFieldChange({id: props.id, value: props.value});
+        return () => {}
+    }, true)
+
     return (
-        <FormContext.Consumer>
-        {
-            ({onFieldChange}) => (
-                <RadioGroup label={props.label} value={props.value} onChange={e => onChange(e, onFieldChange)}>
-                    {props.render(props.children)}
-                </RadioGroup>
-            )
-        }
-        </FormContext.Consumer>
+        <RadioGroup label={props.label} value={props.value} onChange={e => onChange(e)}>
+            {props.render(props.children)}
+        </RadioGroup>
     )
-})
+}
 
 export const UDRadio = withComponentFeatures((props) => {
     return (

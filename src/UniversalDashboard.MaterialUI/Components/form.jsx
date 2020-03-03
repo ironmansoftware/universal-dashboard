@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useReducer} from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { withComponentFeatures } from './universal-dashboard';
@@ -17,14 +17,31 @@ const useStyles = makeStyles(theme => ({
     },
   }));
 
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'changeField':
+            var newState = {...state};
+            newState[action.id] = action.value;
+            return newState;
+        default:
+          throw new Error();
+      }
+}
+
 const UDForm = (props) => {
 
     const classes = useStyles();
 
-    const [fields, setFields] = useState({});
+    const [fields, setFields] = useReducer(reducer, {});
     const [valid, setValid] = useState(props.onValidate == null);
 
-    const components = props.render(props.content);
+    var components = props.render(props.content);
+
+    if (!components.map)
+    {
+        components = [components];
+    }
 
     const onSubmit = () => {
         props.onSubmit(fields).then(x => {
@@ -45,13 +62,11 @@ const UDForm = (props) => {
     }
     
     const contextState = {
-        fields, 
         onFieldChange: (field) => {
-
-            var state = {...fields};
-            state[field.id] = field.value;
-
-            setFields(state);
+            setFields({
+                type: 'changeField',
+                ...field
+            });
         }
     }
 
