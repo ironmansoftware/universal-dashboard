@@ -9,17 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Management.Automation;
 using System.Text;
 using Microsoft.AspNetCore.Routing;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using UniversalDashboard.Execution;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using UniversalDashboard.Interfaces;
-using System.Security;
 using Microsoft.Extensions.Primitives;
 using System.Collections;
 
@@ -118,7 +114,6 @@ namespace UniversalDashboard.Controllers
         }
 
         [Route("element/{id}")]
-        [Authorize]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Element(string id)
         {
@@ -153,7 +148,6 @@ namespace UniversalDashboard.Controllers
 
         [HttpPost]
         [Route("element/{id}")]
-        [Authorize]
         public async Task<IActionResult> ElementPost(string id)
         {
             var variables = new Dictionary<string, object>();
@@ -181,172 +175,8 @@ namespace UniversalDashboard.Controllers
             return await RunScript(endpoint, variables);
         }
 
-		[Route("datatable/{id}")]
-		[Authorize]
-        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public async Task<IActionResult> DataTable(string id, int draw, int start, int length, string sortColumn, bool sortAscending, string filterText)
-		{
-			Log.Debug($"Grid - id = {id}, skip = {start}, take = {length}, sortColumn = {sortColumn}, sortAscending = {sortAscending}, filterText = {filterText}");
-
-			var variables = new Dictionary<string, object>
-			{
-				{ "drawId", draw },
-				{ "skip", start },
-				{ "take", length },
-				{ "sortColumn", sortColumn },
-				{ "sortAscending", sortAscending },
-				{ "filterText", filterText }
-			};
-
-            var endpoint = _dashboardService.EndpointService.Get(id, SessionId);
-
-            if (endpoint == null)
-            {
-                Log.Warn($"Endpoint {id} not found.");
-                return NotFound();
-            }
-
-            return await RunScript(endpoint, variables);
-		}
-
-		[HttpPost]
-		[Route("input/{id}")]
-		[Authorize]
-        public async Task<IActionResult> Input([FromRoute]string id)
-		{
-			var variables = new Dictionary<string, object>();
-
-            var fields = new List<Field>();
-            foreach(var formField in Request.Form.Where(m => !m.Key.EndsWith("_dotNetType") && !m.Key.EndsWith("_type")))
-            {
-                string dotNetType = null;
-                if (Request.Form.ContainsKey(formField.Key + "_dotNetType"))
-                {
-                    dotNetType = Request.Form[formField.Key + "_dotNetType"];
-                }
-
-                fields.Add(new Field
-                {
-                    Name = formField.Key,
-                    Value = formField.Value.FirstOrDefault(),
-                    DotNetType = dotNetType,
-                    Type = Request.Form.First(m => m.Key == formField.Key + "_type").Value,
-                });
-            }
-
-            foreach(var file in Request.Form.Files)
-            {
-                string dotNetType = null;
-                if (Request.Form.ContainsKey(file.Name + "_dotNetType"))
-                {
-                    dotNetType = Request.Form[file.Name + "_dotNetType"];
-                }
-
-                fields.Add(new Field
-                {
-                    Name = file.Name,
-                    DotNetType = dotNetType,
-                    Type = Request.Form.First(m => m.Key == file.Name + "_type").Value,
-                    Value = file
-                });
-            }
-
-			if (fields != null)
-			{
-				foreach (var item in fields)
-				{
-                    if (item.Type == FieldTypes.BinaryFile)
-                    {
-                        variables.Add(item.Name, item.Value);
-                    }
-                    else if (item.Type == FieldTypes.File)
-                    {
-                        var formFile = item.Value as IFormFile;
-                        string value;
-                        using (var reader = new StreamReader(formFile.OpenReadStream()))
-                        {
-                            value = reader.ReadToEnd();
-                        }
-
-                        variables.Add(item.Name, value);
-                    }
-                    else if (item.DotNetType == typeof(bool).FullName)
-					{
-						if (bool.TryParse(item.Value?.ToString(), out bool result))
-						{
-							variables.Add(item.Name, result);
-						}
-					}
-					else if (item.DotNetType == typeof(SwitchParameter).FullName)
-					{
-						if (bool.TryParse(item.Value?.ToString(), out bool result))
-						{
-							variables.Add(item.Name, result);
-						}
-					}
-                    else if (item.DotNetType == typeof(SecureString).FullName)
-					{
-                        var secureString = new SecureString();
-                        if (!string.IsNullOrEmpty((string)item.Value)) {
-                            Array.ForEach(((string)item.Value).ToCharArray(), secureString.AppendChar);
-                        }
-                        variables.Add(item.Name, secureString);
-					}
-                    else if (item.DotNetType == typeof(String[]).FullName)
-					{
-						var value = item.Value?.ToString();
-                        if (!string.IsNullOrEmpty(value)) {
-                            var values = value.Split(Environment.NewLine.ToArray()).Where(m => !string.IsNullOrEmpty(m));
-                            variables.Add(item.Name, values);
-                        }
-					}
-					else
-					{
-						variables.Add(item.Name, item.Value);
-					}
-				}
-			}
-
-			Log.Debug($"Input - id = {id}");
-
-            var endpoint = _dashboardService.EndpointService.Get(id, SessionId);
-
-            if (endpoint == null)
-            {
-                Log.Warn($"Endpoint {id} not found.");
-                return NotFound();
-            }
-
-            return await RunScript(endpoint, variables, true);
-        }
-
-        [HttpPost]
-        [Route("input/validate/{fieldId}/{fieldName}")]
-        [Authorize]
-        public async Task<IActionResult> ValidateField([FromRoute]string fieldId, [FromRoute]string fieldName, [FromBody]string value)
-        {
-            Log.Debug($"Validate Field - id = {fieldId}, value = {value}");
-
-            var endpoint = _dashboardService.EndpointService.Get(fieldId, SessionId);
-
-            if (endpoint == null)
-            {
-                Log.Warn($"Endpoint {fieldId} not found.");
-                return NotFound();
-            }
-
-            var parameters = new Dictionary<string, object>
-            {
-                { fieldName, value }
-            };
-
-            return await RunScript(endpoint, parameters);
-        }
-
-
         [HttpGet]
 		[Route("/api/{*parts}")]
-		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public async Task<IActionResult> GetEndpoint()
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
@@ -369,7 +199,6 @@ namespace UniversalDashboard.Controllers
 
 		[HttpDelete]
 		[Route("/api/{*parts}")]
-		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public async Task<IActionResult> DeleteEndpoint()
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
@@ -460,7 +289,6 @@ namespace UniversalDashboard.Controllers
 
 		[HttpPost]
 		[Route("/api/{*parts}")]
-		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public async Task<IActionResult> PostEndpoint()
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
@@ -506,7 +334,6 @@ namespace UniversalDashboard.Controllers
 
         [HttpPatch]
         [Route("/api/{*parts}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PatchEndpoint()
         {
             var parts = HttpContext.GetRouteValue("parts") as string;
@@ -537,7 +364,6 @@ namespace UniversalDashboard.Controllers
 
         [HttpPut]
 		[Route("/api/{*parts}")]
-		[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 		public async Task<IActionResult> PutEndpoint()
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
@@ -568,7 +394,6 @@ namespace UniversalDashboard.Controllers
 
         [HttpPost]
         [Route("element/sessionState/{requestId}")]
-        [Authorize]
         public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]JObject jobject)
         {
             var element = (Hashtable)jobject.ToObject(typeof(Hashtable));
