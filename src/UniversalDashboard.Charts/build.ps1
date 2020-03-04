@@ -38,13 +38,19 @@ $manifestParameters = @{
     Copyright         = "2020 Ironman Software, LLC"
     RootModule        = "UniversalDashboard.Charts.psm1"
     Description       = "UniversalDashboard Charts pack using AntV javascript library."
-    ModuleVersion     = $version
-    $Version          = "0.1.0"
+    ModuleVersion     = "1.0.0"
+    # $Version          = 1.0.0
     Tags              = @("universaldashboard", "antv", "charts", "monitoring", "reactjs")
     ReleaseNotes      = "Initial release"
     FunctionsToExport = @(
         "New-Chart"
-        "New-AntvChart"
+        "New-ChartTitle"
+        "New-ChartDescription"
+        "New-ChartLegend"
+        "New-ChartTooltip"
+        "New-ChartLabel"
+        "New-ChartTooltipCrosshairs"
+        # "New-AntvChart"
     )
     RequiredModules   = @()
 }

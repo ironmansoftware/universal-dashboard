@@ -1,11 +1,25 @@
-import React, { useCallback, useEffect, useRef } from 'react'
-import { Line, Column,  } from '@antv/g2plot'
+import React, { useEffect, useRef } from 'react'
+
+// const Progress = lazy(() => import('@antv/g2plot/esm/sparkline/progress'))
+// const RingProgress = lazy(() =>
+//   import('@antv/g2plot/esm/sparkline/ring-progress'),
+// )
+// const TinyArea = lazy(() => import('@antv/g2plot/esm/sparkline/tiny-area'))
+// const TinyColumn = lazy(() => import('@antv/g2plot/esm/sparkline/tiny-column'))
+// const TinyLine = lazy(() => import('@antv/g2plot/esm/sparkline/tiny-line'))
+
 import { useThemeUI } from 'theme-ui'
-import {Card, Typography, Tooltip} from 'antd/es'
-import Icon from '@ant-design/icons-react'
+import { Card, Typography, Tooltip } from 'antd/es'
+// import Icon from '@ant-design/icons-react'
+
 export default ({
   id,
   content,
+  // interactions,
+  forceFit,
+  label,
+  legend,
+  tooltip,
   title,
   description,
   xField,
@@ -23,49 +37,51 @@ export default ({
 
   useEffect(() => {
     if (!chartRef.current) return
+    console.log('Chart Type: ', chartType)
 
-    const Chart = new Column(chartRef.current, {
+    let config = {
       colors: Array.from(theme.chart.colors).entries(([key, value]) => value),
-      title: {
-        visible: true,
-        text: title,
-        // style: props.title.style && props.title.style || theme.chart.title.style
-      },
-      description: {
-        visible: true,
-        text: description,
-        // style: props.description.style && props.description.style || theme.chart.description.style 
-      },
+      title: title && { ...title },
+      description: description && { ...description },
+      tooltip: tooltip && {
+        ...tooltip,
+        htmlContent: (title, items) =>
+          (customTooltip &&
+            UniversalDashboard.renderComponent(customTooltip)) ||
+          null,
+      } || {},
+      label: label && { ...label },
+      legend: legend && { ...legend },
       padding: 'auto',
-      forceFit: true,
+      forceFit: forceFit,
       xField: xField,
-      xAxis: {
-        visible: true,
-        autoHideLabel: true,
-      },
+      xAxis: { visible: true, autoHideLabel: true },
       yField: yField,
-      label: {
-        visible: false,
-      },
-      legend: {
-        visible: true,
-        position: 'top-center',
-        marker: 'diamond'
-      },
       colorField: xField,
       data: JSON.parse(content),
-      interactions: [
-        {
-          type: 'slider',
-          cfg: {
-            start: 0.1,
-            end: 0.2,
-          },
-        },
-      ],
+      // interactions: [
+      //   {
+      //     type: 'slider',
+      //     cfg: {
+      //       start: 0.1,
+      //       end: 0.2,
+      //     },
+      //   },
+      // ],
+    }
+
+    
+    import('@antv/g2plot/esm/index.js').then((module) => {
+      let CType = module[chartType]
+       let Chart = new CType(chartRef.current, {...config})
+       Chart.render()
     })
-    Chart.render()
+    
   }, [])
 
-  return <Card><div id={id} ref={chartRef} /></Card>
+  return (
+    <Card>
+      <div id={id} ref={chartRef} />
+    </Card>
+  )
 }

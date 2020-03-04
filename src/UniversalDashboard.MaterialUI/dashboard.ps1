@@ -217,12 +217,13 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         New-UDTypography -Variant h6 -Content { (GET-DATE).ToShortDateString() } -Align center
     }
 
-    New-UDPage -Name 'AntV Chart' -Content {
-        New-AntvChart -Content { 
-            # Get-Counter -Counter '\Processor Information(_total)\% Processor Performance' | Select-Object timeStamp, @{n = 'value'; e = { $_.CounterSamples.CookedValue -as [int] }} 
-            # Get-Process | Select-Object Name, @{n = 'cpu'; e = { $_.TotalProcessorTime.TotalMilliseconds -as [double]}} | ConvertTo-Json -Compress
-            (Get-ChildItem -Path . -Recurse -Include '*.js', '*.jsx', '*.ps1', '*.json', '*.cs', '*.psm1', '*.psd1', '*.yml') | Group-Object -Property Extension -NoElement | ConvertTo-Json -Compress
-        } -Title 'Files Group By Extension' -Description 'Total files in project group by extension' -xField 'Name' -yField 'Count'
+    New-UDPage -Name 'AntV Chart'  -Content {
+        $data =  (Get-ChildItem -Path . -Recurse -Include '*.js', '*.jsx', '*.ps1', '*.json', '*.cs', '*.psm1', '*.psd1', '*.yml') | Group-Object -Property Extension -NoElement 
+        "Column", "Line", "Bar", "TinyColumn", "TinyLine", "Progress", "Bullet", "Ring" | %{New-Chart -ForceFit -Content { 
+           $data
+        } -Title (new-chartTitle -Visible -Text "$_ Chart") -xField 'Name' -yField 'Count' -ChartType $_ -Legend (
+            New-ChartLegend -Visible -Marker circle
+        )}
     }
 
     New-UDPage -Name 'Floating Action Button' -Content {

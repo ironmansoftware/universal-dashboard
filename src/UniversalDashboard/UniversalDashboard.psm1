@@ -17,7 +17,7 @@ if (-not $Env:SkipMaterial)
 {
 	Import-Module (Join-Path $PSScriptRoot "Modules\UniversalDashboard.MaterialUI\UniversalDashboard.MaterialUI.psd1")
 }
-
+Import-Module (Join-Path $PSScriptRoot "Modules\UniversalDashboard.Charts\UniversalDashboard.Charts.psd1")
 $TAType = [psobject].Assembly.GetType("System.Management.Automation.TypeAccelerators")
 $TAtype::Add("DashboardColor", "UniversalDashboard.Models.DashboardColor")
 $TAtype::Add("Endpoint", "UniversalDashboard.Models.Endpoint")

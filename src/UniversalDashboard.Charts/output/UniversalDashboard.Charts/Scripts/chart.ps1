@@ -33,22 +33,9 @@ function New-Chart {
         [Parameter()]
         [PSTypeName("antv.chart.tooltip")]$ToolTip
     )
-    DynamicParam {
-        if($ChartType -match "Ring"){
-            $dynParam = Add-DynamicParameter -Parameters @{Name = 'AngleField'; Type = 'string'}
-            return $dynParam
-        }
-        elseif($ChartType -match "Progress"){
-            $dynParam = Add-DynamicParameter  -Parameters @(
-                @{Name = 'width'; Type = 'int' }
-                @{Name = 'height'; Type = 'int' }
-                @{Name = 'percent'; Type = 'int' }
-            )
-            return $dynParam
-        }
-    }
     end {
-        $Chart = @{
+
+        @{
             type         = "chart"
             id           = $Id
             isPlugin     = $true
@@ -65,10 +52,6 @@ function New-Chart {
             label        = $Label
             interactions = $Interactions
         }
-        foreach($DynamicParameter in $dynParam.keys){
-            $Chart.Add($DynamicParameter, $PSBoundParameters[$DynamicParameter])
-        }
-        $Chart
     }
 }
 
@@ -225,41 +208,8 @@ function New-ChartTooltipCrosshairs {
             type  = $Type
             style = $Style    
         }
-        $Crosshairs.PSTypeNames.Insert(0, "antv.chart.tooltip.crosshairs") | Out-Null
+        $Crosshairs.PSTypeNames.Insert(0, "antv.chart.tooltip.crosshairs") | Out-null
         $Crosshairs
     }
 }
 
-function Add-DynamicParameter {
-    param(
-        [Parameter()]
-        [hashtable[]]$Parameters
-    )
-
-    begin {
-        # Set up the Run-Time Parameter Dictionary
-        $RuntimeParameterDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
-        $AttributeCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
-        $ParameterAttribute = New-Object System.Management.Automation.ParameterAttribute
-        $ParameterAttribute.Mandatory = $false
-        $AttributeCollection.Add($ParameterAttribute)
-    }
-
-    process {
-        # Begin dynamic parameter definition
-        foreach($Prm in $Parameters){
-            $ParamName = $Prm.Name
-            $RuntimeParameter = New-Object System.Management.Automation.RuntimeDefinedParameter($ParamName, $Prm.Type, $AttributeCollection)
-            $RuntimeParameterDictionary.Add($ParamName, $RuntimeParameter)
-        }
-        # $ParameterAttribute.Position = 0
-        # $ValidationValues = Get-CsOnlineTelephoneNumber -IsNotAssigned | Select-Object -ExpandProperty Id
-        # $ValidateSetAttribute = New-Object System.Management.Automation.ValidateSetAttribute($ValidationValues)
-        # $AttributeCollection.Add($ValidateSetAttribute)
-        # End Dynamic parameter definition
-    }
-    end {
-        # When done building dynamic parameters, return
-        return $RuntimeParameterDictionary
-    }
-}

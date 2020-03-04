@@ -54,6 +54,10 @@ Push-Location "$PSScriptRoot\UniversalDashboard.MaterialUI"
 .\build.ps1
 Pop-Location
 
+Push-Location "$PSScriptRoot\UniversalDashboard.Charts"
+.\build.ps1
+Pop-Location
+
 # End Build Child Modules
 
 $outputDirectory = Join-Path $PSScriptRoot "output"
@@ -99,6 +103,7 @@ Copy-Item "$PSScriptRoot\..\LICENSE" "$outputDirectory\LICENSE.txt"
 # Copy Child Modules
 
 Copy-Item "$PSScriptRoot\UniversalDashboard.MaterialUI\output\UniversalDashboard.MaterialUI" $childModules -Recurse -Container
+Copy-Item "$PSScriptRoot\UniversalDashboard.Charts\output\UniversalDashboard.Charts" $childModules -Recurse -Container
 
 # End Copy Child Modules 
 

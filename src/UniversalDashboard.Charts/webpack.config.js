@@ -1,33 +1,33 @@
-var webpack = require('webpack');
-var path = require('path');
+var webpack = require('webpack')
+var path = require('path')
 
-
-var BUILD_DIR = path.resolve(__dirname, 'public');
-var SRC_DIR = path.resolve(__dirname);
-var APP_DIR = path.resolve(__dirname, 'src/app');
+var BUILD_DIR = path.resolve(__dirname, 'public')
+var SRC_DIR = path.resolve(__dirname)
+var APP_DIR = path.resolve(__dirname, 'src/app')
 
 process.env.NODE_ENV = 'production'
 
-module.exports = (env) => {
-  const isDev = env == 'development' || env == 'isolated';
+module.exports = env => {
+  const isDev = env == 'development' || env == 'isolated'
 
   return {
     entry: {
-      'index': __dirname + '/components/index.js'
+      index: __dirname + '/components/index.js',
     },
     output: {
       path: BUILD_DIR,
       filename: isDev ? 'charts.[name].bundle.js' : '[name].[hash].bundle.js',
       sourceMapFilename: '[name].[hash].bundle.map',
-      publicPath: "",
+      publicPath: '',
       library: 'charts',
-      libraryTarget: 'var'
+      libraryTarget: 'var',
     },
     module: {
-      rules: [{
+      rules: [
+        {
           test: /\.(js|jsx)$/,
           exclude: [/node_modules/, /public/],
-          use: ['babel-loader']
+          use: ['babel-loader'],
         },
         {
           test: /\.css$/,
@@ -35,13 +35,16 @@ module.exports = (env) => {
         },
         {
           test: /\.(eot|ttf|woff2?|otf|svg)$/,
-          loader: 'file-loader'
-        }
-      ]
+          loader: 'file-loader',
+        },
+      ],
     },
     externals: {
       UniversalDashboard: 'UniversalDashboard',
-       'theme-ui': 'themeui'
+      react: 'react',
+      'react-dom': 'reactdom',
+      'react-router-dom': 'reactrouterdom',
+      'theme-ui': 'themeui',
     },
     resolve: {
       extensions: ['.json', '.js', '.jsx'],
@@ -49,7 +52,7 @@ module.exports = (env) => {
     plugins: [
       // new RemoveWebpackPlugin(BUILD_DIR)
     ],
-    devtool: "source-map",
+    devtool: 'source-map',
     devServer: {
       disableHostCheck: true,
       historyApiFallback: true,
@@ -57,7 +60,7 @@ module.exports = (env) => {
       // hot: true,
       compress: true,
       publicPath: '/',
-      stats: "minimal"
+      stats: 'minimal',
     },
-  };
+  }
 }
