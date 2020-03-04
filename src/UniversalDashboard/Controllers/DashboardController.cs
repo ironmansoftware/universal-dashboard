@@ -3,20 +3,18 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using UniversalDashboard.Models;
 using NLog;
-using Microsoft.AspNetCore.Authorization;
 using System.Management.Automation;
 using System.IO;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using UniversalDashboard.Interfaces;
-using System.Reflection;
 using Microsoft.AspNetCore.Routing;
 using System.Text;
 using UniversalDashboard.Services;
 
 namespace UniversalDashboard.Controllers
 {
-	[Route("api/internal/dashboard")]
+    [Route("api/internal/dashboard")]
 
 	public class DashboardController : Controller
     {
@@ -32,7 +30,6 @@ namespace UniversalDashboard.Controllers
 			_hub = hub;
 		}
 
-		[Authorize]
 		[HttpGet]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Index()
@@ -58,11 +55,10 @@ namespace UniversalDashboard.Controllers
             }
 
 			return Json(
-				new { dashboard = _dashboard, sessionId = sessionId, authenticated = HttpContext.User.Identity.IsAuthenticated }
+				new { dashboard = _dashboard, sessionId = sessionId  }
 			);
         }
 
-        [Authorize]
         [Route("page/{*pageName}")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
         public async Task<IActionResult> Page()

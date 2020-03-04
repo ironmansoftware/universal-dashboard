@@ -85,8 +85,6 @@ namespace UniversalDashboard
                     }
             }
 
-            services.AddScoped<IFilterProvider, EncFilterProvider>();
-
             services.AddSession(options =>
             {
                 options.IdleTimeout = dashboardService.Dashboard == null ? TimeSpan.FromMinutes(25) : dashboardService.Dashboard.IdleTimeout;
