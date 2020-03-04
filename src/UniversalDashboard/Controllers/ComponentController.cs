@@ -89,6 +89,11 @@ namespace UniversalDashboard.Controllers
 
         private IActionResult ConvertToActionResult(object result)
         {
+            if (result is IActionResult actionResult)
+            {
+                return actionResult;
+            }
+
             var resString = result as string;
             if (resString != null)
             {
