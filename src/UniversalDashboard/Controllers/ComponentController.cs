@@ -89,9 +89,10 @@ namespace UniversalDashboard.Controllers
 
         private IActionResult ConvertToActionResult(object result)
         {
-            if (result is IActionResult actionResult)
+            if (result is List<object> list && list.Count == 1)
             {
-                return actionResult;
+                var r = list.First() as IActionResult;
+                if (r != null) return r;
             }
 
             var resString = result as string;
