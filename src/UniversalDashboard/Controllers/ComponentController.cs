@@ -175,33 +175,6 @@ namespace UniversalDashboard.Controllers
             return await RunScript(endpoint, variables);
         }
 
-		[Route("datatable/{id}")]
-        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
-        public async Task<IActionResult> DataTable(string id, int draw, int start, int length, string sortColumn, bool sortAscending, string filterText)
-		{
-			Log.Debug($"Grid - id = {id}, skip = {start}, take = {length}, sortColumn = {sortColumn}, sortAscending = {sortAscending}, filterText = {filterText}");
-
-			var variables = new Dictionary<string, object>
-			{
-				{ "drawId", draw },
-				{ "skip", start },
-				{ "take", length },
-				{ "sortColumn", sortColumn },
-				{ "sortAscending", sortAscending },
-				{ "filterText", filterText }
-			};
-
-            var endpoint = _dashboardService.EndpointService.Get(id, SessionId);
-
-            if (endpoint == null)
-            {
-                Log.Warn($"Endpoint {id} not found.");
-                return NotFound();
-            }
-
-            return await RunScript(endpoint, variables);
-		}
-
         [HttpGet]
 		[Route("/api/{*parts}")]
 		public async Task<IActionResult> GetEndpoint()
