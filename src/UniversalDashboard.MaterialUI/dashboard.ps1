@@ -318,6 +318,12 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         } -OnSubmit {
             Show-UDToast -Message $Body -Position bottomRight
         }
+
+        New-UDForm -Id 'formReturnContent' -Content {
+
+        } -OnSubmit {
+            New-UDElement -Id 'newElement' -Tag 'div' -Content {'hello'}
+        }
     }
 
     New-UDPage -Name "Grid" -Content {
