@@ -35,9 +35,16 @@ const UDForm = (props) => {
 
     const [fields, setFields] = useReducer(reducer, {});
     const [valid, setValid] = useState(props.onValidate == null);
+    const [content, setContent] = useState(props.content);
+    const [hideSubmit, setHideSubmit] = useState(false);
 
-    var components = props.render(props.content);
-
+    var components = [];
+    
+    if (Object.keys(content).length > 0)
+    {
+        components = props.render(content);
+    }
+    
     if (!components.map)
     {
         components = [components];
@@ -45,7 +52,10 @@ const UDForm = (props) => {
 
     const onSubmit = () => {
         props.onSubmit(fields).then(x => {
-
+            if (x && Object.keys(x).length > 0) {
+                setContent(x);
+                setHideSubmit(true);
+            }
         })
     }
 
@@ -75,9 +85,14 @@ const UDForm = (props) => {
             <FormContext.Provider value={contextState}>
                 <Grid container>
                     {components.map(x => <Grid item xs={12} className={classes.formControlPadding}>{x}</Grid>)}
+                    {hideSubmit ? 
+                    
+                    <React.Fragment></React.Fragment> : 
+                    
                     <Grid item xs={12}>
                         <Button onClick={onSubmit} disabled={!valid} className={classes.formControlPadding}>Submit</Button>
                     </Grid>
+                    }
                 </Grid>
             </FormContext.Provider>
         </div>

@@ -57,4 +57,9 @@ Describe "Form" {
         $TestData.timePickerDefault | should be "10:30 AM"
         $TestData.simpleRadioDefault | should be "Adam"
     }
+
+    It 'returns custom content' {
+        (Find-SeElement -Id 'formReturnContent' -Driver $Driver).FindElementsByTagName("button")[0] | Invoke-SeClick 
+        Find-SeElement -Id 'newElement' -Target $driver | Should not be $null
+    }
 }
