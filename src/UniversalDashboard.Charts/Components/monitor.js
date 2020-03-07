@@ -5,17 +5,17 @@ import DataSet from '@antv/data-set'
 
 export default ({ content, fields, ...props }) => {
   const [data, setData] = useState([])
-  const ds = new DataSet()
-  const dv = ds.createView('monitor').source([])
+  // const ds = new DataSet()
+  // const dv = ds.createView('monitor').source(data)
 
   const loadData = () =>
     UniversalDashboard.get(
       `/api/internal/component/element/${props.id}`,
       result => {
         if (result.error) console.log(result.error)
-        dv.addRow(result)
-        const newData = data
-        newData.push(result)
+        //dv.addRow(result)
+        const newData = data.splice(0);
+        newData.push(result[0])
         setData(newData)
       },
     )
@@ -38,7 +38,7 @@ export default ({ content, fields, ...props }) => {
     },
   ]
 
-  console.log(dv.rows)
+  //console.log(dv.rows)
   console.log(data)
   return (
     <Fragment>
