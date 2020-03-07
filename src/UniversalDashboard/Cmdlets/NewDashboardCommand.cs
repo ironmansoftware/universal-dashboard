@@ -70,6 +70,7 @@ namespace UniversalDashboard.Cmdlets
 			dashboard.EndpointInitialSessionState = EndpointInitialization;
 			dashboard.GeoLocation = GeoLocation;
 			dashboard.IdleTimeout = IdleTimeout;
+			dashboard.Theme = Theme;
 			dashboard.Properties = MyInvocation.BoundParameters;
 
 			if (!AssetService.Instance.Frameworks.ContainsKey(DefaultFramework)) {
@@ -78,16 +79,16 @@ namespace UniversalDashboard.Cmdlets
 
 			dashboard.FrameworkAssetId = AssetService.Instance.Frameworks[DefaultFramework];
 
-            if (Theme != null) {
-				var themeService = new ThemeService();
-				Theme.RenderedContent = themeService.Create(Theme);
-				dashboard.Themes = new [] {Theme};
-			} else {
-				var themeService = new ThemeService();
-				var defaultTheme = themeService.LoadThemes().First(m => m.Name.Equals("Default"));
-				defaultTheme.RenderedContent = themeService.Create(defaultTheme);
-				dashboard.Themes = new [] {defaultTheme};
-			}
+            // if (Theme != null) {
+			// 	var themeService = new ThemeService();
+			// 	Theme.RenderedContent = themeService.Create(Theme);
+			// 	dashboard.Themes = new [] {Theme};
+			// } else {
+			// 	var themeService = new ThemeService();
+			// 	var defaultTheme = themeService.LoadThemes().First(m => m.Name.Equals("Default"));
+			// 	defaultTheme.RenderedContent = themeService.Create(defaultTheme);
+			// 	dashboard.Themes = new [] {defaultTheme};
+			// }
 
 		    if (ParameterSetName == "Content")
 		    {

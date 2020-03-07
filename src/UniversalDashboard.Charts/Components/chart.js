@@ -1,87 +1,92 @@
-import React, { useEffect, useRef } from 'react'
-
-// const Progress = lazy(() => import('@antv/g2plot/esm/sparkline/progress'))
-// const RingProgress = lazy(() =>
-//   import('@antv/g2plot/esm/sparkline/ring-progress'),
-// )
-// const TinyArea = lazy(() => import('@antv/g2plot/esm/sparkline/tiny-area'))
-// const TinyColumn = lazy(() => import('@antv/g2plot/esm/sparkline/tiny-column'))
-// const TinyLine = lazy(() => import('@antv/g2plot/esm/sparkline/tiny-line'))
-
+import React, { useEffect, useRef, useState } from 'react'
 import { useThemeUI } from 'theme-ui'
-import { Card, Typography, Tooltip } from 'antd/es'
-// import Icon from '@ant-design/icons-react'
+import * as G2Plot from '@antv/g2plot'
+import {
+  getGlobalTheme,
+  registerGlobalTheme,
+} from '@antv/g2plot/esm/theme/global'
+import { Select, Card } from 'antd'
+import 'antd/es/card/style'
+import 'antd/es/select/style'  
 
-export default ({
-  id,
-  content,
-  // interactions,
-  forceFit,
-  label,
-  legend,
-  tooltip,
-  title,
-  description,
-  xField,
-  yField,
-  chartType,
-  ...props
-}) => {
-  // create self ref to used in g2plot
-  const chartRef = useRef(null)
+export default ({ id, content, chartType, ...props }) => {
+  const [cType, setCType] = useState(chartType)
 
-  // using the theme hook from theme-ui module.
-  // this theme is used all over the universal dashboard module.
+  const container = useRef(null)
   const context = useThemeUI()
   const { theme } = context
 
+  const data = JSON.parse(content)
+
   useEffect(() => {
-    if (!chartRef.current) return
-    console.log('Chart Type: ', chartType)
+    if (!container.current) return
+
+    registerGlobalTheme('udcharts', {
+      ...theme.chart,
+    })
 
     let config = {
-      colors: Array.from(theme.chart.colors).entries(([key, value]) => value),
-      title: title && { ...title },
-      description: description && { ...description },
-      tooltip: tooltip && {
-        ...tooltip,
-        htmlContent: (title, items) =>
-          (customTooltip &&
-            UniversalDashboard.renderComponent(customTooltip)) ||
-          null,
-      } || {},
-      label: label && { ...label },
-      legend: legend && { ...legend },
-      padding: 'auto',
-      forceFit: forceFit,
-      xField: xField,
-      xAxis: { visible: true, autoHideLabel: true },
-      yField: yField,
-      colorField: xField,
-      data: JSON.parse(content),
-      // interactions: [
-      //   {
-      //     type: 'slider',
-      //     cfg: {
-      //       start: 0.1,
-      //       end: 0.2,
-      //     },
-      //   },
-      // ],
+      ...props,
+      theme: 'udcharts',
     }
 
-    
-    import('@antv/g2plot/esm/index.js').then((module) => {
-      let CType = module[chartType]
-       let Chart = new CType(chartRef.current, {...config})
-       Chart.render()
-    })
-    
-  }, [])
+   
+    console.log(getGlobalTheme('udcharts'))
 
+    const Chart = G2Plot[cType]
+    const chart = new Chart(container.current, { data, ...config })
+    chart.render()
+  }, [cType])
+
+   const onChange = value => setCType(value)
+
+    const extra = (
+      <Select onChange={onChange} style={{ width: 120 }} >
+        {[
+          'Line',
+          'Bar',
+          'Column',
+          'Area',
+          'Pie',
+          'Ring',
+          'StackBar',
+          'PercentageStackBar',
+          'GroupBar',
+          'RangeBar',
+          'StackColumn',
+          'PercentageStackColumn',
+          'GroupColumn',
+          'Histogram',
+          'Waterfall',
+          'RangeColumn',
+          'StackArea',
+          'PercentageStackArea',
+          'StepLine',
+          'Scatter',
+          'Bubble',
+          'Radar',
+          'Heatmap',
+          'Matrix',
+          'Funnel',
+          'Treemap',
+          'Liquid',
+          'Gauge',
+          'OverlappedComboPlot',
+          'Bullet',
+          'TinyArea',
+          'TinyLine',
+          'TinyColumn',
+          'RingProgress',
+          'Progress',
+          'WordCloud',
+        ].map(name => (
+          <Select.Option key={name} value={name}>{name}</Select.Option>
+        ))}
+      </Select>
+    )
   return (
-    <Card>
-      <div id={id} ref={chartRef} />
+    <Card extra={extra} style={{width: 450}}>
+      <div id={id} ref={container} />
     </Card>
   )
 }

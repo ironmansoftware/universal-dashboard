@@ -38,24 +38,33 @@
             }
         }
         chart   = @{
-            colors      = @{
-                red    = '#f44336'
-                pink   = '#e91e63'
-                purple = '#9c27b0'
-                indigo = '#3f51b5'
-                blue   = '#2196f3'
-                cyne   = '#00bcd4'
-                green  = '#4caf50'
-            }
+            width       = 250
+            height      = 220
+            padding     = @(48,48,48,48)
+            colors      = @(
+                '#f44336'
+                '#e91e63'
+                '#9c27b0'
+                '#3f51b5'
+                '#2196f3'
+                '#00bcd4'
+                '#4caf50'
+            )
+            defaultColor       = '#e91e63'
             title       = @{
-                style = @{ }
+                fontSize      = 32
+                fill          = '#4caf50'
+                alignWithAxis =  $false
+                fontFamily    = 'fantasy'
             }
             description = @{
-                style = @{ }
+                fontSize      = 16
+                fill          = '#3f51b5'
+                alignWithAxis = $false
+                fontFamily    = 'fantasy'
             }
-            legend = @{}
-            tooltip = @{}
+            legend      = @{ }
+            tooltip     = @{ }
         }
-           
     }
 }

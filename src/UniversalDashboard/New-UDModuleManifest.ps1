@@ -126,6 +126,8 @@ $manifestParameters = @{
 		"New-ChartTooltip"
 		"New-ChartLabel"
 		"New-ChartTooltipCrosshairs"
+		"New-ViserChart"
+		"New-ViserMonitor"
 	)
 	CmdletsToExport        = @("New-UDChart", 
 		"New-UDDashboard", 

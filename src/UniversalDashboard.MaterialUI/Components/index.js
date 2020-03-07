@@ -35,7 +35,7 @@ import UDNavbar from './framework/ud-navbar';
 import UDFooter from './framework/ud-footer';
 import UDAppBar from './appbar';
 import UDDrawer from './drawer';
-import Chart from './framework/chart'
+// import Chart from './framework/chart'
 
 import {
     Route,
@@ -79,7 +79,7 @@ UniversalDashboard.register('ud-navbar', UDNavbar);
 UniversalDashboard.register('ud-footer', UDFooter);
 UniversalDashboard.register('mu-appbar', UDAppBar);
 UniversalDashboard.register('mu-drawer', UDDrawer);
-UniversalDashboard.register('antv-chart', Chart);
+// UniversalDashboard.register('antv-chart', Chart);
 
 // Framework Support
 import UdPage from './framework/ud-page';

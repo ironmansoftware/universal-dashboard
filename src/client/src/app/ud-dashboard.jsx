@@ -289,9 +289,13 @@ function Dashboard({ history }) {
 
     var pluginComponents = UniversalDashboard.provideDashboardComponents()
 
-    const { colors, modes, ...rest } = dashboard.themes[0].definition
+  
+    const { colors, modes, fonts, ...rest } = dashboard.theme.definition
     let theme = {
       ...base,
+      fonts:{
+        ...fonts 
+      },
       colors: {
         ...colors,
         modes: {

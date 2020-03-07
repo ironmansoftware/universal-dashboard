@@ -4,18 +4,12 @@ function New-Chart {
         [Parameter()]
         [string]$Id = (New-Guid).Guid,
         [Parameter()]
-        [scriptblock]$Content, 
+        [object]$Content,
         [Parameter()]
-        [switch]$ForceFit, 
+        [string]$Title,
         [Parameter()]
-        [PSTypeName("antv.chart.title")]$Title, 
+        [string]$Description,
         [Parameter()]
-        [PSTypeName("antv.chart.description")]$Description, 
-        [Parameter()]
-        [string]$XField, 
-        [Parameter()]
-        [string]$YField,
-        [Parameter(ValueFromPipeline)]
         [ValidateSet(
             "Line", "Bar", "Column", "Area", "Pie", "Ring", 
             "StackBar", "PercentageStackBar", "GroupBar", "RangeBar", "StackColumn", 
@@ -23,35 +17,57 @@ function New-Chart {
             "StackArea", "PercentageStackArea", "StepLine", "Scatter", "Bubble", 
             "Radar", "Heatmap", "Matrix", "Funnel", "Treemap", "Liquid", "Gauge", 
             "OverlappedComboPlot", "Bullet", "TinyArea", "TinyLine", "TinyColumn", "RingProgress", "Progress", "WordCloud")]
-        [string]$ChartType,
-        [Parameter()]
-        [PSTypeName("antv.chart.legend")]$Legend,
-        [Parameter()]
-        [PSTypeName("antv.chart.label")]$Label,
-        [Parameter()]
-        [PSTypeName("antv.chart.interactions")]$Interactions,
-        [Parameter()]
-        [PSTypeName("antv.chart.tooltip")]$ToolTip
+        [string]$ChartType
     )
+    DynamicParam {
+        
+        if ($ChartType -match "Line") {
+            $params = @(
+                @{Name = 'xField'; Type = 'string' }
+                @{Name = 'yField'; Type = 'string' }
+                @{Name = 'forceFit'; Type = 'switch' }
+                @{Name = 'seriesField'; Type = 'string' }
+            )
+            $DynamicParameters = Add-DynamicParameter -Parameters $params
+            return $DynamicParameters
+        }
+        elseif ($ChartType -match "Ring") {
+            $params = @(
+                @{Name = 'xField'; Type = 'string' }
+                @{Name = 'yField'; Type = 'string' }
+                @{Name = 'forceFit'; Type = 'switch' }
+                @{Name = 'colorField'; Type = 'string' }
+                @{Name = 'angleField'; Type = 'string' }
+                @{Name = 'radius'; Type = 'double' }
+            )
+            $DynamicParameters = Add-DynamicParameter -Parameters $params
+            return $DynamicParameters
+        }
+    }
     end {
 
-        @{
-            type         = "chart"
-            id           = $Id
-            isPlugin     = $true
-            assetId      = $ChartAssetId
-            forceFit     = $ForceFit.IsPresent
-            content      = $Content.Invoke() | ConvertTo-Json -Compress
-            title        = $Title
-            description  = $description
-            xField       = $XField
-            yField       = $YField
-            chartType    = $ChartType
-            legend       = $Legend
-            tooltip      = $ToolTip
-            label        = $Label
-            interactions = $Interactions
+        $ChartTitle = if ($PSBoundParameters.ContainsKey('Title')) {
+            New-ChartTitle -Text $Title -Visible
         }
+
+        $ChartDescription = if ($PSBoundParameters.ContainsKey('Description')) {
+            New-ChartDescription -Text $Description -Visible
+        }
+        
+        $Chart = @{
+            type        = "chart"
+            id          = $Id
+            isPlugin    = $true
+            assetId     = $ChartAssetId
+            content     = $Content | ConvertTo-Json -Compress
+            chartType   = $ChartType
+            title       = $ChartTitle
+            description = $ChartDescription
+        }
+        foreach ($DynamicParameter in $DynamicParameters.keys) {
+            $Chart.Add($DynamicParameter, $PSBoundParameters[$DynamicParameter])
+        }
+        $Chart
     }
 }
 
@@ -71,7 +87,7 @@ function New-ChartTitle {
         $Title = @{
             visible = $Visible.IsPresent
             text    = $Text
-            style   = $Style    
+            # style   = $Style    
         }
         $Title.PSTypeNames.Insert(0, "antv.chart.title") | Out-Null
         $Title
@@ -208,8 +224,41 @@ function New-ChartTooltipCrosshairs {
             type  = $Type
             style = $Style    
         }
-        $Crosshairs.PSTypeNames.Insert(0, "antv.chart.tooltip.crosshairs") | Out-null
+        $Crosshairs.PSTypeNames.Insert(0, "antv.chart.tooltip.crosshairs") | Out-Null
         $Crosshairs
     }
 }
 
+function Add-DynamicParameter {
+    param(
+        [Parameter()]
+        [hashtable[]]$Parameters
+    )
+
+    begin {
+        # Set up the Run-Time Parameter Dictionary
+        $RuntimeParameterDictionary = New-Object System.Management.Automation.RuntimeDefinedParameterDictionary
+        $AttributeCollection = New-Object System.Collections.ObjectModel.Collection[System.Attribute]
+        $ParameterAttribute = New-Object System.Management.Automation.ParameterAttribute
+        $ParameterAttribute.Mandatory = $false
+        $AttributeCollection.Add($ParameterAttribute)
+    }
+
+    process {
+        # Begin dynamic parameter definition
+        foreach ($Prm in $Parameters) {
+            $ParamName = $Prm.Name
+            $RuntimeParameter = New-Object System.Management.Automation.RuntimeDefinedParameter($ParamName, $Prm.Type, $AttributeCollection)
+            $RuntimeParameterDictionary.Add($ParamName, $RuntimeParameter)
+        }
+        # $ParameterAttribute.Position = 0
+        # $ValidationValues = Get-CsOnlineTelephoneNumber -IsNotAssigned | Select-Object -ExpandProperty Id
+        # $ValidateSetAttribute = New-Object System.Management.Automation.ValidateSetAttribute($ValidationValues)
+        # $AttributeCollection.Add($ValidateSetAttribute)
+        # End Dynamic parameter definition
+    }
+    end {
+        # When done building dynamic parameters, return
+        return $RuntimeParameterDictionary
+    }
+}

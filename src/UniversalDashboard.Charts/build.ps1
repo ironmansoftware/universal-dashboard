@@ -43,14 +43,15 @@ $manifestParameters = @{
     Tags              = @("universaldashboard", "antv", "charts", "monitoring", "reactjs")
     ReleaseNotes      = "Initial release"
     FunctionsToExport = @(
-        "New-Chart"
-        "New-ChartTitle"
-        "New-ChartDescription"
-        "New-ChartLegend"
-        "New-ChartTooltip"
-        "New-ChartLabel"
-        "New-ChartTooltipCrosshairs"
-        # "New-AntvChart"
+        # "New-Chart"
+        # "New-ChartTitle"
+        # "New-ChartDescription"
+        # "New-ChartLegend"
+        # "New-ChartTooltip"
+        # "New-ChartLabel"
+        # "New-ChartTooltipCrosshairs"
+        "New-ViserChart"
+        "New-ViserMonitor"
     )
     RequiredModules   = @()
 }

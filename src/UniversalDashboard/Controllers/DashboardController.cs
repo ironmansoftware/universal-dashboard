@@ -110,11 +110,6 @@ namespace UniversalDashboard.Controllers
                         stringBuilder.AppendLine($"/* Failed to load style sheet {item}. {ex.Message} */");
                     }
                 }
-
-                if (_dashboard?.Themes?.FirstOrDefault() != null)
-                {
-                    stringBuilder.AppendLine(_dashboard?.Themes?.FirstOrDefault()?.RenderedContent);
-                }
                 
                 return new ContentResult()
                 {

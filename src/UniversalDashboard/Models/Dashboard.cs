@@ -12,8 +12,8 @@ namespace UniversalDashboard.Models
 		public Guid Id { get; set;}
         [JsonProperty("title")]
         public string Title { get; set; }
-		[JsonProperty("themes")]
-		public Theme[] Themes { get; set; }
+		[JsonProperty("theme")]
+		public Theme Theme { get; set; }
         [JsonProperty("scripts")]
         public string[] Scripts { get; set; }
         [JsonProperty("stylesheets")]
