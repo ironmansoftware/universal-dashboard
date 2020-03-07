@@ -15,7 +15,7 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
 
         New-UDElement -Tag 'main' -Content {
-            New-UDAppBar -Content { New-UDTypography -Text 'Hello' -Paragraph } -Position relative -Drawer $Drawer
+            New-UDAppBar -Children { New-UDTypography -Text 'Hello' -Paragraph } -Position relative -Drawer $Drawer
         }
     }
 

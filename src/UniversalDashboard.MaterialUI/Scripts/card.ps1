@@ -1,4 +1,60 @@
 function New-UDCard {
+    <#
+    .SYNOPSIS
+    Creates a new card.
+    
+    .DESCRIPTION
+    Creates a new card. Cards are used to display related content.
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER ClassName
+    A CSS class to assign to this card. 
+    
+    .PARAMETER ShowToolBar
+    Whether to show the toolbar for this card. 
+    
+    .PARAMETER ToolBar
+    The toolbar for this card. Use New-UDCardToolbar to create a toolbar. 
+    
+    .PARAMETER Header
+    The header for this card. The header typically contains a title for the card. Use New-UDCardHeader to create a header.
+    
+    .PARAMETER Body
+    The body for this card. This is the main content for the card. Use New-UDCardHeader to create a body. 
+    
+    .PARAMETER Expand
+    Th expand content for this card. Expand content is show when the user clicks the expansion button. Use New-UDCardExpand to create an expand.
+    
+    .PARAMETER Footer
+    The footer for this card. Footer contents typically contain actions that are relavent to the card. Use New-UDCardFooter to create a footer. 
+    
+    .PARAMETER Style
+    Styles to apply to the card. 
+    
+    .PARAMETER Elevation
+    The amount of elevation to provide the card. The more elevation, the more it will appear the card is floating off the page. 
+    
+    .PARAMETER Title
+    A title for the card. 
+    
+    .PARAMETER TitleAlignment
+    The alignment for the title. 
+    
+    .PARAMETER Content
+    The content of the card. 
+    
+    .PARAMETER Image
+    An image to show in the card. 
+    
+    .EXAMPLE
+    Shows a card with a title, image and content. 
+
+    New-UDCard -Id 'SimpleCard' -Title "Alon" -Content { 
+        "Content" 
+    } -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4'
+    #>
     [CmdletBinding()]
     param(
         [Parameter()]
