@@ -224,12 +224,12 @@ New-UDDashboard -Title "Dashboard" -Theme (Get-UDTheme basic) -Pages @(
             Select-Object -First 20  name, @{n = 'issues'; e = { $_.open_issues_count } }, language
         ) -Fields @('name', 'issues') -ColorBy 'language'  
 
-      
         New-ViserMonitor -Content {
-                @{
-                    time = (Get-Date).TimeOfDay.TotalSeconds
-                    cpu  = 1..120 | Get-Random
-                } |  ConvertTo-Json
+            $epochTime = [DateTime]::UtcNow - [DateTime]::new(1970, 1, 1)
+            @{
+                time = [int64]$epochTime.TotalMilliseconds
+                cpu  = 1..120 | Get-Random
+            } 
         } -Fields @('time', 'cpu') 
     }
 
