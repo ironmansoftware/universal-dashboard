@@ -497,12 +497,6 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         } -Style @{
             backgroundColor = '#90caf9'
         } -Id 'paperElevation' -Elevation 4
-
-        New-UDPaper -Content {
-            New-UDHeading -Text "$(0..10 | get-random)" -Id 'dynamic'
-        } -Style @{
-            backgroundColor = '#90caf9'
-        } -Id 'paperEndpoint' -IsEndPoint -AutoRefresh -RefreshInterval 1
     }
 
     New-UDPage -Name "Progress" -Content {

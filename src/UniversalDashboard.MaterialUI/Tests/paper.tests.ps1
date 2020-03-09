@@ -16,11 +16,4 @@ Describe "paper" {
         $element = Find-SeElement -Id 'paperElevation' -Driver $Driver
         (Get-SeElementAttribute -Element $element -Attribute 'class') -match '.MuiPaper-elevation4' | should be $true
     }
-
-    It 'has content dynamic content' {
-        $element = Find-SeElement -Id 'dynamic' -Driver $Driver
-        start-sleep 4
-        $element1 = Find-SeElement -Id 'dynamic' -Driver $Driver
-        $element.text -eq $element1.text | should be $false
-    }
 }

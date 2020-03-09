@@ -1,4 +1,48 @@
 function New-UDChip {
+    <#
+    .SYNOPSIS
+    Creates a new chip.
+    
+    .DESCRIPTION
+    Creates a new chip. Chips can be used to display tags or little bits of data.
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER Label
+    The label for the chip.
+    
+    .PARAMETER OnDelete
+    A script block to call when the chip is deleted.
+    
+    .PARAMETER OnClick
+    A script block to call when the chip is clicked.
+    
+    .PARAMETER Icon
+    An icon to show within the chip.
+    
+    .PARAMETER Style
+    CSS styles to apply to the chip.
+    
+    .PARAMETER Variant
+    The theme variant to apply to the chip.
+    
+    .PARAMETER Clickable
+    Whether the chip is clickable. 
+    
+    .PARAMETER Avatar
+    An avatar to show within the chip.
+    
+    .PARAMETER AvatarType
+    The type of avatar to show in the chip.
+    
+    .EXAMPLE
+    Creates a clickable chip with a custom style and icon.
+
+    $Icon = New-UDIcon -Icon 'user' -Size sm -Style @{color = '#fff'}
+    New-UDChip -Label "Demo User" -Id "chipIcon" -Icon $Icon -OnClick {Show-UDToast -Message 'test'} -Clickable -Style @{backgroundColor = '#00838f'}
+
+    #>
     [CmdletBinding(DefaultParameterSetName = 'Icon')]
     param(
         [Parameter()]

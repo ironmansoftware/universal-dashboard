@@ -48,17 +48,17 @@ export const UDListItem = withComponentFeatures(props => {
 
   const onClick = () => {
     if (props.onClick) { props.onClick() }
-    if (props.content) { setOpen(!open); }
+    if (props.children) { setOpen(!open); }
   }
 
   var expand = null; 
   var collapse = null;
-  if (props.content) 
+  if (props.children) 
   {
     expand = open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />;
     collapse = <Collapse in={open} timeout="auto" unmountOnExit mountOnEnter>
       <List component="div" disablePadding>
-        {props.render(props.content)}
+        {props.render(props.children)}
       </List>
       <Divider/>
     </Collapse>
@@ -82,7 +82,7 @@ export const UDListItem = withComponentFeatures(props => {
 
 export const UDList = withComponentFeatures(props => {
     const classes = useStyles();
-    const { content } = props;
+    const { children } = props;
 
     return (
       <List
@@ -94,7 +94,7 @@ export const UDList = withComponentFeatures(props => {
           className={classNames(classes.root, "ud-mu-list")}
           component="div"
         >
-          {content.map(item => props.render(item))}
+          {children.map(item => props.render(item))}
       </List>
     );
 })

@@ -1,8 +1,41 @@
 function New-UDList {
+    <#
+    .SYNOPSIS
+    Creates a list. 
+    
+    .DESCRIPTION
+    Creates a list. Use New-UDListItem to add new items to the list. Lists are good for links in UDDrawers.
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER Children
+    The items in the list.
+    
+    .PARAMETER SubHeader
+    Text to show within the sub header. 
+    
+    .EXAMPLE
+    Creates a new list with two items and nested list items.
+
+    New-UDList -Id 'listContent' -Content {
+
+        New-UDListItem -Id 'listContentItem' -AvatarType Avatar -Source 'https://pbs.twimg.com/profile_images/1065243723217416193/tg3XGcVR_400x400.jpg' -Label 'Adam Driscoll' -Content {
+
+            New-UDListItem -Id 'list-item-security' -Label 'username and passwords'
+            New-UDListItem -Id 'list-item-api' -Label 'api keys'
+
+        } 
+    }
+    #>
     param(
-        [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
-        [Parameter ()][scriptblock]$Content,
-        [Parameter ()][string]$SubHeader
+        [Parameter ()]
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
+        [Parameter ()]
+        [Alias("Content")]
+        [scriptblock]$Children,
+        [Parameter ()]
+        [string]$SubHeader
     )
     End
     {
@@ -12,7 +45,7 @@ function New-UDList {
             assetId = $MUAssetId
 
             id = $Id
-            content = $Content.Invoke()
+            children = & $Children
             subHeader = $SubHeader
             style = $Style
         }
@@ -20,17 +53,74 @@ function New-UDList {
 }
 
 function New-UDListItem {
+    <#
+    .SYNOPSIS
+    Creates a new list item.
+    
+    .DESCRIPTION
+    Creates a new list item. List items are used with New-UDList. 
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER AvatarType
+    The type of avatar to show within the list item. 
+    
+    .PARAMETER OnClick
+    A script block to execute when the list item is clicked. 
+    
+    .PARAMETER Label
+    The label to show within the list item. 
+    
+    .PARAMETER Children
+    Nested list items to show underneath this list item. 
+    
+    .PARAMETER SubTitle
+    The subtitle to show within the list item. 
+    
+    .PARAMETER Icon
+    The icon to show within the list item. 
+    
+    .PARAMETER Source
+    Parameter description
+    
+    .PARAMETER SecondaryAction
+    The secondary action to issue with this list item. 
+    
+    .EXAMPLE
+    Creates a new list with two items and nested list items.
+
+    New-UDList -Id 'listContent' -Content {
+
+        New-UDListItem -Id 'listContentItem' -AvatarType Avatar -Source 'https://pbs.twimg.com/profile_images/1065243723217416193/tg3XGcVR_400x400.jpg' -Label 'Adam Driscoll' -Content {
+
+            New-UDListItem -Id 'list-item-security' -Label 'username and passwords'
+            New-UDListItem -Id 'list-item-api' -Label 'api keys'
+
+        } 
+    }
+    #>
     [CmdletBinding()]
     param(
-        [Parameter ()][string]$Id = ([Guid]::NewGuid()).ToString(),
-        [Parameter ()][ValidateSet("Icon","Avatar")][string]$AvatarType,
-		[Parameter ()][Endpoint]$OnClick, 
-        [Parameter ()][string]$Label, 
-        [Parameter ()][scriptblock]$Content, 
-        [Parameter ()][string]$SubTitle,
-        [Parameter ()][PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
-        [Parameter ()][string]$Source,
-        [Parameter ()][scriptblock]$SecondaryAction
+        [Parameter ()]
+        [string]$Id = ([Guid]::NewGuid()).ToString(),
+        [Parameter ()]
+        [ValidateSet("Icon","Avatar")][string]$AvatarType,
+        [Parameter ()]
+        [Endpoint]$OnClick, 
+        [Parameter ()]
+        [string]$Label, 
+        [Parameter ()]
+        [Alias("Content")]
+        [scriptblock]$Children, 
+        [Parameter ()]
+        [string]$SubTitle,
+        [Parameter ()]
+        [PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
+        [Parameter ()]
+        [string]$Source,
+        [Parameter ()]
+        [scriptblock]$SecondaryAction
     )
     # DynamicParam {
         
@@ -72,8 +162,8 @@ function New-UDListItem {
             $OnClick.Register($Id, $PSCmdlet)
         }
 
-        if($null -ne $Content){
-            $CardContent = $Content.Invoke()
+        if($null -ne $Children){
+            $CardContent = &$Children
         }else{
             $CardContent = $null
         }
@@ -93,7 +183,7 @@ function New-UDListItem {
             subTitle = $SubTitle
             label = $Label
             onClick = $OnClick
-            content = $CardContent
+            children = $CardContent
             secondaryAction = $Action
             icon =  $Icon
             source = $Source

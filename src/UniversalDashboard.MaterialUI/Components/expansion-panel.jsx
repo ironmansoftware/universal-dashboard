@@ -55,7 +55,7 @@ function UDExpansionPanel(props) {
 export default function ExpansionPanelGroup(props) {
     const classes = useStyles();
     
-    var children = props.items.map(x => <UDExpansionPanel {...x} />);
+    var children = props.children.map(x => <UDExpansionPanel {...x} />);
 
     return (
         <div className={classes.root}>
