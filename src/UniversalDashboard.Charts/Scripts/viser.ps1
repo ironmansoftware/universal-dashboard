@@ -61,7 +61,7 @@ function New-ViserMonitor {
             content   = $Content.Invoke()
             # chartType = $ChartType
             fields    = $Fields
-            # color = $ColorBy
+            color = $ColorBy
         }
         $monitor
     }

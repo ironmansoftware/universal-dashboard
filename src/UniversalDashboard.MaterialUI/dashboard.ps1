@@ -225,12 +225,16 @@ New-UDDashboard -Title "Dashboard" -Theme (Get-UDTheme basic) -Pages @(
         ) -Fields @('name', 'issues') -ColorBy 'language'  
 
         New-ViserMonitor -Content {
-            $epochTime = [DateTime]::UtcNow - [DateTime]::new(1970, 1, 1)
+            
             @{
-                time = [int64]$epochTime.TotalMilliseconds
-                cpu  = 1..120 | Get-Random
+                used     = 1..100 | Get-Random
+                resource = 'cpu'
             } 
-        } -Fields @('time', 'cpu') 
+            @{
+                used     = 0..8048 | Get-Random
+                resource = 'memory'
+            }
+        } -Fields @('used') -ColorBy 'resource'
     }
 
     #     New-UDPage -Name 'Floating Action Button' -Content {

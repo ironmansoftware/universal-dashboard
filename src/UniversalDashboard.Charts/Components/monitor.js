@@ -1,61 +1,96 @@
 import React, { useEffect, useState, Fragment } from 'react'
-import { Chart, Tooltip, Axis, Legend, Area, Line } from 'viser-react'
+import {
+  Chart,
+  Tooltip,
+  Axis,
+  Legend,
+  Brush,
+  Global,
+  StackArea,
+  Slider,
+  Plugin
+} from 'viser-react'
 import ReactInterval from 'react-interval'
 import DataSet from '@antv/data-set'
+import theme from './theme/viserTheme'
 
 export default ({ content, fields, ...props }) => {
-  const [data, setData] = useState([])
-  // const ds = new DataSet()
-  // const dv = ds.createView('monitor').source(data)
+  const [cpuData, setCpuData] = useState([])
+  const dataSet = new DataSet()
+  const cpuView = dataSet.createView().source(cpuData)
+
+  Global.setTheme(theme)
 
   const loadData = () =>
     UniversalDashboard.get(
       `/api/internal/component/element/${props.id}`,
       result => {
         if (result.error) console.log(result.error)
-        //dv.addRow(result)
-        const newData = data.splice(0);
-        newData.push(result[0])
-        setData(newData)
+        const time = new Date().getTime()
+        // Cpu data
+        cpuView.addRow({
+          ...result[0],
+          time: time,
+        })
+        let newCpuData = cpuView.rows
+        if (newCpuData.length >= 20) newCpuData.shift()
+        setCpuData(newCpuData)
       },
     )
 
-  useEffect(() => {
-    loadData()
-  },[])
-
   const scale = [
     {
-      dataKey: `${fields[0]}`,
+      dataKey: 'time',
       type: 'time',
-      mask: 'MM:ss',
-      nice: false,
+      mask: 'HH:mm:ss',
+      sync: true,
     },
     {
-      dataKey: `${fields[1]}`,
+      dataKey: `${fields[0]}`,
       min: 0,
-      max: 120,
+      sync: true,
     },
   ]
 
-  //console.log(dv.rows)
-  console.log(data)
   return (
     <Fragment>
-      <Chart forceFit height={400} data={data} scale={scale}>
+      <Chart forceFit height={400} data={cpuData} scale={scale} padding={48}>
         <Tooltip />
         <Axis />
-        <Line position={`${fields[0]}*${fields[1]}`} />
-        <Area
-          position={`${fields[0]}*${fields[1]}`}
-          animate={{
-            update: {
-              duration: 0,
-            },
+        <Legend />
+        <StackArea position={`time*${fields[0]}`} color={props.color} />
+        <Brush
+          canvas={null}
+          style={{
+            fill: '#ccc',
+            fillOpacity: 0.4,
           }}
         />
       </Chart>
-      <ReactInterval enabled={true} callback={loadData} timeout={3000} />
+      <ReactInterval enabled={true} timeout={1000} callback={loadData} />
+      <Plugin>
+        <Slider
+          container="viser-slider-1"
+          width="auto"
+          height={26}
+          start={cpuView.rows[0].time}
+          end={cpuView.rows[-1].time}
+          xAxis="time"
+          yAxis={`${fields[0]}`}
+          scales={{
+            time: {
+              type: 'time',
+              tickCount: 10,
+              mask: 'DD/M HH:mm',
+            },
+          }}
+          data={cpuView.rows}
+          backgroundChart={{
+            type: 'line',
+          }}
+          
+        />
+      </Plugin>
     </Fragment>
   )
 }
