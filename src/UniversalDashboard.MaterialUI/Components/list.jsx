@@ -94,7 +94,7 @@ export const UDList = withComponentFeatures(props => {
           className={classNames(classes.root, "ud-mu-list")}
           component="div"
         >
-          {children.map(item => props.render(item))}
+          {props.render(children)}
       </List>
     );
 })

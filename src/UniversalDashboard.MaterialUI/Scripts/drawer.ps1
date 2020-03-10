@@ -36,6 +36,7 @@ function New-UDDrawer
         [Parameter()]
         [string]$Id = [Guid]::NewGuid(),
         [Parameter()]
+        [Alias("Content")]
         [ScriptBlock]$Children
     )
 

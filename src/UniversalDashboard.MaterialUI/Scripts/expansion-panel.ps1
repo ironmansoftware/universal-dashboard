@@ -90,7 +90,7 @@ function New-UDExpansionPanel {
         New-UDElement -Tag 'div' -id 'expContentDiv' -Content { "Hello" }
     }
     #>
-    [CmdletBinding(DefaultParameterSetName = "content")]
+    [CmdletBinding()]
     param(
         [Parameter()]
         [String]$Id = ([Guid]::NewGuid()),
@@ -98,16 +98,12 @@ function New-UDExpansionPanel {
 		[String]$Title,
 		[Parameter()]
 	    [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
-        [Parameter(ParameterSetName = "content")]
+        [Parameter()]
         [Alias("Content")]
         [ScriptBlock]$Children,
 		[Parameter()]
         [Switch]$Active
     )
-
-    if ($PSCmdlet.ParameterSetName -eq 'Content') {
-        $pContent = & $Children
-    }
 
     $iconName = $null
     if ($PSBoundParameters.ContainsKey("Icon")) {
@@ -117,7 +113,7 @@ function New-UDExpansionPanel {
     @{
         id = $Id 
         title = $Title 
-        content = $pContent 
+        children = & $Children
         active = $Active.IsPresent
         icon = $iconName
     }

@@ -7,8 +7,18 @@ import toaster from './toaster';
 
 var components = []
 
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
 const renderComponent = (component, history, dynamicallyLoaded) => {
     if (component == null) return <React.Fragment />;
+    if (isEmpty(component)) return <React.Fragment />;
+
 
     if (component.$$typeof === Symbol.for('react.element'))
     {

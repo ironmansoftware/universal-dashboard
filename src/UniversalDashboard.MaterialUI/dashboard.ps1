@@ -193,15 +193,11 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
     }
 
     New-UDPage -Name 'Expansion Panel' -Content {
-        New-UDExpansionPanelGroup -Items {
-            New-UDExpansionPanel -Title "Hello" -Id 'expTitle' -Content {}
+        New-UDExpansionPanelGroup -Children {
+            New-UDExpansionPanel -Title "Hello" -Id 'expTitle' -Children {}
 
-            New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Content {
+            New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Children {
                 New-UDElement -Tag 'div' -id 'expContentDiv' -Content { "Hello" }
-            }
-
-            New-UDExpansionPanel -Title "Hello" -Id 'expEndpoint' -Endpoint {
-                New-UDElement -Tag 'div' -id 'expEndpointDiv' -Content { "Hello" }
             }
         }
     }

@@ -20,22 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 function UDExpansionPanel(props) {
     const classes = useStyles();
-    const [content, setContent] = useState(props.content);
-
-    if (props.content == null) props.content = content;
-
-    useEffect(() => {
-        if (props.endpoint) {
-            UniversalDashboard.get("/api/internal/component/element/" + props.id, data => {
-                if (data.error) {
-                    setContent(data.error.message)
-                    return;
-                }
-                setContent(data);
-            });
-        }
-    }, [true])
-
+    
     return (
         <ExpansionPanel key={props.id} id={props.id}>
             <ExpansionPanelSummary
@@ -46,7 +31,7 @@ function UDExpansionPanel(props) {
                 <Typography className={classes.heading}>{props.title}</Typography>
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
-                {UniversalDashboard.renderComponent(props.content)}
+                {UniversalDashboard.renderComponent(props.children)}
             </ExpansionPanelDetails>
         </ExpansionPanel>
         )

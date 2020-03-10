@@ -40,7 +40,7 @@ function New-UDLink {
     General notes
     #>
     param(
-        [Parameter]
+        [Parameter()]
         [string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter()]
         [string]$url,
