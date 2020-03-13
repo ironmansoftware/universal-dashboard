@@ -1,5 +1,3 @@
-Import-Module "$PSScriptRoot\..\output\UniversalDashboard.Community.psd1"
-
 function New-ComponentPage {
     param(
         [Parameter(Mandatory)]
@@ -238,6 +236,4 @@ New-UDButton -Text 'Message Box' -OnClick {
     }
 } -Cmdlet "New-UDButton"
 
-$Dashboard = New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
-
-Start-UDDashboard -Dashboard $Dashboard -Port 10000 -Force
+New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
