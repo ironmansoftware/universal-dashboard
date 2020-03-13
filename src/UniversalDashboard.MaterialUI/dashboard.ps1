@@ -15,7 +15,7 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
 
         New-UDElement -Tag 'main' -Content {
-            New-UDAppBar -Content { New-UDTypography -Text 'Hello' -Paragraph } -Position relative -Drawer $Drawer
+            New-UDAppBar -Children { New-UDTypography -Text 'Hello' -Paragraph } -Position relative -Drawer $Drawer
         }
     }
 
@@ -193,15 +193,11 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
     }
 
     New-UDPage -Name 'Expansion Panel' -Content {
-        New-UDExpansionPanelGroup -Items {
-            New-UDExpansionPanel -Title "Hello" -Id 'expTitle' -Content {}
+        New-UDExpansionPanelGroup -Children {
+            New-UDExpansionPanel -Title "Hello" -Id 'expTitle' -Children {}
 
-            New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Content {
+            New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Children {
                 New-UDElement -Tag 'div' -id 'expContentDiv' -Content { "Hello" }
-            }
-
-            New-UDExpansionPanel -Title "Hello" -Id 'expEndpoint' -Endpoint {
-                New-UDElement -Tag 'div' -id 'expEndpointDiv' -Content { "Hello" }
             }
         }
     }
@@ -497,12 +493,6 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         } -Style @{
             backgroundColor = '#90caf9'
         } -Id 'paperElevation' -Elevation 4
-
-        New-UDPaper -Content {
-            New-UDHeading -Text "$(0..10 | get-random)" -Id 'dynamic'
-        } -Style @{
-            backgroundColor = '#90caf9'
-        } -Id 'paperEndpoint' -IsEndPoint -AutoRefresh -RefreshInterval 1
     }
 
     New-UDPage -Name "Progress" -Content {

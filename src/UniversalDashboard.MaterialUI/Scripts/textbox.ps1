@@ -1,4 +1,45 @@
 function New-UDTextbox {
+    <#
+    .SYNOPSIS
+    Creates a textbox.
+    
+    .DESCRIPTION
+    Creates a textbox. Textboxes can be used by themselves or within a New-UDForm.
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+
+    .PARAMETER Label
+    A label to show above this textbox.
+    
+    .PARAMETER Placeholder
+    A placeholder to place within the text box. 
+    
+    .PARAMETER Value
+    The current value of the textbox. 
+    
+    .PARAMETER Type
+    The type of textbox. This can be values such as text, password or email. 
+    
+    .PARAMETER Disabled
+    Whether this textbox is disabled. 
+    
+    .PARAMETER Icon
+    The icon to show next to the textbox. 
+    
+    .PARAMETER Autofocus
+    Whether to autofocus this textbox. 
+    
+    .EXAMPLE
+    Creates a standard textbox. 
+
+    New-UDTextbox -Label 'text' -Id 'txtLabel'
+
+    .EXAMPLE 
+    Creates a password textbox.
+
+    New-UDTextbox -Label 'password' -Id 'txtPassword' -Type 'password'
+    #>
     param(
         [Parameter()]
         [String]$Id = ([Guid]::NewGuid()),

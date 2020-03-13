@@ -10,9 +10,4 @@ Describe "expansion panel" {
         Find-SeElement -Id 'expContent' -Driver $Driver | Select-Object -First 1 | Invoke-SeClick
         (Find-SeElement -Id 'expContentDiv' -Driver $Driver).Text | Should be "Hello"
     }
-
-    It 'has a endpoint' {
-        Find-SeElement -Id 'expEndpoint' -Driver $Driver | Select-Object -First 1 | Invoke-SeClick
-        (Find-SeElement -Id 'expEndpointDiv' -Driver $Driver).Text | Should be "Hello"
-    }
 }

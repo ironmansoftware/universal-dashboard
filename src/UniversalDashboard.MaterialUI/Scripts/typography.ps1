@@ -1,4 +1,46 @@
 function New-UDTypography {
+    <#
+    .SYNOPSIS
+    Creates typography.
+    
+    .DESCRIPTION
+    Creates typography. Typography allows you to configure text within a dashboard. 
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER Variant
+    The type of text to display.
+    
+    .PARAMETER Text
+    The text to format. 
+    
+    .PARAMETER Content
+    The content to format. 
+    
+    .PARAMETER Style
+    A set of CSS styles to apply to the typography.
+    
+    .PARAMETER ClassName
+    A CSS className to apply to the typography.
+    
+    .PARAMETER Align
+    How to align the typography.
+    
+    .PARAMETER GutterBottom
+    The gutter bottom. 
+    
+    .PARAMETER NoWrap
+    Disables text wrapping.
+    
+    .PARAMETER Paragraph
+    Whether this typography is a paragraph.
+    
+    .EXAMPLE
+    
+    New-UDTypography -Text 'Hello' -Paragraph
+
+    #>
     [CmdletBinding(DefaultParameterSetName = "text")]
     param(
         [Parameter()]

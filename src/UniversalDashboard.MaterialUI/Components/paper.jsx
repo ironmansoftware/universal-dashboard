@@ -18,7 +18,7 @@ const styles = theme => ({
 export class UdPaper extends React.Component {
 
   state = {
-    content: this.props.content,
+    children: this.props.children,
   };
 
   onLoadData = () => {
@@ -31,7 +31,7 @@ export class UdPaper extends React.Component {
         errorMessage: data.error.message
       }) :
       this.setState({
-        content: data
+        children: data
       })
     })
   }
@@ -65,11 +65,10 @@ export class UdPaper extends React.Component {
       width,
       square,
       autoRefresh,
-      refreshInterval,
-      isEndpoint  
+      refreshInterval
     } = this.props;
     
-    const { content } = this.state;
+    const { children } = this.state;
 
     return (
       <>
@@ -84,7 +83,7 @@ export class UdPaper extends React.Component {
         sx={{ bg: 'primary', color: 'text'}}
       >
         
-        {UniversalDashboard.renderComponent(content)}
+        {UniversalDashboard.renderComponent(children)}
 
       </Paper>
       <ReactInterval

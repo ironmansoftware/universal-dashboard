@@ -1,4 +1,28 @@
 function New-UDTimePicker {
+    <#
+    .SYNOPSIS
+    Creates a time picker.
+    
+    .DESCRIPTION
+    Creates a time picker. This component can be used stand alone or within New-UDForm. 
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER Label
+    The label to show with the time picker.
+    
+    .PARAMETER OnChange
+    A script block to call when the time is changed. The $EventData variable contains the currently selected time. 
+    
+    .PARAMETER Value
+    The current value of the time picker.
+    
+    .EXAMPLE
+    Creates a new time picker 
+
+    New-UDTimePicker -Id 'timePicker'
+    #>
     param(
         [Parameter()]
         [string]$Id = [Guid]::NewGuid().ToString(),
