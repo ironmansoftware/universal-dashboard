@@ -79,11 +79,11 @@ export default class UdMuTypography extends React.Component {
       gutterBottom={gutterBottom}
       noWrap={noWrap}
       variant={variant}    
-      sx={{ 
-        color:['white', 'hotpink', 'blue'],
-        // fontSize:3
-        fontSize:[2,4,7]
-       }}
+      // sx={{ 
+      //   color:['white', 'hotpink', 'blue'],
+      //   // fontSize:3
+      //   fontSize:[2,4,7]
+      //  }}
       >
         {/* <Styled.root>{this.props.children}</Styled.root> */}
         {text}

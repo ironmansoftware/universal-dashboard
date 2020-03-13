@@ -108,7 +108,6 @@ namespace UniversalDashboard
 			provider.Mappings[".log"] 	= "text/plain";
 			provider.Mappings[".yml"] 	= "text/plain";
 
-			loggerFactory.AddNLog();
 			app.UseResponseCompression();
             app.UseStatusCodePages(async context => {
 

@@ -76,7 +76,8 @@ export class UDMuCard extends React.Component {
           onMouseEnter={this.onMouseEnterEvent}
           onMouseLeave={this.onMouseLeaveEvent}
           style={{ ...style }}
-          sx={{ bg: 'background', color: 'text'}}>
+          //sx={{ bg: 'background', color: 'text'}}
+          >
 
           {toolbar !== null && showToolBar ?
           <UDCardToolBar
