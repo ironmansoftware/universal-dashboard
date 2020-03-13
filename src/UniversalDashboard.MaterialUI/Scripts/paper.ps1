@@ -28,7 +28,13 @@ function New-UDPaper {
     The elevation of this paper. 
     
     .EXAMPLE
-    An example
+    Creates paper with a heading, custom style and an elevation of 4. 
+
+    New-UDPaper -Children {
+        New-UDHeading -Text "hi" -Id 'hi'
+    } -Style @{
+        backgroundColor = '#90caf9'
+    } -Id 'paperElevation' -Elevation 4
     
     .NOTES
     General notes
