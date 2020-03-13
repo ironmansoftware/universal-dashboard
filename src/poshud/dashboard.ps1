@@ -4,7 +4,7 @@ function New-ComponentPage {
         [string]$Title, 
         [Parameter(Mandatory)]
         [string]$Description, 
-        [Parameter(Mandatory)]
+        [Parameter()]
         [string]$SecondDescription, 
         [Parameter(Mandatory)]
         [ScriptBlock]$Content,
@@ -100,14 +100,14 @@ function New-AppBar {
                 New-UDListItem -Label "AppBar" -OnClick { Invoke-UDRedirect -Url "/appbar" }
                 New-UDListItem -Label "Avatar" -OnClick {} 
                 New-UDListItem -Label "Button" -OnClick { Invoke-UDRedirect -Url "/button" }
-                New-UDListItem -Label "Card" -OnClick {}
-                New-UDListItem -Label "Checkbox" -OnClick {}
+                New-UDListItem -Label "Card" -OnClick { Invoke-UDRedirect -Url '/card' }
+                New-UDListItem -Label "Checkbox" -OnClick { Invoke-UDRedirect -Url '/checkbox' }
                 New-UDListItem -Label "Chips" -OnClick {}
-                New-UDListItem -Label "Date Picker" -OnClick {}
+                New-UDListItem -Label "Date Picker" -OnClick { Invoke-UDRedirect -Url '/date-picker' }
                 New-UDListItem -Label "Drawer" -OnClick {}
                 New-UDListItem -Label "Expansion Panel" -OnClick {}
                 New-UDListItem -Label "Floating Action Button" -OnClick {}
-                New-UDListItem -Label "Form" -OnClick {}
+                New-UDListItem -Label "Form" -OnClick { Invoke-UDRedirect -Url '/form' }
                 New-UDListItem -Label "Grid" -OnClick {}
                 New-UDListItem -Label "Icon" -OnClick {}
                 New-UDListItem -Label "Icon Button" -OnClick {}
@@ -121,7 +121,7 @@ function New-AppBar {
                 New-UDListItem -Label "Table" -OnClick {}
                 New-UDListItem -Label "Tabs" -OnClick {}
                 New-UDListItem -Label "Textbox" -OnClick {}
-                New-UDListItem -Label "Time Picker" -OnClick {}
+                New-UDListItem -Label "Time Picker" -OnClick { Invoke-UDRedirect -Url '/time-picker' }
                 New-UDListItem -Label "Tree View" -OnClick {}
                 New-UDListItem -Label "Typography" -OnClick {}
             }
@@ -235,5 +235,104 @@ New-UDButton -Text 'Message Box' -OnClick {
 }
     }
 } -Cmdlet "New-UDButton"
+
+
+$Pages += New-ComponentPage -Title 'Card' -Description 'Cards contain content and actions about a single subject.' -SecondDescription "Cards are surfaces that display content and actions on a single topic.
+
+They should be easy to scan for relevant and actionable information. Elements, like text and images, should be placed on them in a way that clearly indicates hierarchy." -Content {
+    New-Example -Title 'Simple Card' -Description 'Although cards can support multiple actions, UI controls, and an overflow menu, use restraint and remember that cards are entry points to more complex and detailed information.' -Example {
+New-UDCard -Title 'Simple Card' -Content {
+    "This is some content"
+} 
+    }
+} -Cmdlet "New-UDCard"
+
+$Pages += New-ComponentPage -Title 'Checkbox' -Description 'Checkboxes allow the user to select one or more items from a set.' -SecondDescription "Checkboxes can be used to turn an option on or off.
+
+If you have multiple options appearing in a list, you can preserve space by using checkboxes instead of on/off switches. If you have a single option, avoid using a checkbox and use an on/off switch instead." -Content {
+    New-Example -Title 'Checkboxes' -Description "Checkboxes can be disabled and checked by default" -Example {
+New-UDCheckBox
+
+New-UDCheckBox -Disabled
+
+New-UDCheckBox -Checked $true
+
+New-UDCheckBox -Checked $true -Disabled
+    }
+
+    New-Example -Title 'Checkboxes with custom icon' -Description "Create checkboxes that use any icon and style." -Example {
+$Icon = New-UDIcon -Icon angry -Size lg -Regular
+$CheckedIcon = New-UDIcon -Icon angry -Size lg
+New-UDCheckBox -Icon $Icon -CheckedIcon $CheckedIcon -Style @{color = '#2196f3'}
+    }
+
+    New-Example -Title 'Checkboxes with onChange script block' -Description "Create checkboxes that fire script blocks when changed." -Example {
+New-UDCheckBox -OnChange {
+    Show-UDToast -Title 'Checkbox' -Message $Body
+}    
+    }
+
+    New-Example -Title 'Checkbox with custom label placement' -Description "You can adjust where the label for the checkbox is placed." -Example {
+New-UDCheckBox -Label 'Demo' -LabelPlacement start
+New-UDCheckBox -Label 'Demo' -LabelPlacement top
+New-UDCheckBox -Label 'Demo' -LabelPlacement bottom
+New-UDCheckBox -Label 'Demo' -LabelPlacement end
+    }
+} -Cmdlet "New-UDCheckbox"
+
+$Pages += New-ComponentPage -Title 'Date Picker' -Description 'Date pickers pickers provide a simple way to select a single value from a pre-determined set.' -SecondDescription "" -Content {
+    New-Example -Title 'Date Picker' -Description '' -Example {
+        New-UDDatePicker 
+    }
+} -Cmdlet "New-UDDatePicker"
+
+$Pages += New-ComponentPage -Title 'Form' -Description 'Forms provide a way to collect data from users.' -SecondDescription "Forms can include any type of control you want. This allows you to customize the look and feel and use any input controls. 
+
+Data entered via the input controls will be sent back to the the OnSubmit script block when the form is submitted. " -Content {
+    New-Example -Title 'Simple Form' -Description 'Simple forms can use inputs like text boxes and checkboxes.' -Example {
+New-UDForm -Content {
+    New-UDTextbox -Id 'txtTextfield'
+    New-UDCheckbox -Id 'chkCheckbox'
+} -OnSubmit {
+    Show-UDToast -Message $Body
+}
+    }
+
+    New-Example -Title 'Formatting a Form' -Description 'Since forms can use any component, you can use standard formatting components within the form.' -Example {
+New-UDForm -Content {
+
+    New-UDRow -Columns {
+        New-UDColumn -SmallSize 6 -LargeSize 6 -Content {
+            New-UDTextbox -Id 'txtTextfield' -Label 'First Name' 
+        }
+        New-UDColumn -SmallSize 6 -LargeSize 6 -Content {
+            New-UDTextbox -Id 'txtTextfield' -Label 'Last Name'
+        }
+    }
+
+    New-UDTextbox -Id 'txtAddress' -Label 'Address'
+
+    New-UDRow -Columns {
+        New-UDColumn -SmallSize 6 -LargeSize 6  -Content {
+            New-UDTextbox -Id 'txtState' -Label 'State'
+        }
+        New-UDColumn -SmallSize 6 -LargeSize 6  -Content {
+            New-UDTextbox -Id 'txtZipCode' -Label 'ZIP Code'
+        }
+    }
+
+} -OnSubmit {
+    Show-UDToast -Message $Body
+}
+            }
+
+} -Cmdlet "New-UDForm"
+
+
+$Pages += New-ComponentPage -Title 'Time Picker' -Description 'Time pickers pickers provide a simple way to select a single value from a pre-determined set.' -SecondDescription "" -Content {
+    New-Example -Title 'Time Picker' -Description '' -Example {
+        New-UDTimePicker
+    }
+} -Cmdlet "New-UDTimePicker"
 
 New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
