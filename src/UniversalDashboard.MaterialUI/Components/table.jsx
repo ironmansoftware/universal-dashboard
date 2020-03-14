@@ -113,7 +113,7 @@ const UDTable = (props) => {
     }
 
     return (
-        <div id={props.id} key={props.id}>
+        <div id={props.id} key={props.id} style={{width: "100%"}}>
             <MaterialTable 
                 title={props.title}
                 icons={icons}
