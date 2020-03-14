@@ -328,6 +328,7 @@ New-UDForm -Content {
 
 } -Cmdlet "New-UDForm"
 
+
 $Pages += New-ComponentPage -Title 'Table' -Description 'Tables display sets of data. They can be fully customized.' -SecondDescription "Tables display information in a way that’s easy to scan, so that users can look for patterns and insights. They can be embedded in primary content, such as cards." -Content {
     New-Example -Title 'Simple Table' -Description 'A simple example with no frills. Table columns are defined from the data.' -Example {
 $Data = @(
