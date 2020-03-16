@@ -101,7 +101,7 @@ function New-AppBar {
             }
             New-UDListItem -Label "Components" -Children {
                 New-UDListItem -Label "AppBar" -OnClick { Invoke-UDRedirect -Url "/appbar" }
-                New-UDListItem -Label "Avatar" -OnClick {} 
+                New-UDListItem -Label "Avatar" -OnClick { Invoke-UDRedirect -Url '/avatar' } 
                 New-UDListItem -Label "Button" -OnClick { Invoke-UDRedirect -Url "/button" }
                 New-UDListItem -Label "Card" -OnClick { Invoke-UDRedirect -Url '/card' }
                 New-UDListItem -Label "Checkbox" -OnClick { Invoke-UDRedirect -Url '/checkbox' }
@@ -216,6 +216,25 @@ $Pages += New-ComponentPage -Title 'AppBar' `
         New-UDAppBar -Position relative -Children { New-UDElement -Tag 'div' -Content { "Title" } } -Drawer $Drawer
     }
 } -Cmdlet 'New-UDAppBar'
+
+$Pages += New-ComponentPage -Title 'Avatar' `
+    -Description 'Avatars are found throughout material design with uses in everything from tables to dialog menus.' `
+    -SecondDescription "" -Content {
+
+    New-Example -Title 'Avatar' -Example {
+        New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent' -Variant small
+
+        New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarStyle' -Variant medium
+
+        $AvatarProps = @{
+            Image = 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4'
+            Alt = 'alon gvili avatar'
+            Id = 'avatarSquare'
+            variant = 'large'
+        }
+        New-UDAvatar @AvatarProps 
+    }
+} -Cmdlet 'New-UDAvatar'
 
 $Pages += New-ComponentPage -Title 'Button' -Description 'Buttons allow users to take actions, and make choices, with a single tap.' -SecondDescription 'asdfasfas' -Content {
     New-Example -Title 'Contained Button' -Description 'Contained buttons are high-emphasis, distinguished by their use of elevation and fill. They contain actions that are primary to your app.' -Example {
