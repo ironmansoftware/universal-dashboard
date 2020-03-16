@@ -30,12 +30,12 @@ export const UDListItem = withComponentFeatures(props => {
 
   var avatar = null;
 
-  if (props.avatarType === 'Icon') 
+  if (props.avatarType === 'Icon' && props.icon) 
   {
     avatar = <ListItemIcon>{props.icon ? props.render(props.icon) : null}</ListItemIcon>
   }
 
-  if (props.avatarType === 'Avatar')
+  if (props.avatarType === 'Avatar' && props.source)
   {
     avatar = <ListItemAvatar><Avatar src={props.source}/></ListItemAvatar>
   }
@@ -56,7 +56,7 @@ export const UDListItem = withComponentFeatures(props => {
   if (props.children) 
   {
     expand = open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />;
-    collapse = <Collapse in={open} timeout="auto" unmountOnExit mountOnEnter>
+    collapse = <Collapse in={open} timeout="auto" unmountOnExit mountOnEnter >
       <List component="div" disablePadding>
         {props.render(props.children)}
       </List>
@@ -72,7 +72,7 @@ export const UDListItem = withComponentFeatures(props => {
       onClick={onClick}
     >
       {avatar}
-      <ListItemText inset primary={props.label} secondary={props.subTitle} />
+      <ListItemText primary={props.label} secondary={props.subTitle} />
       {secondaryItem}
       {expand}
     </ListItem>,
