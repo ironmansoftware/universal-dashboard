@@ -105,7 +105,7 @@ function New-UDListItem {
         [Parameter ()]
         [string]$Id = ([Guid]::NewGuid()).ToString(),
         [Parameter ()]
-        [ValidateSet("Icon","Avatar")][string]$AvatarType,
+        [ValidateSet("Icon","Avatar")][string]$AvatarType = 'Icon',
         [Parameter ()]
         [Endpoint]$OnClick, 
         [Parameter ()]
@@ -116,7 +116,7 @@ function New-UDListItem {
         [Parameter ()]
         [string]$SubTitle,
         [Parameter ()]
-        [PSTypeName('UniversalDashboard.MaterialUI.Icon')]$Icon,
+        [PSTypeName('UniversalDashboard.Icon')]$Icon,
         [Parameter ()]
         [string]$Source,
         [Parameter ()]

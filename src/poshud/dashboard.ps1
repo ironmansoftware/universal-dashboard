@@ -115,7 +115,7 @@ function New-AppBar {
                 New-UDListItem -Label "Icons" -OnClick { Invoke-UDRedirect -Url '/icons' }
                 New-UDListItem -Label "Icon Button" -OnClick {}
                 New-UDListItem -Label "Link" -OnClick {}
-                New-UDListItem -Label "List" -OnClick {}
+                New-UDListItem -Label "List" -OnClick { Invoke-UDRedirect -Url '/list' }
                 New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
                 New-UDListItem -Label "Progress" -OnClick { Invoke-UDRedirect -Url '/progress' }
                 New-UDListItem -Label "Radio" -OnClick { Invoke-UDRedirect -Url '/radio' }
@@ -422,6 +422,16 @@ $Pages += New-ComponentPage -Title 'Icons' -Description 'FontAwesome icons to in
         foreach($icon in $icons) {
             New-UDIcon -Icon $icon -Size lg
         }
+    }
+} -Cmdlet "New-UDIcon"
+
+$Pages += New-ComponentPage -Title 'List' -Description 'Lists are continuous, vertical indexes of text or images.' -SecondDescription "Lists are a continuous group of text or images. They are composed of items containing primary and supplemental actions, which are represented by icons and text." -Content {
+
+    New-UDList -Content {
+        New-UDListItem -Label 'Inbox' -Icon (New-UDIcon -Icon envelope -Size 3x) -SubTitle 'New Stuff'
+        New-UDListItem -Label 'Drafts' -Icon (New-UDIcon -Icon edit -Size 3x) -SubTitle "Stuff I'm working on "
+        New-UDListItem -Label 'Trash' -Icon (New-UDIcon -Icon trash -Size 3x) -SubTitle 'Stuff I deleted'
+        New-UDListItem -Label 'Spam' -Icon (New-UDIcon -Icon bug -Size 3x) -SubTitle "Stuff I didn't want"
     }
 } -Cmdlet "New-UDIcon"
 
