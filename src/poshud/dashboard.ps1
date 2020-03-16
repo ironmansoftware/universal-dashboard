@@ -115,7 +115,7 @@ function New-AppBar {
                 New-UDListItem -Label "List" -OnClick {}
                 New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
                 New-UDListItem -Label "Progress" -OnClick {}
-                New-UDListItem -Label "Radio" -OnClick {}
+                New-UDListItem -Label "Radio" -OnClick { Invoke-UDRedirect -Url '/radio' }
                 New-UDListItem -Label "Select" -OnClick { Invoke-UDRedirect -Url '/select'}
                 New-UDListItem -Label "Switch" -OnClick { Invoke-UDRedirect -Url '/switch'}
                 New-UDListItem -Label "Table" -OnClick { Invoke-UDRedirect -Url '/table' }
@@ -429,6 +429,34 @@ New-UDPaper -Elevation 1 -Content {}
 New-UDPaper -Elevation 3 -Content {} 
     }
 } -Cmdlet "New-UDPaper"
+
+$Pages += New-ComponentPage -Title 'Radio' -Description 'Radio buttons allow the user to select one option from a set.' -SecondDescription "Use radio buttons when the user needs to see all available options. If available options can be collapsed, consider using a dropdown menu because it uses less space.
+
+Radio buttons should have the most commonly used option selected by default." -Content {
+    New-Example -Title 'Simple Radio' -Description '' -Example {
+New-UDRadioGroup -Label "Day" -Content {
+    New-UDRadio -Label Monday -Value 'monday'
+    New-UDRadio -Label Tuesday -Value 'tuesday'
+    New-UDRadio -Label Wednesday -Value 'wednesday'
+    New-UDRadio -Label Thursday -Value 'thursday'
+    New-UDRadio -Label Friday  -Value 'friday'
+    New-UDRadio -Label Saturday -Value 'saturday'
+    New-UDRadio -Label Sunday -Value 'sunday'
+}
+    }
+
+    New-Example -Title 'OnChange' -Description '' -Example {
+New-UDRadioGroup -Label "Day" -Content {
+    New-UDRadio -Label Monday -Value 'monday'
+    New-UDRadio -Label Tuesday -Value 'tuesday'
+    New-UDRadio -Label Wednesday -Value 'wednesday'
+    New-UDRadio -Label Thursday -Value 'thursday'
+    New-UDRadio -Label Friday  -Value 'friday'
+    New-UDRadio -Label Saturday -Value 'saturday'
+    New-UDRadio -Label Sunday -Value 'sunday'
+} -OnChange { Show-UDToast -Message $Body }
+    }
+} -Cmdlet "New-UDRadio"
 
 $Pages += New-ComponentPage -Title 'Select' -Description 'Select components are used for collecting user provided information from a list of options.' -SecondDescription "" -Content {
     New-Example -Title 'Simple Select' -Description '' -Example {
