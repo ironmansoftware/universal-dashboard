@@ -105,11 +105,11 @@ function New-AppBar {
                 New-UDListItem -Label "Chips" -OnClick {}
                 New-UDListItem -Label "Date Picker" -OnClick { Invoke-UDRedirect -Url '/date-picker' }
                 New-UDListItem -Label "Drawer" -OnClick {}
-                New-UDListItem -Label "Expansion Panel" -OnClick {}
+                New-UDListItem -Label "Expansion Panel" -OnClick { Invoke-UDRedirect -Url '/expansion-panel' }
                 New-UDListItem -Label "Floating Action Button" -OnClick {}
                 New-UDListItem -Label "Form" -OnClick { Invoke-UDRedirect -Url '/form' }
                 New-UDListItem -Label "Grid" -OnClick {}
-                New-UDListItem -Label "Icon" -OnClick {}
+                New-UDListItem -Label "Icons" -OnClick { Invoke-UDRedirect -Url '/icons' }
                 New-UDListItem -Label "Icon Button" -OnClick {}
                 New-UDListItem -Label "Link" -OnClick {}
                 New-UDListItem -Label "List" -OnClick {}
@@ -286,6 +286,20 @@ $Pages += New-ComponentPage -Title 'Date Picker' -Description 'Date pickers pick
     }
 } -Cmdlet "New-UDDatePicker"
 
+$Pages += New-ComponentPage -Title 'Expansion Panel' -Description 'Expansion panels contain creation flows and allow lightweight editing of an element.' -SecondDescription "An expansion panel is a lightweight container that may either stand alone or be connected to a larger surface, such as a card." -Content {
+    New-Example -Title 'Simple Expansion Panel' -Description '' -Example {
+        New-UDExpansionPanelGroup -Children {
+            New-UDExpansionPanel -Title "Hello" -Children {}
+
+            New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Children {
+                New-UDElement -Tag 'div' -Content { "Hello" }
+            }
+        }
+    }
+} -Cmdlet "New-UDExpansionPanel"
+
+
+
 $Pages += New-ComponentPage -Title 'Form' -Description 'Forms provide a way to collect data from users.' -SecondDescription "Forms can include any type of control you want. This allows you to customize the look and feel and use any input controls. 
 
 Data entered via the input controls will be sent back to the the OnSubmit script block when the form is submitted. " -Content {
@@ -327,6 +341,30 @@ New-UDForm -Content {
             }
 
 } -Cmdlet "New-UDForm"
+
+$Pages += New-ComponentPage -Title 'Icons' -Description 'FontAwesome icons to include in your dashboard.' -SecondDescription "" -Content {
+
+    New-UDTextbox -Id 'txtIconSearch' -Label 'Search' 
+    New-UDButton -Text 'Search' -OnClick {
+        Sync-UDElement -Id 'icons'
+    }
+
+    New-UDElement -tag 'p' -Content {}
+
+    New-UDDynamic -Id 'icons' -Content {
+        $Icons = [Enum]::GetNames([UniversalDashboard.Models.FontAwesomeIcons])
+        $IconSearch = (Get-UDElement -Id 'txtIconSearch').value
+        if ($null -ne $IconSearch -and $IconSearch -ne '')
+        {
+            Show-UDToast -Message $IconSearch
+            $Icons = $Icons.where({ $_ -match $IconSearch})
+        }
+
+        foreach($icon in $icons) {
+            New-UDIcon -Icon $icon -Size lg
+        }
+    }
+} -Cmdlet "New-UDIcon"
 
 
 $Pages += New-ComponentPage -Title 'Table' -Description 'Tables display sets of data. They can be fully customized.' -SecondDescription "Tables display information in a way that’s easy to scan, so that users can look for patterns and insights. They can be embedded in primary content, such as cards." -Content {
