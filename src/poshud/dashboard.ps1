@@ -9,7 +9,7 @@ function New-ComponentPage {
         [Parameter(Mandatory)]
         [ScriptBlock]$Content,
         [Parameter(Mandatory)] 
-        [string]$Cmdlet) 
+        [string[]]$Cmdlet) 
 
     New-UDPage -Name $Title -Content {
         New-AppBar -Title $title
@@ -27,19 +27,6 @@ function New-ComponentPage {
         }
 
         & $Content
-
-        $Parameters = (Get-Command $Cmdlet).Parameters.GetEnumerator() | ForEach-Object {
-            $Parameter = $_.Key
-
-            $Help = Get-Help -Name $Cmdlet -Parameter $Parameter
-
-            @{
-                name = $Help.name 
-                type = $Help.type.name
-                description = $Help.description.text
-                required = $Help.required
-            }
-        }
 
         $Columns = @(
             New-UDTableColumn -Title 'Name' -Property 'name' 
@@ -62,7 +49,23 @@ function New-ComponentPage {
             New-UDTypography -Text 'Parameters' -Variant h4
         }
 
-        New-UDTable -Title 'Parameters' -Data $Parameters -Columns $Columns
+        foreach($item in $Cmdlet)
+        {
+            $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
+                $Parameter = $_.Key
+    
+                $Help = Get-Help -Name $item -Parameter $Parameter
+    
+                @{
+                    name = $Help.name 
+                    type = $Help.type.name
+                    description = $Help.description.text
+                    required = $Help.required
+                }
+            }
+
+            New-UDTable -Title $item -Data $Parameters -Columns $Columns
+        }   
     }
 }
 
@@ -114,12 +117,12 @@ function New-AppBar {
                 New-UDListItem -Label "Link" -OnClick {}
                 New-UDListItem -Label "List" -OnClick {}
                 New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
-                New-UDListItem -Label "Progress" -OnClick {}
+                New-UDListItem -Label "Progress" -OnClick { Invoke-UDRedirect -Url '/progress' }
                 New-UDListItem -Label "Radio" -OnClick { Invoke-UDRedirect -Url '/radio' }
                 New-UDListItem -Label "Select" -OnClick { Invoke-UDRedirect -Url '/select'}
                 New-UDListItem -Label "Switch" -OnClick { Invoke-UDRedirect -Url '/switch'}
                 New-UDListItem -Label "Table" -OnClick { Invoke-UDRedirect -Url '/table' }
-                New-UDListItem -Label "Tabs" -OnClick {}
+                New-UDListItem -Label "Tabs" -OnClick { Invoke-UDRedirect -Url '/tabs' }
                 New-UDListItem -Label "Textbox" -OnClick {}
                 New-UDListItem -Label "Time Picker" -OnClick { Invoke-UDRedirect -Url '/time-picker' }
                 New-UDListItem -Label "Tree View" -OnClick {}
@@ -430,6 +433,31 @@ New-UDPaper -Elevation 3 -Content {}
     }
 } -Cmdlet "New-UDPaper"
 
+$Pages += New-ComponentPage -Title 'Progress' -Description 'Progress indicators commonly known as spinners, express an unspecified wait time or display the length of a process.' -SecondDescription "Progress indicators inform users about the status of ongoing processes, such as loading an app, submitting a form, or saving updates. They communicate an app’s state and indicate available actions, such as whether users can navigate away from the current screen.
+
+Determinate indicators display how long an operation will take.
+
+Indeterminate indicators visualize an unspecified wait time." -Content {
+    New-Example -Title 'Circular Progress' -Description '' -Example {
+New-UDProgress -Circular -Color Red
+New-UDProgress -Circular -Color Green 
+New-UDProgress -Circular -Color Blue 
+New-UDProgress -Circular -Size Small
+New-UDProgress -Circular -Size Medium 
+New-UDProgress -Circular -Size Large
+    }
+
+    New-Example -Title 'Linear Indeterminate' -Description '' -Example {
+New-UDProgress 
+    }
+
+    New-Example -Title 'Linear Determinate' -Description '' -Example {
+New-UDProgress -PercentComplete 75
+    }
+
+} -Cmdlet "New-UDProgress"
+
+
 $Pages += New-ComponentPage -Title 'Radio' -Description 'Radio buttons allow the user to select one option from a set.' -SecondDescription "Use radio buttons when the user needs to see all available options. If available options can be collapsed, consider using a dropdown menu because it uses less space.
 
 Radio buttons should have the most commonly used option selected by default." -Content {
@@ -503,6 +531,25 @@ New-UDSwitch -OnChange { Show-UDToast -Message $Body }
     }
 
 } -Cmdlet "New-UDSwitch"
+
+$Pages += New-ComponentPage -Title 'Tabs' -Description 'Tabs make it easy to explore and switch between different views.' -SecondDescription "Tabs organize and allow navigation between groups of content that are related and at the same level of hierarchy." -Content {
+    New-Example -Title 'Simple Tables' -Description 'A simple example with no frills.' -Example {
+New-UDTabs -Tabs {
+    New-UDTab -Text 'Item One' -Content { New-UDTypography -Text 'Item One' -Variant 'h2' }
+    New-UDTab -Text 'Item Two' -Content { New-UDTypography -Text 'Item Two' -Variant 'h2' }
+    New-UDTab -Text 'Item Three' -Content { New-UDTypography -Text 'Item Three' -Variant 'h2' }
+}
+    }
+
+    New-Example -Title 'Vertical Tables' -Description 'Vertical tabs' -Example {
+New-UDTabs -Tabs {
+    New-UDTab -Text 'Item One' -Content { New-UDTypography -Text 'Item One' -Variant 'h2' }
+    New-UDTab -Text 'Item Two' -Content { New-UDTypography -Text 'Item Two' -Variant 'h2' }
+    New-UDTab -Text 'Item Three' -Content { New-UDTypography -Text 'Item Three' -Variant 'h2' }
+} -Orientation vertical
+            }
+    
+} -Cmdlet @("New-UDTabs", "New-UDTab")
 
 $Pages += New-ComponentPage -Title 'Table' -Description 'Tables display sets of data. They can be fully customized.' -SecondDescription "Tables display information in a way that’s easy to scan, so that users can look for patterns and insights. They can be embedded in primary content, such as cards." -Content {
     New-Example -Title 'Simple Table' -Description 'A simple example with no frills. Table columns are defined from the data.' -Example {
