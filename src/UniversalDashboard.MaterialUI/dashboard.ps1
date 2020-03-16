@@ -218,23 +218,24 @@ New-UDDashboard -Title "Dashboard" -Theme (Get-UDTheme basic) -Pages @(
     # }
 
     New-UDPage -Name 'AntV Chart'  -Content {
-        New-ViserChart -Content (
-            Get-Content -path "D:\GPM\github.com\ironmansoftware\universal-dashboard\src\UniversalDashboard.Charts\demo.json" | 
-            ConvertFrom-Json | Where-Object { $_.open_issues_count -gt 0 } | 
-            Select-Object -First 20  name, @{n = 'issues'; e = { $_.open_issues_count } }, language
-        ) -Fields @('name', 'issues') -ColorBy 'language'  
+        # New-ViserChart -Content (
+        #     Get-Content -path "D:\GPM\github.com\ironmansoftware\universal-dashboard\src\UniversalDashboard.Charts\demo.json" | 
+        #     ConvertFrom-Json | Where-Object { $_.open_issues_count -gt 0 } | 
+        #     Select-Object -First 20  name, @{n = 'issues'; e = { $_.open_issues_count } }, language
+        # ) -Fields @('name', 'issues') -ColorBy 'language'  
 
+        
         New-ViserMonitor -Content {
-            
             @{
-                used     = 1..100 | Get-Random
-                resource = 'cpu'
+                used     = Get-Counter -Counter '\Processor Information(_Total)\% Processor Time' | Select-Object -expand CounterSamples | Select-Object -expand  CookedValue
+                resource = 'processor'
             } 
             @{
-                used     = 0..8048 | Get-Random
-                resource = 'memory'
-            }
+                used     = Get-Counter -Counter '\Processor Information(_Total)\% User Time' | Select-Object -expand CounterSamples | Select-Object -expand  CookedValue
+                resource = 'user'
+            } 
         } -Fields @('used') -ColorBy 'resource'
+  
     }
 
     #     New-UDPage -Name 'Floating Action Button' -Content {

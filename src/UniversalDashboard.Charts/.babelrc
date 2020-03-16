@@ -1,12 +1,10 @@
 {
-  "presets" : [
+  "presets": [
     [
-      "@babel/preset-env", {
-        "targets":{
-          "browsers":[
-            ">1.0%",
-            "not dead"
-          ]
+      "@babel/preset-env",
+      {
+        "targets": {
+          "browsers": [">1.0%", "not dead"]
         }
       }
     ],
@@ -14,6 +12,13 @@
   ],
   "plugins": [
     ["minify-dead-code-elimination", { "optimizeRawSize": true }],
+    ["import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "es", // default: lib
+        "style": true
+      }
+    ],
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-syntax-dynamic-import"
   ]

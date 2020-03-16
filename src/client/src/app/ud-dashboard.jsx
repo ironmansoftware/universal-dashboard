@@ -322,7 +322,7 @@ function Dashboard({ history }) {
     console.log(theme)
     return (
       <ThemeProvider theme={theme}>
-        <ColorModeProvider>{[component, pluginComponents]}</ColorModeProvider>
+        <ColorModeProvider >{[component, pluginComponents]}</ColorModeProvider>
       </ThemeProvider>
     )
   } catch (err) {

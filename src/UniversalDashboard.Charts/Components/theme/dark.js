@@ -1,199 +1,679 @@
-import { DESCRIPTION_BOTTOM_MARGIN, TOP_BLEEDING, BOTTOM_BLEEDING } from './default';
-
-export const DEFAULT_DARK_THEME = {
-  backgroundStyle: {
-    fill: '#262626',
+var dark = {
+  "background": {
+    "fill": "#5b5c6e"
   },
-  defaultColor: '#5B8FF9',
-  width: 400,
-  height: 400,
-  bleeding: [TOP_BLEEDING, 24, BOTTOM_BLEEDING, 24],
-  padding: 'auto',
-  title: {
-    padding: [24, 24, 24, 24],
-    fontFamily: 'PingFang SC',
-    fontSize: 18,
-    fontWeight: 'bold',
-    fill: 'rgba(255,255,255,0.65)',
-    stroke: 'rgba(0,0,0,0.95)',
-    textAlign: 'left',
-    textBaseline: 'top',
-    lineHeight: 20,
-    alignWithAxis: false,
+  "defaultColor": "#8a7ca8",
+  "plotCfg": {
+    "padding": [
+      20,
+      20,
+      95,
+      80
+    ]
   },
-  description: {
-    padding: [10, 24, DESCRIPTION_BOTTOM_MARGIN, 24],
-    fontFamily: 'PingFang SC',
-    fontSize: 12,
-    fill: 'rgba(255, 255, 255, 0.65)',
-    stroke: 'rgba(0,0,0,0.95)',
-    textAlign: 'left',
-    textBaseline: 'top',
-    lineHeight: 16,
-    alignWithAxis: false,
+  "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\"",
+  "defaultLegendPosition": "bottom",
+  "colors": [
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7"
+  ],
+  "colors_16": [
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e"
+  ],
+  "colors_24": [
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc"
+  ],
+  "colors_pie": [
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7"
+  ],
+  "colors_pie_16": [
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e",
+    "#cc70af",
+    "#7cb4cc",
+    "#8a7ca8",
+    "#e098c7",
+    "#8fd3e8",
+    "#71669e"
+  ],
+  "shapes": {
+    "point": [
+      "hollowCircle",
+      "hollowSquare",
+      "hollowDiamond",
+      "hollowBowtie",
+      "hollowTriangle",
+      "hollowHexagon",
+      "cross",
+      "tick",
+      "plus",
+      "hyphen",
+      "line"
+    ],
+    "line": [
+      "line",
+      "dash",
+      "dot"
+    ],
+    "area": [
+      "area"
+    ]
   },
-  axis: {
-    y: {
-      visible: true,
-      position: 'left',
-      autoHideLabel: false,
-      autoRotateLabel: false,
-      autoRotateTitle: true,
-      grid: {
-        visible: true,
-        style: {
-          stroke: 'rgba(255, 255, 255, 0.15)',
-          lineWidth: 1,
-          lineDash: [0, 0],
+  "sizes": [
+    1,
+    10
+  ],
+  "opacities": [
+    0.1,
+    0.9
+  ],
+  "axis": {
+    "top": {
+      "position": "top",
+      "title": null,
+      "label": {
+        "offset": 14,
+        "textStyle": {
+          "fill": "#545454",
+          "fontSize": 12,
+          "lineHeight": 20,
+          "textBaseline": "middle",
+          "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
         },
+        "autoRotate": true
       },
-      line: {
-        visible: false,
-        style: {
-          stroke: 'rgba(255, 255, 255, 0.45)',
-          lineWidth: 1,
+      "line": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF"
+      },
+      "tickLine": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF",
+        "length": 4,
+        "alignWithLabel": true
+      },
+      "grid": {
+        "zIndex": -1,
+        "lineStyle": {
+          "stroke": "#E9E9E9",
+          "lineWidth": 1
         },
-      },
-      tickLine: {
-        visible: false,
-        style: {
-          stroke: 'rgba(255, 255, 255, 0.45)',
-          lineWidth: 0.5,
-          length: 4,
-        },
-      },
-      label: {
-        visible: true,
-        offset: 8,
-        textStyle: {
-          fill: 'rgba(255, 255, 255, 0.45)',
-          fontSize: 12,
-        },
-      },
-      title: {
-        visible: false,
-        offset: 12,
-        style: {
-          fill: 'rgba(255, 255, 255, 0.65)',
-          fontSize: 12,
-          textBaseline: 'bottom',
-        },
-      },
+        "hideFirstLine": true
+      }
     },
-    x: {
-      visible: true,
-      position: 'bottom',
-      autoHideLabel: false,
-      autoRotateLabel: false,
-      autoRotateTitle: false,
-      grid: {
-        visible: false,
-        style: {
-          stroke: 'rgba(255, 255, 255, 0.15)',
-          lineWidth: 1,
-          lineDash: [0, 0],
-        },
+    "bottom": {
+      "position": "bottom",
+      "title": null,
+      "label": {
+        "offset": 22,
+        "autoRotate": true,
+        "textStyle": {
+          "fill": "#545454",
+          "fontSize": 12,
+          "lineHeight": 20,
+          "textBaseline": "middle",
+          "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+        }
       },
-      line: {
-        visible: false,
-        style: {
-          stroke: 'rgba(255, 255, 255, 0.45)',
-        },
+      "line": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF"
       },
-      tickLine: {
-        visible: true,
-        style: {
-          length: 4,
-          stroke: 'rgba(255, 255, 255, 0.45)',
-          lineWidth: 0.5,
-        },
+      "tickLine": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF",
+        "length": 4,
+        "alignWithLabel": true
       },
-      label: {
-        visible: true,
-        textStyle: {
-          fill: 'rgba(255, 255, 255, 0.65)',
-          fontSize: 12,
+      "grid": {
+        "zIndex": -1,
+        "lineStyle": {
+          "stroke": "#E9E9E9",
+          "lineWidth": 1
         },
-        offset: 16,
-      },
-      title: {
-        visible: false,
-        offset: 12,
-        style: {
-          fill: 'rgba(255, 255, 255, 0.65)',
-          fontSize: 12,
-        },
-      },
+        "hideFirstLine": true
+      }
     },
-    circle: {
-      autoHideLabel: false,
-      autoRotateLabel: true,
-      autoRotateTitle: true,
-      // gridType: 'line',
-      grid: {
-        style: {
-          lineDash: null,
-          lineWidth: 1,
-          stroke: '#E3E8EC',
+    "left": {
+      "position": "left",
+      "title": null,
+      "label": {
+        "offset": 12,
+        "autoRotate": true,
+        "textStyle": {
+          "fill": "#545454",
+          "fontSize": 12,
+          "lineHeight": 20,
+          "textBaseline": "middle",
+          "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+        }
+      },
+      "line": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF"
+      },
+      "tickLine": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF",
+        "length": 4,
+        "alignWithLabel": true
+      },
+      "grid": {
+        "zIndex": -1,
+        "lineStyle": {
+          "stroke": "#E9E9E9",
+          "lineWidth": 1
         },
-      },
-      line: {
-        style: {
-          lineWidth: 1,
-          stroke: '#BFBFBF',
-        },
-      },
-      tickLine: {
-        style: {
-          lineWidth: 1,
-          stroke: '#bdc8d3',
-          length: 4,
-          alignWithLabel: true,
-        },
-      },
-      label: {
-        offset: 16,
-        textStyle: {
-          fill: '#a0a4aa',
-          fontSize: 12,
-        },
-      },
-      title: {
-        offset: 12,
-        style: { fill: '#767b84', fontSize: 12 },
-      },
+        "hideFirstLine": true
+      }
     },
-    radius: {
-      label: {
-        offset: 12,
-        textStyle: {
-          fill: '#a0a4aa',
-          fontSize: 12,
-        },
+    "right": {
+      "position": "right",
+      "title": null,
+      "label": {
+        "offset": 12,
+        "autoRotate": true,
+        "textStyle": {
+          "fill": "#545454",
+          "fontSize": 12,
+          "lineHeight": 20,
+          "textBaseline": "middle",
+          "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+        }
       },
+      "line": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF"
+      },
+      "tickLine": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF",
+        "length": 4,
+        "alignWithLabel": true
+      },
+      "grid": {
+        "lineStyle": {
+          "stroke": "#E9E9E9",
+          "lineWidth": 1
+        },
+        "hideFirstLine": true
+      }
     },
+    "circle": {
+      "zIndex": 1,
+      "title": null,
+      "label": {
+        "offset": 12,
+        "textStyle": {
+          "fill": "#545454",
+          "fontSize": 12,
+          "lineHeight": 20,
+          "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+        }
+      },
+      "line": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF"
+      },
+      "tickLine": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF",
+        "length": 4,
+        "alignWithLabel": true
+      },
+      "grid": {
+        "lineStyle": {
+          "stroke": "#E9E9E9",
+          "lineWidth": 1,
+          "lineDash": [
+            3,
+            3
+          ]
+        },
+        "hideFirstLine": true
+      }
+    },
+    "radius": {
+      "zIndex": 0,
+      "label": {
+        "offset": 12,
+        "textStyle": {
+          "fill": "#545454",
+          "fontSize": 12,
+          "textBaseline": "middle",
+          "lineHeight": 20,
+          "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+        }
+      },
+      "line": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF"
+      },
+      "tickLine": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF",
+        "length": 4,
+        "alignWithLabel": true
+      },
+      "grid": {
+        "lineStyle": {
+          "stroke": "#E9E9E9",
+          "lineWidth": 1,
+          "lineDash": [
+            3,
+            3
+          ]
+        },
+        "type": "circle"
+      }
+    },
+    "helix": {
+      "label": null,
+      "title": null,
+      "line": {
+        "lineWidth": 1,
+        "stroke": "#BFBFBF"
+      },
+      "tickLine": {
+        "lineWidth": 1,
+        "length": 4,
+        "stroke": "#BFBFBF",
+        "alignWithLabel": true
+      },
+      "grid": {
+        "lineStyle": {
+          "stroke": "#E9E9E9",
+          "lineWidth": 1
+        },
+        "type": "circle"
+      }
+    }
   },
-  legend: {
-    flipPage: false,
-    position: 'bottom-center',
-    // 距离panelRange的距离
-    innerPadding: [16, 16, 16, 16],
+  "label": {
+    "offset": 20,
+    "textStyle": {
+      "fill": "#545454",
+      "fontSize": 12,
+      "textBaseline": "middle",
+      "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+    }
   },
-  label: {
-    offset: 12,
-    textStyle: {
-      fill: 'rgba(255, 255, 255, 0.65)',
-    },
-    style: {
-      fill: 'rgba(255, 255, 255, 0.65)',
-      lineWidth: 1,
-    },
+  "treemapLabels": {
+    "offset": 10,
+    "textStyle": {
+      "fill": "#fff",
+      "fontSize": 12,
+      "textBaseline": "top",
+      "fontStyle": "bold",
+      "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+    }
   },
-  tooltip: {
-    'g2-tooltip': {
-      backgroundColor: 'rgba(33,33,33, 0.95)',
-      boxShadow: '0px 0px 8px rgba(0,0,0,0.65)',
-      color: 'rgba(255, 255, 255, 0.65)',
-    },
+  "innerLabels": {
+    "textStyle": {
+      "fill": "#fff",
+      "fontSize": 12,
+      "textBaseline": "middle",
+      "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+    }
   },
+  "thetaLabels": {
+    "labelLine": {
+      "lineWidth": 1
+    },
+    "labelHeight": 14,
+    "offset": 30
+  },
+  "legend": {
+    "right": {
+      "position": "right",
+      "layout": "vertical",
+      "itemMarginBottom": 8,
+      "width": 16,
+      "height": 156,
+      "title": null,
+      "textStyle": {
+        "fill": "#8C8C8C",
+        "fontSize": 12,
+        "textAlign": "start",
+        "textBaseline": "middle",
+        "lineHeight": 20,
+        "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+      },
+      "unCheckColor": "#bfbfbf"
+    },
+    "left": {
+      "position": "left",
+      "layout": "vertical",
+      "itemMarginBottom": 8,
+      "width": 16,
+      "height": 156,
+      "title": null,
+      "textStyle": {
+        "fill": "#8C8C8C",
+        "fontSize": 12,
+        "textAlign": "start",
+        "textBaseline": "middle",
+        "lineHeight": 20,
+        "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+      },
+      "unCheckColor": "#bfbfbf"
+    },
+    "top": {
+      "position": "top",
+      "offset": 6,
+      "layout": "horizontal",
+      "title": null,
+      "itemGap": 10,
+      "width": 156,
+      "height": 16,
+      "textStyle": {
+        "fill": "#8C8C8C",
+        "fontSize": 12,
+        "textAlign": "start",
+        "textBaseline": "middle",
+        "lineHeight": 20,
+        "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+      },
+      "unCheckColor": "#bfbfbf"
+    },
+    "bottom": {
+      "position": "bottom",
+      "offset": 6,
+      "layout": "horizontal",
+      "title": null,
+      "itemGap": 10,
+      "width": 156,
+      "height": 16,
+      "textStyle": {
+        "fill": "#8C8C8C",
+        "fontSize": 12,
+        "textAlign": "start",
+        "textBaseline": "middle",
+        "lineHeight": 20,
+        "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+      },
+      "unCheckColor": "#bfbfbf"
+    },
+    "html": {
+      "g2-legend": {
+        "height": "auto",
+        "width": "auto",
+        "position": "absolute",
+        "overflow": "auto",
+        "fontSize": "12px",
+        "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\"",
+        "lineHeight": "20px",
+        "color": "#8C8C8C"
+      },
+      "g2-legend-title": {
+        "marginBottom": "4px"
+      },
+      "g2-legend-list": {
+        "listStyleType": "none",
+        "margin": 0,
+        "padding": 0
+      },
+      "g2-legend-list-item": {
+        "cursor": "pointer",
+        "marginBottom": "5px",
+        "marginRight": "24px"
+      },
+      "g2-legend-marker": {
+        "width": "9px",
+        "height": "9px",
+        "borderRadius": "50%",
+        "display": "inline-block",
+        "marginRight": "8px",
+        "verticalAlign": "middle"
+      }
+    },
+    "gradient": {
+      "textStyle": {
+        "fill": "#8C8C8C",
+        "fontSize": 12,
+        "textAlign": "center",
+        "textBaseline": "middle",
+        "lineHeight": 20,
+        "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+      },
+      "lineStyle": {
+        "lineWidth": 1,
+        "stroke": "#fff"
+      },
+      "unCheckColor": "#bfbfbf"
+    },
+    "margin": [
+      0,
+      20,
+      24,
+      5
+    ],
+    "legendMargin": 24
+  },
+  "tooltip": {
+    "crosshairs": false,
+    "offset": 15,
+    "g2-tooltip": {
+      "position": "absolute",
+      "visibility": "hidden",
+      "zIndex": 8,
+      "transition": "visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), left 0.4s cubic-bezier(0.23, 1, 0.32, 1), top 0.4s cubic-bezier(0.23, 1, 0.32, 1)",
+      "backgroundColor": "rgba(255, 255, 255, 0.9)",
+      "boxShadow": "0px 0px 10px #aeaeae",
+      "borderRadius": "3px",
+      "color": "rgb(87, 87, 87)",
+      "fontSize": "12px",
+      "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\"",
+      "lineHeight": "20px",
+      "padding": "10px 10px 6px 10px"
+    },
+    "g2-tooltip-title": {
+      "marginBottom": "4px"
+    },
+    "g2-tooltip-list": {
+      "margin": 0,
+      "listStyleType": "none",
+      "padding": 0
+    },
+    "g2-tooltip-list-item": {
+      "marginBottom": "4px"
+    },
+    "g2-tooltip-marker": {
+      "width": "5px",
+      "height": "5px",
+      "borderRadius": "50%",
+      "display": "inline-block",
+      "marginRight": "8px"
+    },
+    "g2-tooltip-value": {
+      "display": "inline-block",
+      "float": "right",
+      "marginLeft": "30px"
+    }
+  },
+  "tooltipMarker": {
+    "stroke": "#fff",
+    "shadowBlur": 8,
+    "shadowOffsetX": 0,
+    "shadowOffSetY": 0,
+    "radius": 4
+  },
+  "tooltipCrosshairsRect": {
+    "type": "rect",
+    "style": {
+      "fill": "#CCD6EC",
+      "opacity": 0.3
+    }
+  },
+  "tooltipCrosshairsLine": {
+    "style": {
+      "stroke": "rgba(0, 0, 0, 0.25)",
+      "lineWidth": 1
+    }
+  },
+  "shape": {
+    "point": {
+      "lineWidth": 1,
+      "fill": "#1890FF",
+      "radius": 4
+    },
+    "hollowPoint": {
+      "fill": "#fff",
+      "lineWidth": 1,
+      "stroke": "#1890FF",
+      "radius": 3
+    },
+    "interval": {
+      "lineWidth": 0,
+      "fill": "#1890FF",
+      "fillOpacity": 0.85
+    },
+    "hollowInterval": {
+      "fill": "#fff",
+      "stroke": "#1890FF",
+      "fillOpacity": 0,
+      "lineWidth": 2
+    },
+    "area": {
+      "lineWidth": 0,
+      "fill": "#1890FF",
+      "fillOpacity": 0.3
+    },
+    "polygon": {
+      "lineWidth": 0,
+      "fill": "#1890FF",
+      "fillOpacity": 1
+    },
+    "hollowPolygon": {
+      "fill": "#fff",
+      "stroke": "#1890FF",
+      "fillOpacity": 0,
+      "lineWidth": 2
+    },
+    "hollowArea": {
+      "fill": "#fff",
+      "stroke": "#1890FF",
+      "fillOpacity": 0,
+      "lineWidth": 2
+    },
+    "line": {
+      "stroke": "#1890FF",
+      "lineWidth": 2,
+      "fill": null
+    },
+    "edge": {
+      "stroke": "#1890FF",
+      "lineWidth": 1,
+      "fill": null
+    },
+    "schema": {
+      "stroke": "#1890FF",
+      "lineWidth": 1,
+      "fill": null
+    }
+  },
+  "guide": {
+    "line": {
+      "lineStyle": {
+        "stroke": "#1890FF",
+        "lineDash": [
+          0,
+          2,
+          2
+        ],
+        "lineWidth": 1
+      },
+      "text": {
+        "position": "end",
+        "autoRotate": true,
+        "style": {
+          "fill": "#545454",
+          "fontSize": 12,
+          "textAlign": "center",
+          "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+        }
+      }
+    },
+    "text": {
+      "style": {
+        "fill": "#545454",
+        "fontSize": 12,
+        "textBaseline": "middle",
+        "textAlign": "start",
+        "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
+      }
+    },
+    "region": {
+      "style": {
+        "lineWidth": 0,
+        "fill": "#000",
+        "fillOpacity": 0.04
+      }
+    },
+    "html": {
+      "alignX": "middle",
+      "alignY": "middle"
+    }
+  },
+  "pixelRatio": null
 };
+module.exports =dark;

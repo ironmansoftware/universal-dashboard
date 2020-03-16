@@ -26,7 +26,7 @@ function New-ViserChart {
             content   = $Content | ConvertTo-Json -Compress
             chartType = $ChartType
             fields    = $Fields
-            color = $ColorBy
+            color     = $ColorBy
         }
         $Chart
     }
@@ -47,21 +47,29 @@ function New-ViserMonitor {
         [Parameter()]
         [string]$ColorBy,
         [Parameter()]
-        [ValidateSet("Line", "Bar", "Column")]
-        [string]$ChartType = "Column"
+        [int]$Width,
+        [Parameter()]
+        [int]$Height = 400,
+        [Parameter()]
+        [int]$refresh = 1000
+
     )
     end {  
 
         $Endpoint = New-UDEndpoint -Endpoint $Content -Id $id 
+
         $monitor = @{
-            type      = "viser-monitor"
-            id        = $Id
-            isPlugin  = $true
-            assetId   = $ChartAssetId
-            content   = $Content.Invoke()
-            # chartType = $ChartType
-            fields    = $Fields
-            color = $ColorBy
+            type     = "viser-monitor"
+            id       = $Id
+            isPlugin = $true
+            assetId  = $ChartAssetId
+            content  = $Content.Invoke()
+            fields   = $Fields
+            color    = $ColorBy
+            title    = $Title
+            width    = $Width
+            height   = $Height
+            refresh  = $Refresh
         }
         $monitor
     }
