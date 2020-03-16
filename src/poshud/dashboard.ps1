@@ -109,7 +109,7 @@ function New-AppBar {
                 New-UDListItem -Label "Date Picker" -OnClick { Invoke-UDRedirect -Url '/date-picker' }
                 New-UDListItem -Label "Drawer" -OnClick {}
                 New-UDListItem -Label "Expansion Panel" -OnClick { Invoke-UDRedirect -Url '/expansion-panel' }
-                New-UDListItem -Label "Floating Action Button" -OnClick {}
+                New-UDListItem -Label "Floating Action Button" -OnClick { Invoke-UDRedirect -Url '/floating-action-button' }
                 New-UDListItem -Label "Form" -OnClick { Invoke-UDRedirect -Url '/form' }
                 New-UDListItem -Label "Grid" -OnClick { Invoke-UDRedirect -Url '/grid' }
                 New-UDListItem -Label "Icons" -OnClick { Invoke-UDRedirect -Url '/icons' }
@@ -123,7 +123,7 @@ function New-AppBar {
                 New-UDListItem -Label "Switch" -OnClick { Invoke-UDRedirect -Url '/switch'}
                 New-UDListItem -Label "Table" -OnClick { Invoke-UDRedirect -Url '/table' }
                 New-UDListItem -Label "Tabs" -OnClick { Invoke-UDRedirect -Url '/tabs' }
-                New-UDListItem -Label "Textbox" -OnClick {}
+                New-UDListItem -Label "Textbox" -OnClick { Invoke-UDRedirect -Url '/textbox' }
                 New-UDListItem -Label "Time Picker" -OnClick { Invoke-UDRedirect -Url '/time-picker' }
                 New-UDListItem -Label "Tree View" -OnClick {}
                 New-UDListItem -Label "Typography" -OnClick {}
@@ -326,7 +326,23 @@ $Pages += New-ComponentPage -Title 'Expansion Panel' -Description 'Expansion pan
     }
 } -Cmdlet "New-UDExpansionPanel"
 
+$Pages += New-ComponentPage -Title 'Floating Action Button' -Description 'A floating action button (FAB) performs the primary, or most common, action on a screen.' -SecondDescription "A floating action button appears in front of all screen content, typically as a circular shape with an icon in its center. FABs come in two types: regular, and extended.
 
+Only use a FAB if it is the most suitable way to present a screen’s primary action.
+
+Only one floating action button is recommended per screen to represent the most common action." -Content {
+    New-Example -Title 'Floating Action Button' -Description '' -Example {
+        New-UDFloatingActionButton -Icon user -Size Small
+        New-UDFloatingActionButton -Icon user -Size Medium
+        New-UDFloatingActionButton -Icon user -Size Large
+    }
+
+    New-Example -Title 'OnClick' -Description '' -Example {
+        New-UDFloatingActionButton -Icon user -OnClick {
+            Show-UDToast -Message "Hello!"
+        }
+    }
+} -Cmdlet "New-UDFloatingActionButton"
 
 $Pages += New-ComponentPage -Title 'Form' -Description 'Forms provide a way to collect data from users.' -SecondDescription "Forms can include any type of control you want. This allows you to customize the look and feel and use any input controls. 
 
@@ -676,6 +692,26 @@ New-UDTable -Columns $Columns -LoadData {
     }
 
 } -Cmdlet "New-UDTable"
+
+$Pages += New-ComponentPage -Title 'Textbox' -Description 'A textbox lets users enter and edit text.' -SecondDescription "" -Content {
+    New-Example -Title 'Textbox' -Description '' -Example {
+        New-UDTextbox -Label 'Standard' -Placeholder 'Textbox'
+        New-UDTextbox -Label 'Disabled' -Placeholder 'Textbox' -Disabled
+        New-UDTextbox -Label 'Textbox' -Value 'With value'
+    }
+
+    New-Example -Title 'Password Textbox' -Description '' -Example {
+        New-UDTextbox -Label 'Password' -Type password
+    }
+
+    New-Example -Title 'Retrieving a textbox value' -Description 'You can use Get-UDElement to get the value of a textbox' -Example {
+        New-UDTextbox -Id 'txtExample' 
+        New-UDButton -OnClick {
+            $Value = (Get-UDElement -Id 'txtExample').value 
+            Show-UDToast -Message $Value
+        } -Text "Get textbox value"
+    }
+} -Cmdlet "New-UDTextbox"
 
 $Pages += New-ComponentPage -Title 'Time Picker' -Description 'Time pickers pickers provide a simple way to select a single value from a pre-determined set.' -SecondDescription "" -Content {
     New-Example -Title 'Time Picker' -Description '' -Example {
