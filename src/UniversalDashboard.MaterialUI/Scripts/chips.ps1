@@ -27,9 +27,6 @@ function New-UDChip {
     .PARAMETER Variant
     The theme variant to apply to the chip.
     
-    .PARAMETER Clickable
-    Whether the chip is clickable. 
-    
     .PARAMETER Avatar
     An avatar to show within the chip.
     
@@ -67,13 +64,10 @@ function New-UDChip {
         [ValidateSet("outlined","default")]
 		[string]$Variant = "default",
 
-		[Parameter(Position = 4)]
-		[Switch]$Clickable,
-
-		[Parameter(Position = 5, ParameterSetName = "Avatar")]
+		[Parameter(Position = 4, ParameterSetName = "Avatar")]
 		[string]$Avatar,
 
-		[Parameter(Position = 6, ParameterSetName = "Avatar" )]
+		[Parameter(Position = 5, ParameterSetName = "Avatar" )]
 		[ValidateSet("letter","image")]
 		[string]$AvatarType
     )
@@ -113,10 +107,9 @@ function New-UDChip {
             icon = $Icon 
             style = $Style 
             variant = $Variant 
-            clickable = $Clickable 
+            clickable = $null -ne $OnClick
             onClick = $OnClick
-            onDelete  = $OnDelete
-            delete = $Delete 
+            delete  = $null -ne $OnDelete
             avatar = $Avatar
             avatarType = $AvatarType
         }
