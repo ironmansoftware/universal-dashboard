@@ -125,8 +125,8 @@ function New-AppBar {
                 New-UDListItem -Label "Tabs" -OnClick { Invoke-UDRedirect -Url '/tabs' }
                 New-UDListItem -Label "Textbox" -OnClick { Invoke-UDRedirect -Url '/textbox' }
                 New-UDListItem -Label "Time Picker" -OnClick { Invoke-UDRedirect -Url '/time-picker' }
-                New-UDListItem -Label "Tree View" -OnClick {}
-                New-UDListItem -Label "Typography" -OnClick {}
+                New-UDListItem -Label "Tree View" -OnClick { Invoke-UDRedirect -Url '/tree-view' }
+                New-UDListItem -Label "Typography" -OnClick { Invoke-UDRedirect -Url '/typography' }
             }
             New-UDListItem -Label "Security" -Children {
                 New-UDListItem -Label "Authorization" -OnClick {} 
@@ -718,5 +718,37 @@ $Pages += New-ComponentPage -Title 'Time Picker' -Description 'Time pickers pick
         New-UDTimePicker
     }
 } -Cmdlet "New-UDTimePicker"
+
+
+$Pages += New-ComponentPage -Title 'Tree View' -Description 'A tree view widget presents a hierarchical list.' -SecondDescription "Tree views can be used to represent a file system navigator displaying folders and files, an item representing a folder can be expanded to reveal the contents of the folder, which may be files, folders, or both." -Content {
+    New-Example -Title 'Tree view' -Description '' -Example {
+        New-UDTreeView -Node {
+            New-UDTreeNode -Id 'Root' -Name 'Root' -Children {
+                New-UDTreeNode -Id 'Level1' -Name 'Level 1' -Children {
+                    New-UDTreeNode -Id 'Level2' -Name 'Level 2'
+                }
+                New-UDTreeNode -Name 'Level 1' -Children {
+                    New-UDTreeNode -Name 'Level 2'
+                }
+                New-UDTreeNode -Name 'Level 1' -Children {
+                    New-UDTreeNode -Name 'Level 2'
+                }   
+            }
+            New-UDTreeNode -Id 'Root2' -Name 'Root 2'
+        }
+    }
+} -Cmdlet @("New-UDTreeView", "New-UDTreeNode")
+
+$Pages += New-ComponentPage -Title 'Typography' -Description 'Use typography to present your design and content as clearly and efficiently as possible.' -SecondDescription "Too many type sizes and styles at once can spoil any layout. A typographic scale has a limited set of type sizes that work well together along with the layout grid." -Content {
+    New-Example -Title 'Variants' -Description '' -Example {
+        @("h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", 
+        "caption", "button", "overline", "srOnly", "inherit", 
+        "display4", "display3", "display2", "display1", "headline", "title", "subheading") | ForEach-Object {
+            New-UDTypography -Variant $_ -Text $_ -GutterBottom
+            New-UDElement -Tag 'p' -Content {}
+        }
+    }
+} -Cmdlet @("New-UDTypography")
+
 
 New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
