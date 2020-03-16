@@ -113,7 +113,7 @@ function New-AppBar {
                 New-UDListItem -Label "Icon Button" -OnClick {}
                 New-UDListItem -Label "Link" -OnClick {}
                 New-UDListItem -Label "List" -OnClick {}
-                New-UDListItem -Label "Paper" -OnClick {}
+                New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
                 New-UDListItem -Label "Progress" -OnClick {}
                 New-UDListItem -Label "Radio" -OnClick {}
                 New-UDListItem -Label "Select" -OnClick {}
@@ -422,6 +422,13 @@ $Pages += New-ComponentPage -Title 'Icons' -Description 'FontAwesome icons to in
     }
 } -Cmdlet "New-UDIcon"
 
+$Pages += New-ComponentPage -Title 'Paper' -Description 'In Material Design, the physical properties of paper are translated to the screen.' -SecondDescription "The background of an application resembles the flat, opaque texture of a sheet of paper, and an application’s behavior mimics paper’s ability to be re-sized, shuffled, and bound together in multiple sheets." -Content {
+    New-Example -Title 'Paper' -Description '' -Example {
+New-UDPaper -Elevation 0 -Content {} 
+New-UDPaper -Elevation 1 -Content {} 
+New-UDPaper -Elevation 3 -Content {} 
+    }
+} -Cmdlet "New-UDPaper"
 
 $Pages += New-ComponentPage -Title 'Table' -Description 'Tables display sets of data. They can be fully customized.' -SecondDescription "Tables display information in a way that’s easy to scan, so that users can look for patterns and insights. They can be embedded in primary content, such as cards." -Content {
     New-Example -Title 'Simple Table' -Description 'A simple example with no frills. Table columns are defined from the data.' -Example {
