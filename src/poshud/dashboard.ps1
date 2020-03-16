@@ -356,7 +356,6 @@ $Pages += New-ComponentPage -Title 'Icons' -Description 'FontAwesome icons to in
         $IconSearch = (Get-UDElement -Id 'txtIconSearch').value
         if ($null -ne $IconSearch -and $IconSearch -ne '')
         {
-            Show-UDToast -Message $IconSearch
             $Icons = $Icons.where({ $_ -match $IconSearch})
         }
 
