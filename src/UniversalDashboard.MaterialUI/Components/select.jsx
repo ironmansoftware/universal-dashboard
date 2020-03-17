@@ -74,7 +74,9 @@ const UDSelect = (props) => {
     }, true)
 
     return (
-        <FormControl className={classes.formControl} key={props.id} sx={{bg: 'background', color: 'text'}}>
+        <FormControl className={classes.formControl} key={props.id} 
+        //sx={{bg: 'background', color: 'text'}}
+        >
             <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
             <Select 
                 defaultValue={defaultValue} 

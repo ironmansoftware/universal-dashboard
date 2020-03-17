@@ -38,6 +38,7 @@ function New-UDRadioGroup {
         [Parameter()]
         [String]$Label,
         [Parameter()]
+        [Alias("Content")]
         [ScriptBlock]$Children,
         [Parameter()]
         [Endpoint]$OnChange,

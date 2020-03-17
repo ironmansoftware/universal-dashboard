@@ -181,7 +181,7 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         New-UDChip -Label "my Label" -Id "chipLabel"
 
         $Icon = New-UDIcon -Icon 'user' -Size sm -Style @{color = '#fff'}
-        New-UDChip -Label "Demo User" -Id "chipIcon" -Icon $Icon -OnClick {Show-UDToast -Message 'test'} -Clickable -Style @{backgroundColor = '#00838f'}
+        New-UDChip -Label "Demo User" -Id "chipIcon" -Icon $Icon -OnClick {Show-UDToast -Message 'test'} -Style @{backgroundColor = '#00838f'}
 
         New-UDChip -Label "my Label" -Id "chipClick" -OnClick {
             Set-TestData -Data "chipClick"
