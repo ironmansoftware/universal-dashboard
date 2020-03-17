@@ -3,7 +3,9 @@ import light from '../theme/light'
 import dark from '../theme/dark'
 import { Global } from 'viser-react'
 import { AreaChartOutlined } from '@ant-design/icons'
-Global.registerTheme('udDark', dark)
+
+
+Global.registerTheme('dark', dark)
 Global.registerTheme('udLight', light)
 
 
@@ -17,7 +19,7 @@ const initialState = {
   data: [],
   url: '',
   settings: {
-    collapsed: true,
+    visible: false,
     statistics: {
       showMin: false,
       showAvg: false,
@@ -26,8 +28,9 @@ const initialState = {
     },
     refreshInterval: '5s',
     timeRange: 'none',
-    chartTypeSelector: <span><AreaChartOutlined style={{ color: light.defaultColor }}/> Area chart</span>,
-    chartType: 'area'
+    chartTypeSelector: <span><AreaChartOutlined style={{ color: "inherit" }}/> Area chart</span>,
+    chartType: 'area',
+    chartLineStyle: 'regular'
   },
 }
 
@@ -78,7 +81,7 @@ const monitorReducer = (state, action) => {
     case 'SET_SETTINGS_VISIBILITY': {
       return {
         ...state,
-        settings: { ...state.settings, collapsed: action.payload },
+        settings: { ...state.settings, visible: action.payload },
       }
     }
     case 'STATISTIC_CHANGE': {

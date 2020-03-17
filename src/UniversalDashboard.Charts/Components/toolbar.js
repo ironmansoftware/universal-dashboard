@@ -54,10 +54,17 @@ export default ({ title, ...props }) => {
         borderBottom: '2px solid rgba(0, 0, 0, 0.08)',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
       }}
     >
-      <Input.Group style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
+      <Input.Group
+        style={{
+          display: 'flex',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+        }}
+      >
         <Select
           placeholder="Chart type"
           bordered={false}
@@ -109,10 +116,17 @@ export default ({ title, ...props }) => {
           <Option value="1h">1h</Option>
         </Select>
       </Input.Group>
-      <Input.Group style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
+      <Input.Group
+        style={{
+          display: 'flex',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+        }}
+      >
         <Button
           icon={
-            settings.collapsed ? (
+            !settings.visible ? (
               <SettingOutlined style={{ color: theme.props.defaultColor }} />
             ) : (
               <CloseOutlined style={{ color: theme.props.defaultColor }} />
@@ -122,7 +136,7 @@ export default ({ title, ...props }) => {
           onClick={() =>
             dispatch({
               type: 'SET_SETTINGS_VISIBILITY',
-              payload: !settings.collapsed,
+              payload: !settings.visible,
             })
           }
           type="link"
@@ -148,5 +162,16 @@ export default ({ title, ...props }) => {
         />
       </Input.Group>
     </Header>
+  )
+}
+
+export const AreaChartIcon = () => {
+  const [state, dispatch] = useMonitor()
+  const { theme } = state
+  return (
+    <span>
+      <AreaChartOutlined style={{ color: theme.props.defaultColor }} /> Area
+      chart
+    </span>
   )
 }

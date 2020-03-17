@@ -1,3 +1,5 @@
+
+
 export const getAggregate = (dataView, operations = [], fields = [], as = []) =>
   [dataView].transform({
     type: 'aggregate',
@@ -6,8 +8,36 @@ export const getAggregate = (dataView, operations = [], fields = [], as = []) =>
     as: as,
   })
 
-export function downloadCSV(csvString, csvName = 'Table') {
-  var blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' })
+// data.forEach(function(rowArray) {
+//     let row = rowArray.join(",");
+//     csvContent += row + "\r\n";
+// });
+
+export const generateCsvString = data => {
+  
+  const csvRows = []
+
+  // create csv headers
+  const headers = Object.keys(data[0])
+  csvRows.push(headers.join(','))
+
+  // loop over the rows
+  for(const row of data){
+    const values = headers.map(header => {
+      const escaped = (''+row[header]).replace(/"/g, '\\"')
+      return `"${escaped}"`
+    })
+    csvRows.push(values.join(','))
+  }
+  
+  // return the correct data
+  return csvRows.join('\n')
+}
+
+
+export function downloadCSV(data, csvName = 'Table') {
+  const csvData = generateCsvString(data)
+  var blob = new Blob([csvData], { type: 'text/csv' })
   var blobURL = window.URL.createObjectURL(blob)
   var link = document.createElement('a')
   link.setAttribute('href', blobURL)

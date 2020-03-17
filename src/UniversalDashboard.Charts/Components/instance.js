@@ -4,23 +4,12 @@ import ReactInterval from 'react-interval'
 import { useMonitor } from './api/MonitorState'
 import DataSet from '@antv/data-set'
 
-import light from './theme/light'
-import dark from './theme/dark'
-
 export default ({ height, width, ...props }) => {
-   const [data, setData] = useState([])
+  const [data, setData] = useState([])
   const dataSet = new DataSet()
   const dataView = dataSet.createView().source(data)
   const [state, dispatch] = useMonitor()
   const { settings, theme, running } = state
-
-  useEffect(
-    () =>
-      theme.title === 'udLight'
-        ? Global.setTheme(light)
-        : Global.setTheme(dark),
-    [theme.title],
-  )
 
   const loadData = () =>
     UniversalDashboard.get(
@@ -35,18 +24,20 @@ export default ({ height, width, ...props }) => {
             time: time,
           }),
         )
+
+        dispatch({ type: 'LOAD_DATA', payload: dataView.rows })
+
         let newData = dataView.rows
         if (newData.length >= 100) {
           newData.shift()
           newData.shift()
         }
-        console.log(newData)
         setData(newData)
       },
     )
 
   const refreshInterval = {
-    "off": null,
+    off: null,
     '5s': 1000 * 5,
     '1m': 1000 * 60,
     '5m': 1000 * 60 * 5,
@@ -72,21 +63,22 @@ export default ({ height, width, ...props }) => {
 
   const area = (
     <React.Fragment>
-      <Area position={`time*${props.fields[0]}`} color={props.color} />
-      <Line position={`time*${props.fields[0]}`} color={props.color} />
+      <Line position={`time*${props.fields[0]}`} color={[props.color,theme.props.colors_16]} shape="smooth"/>
+      <Area position={`time*${props.fields[0]}`} color={[props.color,theme.props.colors_16]} shape="smooth"/>
     </React.Fragment>
   )
 
+  Global.setTheme(theme)
   return (
     <React.Fragment>
-      <Chart forceFit height={400} data={data} scale={scale} padding={48}>
+      <Chart forceFit height={400} data={data} scale={scale} padding={48} background={{...theme.props.background}}>
         <Tooltip />
         <Axis />
         <Legend />
         {settings.chartType === 'area' ? (
           area
         ) : (
-          <Line position={`time*${props.fields[0]}`} color={props.color} />
+          <Line position={`time*${props.fields[0]}`} color={[props.color,theme.props.colors_16]} shape="smooth"/>
         )}
       </Chart>
       <ReactInterval

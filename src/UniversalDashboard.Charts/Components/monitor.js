@@ -12,6 +12,7 @@ export default ({ content, ...props }) => {
 
   return (
     <MonitorProvider>
+      <SettingsPanel />
       <Layout
         style={{
           backgroundColor: 'inherit',
@@ -31,7 +32,6 @@ export default ({ content, ...props }) => {
           </Content>
         </Layout>
       </Layout>
-      <SettingsPanel />
     </MonitorProvider>
   )
 }
