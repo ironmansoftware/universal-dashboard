@@ -9,6 +9,11 @@ const UDDynamic = (props) => {
 
     const loadData = () => {
         props.post(props.id, {}).then(x => {
+
+            if (Array.isArray(x)) {
+                x.forEach(y => y.version = props.version);
+            }
+
             setComponent(x);
             setLoading(false);
         });
