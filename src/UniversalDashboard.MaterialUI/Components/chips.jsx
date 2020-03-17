@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Icon, Chip, Avatar } from '@material-ui/core';
 import classNames from "classnames"
+import DoneIcon from '@material-ui/icons/Done';
 
 const styles = theme => ({
     root: {
@@ -76,9 +77,6 @@ export class UdChip extends React.Component {
                 icon={<Icon className={classes.chipIcon}>
                     {UniversalDashboard.renderComponent(this.props.icon)}
                 </Icon>}
-                deleteIcon={this.props.delete ? <Icon className={classes.chipIcon}>
-                    {UniversalDashboard.renderComponent({type:'icon', icon: 'times'})}
-                </Icon> : null}
                 variant={this.props.variant}
 
             />
