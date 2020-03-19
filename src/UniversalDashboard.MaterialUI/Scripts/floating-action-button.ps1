@@ -30,15 +30,13 @@ function New-UDFloatingActionButton {
         [Parameter()]
         [string] $Id = ([Guid]::NewGuid()),
         [Parameter()]
-        [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
+        [PSTypeName('UniversalDashboard.Icon')]$Icon,
         [Parameter()]
         [ValidateSet("small", "medium", "large")]
         $Size = "large",
         [Parameter()]
         [object]$OnClick
     )
-
-    $iconName = [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon)
 
     if ($null -ne $OnClick) {
         if ($OnClick -is [scriptblock]) {
@@ -58,7 +56,7 @@ function New-UDFloatingActionButton {
         size = $Size.tolower()
         backgroundColor = $ButtonColor.HtmlColor
         color = $IconColor.HtmlColor
-        icon = $iconName
+        icon = $icon
         onClick = $OnClick.Name
     }
 }

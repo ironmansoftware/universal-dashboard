@@ -55,7 +55,7 @@ function New-UDTextbox {
         [Parameter()]
         [Switch]$Disabled,
         [Parameter()]
-        [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
+        [PSTypeName('UniversalDashboard.Icon')]$Icon,
         [Switch]$Autofocus
     )
 
