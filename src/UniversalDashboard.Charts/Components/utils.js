@@ -1,20 +1,8 @@
-
-
-export const getAggregate = (dataView, operations = [], fields = [], as = []) =>
-  [dataView].transform({
-    type: 'aggregate',
-    fields: fields,
-    operations: operations,
-    as: as,
-  })
-
-// data.forEach(function(rowArray) {
-//     let row = rowArray.join(",");
-//     csvContent += row + "\r\n";
-// });
+import { useMonitor } from './api/MonitorState'
+import ReactInterval from 'react-interval'
+import React from  'react'
 
 export const generateCsvString = data => {
-  
   const csvRows = []
 
   // create csv headers
@@ -22,22 +10,25 @@ export const generateCsvString = data => {
   csvRows.push(headers.join(','))
 
   // loop over the rows
-  for(const row of data){
+  for (const row of data) {
     const values = headers.map(header => {
-      const escaped = (''+row[header]).replace(/"/g, '\\"')
+      const escaped = ('' + row[header]).replace(/"/g, '\\"')
       return `"${escaped}"`
     })
     csvRows.push(values.join(','))
   }
-  
+
   // return the correct data
   return csvRows.join('\n')
 }
 
-
 export function downloadCSV(data, csvName = 'Table') {
   const csvData = generateCsvString(data)
   var blob = new Blob([csvData], { type: 'text/csv' })
+  if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+    // for IE
+    window.navigator.msSaveOrOpenBlob(csvData, csvName)
+  }
   var blobURL = window.URL.createObjectURL(blob)
   var link = document.createElement('a')
   link.setAttribute('href', blobURL)
@@ -48,31 +39,4 @@ export function downloadCSV(data, csvName = 'Table') {
   link.click()
 }
 
-export function parseTimeInput(inputString = '') {
-  inputString = inputString.toLowerCase()
-  let getNumber = (inputString, charsFromEnd) => {
-    let startAt =
-      inputString.indexOf('pt') !== -1
-        ? 2
-        : inputString.indexOf('p') !== -1
-        ? 1
-        : 0
-    return Number(inputString.slice(startAt, inputString.length - charsFromEnd))
-  }
-  if (inputString.indexOf('ms') == inputString.length - 2) {
-    return getNumber(inputString, 2)
-  }
-  if (inputString.indexOf('s') == inputString.length - 1) {
-    return getNumber(inputString, 1) * 1000
-  }
-  if (inputString.indexOf('m') == inputString.length - 1) {
-    return getNumber(inputString, 1) * 60 * 1000
-  }
-  if (inputString.indexOf('h') == inputString.length - 1) {
-    return getNumber(inputString, 1) * 60 * 60 * 1000
-  }
-  if (inputString.indexOf('d') == inputString.length - 1) {
-    return getNumber(inputString, 1) * 24 * 60 * 60 * 1000
-  }
-  return -1
-}
+
