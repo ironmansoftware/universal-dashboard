@@ -12,7 +12,7 @@ import copy from 'copy-to-clipboard'
 
 var connection
 
-function connectWebSocket(sessionId, location, setLoading) {
+function connectWebSocket(sessionId, location, setLoading, history) {
   if (connection) {
     setLoading(false)
   }
@@ -93,7 +93,11 @@ function connectWebSocket(sessionId, location, setLoading) {
   })
 
   connection.on('redirect', (url, newWindow) => {
-    if (newWindow) {
+    if (url.startsWith('/'))
+    {
+       history.push(url);
+    }
+    else if (newWindow) {
       window.open(url)
     } else {
       window.location.href = url
@@ -204,7 +208,7 @@ function loadData(setDashboard, setLocation, history, location, setLoading) {
 
       if (dashboard.scripts) dashboard.scripts.map(loadJavascript)
 
-      connectWebSocket(json.sessionId, location, setLoading)
+      connectWebSocket(json.sessionId, location, setLoading, history)
 
       UniversalDashboard.design = dashboard.design
 
@@ -289,37 +293,40 @@ function Dashboard({ history }) {
 
     var pluginComponents = UniversalDashboard.provideDashboardComponents()
 
-  
-    const { colors, modes, fonts, ...rest } = dashboard.theme.definition
-    let theme = {
-      ...base,
-      fonts:{
-        ...fonts 
-      },
-      colors: {
-        ...colors,
-        modes: {
-          ...modes,
+    let theme = {};
+
+    if (dashboard.theme) {
+      const { colors, modes, fonts, ...rest } = dashboard.theme.definition
+      theme = {
+        ...base,
+        fonts:{
+          ...fonts 
         },
-      },
-      ...rest,
-      styles: {
-        ...base.styles,
-        h1: {
-          ...base.styles.h1,
-          fontSize: [5,7,8],
+        colors: {
+          ...colors,
+          modes: {
+            ...modes,
+          },
         },
-        h3: {
-          ...base.styles.h3,
-          fontSize: [base.styles.h3.fontSize, 4, 5]
+        ...rest,
+        styles: {
+          ...base.styles,
+          h1: {
+            ...base.styles.h1,
+            fontSize: [5,7,8],
+          },
+          h3: {
+            ...base.styles.h3,
+            fontSize: [base.styles.h3.fontSize, 4, 5]
+          },
+          h5: {
+            ...base.styles.h5,
+            fontSize: [base.styles.h5.fontSize, 2, 3]
+          },
         },
-        h5: {
-          ...base.styles.h5,
-          fontSize: [base.styles.h5.fontSize, 2, 3]
-        },
-      },
+      }
     }
-    console.log(theme)
+
     return (
       <ThemeProvider theme={theme}>
         <ColorModeProvider >{[component, pluginComponents]}</ColorModeProvider>

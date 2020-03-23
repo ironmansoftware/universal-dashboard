@@ -1,13 +1,45 @@
 function New-UDExpansionPanelGroup {
+    <#
+    .SYNOPSIS
+    Creates a group of expansion panels. 
+    
+    .DESCRIPTION
+    Creates a group of expansion panels. Use New-UDExpansionPanel to create children for a group. 
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER Children
+    Expansion panels to include in this group. 
+    
+    .PARAMETER Popout
+    Creates a popout style expansion panel group.
+    
+    .PARAMETER Type
+    The type of expansion panel group.
+    
+    .EXAMPLE
+    
+    Creates an expansion panel group. 
+
+    New-UDExpansionPanelGroup -Items {
+        New-UDExpansionPanel -Title "Hello" -Id 'expTitle' -Content {}
+
+        New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Content {
+            New-UDElement -Tag 'div' -id 'expContentDiv' -Content { "Hello" }
+        }
+
+        New-UDExpansionPanel -Title "Hello" -Id 'expEndpoint' -Endpoint {
+            New-UDElement -Tag 'div' -id 'expEndpointDiv' -Content { "Hello" }
+        }
+    }
+    #>
     param(
         [Parameter()]
         [String]$Id = ([Guid]::NewGuid()),
         [Parameter(Mandatory = $true, Position = 0)]
-        [ScriptBlock]$Items,
-        [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$BackgroundColor = 'Transparent',
-        [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$FontColor = 'Black',
+        [Alias("Content")]
+        [ScriptBlock]$Children,
         [Parameter()]
         [Switch]$Popout,
         [Parameter()]
@@ -21,16 +53,44 @@ function New-UDExpansionPanelGroup {
         assetId = $AssetId
 
         id = $id
-        items = $Items.Invoke()
-        backgroundColor = $BackgroundColor.HtmlColor
-        color = $Color.HtmlColor
+        children = & $Children
         popout = $Popout.IsPresent
         accordion = $Type -eq 'Accordion'
     }
 }
 
 function New-UDExpansionPanel {
-    [CmdletBinding(DefaultParameterSetName = "content")]
+    <#
+    .SYNOPSIS
+    Creates an expansion panel.
+    
+    .DESCRIPTION
+    Creates an expansion panel. An expansion panel can hide content that isn't necessary to view when a page is loaded. 
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER Title
+    The title show within the header of the expansion panel. 
+    
+    .PARAMETER Icon
+    An icon to show within the header of the expansion panel. 
+    
+    .PARAMETER Children
+    Children components to put within the expansion panel. 
+    
+    .PARAMETER Active
+    Whether the expansion panel is currently active (open).
+    
+    .EXAMPLE
+
+    Creates an expansion panel with some content.
+    
+    New-UDExpansionPanel -Title "Hello" -Id 'expContent' -Content {
+        New-UDElement -Tag 'div' -id 'expContentDiv' -Content { "Hello" }
+    }
+    #>
+    [CmdletBinding()]
     param(
         [Parameter()]
         [String]$Id = ([Guid]::NewGuid()),
@@ -38,35 +98,12 @@ function New-UDExpansionPanel {
 		[String]$Title,
 		[Parameter()]
 	    [UniversalDashboard.Models.FontAwesomeIcons]$Icon,
-		[Parameter(ParameterSetName = "content")]
-        [ScriptBlock]$Content,
-        [Parameter(ParameterSetName = "endpoint")]
-        [object]$Endpoint,
-        [Parameter(ParameterSetName = "endpoint")]
-        [Switch]$AutoRefresh,
-        [Parameter(ParameterSetName = "endpoint")]
-		[int]$RefreshInterval = 5,
+        [Parameter()]
+        [Alias("Content")]
+        [ScriptBlock]$Children,
 		[Parameter()]
-        [Switch]$Active,
-        [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$BackgroundColor = 'White',
-        [Parameter()]
-        [UniversalDashboard.Models.DashboardColor]$FontColor = 'Black'
+        [Switch]$Active
     )
-
-    if ($PSCmdlet.ParameterSetName -eq 'Content') {
-        $pContent = $Content.Invoke()
-    }
-    else {
-        if ($null -ne $Endpoint) {
-            if ($Endpoint -is [scriptblock]) {
-                $Endpoint = New-UDEndpoint -Endpoint $Endpoint -Id $Id
-            }
-            elseif ($Endpoint -isnot [UniversalDashboard.Models.Endpoint]) {
-                throw "Endpoint must be a script block or UDEndpoint"
-            }
-        }
-    }
 
     $iconName = $null
     if ($PSBoundParameters.ContainsKey("Icon")) {
@@ -76,13 +113,8 @@ function New-UDExpansionPanel {
     @{
         id = $Id 
         title = $Title 
-        content = $pContent 
-        endpoint = $Endpoint.Name 
-        autoRefresh = $AutoRefresh.IsPresent
-        refreshInterval = $RefreshInterval
+        children = & $Children
         active = $Active.IsPresent
-        backgroundColor = $BackgroundColor.HtmlColor
-        color = $FontColor.HtmlColor
         icon = $iconName
     }
 }

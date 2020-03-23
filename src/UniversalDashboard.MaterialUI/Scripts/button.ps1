@@ -1,4 +1,49 @@
 function New-UDButton {
+    <#
+    .SYNOPSIS
+    Creates a new button.
+    
+    .DESCRIPTION
+    Creates a new button. Buttons are used to allow the user to take action.
+    
+    .PARAMETER Text
+    The text to show within the button.
+    
+    .PARAMETER Icon
+    An icon to show within the button. Use New-UDIcon to create an icon for this parameter. 
+    
+    .PARAMETER Variant
+    The variant type for this button. 
+    
+    .PARAMETER IconAlignment
+    How to align the icon within the button. 
+    
+    .PARAMETER FullWidth
+    Whether the button takes the full width of the it's container.
+    
+    .PARAMETER OnClick
+    The action to take when the button is clicked. 
+    
+    .PARAMETER Size
+    The size of the button. 
+    
+    .PARAMETER Style
+    Styles to apply to the button. 
+    
+    .PARAMETER Href
+    A URL that the user should be redirected to when clicking the button. 
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .EXAMPLE
+    Creates a button with the GitHub logo and redirects the user to GitHub when clicked. 
+
+    $Icon = New-UDIcon -Icon 'github'
+    New-UDButton -Text "Submit" -Id "btnClick" -Icon $Icon -OnClick {
+        Invoke-UDRedirect https://github.com
+    }
+    #>
     param
     (
         [Parameter (Position = 0)]

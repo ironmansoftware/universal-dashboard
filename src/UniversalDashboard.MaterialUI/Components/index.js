@@ -4,7 +4,7 @@ import Chip from "./chips";
 import Icon from "./icon";
 import Paper from "./paper";
 import IconButton from "./icon-button";
-import List from "./list";
+import { UDList, UDListItem } from "./list";
 import Button from "./button";
 import UDMuCard from "./card";
 import UDCardMedia from "./card-media";
@@ -35,7 +35,8 @@ import UDNavbar from './framework/ud-navbar';
 import UDFooter from './framework/ud-footer';
 import UDAppBar from './appbar';
 import UDDrawer from './drawer';
-// import Chart from './framework/chart'
+import {UDRadioGroupWithContext, UDRadio } from './radio';
+import NotFound from './framework/not-found';
 
 import {
     Route,
@@ -47,8 +48,8 @@ UniversalDashboard.register("mu-chip", Chip);
 UniversalDashboard.register("mu-icon", Icon);
 UniversalDashboard.register("mu-paper", Paper);
 UniversalDashboard.register("mu-icon-button", IconButton);
-UniversalDashboard.register("mu-list", List);
-UniversalDashboard.register("mu-list-item", List);
+UniversalDashboard.register("mu-list", UDList);
+UniversalDashboard.register("mu-list-item", UDListItem);
 UniversalDashboard.register("mu-button", Button);
 UniversalDashboard.register("mu-card", UDMuCard);
 UniversalDashboard.register("mu-card-media", UDCardMedia);
@@ -79,7 +80,8 @@ UniversalDashboard.register('ud-navbar', UDNavbar);
 UniversalDashboard.register('ud-footer', UDFooter);
 UniversalDashboard.register('mu-appbar', UDAppBar);
 UniversalDashboard.register('mu-drawer', UDDrawer);
-// UniversalDashboard.register('antv-chart', Chart);
+UniversalDashboard.register('mu-radio', UDRadio);
+UniversalDashboard.register('mu-radiogroup', UDRadioGroupWithContext);
 
 // Framework Support
 import UdPage from './framework/ud-page';

@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Management.Automation;
 using UniversalDashboard.Cmdlets;
 
@@ -23,7 +23,7 @@ namespace UniversalDashboard
         {
             Content.GenerateCallback(Id, this, this.SessionState, ArgumentList);
 
-            WriteObject(new Dictionary<string, object> {
+            WriteObject(new Hashtable {
                 { "id", Id },
                 { "autoRefresh", AutoRefresh.IsPresent },
                 { "autoRefreshInterval", AutoRefreshInterval},

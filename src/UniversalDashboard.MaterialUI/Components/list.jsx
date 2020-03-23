@@ -1,4 +1,4 @@
-import { Avatar, CssBaseline } from "@material-ui/core";
+import Avatar from "@material-ui/core/Avatar";
 import Collapse from "@material-ui/core/Collapse";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
@@ -8,193 +8,93 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import PropTypes from "prop-types";
-import React, { Component } from "react";
-import ReactInterval from "react-interval";
+import React, { useState } from "react";
 import classNames from "classnames"
+import { withComponentFeatures } from './universal-dashboard';
 
-
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
   root: {
     width: "100%"
   },
   item: {
     marginBottom: theme.spacing.unit
   }
-});
+}))
 
-class UdList extends Component {
+export const UDListItem = withComponentFeatures(props => {
 
-  state = {
-    content: this.props.content,
-  };
+  const [open, setOpen] = useState(false);
 
-  handleClick = event => {
-    this.setState({ [event]: !this.state[event] });
-  };
+  var avatar = null;
 
-  handleItemClick = (item) => {
-    UniversalDashboard.publish("element-event", {
-      type: "clientEvent",
-      eventId: item.id + "onClick",
-      eventName: "",
-      eventData: ""
-    });
-  };
-
-  onLoadData = () => {
-    UniversalDashboard.get(`/api/internal/component/element/${this.props.id}`,(data) =>{
-      data.error ?
-      this.setState({
-        hasError: true,
-        error: data.error,
-        data: data,
-        errorMessage: data.error.message
-      }) :
-      this.setState({
-        content: data
-      })
-    })
+  if (props.avatarType === 'Icon' && props.icon) 
+  {
+    avatar = <ListItemIcon>{props.icon ? props.render(props.icon) : null}</ListItemIcon>
   }
 
-  componentWillMount = () => {
-    if(this.props.isEndpoint){
-      this.onLoadData()
-    }
-    this.pubSubToken = UniversalDashboard.subscribe(
-      this.props.id,
-      this.onIncomingEvent.bind(this)
-    );
-  };
-
-  onIncomingEvent(eventName, event) {
-    if (event.type === "syncElement") {
-      this.onLoadData();
-    }
+  if (props.avatarType === 'Avatar' && props.source)
+  {
+    avatar = <ListItemAvatar><Avatar src={props.source}/></ListItemAvatar>
   }
 
-  componentWillUnmount() {
-    UniversalDashboard.unsubscribe(this.pubSubToken);
+  var secondaryItem = null;
+  if (props.secondaryItem)
+  {
+      secondaryItem = <ListItemSecondaryAction>{props.render(item.secondaryAction)}</ListItemSecondaryAction>
   }
 
-  //   Render Basic list Item
-  renderListItem = item => {
+  const onClick = () => {
+    if (props.onClick) { props.onClick() }
+    if (props.children) { setOpen(!open); }
+  }
 
-    return (
-      <ListItem
-        button={item.isButton}
-        key={item.id}
-        id={item.id}
-        onClick={
-          item.onClick !== null ? this.handleItemClick.bind(this,item) : item.onClick
-        }
-        style={item.style}>
-
-          {item.avatarType === 'Icon' ? <ListItemIcon>
-              {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
-            </ListItemIcon> : (item.avatarType === 'Avatar' ? <ListItemAvatar>
-              <Avatar src={item.source}/>
-            </ListItemAvatar> : null)}
-
-        <ListItemText inset primary={item.label} secondary={item.subTitle} style={!item.icon ? {marginLeft:'24px'}: null} />
-
-        {item.secondaryAction ? (
-          <ListItemSecondaryAction>
-            {UniversalDashboard.renderComponent(item.secondaryAction)}
-          </ListItemSecondaryAction>
-        ) : null}
-      </ListItem>
-    );
-  };
-
-  //   Render Nested List Item With Collapse Option
-  renderNestedItem = item => {
-    return item.content == null ? (
-      this.renderListItem(item)
-    ) : (
-      <>
-        {/* Top list item with collapse option */}
-        <ListItem
-          style={item.style}
-          id={item.id}
-          key={item.id}
-          button
-          onClick={this.handleClick.bind(this, item.label)}
-        >
-          {
-            item.avatarType === 'Icon' ? <ListItemIcon>
-              {item.icon ? UniversalDashboard.renderComponent(item.icon) : null}
-            </ListItemIcon> : (item.avatarType === 'Avatar' ? <ListItemAvatar>
-              <Avatar src={item.source}/>
-            </ListItemAvatar> : null)
-          }
-          <ListItemText inset primary={item.label} secondary={item.subTitle} style={(!item.icon || !item.source ? {marginLeft:'24px'}: null)} primaryTypographyProps={{...item.labelStyle}} />
-          {this.state[item.label] ? (
-            <ExpandLess color="primary" />
-          ) : (
-            <ExpandMore color="primary" />
-          )}
-        </ListItem>
-
-        {/* The Content of the collapse element should be basic list item or nested */}
-        <Collapse in={this.state[item.label]} timeout="auto" unmountOnExit mountOnEnter>
-          <List component="div" disablePadding>
-            {item.content == null
-              ? this.renderListItem(item)
-              : (item.content.map(nestedItem => {
-                  return nestedItem.type === 'mu-list-item' ?
-                  this.renderNestedItem(nestedItem) : UniversalDashboard.renderComponent(nestedItem)
-                }))}
-          </List>
-          <Divider/>
-        </Collapse>
-      </>
-    );
-  };
-
-  render() {
-    const { 
-      classes, 
-      autoRefresh,
-      refreshInterval,
-      isEndpoint 
-    } = this.props;
-
-    const { content } = this.state;
-
-    return (
-      <>
-      <CssBaseline />
-      <List
-        id={this.props.id}
-        key={this.props.id}
-        subheader={
-          <ListSubheader disableSticky>{this.props.subHeader}</ListSubheader>
-        }
-        className={classNames(classes.root, "ud-mu-list")}
-        component="div"
-        style={this.props.style}
-      >
-        {content.map(item => {
-          return this.renderNestedItem(item);
-        })}
+  var expand = null; 
+  var collapse = null;
+  if (props.children) 
+  {
+    expand = open ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />;
+    collapse = <Collapse in={open} timeout="auto" unmountOnExit mountOnEnter >
+      <List component="div" disablePadding>
+        {props.render(props.children)}
       </List>
-      <ReactInterval
-        timeout={refreshInterval * 1000}
-        enabled={autoRefresh}
-        callback={this.onLoadData}
-      />
-
-      </>
-    );
+      <Divider/>
+    </Collapse>
   }
-}
 
-UdList.propTypes = {
-  classes: PropTypes.object.isRequired
-};
+  return [
+    <ListItem
+      button={props.onClick !== null}
+      key={props.id}
+      id={props.id}
+      onClick={onClick}
+    >
+      {avatar}
+      <ListItemText primary={props.label} secondary={props.subTitle} />
+      {secondaryItem}
+      {expand}
+    </ListItem>,
+    collapse
+  ];
+})
 
-export default withStyles(styles)(UdList);
+export const UDList = withComponentFeatures(props => {
+    const classes = useStyles();
+    const { children } = props;
+
+    return (
+      <List
+          id={props.id}
+          key={props.id}
+          subheader={
+            <ListSubheader disableSticky>{props.subHeader}</ListSubheader>
+          }
+          className={classNames(classes.root, "ud-mu-list")}
+          component="div"
+        >
+          {props.render(children)}
+      </List>
+    );
+})

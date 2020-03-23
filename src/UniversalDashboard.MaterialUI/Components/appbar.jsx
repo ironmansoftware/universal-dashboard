@@ -26,22 +26,26 @@ const useStyles = makeStyles(theme => ({
 const UDAppBar = props => {
   const classes = useStyles();
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
-
   var drawer = null;
   var drawerButton = null;
   if (props.drawer)
   {
-    const drawerProps = {...props.drawer, open: drawerOpen};
-    drawer = props.render(drawerProps);
+    drawer = props.render(props.drawer);
 
-    drawerButton = <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={() => setDrawerOpen(true)}>
+    const openDrawer = () => {
+      props.publish(props.drawer.id, {
+        type: 'setState',
+        state: { open: true }
+      });
+    }
+
+    drawerButton = <IconButton id={`btn${props.drawer.id}`} edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={openDrawer}>
         <MenuIcon />
     </IconButton>
   }
 
   return [
-    <AppBar position={props.position}>
+    <AppBar position={props.position} key={props.id} id={props.id}>
         <Toolbar>
             {drawerButton}
             {props.render(props.children)}

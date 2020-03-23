@@ -85,8 +85,6 @@ namespace UniversalDashboard
                     }
             }
 
-            services.AddScoped<IFilterProvider, EncFilterProvider>();
-
             services.AddSession(options =>
             {
                 options.IdleTimeout = dashboardService.Dashboard == null ? TimeSpan.FromMinutes(25) : dashboardService.Dashboard.IdleTimeout;
@@ -110,7 +108,6 @@ namespace UniversalDashboard
 			provider.Mappings[".log"] 	= "text/plain";
 			provider.Mappings[".yml"] 	= "text/plain";
 
-			loggerFactory.AddNLog();
 			app.UseResponseCompression();
             app.UseStatusCodePages(async context => {
 

@@ -22,9 +22,12 @@ Describe "Form" {
 
         $Element = Find-SeElement -Id 'select' -Driver $Driver
         $Element.FindElementByXPath('../..') | Invoke-SeClick 
-
         Find-SeElement -TagName 'li' -Driver $Driver | Select-Object -First 1 | Invoke-SeClick 
         Find-SeElement -TagName 'body' -Driver $Driver | Invoke-SeClick 
+
+        Find-SeElement -TagName 'body' -Driver $Driver | Invoke-SeClick 
+        Find-SeElement -Id 'alon' -Driver $Driver | Invoke-SeClick 
+
         (Find-SeElement -Id 'form' -Driver $Driver).FindElementsByTagName("button")[2] | Invoke-SeClick 
 
         $TestData = Get-TestData 
@@ -37,5 +40,26 @@ Describe "Form" {
         $TestData.select | should be "1"
         [DateTime]$DateTime = $TestData.timePicker
         $DateTime.TimeOfDay.ToString() | should be "22:20:00"
+        $TestData.simpleRadio | should be "Alon"
+    }
+
+    It 'submits default values' {
+        (Find-SeElement -Id 'defaultForm' -Driver $Driver).FindElementsByTagName("button")[2] | Invoke-SeClick 
+
+        $TestData = Get-TestData 
+
+        $TestData.txtNameDefault | should be "Name"
+        $TestData.txtLastNameDefault | should be "LastName"
+        $TestData.chkYesDefault | should be $true
+        $TestData.switchYesDefault | should be $true
+        $TestData.dateDateDefault.StartsWith('1/2/2020') | should be $true
+        $TestData.selectDefault | should be "1"
+        $TestData.timePickerDefault | should be "10:30 AM"
+        $TestData.simpleRadioDefault | should be "Adam"
+    }
+
+    It 'returns custom content' {
+        (Find-SeElement -Id 'formReturnContent' -Driver $Driver).FindElementsByTagName("button")[0] | Invoke-SeClick 
+        Find-SeElement -Id 'newElement' -Target $driver | Should not be $null
     }
 }

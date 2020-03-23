@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Icon, Chip, Avatar } from '@material-ui/core';
 import classNames from "classnames"
+import DoneIcon from '@material-ui/icons/Done';
 
 const styles = theme => ({
     root: {
@@ -19,11 +20,11 @@ const styles = theme => ({
     }
 });
 
-
-
 export class UdChip extends React.Component {
 
     handleDelete() {
+
+        if (!this.props.delete) { return }
 
         UniversalDashboard.publish('element-event', {
             type: "clientEvent",
@@ -34,6 +35,8 @@ export class UdChip extends React.Component {
     }
 
     handleClick() {
+
+        if (!this.props.clickable) { return }
 
         UniversalDashboard.publish('element-event', {
             type: "clientEvent",
