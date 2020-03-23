@@ -1,8 +1,8 @@
 var dark = {
   "background": {
-    "fill": "#5b5c6e"
+    "fill": "#333333"
   },
-  "defaultColor": "#8a7ca8",
+  "defaultColor": "#1890ff",
   "plotCfg": {
     "padding": [
       20,
@@ -14,86 +14,86 @@ var dark = {
   "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\"",
   "defaultLegendPosition": "bottom",
   "colors": [
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7"
+    "#1890ff",
+    "#F7FBFF",
+    "#69c0ff",
+    "#0050b3",
+    "#096dd9",
+    "#40a9ff",
+    "#69c0ff",
+    "#91d5ff"
   ],
   "colors_16": [
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e"
+    "#1890ff",
+    "#F7FBFF",
+    "#69c0ff",
+    "#0050b3",
+    "#096dd9",
+    "#40a9ff",
+    "#69c0ff",
+    "#91d5ff",
+    "#ABCFE6",
+    "#bae7ff",
+    "#e6f7ff",
+    "#1890ff",
+    "#F7FBFF",
+    "#69c0ff",
+    "#0050b3",
+    "#096dd9"
   ],
   "colors_24": [
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc"
+    "#1890ff",
+    "#F7FBFF",
+    "#69c0ff",
+    "#0050b3",
+    "#096dd9",
+    "#40a9ff",
+    "#69c0ff",
+    "#91d5ff",
+    "#ABCFE6",
+    "#bae7ff",
+    "#e6f7ff",
+    "#1890ff",
+    "#F7FBFF",
+    "#69c0ff",
+    "#0050b3",
+    "#096dd9",
+    "#40a9ff",
+    "#69c0ff",
+    "#91d5ff",
+    "#ABCFE6",
+    "#bae7ff",
+    "#e6f7ff",
+    "#1890ff",
+    "#F7FBFF"
   ],
   "colors_pie": [
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7"
+    "#1890ff",
+    "#F7FBFF",
+    "#69c0ff",
+    "#0050b3",
+    "#096dd9",
+    "#40a9ff",
+    "#69c0ff",
+    "#91d5ff"
   ],
   "colors_pie_16": [
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e",
-    "#cc70af",
-    "#7cb4cc",
-    "#8a7ca8",
-    "#e098c7",
-    "#8fd3e8",
-    "#71669e"
+    "#1890ff",
+    "#F7FBFF",
+    "#69c0ff",
+    "#0050b3",
+    "#096dd9",
+    "#40a9ff",
+    "#69c0ff",
+    "#91d5ff",
+    "#ABCFE6",
+    "#bae7ff",
+    "#e6f7ff",
+    "#1890ff",
+    "#F7FBFF",
+    "#69c0ff",
+    "#0050b3",
+    "#096dd9"
   ],
   "shapes": {
     "point": [
@@ -133,7 +133,7 @@ var dark = {
       "label": {
         "offset": 14,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#797979",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -167,7 +167,7 @@ var dark = {
         "offset": 22,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#797979",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -200,7 +200,7 @@ var dark = {
         "offset": 12,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#797979",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -233,7 +233,7 @@ var dark = {
         "offset": 12,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#797979",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -264,7 +264,7 @@ var dark = {
       "label": {
         "offset": 12,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#797979",
           "fontSize": 12,
           "lineHeight": 20,
           "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
@@ -297,7 +297,7 @@ var dark = {
       "label": {
         "offset": 12,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#797979",
           "fontSize": 12,
           "textBaseline": "middle",
           "lineHeight": 20,
@@ -327,7 +327,11 @@ var dark = {
       }
     },
     "helix": {
-      "label": null,
+      "label": {
+        "textStyle": {
+          "fill": "#797979"
+        }
+      },
       "title": null,
       "line": {
         "lineWidth": 1,
@@ -351,7 +355,7 @@ var dark = {
   "label": {
     "offset": 20,
     "textStyle": {
-      "fill": "#545454",
+      "fill": "#797979",
       "fontSize": 12,
       "textBaseline": "middle",
       "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""

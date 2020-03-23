@@ -3,7 +3,8 @@ import { Table, Drawer, Button } from 'antd/es'
 import { DownloadOutlined } from '@ant-design/icons'
 import { downloadCSV, generateCsvString } from './utils'
 import { useMonitor } from './api/MonitorState'
-import { Spin } from 'antd'
+import { Spin, Row, Col, Switch } from 'antd'
+import Form from './settingsForm'
 
 export default ({ visible }) => {
   const [state, dispatch] = useMonitor()
@@ -15,15 +16,12 @@ export default ({ visible }) => {
   const download = () => downloadCSV(data, 'monitorData')
 
   const createTable = () => {
-    if (!data[0]) return <Spin spinning={!data[0]} tip="Loading table" />
-    else {
-      const columns = Object.keys(data[0]).map(column => ({
-        title: `${column[0].toUpperCase()}${column.substring(1)}`,
-        dataIndex: `${column.toLowerCase()}`,
-      }))
+    const columns = Object.keys(data[0]).map(column => ({
+      title: `${column[0].toUpperCase()}${column.substring(1)}`,
+      dataIndex: `${column.toLowerCase()}`,
+    }))
 
-      return <Table dataSource={data} columns={columns} bordered />
-    }
+    return <Table dataSource={data} columns={columns} bordered size="small" pagination={{defaultPageSize: 20}}/>
   }
 
   return (
@@ -35,12 +33,21 @@ export default ({ visible }) => {
       onClose={onClose}
       visible={settings.visible}
       footer={
-        <Button onClick={download} type="primary" icon={<DownloadOutlined />}>
+        <Button onClick={download} disabled={!data[0]} type="primary" icon={<DownloadOutlined />}>
           Download
         </Button>
       }
     >
-      {createTable()}
+      <Row>
+        <Col span={6}>
+          <Form />
+        </Col>
+        <Col span={18}>
+            <Spin spinning={!data[0]} tip="Loading data" >
+              {!data[0] ? [] : createTable()}
+            </Spin>
+        </Col>
+      </Row>
     </Drawer>
   )
 }

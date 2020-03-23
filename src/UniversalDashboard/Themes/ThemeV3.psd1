@@ -38,33 +38,69 @@
             }
         }
         chart   = @{
-            width       = 250
-            height      = 220
-            padding     = @(48,48,48,48)
-            colors      = @(
-                '#f44336'
-                '#e91e63'
-                '#9c27b0'
-                '#3f51b5'
-                '#2196f3'
-                '#00bcd4'
-                '#4caf50'
-            )
-            defaultColor       = '#e91e63'
-            title       = @{
-                fontSize      = 32
-                fill          = '#4caf50'
-                alignWithAxis =  $false
-                fontFamily    = 'fantasy'
+            width   = 250
+            height  = 400
+            padding = @(48, 48, 48, 48)
+            light   = @{
+                colors       = @(
+                    "#1890ff",
+                    "#1f1f1f",
+                    "#bfbfbf",
+                    "#f0f0f0",
+                    "#d9d9d9",
+                    "#8c8c8c",
+                    "#595959",
+                    "#434343"
+                )
+                background   = @{
+                    fill = "#ffffff"
+                }
+                defaultColor = "#1890ff"
+                title        = @{
+                    fontSize      = 32
+                    fill          = "#1f1f1f"
+                    alignWithAxis = $false
+                    fontFamily    = 'fantasy'
+                }
+                description  = @{
+                    fontSize      = 16
+                    fill          = "#1f1f1f"
+                    alignWithAxis = $false
+                    fontFamily    = 'fantasy'
+                }
+                legend       = @{ }
+                tooltip      = @{ }
             }
-            description = @{
-                fontSize      = 16
-                fill          = '#3f51b5'
-                alignWithAxis = $false
-                fontFamily    = 'fantasy'
+            dark   = @{
+                colors       = @(
+                    "#1890ff",
+                    "#F7FBFF",
+                    "#69c0ff",
+                    "#0050b3",
+                    "#096dd9",
+                    "#40a9ff",
+                    "#69c0ff",
+                    "#91d5ff"
+                )
+                background = @{
+                    fill = "#333333"
+                }
+                defaultColor = "#1890ff"
+                title        = @{
+                    fontSize      = 32
+                    fill          = "#797979"
+                    alignWithAxis = $false
+                    fontFamily    = 'fantasy'
+                }
+                description  = @{
+                    fontSize      = 16
+                    fill          = "#797979"
+                    alignWithAxis = $false
+                    fontFamily    = 'fantasy'
+                }
+                legend       = @{ }
+                tooltip      = @{ }
             }
-            legend      = @{ }
-            tooltip     = @{ }
         }
     }
 }

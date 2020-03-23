@@ -49,9 +49,7 @@ function New-UDMonitor {
         [Parameter()]
         [int]$Width,
         [Parameter()]
-        [int]$Height = 400,
-        [Parameter()]
-        [int]$refresh = 1000
+        [int]$Height = 400
 
     )
     end {  
@@ -69,7 +67,6 @@ function New-UDMonitor {
             title    = $Title
             width    = $Width
             height   = $Height
-            refresh  = $Refresh
         }
         $monitor
     }

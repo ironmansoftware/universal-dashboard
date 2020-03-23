@@ -166,7 +166,7 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
                 used     = Get-Counter -Counter '\Processor Information(_Total)\% User Time' | Select-Object -expand CounterSamples | Select-Object -expand  CookedValue
                 resource = 'user'
             } 
-        } -Fields @('used') -ColorBy 'resource'
+        } -Fields @('used') -ColorBy 'resource' -Title "Universal Dashboard Demo"
   
     }
 

@@ -2,7 +2,7 @@ var light = {
   "background": {
     "fill": "#ffffff"
   },
-  "defaultColor": "#e01f54",
+  "defaultColor": "#1890ff",
   "plotCfg": {
     "padding": [
       20,
@@ -14,86 +14,86 @@ var light = {
   "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\"",
   "defaultLegendPosition": "bottom",
   "colors": [
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2",
-    "#f3d999",
-    "#d3758f"
+    "#1890ff",
+    "#1f1f1f",
+    "#bfbfbf",
+    "#f0f0f0",
+    "#d9d9d9",
+    "#8c8c8c",
+    "#595959",
+    "#434343"
   ],
   "colors_16": [
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2",
-    "#f3d999",
-    "#d3758f",
-    "#dcc392",
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2",
-    "#f3d999"
+    "#1890ff",
+    "#1f1f1f",
+    "#bfbfbf",
+    "#f0f0f0",
+    "#d9d9d9",
+    "#8c8c8c",
+    "#595959",
+    "#434343",
+    "#1f1f1f",
+    "#000000",
+    "#1890ff",
+    "#bfbfbf",
+    "#1f1f1f",
+    "#f0f0f0",
+    "#d9d9d9",
+    "#8c8c8c"
   ],
   "colors_24": [
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2",
-    "#f3d999",
-    "#d3758f",
-    "#dcc392",
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2",
-    "#f3d999",
-    "#d3758f",
-    "#dcc392",
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2"
+    "#1890ff",
+    "#1f1f1f",
+    "#bfbfbf",
+    "#f0f0f0",
+    "#d9d9d9",
+    "#8c8c8c",
+    "#595959",
+    "#434343",
+    "#1f1f1f",
+    "#000000",
+    "#1890ff",
+    "#bfbfbf",
+    "#1f1f1f",
+    "#f0f0f0",
+    "#d9d9d9",
+    "#8c8c8c",
+    "#595959",
+    "#434343",
+    "#1f1f1f",
+    "#000000",
+    "#1890ff",
+    "#bfbfbf",
+    "#1f1f1f",
+    "#f0f0f0"
   ],
   "colors_pie": [
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2",
-    "#f3d999",
-    "#d3758f"
+    "#1890ff",
+    "#1f1f1f",
+    "#bfbfbf",
+    "#f0f0f0",
+    "#d9d9d9",
+    "#8c8c8c",
+    "#595959",
+    "#434343"
   ],
   "colors_pie_16": [
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2",
-    "#f3d999",
-    "#d3758f",
-    "#dcc392",
-    "#e01f54",
-    "#001852",
-    "#f5e8c8",
-    "#b8d2c7",
-    "#c6b38e",
-    "#a4d8c2",
-    "#f3d999"
+    "#1890ff",
+    "#1f1f1f",
+    "#bfbfbf",
+    "#f0f0f0",
+    "#d9d9d9",
+    "#8c8c8c",
+    "#595959",
+    "#434343",
+    "#1f1f1f",
+    "#000000",
+    "#1890ff",
+    "#bfbfbf",
+    "#1f1f1f",
+    "#f0f0f0",
+    "#d9d9d9",
+    "#8c8c8c"
   ],
   "shapes": {
     "point": [
@@ -133,7 +133,7 @@ var light = {
       "label": {
         "offset": 14,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#262626",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -143,19 +143,19 @@ var light = {
       },
       "line": {
         "lineWidth": 1,
-        "stroke": "#BFBFBF"
+        "stroke": "#d9d9d9"
       },
       "tickLine": {
-        "lineWidth": 1,
-        "stroke": "#BFBFBF",
-        "length": 4,
+        "lineWidth": "0",
+        "stroke": "#FFF",
+        "length": "0",
         "alignWithLabel": true
       },
       "grid": {
         "zIndex": -1,
         "lineStyle": {
-          "stroke": "#E9E9E9",
-          "lineWidth": 1
+          "stroke": "#d9d9d9",
+          "lineWidth": "1"
         },
         "hideFirstLine": true
       }
@@ -167,7 +167,7 @@ var light = {
         "offset": 22,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#262626",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -176,19 +176,19 @@ var light = {
       },
       "line": {
         "lineWidth": 1,
-        "stroke": "#BFBFBF"
+        "stroke": "#d9d9d9"
       },
       "tickLine": {
-        "lineWidth": 1,
-        "stroke": "#BFBFBF",
-        "length": 4,
+        "lineWidth": "0",
+        "stroke": "#FFF",
+        "length": "0",
         "alignWithLabel": true
       },
       "grid": {
         "zIndex": -1,
         "lineStyle": {
-          "stroke": "#E9E9E9",
-          "lineWidth": 1
+          "stroke": "#d9d9d9",
+          "lineWidth": "1"
         },
         "hideFirstLine": true
       }
@@ -200,7 +200,7 @@ var light = {
         "offset": 12,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#262626",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -209,19 +209,19 @@ var light = {
       },
       "line": {
         "lineWidth": 1,
-        "stroke": "#BFBFBF"
+        "stroke": "#d9d9d9"
       },
       "tickLine": {
-        "lineWidth": 1,
-        "stroke": "#BFBFBF",
-        "length": 4,
+        "lineWidth": "0",
+        "stroke": "#FFF",
+        "length": "0",
         "alignWithLabel": true
       },
       "grid": {
         "zIndex": -1,
         "lineStyle": {
-          "stroke": "#E9E9E9",
-          "lineWidth": 1
+          "stroke": "#d9d9d9",
+          "lineWidth": "1"
         },
         "hideFirstLine": true
       }
@@ -233,7 +233,7 @@ var light = {
         "offset": 12,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#262626",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -242,18 +242,18 @@ var light = {
       },
       "line": {
         "lineWidth": 1,
-        "stroke": "#BFBFBF"
+        "stroke": "#d9d9d9"
       },
       "tickLine": {
-        "lineWidth": 1,
-        "stroke": "#BFBFBF",
-        "length": 4,
+        "lineWidth": "0",
+        "stroke": "#FFF",
+        "length": "0",
         "alignWithLabel": true
       },
       "grid": {
         "lineStyle": {
-          "stroke": "#E9E9E9",
-          "lineWidth": 1
+          "stroke": "#d9d9d9",
+          "lineWidth": "1"
         },
         "hideFirstLine": true
       }
@@ -264,7 +264,7 @@ var light = {
       "label": {
         "offset": 12,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#262626",
           "fontSize": 12,
           "lineHeight": 20,
           "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
@@ -272,18 +272,18 @@ var light = {
       },
       "line": {
         "lineWidth": 1,
-        "stroke": "#BFBFBF"
+        "stroke": "#d9d9d9"
       },
       "tickLine": {
-        "lineWidth": 1,
-        "stroke": "#BFBFBF",
-        "length": 4,
+        "lineWidth": "0",
+        "stroke": "#FFF",
+        "length": "0",
         "alignWithLabel": true
       },
       "grid": {
         "lineStyle": {
-          "stroke": "#E9E9E9",
-          "lineWidth": 1,
+          "stroke": "#d9d9d9",
+          "lineWidth": "1",
           "lineDash": [
             3,
             3
@@ -297,7 +297,7 @@ var light = {
       "label": {
         "offset": 12,
         "textStyle": {
-          "fill": "#545454",
+          "fill": "#262626",
           "fontSize": 12,
           "textBaseline": "middle",
           "lineHeight": 20,
@@ -306,18 +306,18 @@ var light = {
       },
       "line": {
         "lineWidth": 1,
-        "stroke": "#BFBFBF"
+        "stroke": "#d9d9d9"
       },
       "tickLine": {
-        "lineWidth": 1,
-        "stroke": "#BFBFBF",
-        "length": 4,
+        "lineWidth": "0",
+        "stroke": "#FFF",
+        "length": "0",
         "alignWithLabel": true
       },
       "grid": {
         "lineStyle": {
-          "stroke": "#E9E9E9",
-          "lineWidth": 1,
+          "stroke": "#d9d9d9",
+          "lineWidth": "1",
           "lineDash": [
             3,
             3
@@ -327,22 +327,26 @@ var light = {
       }
     },
     "helix": {
-      "label": null,
+      "label": {
+        "textStyle": {
+          "fill": "#262626"
+        }
+      },
       "title": null,
       "line": {
         "lineWidth": 1,
-        "stroke": "#BFBFBF"
+        "stroke": "#d9d9d9"
       },
       "tickLine": {
-        "lineWidth": 1,
-        "length": 4,
-        "stroke": "#BFBFBF",
+        "lineWidth": "0",
+        "length": "0",
+        "stroke": "#FFF",
         "alignWithLabel": true
       },
       "grid": {
         "lineStyle": {
-          "stroke": "#E9E9E9",
-          "lineWidth": 1
+          "stroke": "#d9d9d9",
+          "lineWidth": "1"
         },
         "type": "circle"
       }
@@ -351,7 +355,7 @@ var light = {
   "label": {
     "offset": 20,
     "textStyle": {
-      "fill": "#545454",
+      "fill": "#262626",
       "fontSize": 12,
       "textBaseline": "middle",
       "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
@@ -398,7 +402,7 @@ var light = {
         "lineHeight": 20,
         "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
       },
-      "unCheckColor": "#bfbfbf"
+      "unCheckColor": "#f5f5f5"
     },
     "left": {
       "position": "left",
@@ -415,7 +419,7 @@ var light = {
         "lineHeight": 20,
         "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
       },
-      "unCheckColor": "#bfbfbf"
+      "unCheckColor": "#f5f5f5"
     },
     "top": {
       "position": "top",
@@ -433,7 +437,7 @@ var light = {
         "lineHeight": 20,
         "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
       },
-      "unCheckColor": "#bfbfbf"
+      "unCheckColor": "#f5f5f5"
     },
     "bottom": {
       "position": "bottom",
@@ -451,7 +455,7 @@ var light = {
         "lineHeight": 20,
         "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\""
       },
-      "unCheckColor": "#bfbfbf"
+      "unCheckColor": "#f5f5f5"
     },
     "html": {
       "g2-legend": {
@@ -499,7 +503,7 @@ var light = {
         "lineWidth": 1,
         "stroke": "#fff"
       },
-      "unCheckColor": "#bfbfbf"
+      "unCheckColor": "#f5f5f5"
     },
     "margin": [
       0,
@@ -519,8 +523,8 @@ var light = {
       "transition": "visibility 0.2s cubic-bezier(0.23, 1, 0.32, 1), left 0.4s cubic-bezier(0.23, 1, 0.32, 1), top 0.4s cubic-bezier(0.23, 1, 0.32, 1)",
       "backgroundColor": "rgba(255, 255, 255, 0.9)",
       "boxShadow": "0px 0px 10px #aeaeae",
-      "borderRadius": "3px",
-      "color": "rgb(87, 87, 87)",
+      "borderRadius": "0px",
+      "color": "#262626",
       "fontSize": "12px",
       "fontFamily": "\"-apple-system\", BlinkMacSystemFont, \"Segoe UI\", Roboto,\"Helvetica Neue\", Helvetica, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\",SimSun, \"sans-serif\"",
       "lineHeight": "20px",
@@ -676,4 +680,4 @@ var light = {
   },
   "pixelRatio": null
 };
-module.exports =light;
+module.exports = light;

@@ -1,15 +1,20 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { Chart, Tooltip, Axis, Legend, Line, Area, Global } from 'viser-react'
-import ReactInterval from 'react-interval'
+import { Chart, Tooltip, Legend, StackLine, Line, StackArea, Global, View } from 'viser-react'
+import { Layout } from 'antd/es'
 import { useMonitor } from './api/MonitorState'
 import DataSet from '@antv/data-set'
+import React, { useRef, useState, useEffect } from 'react'
+import ReactInterval from 'react-interval'
+import Axis from './parts/axis'
+import { useAutoRefresh } from './utils'
+const { Content } = Layout
 
 export default ({ height, width, ...props }) => {
-  const [data, setData] = useState([])
+  const [currentData, setCurrentData] = useState([])
+  const [database, setDatabase] = useState([])
   const dataSet = new DataSet()
-  const dataView = dataSet.createView().source(data)
+  const dataView = dataSet.createView().source(currentData)
   const [state, dispatch] = useMonitor()
-  const { settings, theme, running } = state
+  const { settings, theme, running, data } = state
 
   const loadData = () =>
     UniversalDashboard.get(
@@ -17,7 +22,7 @@ export default ({ height, width, ...props }) => {
       result => {
         if (result.error) console.log(result.error)
         const time = new Date().getTime()
-        // Cpu data
+        
         result.map(item =>
           dataView.addRow({
             ...item,
@@ -25,17 +30,24 @@ export default ({ height, width, ...props }) => {
           }),
         )
 
-        dispatch({ type: 'LOAD_DATA', payload: dataView.rows })
+        let newRes = result.map(item =>({
+            ...item,
+            time: time,
+          })
+        )
+        setDatabase(database => database.concat(newRes))
+        dispatch({ type: 'LOAD_DATA', payload: database })
 
         let newData = dataView.rows
-        if (newData.length >= 100) {
+        if (newData.length >= 50) {
           newData.shift()
           newData.shift()
         }
-        setData(newData)
+        setCurrentData(newData)
       },
     )
 
+    // useAutoRefresh(loadData)
   const refreshInterval = {
     off: null,
     '5s': 1000 * 5,
@@ -63,29 +75,56 @@ export default ({ height, width, ...props }) => {
 
   const area = (
     <React.Fragment>
-      <Line position={`time*${props.fields[0]}`} color={[props.color,theme.props.colors_16]} shape="smooth"/>
-      <Area position={`time*${props.fields[0]}`} color={[props.color,theme.props.colors_16]} shape="smooth"/>
+      <StackLine
+        position={`time*${props.fields[0]}`}
+        color={[props.color, theme.props.colors]}
+        shape="smooth"
+      />
+      <StackArea
+        position={`time*${props.fields[0]}`}
+        color={[props.color, theme.props.colors]}
+        shape="smooth"
+      />
     </React.Fragment>
   )
 
-  Global.setTheme(theme)
   return (
-    <React.Fragment>
-      <Chart forceFit height={400} data={data} scale={scale} padding={48} background={{...theme.props.background}}>
-        <Tooltip />
-        <Axis />
-        <Legend />
-        {settings.chartType === 'area' ? (
-          area
-        ) : (
-          <Line position={`time*${props.fields[0]}`} color={[props.color,theme.props.colors_16]} shape="smooth"/>
-        )}
-      </Chart>
-      <ReactInterval
-        enabled={running}
-        timeout={refreshInterval[settings.refreshInterval]}
-        callback={loadData}
-      />
-    </React.Fragment>
+    <Content
+      style={{
+        backgroundColor: theme.props.background.fill,
+        overflow: 'hidden',
+        padding: 48,
+      }}
+    >
+      <div style={{ backgroundColor: theme.props.background.fill }}>
+        <Chart
+          forceFit
+          height={400}
+          
+          padding={48}
+          background={{ fill: 'transparent' }}
+        >
+          <Tooltip />
+          <Legend />
+          <Axis style={{...theme.props.axis.label }}/>
+          <View data={currentData} scale={scale}>
+          {settings.chartType === 'area' ? (
+            area
+          ) : (
+            <Line
+              position={`time*${props.fields[0]}`}
+              color={[props.color, theme.props.colors]}
+              shape="smooth"
+            />
+          )}
+          </View>
+        </Chart>
+        <ReactInterval
+          enabled={running}
+          timeout={refreshInterval[settings.refreshInterval]}
+          callback={loadData}
+        />
+      </div>
+    </Content>
   )
 }
