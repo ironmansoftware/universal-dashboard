@@ -20,6 +20,7 @@ import ThirdStateCheckIcon from '@material-ui/icons/Remove';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
 import { withComponentFeatures } from './universal-dashboard';
 import Skeleton from '@material-ui/lab/Skeleton';
+import ErrorCard from './framework/error-card';
 
 const icons = {
     Add: AddIcon,
@@ -69,6 +70,8 @@ const toLowerCaseKeys = o => {
 
 const UDTable = (props) => {
 
+    const [error, setError] = useState(null);
+
     const columns = props.columns.map(column => {
 
         var render = null;
@@ -91,12 +94,17 @@ const UDTable = (props) => {
     if (props.loadData) {
         data = (query) => {
             return new Promise((resolve, reject) => {
-
                 query.properties = columns.map(x => x.field);
 
-                //todo: show error message
-
                 props.loadData(query).then(x => {
+
+                    if (x.error)
+                    {
+                        setError(x.error);
+                        resolve({data:[], page: 0, totalCount: 0})
+                        return;
+                    }
+
                     var result = x[0].data.map(y => toLowerCaseKeys(y));
                     resolve({
                         data: result,
@@ -112,8 +120,12 @@ const UDTable = (props) => {
         data = props.data.map(x => toLowerCaseKeys(x));
     }
 
+    if (error) {
+        return <ErrorCard message={error.message} title={"Error"} />
+    } 
+
     return (
-        <div id={props.id} key={props.id}>
+        <div id={props.id} key={props.id} style={{width: "100%"}}>
             <MaterialTable 
                 title={props.title}
                 icons={icons}

@@ -12,7 +12,7 @@ import copy from 'copy-to-clipboard'
 
 var connection
 
-function connectWebSocket(sessionId, location, setLoading) {
+function connectWebSocket(sessionId, location, setLoading, history) {
   if (connection) {
     setLoading(false)
   }
@@ -93,7 +93,11 @@ function connectWebSocket(sessionId, location, setLoading) {
   })
 
   connection.on('redirect', (url, newWindow) => {
-    if (newWindow) {
+    if (url.startsWith('/'))
+    {
+       history.push(url);
+    }
+    else if (newWindow) {
       window.open(url)
     } else {
       window.location.href = url
@@ -204,7 +208,7 @@ function loadData(setDashboard, setLocation, history, location, setLoading) {
 
       if (dashboard.scripts) dashboard.scripts.map(loadJavascript)
 
-      connectWebSocket(json.sessionId, location, setLoading)
+      connectWebSocket(json.sessionId, location, setLoading, history)
 
       UniversalDashboard.design = dashboard.design
 
@@ -289,7 +293,6 @@ function Dashboard({ history }) {
 
     var pluginComponents = UniversalDashboard.provideDashboardComponents()
 
-  
     const { colors, modes, fonts, ...rest } = dashboard.theme.definition
     let theme = {
       ...base,
@@ -319,7 +322,7 @@ function Dashboard({ history }) {
         },
       },
     }
-    console.log(theme)
+    
     return (
       <ThemeProvider theme={theme}>
         <ColorModeProvider >{[component, pluginComponents]}</ColorModeProvider>

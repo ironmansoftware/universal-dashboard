@@ -1,4 +1,37 @@
 function New-UDProgress {
+    <#
+    .SYNOPSIS
+    Creates a progress dialog.
+    
+    .DESCRIPTION
+    Creates a progress dialog. Progress dialogs can show both determinate and indeterminate progress. They can also be circular or linear. 
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER PercentComplete
+    The percent complete for the progress.
+    
+    .PARAMETER BackgroundColor
+    The background color.
+    
+    .PARAMETER ProgressColor
+    The progress bar color. 
+    
+    .PARAMETER Circular
+    Whether the progress is circular. 
+    
+    .PARAMETER Color
+    The color of the progress.
+    
+    .PARAMETER Size
+    The size of the progress.
+    
+    .EXAMPLE
+    Creates a progress bar at 75%.
+
+    New-UDProgress -PercentComplete 75
+    #>
     [CmdletBinding(DefaultParameterSetName = "indeterminate")]
     param(
         [Parameter()]

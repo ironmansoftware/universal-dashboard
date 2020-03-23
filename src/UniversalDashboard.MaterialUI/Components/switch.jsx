@@ -1,14 +1,24 @@
 /** @jsx jsx */
-import React from 'react';
+import React, {useEffect} from 'react';
 import Switch from '@material-ui/core/Switch';
 import { withComponentFeatures } from './universal-dashboard';
 import {FormContext} from './form';
 import {jsx} from 'theme-ui'
 
+const UDSwitchWithContext = (props) => {
+    return (
+        <FormContext.Consumer>
+            {
+                ({onFieldChange}) => <UDSwitch {...props} onFieldChange={onFieldChange} />
+            }
+        </FormContext.Consumer>
+    )
+}
+
 const UDSwitch = (props) => {
 
-    const onChange = (event, onFieldChange) => {
-        onFieldChange({id: props.id, value: event.target.checked})
+    const onChange = (event) => {
+        props.onFieldChange({id: props.id, value: event.target.checked})
         props.setState({checked: event.target.checked});
 
         if (props.onChange) {
@@ -16,23 +26,22 @@ const UDSwitch = (props) => {
         }
     } 
 
+    useEffect(() => {
+        props.onFieldChange({id: props.id, value: props.checked});
+        return () => {}
+    }, true)
+
     return (
-        <FormContext.Consumer>
-            {
-                ({onFieldChange}) => (
-                    <Switch
-                        key={props.key}
-                        id={props.id}
-                        checked={props.checked}
-                        onChange={event => onChange(event, onFieldChange)}
-                        disabled={props.disabled}
-                        sx={{ color: 'primary' }}
-                    />
-                )
-            }
-        </FormContext.Consumer>
+        <Switch
+            key={props.key}
+            id={props.id}
+            checked={props.checked}
+            onChange={event => onChange(event)}
+            disabled={props.disabled}
+            sx={{ color: 'primary' }}
+        />
     )
 }
 
-export default withComponentFeatures(UDSwitch);
+export default withComponentFeatures(UDSwitchWithContext);
 

@@ -30,7 +30,7 @@ export default function FloatingActionButton(props) {
 
       var icon = null; 
       if (props.icon) {
-          icon = <Icon icon={props.icon}/>
+          icon = UniversalDashboard.renderComponent(props.icon)
       }
 
       return (

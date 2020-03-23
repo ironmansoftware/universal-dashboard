@@ -1,25 +1,32 @@
 /** @jsx jsx */
-import React from 'react';
+import React, { useEffect } from 'react';
 import {withComponentFeatures} from './universal-dashboard';
 import TextField from '@material-ui/core/TextField';
 import {FormContext} from './form';
 import {jsx} from 'theme-ui'
 
-const UDTextField = (props) => {
+const UDTextFieldWithContext = (props) => {
     return (
         <FormContext.Consumer>
             {
-                ({onFieldChange}) => {
-                    const onChange = (e) => {
-                        props.setState({value: e.target.value})
-                        onFieldChange({id: props.id, value: e.target.value})
-                    }
-
-                    return <TextField  {...props} type={props.textType} onChange={onChange}/>
-                }
+                ({onFieldChange}) => <UDTextField {...props} onFieldChange={onFieldChange} />
             }
         </FormContext.Consumer>
     )
 }
 
-export default withComponentFeatures(UDTextField);
+const UDTextField = (props) => {
+    const onChange = (e) => {
+        props.setState({value: e.target.value})
+        props.onFieldChange({id: props.id, value: e.target.value})
+    }
+
+    useEffect(() => {
+        props.onFieldChange({id: props.id, value: props.value});
+        return () => {}
+    }, true)
+
+    return <TextField  {...props} type={props.textType} onChange={onChange} />
+}
+
+export default withComponentFeatures(UDTextFieldWithContext);

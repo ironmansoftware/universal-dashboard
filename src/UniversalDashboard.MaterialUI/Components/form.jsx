@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
-import { Button } from '@material-ui/core';
+import React, {useState, useReducer} from 'react';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 import { withComponentFeatures } from './universal-dashboard';
+import { makeStyles } from '@material-ui/core/styles';
 
 const defaultContext = {
     fields: {},
@@ -9,15 +11,51 @@ const defaultContext = {
 
 export const FormContext = React.createContext(defaultContext);
 
-const UDForm = (props) => {
-    const [fields, setFields] = useState({});
-    const [valid, setValid] = useState(props.onValidate == null);
+const useStyles = makeStyles(theme => ({
+    formControlPadding: {
+      padding: theme.spacing(1),
+    },
+  }));
 
-    const components = props.render(props.content);
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'changeField':
+            var newState = {...state};
+            newState[action.id] = action.value;
+            return newState;
+        default:
+          throw new Error();
+      }
+}
+
+const UDForm = (props) => {
+
+    const classes = useStyles();
+
+    const [fields, setFields] = useReducer(reducer, {});
+    const [valid, setValid] = useState(props.onValidate == null);
+    const [content, setContent] = useState(props.children);
+    const [hideSubmit, setHideSubmit] = useState(false);
+
+    var components = [];
+    
+    if (Object.keys(content).length > 0)
+    {
+        components = props.render(content);
+    }
+    
+    if (!components.map)
+    {
+        components = [components];
+    }
 
     const onSubmit = () => {
         props.onSubmit(fields).then(x => {
-
+            if (x && Object.keys(x).length > 0) {
+                setContent(x);
+                setHideSubmit(true);
+            }
         })
     }
 
@@ -34,21 +72,28 @@ const UDForm = (props) => {
     }
     
     const contextState = {
-        fields, 
         onFieldChange: (field) => {
-
-            var state = {...fields};
-            state[field.id] = field.value;
-
-            setFields(state);
+            setFields({
+                type: 'changeField',
+                ...field
+            });
         }
     }
 
     return (
         <div id={props.id}>
             <FormContext.Provider value={contextState}>
-                {components}
-                <Button onClick={onSubmit} disabled={!valid}>Submit</Button>
+                <Grid container>
+                    {components.map(x => <Grid item xs={12} className={classes.formControlPadding}>{x}</Grid>)}
+                    {hideSubmit ? 
+                    
+                    <React.Fragment></React.Fragment> : 
+                    
+                    <Grid item xs={12}>
+                        <Button onClick={onSubmit} disabled={!valid} className={classes.formControlPadding}>Submit</Button>
+                    </Grid>
+                    }
+                </Grid>
             </FormContext.Provider>
         </div>
     )

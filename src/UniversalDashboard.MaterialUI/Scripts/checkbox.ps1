@@ -1,4 +1,50 @@
 function New-UDCheckBox {
+    <#
+    .SYNOPSIS
+    Creates a checkbox.
+
+    .DESCRIPTION
+    Creates a checkbox. Checkboxes can be used in forms or by themselves. 
+
+    .PARAMETER Label
+    The label to show next to the checkbox.
+
+    .PARAMETER Icon
+    The icon to show instead of the default icon.
+
+    .PARAMETER CheckedIcon
+    The icon to show instead of the default checked icon.
+
+    .PARAMETER OnChange
+    Called when the value of the checkbox changes. The $EventData variable will have the current value of the checkbox. 
+
+    .PARAMETER Style
+    A hashtable of styles to apply to the checkbox.  
+
+    .PARAMETER Disabled
+    Whether the checkbox is disabled.
+
+    .PARAMETER Checked
+    Whether the checkbox is checked. 
+
+    .PARAMETER ClassName
+    A CSS class to assign to the checkbox. 
+
+    .PARAMETER LabelPlacement
+    Where to place the label. 
+
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+
+    .EXAMPLE
+
+    Creates a checkbox with a custom icon and style. 
+
+    $Icon = New-UDIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon' -Regular
+    $CheckedIcon = New-UDIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon-checked' 
+    New-UDCheckBox -Id 'btnCustomIcon' -Icon $Icon -CheckedIcon $CheckedIcon -OnChange {} -Style @{color = '#2196f3'}
+
+    #>
     param
     (
         [Parameter (Position = 0)]
@@ -20,7 +66,7 @@ function New-UDCheckBox {
         [switch]$Disabled,
 
         [Parameter (Position = 6)]
-        [switch]$Checked,
+        [bool]$Checked,
 
         [Parameter (Position = 7)]
         [string]$ClassName,
@@ -50,7 +96,7 @@ function New-UDCheckBox {
             # Command properties.
             id          = $Id
             className   = $ClassName
-            checked     = $Checked.IsPresent
+            checked     = $Checked
             onChange    = $OnChange
             icon        = $Icon
             checkedIcon = $CheckedIcon
@@ -59,6 +105,5 @@ function New-UDCheckBox {
             label       = $Label
             labelPlacement = $LabelPlacement
         }
-
     }
 }
