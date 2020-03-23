@@ -21,7 +21,7 @@ export default ({ content, ...props }) => {
       >
         <Layout style={{ backgroundColor: colorModes === "light" ? theme.chart.light.background.fill : theme.chart.dark.background.fill }}>
           <ToolBar />
-          <h4 style={{ margin: 16, color: colorModes === "light" ? theme.chart.light.title.fill : theme.chart.dark.title.fill }}>{props.title}</h4>
+          {/* <h4 style={{ margin: 16, color: colorModes === "lig3ht" ? theme.chart.light.title.fill : theme.chart.dark.title.fill }}>{props.title}</h4> */}
           <Monitor {...props} />
         </Layout>
       </Layout>
