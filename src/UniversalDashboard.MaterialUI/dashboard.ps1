@@ -209,17 +209,20 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
     }
 
     New-UDPage -Name 'Floating Action Button' -Content {
-        New-UDFloatingActionButton -Id 'fabIcon' -Icon user 
 
-        New-UDFloatingActionButton -Id 'fabClick' -Icon user -OnClick {
+        $Icon = New-UDIcon -Icon 'user'
+
+        New-UDFloatingActionButton -Id 'fabIcon' -Icon $Icon
+
+        New-UDFloatingActionButton -Id 'fabClick' -Icon $Icon -OnClick {
             Set-TestData -Data "fabClick"
         }
 
-        New-UDFloatingActionButton -Id 'fabSmall' -Icon user -Size small 
+        New-UDFloatingActionButton -Id 'fabSmall' -Icon $Icon -Size small 
 
-        New-UDFloatingActionButton -Id 'fabMedium' -Icon user -Size medium
+        New-UDFloatingActionButton -Id 'fabMedium' -Icon $Icon -Size medium
 
-        New-UDFloatingActionButton -Id 'fabLarge' -Icon user -Size large
+        New-UDFloatingActionButton -Id 'fabLarge' -Icon $Icon -Size large
     }
 
     New-UDPage -Name 'Form' -Content {
