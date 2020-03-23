@@ -12,8 +12,8 @@ Set-Location $BuildFolder
 
 $OutputPath = "$BuildFolder\output\UniversalDashboard.Charts"
 
-Remove-Item -Path $OutputPath -Force -Recurse
-Remove-Item -Path "$BuildFolder\public" -Force -Recurse
+Remove-Item -Path $OutputPath -Force -Recurse -ErrorAction SilentlyContinue
+Remove-Item -Path "$BuildFolder\public" -Force -Recurse -ErrorAction SilentlyContinue
 
 New-Item -Path $OutputPath -ItemType Directory
 
@@ -50,8 +50,8 @@ $manifestParameters = @{
         # "New-ChartTooltip"
         # "New-ChartLabel"
         # "New-ChartTooltipCrosshairs"
-        "New-ViserChart"
-        "New-ViserMonitor"
+        "New-UDChart"
+        "New-UDMonitor"
     )
     RequiredModules   = @()
 }

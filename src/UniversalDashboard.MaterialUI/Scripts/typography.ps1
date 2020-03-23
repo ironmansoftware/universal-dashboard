@@ -50,7 +50,7 @@ function New-UDTypography {
         [ValidateSet ("h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", "caption", "button", "overline", "srOnly", "inherit", "display4", "display3", "display2", "display1", "headline", "title", "subheading")]
 		[string]$Variant,
 
-        [Parameter()]
+        [Parameter(ParameterSetName = "content")]
 		[scriptblock]$Content,
 
 		[Parameter()]
@@ -61,10 +61,20 @@ function New-UDTypography {
 
         [Parameter()]
         [ValidateSet ("inherit", "left", "center", "right", "justify")]
-		[string]$Align
+        [string]$Align,
+        
+        [Parameter(ParameterSetName = "text")]
+        [string]$Text
     )
 
     End {
+
+        $MUContent = $Text
+        if ($PSCmdlet.ParameterSetName -eq 'content')
+        {
+            $MUContent = & $Content
+        }
+
         $MUTypography = @{
             type = "mu-typography"
             isPlugin = $true
@@ -72,10 +82,9 @@ function New-UDTypography {
             id = $Id
             className = $ClassName
             variant = $Variant
-            # fontSize = $FontSize
             style = $Style
             textAlign = $Align
-            content = $Content.Invoke() 
+            content = $MUContent
         }
 
         $MUTypography.PSTypeNames.Insert(0, 'UniversalDashboard.MaterialUI.Typography') | Out-Null

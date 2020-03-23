@@ -1,4 +1,4 @@
-function New-ViserChart {
+function New-UDChart {
     [Cmdletbinding()]
     param(
         [Parameter()]
@@ -31,7 +31,7 @@ function New-ViserChart {
         $Chart
     }
 }
-function New-ViserMonitor {
+function New-UDMonitor {
     [Cmdletbinding()]
     param(
         [Parameter()]

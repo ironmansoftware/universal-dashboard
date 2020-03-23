@@ -15,7 +15,7 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
 
         New-UDElement -Tag 'main' -Content {
-            New-UDAppBar -Children { New-UDTypography -Text 'Hello' -Paragraph } -Position relative -Drawer $Drawer
+            New-UDAppBar -Children { New-UDTypography -Text 'Hello' } -Position relative -Drawer $Drawer
         }
     }
 
@@ -157,7 +157,7 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         # ) -Fields @('name', 'issues') -ColorBy 'language'  
 
         
-        New-ViserMonitor -Content {
+        New-UDMonitor -Content {
             @{
                 used     = Get-Counter -Counter '\Processor Information(_Total)\% Processor Time' | Select-Object -expand CounterSamples | Select-Object -expand  CookedValue
                 resource = 'processor'

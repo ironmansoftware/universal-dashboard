@@ -121,35 +121,22 @@ $manifestParameters = @{
 		"New-UDTimePicker"
 		"New-UDRadio"
 		"New-UDRadioGroup"
-		"New-Chart"
-		"New-ChartTitle"
-		"New-ChartDescription"
-		"New-ChartLegend"
-		"New-ChartTooltip"
-		"New-ChartLabel"
-		"New-ChartTooltipCrosshairs"
-		"New-ViserChart"
-		"New-ViserMonitor"
+		"New-UDChart"
+		"New-UDMonitor"
 	)
 	CmdletsToExport = @(
-		"New-UDChart", 
 		"New-UDDashboard", 
 		"Get-UDDashboard",
 		"Start-UDDashboard", 
 		"Stop-UDDashboard", 
-		"New-UDMonitor", 
 		"New-UDHtml",
-		"New-UDCounter", 
 		"New-UDPage",
 		"Enable-UDLogging",
 		"Disable-UDLogging",
-		"New-UDInput",
-		"New-UDInputAction",
 		"New-UDEndpoint",
 		"Start-UDRestApi",
 		"Stop-UDRestApi",
 		"Get-UDRestApi",
-		"New-UDInputField",
 		"New-UDFooter",
 		"New-UDElement",
 		"New-UDTheme",
@@ -172,8 +159,6 @@ $manifestParameters = @{
 		"Hide-UDToast"
 		"Publish-UDFolder"
 		"New-UDEndpointInitialization"
-		"New-UDSideNav"
-		"New-UDSideNavItem"
 		"Clear-UDCache"
 		"New-UDDynamic"
 	)
