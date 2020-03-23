@@ -16,6 +16,13 @@ export default class LazyElement extends React.Component {
         script.onload = function() {
             this.setState({loading:false});
         }.bind(this)
+
+        if (this.props.component.type === "error")
+        {
+            this.setState({error: this.props.component.message})
+            return;
+        }
+
         script.src = getApiPath() + "/api/internal/javascript/" + this.props.component.assetId;
         document.head.appendChild(script); 
     }

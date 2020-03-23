@@ -116,6 +116,7 @@ function New-AppBar {
                 New-UDListItem -Label "Icon Button" -OnClick {}
                 New-UDListItem -Label "Link" -OnClick {}
                 New-UDListItem -Label "List" -OnClick { Invoke-UDRedirect -Url '/list' }
+                New-UDListItem -Label "Monitor" -OnClick { Invoke-UDRedirect -Url '/monitor' }
                 New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
                 New-UDListItem -Label "Progress" -OnClick { Invoke-UDRedirect -Url '/progress' }
                 New-UDListItem -Label "Radio" -OnClick { Invoke-UDRedirect -Url '/radio' }
@@ -178,14 +179,14 @@ $Pages += New-UDPage -Name "PowerShell Universal Dashboard" -Content {
     New-UDGrid -Container -Content {
         New-UDGrid -Item -SmallSize 6 -Content {
             New-UDCard -Title "Installation" -Content {
-                New-UDTypography -Text "Universal Dashboard can be installed from the PowerShell Gallery" -Paragraph
+                New-UDTypography -Text "Universal Dashboard can be installed from the PowerShell Gallery" 
                 New-UDElement -Tag pre -Content { "Install-Module UniversalDashboard" }
             } 
         }
 
         New-UDGrid -Item -SmallSize 6 -Content {
             New-UDCard -Title "Usage" -Content {
-                New-UDTypography -Text "To start Universal Dashboard, you can just use the Start-UDDashboard cmdlet." -Paragraph
+                New-UDTypography -Text "To start Universal Dashboard, you can just use the Start-UDDashboard cmdlet."
                 New-UDElement -tag 'p' -Content {}
                 New-UDElement -Tag pre -Content { "Import-Module UniversalDashboard
 Start-UDDashboard -Port 10000
@@ -351,13 +352,13 @@ Only use a FAB if it is the most suitable way to present a screen’s primary ac
 
 Only one floating action button is recommended per screen to represent the most common action." -Content {
     New-Example -Title 'Floating Action Button' -Description '' -Example {
-        New-UDFloatingActionButton -Icon user -Size Small
-        New-UDFloatingActionButton -Icon user -Size Medium
-        New-UDFloatingActionButton -Icon user -Size Large
+        New-UDFloatingActionButton -Icon (New-UDIcon -Icon user) -Size Small
+        New-UDFloatingActionButton -Icon (New-UDIcon -Icon user) -Size Medium
+        New-UDFloatingActionButton -Icon (New-UDIcon -Icon user) -Size Large
     }
 
     New-Example -Title 'OnClick' -Description '' -Example {
-        New-UDFloatingActionButton -Icon user -OnClick {
+        New-UDFloatingActionButton -Icon (New-UDIcon Icon user) -OnClick {
             Show-UDToast -Message "Hello!"
         }
     }
@@ -487,13 +488,31 @@ $Pages += New-ComponentPage -Title 'Icons' -Description 'FontAwesome icons to in
 
 $Pages += New-ComponentPage -Title 'List' -Description 'Lists are continuous, vertical indexes of text or images.' -SecondDescription "Lists are a continuous group of text or images. They are composed of items containing primary and supplemental actions, which are represented by icons and text." -Content {
 
-    New-UDList -Content {
-        New-UDListItem -Label 'Inbox' -Icon (New-UDIcon -Icon envelope -Size 3x) -SubTitle 'New Stuff'
-        New-UDListItem -Label 'Drafts' -Icon (New-UDIcon -Icon edit -Size 3x) -SubTitle "Stuff I'm working on "
-        New-UDListItem -Label 'Trash' -Icon (New-UDIcon -Icon trash -Size 3x) -SubTitle 'Stuff I deleted'
-        New-UDListItem -Label 'Spam' -Icon (New-UDIcon -Icon bug -Size 3x) -SubTitle "Stuff I didn't want"
+    New-Example -Title 'List' -Description '' -Example {
+        New-UDList -Content {
+            New-UDListItem -Label 'Inbox' -Icon (New-UDIcon -Icon envelope -Size 3x) -SubTitle 'New Stuff'
+            New-UDListItem -Label 'Drafts' -Icon (New-UDIcon -Icon edit -Size 3x) -SubTitle "Stuff I'm working on "
+            New-UDListItem -Label 'Trash' -Icon (New-UDIcon -Icon trash -Size 3x) -SubTitle 'Stuff I deleted'
+            New-UDListItem -Label 'Spam' -Icon (New-UDIcon -Icon bug -Size 3x) -SubTitle "Stuff I didn't want"
+        }
     }
-} -Cmdlet "New-UDIcon"
+} -Cmdlet @("New-UDList", "New-UDListItem")
+
+$Pages += New-ComponentPage -Title 'Monitor' -Description 'Monitors show a stream of continuous data in a chart.' -SecondDescription "" -Content {
+    New-Example -Title 'Monitor' -Description '' -Example {
+        New-UDMonitor -Content {
+            @{
+                used     = Get-Random -Min 1 -Max 10000
+                resource = 'processor'
+            } 
+            @{
+                used     = Get-Random -Min 1 -Max 10000
+                resource = 'user'
+            } 
+        } -Fields @('used') -ColorBy 'resource'
+    }
+    
+} -Cmdlet @("New-UDMonitor")
 
 $Pages += New-ComponentPage -Title 'Paper' -Description 'In Material Design, the physical properties of paper are translated to the screen.' -SecondDescription "The background of an application resembles the flat, opaque texture of a sheet of paper, and an application’s behavior mimics paper’s ability to be re-sized, shuffled, and bound together in multiple sheets." -Content {
     New-Example -Title 'Paper' -Description '' -Example {
@@ -763,7 +782,7 @@ $Pages += New-ComponentPage -Title 'Typography' -Description 'Use typography to 
         @("h1", "h2", "h3", "h4", "h5", "h6", "subtitle1", "subtitle2", "body1", "body2", 
         "caption", "button", "overline", "srOnly", "inherit", 
         "display4", "display3", "display2", "display1", "headline", "title", "subheading") | ForEach-Object {
-            New-UDTypography -Variant $_ -Text $_ -GutterBottom
+            New-UDTypography -Variant $_ -Text $_ 
             New-UDElement -Tag 'p' -Content {}
         }
     }
