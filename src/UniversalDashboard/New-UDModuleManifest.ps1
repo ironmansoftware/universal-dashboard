@@ -6,7 +6,7 @@ param(
 Remove-Item  (Join-Path $outputDirectory 'UniversalDashboard.Community.psd1') -ErrorAction SilentlyContinue -Force
 
 $version = "3.0.0"
-$prerelease = "-alpha1"
+$prerelease = "-beta1"
 
 $manifestParameters = @{
 	Guid = 'c7894dd1-357e-4474-b8e1-b416afd70c2d'
