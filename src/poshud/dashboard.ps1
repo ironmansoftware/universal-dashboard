@@ -351,13 +351,13 @@ Only use a FAB if it is the most suitable way to present a screen’s primary ac
 
 Only one floating action button is recommended per screen to represent the most common action." -Content {
     New-Example -Title 'Floating Action Button' -Description '' -Example {
-        New-UDFloatingActionButton -Icon user -Size Small
-        New-UDFloatingActionButton -Icon user -Size Medium
-        New-UDFloatingActionButton -Icon user -Size Large
+        New-UDFloatingActionButton -Icon (New-UDIcon -Icon user) -Size Small
+        New-UDFloatingActionButton -Icon (New-UDIcon -Icon user) -Size Medium
+        New-UDFloatingActionButton -Icon (New-UDIcon -Icon user) -Size Large
     }
 
     New-Example -Title 'OnClick' -Description '' -Example {
-        New-UDFloatingActionButton -Icon user -OnClick {
+        New-UDFloatingActionButton -Icon (New-UDIcon -Icon user) -OnClick {
             Show-UDToast -Message "Hello!"
         }
     }
