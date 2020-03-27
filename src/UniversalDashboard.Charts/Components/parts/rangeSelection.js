@@ -1,9 +1,14 @@
 import React from 'react'
 import { useMonitor } from '../api/MonitorState'
-import { Select } from 'antd/es'
+import { useThemeUI } from 'theme-ui'
+
+import Select from 'antd/es/select'
+import 'antd/es/select/style'
 
 export default () => {
-  const [{ settings, theme }, dispatch] = useMonitor()
+  const [{ settings }, dispatch] = useMonitor()
+  const context = useThemeUI()
+  const { theme, colorMode } = context
   const Option = Select.Option
 
   const onTimeRangeChange = value =>
@@ -11,10 +16,15 @@ export default () => {
 
   const value = (
     <div>
-      <span style={{ marginRight: 4, color: theme.props.defaultColor }}>[</span>
-      <span style={{ color: theme.props.axis.bottom.label.textStyle.fill }}> {settings.timeRange} </span>
-      <span style={{ marginLeft: 4, color: theme.props.defaultColor }}>]</span> 
-      <span style={{ marginLeft: 4, color: theme.props.axis.bottom.label.textStyle.fill }}>Time Range</span>
+      <span style={{ marginRight: 4, color: theme.chart[colorMode].defaultColor }}>[</span>
+      <span style={{ color: theme.chart[colorMode].title.fill }}>
+        {' '}
+        {settings.timeRange}{' '}
+      </span>
+      <span style={{ marginLeft: 4, color: theme.chart[colorMode].defaultColor }}>]</span>
+      <span style={{ marginLeft: 4, color: theme.chart[colorMode].title.fill }}>
+        Time Range
+      </span>
     </div>
   )
 
@@ -25,7 +35,6 @@ export default () => {
       onChange={onTimeRangeChange}
       value={value}
       showArrow={false}
-      defaultValue="1h"
       style={{ marginRight: 24 }}
     >
       <Option value="5m">5m</Option>

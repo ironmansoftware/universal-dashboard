@@ -1,23 +1,35 @@
 import React from 'react'
-import light from '../theme/light'
-import dark from '../theme/dark'
 import { Global } from 'viser-react'
-import { AreaChartOutlined, LineChartOutlined } from '@ant-design/icons'
+import { useThemeUI } from 'theme-ui'
 
-const ChartTypeIcon = () => {
-  return initialState.settings.chartType === "area" 
-  ? <span><AreaChartOutlined style={{ color: initialState.theme.props.defaultColor }}/> Area chart</span>
-  : <span><LineChartOutlined style={{ color: initialState.theme.props.defaultColor }}/> Line chart</span>
+export function testLight() {
+  const context = useThemeUI()
+  const { theme, colorMode } = context
+
+  console.group('theme')
+  console.log('mode', colorMode)
+  console.log('theme', theme)
+  console.groupEnd()
+
+  return theme.chart.light
 }
 
-Global.registerTheme('dark', dark)
-Global.registerTheme('light', light)
+export function testDark() {
+  const context = useThemeUI()
+  const { theme, colorMode } = context
+
+  console.group('theme')
+  console.log('mode', colorMode)
+  console.log('theme', theme)
+  console.groupEnd()
+
+  return theme.chart.dark
+}
 
 const initialState = {
   running: true,
   theme: {
     title: 'light',
-    props: light,
   },
   data: [],
   url: '',
@@ -31,9 +43,8 @@ const initialState = {
     },
     refreshInterval: '5s',
     timeRange: 'none',
-    chartTypeSelector: <ChartTypeIcon />,
     chartType: 'area',
-    chartLineStyle: 'sharp'
+    chartLineStyle: 'sharp',
   },
 }
 
@@ -50,15 +61,14 @@ const monitorReducer = (state, action) => {
     }
     case 'THEME_CHANGE': {
       if (action.payload.title === 'light') {
-        Global.setTheme(light)
+        Global.setTheme(testLight())
       } else {
-        Global.setTheme(dark)
+        Global.setTheme(testDark())
       }
       return {
         ...state,
         theme: {
           title: action.payload.title,
-          props: action.payload.title === 'light' ? light : dark,
         },
       }
     }
@@ -66,6 +76,15 @@ const monitorReducer = (state, action) => {
       return {
         ...state,
         settings: { ...state.settings, chartType: action.payload.chartType },
+      }
+    }
+    case 'SET_CHART_LINE_TYPE': {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          chartLineStyle: action.payload.chartLineStyle,
+        },
       }
     }
     case 'SET_REFRESH_INTERVAL': {
@@ -88,20 +107,36 @@ const monitorReducer = (state, action) => {
       }
     }
     case 'SET_SETTINGS_SHOW_MIN': {
-      return { ...state, settings: { ...state.settings, statistics: {...state.settings.statistics, showMin: action.payload }} }
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          statistics: { ...state.settings.statistics, showMin: action.payload },
+        },
+      }
     }
     case 'SET_SETTINGS_SHOW_AVG': {
-      return { ...state, settings: { ...state.settings, statistics: {...state.settings.statistics, showAvg: action.payload }} }
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          statistics: { ...state.settings.statistics, showAvg: action.payload },
+        },
+      }
     }
     case 'SET_SETTINGS_SHOW_MAX': {
-      return { ...state, settings: { ...state.settings, statistics: {...state.settings.statistics, showMax: action.payload }} }
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          statistics: { ...state.settings.statistics, showMax: action.payload },
+        },
+      }
     }
     default:
       return state
   }
 }
-
-
 
 export { initialState }
 export default monitorReducer

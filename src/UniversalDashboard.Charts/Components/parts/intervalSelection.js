@@ -1,23 +1,33 @@
 import React from 'react'
 import { useMonitor } from '../api/MonitorState'
-import { Select } from 'antd/es'
+import { useThemeUI } from 'theme-ui'
+
+import Select from 'antd/es/select'
+import 'antd/es/select/style'
 
 export default () => {
-  const [{ settings, theme }, dispatch] = useMonitor()
+  const [{ settings }, dispatch] = useMonitor()
+  const context = useThemeUI()
+  const { theme, colorMode } = context
   const Option = Select.Option
 
   const onRefreshIntervalChange = value =>
     dispatch({ type: 'SET_REFRESH_INTERVAL', payload: value })
 
-    const value = (
+  const value = (
     <div>
-      <span style={{ marginRight: 4, color: theme.props.defaultColor }}>[</span>
-      <span style={{ color: theme.props.axis.bottom.label.textStyle.fill }}> {settings.refreshInterval} </span>
-      <span style={{ marginLeft: 4, color: theme.props.defaultColor }}>]</span> 
-      <span style={{ marginLeft: 4, color: theme.props.axis.bottom.label.textStyle.fill }}>Interval</span>
+      <span style={{ marginRight: 4, color: theme.chart[colorMode].defaultColor }}>[</span>
+      <span style={{ color: theme.chart[colorMode].title.fill }}>
+        {' '}
+        {settings.refreshInterval}{' '}
+      </span>
+      <span style={{ marginLeft: 4, color: theme.chart[colorMode].defaultColor }}>]</span>
+      <span style={{ marginLeft: 4, color: theme.chart[colorMode].title.fill }}>
+        Interval
+      </span>
     </div>
   )
-  
+
   return (
     <Select
       placeholder="Select refresh interval"
@@ -25,7 +35,6 @@ export default () => {
       onChange={onRefreshIntervalChange}
       value={value}
       showArrow={false}
-      defaultValue="off"
       style={{ marginRight: 24 }}
     >
       <Option value="off">Off</Option>

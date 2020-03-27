@@ -1,10 +1,15 @@
 import React from 'react'
 import { useMonitor } from '../api/MonitorState'
+import { useThemeUI } from 'theme-ui'
 import { AreaChartOutlined, LineChartOutlined } from '@ant-design/icons'
-import { Select } from 'antd/es'
+
+import Select from 'antd/es/select'
+import 'antd/es/select/style'
 
 export default () => {
-  const [{ theme }, dispatch] = useMonitor()
+  const [, dispatch] = useMonitor()
+  const context = useThemeUI()
+  const { theme, colorMode} = context
   const Option = Select.Option
 
   const onChartTypeChange = value =>
@@ -26,14 +31,14 @@ export default () => {
     >
       <Option value="area">
         <span>
-          <AreaChartOutlined style={{ color: theme.props.defaultColor }} /> 
-          <span style={{ marginLeft: 4, color: theme.props.axis.bottom.label.textStyle.fill }}>Area chart</span>
+          <AreaChartOutlined style={{ color: theme.chart[colorMode].defaultColor }} /> 
+          <span style={{ marginLeft: 4, color: theme.chart[colorMode].title.fill }}>Area chart</span>
         </span>
       </Option>
       <Option value="line">
         <span>
-          <LineChartOutlined style={{ color: theme.props.defaultColor }} /> 
-          <span style={{ marginLeft: 4, color: theme.props.axis.bottom.label.textStyle.fill }}>Line chart</span>
+          <LineChartOutlined style={{ color: theme.chart[colorMode].defaultColor }} /> 
+          <span style={{ marginLeft: 4,  color: theme.chart[colorMode].title.fill }}>Line chart</span>
         </span>
       </Option>
     </Select>

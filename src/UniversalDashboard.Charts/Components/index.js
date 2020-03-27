@@ -1,11 +1,9 @@
-import 'antd/dist/antd.less'
+// import 'antd/dist/antd.less'
 
-// import Chart from './chart'
-import ChartViser from './chartviser'
-import MonitorViser from './monitor'
+// import Chart from './chartviser'
+import Monitor from './monitor'
 
-// UniversalDashboard.register('chart', Chart);
-UniversalDashboard.register('viser-chart', ChartViser);
-UniversalDashboard.register('viser-monitor', MonitorViser);
+// UniversalDashboard.register('ud-chart', Chart);
+UniversalDashboard.register('ud-monitor', Monitor);
 
 

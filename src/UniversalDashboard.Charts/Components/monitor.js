@@ -1,30 +1,32 @@
-import React, { useRef, useState, useEffect } from 'react'
-import ToolBar from './parts/toolbar'
-import { Layout } from 'antd/es'
-import SettingsPanel from './settingsPanel'
-import Monitor from './instance'
-import { useThemeUI } from 'theme-ui'
-
+  import React, { lazy } from 'react'
 import { MonitorProvider } from './api/MonitorState'
+import Monitor from './instance'
+import ToolBar from './parts/toolbar'
 
-export default ({ content, ...props }) => {
-  const context = useThemeUI()
-  const { theme, colorModes } = context
+const MonitorLayout = lazy(() =>
+  import(/* webpackChunkName: 'MonitorLayout' */ './parts/monitorLayout'),
+)
+const SettingsPanel = lazy(() =>
+  import(/* webpackChunkName: 'SettingsPanel' */ './parts/settingsPanel'),
+)
+const Title = lazy(() =>
+  import(/* webpackChunkName: 'Title' */ './parts/title'),
+)
+const Description = lazy(() =>
+  import(/* webpackChunkName: 'Description' */ './parts/description'),
+)
+
+
+export default ({ title, description, ...props }) => {
   return (
     <MonitorProvider>
       <SettingsPanel />
-      <Layout
-        style={{
-          backgroundColor: 'transparent',
-          border: '2px solid rgba(0, 0, 0, 0.08)',
-        }}
-      >
-        <Layout style={{ backgroundColor: colorModes === "light" ? theme.chart.light.background.fill : theme.chart.dark.background.fill }}>
-          <ToolBar />
-          {/* <h4 style={{ margin: 16, color: colorModes === "lig3ht" ? theme.chart.light.title.fill : theme.chart.dark.title.fill }}>{props.title}</h4> */}
-          <Monitor {...props} />
-        </Layout>
-      </Layout>
+      <MonitorLayout>
+        <ToolBar />
+        <Title title={title} />
+        <Description description={description} />
+        <Monitor {...props} />
+      </MonitorLayout>
     </MonitorProvider>
   )
 }

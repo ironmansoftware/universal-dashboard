@@ -38,7 +38,7 @@
             }
         }
         chart   = @{
-            width   = 250
+            width   = $null
             height  = 400
             padding = @(48, 48, 48, 48)
             light   = @{
@@ -56,47 +56,100 @@
                     fill = "#ffffff"
                 }
                 defaultColor = "#1890ff"
+                axis         = @{
+                    label  = @{
+                        textStyle = @{ 
+                            fill = '#1890ff'
+                        }
+                    }
+                    bottom = @{
+                        label = @{
+                            textStyle = @{ 
+                                fill = '#1890ff'
+                            }
+                        }
+                    }
+                    left   = @{
+                        label = @{
+                            textStyle = @{ 
+                                fill = '#1890ff'
+                            }
+                        }
+                    }
+                }
                 title        = @{
-                    fontSize      = 32
+                    fontSize      = 24
                     fill          = "#1f1f1f"
+                    color         = "#1f1f1f"
                     alignWithAxis = $false
                     fontFamily    = 'fantasy'
+                    marginLeft    = 48
+                    marginBottom  = 0
                 }
                 description  = @{
                     fontSize      = 16
                     fill          = "#1f1f1f"
+                    color         = "#1f1f1f"
                     alignWithAxis = $false
                     fontFamily    = 'fantasy'
+                    marginLeft    = 48
+                    marginBottom  = 0
                 }
                 legend       = @{ }
                 tooltip      = @{ }
             }
-            dark   = @{
+            dark    = @{
                 colors       = @(
-                    "#1890ff",
-                    "#F7FBFF",
-                    "#69c0ff",
-                    "#0050b3",
-                    "#096dd9",
-                    "#40a9ff",
-                    "#69c0ff",
-                    "#91d5ff"
+                    "#d32029",
+                    "#ffccc7",
+                    "#ff7875",
+                    "#ff4d4f",
+                    "#cf1322",
+                    "#a8071a",
+                    "#820014",
+                    "#5c0011"
                 )
-                background = @{
+                background   = @{
                     fill = "#333333"
                 }
-                defaultColor = "#1890ff"
+                defaultColor = "#d32029"
                 title        = @{
                     fontSize      = 32
                     fill          = "#797979"
+                    color         = "#797979"
                     alignWithAxis = $false
                     fontFamily    = 'fantasy'
+                    marginLeft    = 48
+                    marginBottom  = 0
+                }
+                axis         = @{
+                    label  = @{
+                        textStyle = @{ 
+                            fill = '#f37370'
+                        }
+                    }
+                    bottom = @{
+                        label = @{
+                            textStyle = @{ 
+                                fill = '#f37370'
+                            }
+                        }
+                    }
+                    left   = @{
+                        label = @{
+                            textStyle = @{ 
+                                fill = '#f37370'
+                            }
+                        }
+                    }
                 }
                 description  = @{
                     fontSize      = 16
                     fill          = "#797979"
                     alignWithAxis = $false
                     fontFamily    = 'fantasy'
+                    marginLeft    = 48
+                    marginBottom  = 0
                 }
                 legend       = @{ }
                 tooltip      = @{ }

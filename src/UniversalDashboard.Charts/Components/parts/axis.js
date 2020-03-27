@@ -1,7 +1,6 @@
 import React from 'react'
-import { Axis } from 'viser-react'
-// import { useMonitor } from '../api/MonitorState'
+import { Axis } from 'viser-react/es/components/SubComponent'
 
-export default ({ style }) => {  
-    return <Axis label={{ ...style }} />
+export default (props) => {  
+    return <Axis { ...props } />
 }

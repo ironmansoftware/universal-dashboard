@@ -2,9 +2,6 @@ var webpack = require('webpack')
 var path = require('path')
 
 var BUILD_DIR = path.resolve(__dirname, 'public')
-var SRC_DIR = path.resolve(__dirname)
-var APP_DIR = path.resolve(__dirname, 'src/app')
-
 process.env.NODE_ENV = 'production'
 
 module.exports = env => {
@@ -25,6 +22,21 @@ module.exports = env => {
     module: {
       rules: [
         {
+          test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+          use: [
+            {
+              loader: 'babel-loader',
+            },
+            {
+              loader: '@svgr/webpack',
+              options: {
+                babel: false,
+                icon: true,
+              },
+            },
+          ],
+        },
+        {
           test: /\.(js|jsx)$/,
           exclude: [/node_modules/, /public/],
           use: ['babel-loader'],
@@ -38,22 +50,22 @@ module.exports = env => {
           loader: 'file-loader',
         },
         {
-        test: /\.less$/,
-        use: [
-          {
-            loader: 'style-loader', // creates style nodes from JS strings
-          },
-          {
-            loader: 'css-loader', // translates CSS into CommonJS
-          },
-          {
-            loader: 'less-loader', // compiles Less to CSS
-            options:{
-              javascriptEnabled: true
-            }
-          },
-        ],
-      },
+          test: /\.less$/,
+          use: [
+            {
+              loader: 'style-loader', // creates style nodes from JS strings
+            },
+            {
+              loader: 'css-loader', // translates CSS into CommonJS
+            },
+            {
+              loader: 'less-loader', // compiles Less to CSS
+              options: {
+                javascriptEnabled: true,
+              },
+            },
+          ],
+        },
       ],
     },
     externals: {

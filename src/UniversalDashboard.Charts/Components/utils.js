@@ -1,6 +1,3 @@
-import { useMonitor } from './api/MonitorState'
-import ReactInterval from 'react-interval'
-import React from  'react'
 
 export const generateCsvString = data => {
   const csvRows = []

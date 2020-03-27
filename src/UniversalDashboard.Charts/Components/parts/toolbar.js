@@ -1,35 +1,31 @@
-import React, { useContext, useEffect, useState, useRef } from 'react'
-import {
-  SettingOutlined,
-  CloseOutlined,
-  AreaChartOutlined,
-  LineChartOutlined,
-  FormatPainterFilled,
-  FormatPainterOutlined,
-} from '@ant-design/icons'
+import React from 'react'
+import { SettingOutlined, CloseOutlined } from '@ant-design/icons'
 import { useMonitor } from '../api/MonitorState'
-import { Layout, Button, Select, Input, Tooltip } from 'antd'
 import ChartSelection from './chartSelection'
+import ChartLineSelection from './chartLineStyleSelection'
 import IntervalSelection from './intervalSelection'
 import RangeSelection from './rangeSelection'
+// import ThemeToggle from './themeToggle'
+import { useThemeUI } from 'theme-ui'
+
+import Layout from 'antd/es/layout'
+import 'antd/es/layout/style'
+import Button from 'antd/es/button'
+import 'antd/es/button/style'
+import Input from 'antd/es/input'
+import 'antd/es/input/style'
 
 const { Header } = Layout
 
-export default ({ title, ...props }) => {
-  const [{ settings, theme }, dispatch] = useMonitor()
+export default () => {
+  const [{ settings }, dispatch] = useMonitor()
+  const context = useThemeUI()
+  const { theme, colorMode } = context
 
-  const { Option } = Select
-
-
-
-  const setDarkTheme = () =>
-    dispatch({ type: 'THEME_CHANGE', payload: { title: 'dark' } })
-  const setLightTheme = () =>
-    dispatch({ type: 'THEME_CHANGE', payload: { title: 'light' } })
   return (
     <Header
       style={{
-        backgroundColor: theme.props.background.fill,
+        backgroundColor: theme.chart[colorMode].background.fill,
         height: 32,
         lineHeight: 32,
         borderBottom: '2px solid rgba(0, 0, 0, 0.08)',
@@ -47,6 +43,7 @@ export default ({ title, ...props }) => {
         }}
       >
         <ChartSelection />
+        <ChartLineSelection />
         <RangeSelection />
         <IntervalSelection />
       </Input.Group>
@@ -58,36 +55,17 @@ export default ({ title, ...props }) => {
           justifyContent: 'flex-end',
         }}
       >
-        <Tooltip
-          title="Change monitor theme"
-          style={{ marginRight: 24 }}
-          arrowPointAtCenter
-        >
-          <Button
-            icon={
-              theme.title === 'light' ? (
-                <FormatPainterOutlined
-                  style={{ color: theme.props.defaultColor }}
-                />
-              ) : (
-                <FormatPainterFilled
-                  style={{ color: theme.props.defaultColor }}
-                />
-              )
-            }
-            onClick={() =>
-              theme.title === 'light' ? setDarkTheme() : setLightTheme()
-            }
-            type="link"
-            size="small"
-          />
-        </Tooltip>
+        {/* <ThemeToggle /> */}
         <Button
           icon={
             !settings.visible ? (
-              <SettingOutlined style={{ color: theme.props.defaultColor }} />
+              <SettingOutlined
+                style={{ color: theme.chart[colorMode].defaultColor }}
+              />
             ) : (
-              <CloseOutlined style={{ color: theme.props.defaultColor }} />
+              <CloseOutlined
+                style={{ color: theme.chart[colorMode].defaultColor }}
+              />
             )
           }
           className="trigger"

@@ -1,11 +1,17 @@
-import { Chart, Tooltip, Legend, StackLine, Line, StackArea, Global, View } from 'viser-react'
-import { Layout } from 'antd/es'
+import { Chart, Tooltip, Legend, View } from 'viser-react'
 import { useMonitor } from './api/MonitorState'
 import DataSet from '@antv/data-set'
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import ReactInterval from 'react-interval'
+import { useThemeUI } from 'theme-ui'
+
 import Axis from './parts/axis'
-import { useAutoRefresh } from './utils'
+import StackArea from './parts/stackArea'
+import Line from './parts/lineArea'
+
+import Layout from 'antd/es/layout'
+import 'antd/es/layout/style'
+
 const { Content } = Layout
 
 export default ({ height, width, ...props }) => {
@@ -14,7 +20,9 @@ export default ({ height, width, ...props }) => {
   const dataSet = new DataSet()
   const dataView = dataSet.createView().source(currentData)
   const [state, dispatch] = useMonitor()
-  const { settings, theme, running, data } = state
+  const { settings, running } = state
+  const context = useThemeUI()
+  const { theme, colorMode } = context
 
   const loadData = () =>
     UniversalDashboard.get(
@@ -22,7 +30,7 @@ export default ({ height, width, ...props }) => {
       result => {
         if (result.error) console.log(result.error)
         const time = new Date().getTime()
-        
+
         result.map(item =>
           dataView.addRow({
             ...item,
@@ -30,24 +38,24 @@ export default ({ height, width, ...props }) => {
           }),
         )
 
-        let newRes = result.map(item =>({
-            ...item,
-            time: time,
-          })
-        )
+        let newRes = result.map(item => ({
+          ...item,
+          time: time,
+        }))
+
         setDatabase(database => database.concat(newRes))
         dispatch({ type: 'LOAD_DATA', payload: database })
 
         let newData = dataView.rows
         if (newData.length >= 50) {
-          newData.shift()
-          newData.shift()
+          newRes.forEach(element => {
+            newData.shift()
+          })
         }
         setCurrentData(newData)
       },
     )
 
-    // useAutoRefresh(loadData)
   const refreshInterval = {
     off: null,
     '5s': 1000 * 5,
@@ -59,72 +67,52 @@ export default ({ height, width, ...props }) => {
     '1h': 1000 * 60 * 60,
   }
 
-  const scale = [
-    {
-      dataKey: 'time',
-      type: 'time',
-      mask: 'HH:mm:ss',
-      sync: true,
-    },
-    {
-      dataKey: `${props.fields[0]}`,
-      min: 0,
-      sync: true,
-    },
-  ]
-
-  const area = (
-    <React.Fragment>
-      <StackLine
-        position={`time*${props.fields[0]}`}
-        color={[props.color, theme.props.colors]}
-        shape="smooth"
-      />
-      <StackArea
-        position={`time*${props.fields[0]}`}
-        color={[props.color, theme.props.colors]}
-        shape="smooth"
-      />
-    </React.Fragment>
-  )
-
   return (
     <Content
       style={{
-        backgroundColor: theme.props.background.fill,
+        backgroundColor: 'transparent',
         overflow: 'hidden',
         padding: 48,
       }}
     >
-      <div style={{ backgroundColor: theme.props.background.fill }}>
-        <Chart
-          forceFit
-          height={400}
-          
-          padding={48}
-          background={{ fill: 'transparent' }}
+      <Chart
+        forceFit
+        width={width}
+        height={height}
+        padding={48}
+        data={currentData}
+        background={{ fill: 'transparent' }}
+      >
+        <Axis {...theme.chart[colorMode].axis} />
+        <Tooltip />
+        <Legend dataKey={props.color} show={true} position="top-left" />
+        <View
+          scale={[
+            {
+              dataKey: 'time',
+              type: 'time',
+              mask: 'HH:mm:ss',
+              sync: true
+            },
+            {
+              dataKey: `${props.fields[0]}`,
+              min: 0,
+              sync: true,
+            },
+          ]}
         >
-          <Tooltip />
-          <Legend />
-          <Axis style={{...theme.props.axis.label }}/>
-          <View data={currentData} scale={scale}>
           {settings.chartType === 'area' ? (
-            area
+            <StackArea fields={props.fields} color={props.color} />
           ) : (
-            <Line
-              position={`time*${props.fields[0]}`}
-              color={[props.color, theme.props.colors]}
-              shape="smooth"
-            />
+            <Line fields={props.fields} color={props.color} />
           )}
-          </View>
-        </Chart>
-        <ReactInterval
-          enabled={running}
-          timeout={refreshInterval[settings.refreshInterval]}
-          callback={loadData}
-        />
-      </div>
+        </View>
+      </Chart>
+      <ReactInterval
+        enabled={running}
+        timeout={refreshInterval[settings.refreshInterval]}
+        callback={loadData}
+      />
     </Content>
   )
 }

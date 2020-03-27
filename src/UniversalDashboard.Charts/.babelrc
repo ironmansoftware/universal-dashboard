@@ -15,8 +15,7 @@
     ["import",
       {
         "libraryName": "antd",
-        "libraryDirectory": "es", // default: lib
-        "style": true
+        "libraryDirectory": "es" // default: lib
       }
     ],
     "@babel/plugin-proposal-class-properties",

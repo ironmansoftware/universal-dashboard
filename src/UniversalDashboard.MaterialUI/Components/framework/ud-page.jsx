@@ -1,3 +1,4 @@
+/** @jsx jsx */
 import React, { useState, useEffect } from 'react';
 import ErrorCard from './error-card.jsx';
 import ReactInterval from 'react-interval';
@@ -5,6 +6,7 @@ import UDNavbar from './ud-navbar';
 import UDFooter from './ud-footer';
 import {withComponentFeatures} from '../universal-dashboard';
 import Container from '@material-ui/core/Container';
+import {jsx} from 'theme-ui'
 
 const UDPage = (props) => {
 
@@ -96,7 +98,7 @@ const UDPage = (props) => {
     {
         return [
             <UDNavbar pages={props.pages} title={props.name} history={props.history} id="defaultNavbar"/>,
-            <Container>
+            <Container sx={{ bg: 'primary' }}>
                 {childComponents}
             </Container>,
             <ReactInterval timeout={props.refreshInterval * 1000} enabled={props.autoRefresh} callback={loadData}/>,
