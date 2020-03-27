@@ -79,11 +79,11 @@ function New-Example {
 
     New-UDPaper -Children {
         & $Example 
-    }
+    } -Elevation 2
 
     New-UDPaper -Children {
         New-UDElement -Tag 'pre' -Content { $Example.ToString().Trim() }
-    }
+    } -Elevation 2
 }
 
 function New-AppBar {
@@ -107,14 +107,14 @@ function New-AppBar {
                 New-UDListItem -Label "Checkbox" -OnClick { Invoke-UDRedirect -Url '/checkbox' }
                 New-UDListItem -Label "Chips" -OnClick {  Invoke-UDRedirect -Url '/chips'  }
                 New-UDListItem -Label "Date Picker" -OnClick { Invoke-UDRedirect -Url '/date-picker' }
-                New-UDListItem -Label "Drawer" -OnClick {}
+                New-UDListItem -Label "Drawer" -OnClick { Invoke-UDRedirect -Url '/appbar' }
                 New-UDListItem -Label "Expansion Panel" -OnClick { Invoke-UDRedirect -Url '/expansion-panel' }
                 New-UDListItem -Label "Floating Action Button" -OnClick { Invoke-UDRedirect -Url '/floating-action-button' }
                 New-UDListItem -Label "Form" -OnClick { Invoke-UDRedirect -Url '/form' }
                 New-UDListItem -Label "Grid" -OnClick { Invoke-UDRedirect -Url '/grid' }
                 New-UDListItem -Label "Icons" -OnClick { Invoke-UDRedirect -Url '/icons' }
-                New-UDListItem -Label "Icon Button" -OnClick {}
-                New-UDListItem -Label "Link" -OnClick {}
+                New-UDListItem -Label "Icon Button" -OnClick { Invoke-UDRedirect -Url '/icon-button' }
+                New-UDListItem -Label "Link" -OnClick { Invoke-UDRedirect -Url '/link' }
                 New-UDListItem -Label "List" -OnClick { Invoke-UDRedirect -Url '/list' }
                 New-UDListItem -Label "Monitor" -OnClick { Invoke-UDRedirect -Url '/monitor' }
                 New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
@@ -155,7 +155,7 @@ function New-AppBar {
     }
     
     New-UDAppbar -Children {
-        New-UDElement -Tag 'div' -Content {$title}
+        New-UDTypography -Text $title -Variant h4
     } -Drawer $Drawer
 }
 
@@ -497,6 +497,12 @@ $Pages += New-ComponentPage -Title 'List' -Description 'Lists are continuous, ve
         }
     }
 } -Cmdlet @("New-UDList", "New-UDListItem")
+
+$Pages += New-ComponentPage -Title 'Link' -Description 'Link to other pages.' -SecondDescription "" -Content {
+    New-Example -Title 'Link' -Description '' -Example {
+        New-UDLink -Url 'https://www.google.com' -Text Google
+    }
+} -Cmdlet @("New-UDLink")
 
 $Pages += New-ComponentPage -Title 'Monitor' -Description 'Monitors show a stream of continuous data in a chart.' -SecondDescription "" -Content {
     New-Example -Title 'Monitor' -Description '' -Example {
