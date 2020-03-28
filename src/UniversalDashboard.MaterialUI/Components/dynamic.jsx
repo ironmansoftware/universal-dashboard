@@ -30,6 +30,9 @@ const UDDynamic = (props) => {
     }, [props.version])
 
     if (loading) {
+        if (props.loadingComponent) {
+            return props.render(props.loadingComponent);
+        }
         return <CircularProgress />
     }
 
