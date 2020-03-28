@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased 
 
+### Added 
+
+- Added -Key parameter to Clear-UDCache to clear a specific item (#1491) by [adamdriscoll](https://github.com/adamdriscoll)
+
 ### Changed 
 
 - Fixed an issue where loading the module a second time would throw an error (#1569) by [adamdriscoll](https://github.com/adamdriscoll)
