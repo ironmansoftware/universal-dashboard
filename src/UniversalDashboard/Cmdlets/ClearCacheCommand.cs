@@ -6,9 +6,19 @@ namespace UniversalDashboard.Cmdlets
     [Cmdlet(VerbsCommon.Clear, "UDCache")]
     public class ClearCacheCommand : PSCmdlet
     {
+        [Parameter(Position = 0)]
+        public string Key { get; set; }
+
         protected override void EndProcessing()
         {
-            GlobalCachedVariableProvider.Cache.Clear();
+            if (!string.IsNullOrWhiteSpace(Key)) {
+                GlobalCachedVariableProvider.Cache.Remove(Key);
+            }
+            else 
+            {
+                GlobalCachedVariableProvider.Cache.Clear();
+            }
+            
         }
     }
 }
