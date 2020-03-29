@@ -12,6 +12,10 @@ Describe "Table" {
         $Element.FindElementByTagName('thead').FindElementsByTagName('th')[0].Text | Should be "A Dessert"
     }
 
+    It 'should work with PSCustomObject' {
+        (Find-SeElement -Id 'customData' -Driver $Driver).Text.Contains("AttributeTesting") | should be $true
+    }
+    
     It 'should render button in table' {
         Find-SeElement -Id 'btnEclair' -Driver $Driver | Should not be $null
     }

@@ -31,7 +31,7 @@ namespace UniversalDashboard.Utilities
             }
             else if (obj is PSObject psObject)
             {
-                if (psObject.BaseObject != null)
+                if (psObject.BaseObject != null && !(psObject.BaseObject is PSCustomObject))
                 {
                     return ToDictionary(psObject.BaseObject);
                 }
