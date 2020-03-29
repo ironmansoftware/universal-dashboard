@@ -668,6 +668,9 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
                 @{Dessert = 'Gingerbread'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
             ) | Out-UDTableData -Page 0 -TotalCount 5 -Properties $Query.Properties 
         }
+
+        $Data = ConvertFrom-Json '[{"Name":"AttributeTesting","Description":null,"ID":"162c27f4-7ad1-4a6c-b62c-20090151dcc7"},{"Name":"test","Description":"testing","ID":"1c229a64-d499-4d91-9102-829412efb6b0"},{"Name":"Auto","Description":null,"ID":"52103d0b-3144-4fe3-aa94-e3f986926e7c"},{"Name":"Person","Description":null,"ID":"72ae0e64-c35c-4a0a-aad1-39e056c51d48"},{"Name":"Person2","Description":null,"ID":"9a166c5b-0ddf-4759-84b0-b7c15c4d59bd"}]'
+        New-UDTable -Data $Data -Id 'customData'
     }
 
     New-UDPage -Name "Tabs" -Id 'Tabs' -Content {
