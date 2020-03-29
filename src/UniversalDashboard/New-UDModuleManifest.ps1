@@ -121,6 +121,7 @@ $manifestParameters = @{
 		"New-UDTimePicker"
 		"New-UDRadio"
 		"New-UDRadioGroup"
+		"New-UDContainer"
 	)
 	CmdletsToExport = @("New-UDChart", 
 						"New-UDDashboard", 
