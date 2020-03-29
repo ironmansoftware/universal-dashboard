@@ -761,4 +761,12 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
             Set-TestData $EventData
         }
     }
+
+    New-UDPage -Name 'Named Page' -Content { New-UDElement -Tag div -Id 'namedPage' }
+    New-UDPage -Name 'URL Page' -Url '/myurl' -Content { New-UDElement -Tag div -Id 'urlPage' }
+    New-UDPage -Name 'URL with variable' -Url '/myurl/:test' -Content { param($test) New-UDElement -Tag div -Id 'urlPageWithVariable' -Content { $test } }
+    New-UDPage -Name 'Page with loading' -Url '/loading' -Content { Start-Sleep -Seconds 3 } -OnLoading {
+        New-UDElement -Id 'loading' -Tag 'div' -Content { 'Loading...' }
+    }
+
 )

@@ -32,5 +32,7 @@ namespace UniversalDashboard.Models
 
 		[JsonProperty("blank")]
 		public bool Blank { get; set; }
+		[JsonProperty("onLoading")]
+		public object Loading { get; set; }
     }
 }

@@ -37,6 +37,7 @@ import UDAppBar from './appbar';
 import UDDrawer from './drawer';
 import {UDRadioGroupWithContext, UDRadio } from './radio';
 import NotFound from './framework/not-found';
+import UDContainer from './container';
 
 import {
     Route,
@@ -82,6 +83,8 @@ UniversalDashboard.register('mu-appbar', UDAppBar);
 UniversalDashboard.register('mu-drawer', UDDrawer);
 UniversalDashboard.register('mu-radio', UDRadio);
 UniversalDashboard.register('mu-radiogroup', UDRadioGroupWithContext);
+UniversalDashboard.register('mu-container', UDContainer);
+
 
 // Framework Support
 import UdPage from './framework/ud-page';
@@ -101,51 +104,27 @@ function redirectToHomePage(dashboard) {
         defaultHomePage = dashboard.pages[0];
     }
 
-    if (defaultHomePage != null && defaultHomePage.url == null) {
-        return <Redirect to={window.baseUrl + `/${defaultHomePage.name.replace(/ /g, "-")}`} />
-    }
-    else if (defaultHomePage.url != null && defaultHomePage.url.indexOf(":") === -1) {
+    if (defaultHomePage.url != null && defaultHomePage.url.indexOf(":") === -1) {
         return <Redirect to={defaultHomePage.url} />
     }
-    else if (defaultHomePage.name == null) {
-        return <Suspense fallback={<div></div>}>
-            <UDErrorCard message="Your first page needs to be a static page or a dynamic page without a variable in the URL." />
-        </Suspense>
-    }
     else {
-        return <Redirect to={window.baseUrl + `/${defaultHomePage.name.replace(/ /g, "-")}`} />
+        return <Suspense fallback={<div></div>}>
+            <UDErrorCard message="Your first page needs page without a variable in the URL." />
+        </Suspense>
     }
 }
 
 const MaterialUI = (props) => {
     var { dashboard } = props;
 
-    var dynamicPages = dashboard.pages.map(function (x) {
-        if (!x.dynamic) return null;
-
+    var pages = dashboard.pages.map(function (x) {
         if (!x.url.startsWith("/")) {
             x.url = "/" + x.url;
         }
 
-        return <Route key={x.url} path={window.baseUrl + x.url} render={props => (
+        return <Route key={x.url} path={window.baseUrl + x.url} exact={x.url.indexOf(":") === -1} render={props => (
             <UdPage 
                 id={x.id} dynamic={true} 
-                {...x} 
-                {...props} 
-                autoRefresh={x.autoRefresh} 
-                refreshInterval={x.refreshInterval} 
-                key={props.location.key} 
-                pages={dashboard.pages}
-            />
-        )} />
-    })
-
-    var staticPages = dashboard.pages.map(function (x) {
-        if (x.dynamic) return null;
-
-        return <Route key={x.name} exact path={window.baseUrl + '/' + x.name.replace(/ /g, "-")} render={props => (
-            <UdPage 
-                dynamic={false} 
                 {...x} 
                 {...props} 
                 autoRefresh={x.autoRefresh} 
@@ -159,8 +138,7 @@ const MaterialUI = (props) => {
     return [
         <Suspense fallback={<span />}>
             <Switch>
-                {staticPages}
-                {dynamicPages}
+                {pages}
                 <Route exact path={window.baseUrl + `/`} render={() => redirectToHomePage(dashboard)} />
                 <Route path={window.baseUrl + `/`} render={() => <NotFound />} />
             </Switch>
