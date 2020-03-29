@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed an issue where loading the module a second time would throw an error (#1569) by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed an issue where UD Enterprise would not successfully load pages when authentication was disabled by [adamdriscoll](https://github.com/adamdriscoll)
+- Fixed an issue where returning a PSCustomObject for use in a UDTable would not work by [adamdriscoll](https://github.com/adamdriscoll)
 
 ## 3.0.0-beta1 - 3/28/2020
 
