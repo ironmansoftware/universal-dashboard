@@ -797,5 +797,6 @@ $Pages += New-ComponentPage -Title 'Typography' -Description 'Use typography to 
     }
 } -Cmdlet @("New-UDTypography")
 
-
-New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
+function New-DemoDashboard {
+    New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
+}

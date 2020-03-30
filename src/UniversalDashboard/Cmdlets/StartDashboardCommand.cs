@@ -117,15 +117,14 @@ namespace UniversalDashboard.Cmdlets
             if (Content == null && Dashboard == null && FilePath == null && !File.Exists(Constants.CachedDashboardPath)) {
 				using(var powershell = PowerShell.Create()) {
                     powershell.AddStatement().AddCommand("Import-Module").AddParameter("Name", tempPath);
-                    powershell.AddStatement().AddScript($". '{Constants.DemoDashboardPath}'");
+                    powershell.AddStatement().AddCommand("Import-Module").AddParameter("Name", Constants.DemoDashboardPath);
+					powershell.AddStatement().AddCommand("New-DemoDashboard");
 					Dashboard = powershell.Invoke().FirstOrDefault()?.BaseObject as Dashboard;
 				}
 
 				if (Dashboard == null) {
 					throw new Exception($"The file {Constants.DemoDashboardPath} did not return a valid dashboard");
 				}
-
-				Dashboard.Demo = true;
 			}
 			
 			// Dashboard from parameter
@@ -134,7 +133,6 @@ namespace UniversalDashboard.Cmdlets
 				Log.Info("Invalid dashboard.");
 			    throw new Exception("Invalid dashboard.");
 		    }
-
 
             Log.Info($"{Name} - {MyInvocation.ScriptName} - {AutoReload}");
 			Log.Debug(JsonConvert.SerializeObject(Dashboard));
