@@ -54,9 +54,9 @@ function New-ComponentPage {
             {
                 $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
                     $Parameter = $_.Key
-        
+
                     $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
-    
+                    
                     if ($null -ne $Help)
                     {
                         @{
