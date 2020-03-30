@@ -20,6 +20,7 @@
     "classnames": "^2.2.6",
     "date-fns": "^2.9.0",
     "eslint-loader": "^3.0.3",
+    "lodash": "^4.17.15",
     "material-table": "^1.57.2",
     "react-hot-loader": "^4.12.19",
     "react-interval": "^2.1.1",

@@ -98,18 +98,20 @@ const UDTable = (props) => {
 
                 props.loadData(query).then(x => {
 
-                    if (x.error)
+                    const result = JSON.parse(x);
+
+                    if (result.error)
                     {
-                        setError(x.error);
+                        setError(result.error);
                         resolve({data:[], page: 0, totalCount: 0})
                         return;
                     }
 
-                    var result = x[0].data.map(y => toLowerCaseKeys(y));
+                    var data = result[0].data.map(y => toLowerCaseKeys(y));
                     resolve({
-                        data: result,
-                        page: x[0].page,
-                        totalCount: x[0].totalCount
+                        data,
+                        page: result[0].page,
+                        totalCount: result[0].totalCount
                     })
                 })
             });

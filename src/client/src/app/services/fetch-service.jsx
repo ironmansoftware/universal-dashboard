@@ -150,6 +150,43 @@ export const fetchPut = function(url, data, success) {
     });
 }
 
+export const fetchPostHeaders = function(url, data, success, headers) {
+    if (!success) {
+        success = () => {}
+    }
+
+    const requestHeaders = {...headers};
+    requestHeaders['UDConnectionId'] = UniversalDashboard.connectionId
+
+    if (!requestHeaders['Accept'] || requestHeaders['Accept'] === '')
+    {
+        requestHeaders['Accept'] = 'application/json, text/plain, */*'
+    }
+
+    if (!requestHeaders['Content-Type'] || requestHeaders['Content-Type'] === '')
+    {
+        requestHeaders['Content-Type'] = 'application/json'
+        data = JSON.stringify(data)
+    }
+
+    fetch(getApiPath() + url, {
+        method: 'post',
+        headers: requestHeaders,
+        body: data,
+        credentials: 'include'
+      })
+      .then(function(response){
+        if (response.status === 200) {
+            return response.text();
+        } else {
+            throw new Error(response.statusText);
+        }
+    })
+    .then(success)
+    .catch(function(e) {
+        console.log(e)
+    });
+}
 
 export const fetchPostRaw = function(url, data, success) {
     if (!success) {
