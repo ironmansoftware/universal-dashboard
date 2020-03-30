@@ -95,6 +95,10 @@ Describe "Api" {
                 "memberOf$id"
             }
 
+            New-UDEndpoint -Url "/options" -Method "OPTIONS" -Endpoint {
+                $body
+            }
+
             $wsPOST = New-UDEndpoint -Url "/SpireonEvents" -Method POST -Endpoint {
                 param($Body)
                     $jsonBody = ConvertFrom-Json $Body
@@ -223,6 +227,11 @@ Describe "Api" {
             $json = (@{FilePath = "code"; Arguments = "script.ps1" } | ConvertTo-Json)
             $result = Invoke-RestMethod -Uri 'http://localhost:10001/api/SpireonEvents' -Method POST -Body $json #-ContentType 'application/json'
             $result | Should Be '@{Arguments=script.ps1; FilePath=code}'
+        }
+
+        It "should support options"{
+            $result = Invoke-RestMethod -Uri 'http://localhost:10001/api/options' -Method "OPTIONS" -Body "hello"
+            $result | Should Be 'hello'
         }
     }
 }
