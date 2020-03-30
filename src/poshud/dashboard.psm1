@@ -55,7 +55,7 @@ function New-ComponentPage {
                 $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
                     $Parameter = $_.Key
     
-                    $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SIlentlyContinue
+                    $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
     
                     if ($null -ne $Help)
                     {
@@ -772,5 +772,6 @@ $Pages += New-ComponentPage -Title 'Typography' -Description 'Use typography to 
     }
 } -Cmdlet @("New-UDTypography")
 
-
-New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
+function New-DemoDashboard {
+    New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
+}
