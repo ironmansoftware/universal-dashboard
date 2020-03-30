@@ -19,6 +19,17 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
     }
 
+    New-UDPage -Name 'Autocomplete' -Content {
+        New-UDAutocomplete -Id 'autoComplete' -Options @('Test', 'Test2', 'Test3', 'Test4')
+
+        New-UDAutocomplete -Id 'autoComplete' -OnLoadOptions { 
+            param($Body)
+            Write-UDLog $Body
+            @('Test', 'Test2', 'Test3', 'Test4') | Where-Object { $_ -match $Body.Trim("`"") } | ConvertTo-Json
+        }
+
+    }
+
     New-UDPage -Name "Avatar" -Content {
         New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent' -Variant small
 
