@@ -74,6 +74,7 @@ Describe "Form" {
         $SubmitButton = (Find-SeElement -Id 'validateForm' -Driver $Driver).FindElementsByTagName("button") | Select-Object -Last 1
         $SubmitButton.GetAttribute("disabled") | should be "true"
         Find-SeElement -Id 'txtValidateForm' -Driver $Driver | Send-SeKeys -Keys "Hello"
+        Start-Sleep 1
         $SubmitButton = (Find-SeElement -Id 'validateForm' -Driver $Driver).FindElementsByTagName("button") | Select-Object -Last 1
         $SubmitButton | Invoke-SeClick
         $TestData = Get-TestData 
