@@ -90,6 +90,7 @@ $manifestParameters = @{
         "New-UDRadioGroup"
         "New-UDContainer"
         "New-UDAutocomplete"
+        "New-UDFormValidationResult"
     )
     RequiredModules   = @()
 }

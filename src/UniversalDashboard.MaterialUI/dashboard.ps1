@@ -338,6 +338,20 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         } -OnSubmit {
             New-UDElement -Id 'newElement' -Tag 'div' -Content {'hello'}
         }
+
+        New-UDForm -Id 'validateForm' -Content {
+            New-UDTextbox -Id 'txtValidateForm'
+        } -OnValidate {
+            $FormContent = $Body | ConvertFrom-Json 
+
+            if ($FormContent.txtValidateForm -eq $null -or $FormContent.txtValidateForm -eq '') {
+                New-UDFormValidationResult -ValidationError "txtValidateForm is required"
+            } else {
+                New-UDFormValidationResult -Valid
+            }
+        } -OnSubmit {
+            Set-TestData ($Body | ConvertFrom-Json)
+        }
     }
 
     New-UDPage -Name "Grid" -Content {

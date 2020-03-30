@@ -17,7 +17,10 @@ function New-UDForm
     A script block that is execute when the form is submitted. You can return controls from this script block and the form will be replaced by the script block. The $EventData variable will contain a hashtable of all the input fields and their values. 
     
     .PARAMETER OnValidate
-    TODO
+    A script block that validates the form. Return the result of a call to New-UDFormValidationResult.
+
+    .PARAMETER OnProcessing
+    A script block that is called when the form begins processing. The return value of this script block should be a component that displays a loading dialog. The script block will receive the current form data.
     
     .EXAMPLE
     Creates a form that contains many input controls and displays the $eventdata hashtable as a toast. 
@@ -57,8 +60,19 @@ function New-UDForm
         [Parameter(Mandatory)]
         [Endpoint]$OnSubmit,
         [Parameter()]
-        [Endpoint]$OnValidate
+        [Endpoint]$OnValidate,
+        [Parameter()]
+        [ScriptBlock]$OnProcessing
     )
+
+    if ($null -ne $OnValidate) {
+       $OnValidate.Register($id + "validate", $PSCmdlet) 
+    }
+
+    $LoadingComponent = $null 
+    if ($null -ne $OnProcessing) {
+        $LoadingComponent = & $OnProcessing
+     }
 
     $OnSubmit.Register($id, $PSCmdlet)
 
@@ -68,8 +82,39 @@ function New-UDForm
         isPlugin = $true 
         type = "mu-form"
 
-        onSubmit = $onSubmit 
-        onValidate = $onValidate
+        onSubmit = $OnSubmit 
+        onValidate = $OnValidate
+        loadingComponent = $LoadingComponent
         children = & $Children
+    }
+}
+
+function New-UDFormValidationResult {
+    <#
+    .SYNOPSIS
+    Creates a new form validation result. 
+    
+    .DESCRIPTION
+    Creates a new form validation result. This cmdlet should return its value from the OnValidate script block parameter on New-UDForm. 
+    
+    .PARAMETER Valid
+    Whether the form status is considered valid. 
+    
+    .PARAMETER ValidationError
+    An error to display if the form is not valid. 
+    
+    .EXAMPLE
+    An example
+    #>
+    param(
+        [Parameter()]
+        [Switch]$Valid,
+        [Parameter()]
+        [string]$ValidationError = "Form is invalid."
+    )
+
+    @{
+        valid = $Valid.IsPresent
+        validationError = $ValidationError
     }
 }

@@ -68,4 +68,15 @@ Describe "Form" {
         (Find-SeElement -Id 'formReturnContent' -Driver $Driver).FindElementsByTagName("button")[0] | Invoke-SeClick 
         Find-SeElement -Id 'newElement' -Target $driver | Should not be $null
     }
+    
+    It 'returns validates the form' {
+        (Find-SeElement -Id 'validateForm-validationError' -Driver $Driver).Text | Should be "txtValidateForm is required"
+        $SubmitButton = (Find-SeElement -Id 'validateForm' -Driver $Driver).FindElementsByTagName("button") | Select-Object -Last 1
+        $SubmitButton.GetAttribute("disabled") | should be "true"
+        Find-SeElement -Id 'txtValidateForm' -Driver $Driver | Send-SeKeys -Keys "Hello"
+        $SubmitButton = (Find-SeElement -Id 'validateForm' -Driver $Driver).FindElementsByTagName("button") | Select-Object -Last 1
+        $SubmitButton | Invoke-SeClick
+        $TestData = Get-TestData 
+        $TestData.txtValidateForm | should be "Hello"
+    }
 }

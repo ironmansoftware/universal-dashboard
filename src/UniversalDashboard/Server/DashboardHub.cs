@@ -15,6 +15,7 @@ using System.Text;
 using UniversalDashboard.Models.Enums;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Collections;
+using System.Linq;
 
 namespace UniversalDashboard
 {
@@ -263,7 +264,7 @@ namespace UniversalDashboard
                     if (result.Error is Error error)
                     {
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-                        Clients.Client(Context.ConnectionId).SendAsync("showError", new { message = error.Message });
+                        Clients.Client(Context.ConnectionId).SendAsync("showError", new { message = error.ErrorRecords.First().Message });
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     }
 
