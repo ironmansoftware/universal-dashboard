@@ -431,7 +431,23 @@ New-UDForm -Content {
 }
             }
 
-} -Cmdlet "New-UDForm"
+New-Example -Title 'Validating a form' -Description 'Form validation can be accomplished by using the OnValidate script block parameter' -Example {
+New-UDForm -Content {
+    New-UDTextbox -Id 'txtValidateForm'
+} -OnValidate {
+    $FormContent = $Body | ConvertFrom-Json 
+
+    if ($FormContent.txtValidateForm -eq $null -or $FormContent.txtValidateForm -eq '') {
+        New-UDFormValidationResult -ValidationError "txtValidateForm is required"
+    } else {
+        New-UDFormValidationResult -Valid
+    }
+} -OnSubmit {
+    Show-UDToast -Message $Body
+}
+}
+
+} -Cmdlet @("New-UDForm", "New-UDFormValidationResult")
 
 $Pages += New-ComponentPage -Title 'Grid' -Description 'The responsive layout grid adapts to screen size and orientation, ensuring consistency across layouts.' -SecondDescription "The grid creates visual consistency between layouts while allowing flexibility across a wide variety of designs. Material Design’s responsive UI is based on a 12-column grid layout." -Content {
 
