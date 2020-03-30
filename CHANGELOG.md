@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added -Key parameter to Clear-UDCache to clear a specific item (#1491) by [adamdriscoll](https://github.com/adamdriscoll)
 - Added -LoadingComponent parameter to New-UDDynamic to allow for configuration of loading component (#1562) by [adamdriscoll](https://github.com/adamdriscoll)
+- Added New-UDAutocomplete component by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed 
 
