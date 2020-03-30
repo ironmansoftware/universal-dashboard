@@ -22,6 +22,10 @@ function UDAutocomplete(props) {
     const onChange = (event, value) => {
         props.onFieldChange({id: props.id, value : value})
         props.setState({ value : value})
+
+        if (props.onChange) {
+          props.onChange(value);
+      }
     }
 
     if (!props.onLoadOptions) {
@@ -60,10 +64,13 @@ function UDAutocomplete(props) {
     
         fetch(inputValue, (results) => {
           if (active) {
-              if (!Array.isArray(results)) {
-                  results = [results]
+
+              let json = JSON.parse(results);
+
+              if (!Array.isArray(json)) {
+                json = [json]
               }
-            setOptions(results || []);
+              setOptions(json || []);
           }
         });
     

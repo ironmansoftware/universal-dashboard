@@ -28,6 +28,14 @@ export const withComponentFeatures = (component) => {
         });
     }
 
+    const postWithHeaders = (id, data, headers) => {
+        return new Promise((resolve, reject) => {
+            UniversalDashboard.postWithHeaders(`/api/internal/component/element/${id}`, data, (returnData) => {
+                resolve(returnData)
+            }, headers);
+        });
+    }
+
     const subscribeToIncomingEvents = (id, callback) => {
         const incomingEvent = (id, event) => {
 
@@ -47,7 +55,16 @@ export const withComponentFeatures = (component) => {
         UniversalDashboard.unsubscribe(token)
     }
 
+    function isString (obj) {
+        return (Object.prototype.toString.call(obj) === '[object String]');
+      }
+
     const render = (component, history) => {
+
+        if (isString(component)) {
+            component = JSON.parse(component);
+        }
+
         // set props version
         if (!component.version)
         {
@@ -141,7 +158,17 @@ export const withComponentFeatures = (component) => {
             if (componentState[x] != null && componentState[x].endpoint)
             {
                 additionalProps[x] = (data) => {
-                    return post(componentState[x].name, data)
+
+                    let headers = {}
+                    if (componentState[x].accept && componentState[x].accept !== '') {
+                        headers['Accept'] = componentState[x].accept;
+                    } 
+
+                    if (componentState[x].contentType && componentState[x].contentType !== '') {
+                        headers['Content-Type'] = componentState[x].contentType;
+                    } 
+
+                    return postWithHeaders(componentState[x].name, data, headers);
                 }
             }
         })

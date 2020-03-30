@@ -20,14 +20,15 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
     }
 
     New-UDPage -Name 'Autocomplete' -Content {
-        New-UDAutocomplete -Id 'autoComplete' -Options @('Test', 'Test2', 'Test3', 'Test4')
-
-        New-UDAutocomplete -Id 'autoComplete' -OnLoadOptions { 
-            param($Body)
-            Write-UDLog $Body
-            @('Test', 'Test2', 'Test3', 'Test4') | Where-Object { $_ -match $Body.Trim("`"") } | ConvertTo-Json
+        New-UDAutocomplete -Id 'autoComplete' -Options @('Test', 'Test2', 'Test3', 'Test4') -OnChange {
+            Set-TestData $Body 
         }
 
+        New-UDAutocomplete -Id 'autoCompleteDynamic' -OnLoadOptions { 
+            @('Test', 'Test2', 'Test3', 'Test4') | Where-Object { $_ -match $Body } | ConvertTo-Json
+        } -OnChange {
+            Set-TestData $Body 
+        }
     }
 
     New-UDPage -Name "Avatar" -Content {
@@ -259,6 +260,9 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
                 New-UDRadio -Value 'Alon' -Label 'Alon' -Id 'alon'
                 New-UDRadio -Value 'Lee' -Label 'Lee' -Id 'lee'
             } -Value 'Adam'
+
+            New-UDAutocomplete -Id 'autoCompleteForm' -Options @('Test', 'Test2', 'Test3', 'Test4') 
+
         } -OnSubmit {
             Show-UDToast -Message $Body
             $Fields = $Body | ConvertFrom-Json
