@@ -54,9 +54,9 @@ function New-ComponentPage {
             {
                 $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
                     $Parameter = $_.Key
-    
+
                     $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
-    
+                    
                     if ($null -ne $Help)
                     {
                         @{
@@ -69,7 +69,7 @@ function New-ComponentPage {
                 }
     
                 New-UDTable -Title $item -Data $Parameters -Columns $Columns
-            }   
+            }               
         }
     }
 }
@@ -106,6 +106,7 @@ function New-AppBar {
             }
             New-UDListItem -Label "Components" -Children {
                 New-UDListItem -Label "AppBar" -OnClick { Invoke-UDRedirect -Url "/appbar" }
+                New-UDListItem -Label "Autocomplete" -OnClick { Invoke-UDRedirect -Url '/autocomplete' } 
                 New-UDListItem -Label "Avatar" -OnClick { Invoke-UDRedirect -Url '/avatar' } 
                 New-UDListItem -Label "Button" -OnClick { Invoke-UDRedirect -Url "/button" }
                 New-UDListItem -Label "Card" -OnClick { Invoke-UDRedirect -Url '/card' }
@@ -219,6 +220,30 @@ $Pages += New-ComponentPage -Title 'AppBar' `
         New-UDAppBar -Position relative -Children { New-UDElement -Tag 'div' -Content { "Title" } } -Drawer $Drawer
     }
 } -Cmdlet 'New-UDAppBar'
+
+$Pages += New-ComponentPage -Title 'Autocomplete' `
+    -Description 'The autocomplete is a normal text input enhanced by a panel of suggested options.' `
+    -SecondDescription "This is a useful control for allowing the user to select from a large set of options." -Content {
+
+    New-Example -Title 'Autocomplete with a static list of options' -Example {
+        New-UDAutocomplete -Options @('Test', 'Test2', 'Test3', 'Test4') 
+    }
+
+    New-Example -Title 'Autocomplete with a dynamic list of options' -Example {
+        New-UDAutocomplete -OnLoadOptions { 
+            @('Test', 'Test2', 'Test3', 'Test4') | Where-Object { $_ -match $Body } | ConvertTo-Json
+        }
+    }
+
+    New-Example -Title 'Autocomplete with an OnChange script block' -Example {
+        New-UDAutocomplete -OnLoadOptions { 
+            @('Test', 'Test2', 'Test3', 'Test4') | Where-Object { $_ -match $Body } | ConvertTo-Json
+        } -OnChange {
+            Show-UDToast $Body 
+        }
+    }
+
+} -Cmdlet 'New-UDAutocomplete'
 
 $Pages += New-ComponentPage -Title 'Avatar' `
     -Description 'Avatars are found throughout material design with uses in everything from tables to dialog menus.' `

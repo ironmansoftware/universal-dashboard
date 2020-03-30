@@ -19,6 +19,18 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
     }
 
+    New-UDPage -Name 'Autocomplete' -Content {
+        New-UDAutocomplete -Id 'autoComplete' -Options @('Test', 'Test2', 'Test3', 'Test4') -OnChange {
+            Set-TestData $Body 
+        }
+
+        New-UDAutocomplete -Id 'autoCompleteDynamic' -OnLoadOptions { 
+            @('Test', 'Test2', 'Test3', 'Test4') | Where-Object { $_ -match $Body } | ConvertTo-Json
+        } -OnChange {
+            Set-TestData $Body 
+        }
+    }
+
     New-UDPage -Name "Avatar" -Content {
         New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent' -Variant small
 
@@ -248,6 +260,9 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
                 New-UDRadio -Value 'Alon' -Label 'Alon' -Id 'alon'
                 New-UDRadio -Value 'Lee' -Label 'Lee' -Id 'lee'
             } -Value 'Adam'
+
+            New-UDAutocomplete -Id 'autoCompleteForm' -Options @('Test', 'Test2', 'Test3', 'Test4') 
+
         } -OnSubmit {
             Show-UDToast -Message $Body
             $Fields = $Body | ConvertFrom-Json

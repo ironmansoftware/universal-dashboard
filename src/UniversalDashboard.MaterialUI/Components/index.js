@@ -38,6 +38,7 @@ import UDDrawer from './drawer';
 import {UDRadioGroupWithContext, UDRadio } from './radio';
 import NotFound from './framework/not-found';
 import UDContainer from './container';
+import UDAutocomplete from './autocomplete';
 
 import {
     Route,
@@ -84,6 +85,7 @@ UniversalDashboard.register('mu-drawer', UDDrawer);
 UniversalDashboard.register('mu-radio', UDRadio);
 UniversalDashboard.register('mu-radiogroup', UDRadioGroupWithContext);
 UniversalDashboard.register('mu-container', UDContainer);
+UniversalDashboard.register("mu-autocomplete", UDAutocomplete);
 
 
 // Framework Support
