@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added -LoadingComponent parameter to New-UDDynamic to allow for configuration of loading component (#1562) by [adamdriscoll](https://github.com/adamdriscoll)
 - Added New-UDAutocomplete component by [adamdriscoll](https://github.com/adamdriscoll)
 - Added support for OPTIONS endpoints by [adamdriscoll](https://github.com/adamdriscoll)
+- Added -OnProcessing to New-UDForm to allow for custom loading dialogs by [adamdriscoll](https://github.com/adamdriscoll)
+- Added -OnValidating to New-UDForm to support validating forms by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed 
 
