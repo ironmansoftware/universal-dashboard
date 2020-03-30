@@ -588,6 +588,21 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
     }
 
+    
+    New-UDPage -Name 'Stepper' -Content {
+        New-UDStepper -Steps {
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 1" }
+            } -Label "Step 1"
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 2" }
+            } -Label "Step 2"
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 3" }
+            } -Label "Step 3"
+        } -OnFinish {}
+    }
+
     New-UDPage -Name 'Switch' -Content {
         New-UDSwitch -Id 'switchOff'
         New-UDSwitch -Id 'switchOffExplicit' -Checked $false
