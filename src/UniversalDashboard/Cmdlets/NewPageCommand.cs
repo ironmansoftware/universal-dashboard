@@ -89,12 +89,7 @@ namespace UniversalDashboard.Cmdlets
 			catch (Exception ex)
 			{
 				WriteError(new ErrorRecord(ex, string.Empty, ErrorCategory.SyntaxError, page));
-
-				page.Error = new Error
-				{
-					Message = ex.Message,
-					Location = this.MyInvocation.PositionMessage
-				};
+				page.Error = new Error(ex);
 			}
 
 			Log.Debug(JsonConvert.SerializeObject(page));

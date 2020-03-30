@@ -194,7 +194,7 @@ namespace UniversalDashboard.Execution
                                         Log.Warn($"Error executing endpoint {endpoint.Name}. {errorRecord} {Environment.NewLine} {errorRecord.ScriptStackTrace}");
                                     }
 
-                                    return new { Error = new Error { Message = error } };
+                                    return new Error(ps.Streams.Error);
                                 }
                             }
                         }
@@ -203,7 +203,7 @@ namespace UniversalDashboard.Execution
                     {
                         Log.Warn(ex, $"Error executing endpoint {endpoint.Name}.");
 
-                        return new { Error = new Error { Message = ex.Message, Location = ex.StackTrace } };
+                        return new Error(ex);
                     }
                 }
 			}
