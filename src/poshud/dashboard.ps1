@@ -12,60 +12,65 @@ function New-ComponentPage {
         [string[]]$Cmdlet) 
 
     New-UDPage -Name $Title -Content {
-        New-AppBar -Title $title
+        New-UDContainer {
+            New-AppBar -Title $title
 
-        New-UDElement -tag 'div' -Attributes @{ style = @{ marginTop = '20px' }} -Content {
-            New-UDTypography -Text $Title -Variant 'h2' 
-        }
-    
-        New-UDElement -tag 'div' -Attributes @{ style = @{ marginTop = '20px' }} -Content {
-            New-UDTypography -Text $Description -Variant 'h4'
-        }
-    
-        New-UDElement -tag 'div' -Attributes @{ style = @{ marginTop = '20px' }} -Content {
-            New-UDElement -Tag 'div' -Content { $SecondDescription }
-        }
-
-        & $Content
-
-        $Columns = @(
-            New-UDTableColumn -Title 'Name' -Property 'name' 
-            New-UDTableColumn -Title 'Type' -Property 'type' 
-            New-UDTableColumn -Title 'Description' -Property 'description' -Render {
-                $Row = $Body | ConvertFrom-Json 
-                if ($Row.description)
-                {
-                    New-UDTypography -Text $Row.description
-                }
-                else 
-                {
-                    New-UDElement -tag 'div' -Content {}
-                }
+            New-UDElement -tag 'div' -Attributes @{ style = @{ marginTop = '20px' }} -Content {
+                New-UDTypography -Text $Title -Variant 'h2' 
             }
-            New-UDTableColumn -Title 'Required' -Property 'required' 
-        )
-
-        New-UDElement -Tag 'div' -Attributes @{ style = @{ marginTop = "20px"; marginBottom = "20px"}} -Content {
-            New-UDTypography -Text 'Parameters' -Variant h4
-        }
-
-        foreach($item in $Cmdlet)
-        {
-            $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
-                $Parameter = $_.Key
-    
-                $Help = Get-Help -Name $item -Parameter $Parameter
-    
-                @{
-                    name = $Help.name 
-                    type = $Help.type.name
-                    description = $Help.description.text
-                    required = $Help.required
-                }
+        
+            New-UDElement -tag 'div' -Attributes @{ style = @{ marginTop = '20px' }} -Content {
+                New-UDTypography -Text $Description -Variant 'h4'
             }
-
-            New-UDTable -Title $item -Data $Parameters -Columns $Columns
-        }   
+        
+            New-UDElement -tag 'div' -Attributes @{ style = @{ marginTop = '20px' }} -Content {
+                New-UDElement -Tag 'div' -Content { $SecondDescription }
+            }
+    
+            & $Content
+    
+            $Columns = @(
+                New-UDTableColumn -Title 'Name' -Property 'name' 
+                New-UDTableColumn -Title 'Type' -Property 'type' 
+                New-UDTableColumn -Title 'Description' -Property 'description' -Render {
+                    $Row = $Body | ConvertFrom-Json 
+                    if ($Row.description)
+                    {
+                        New-UDTypography -Text $Row.description
+                    }
+                    else 
+                    {
+                        New-UDElement -tag 'div' -Content {}
+                    }
+                }
+                New-UDTableColumn -Title 'Required' -Property 'required' 
+            )
+    
+            New-UDElement -Tag 'div' -Attributes @{ style = @{ marginTop = "20px"; marginBottom = "20px"}} -Content {
+                New-UDTypography -Text 'Parameters' -Variant h4
+            }
+    
+            foreach($item in $Cmdlet)
+            {
+                $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
+                    $Parameter = $_.Key
+    
+                    $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SIlentlyContinue
+    
+                    if ($null -ne $Help)
+                    {
+                        @{
+                            name = $Help.name 
+                            type = $Help.type.name
+                            description = $Help.description.text
+                            required = $Help.required
+                        }
+                    }
+                }
+    
+                New-UDTable -Title $item -Data $Parameters -Columns $Columns
+            }   
+        }
     }
 }
 
@@ -157,8 +162,6 @@ function New-AppBar {
         New-UDElement -Tag 'div' -Content {$title}
     } -Drawer $Drawer
 }
-
-
 
 $Pages = @()
 $Pages += New-UDPage -Name "PowerShell Universal Dashboard" -Content {
