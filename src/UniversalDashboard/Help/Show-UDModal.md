@@ -13,9 +13,8 @@ Shows a modal.
 ## SYNTAX
 
 ```
-Show-UDModal [-BottomSheet] [-FixedFooter] [-Footer <ScriptBlock>] [-Header <ScriptBlock>]
- [-Content <ScriptBlock>] [-BackgroundColor <DashboardColor>] [-FontColor <DashboardColor>] [-Height <String>]
- [-Width <String>] [-Persistent] [<CommonParameters>]
+Show-UDModal [-FullScreen] [-FullWidth] [-Footer <ScriptBlock>] [-Header <ScriptBlock>]
+ [-Content <ScriptBlock>] [-MaxWidth] [-Persistent] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -36,19 +35,6 @@ New-UDButton -Text "Show Modal" -OnClick {
 
 Shows a modal when the button is clicked.
 
-### Bottom Sheet
-```
-New-UDButton -Text "Show Modal" -OnClick {
-    Show-UDModal -Header {
-        New-UDHeading -Size 4 -Text "Modal"
-    } -Content {
-        "This is a modal"
-    } -BottomSheet
-}
-```
-
-Shows a bottom sheet modal.
-
 ### Persistent
 ```
 New-UDButton -Text "Show Modal" -OnClick {
@@ -64,28 +50,13 @@ New-UDButton -Text "Show Modal" -OnClick {
 
 Shows a persistent modal.
 
-### Custom Width
-```
-New-UDButton -Text "Show Modal" -OnClick {
-    Show-UDModal -Header {
-        New-UDHeading -Size 4 -Text "Modal"
-    } -Content {
-        New-UDButton -Text 'Hide Modal' -OnClick {
-            Hide-UDModal
-        }
-    } -Width 1000 -Height 1000
-}
-```
-
-Shows a custom width modal.
-
 ## PARAMETERS
 
-### -BackgroundColor
-The background color of the modal. 
+### -FullScreen
+Full screen modal
 
 ```yaml
-Type: DashboardColor
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 
@@ -96,11 +67,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -BottomSheet
-Whether this is a bottom sheet modal. 
+### -FullWidth
+Full width modal
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MaxWidth
+The maximum width
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases: 
 
@@ -116,21 +102,6 @@ The content of the modal.
 
 ```yaml
 Type: ScriptBlock
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -FixedFooter
-Whether this modal has a fixed footer. 
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 Aliases: 
 
@@ -186,41 +157,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Height
-The height of the modal.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Persistent
 Creates a modal that cannot click away from.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: 
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Width
-The width of the modal.
-
-```yaml
-Type: String
 Parameter Sets: (All)
 Aliases: 
 

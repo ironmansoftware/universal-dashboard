@@ -68,7 +68,10 @@ function New-ComponentPage {
                     }
                 }
     
-                New-UDTable -Title $item -Data $Parameters -Columns $Columns
+                if ($Parameters)
+                {
+                    New-UDTable -Title $item -Data $Parameters -Columns $Columns
+                }
             }               
         }
     }
@@ -122,6 +125,7 @@ function New-AppBar {
                 New-UDListItem -Label "Icon Button" -OnClick {}
                 New-UDListItem -Label "Link" -OnClick {}
                 New-UDListItem -Label "List" -OnClick { Invoke-UDRedirect -Url '/list' }
+                New-UDListItem -Label "Modal" -OnClick { Invoke-UDRedirect -Url '/modal' }
                 New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
                 New-UDListItem -Label "Progress" -OnClick { Invoke-UDRedirect -Url '/progress' }
                 New-UDListItem -Label "Radio" -OnClick { Invoke-UDRedirect -Url '/radio' }
@@ -531,14 +535,54 @@ $Pages += New-ComponentPage -Title 'Icons' -Description 'FontAwesome icons to in
 } -Cmdlet "New-UDIcon"
 
 $Pages += New-ComponentPage -Title 'List' -Description 'Lists are continuous, vertical indexes of text or images.' -SecondDescription "Lists are a continuous group of text or images. They are composed of items containing primary and supplemental actions, which are represented by icons and text." -Content {
-
-    New-UDList -Content {
-        New-UDListItem -Label 'Inbox' -Icon (New-UDIcon -Icon envelope -Size 3x) -SubTitle 'New Stuff'
-        New-UDListItem -Label 'Drafts' -Icon (New-UDIcon -Icon edit -Size 3x) -SubTitle "Stuff I'm working on "
-        New-UDListItem -Label 'Trash' -Icon (New-UDIcon -Icon trash -Size 3x) -SubTitle 'Stuff I deleted'
-        New-UDListItem -Label 'Spam' -Icon (New-UDIcon -Icon bug -Size 3x) -SubTitle "Stuff I didn't want"
+    New-Example -Title 'List' -Description '' -Example {
+New-UDList -Content {
+    New-UDListItem -Label 'Inbox' -Icon (New-UDIcon -Icon envelope -Size 3x) -SubTitle 'New Stuff'
+    New-UDListItem -Label 'Drafts' -Icon (New-UDIcon -Icon edit -Size 3x) -SubTitle "Stuff I'm working on "
+    New-UDListItem -Label 'Trash' -Icon (New-UDIcon -Icon trash -Size 3x) -SubTitle 'Stuff I deleted'
+    New-UDListItem -Label 'Spam' -Icon (New-UDIcon -Icon bug -Size 3x) -SubTitle "Stuff I didn't want"
+}
     }
-} -Cmdlet "New-UDIcon"
+} -Cmdlet @("New-UDList", "New-UDListItem")
+
+$Pages += New-ComponentPage -Title 'Modal' -Description 'Modals inform users about a task and can contain critical information, require decisions, or involve multiple tasks.' -SecondDescription "" -Content {
+    New-Example -Title 'Basic' -Description '' -Example {
+New-UDButton -Text 'Basic' -OnClick {
+    Show-UDModal -Content {
+        New-UDTypography -Text "Hello"
+    }
+}
+    }
+
+    New-Example -Title 'Full Screen' -Description '' -Example {
+New-UDButton -Text 'Full Screen' -OnClick {
+    Show-UDModal -Content {
+        New-UDTypography -Text "Hello"
+    } -Footer {
+        New-UDButton -Text "Close" -OnClick { Hide-UDModal }
+    }  -FullScreen
+}
+    }
+
+    New-Example -Title 'Full Width' -Description '' -Example {
+New-UDButton -Text 'Full Width' -OnClick {
+    Show-UDModal -Content {
+        New-UDTypography -Text "Hello"
+    } -FullWidth -MaxWidth 'md'
+}
+    }
+
+    New-Example -Title 'Persistent' -Description '' -Example {
+New-UDButton -Text 'Persistent' -OnClick {
+    Show-UDModal -Content {
+        New-UDTypography -Text "Hello"
+    } -Footer {
+        New-UDButton -Text "Close" -OnClick { Hide-UDModal }
+    } -Persistent
+}
+    }
+    
+} -Cmdlet @("Show-UDModal", "Hide-UDModal")
 
 $Pages += New-ComponentPage -Title 'Paper' -Description 'In Material Design, the physical properties of paper are translated to the screen.' -SecondDescription "The background of an application resembles the flat, opaque texture of a sheet of paper, and an application’s behavior mimics paper’s ability to be re-sized, shuffled, and bound together in multiple sheets." -Content {
     New-Example -Title 'Paper' -Description '' -Example {

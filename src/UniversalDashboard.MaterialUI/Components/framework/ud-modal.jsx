@@ -31,12 +31,16 @@ export default function Modal(props) {
 
     var header = null;
     if (modalOptions.header != null) {
-        header = modalOptions.header.map(x => UniversalDashboard.renderComponent(x));
+        header = <DialogTitle id="customized-dialog-title" onClose={() => setOpen(false)}>
+            {modalOptions.header.map(x => UniversalDashboard.renderComponent(x))}
+        </DialogTitle>
     }
 
     var content = null;
     if (modalOptions.content != null) {
-        content = modalOptions.content.map(x => UniversalDashboard.renderComponent(x));
+        content = <DialogContent dividers>
+            {modalOptions.content.map(x => UniversalDashboard.renderComponent(x))}
+        </DialogContent>
     }
 
     var footer = null;
@@ -47,19 +51,17 @@ export default function Modal(props) {
         else {
             footer = UniversalDashboard.renderComponent(modalOptions.footer);
         }
+
+        footer = <DialogActions>
+            {footer}
+        </DialogActions>
     }
 
     return (
-        <Dialog aria-labelledby="customized-dialog-title" open={open} onBackdropClick={() => setOpen(false)}>
-            <DialogTitle id="customized-dialog-title" onClose={() => setOpen(false)}>
-                {header}
-            </DialogTitle>
-            <DialogContent dividers>
-                {content}
-            </DialogContent>
-            <DialogActions>
-                {footer}
-            </DialogActions>
+        <Dialog aria-labelledby="customized-dialog-title" open={open} onBackdropClick={() => modalOptions.dismissible && setOpen(false)} maxWidth={modalOptions.maxWidth} fullScreen={modalOptions.fullScreen} fullWidth={modalOptions.fullWidth}>
+            {header}
+            {content}
+            {footer}
         </Dialog>
     )
 } 

@@ -9,9 +9,7 @@ namespace UniversalDashboard.Cmdlets
     public class ShowModalCommand : PSCmdlet
     {
         [Parameter()]
-        public SwitchParameter BottomSheet { get; set; }
-        [Parameter()]
-        public SwitchParameter FixedFooter { get; set; }
+        public SwitchParameter FullScreen { get; set; }
         [Parameter()]
         public ScriptBlock Footer { get; set; }
         [Parameter()]
@@ -19,30 +17,25 @@ namespace UniversalDashboard.Cmdlets
         [Parameter()]
         public ScriptBlock Content { get; set; }
         [Parameter()]
-        public DashboardColor BackgroundColor { get; set; }
-        [Parameter()]
-        public DashboardColor FontColor { get; set; }
-        [Parameter()]
-        public string Height { get; set; }
-        [Parameter()]
-        public string Width { get; set; }
-        [Parameter()]
         public SwitchParameter Persistent { get; set; }
+        [Parameter()]
+        public SwitchParameter FullWidth { get; set; }
+
+        [Parameter()]
+        [ValidateSet("xs", "sm", "md", "lg", "xl")]
+        public string MaxWidth { get; set; } 
 
         protected override void EndProcessing()
         {
             var modal = new Modal
             {
-                BottomSheet = BottomSheet,
-                FixedFooter = FixedFooter,
                 Footer = Footer?.Invoke().Select(m => m.BaseObject).ToArray(),
                 Header = Header?.Invoke().Select(m => m.BaseObject).ToArray(),
                 Content = Content?.Invoke().Select(m => m.BaseObject).ToArray(),
-                BackgroundColor = BackgroundColor?.HtmlColor,
-                FontColor = FontColor?.HtmlColor,
-                Height = Height,
-                Width = Width,
-                Dismissible = !Persistent.IsPresent
+                Dismissible = !Persistent.IsPresent,
+                MaxWidth = MaxWidth, 
+                FullWidth = FullWidth, 
+                FullScreen = FullScreen
             };
 
             var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
