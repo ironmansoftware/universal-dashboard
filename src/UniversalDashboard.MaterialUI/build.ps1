@@ -93,6 +93,7 @@ $manifestParameters = @{
         "New-UDFormValidationResult"
         "New-UDStep"
         "New-UDStepper"
+        "New-UDSlider"
     )
     RequiredModules   = @()
 }

@@ -588,7 +588,27 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
     }
 
+    New-UDPage -Name 'Slider' -Content {
+        New-UDContainer {
+            New-UDSlider -Id 'slider' -Value 1
+            New-UDSlider -Id 'sliderMinMax' -Min 10 -Max 1000
+            New-UDSlider -Id 'sliderCustomStep' -Min 10 -Max 1000 -Step 100
+            New-UDSlider -Id 'sliderDisabled' -Disabled
+            New-UDSlider -Id 'sliderMarks' -Marks
+            
+            New-UDSlider -Id 'sliderOnChange' -OnChange {
+                Show-UDToast -Message $Body 
+                Set-TestData $Body
+            }
+
+            New-UDSlider -Id 'rangeSlider' -Value @(1, 10)
     
+            New-UDCard -Content {
+                New-UDSlider -Id 'sliderVertical' -Orientation vertical
+            }
+        }
+    }
+
     New-UDPage -Name 'Stepper' -Content {
         New-UDStepper -Id 'stepper' -Steps {
             New-UDStep -OnLoad {

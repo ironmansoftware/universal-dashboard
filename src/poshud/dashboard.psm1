@@ -126,6 +126,7 @@ function New-AppBar {
                 New-UDListItem -Label "Progress" -OnClick { Invoke-UDRedirect -Url '/progress' }
                 New-UDListItem -Label "Radio" -OnClick { Invoke-UDRedirect -Url '/radio' }
                 New-UDListItem -Label "Select" -OnClick { Invoke-UDRedirect -Url '/select'}
+                New-UDListItem -Label "Slider" -OnClick { Invoke-UDRedirect -Url '/slider'}
                 New-UDListItem -Label "Switch" -OnClick { Invoke-UDRedirect -Url '/switch'}
                 New-UDListItem -Label "Table" -OnClick { Invoke-UDRedirect -Url '/table' }
                 New-UDListItem -Label "Tabs" -OnClick { Invoke-UDRedirect -Url '/tabs' }
@@ -633,6 +634,40 @@ New-UDSelect -Option {
     }
 
 } -Cmdlet "New-UDSelect"
+
+
+$Pages += New-ComponentPage -Title 'Slider' -Description 'Sliders allow users to make selections from a range of values.' -SecondDescription "Sliders reflect a range of values along a bar, from which users may select a single value. They are ideal for adjusting settings such as volume, brightness, or applying image filters." -Content {
+    New-Example -Title 'Slider' -Description '' -Example {
+        New-UDSlider -Value 1
+    }
+
+    New-Example -Title 'Slider with min and max values' -Description '' -Example {
+        New-UDSlider -Min 10 -Max 1000
+    }
+
+    New-Example -Title 'Slider with custom step size' -Description '' -Example {
+        New-UDSlider -Min 10 -Max 1000 -Step 100
+    }
+
+    New-Example -Title 'Disabled slider' -Description '' -Example {
+        New-UDSlider -Disabled
+    }
+
+    New-Example -Title 'Slider with marks' -Description '' -Example {
+        New-UDSlider -Marks
+    }
+
+    New-Example -Title 'Range based slider' -Description '' -Example {
+        New-UDSlider -Value @(1, 10)
+    }
+
+    New-Example -Title 'OnChange event for slider' -Description '' -Example {       
+New-UDSlider -OnChange {
+    Show-UDToast -Message $Body 
+    Set-TestData $Body
+}
+    }
+} -Cmdlet @("New-UDSlider")
 
 $Pages += New-ComponentPage -Title 'Stepper' -Description 'Steppers convey progress through numbered steps. It provides a wizard-like workflow.' -SecondDescription "Steppers display progress through a sequence of logical and numbered steps. They may also be used for navigation. Steppers may display a transient feedback message after a step is saved." -Content {
     New-Example -Title 'Stepper' -Description '' -Example {
