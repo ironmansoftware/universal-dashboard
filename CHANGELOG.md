@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added support for OPTIONS endpoints by [adamdriscoll](https://github.com/adamdriscoll)
 - Added -OnProcessing to New-UDForm to allow for custom loading dialogs by [adamdriscoll](https://github.com/adamdriscoll)
 - Added -OnValidating to New-UDForm to support validating forms by [adamdriscoll](https://github.com/adamdriscoll)
+- Added New-UDStepper and New-UDStep to support a wizard-like control by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed 
 
