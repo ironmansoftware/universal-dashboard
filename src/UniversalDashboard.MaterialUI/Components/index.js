@@ -124,6 +124,11 @@ const MaterialUI = (props) => {
     var { dashboard } = props;
 
     var pages = dashboard.pages.map(function (x) {
+
+        if (!x.url) {
+            x.url = x.name;
+        }
+
         if (!x.url.startsWith("/")) {
             x.url = "/" + x.url;
         }
