@@ -41,6 +41,7 @@ import UDContainer from './container';
 import UDAutocomplete from './autocomplete';
 import UDErrorCard from './framework/error-card';
 import {UDStep, UDStepper} from './stepper';
+import UDSlider from './slider'
 
 import {
     Route,
@@ -91,6 +92,7 @@ UniversalDashboard.register("mu-autocomplete", UDAutocomplete);
 UniversalDashboard.register("error", UDErrorCard);
 UniversalDashboard.register("mu-stepper-step", UDStep);
 UniversalDashboard.register("mu-stepper", UDStepper);
+UniversalDashboard.register("mu-slider", UDSlider);
 
 // Framework Support
 import UdPage from './framework/ud-page';
