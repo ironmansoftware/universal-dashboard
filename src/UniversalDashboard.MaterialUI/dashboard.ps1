@@ -509,6 +509,36 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         } -SubHeader 'USERS'
     }
 
+    New-UDPage -Name 'Modal' -Content {
+        New-UDButton -Text 'Basic' -OnClick {
+            Show-UDModal -Content {
+                New-UDTypography -Text "Hello"
+            }
+        }
+
+        New-UDButton -Text 'Full Screen' -OnClick {
+            Show-UDModal -Content {
+                New-UDTypography -Text "Hello"
+            } -Footer {
+                New-UDButton -Text "Close" -OnClick { Hide-UDModal }
+            }  -FullScreen
+        }
+
+        New-UDButton -Text 'Full Width' -OnClick {
+            Show-UDModal -Content {
+                New-UDTypography -Text "Hello"
+            } -FullWidth -MaxWidth 'md'
+        }
+
+        New-UDButton -Text 'Persistent' -OnClick {
+            Show-UDModal -Content {
+                New-UDTypography -Text "Hello"
+            } -Footer {
+                New-UDButton -Text "Close" -OnClick { Hide-UDModal }
+            } -Persistent
+        }
+    }
+
     New-UDPage -Name "Paper" -Content {
         New-UDPaper -Content {
             New-UDHeading -Text "hi" -Id 'paperContent'
