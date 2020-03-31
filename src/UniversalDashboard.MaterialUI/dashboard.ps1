@@ -588,6 +588,32 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
     }
 
+    
+    New-UDPage -Name 'Stepper' -Content {
+        New-UDStepper -Id 'stepper' -Steps {
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 1" }
+                New-UDTextbox -Id 'txtStep1' 
+            } -Label "Step 1"
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 2" }
+                New-UDElement -tag 'div' -Content { "Previous data: $Body" }
+                New-UDTextbox -Id 'txtStep2' 
+                Set-TestData ($Body | ConvertFrom-Json)
+            } -Label "Step 2"
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 3" }
+                New-UDElement -tag 'div' -Content { "Previous data: $Body" }
+                New-UDTextbox -Id 'txtStep3' 
+                Set-TestData ($Body | ConvertFrom-Json)
+            } -Label "Step 3"
+        } -OnFinish {
+            New-UDTypography -Text 'Nice! You did it!' -Variant h3
+            New-UDElement -Tag 'div' -Id 'result' -Content {$Body}
+            Set-TestData ($Body | ConvertFrom-Json)
+        }
+    }
+
     New-UDPage -Name 'Switch' -Content {
         New-UDSwitch -Id 'switchOff'
         New-UDSwitch -Id 'switchOffExplicit' -Checked $false
