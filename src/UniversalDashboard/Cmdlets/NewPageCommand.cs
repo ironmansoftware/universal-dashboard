@@ -84,6 +84,7 @@ namespace UniversalDashboard.Cmdlets
 
 				page.Name = Name;
 				page.Callback = Content.GenerateCallback(Id, this, SessionState, ArgumentList);
+				page.Callback.Page = page;
 				page.Dynamic = true;
 			}
 			catch (Exception ex)
