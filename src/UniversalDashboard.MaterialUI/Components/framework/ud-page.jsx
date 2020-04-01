@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ErrorCard from './error-card.jsx';
 import ReactInterval from 'react-interval';
-import UDNavbar from './ud-navbar';
-import UDFooter from './ud-footer';
 import {withComponentFeatures} from '../universal-dashboard';
-import Container from '@material-ui/core/Container';
 import Skeleton from '@material-ui/lab/Skeleton';
 
 const UDPage = (props) => {
@@ -77,7 +74,13 @@ const UDPage = (props) => {
     else 
     {
         return [
-            <UDNavbar pages={props.pages} title={props.name} history={props.history} id="defaultNavbar"/>,
+            props.render({
+                type: 'ud-navbar',
+                pages: props.pages, 
+                title: props.name,
+                history: props.history, 
+                id: "defaultNavbar"
+            }),
             childComponents,
             <ReactInterval timeout={props.refreshInterval * 1000} enabled={props.autoRefresh} callback={loadData}/>,
            // <UDFooter />
