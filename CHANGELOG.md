@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added New-UDStepper and New-UDStep to support a wizard-like control by [adamdriscoll](https://github.com/adamdriscoll)
 - Added New-UDSlider by [adamdriscoll](https://github.com/adamdriscoll)
 - Added -FullScreen, -FullWidth, -MaxWidth to Show-UDModal by [adamdriscoll](https://github.com/adamdriscoll)
+- Added -UseMesh to Nivo Line chart by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed 
 
@@ -28,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Removed -BackgroundColor, -FontColor, -BottomSheet, -FixedFoot from Show-UDModal by [adamdriscoll](https://github.com/adamdriscoll)
+- Removed -UseDataColor from Nivo charts by [adamdriscoll](https://github.com/adamdriscoll)
 
 ## 3.0.0-beta1 - 3/28/2020
 
