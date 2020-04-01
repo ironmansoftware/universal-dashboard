@@ -1,3 +1,5 @@
+$Cache:Enterprise = $null -ne (Get-Module UniversalDashboard -ErrorAction SilentlyContinue)
+$Cache:Help = @{}
 function New-ComponentPage {
     param(
         [Parameter(Mandatory)]
@@ -50,29 +52,38 @@ function New-ComponentPage {
                 New-UDTypography -Text 'Parameters' -Variant h4
             }
     
-            foreach($item in $Cmdlet)
-            {
-                $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
-                    $Parameter = $_.Key
-
-                    $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
-                    
-                    if ($null -ne $Help)
+            New-UDDynamic -Content {
+                foreach($item in $Cmdlet)
+                {
+                    if ($Cache:Help.ContainsKey($item)) {
+                        $Parameters = $Cache:Help[$item]
+                    }
+                    else 
                     {
-                        @{
-                            name = $Help.name 
-                            type = $Help.type.name
-                            description = $Help.description.text
-                            required = $Help.required
+                        $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
+                            $Parameter = $_.Key
+        
+                            $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
+                            
+                            if ($null -ne $Help)
+                            {
+                                @{
+                                    name = $Help.name 
+                                    type = $Help.type.name
+                                    description = $Help.description.text
+                                    required = $Help.required
+                                }
+                            }
                         }
+                        $Cache:Help[$item] = $Parameters
+                    }
+                    
+                    if ($Parameters)
+                    {
+                        New-UDTable -Title $item -Data $Parameters -Columns $Columns
                     }
                 }
-    
-                if ($Parameters)
-                {
-                    New-UDTable -Title $item -Data $Parameters -Columns $Columns
-                }
-            }               
+            }
         }
     }
 }
@@ -108,36 +119,59 @@ function New-AppBar {
                 New-UDListItem -Label "Purchasing" -OnClick {}
             }
             New-UDListItem -Label "Components" -Children {
-                New-UDListItem -Label "AppBar" -OnClick { Invoke-UDRedirect -Url "/appbar" }
-                New-UDListItem -Label "Autocomplete" -OnClick { Invoke-UDRedirect -Url '/autocomplete' } 
-                New-UDListItem -Label "Avatar" -OnClick { Invoke-UDRedirect -Url '/avatar' } 
-                New-UDListItem -Label "Button" -OnClick { Invoke-UDRedirect -Url "/button" }
-                New-UDListItem -Label "Card" -OnClick { Invoke-UDRedirect -Url '/card' }
-                New-UDListItem -Label "Checkbox" -OnClick { Invoke-UDRedirect -Url '/checkbox' }
-                New-UDListItem -Label "Chips" -OnClick {  Invoke-UDRedirect -Url '/chips'  }
-                New-UDListItem -Label "Date Picker" -OnClick { Invoke-UDRedirect -Url '/date-picker' }
-                New-UDListItem -Label "Drawer" -OnClick {}
-                New-UDListItem -Label "Expansion Panel" -OnClick { Invoke-UDRedirect -Url '/expansion-panel' }
-                New-UDListItem -Label "Floating Action Button" -OnClick { Invoke-UDRedirect -Url '/floating-action-button' }
-                New-UDListItem -Label "Form" -OnClick { Invoke-UDRedirect -Url '/form' }
-                New-UDListItem -Label "Grid" -OnClick { Invoke-UDRedirect -Url '/grid' }
-                New-UDListItem -Label "Icons" -OnClick { Invoke-UDRedirect -Url '/icons' }
-                New-UDListItem -Label "Icon Button" -OnClick {}
-                New-UDListItem -Label "Link" -OnClick {}
-                New-UDListItem -Label "List" -OnClick { Invoke-UDRedirect -Url '/list' }
-                New-UDListItem -Label "Modal" -OnClick { Invoke-UDRedirect -Url '/modal' }
-                New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
-                New-UDListItem -Label "Progress" -OnClick { Invoke-UDRedirect -Url '/progress' }
-                New-UDListItem -Label "Radio" -OnClick { Invoke-UDRedirect -Url '/radio' }
-                New-UDListItem -Label "Select" -OnClick { Invoke-UDRedirect -Url '/select'}
-                New-UDListItem -Label "Slider" -OnClick { Invoke-UDRedirect -Url '/slider'}
-                New-UDListItem -Label "Switch" -OnClick { Invoke-UDRedirect -Url '/switch'}
-                New-UDListItem -Label "Table" -OnClick { Invoke-UDRedirect -Url '/table' }
-                New-UDListItem -Label "Tabs" -OnClick { Invoke-UDRedirect -Url '/tabs' }
-                New-UDListItem -Label "Textbox" -OnClick { Invoke-UDRedirect -Url '/textbox' }
-                New-UDListItem -Label "Time Picker" -OnClick { Invoke-UDRedirect -Url '/time-picker' }
-                New-UDListItem -Label "Tree View" -OnClick { Invoke-UDRedirect -Url '/tree-view' }
-                New-UDListItem -Label "Typography" -OnClick { Invoke-UDRedirect -Url '/typography' }
+                New-UDListItem -Label "Layout" -Children {
+                    New-UDListItem -Label "Container" -OnClick { Invoke-UDRedirect -Url '/container' }
+                    New-UDListItem -Label "Grid" -OnClick { Invoke-UDRedirect -Url '/grid' }
+                }
+                New-UDListItem -Label "Inputs" -Children {
+                    New-UDListItem -Label "Autocomplete" -OnClick { Invoke-UDRedirect -Url '/autocomplete' } 
+                    New-UDListItem -Label "Button" -OnClick { Invoke-UDRedirect -Url "/button" }
+                    New-UDListItem -Label "Checkbox" -OnClick { Invoke-UDRedirect -Url '/checkbox' }
+                    New-UDListItem -Label "Date Picker" -OnClick { Invoke-UDRedirect -Url '/date-picker' }
+                    New-UDListItem -Label "Floating Action Button" -OnClick { Invoke-UDRedirect -Url '/floating-action-button' }
+                    New-UDListItem -Label "Form" -OnClick { Invoke-UDRedirect -Url '/form' }
+                    New-UDListItem -Label "Icon Button" -OnClick {}
+                    New-UDListItem -Label "Radio" -OnClick { Invoke-UDRedirect -Url '/radio' }
+                    New-UDListItem -Label "Select" -OnClick { Invoke-UDRedirect -Url '/select'}
+                    New-UDListItem -Label "Slider" -OnClick { Invoke-UDRedirect -Url '/slider'}
+                    New-UDListItem -Label "Switch" -OnClick { Invoke-UDRedirect -Url '/switch'}
+                    New-UDListItem -Label "Textbox" -OnClick { Invoke-UDRedirect -Url '/textbox' }
+                    New-UDListItem -Label "Time Picker" -OnClick { Invoke-UDRedirect -Url '/time-picker' }
+                }
+                New-UDListItem -Label "Navigation" -Children {
+                    New-UDListItem -Label "Drawer" -OnClick {}
+                    New-UDListItem -Label "Link" -OnClick {}
+                    New-UDListItem -Label "Tabs" -OnClick { Invoke-UDRedirect -Url '/tabs' }
+                }
+                New-UDListItem -Label "Surfaces" -Children {
+                    New-UDListItem -Label "AppBar" -OnClick { Invoke-UDRedirect -Url "/appbar" }
+                    New-UDListItem -Label "Card" -OnClick { Invoke-UDRedirect -Url '/card' }
+                    New-UDListItem -Label "Paper" -OnClick { Invoke-UDRedirect -Url '/paper' }
+                    New-UDListItem -Label "Expansion Panel" -OnClick { Invoke-UDRedirect -Url '/expansion-panel' }
+                }
+                New-UDListItem -Label "Feedback" -Children {
+                    New-UDListItem -Label "Modal" -OnClick { Invoke-UDRedirect -Url '/modal' }
+                    New-UDListItem -Label "Progress" -OnClick { Invoke-UDRedirect -Url '/progress' }
+                    #TODO: toast
+                }
+                New-UDListItem -Label "Data Display" -Children {
+                    New-UDListItem -Label "Avatar" -OnClick { Invoke-UDRedirect -Url '/avatar' } 
+                    New-UDListItem -Label "Chips" -OnClick {  Invoke-UDRedirect -Url '/chips'  }
+                    New-UDListItem -Label "Icons" -OnClick { Invoke-UDRedirect -Url '/icons' }
+                    New-UDListItem -Label "List" -OnClick { Invoke-UDRedirect -Url '/list' }
+                    New-UDListItem -Label "Table" -OnClick { Invoke-UDRedirect -Url '/table' }
+                    New-UDListItem -Label "Tree View" -OnClick { Invoke-UDRedirect -Url '/tree-view' }
+                    New-UDListItem -Label "Typography" -OnClick { Invoke-UDRedirect -Url '/typography' }
+                }
+                New-UDListItem -Label "Data Visualization" -Children {
+                    if ($Cache:Enterprise)
+                    {
+                        New-UDListItem -Label 'Nivo' -Children {
+                            New-UDListItem -Label "Overview" -OnClick { Invoke-UDRedirect -Url '/nivo' }
+                            New-UDListItem -Label "Bar" -OnClick { Invoke-UDRedirect -Url '/nivo-bar' }
+                        }
+                    }
+                }
             }
             New-UDListItem -Label "Security" -Children {
                 New-UDListItem -Label "Authorization" -OnClick {} 
@@ -916,6 +950,11 @@ $Pages += New-ComponentPage -Title 'Typography' -Description 'Use typography to 
         }
     }
 } -Cmdlet @("New-UDTypography")
+
+Get-ChildItem (Join-Path $PSScriptRoot "pages") | ForEach-Object {
+    $Page = . $_.FullName
+    $Pages += $Page
+}
 
 function New-DemoDashboard {
     New-UDDashboard -Title "PowerShell Universal Dashboard" -Pages $Pages
