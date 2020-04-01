@@ -23,6 +23,19 @@ New-ComponentPage -Title 'Nivo' -Description 'Nivo chart library' -Content {
         New-UDNivoChart -Colors 'dark2' -Bar -Data $Data -Height 400 -Width 900 -Keys @('burgers', 'fries', 'sandwich')  -IndexBy 'country'
     }
 
+    New-Example -Title 'Auto Refresh' -Description 'Nivo charts support auto refresh through the New-UDDyanmic cmdlet.' -Example {
+        New-UDDynamic -Content {
+            $Data = 1..10 | ForEach-Object { 
+                $item = Get-Random -Max 1000 
+                [PSCustomObject]@{
+                    Name = "Test$item"
+                    Value = $item
+                }
+            }
+            New-UDNivoChart -Id 'autoRefreshingNivoBar' -Bar -Keys "Value" -IndexBy 'name' -Data $Data -Height 500 -Width 1000
+        } -AutoRefresh
+    }
+
     New-Example -Title 'Patterns' -Description 'You can also define patterns to use with your charts. You can use lines, dots or squares to provide extra emphasis to particular vectors of a series.' -Example {
         $Data = @(
             @{
@@ -77,4 +90,4 @@ New-ComponentPage -Title 'Nivo' -Description 'Nivo chart library' -Content {
         }
     }
 
-} -Cmdlet @("New-UDNivoChart")
+} -Cmdlet @("New-UDNivoChart") -Enterprise
