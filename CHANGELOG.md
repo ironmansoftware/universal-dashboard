@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added New-UDSlider by [adamdriscoll](https://github.com/adamdriscoll)
 - Added -FullScreen, -FullWidth, -MaxWidth to Show-UDModal by [adamdriscoll](https://github.com/adamdriscoll)
 - Added -UseMesh to Nivo Line chart by [adamdriscoll](https://github.com/adamdriscoll)
+- [Enterprise] Added -CachePolicy to New-UDPage by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Changed 
 
@@ -25,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed an issue where UD Enterprise would not successfully load pages when authentication was disabled by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed an issue where returning a PSCustomObject for use in a UDTable would not work by [adamdriscoll](https://github.com/adamdriscoll)
 - Fixed issue with Nivo chart keys and values being case sensitive (#691) by [adamdriscoll](https://github.com/adamdriscoll)
+- Pages are now always dynmaic by [adamdriscoll](https://github.com/adamdriscoll)
 
 ### Removed
 
