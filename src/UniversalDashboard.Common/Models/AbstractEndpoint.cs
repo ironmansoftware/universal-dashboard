@@ -23,6 +23,7 @@ namespace UniversalDashboard.Models
         public Dictionary<string, object> Properties { get; set; }
         public string ContentType { get; set; } 
         public string Accept { get; set; }
+        public bool IsPage { get; set; }
     }
 
     public class Part
