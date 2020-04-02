@@ -93,6 +93,10 @@ namespace UniversalDashboard.Services
             var variables = sessionState.InvokeCommand.InvokeScript("Get-Variable").Select(m => m.BaseObject).Cast<PSVariable>();
             foreach (var variable in variables)
             {
+                if (variable.Options.HasFlag(ScopedItemOptions.Constant) || variable.Options.HasFlag(ScopedItemOptions.ReadOnly))
+                {
+                    continue;
+                }
                 initialSessionState.Variables.Add(new SessionStateVariableEntry(variable.Name, variable.Value, variable.Description));
             }
 
