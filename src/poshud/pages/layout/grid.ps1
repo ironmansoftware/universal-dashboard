@@ -48,7 +48,10 @@ New-UDDynamic -Id 'spacingGrid' -Content {
 }
 
 New-UDSelect -Id 'spacingSelect' -Label Spacing -Option {
-    0..10 | ForEach-Object { New-UDSelectOption -Name $_ -Value $_ }
+    for($i = 0; $i -lt 10; $i++)
+    {
+        New-UDSelectOption -Name $i -Value $i
+    }
 } -OnChange { Sync-UDElement -Id 'spacingGrid' } -DefaultValue 3
 
     }

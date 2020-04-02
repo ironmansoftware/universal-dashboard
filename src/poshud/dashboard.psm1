@@ -1,4 +1,4 @@
-#$Cache:Enterprise = $null -ne (Get-Module UniversalDashboard -ErrorAction SilentlyContinue)
+$Cache:Enterprise = $Cache:Enterprise -or $null -ne (Get-Module UniversalDashboard -ErrorAction SilentlyContinue)
 $Cache:Help = @{}
 function New-ComponentPage {
     param(
@@ -117,9 +117,7 @@ function New-Example {
                 minHeight = '100px'
                 width = '100%'
             }
-        } -Content {
-            & $Example 
-        }
+        } -Content $Example
     }
 
     New-UDPaper -Children {
