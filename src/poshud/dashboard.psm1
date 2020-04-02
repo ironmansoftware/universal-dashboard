@@ -1,4 +1,4 @@
-$Cache:Enterprise = $null -ne (Get-Module UniversalDashboard -ErrorAction SilentlyContinue)
+#$Cache:Enterprise = $null -ne (Get-Module UniversalDashboard -ErrorAction SilentlyContinue)
 $Cache:Help = @{}
 function New-ComponentPage {
     param(
