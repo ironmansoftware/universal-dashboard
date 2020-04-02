@@ -16,7 +16,12 @@ function New-ComponentPage {
         [Switch]$Enterprise
         ) 
 
-    New-UDPage -Name $Title -Content {
+    $AdditionalParameters = @{}
+    if ($Cache:Enterprise) {
+        $AdditionalParameters["CachePolicy"] = "Global"
+    }
+
+    New-UDPage @AdditionalParameters -Name $Title -Content {
         New-UDContainer {
             New-AppBar -Title $title
             
@@ -129,11 +134,11 @@ function New-AppBar {
         New-UDList -Children {
             New-UDListItem -Label "Home" -OnClick { Invoke-UDRedirect -Url "/powershell-universal-dashboard" }
             New-UDListItem -Label "Getting Started" -Children {
-                New-UDListItem -Label "Installation" -OnClick {}
-                New-UDListItem -Label "Usage" -OnClick {}
-                New-UDListItem -Label "FAQs" -OnClick {}
-                New-UDListItem -Label "System Requirements" -OnClick {}
-                New-UDListItem -Label "Purchasing" -OnClick {}
+                New-UDListItem -Label "Installation" -OnClick { Invoke-UDRedirect -Url "/installation" }
+                New-UDListItem -Label "Usage" -OnClick { Invoke-UDRedirect -Url "/usage" }
+                New-UDListItem -Label "FAQs" -OnClick { Invoke-UDRedirect -Url "/faqs" }
+                New-UDListItem -Label "System Requirements" -OnClick { Invoke-UDRedirect -Url "/installation" }
+                New-UDListItem -Label "Purchasing" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/powershell-universal-dashboard" }
             }
             New-UDListItem -Label "Components" -Children {
                 New-UDListItem -Label "Layout" -Children {
@@ -187,6 +192,11 @@ function New-AppBar {
                         New-UDListItem -Label 'Nivo' -Children {
                             New-UDListItem -Label "Overview" -OnClick { Invoke-UDRedirect -Url '/nivo' }
                             New-UDListItem -Label "Bar" -OnClick { Invoke-UDRedirect -Url '/nivo-bar' }
+                            New-UDListItem -Label "Calendar" -OnClick { Invoke-UDRedirect -Url '/nivo-calendar' }
+                            New-UDListItem -Label "Heatmap" -OnClick { Invoke-UDRedirect -Url '/nivo-heatmap' }
+                            New-UDListItem -Label "Line" -OnClick { Invoke-UDRedirect -Url '/nivo-line' }
+                            New-UDListItem -Label "Stream" -OnClick { Invoke-UDRedirect -Url '/nivo-stream' }
+                            New-UDListItem -Label "Treemap" -OnClick { Invoke-UDRedirect -Url '/nivo-treemap' }
                         }
                         New-UDListItem -Label "Sparklines" -OnClick { Invoke-UDRedirect -Url '/sparklines' }
                     }
