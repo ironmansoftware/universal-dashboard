@@ -57,24 +57,22 @@ export const withComponentFeatures = (component) => {
 
     function isString (obj) {
         return (Object.prototype.toString.call(obj) === '[object String]');
-      }
+    }    
 
     const render = (component, history) => {
-
-        if (isString(component)) {
-            component = JSON.parse(component);
-        }
-
-        // set props version
-        if (!component.version)
+        if (!isString(component))
         {
-            component.version = "0";    
+            // set props version
+            if (!component.version)
+            {
+                component.version = "0";    
+            }
+                
+            if (!history && component.history) {
+                history = component.history;
+            }
         }
-            
-        if (!history && component.history) {
-            history = component.history;
-        }
-        
+
         return UniversalDashboard.renderComponent(component, history);
     }
 
