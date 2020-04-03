@@ -70,6 +70,10 @@ export const withComponentFeatures = (component) => {
         {
             component.version = "0";    
         }
+            
+        if (!history && component.history) {
+            history = component.history;
+        }
         
         return UniversalDashboard.renderComponent(component, history);
     }
@@ -133,12 +137,22 @@ export const withComponentFeatures = (component) => {
             const token = subscribeToIncomingEvents(props.id, incomingEvent)
             return () => {
                 unsubscribeFromIncomingEvents(token)
-                // PubSub.publish('element-event', {
-                //     type: "unregisterEvent",
-                //     eventId: this.props.id
-                // });
+                UniversalDashboard.publish('element-event', {
+                    type: "unregisterEvent",
+                    eventId: props.id
+                });
+
+                Object.keys(componentState).forEach(x => {
+                    if (componentState[x] != null && componentState[x].endpoint)
+                    {
+                        UniversalDashboard.publish('element-event', {
+                            type: "unregisterEvent",
+                            eventId: componentState[x].name
+                        });
+                    }
+                });
             }
-        })
+        }, true)
 
         const additionalProps = {
             render,

@@ -232,34 +232,38 @@ function New-AppBar {
 
 $Pages = @()
 $Pages += New-UDPage -Name "PowerShell Universal Dashboard" -Content {
+    
     New-AppBar -Title "PowerShell Universal Dashboard"
-    New-UDElement -Tag 'div' -Attributes @{ style = @{ paddingTop = '20px'}} -Content {}
-    New-UDGrid -Container -Content {
-        New-UDGrid -Item -SmallSize 3 -Content {
-            New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png'
-        }
-        New-UDGrid -Item -SmallSize 9 -Content { 
-            New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
-            New-UDTypography -Text "The most popular web framework for PowerShell" -Variant h4
-            New-UDButton -Variant outlined -Text "Get Started" -OnClick { Invoke-UDRedirect -Url "/get-started" }
-        }
-    }
 
-    New-UDGrid -Container -Content {
-        New-UDGrid -Item -SmallSize 6 -Content {
-            New-UDCard -Title "Installation" -Content {
-                New-UDTypography -Text "Universal Dashboard can be installed from the PowerShell Gallery" -Paragraph
-                New-UDElement -Tag pre -Content { "Install-Module UniversalDashboard" }
-            } 
+    New-UDContainer {
+        New-UDElement -Tag 'div' -Attributes @{ style = @{ paddingTop = '20px'}} -Content {}
+        New-UDGrid -Container -Content {
+            New-UDGrid -Item -SmallSize 3 -Content {
+                New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png'
+            }
+            New-UDGrid -Item -SmallSize 9 -Content { 
+                New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
+                New-UDTypography -Text "The most popular web framework for PowerShell" -Variant h4
+                New-UDButton -Variant outlined -Text "Get Started" -OnClick { Invoke-UDRedirect -Url "/get-started" }
+            }
         }
 
-        New-UDGrid -Item -SmallSize 6 -Content {
-            New-UDCard -Title "Usage" -Content {
-                New-UDTypography -Text "To start Universal Dashboard, you can just use the Start-UDDashboard cmdlet." -Paragraph
-                New-UDElement -tag 'p' -Content {}
-                New-UDElement -Tag pre -Content { "Import-Module UniversalDashboard
-Start-UDDashboard -Port 10000
-Start-Process http://localhost:10000" }
+        New-UDGrid -Container -Content {
+            New-UDGrid -Item -SmallSize 6 -Content {
+                New-UDCard -Title "Installation" -Content {
+                    New-UDTypography -Text "Universal Dashboard can be installed from the PowerShell Gallery" -Paragraph
+                    New-UDElement -Tag pre -Content { "Install-Module UniversalDashboard" }
+                } 
+            }
+
+            New-UDGrid -Item -SmallSize 6 -Content {
+                New-UDCard -Title "Usage" -Content {
+                    New-UDTypography -Text "To start Universal Dashboard, you can just use the Start-UDDashboard cmdlet." -Paragraph
+                    New-UDElement -tag 'p' -Content {}
+                    New-UDElement -Tag pre -Content { "Import-Module UniversalDashboard
+    Start-UDDashboard -Port 10000
+    Start-Process http://localhost:10000" }
+                }
             }
         }
     }
