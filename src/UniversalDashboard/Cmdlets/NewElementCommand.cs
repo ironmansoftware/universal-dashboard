@@ -67,20 +67,13 @@ namespace UniversalDashboard.Cmdlets
 					Attributes.Remove(key);
 			}
 
-			var content = new object[0];
-			if (Content != null && !string.IsNullOrEmpty(Content.ToString()))
-			{
-				var scriptBlock = ScriptBlock.Create(Content.ToString());
-				content = scriptBlock?.Invoke().Where(m => m != null).Select(m => m.BaseObject).ToArray();
-			}
-
 			var element = new Element
 			{
 				Id = Id,
 				Tag = Tag,
 				Attributes = Attributes,
 				Events = events.ToArray(),
-				Content = content,
+				Content = Content?.Invoke().Where(m => m != null).Select(m => m.BaseObject).ToArray(),
 				Callback = GenerateCallback(Id),
 				AutoRefresh = AutoRefresh,
 				RefreshInterval = RefreshInterval,
