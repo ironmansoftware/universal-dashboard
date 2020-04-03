@@ -44,7 +44,7 @@ function New-ComponentPage {
                 New-UDElement -Tag 'div' -Content { $SecondDescription }
             }
     
-            & $Content
+            Invoke-Expression $Content.ToString()
     
             $Columns = @(
                 New-UDTableColumn -Title 'Name' -Property 'name' 
