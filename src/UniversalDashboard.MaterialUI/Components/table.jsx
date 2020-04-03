@@ -72,6 +72,19 @@ const UDTable = (props) => {
 
     const [error, setError] = useState(null);
 
+    useEffect(() => {
+        return () => {
+            props.columns.forEach(column => {
+                if (column.render) {
+                    UniversalDashboard.publish('element-event', {
+                        type: "unregisterEvent",
+                        eventId: column.render
+                    });
+                }
+            })
+        }
+    });
+
     const columns = props.columns.map(column => {
 
         var render = null;
