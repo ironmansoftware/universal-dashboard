@@ -57,24 +57,22 @@ export const withComponentFeatures = (component) => {
 
     function isString (obj) {
         return (Object.prototype.toString.call(obj) === '[object String]');
-      }
+    }    
 
     const render = (component, history) => {
-
-        if (isString(component)) {
-            component = JSON.parse(component);
-        }
-
-        // set props version
-        if (!component.version)
+        if (!isString(component))
         {
-            component.version = "0";    
+            // set props version
+            if (!component.version)
+            {
+                component.version = "0";    
+            }
+                
+            if (!history && component.history) {
+                history = component.history;
+            }
         }
-            
-        if (!history && component.history) {
-            history = component.history;
-        }
-        
+
         return UniversalDashboard.renderComponent(component, history);
     }
 
@@ -100,8 +98,10 @@ export const withComponentFeatures = (component) => {
                     ...event.state
                 });
     
-            if (type === "getState")
+            if (type === "getState") {
                 sendComponentState(event.requestId, componentState);
+            }
+                
     
             if (type === "addElement")
             {
@@ -132,11 +132,16 @@ export const withComponentFeatures = (component) => {
                 setComponentState({...componentState, version: Math.random().toString(36).substr(2, 5) })
             }
         }
-        
+
         useEffect(() => {
             const token = subscribeToIncomingEvents(props.id, incomingEvent)
             return () => {
                 unsubscribeFromIncomingEvents(token)
+            }
+        });
+        
+        useEffect(() => {
+            return () => {
                 UniversalDashboard.publish('element-event', {
                     type: "unregisterEvent",
                     eventId: props.id

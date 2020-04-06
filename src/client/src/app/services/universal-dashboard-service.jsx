@@ -8,17 +8,20 @@ import toaster from './toaster';
 var components = []
 
 function isEmpty(obj) {
-    for(var key in obj) {
+    for(var key in obj) { 
         if(obj.hasOwnProperty(key))
             return false;
     }
     return true;
 }
 
+function isString (obj) {
+    return (Object.prototype.toString.call(obj) === '[object String]');
+}
+
 const renderComponent = (component, history, dynamicallyLoaded) => {
     if (component == null) return <React.Fragment />;
     if (isEmpty(component)) return <React.Fragment />;
-
 
     if (component.$$typeof === Symbol.for('react.element'))
     {
@@ -28,6 +31,19 @@ const renderComponent = (component, history, dynamicallyLoaded) => {
     if (Array.isArray(component)) {
         return component.map(x => renderComponent(x, history));
     }
+
+    if (isString(component)) {
+        try 
+        {
+            component = JSON.parse(component);
+        }
+        catch 
+        {
+            return component;
+        }
+    }
+
+    if (component.type == null) return <React.Fragment />;
 
     var existingComponent = components.find(x => x.type === component.type);
     if (existingComponent != null) {
