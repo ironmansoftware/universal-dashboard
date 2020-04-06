@@ -105,6 +105,11 @@ namespace UniversalDashboard.Execution
                         logger.Debug("Session endpoint found. Removing endpoint.");
                         session.Endpoints.TryRemove(name, out AbstractEndpoint value);
                     }
+
+                    if (Endpoints.TryGetValue(name, out AbstractEndpoint pageEndpoint) && pageEndpoint.IsPage)
+                    {
+                        session.Endpoints.Clear();
+                    }
                 }
             }
         }

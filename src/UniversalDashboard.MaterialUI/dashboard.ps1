@@ -615,6 +615,32 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
                 $EventData = $Body | ConvertFrom-Json
                 Set-TestData $EventData.Length
             } -Multiple
+
+            New-UDDynamic -Id 'spacingGrid' -Content {
+                $Spacing = (Get-UDElement -Id 'spacingSelect').value
+            
+                New-UDGrid -Spacing $Spacing -Container -Content {
+                    New-UDGrid -Item -ExtraSmallSize 3 -Content {
+                        New-UDPaper -Content { "xs-3" } -Elevation 2
+                    }
+                    New-UDGrid -Item -ExtraSmallSize 3 -Content {
+                        New-UDPaper -Content { "xs-3" } -Elevation 2
+                    }
+                    New-UDGrid -Item -ExtraSmallSize 3 -Content {
+                        New-UDPaper -Content { "xs-3" } -Elevation 2
+                    }
+                    New-UDGrid -Item -ExtraSmallSize 3 -Content {
+                        New-UDPaper -Content { "xs-3" } -Elevation 2
+                    }
+                }
+            }
+            
+            New-UDSelect -Id 'spacingSelect' -Label Spacing -Option {
+                for($i = 0; $i -lt 10; $i++)
+                {
+                    New-UDSelectOption -Name $i -Value $i
+                }
+            } -OnChange { Sync-UDElement -Id 'spacingGrid' } -DefaultValue 3
         }
     }
 

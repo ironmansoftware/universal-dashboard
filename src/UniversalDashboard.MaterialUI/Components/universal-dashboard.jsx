@@ -98,8 +98,10 @@ export const withComponentFeatures = (component) => {
                     ...event.state
                 });
     
-            if (type === "getState")
+            if (type === "getState") {
                 sendComponentState(event.requestId, componentState);
+            }
+                
     
             if (type === "addElement")
             {
@@ -130,11 +132,16 @@ export const withComponentFeatures = (component) => {
                 setComponentState({...componentState, version: Math.random().toString(36).substr(2, 5) })
             }
         }
-        
+
         useEffect(() => {
             const token = subscribeToIncomingEvents(props.id, incomingEvent)
             return () => {
                 unsubscribeFromIncomingEvents(token)
+            }
+        });
+        
+        useEffect(() => {
+            return () => {
                 UniversalDashboard.publish('element-event', {
                     type: "unregisterEvent",
                     eventId: props.id
