@@ -72,6 +72,13 @@ namespace UniversalDashboard.Cmdlets
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
             var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
 
+			var enterprisePath = Path.Combine(assemblyBasePath, "..", "..", "UniversalDashboard.psd1");
+			if (File.Exists(enterprisePath))
+			{
+				tempPath = enterprisePath;
+			}
+
+
 			if (Force) {
 				var existingServer = Server.Servers.FirstOrDefault(m => m.Port == Port || m.Name == m.Name);
 				if (existingServer != null) {
