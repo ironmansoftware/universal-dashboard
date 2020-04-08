@@ -53,4 +53,37 @@ Describe "Scheduled Endpoint" {
         }
     }
 
+    Context "Manage schedule endpoints" {
+
+        $Schedule = New-UDEndpointSchedule -Every 1 -Second 
+
+        $EverySecond = New-UDEndpoint -Schedule $Schedule -Endpoint {
+            $Cache:Value = "FirstSchedule"
+        } -Id 'schedule'
+
+        $Endpoint = New-UDEndpoint -Url "changeSchedule" -Endpoint {
+            Remove-UDEndpoint -Id 'schedule'
+            $Schedule = New-UDEndpointSchedule -Every 1 -Second 
+            New-UDEndpoint -Schedule $Schedule -Endpoint {
+                $Cache:Value = "SecondSchedule"
+            } -Id 'schedule'
+        }
+
+        $Endpoint = New-UDEndpoint -Url "test" -Endpoint {
+            $Cache:Value
+        }
+
+        Start-UDRestApi -Endpoint @($Endpoint, $EverySecond) -Port 10001 -Force
+
+        It "should set remove and recreate schedule" {
+            Invoke-RestMethod http://localhost:10001/api/test | Should be "FirstSchedule"
+            Invoke-RestMethod http://localhost:10001/api/changeSchedule
+            Start-Sleep 2
+            Invoke-RestMethod http://localhost:10001/api/test | Should be "SecondSchedule"
+
+            (Get-UDRestApi).DashboardService.EndpointService.ScheduledEndpointManager.GetUpcomingJobs().Result.Length | Should be 1
+        }
+    }
+
+
 }
