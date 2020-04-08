@@ -211,7 +211,7 @@ function New-AppBar {
                     New-UDListItem -Label "Windows" -OnClick {} 
                     New-UDListItem -Label "WS-Federation" -OnClick {} 
                 }
-                New-UDListItem -Label "Login Pages" -OnClick {} 
+                New-UDListItem -Label "Login Pages" -OnClick { Invoke-UDRedirect -Url '/login-pages'  } 
             }
             New-UDListItem -Label "Web Server" -Children {
                 New-UDListItem -Label "Published Folders" -OnClick {}
@@ -228,6 +228,8 @@ function New-AppBar {
     New-UDAppbar -Children {
         New-UDElement -Tag 'div' -Content {$title}
     } -Drawer $Drawer
+
+    New-UDElement -Tag 'div' -Attributes @{ style = @{ paddingTop = '20px'}} -Content {}
 }
 
 $Pages = @()
@@ -236,7 +238,6 @@ $Pages += New-UDPage -Name "PowerShell Universal Dashboard" -Content {
     New-AppBar -Title "PowerShell Universal Dashboard"
 
     New-UDContainer {
-        New-UDElement -Tag 'div' -Attributes @{ style = @{ paddingTop = '20px'}} -Content {}
         New-UDGrid -Container -Content {
             New-UDGrid -Item -SmallSize 3 -Content {
                 New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png'
