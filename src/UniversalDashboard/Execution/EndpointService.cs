@@ -95,7 +95,7 @@ namespace UniversalDashboard.Execution
         {
             logger.Debug($"Unregister() {name} {sessionId}");
 
-            ScheduledEndpointManager.RemoveSchedule(name);
+            ScheduledEndpointManager?.RemoveSchedule(name);
 
             if (sessionId == null)
             {
