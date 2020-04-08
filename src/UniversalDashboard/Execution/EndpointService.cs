@@ -13,12 +13,10 @@ namespace UniversalDashboard.Execution
     public class EndpointService : IEndpointService
     {
         public List<AbstractEndpoint> RestEndpoints { get; private set; }
-        public List<AbstractEndpoint> ScheduledEndpoints { get; private set; }
         private static readonly Logger logger = LogManager.GetLogger("EndpointService");
         public ConcurrentDictionary<string, AbstractEndpoint> Endpoints { get; private set; }
         public ISessionManager SessionManager { get; private set; }
         public IScheduledEndpointManager ScheduledEndpointManager { get; set;  }
-
       
         public EndpointService() 
         {
@@ -26,7 +24,6 @@ namespace UniversalDashboard.Execution
             SessionManager = new SessionManager();
 
             RestEndpoints = new List<AbstractEndpoint>();
-            ScheduledEndpoints = new List<AbstractEndpoint>();
         }
 
         public void Register(AbstractEndpoint callback)
@@ -38,20 +35,15 @@ namespace UniversalDashboard.Execution
 
             logger.Debug($"Register() {callback.Name} {callback.Url} {callback.SessionId}");
 
-            if (callback.Schedule != null)
-            {
-                if (ScheduledEndpointManager == null)
-                {
-                    ScheduledEndpoints.Add(callback);
-                }
-                else 
-                {
-                    ScheduledEndpointManager.SetEndpointSchedule(callback);
-                }
-            }
-            else if (string.IsNullOrEmpty(callback.Url))
+            
+            if (string.IsNullOrEmpty(callback.Url))
             {
                 Unregister(callback.Name, callback.SessionId);
+
+                if (callback.Schedule != null)
+                {
+                    ScheduledEndpointManager?.SetEndpointSchedule(callback);
+                }
 
                 if (callback.SessionId == null)
                 {
@@ -201,7 +193,7 @@ namespace UniversalDashboard.Execution
 
         public IEnumerable<AbstractEndpoint> GetScheduledEndpoints()
         {
-            return ScheduledEndpoints;
+            return Endpoints.Where(m => m.Value.Schedule != null).Select(m => m.Value).ToArray();
         }
 
         private bool IsMatch(AbstractEndpoint callback, string url, Dictionary<string, object> matchedVariables)

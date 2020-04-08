@@ -85,5 +85,32 @@ Describe "Scheduled Endpoint" {
         }
     }
 
+    Context "Manual Invoke" {
+
+        $Schedule = New-UDEndpointSchedule -Every 1 -Day 
+
+        $EverySecond = New-UDEndpoint -Schedule $Schedule -Endpoint {
+            $Cache:Value = Get-Random
+        } -Id 'schedule'
+
+        $Endpoint = New-UDEndpoint -Url "changeSchedule" -Endpoint {
+            Invoke-UDEndpoint -Id 'schedule'
+        }
+
+        $Endpoint = New-UDEndpoint -Url "test" -Endpoint {
+            $Cache:Value
+        }
+
+        Start-UDRestApi -Endpoint @($Endpoint, $EverySecond) -Port 10001 -Force
+
+        It "should set remove and recreate schedule" {
+            $Result = Invoke-RestMethod http://localhost:10001/api/test
+            Invoke-RestMethod http://localhost:10001/api/changeSchedule
+            Invoke-RestMethod http://localhost:10001/api/test | should not be $result
+
+            Wait-Debugger
+        }
+    }
+
 
 }

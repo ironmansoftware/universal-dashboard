@@ -14,5 +14,7 @@ namespace UniversalDashboard {
         public static readonly string SessionState = "SessionState";
         public static readonly string ModuleManifest = "UniversalDashboard.Community.psd1";
         public static readonly string UDPage = "UDPage";
+        public static readonly string ExecutionService = "UDExecutionService";
+        public static readonly string ClaimsPrincipal = "ClaimsPrincipal";
     }
 }

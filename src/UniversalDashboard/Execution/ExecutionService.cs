@@ -28,5 +28,18 @@ namespace UniversalDashboard.Execution
             return await executionService.ExecuteEndpointAsync(context, endpoint);
 
         }
+
+        public object ExecuteEndpoint(ExecutionContext context, AbstractEndpoint endpoint)
+        {
+            var executionService = this.executionServices.FirstOrDefault(m => m.Language == endpoint.Language);
+
+            if (executionService == null)
+            {
+                throw new Exception($"Execution service for {endpoint.Language} not defined.");
+            }
+
+            return executionService.ExecuteEndpoint(context, endpoint);
+
+        }
     }
 }
