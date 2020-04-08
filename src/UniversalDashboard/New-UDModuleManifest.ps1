@@ -172,6 +172,7 @@ $manifestParameters = @{
 						"New-UDSideNavItem"
 						"Clear-UDCache"
 						"New-UDDynamic"
+						"Remove-UDEndpoint"
 						)
 }
 

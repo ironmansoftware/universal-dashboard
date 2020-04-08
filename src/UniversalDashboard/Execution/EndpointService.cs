@@ -17,6 +17,7 @@ namespace UniversalDashboard.Execution
         private static readonly Logger logger = LogManager.GetLogger("EndpointService");
         public ConcurrentDictionary<string, AbstractEndpoint> Endpoints { get; private set; }
         public ISessionManager SessionManager { get; private set; }
+        public IScheduledEndpointManager ScheduledEndpointManager { get; set;  }
 
       
         public EndpointService() 
@@ -39,7 +40,14 @@ namespace UniversalDashboard.Execution
 
             if (callback.Schedule != null)
             {
-                ScheduledEndpoints.Add(callback);
+                if (ScheduledEndpointManager == null)
+                {
+                    ScheduledEndpoints.Add(callback);
+                }
+                else 
+                {
+                    ScheduledEndpointManager.SetEndpointSchedule(callback);
+                }
             }
             else if (string.IsNullOrEmpty(callback.Url))
             {
@@ -86,6 +94,8 @@ namespace UniversalDashboard.Execution
         public void Unregister(string name, string sessionId)
         {
             logger.Debug($"Unregister() {name} {sessionId}");
+
+            ScheduledEndpointManager.RemoveSchedule(name);
 
             if (sessionId == null)
             {

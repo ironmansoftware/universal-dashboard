@@ -4,7 +4,6 @@ using System.Management.Automation;
 using System.Management.Automation.Language;
 using System.Text.RegularExpressions;
 using UniversalDashboard.Models;
-using UniversalDashboard.Services;
 using System.Linq;
 
 namespace UniversalDashboard.Cmdlets
@@ -77,6 +76,7 @@ namespace UniversalDashboard.Cmdlets
             {
                 WriteWarning(ex.Message);
             }
+
             if (AcceptFileUpload) {
                 callback.AcceptFileUpload = true;
             }
@@ -88,11 +88,8 @@ namespace UniversalDashboard.Cmdlets
             callback.SessionId = SessionState.PSVariable.Get(Constants.SessionId)?.Value as string;
             callback.Page = SessionState.PSVariable.Get(Constants.UDPage)?.Value as Page;
 
-            if (callback.Schedule == null) 
-            {
-                var state = this.GetHostState();
-                state.EndpointService.Register(callback);
-            }
+            var state = this.GetHostState();                
+            state.EndpointService.Register(callback);
             
             WriteObject(callback);
 	    }
