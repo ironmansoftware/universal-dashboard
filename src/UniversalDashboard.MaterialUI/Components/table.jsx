@@ -85,7 +85,7 @@ const UDTable = (props) => {
         }
     });
 
-    const columns = props.columns.map(column => {
+    const columns = props.columns ? props.columns.map(column => {
 
         var render = null;
         if (column.render)
@@ -94,14 +94,14 @@ const UDTable = (props) => {
         }
 
         return { 
-            field: column.field.toLowerCase(), 
+            field: column.field ? column.field.toLowerCase() : "", 
             title: column.title, 
             filtering: column.filter, 
             sorting: column.sort, 
             search: column.search,
             render
         }
-    })
+    }) : []
 
     var data = null;
     if (props.loadData) {
@@ -132,7 +132,7 @@ const UDTable = (props) => {
     }
     else 
     {
-        data = props.data.map(x => toLowerCaseKeys(x));
+        data = props.data ? props.data.map(x => toLowerCaseKeys(x)) : [];
     }
 
     if (error) {

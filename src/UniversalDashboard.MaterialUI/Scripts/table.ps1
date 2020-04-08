@@ -126,7 +126,8 @@ function New-UDTable {
         [Parameter()]
         [string]$Title = "",
         [Parameter(Mandatory, ParameterSetName = "Static")]
-        [object[]]$Data,
+        [AllowNull()]
+        [object[]]$Data = @(),
         [Parameter(Mandatory, ParameterSetName = "Dynamic")]
         [Endpoint]$LoadData,
         [Parameter(ParameterSetName = "Static")]
@@ -142,7 +143,7 @@ function New-UDTable {
         [Switch]$Export
     )
 
-    if ($null -eq $Columns)
+    if ($null -eq $Columns -and $null -ne $Data)
     {
         $item = $Data | Select-Object -First 1
 
