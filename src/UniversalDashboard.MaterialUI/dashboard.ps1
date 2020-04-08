@@ -204,6 +204,16 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         } 
     }
 
+    New-UDPage -Name 'Clipboard' -Content {
+        New-UDButton -Text 'Click' -Id 'btnClip' -OnClick {
+            Show-UDModal -Content {
+                New-UDButton -Text 'Clicker' -Id 'btnClip2' -OnClick {
+                    Set-UDClipboard -Data 'hello world!'
+                }
+            }
+        }
+    }
+
     New-UDPage -Name 'Expansion Panel' -Content {
         New-UDExpansionPanelGroup -Children {
             New-UDExpansionPanel -Title "Hello" -Id 'expTitle' -Children {}
