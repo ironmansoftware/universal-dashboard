@@ -108,12 +108,6 @@ namespace UniversalDashboard
                         DashboardService.EndpointService.Register(endpoint.Value);
                     }
 
-                    foreach (var endpoint in CmdletExtensions.HostState.EndpointService.ScheduledEndpoints)
-                    {
-                        DashboardService.EndpointService.Register(endpoint);
-                    }
-
-
                     foreach (var endpoint in CmdletExtensions.HostState.EndpointService.RestEndpoints)
                     {
                         DashboardService.EndpointService.Register(endpoint);
@@ -122,7 +116,6 @@ namespace UniversalDashboard
 
                     CmdletExtensions.HostState.EndpointService.Endpoints.Clear();
                     CmdletExtensions.HostState.EndpointService.RestEndpoints.Clear();
-                    CmdletExtensions.HostState.EndpointService.ScheduledEndpoints.Clear();
 
                     y.Add(new ServiceDescriptor(typeof(IDashboardService), DashboardService));
                     

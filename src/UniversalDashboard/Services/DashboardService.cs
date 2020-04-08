@@ -57,12 +57,6 @@ namespace UniversalDashboard.Services
                 EndpointService.Register(endpoint.Value);
             }
 
-            foreach (var endpoint in CmdletExtensions.HostState.EndpointService.ScheduledEndpoints)
-            {
-                EndpointService.Register(endpoint);
-            }
-
-
             foreach (var endpoint in CmdletExtensions.HostState.EndpointService.RestEndpoints)
             {
                 EndpointService.Register(endpoint);
@@ -71,7 +65,6 @@ namespace UniversalDashboard.Services
 
             CmdletExtensions.HostState.EndpointService.Endpoints.Clear();
             CmdletExtensions.HostState.EndpointService.RestEndpoints.Clear();
-            CmdletExtensions.HostState.EndpointService.ScheduledEndpoints.Clear();
 
             if (ServiceProvider != null)
             {

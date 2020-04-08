@@ -173,6 +173,7 @@ $manifestParameters = @{
 						"Clear-UDCache"
 						"New-UDDynamic"
 						"Remove-UDEndpoint"
+						"Invoke-UDEndpoint"
 						)
 }
 
