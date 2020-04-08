@@ -107,8 +107,6 @@ Describe "Scheduled Endpoint" {
             $Result = Invoke-RestMethod http://localhost:10001/api/test
             Invoke-RestMethod http://localhost:10001/api/changeSchedule
             Invoke-RestMethod http://localhost:10001/api/test | should not be $result
-
-            Wait-Debugger
         }
     }
 
