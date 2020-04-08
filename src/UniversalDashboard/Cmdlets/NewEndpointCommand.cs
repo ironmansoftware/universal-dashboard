@@ -89,7 +89,7 @@ namespace UniversalDashboard.Cmdlets
             callback.Page = SessionState.PSVariable.Get(Constants.UDPage)?.Value as Page;
 
             var state = this.GetHostState();                
-            state.EndpointService.Register(callback);
+            state?.EndpointService?.Register(callback);
             
             WriteObject(callback);
 	    }
