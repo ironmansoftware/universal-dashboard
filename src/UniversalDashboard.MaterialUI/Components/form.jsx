@@ -56,6 +56,13 @@ const UDForm = (props) => {
     const onSubmit = () => {
         setSubmitting(true);
         props.onSubmit(fields).then(x => {
+
+            try
+            {
+                x = JSON.parse(x);
+            }
+            catch {}
+
             if (x && Object.keys(x).length > 0) {
                 setContent(x);
                 setHideSubmit(true);

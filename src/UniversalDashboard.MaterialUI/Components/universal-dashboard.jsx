@@ -140,24 +140,24 @@ export const withComponentFeatures = (component) => {
             }
         });
         
-        useEffect(() => {
-            return () => {
-                UniversalDashboard.publish('element-event', {
-                    type: "unregisterEvent",
-                    eventId: props.id
-                });
+        // useEffect(() => {
+        //     return () => {
+        //         UniversalDashboard.publish('element-event', {
+        //             type: "unregisterEvent",
+        //             eventId: props.id
+        //         });
 
-                Object.keys(componentState).forEach(x => {
-                    if (componentState[x] != null && componentState[x].endpoint)
-                    {
-                        UniversalDashboard.publish('element-event', {
-                            type: "unregisterEvent",
-                            eventId: componentState[x].name
-                        });
-                    }
-                });
-            }
-        }, true)
+        //         Object.keys(componentState).forEach(x => {
+        //             if (componentState[x] != null && componentState[x].endpoint)
+        //             {
+        //                 UniversalDashboard.publish('element-event', {
+        //                     type: "unregisterEvent",
+        //                     eventId: componentState[x].name
+        //                 });
+        //             }
+        //         });
+        //     }
+        // }, true)
 
         const additionalProps = {
             render,

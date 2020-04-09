@@ -67,6 +67,7 @@ Describe "Form" {
     It 'returns custom content' {
         (Find-SeElement -Id 'formReturnContent' -Driver $Driver).FindElementsByTagName("button")[0] | Invoke-SeClick 
         Find-SeElement -Id 'newElement' -Target $driver | Should not be $null
+
     }
     
     It 'returns validates the form' {

@@ -24,6 +24,11 @@ const UDStepImpl = (props) => {
 
     useEffect(() => {
         props.onLoad({context: props.context}).then(x => {
+
+            try {
+                x = JSON.parse(x);
+            } catch {}
+
             setContent(x);
         })
     }, [true]);
