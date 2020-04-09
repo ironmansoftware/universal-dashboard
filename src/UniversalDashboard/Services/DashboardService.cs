@@ -42,7 +42,7 @@ namespace UniversalDashboard.Services
         public DateTime StartTime { get; private set; }
         public Debugger Debugger { get; private set; }
         public ServiceProvider ServiceProvider { get; set; }
-        public IEndpointService EndpointService { get; }
+        public IEndpointService EndpointService { get; set; }
         public Dictionary<string, object> Properties { get; }
 
         public void SetDashboard(Dashboard dashboard)
