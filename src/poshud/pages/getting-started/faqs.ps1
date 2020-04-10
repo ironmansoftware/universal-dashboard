@@ -1,4 +1,4 @@
-New-UDPage -Name 'FAQs' -Content {
+New-UDPage @AdditionalParameters -Name 'FAQs' -Content {
 
     New-AppBar -Title "Frequently Asked Questions"
 

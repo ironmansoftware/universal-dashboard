@@ -1,4 +1,4 @@
-New-UDPage -Name 'Login Pages' -Content {
+New-UDPage @AdditionalParameters -Name 'Login Pages' -Content {
     New-AppBar -Title "Login Pages"
 
     

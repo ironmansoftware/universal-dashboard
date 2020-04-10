@@ -1,4 +1,4 @@
-New-UDPage -Name 'System Requirements' -Content {
+New-UDPage @AdditionalParameters -Name 'System Requirements' -Content {
 
     New-AppBar -Title "System Requirements"
 

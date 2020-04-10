@@ -1,4 +1,4 @@
-New-UDPage -Name 'Installation' -Content {
+New-UDPage @AdditionalParameters -Name 'Installation' -Content {
 
     New-AppBar -Title "Installation"
 

@@ -1,5 +1,11 @@
 $Cache:Enterprise = $Cache:Enterprise -or $null -ne (Get-Module UniversalDashboard -ErrorAction SilentlyContinue)
 $Cache:Help = @{}
+
+$AdditionalParameters = @{}
+if ($Cache:Enterprise) {
+    $AdditionalParameters["CachePolicy"] = "Global"
+}
+
 function New-ComponentPage {
     param(
         [Parameter(Mandatory)]
@@ -49,17 +55,7 @@ function New-ComponentPage {
             $Columns = @(
                 New-UDTableColumn -Title 'Name' -Property 'name' 
                 New-UDTableColumn -Title 'Type' -Property 'type' 
-                New-UDTableColumn -Title 'Description' -Property 'description' -Render {
-                    $Row = $Body | ConvertFrom-Json 
-                    if ($Row.description)
-                    {
-                        New-UDTypography -Text $Row.description
-                    }
-                    else 
-                    {
-                        New-UDElement -tag 'div' -Content {}
-                    }
-                }
+                New-UDTableColumn -Title 'Description' -Property 'description'
                 New-UDTableColumn -Title 'Required' -Property 'required' 
             )
     
@@ -233,7 +229,7 @@ function New-AppBar {
 }
 
 $Pages = @()
-$Pages += New-UDPage -Name "PowerShell Universal Dashboard" -Content {
+$Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard" -Content {
     
     New-AppBar -Title "PowerShell Universal Dashboard"
 
