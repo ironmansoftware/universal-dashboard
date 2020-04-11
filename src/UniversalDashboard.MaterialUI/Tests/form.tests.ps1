@@ -28,7 +28,12 @@ Describe "Form" {
         Find-SeElement -TagName 'body' -Driver $Driver | Invoke-SeClick 
         Find-SeElement -Id 'alon' -Driver $Driver | Invoke-SeClick 
 
-        (Find-SeElement -Id 'form' -Driver $Driver).FindElementsByTagName("button")[2] | Invoke-SeClick 
+        Find-SeElement -Id 'autoCompleteForm' -Driver $Driver | Invoke-SeClick
+        Find-SeElement -Id 'autoCompleteForm' -Driver $Driver | Send-SeKeys -Keys '2'
+        $Element = Find-SeElement -ClassName 'MuiAutocomplete-popper' -Driver $Driver 
+        $Element.FindElementByTagName('li') | Invoke-SeClick
+        
+        (Find-SeElement -Id 'form' -Driver $Driver).FindElementsByTagName("button") | Where-Object Text -eq 'Submit' | Invoke-SeClick 
 
         $TestData = Get-TestData 
 
@@ -41,6 +46,7 @@ Describe "Form" {
         [DateTime]$DateTime = $TestData.timePicker
         $DateTime.TimeOfDay.ToString() | should be "22:20:00"
         $TestData.simpleRadio | should be "Alon"
+        $TestData.autoCompleteForm | should be "Test2"
     }
 
     It 'submits default values' {
@@ -61,5 +67,18 @@ Describe "Form" {
     It 'returns custom content' {
         (Find-SeElement -Id 'formReturnContent' -Driver $Driver).FindElementsByTagName("button")[0] | Invoke-SeClick 
         Find-SeElement -Id 'newElement' -Target $driver | Should not be $null
+
+    }
+    
+    It 'returns validates the form' {
+        (Find-SeElement -Id 'validateForm-validationError' -Driver $Driver).Text | Should be "txtValidateForm is required"
+        $SubmitButton = (Find-SeElement -Id 'validateForm' -Driver $Driver).FindElementsByTagName("button") | Select-Object -Last 1
+        $SubmitButton.GetAttribute("disabled") | should be "true"
+        Find-SeElement -Id 'txtValidateForm' -Driver $Driver | Send-SeKeys -Keys "Hello"
+        Start-Sleep 1
+        $SubmitButton = (Find-SeElement -Id 'validateForm' -Driver $Driver).FindElementsByTagName("button") | Select-Object -Last 1
+        $SubmitButton | Invoke-SeClick
+        $TestData = Get-TestData 
+        $TestData.txtValidateForm | should be "Hello"
     }
 }

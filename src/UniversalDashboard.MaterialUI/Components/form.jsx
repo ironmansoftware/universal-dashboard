@@ -1,8 +1,9 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState, useReducer, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { withComponentFeatures } from './universal-dashboard';
 import { makeStyles } from '@material-ui/core/styles';
+import UDIcon from './icon';
 
 const defaultContext = {
     fields: {},
@@ -35,8 +36,10 @@ const UDForm = (props) => {
 
     const [fields, setFields] = useReducer(reducer, {});
     const [valid, setValid] = useState(props.onValidate == null);
+    const [validationError, setValidationError] = useState("");
     const [content, setContent] = useState(props.children);
     const [hideSubmit, setHideSubmit] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
 
     var components = [];
     
@@ -51,24 +54,39 @@ const UDForm = (props) => {
     }
 
     const onSubmit = () => {
+        setSubmitting(true);
         props.onSubmit(fields).then(x => {
+
+            try
+            {
+                x = JSON.parse(x);
+            }
+            catch {}
+
             if (x && Object.keys(x).length > 0) {
                 setContent(x);
                 setHideSubmit(true);
             }
+            setSubmitting(false);
         })
     }
 
-    const onValidate = () => {
-        if (props.onValidate) {
+    if (props.onValidate)
+    {
+        useEffect(() => {
             props.onValidate(fields).then(x => {
-                if (x) {
-                    setValid(x)
+
+                var json = JSON.parse(x);
+
+                if (Array.isArray(json))
+                {
+                    json = json[0]
                 }
+
+                setValid(json.valid);
+                setValidationError(json.validationError);
             });
-        } else {
-            setValid(true);
-        }
+        }, [fields]);
     }
     
     const contextState = {
@@ -80,19 +98,34 @@ const UDForm = (props) => {
         }
     }
 
+    if (submitting && props.loadingComponent) {
+        return props.render(props.loadingComponent);
+    }
+
+    var submitButton = null;
+    if (!hideSubmit) {
+        submitButton = (
+            <Grid item xs={12}>
+                {valid ? <React.Fragment></React.Fragment> : <div style={{color: 'red'}} id={props.id + "-validationError"}><UDIcon icon="Exclamation" /> {validationError}</div>}
+                <Button onClick={onSubmit} disabled={!valid} className={classes.formControlPadding}>Submit</Button>
+            </Grid>
+        )
+    }
+
+    if (submitting) {
+        submitButton = (
+            <Grid item xs={12}>
+                <Button disabled={true} className={classes.formControlPadding}><UDIcon icon="Spinner" spin/> Submit</Button>
+            </Grid>
+        )
+    }
+
     return (
         <div id={props.id}>
             <FormContext.Provider value={contextState}>
                 <Grid container>
                     {components.map(x => <Grid item xs={12} className={classes.formControlPadding}>{x}</Grid>)}
-                    {hideSubmit ? 
-                    
-                    <React.Fragment></React.Fragment> : 
-                    
-                    <Grid item xs={12}>
-                        <Button onClick={onSubmit} disabled={!valid} className={classes.formControlPadding}>Submit</Button>
-                    </Grid>
-                    }
+                    {submitButton}
                 </Grid>
             </FormContext.Provider>
         </div>

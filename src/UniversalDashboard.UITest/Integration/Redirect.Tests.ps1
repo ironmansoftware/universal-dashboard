@@ -12,9 +12,6 @@ Describe "Invoke-UDRedirect" {
         Enter-SeUrl -Driver $Driver -Url "http://localhost:$BrowserPort"
 
         It "should redirect to google" {
-            $Element = Find-SeElement -Driver $Driver -Id 'Counter'
-            $Text = $Element.Text
-
             $Element = Find-SeElement -Driver $Driver -Id 'Button'
             Invoke-SeClick -Element $Element
 

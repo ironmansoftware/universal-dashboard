@@ -398,6 +398,36 @@ namespace UniversalDashboard.Controllers
 			return StatusCode(404);
 		}
 
+        [HttpOptions]
+		[Route("/api/{*parts}")]
+		public async Task<IActionResult> OptionsEndpoint()
+		{
+			var parts = HttpContext.GetRouteValue("parts") as string;
+
+			Log.Info($"OptionsEndpoint - {parts}");
+
+			var variables = new Dictionary<string, object>();
+            SetQueryStringValues(variables);
+
+            if (!await TryProcessBodyAsForm(Request, variables))
+            {
+                //If we made it here we either have a non-form content type
+                //or the request was made with the default content type of form
+                //when it is really something else (probably application/json)
+                ProcessBodyAsRaw(Request, variables);
+            }
+
+            var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "OPTIONS", variables);
+            if (endpoint != null)
+            {
+                return await RunScript(endpoint, variables);
+            }
+
+            Log.Info("Did not match endpoint.");
+
+			return StatusCode(404);
+		}
+
         [HttpPost]
         [Route("element/sessionState/{requestId}")]
         public IActionResult SetElementSessionState([FromRoute]string requestId, [FromBody]JObject jobject)

@@ -98,25 +98,11 @@ namespace UniversalDashboard.Cmdlets
 
 				try
 				{
-					var components = Content.Invoke();
-
-					foreach (var component in components)
-					{
-						if (component.BaseObject is Component dashboardComponent)
-						{
-							page.Components.Add(dashboardComponent);
-						}
-
-                        if (component.BaseObject is Dictionary<string, object> dictionary)
-                        {
-                            page.Components.Add(new GenericComponent(dictionary));
-                        }
-
-						if (component.BaseObject is Hashtable hashtable)
-                        {
-                            page.Components.Add(new GenericComponent(hashtable));
-                        }
-                    }
+					page.Id = Guid.NewGuid().ToString();
+					page.Callback = Content.GenerateCallback(page.Id, this, SessionState, new object[0]);
+					page.Callback.IsPage = true;
+					page.Callback.Page = page;
+					page.Dynamic = true;
 				}
 				catch (Exception ex)
 				{

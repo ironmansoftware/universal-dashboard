@@ -28,6 +28,14 @@ export const withComponentFeatures = (component) => {
         });
     }
 
+    const postWithHeaders = (id, data, headers) => {
+        return new Promise((resolve, reject) => {
+            UniversalDashboard.postWithHeaders(`/api/internal/component/element/${id}`, data, (returnData) => {
+                resolve(returnData)
+            }, headers);
+        });
+    }
+
     const subscribeToIncomingEvents = (id, callback) => {
         const incomingEvent = (id, event) => {
 
@@ -47,13 +55,24 @@ export const withComponentFeatures = (component) => {
         UniversalDashboard.unsubscribe(token)
     }
 
+    function isString (obj) {
+        return (Object.prototype.toString.call(obj) === '[object String]');
+    }    
+
     const render = (component, history) => {
-        // set props version
-        if (!component.version)
+        if (!isString(component))
         {
-            component.version = "0";    
+            // set props version
+            if (!component.version)
+            {
+                component.version = "0";    
+            }
+                
+            if (!history && component.history) {
+                history = component.history;
+            }
         }
-        
+
         return UniversalDashboard.renderComponent(component, history);
     }
 
@@ -79,8 +98,10 @@ export const withComponentFeatures = (component) => {
                     ...event.state
                 });
     
-            if (type === "getState")
+            if (type === "getState") {
                 sendComponentState(event.requestId, componentState);
+            }
+                
     
             if (type === "addElement")
             {
@@ -111,17 +132,32 @@ export const withComponentFeatures = (component) => {
                 setComponentState({...componentState, version: Math.random().toString(36).substr(2, 5) })
             }
         }
-        
+
         useEffect(() => {
             const token = subscribeToIncomingEvents(props.id, incomingEvent)
             return () => {
                 unsubscribeFromIncomingEvents(token)
-                // PubSub.publish('element-event', {
-                //     type: "unregisterEvent",
-                //     eventId: this.props.id
-                // });
             }
-        })
+        });
+        
+        // useEffect(() => {
+        //     return () => {
+        //         UniversalDashboard.publish('element-event', {
+        //             type: "unregisterEvent",
+        //             eventId: props.id
+        //         });
+
+        //         Object.keys(componentState).forEach(x => {
+        //             if (componentState[x] != null && componentState[x].endpoint)
+        //             {
+        //                 UniversalDashboard.publish('element-event', {
+        //                     type: "unregisterEvent",
+        //                     eventId: componentState[x].name
+        //                 });
+        //             }
+        //         });
+        //     }
+        // }, true)
 
         const additionalProps = {
             render,
@@ -141,7 +177,17 @@ export const withComponentFeatures = (component) => {
             if (componentState[x] != null && componentState[x].endpoint)
             {
                 additionalProps[x] = (data) => {
-                    return post(componentState[x].name, data)
+
+                    let headers = {}
+                    if (componentState[x].accept && componentState[x].accept !== '') {
+                        headers['Accept'] = componentState[x].accept;
+                    } 
+
+                    if (componentState[x].contentType && componentState[x].contentType !== '') {
+                        headers['Content-Type'] = componentState[x].contentType;
+                    } 
+
+                    return postWithHeaders(componentState[x].name, data, headers);
                 }
             }
         })

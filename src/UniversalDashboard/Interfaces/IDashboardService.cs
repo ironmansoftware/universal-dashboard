@@ -16,7 +16,7 @@ namespace UniversalDashboard.Interfaces
         string UpdateToken { get; set; }
         string ReloadToken { get; set; }
         DateTime StartTime { get; }
-        IEndpointService EndpointService { get; }
+        IEndpointService EndpointService { get; set; }
         Debugger Debugger { get; }
         ServiceProvider ServiceProvider { get; set; }
     }

@@ -39,13 +39,13 @@ function New-UDRow {
 
     End 
     {
-        if ($PSCmdlet.ParameterSetName -eq 'dynamic')
-        {
-            throw "dynamic parameterset not yet supported"
-        }
+        # if ($PSCmdlet.ParameterSetName -eq 'dynamic')
+        # {
+        #     throw "dynamic parameterset not yet supported"
+        # }
 
         New-UDGrid -Container -Content {
-            $Columns.Invoke()
+            & $Columns 
         }
     }
 }
@@ -91,7 +91,7 @@ function New-UDColumn {
     if ($PSCmdlet.ParameterSetName -eq 'content') {
         $GridContent = $Content
         New-UDGrid -Item -SmallSize $SmallSize -MediumSize $MediumSize -LargeSize $LargeSize -Content {
-            $GridContent.Invoke()
+            & $GridContent 
         }
     } else {
         throw "endpoint not yet supported"

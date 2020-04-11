@@ -72,7 +72,20 @@ const UDTable = (props) => {
 
     const [error, setError] = useState(null);
 
-    const columns = props.columns.map(column => {
+    useEffect(() => {
+        return () => {
+            props.columns.forEach(column => {
+                if (column.render) {
+                    UniversalDashboard.publish('element-event', {
+                        type: "unregisterEvent",
+                        eventId: column.render
+                    });
+                }
+            })
+        }
+    });
+
+    const columns = props.columns ? props.columns.map(column => {
 
         var render = null;
         if (column.render)
@@ -81,14 +94,14 @@ const UDTable = (props) => {
         }
 
         return { 
-            field: column.field.toLowerCase(), 
+            field: column.field ? column.field.toLowerCase() : "", 
             title: column.title, 
             filtering: column.filter, 
             sorting: column.sort, 
             search: column.search,
             render
         }
-    })
+    }) : []
 
     var data = null;
     if (props.loadData) {
@@ -98,18 +111,20 @@ const UDTable = (props) => {
 
                 props.loadData(query).then(x => {
 
-                    if (x.error)
+                    const result = JSON.parse(x);
+
+                    if (result.error)
                     {
-                        setError(x.error);
+                        setError(result.error);
                         resolve({data:[], page: 0, totalCount: 0})
                         return;
                     }
 
-                    var result = x[0].data.map(y => toLowerCaseKeys(y));
+                    var data = result[0].data.map(y => toLowerCaseKeys(y));
                     resolve({
-                        data: result,
-                        page: x[0].page,
-                        totalCount: x[0].totalCount
+                        data,
+                        page: result[0].page,
+                        totalCount: result[0].totalCount
                     })
                 })
             });
@@ -117,7 +132,7 @@ const UDTable = (props) => {
     }
     else 
     {
-        data = props.data.map(x => toLowerCaseKeys(x));
+        data = props.data ? props.data.map(x => toLowerCaseKeys(x)) : [];
     }
 
     if (error) {

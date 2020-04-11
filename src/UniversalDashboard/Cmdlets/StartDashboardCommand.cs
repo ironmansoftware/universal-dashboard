@@ -72,6 +72,13 @@ namespace UniversalDashboard.Cmdlets
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
             var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
 
+			var enterprisePath = Path.Combine(assemblyBasePath, "..", "..", "UniversalDashboard.psd1");
+			if (File.Exists(enterprisePath))
+			{
+				tempPath = enterprisePath;
+			}
+
+
 			if (Force) {
 				var existingServer = Server.Servers.FirstOrDefault(m => m.Port == Port || m.Name == m.Name);
 				if (existingServer != null) {
@@ -117,15 +124,14 @@ namespace UniversalDashboard.Cmdlets
             if (Content == null && Dashboard == null && FilePath == null && !File.Exists(Constants.CachedDashboardPath)) {
 				using(var powershell = PowerShell.Create()) {
                     powershell.AddStatement().AddCommand("Import-Module").AddParameter("Name", tempPath);
-                    powershell.AddStatement().AddScript($". '{Constants.DemoDashboardPath}'");
+                    powershell.AddStatement().AddCommand("Import-Module").AddParameter("Name", Constants.DemoDashboardPath);
+					powershell.AddStatement().AddCommand("New-DemoDashboard");
 					Dashboard = powershell.Invoke().FirstOrDefault()?.BaseObject as Dashboard;
 				}
 
 				if (Dashboard == null) {
 					throw new Exception($"The file {Constants.DemoDashboardPath} did not return a valid dashboard");
 				}
-
-				Dashboard.Demo = true;
 			}
 			
 			// Dashboard from parameter
@@ -134,7 +140,6 @@ namespace UniversalDashboard.Cmdlets
 				Log.Info("Invalid dashboard.");
 			    throw new Exception("Invalid dashboard.");
 		    }
-
 
             Log.Info($"{Name} - {MyInvocation.ScriptName} - {AutoReload}");
 			Log.Debug(JsonConvert.SerializeObject(Dashboard));

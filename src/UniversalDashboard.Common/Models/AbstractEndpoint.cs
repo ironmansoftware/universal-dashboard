@@ -21,6 +21,9 @@ namespace UniversalDashboard.Models
         public bool AcceptFileUpload {get; set;}
         public bool Asynchronous { get; set; }
         public Dictionary<string, object> Properties { get; set; }
+        public string ContentType { get; set; } 
+        public string Accept { get; set; }
+        public bool IsPage { get; set; }
     }
 
     public class Part

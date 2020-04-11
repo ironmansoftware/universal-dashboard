@@ -14,7 +14,7 @@ namespace UniversalDashboard.Interfaces
         void Register(AbstractEndpoint callback);
         ConcurrentDictionary<string, AbstractEndpoint> Endpoints { get; }
         List<AbstractEndpoint> RestEndpoints { get; }
-        List<AbstractEndpoint> ScheduledEndpoints { get; }
         ISessionManager SessionManager { get; }
+        IScheduledEndpointManager ScheduledEndpointManager { get; set; }
     }
 }

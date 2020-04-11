@@ -10,17 +10,18 @@ using UniversalDashboard.Utilities;
 namespace UniversalDashboard.Cmdlets
 {
 	[Cmdlet(VerbsCommon.New, "UDPage")]
-    public class NewPageCommand : CallbackCmdlet, IDynamicParameters
+    public class NewPageCommand : PSCmdlet, IDynamicParameters
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(NewPageCommand));
 
-		[Parameter(Position = 0, Mandatory = true, ParameterSetName = "name")]
+		[Parameter(Position = 0, Mandatory = true)]
 		public string Name { get; set; }
 	    [Parameter(Position = 1)]
 		public FontAwesomeIcons Icon { get; set; }
 	    [Parameter(Position = 2)]
+		[Alias("Endpoint")]
 		public ScriptBlock Content { get; set; }
-		[Parameter(Position = 0, Mandatory = true, ParameterSetName = "url")]
+		[Parameter(Position = 0)]
 		public string Url { get; set; }
 
 		[Parameter(Position = 3)]
@@ -31,6 +32,21 @@ namespace UniversalDashboard.Cmdlets
 
 		[Parameter]
 		public SwitchParameter Blank { get; set; }
+
+        [Parameter]
+        public object[] ArgumentList { get; set; }
+
+        [Parameter]
+	    public SwitchParameter AutoRefresh { get; set; }
+
+	    [Parameter]
+	    public int RefreshInterval { get; set; } = 5;
+		
+		[Parameter]
+		public string Id { get; set; } = Guid.NewGuid().ToString();
+		
+		[Parameter]
+		public ScriptBlock OnLoading { get; set; }
 
 		public static RuntimeDefinedParameterDictionary DynamicParameters { get; } = new RuntimeDefinedParameterDictionary();
 
@@ -52,63 +68,30 @@ namespace UniversalDashboard.Cmdlets
 			page.Title = Title;
 			page.Properties = MyInvocation.BoundParameters;
 			page.Blank = Blank;
-
-			if (Content != null && Endpoint != null) {
-				throw new Exception("Content and Endpoint cannot both be specified.");
-			}
+			page.Loading = OnLoading?.Invoke();
 
 			try
 			{
-				if (Endpoint != null)
+				if (Url != null && !Url.StartsWith("/"))
 				{
-                    if (Url != null && !Url.StartsWith("/"))
-                    {
-                        Url = "/" + Url;
-                    }
-
-                    if (Url == null && Name != null)
-                    {
-                        page.Url = "/" + Name;
-                    }
-
-					page.Callback = GenerateCallback(Id);
-					page.Dynamic = true;
+					Url = "/" + Url;
 				}
-				else
+
+				if (Url == null && Name != null)
 				{
-					var components = Content.Invoke();
-
-					foreach (var component in components)
-					{
-                        if (component.BaseObject is Component dashboardComponent)
-                        {
-                            page.Components.Add(dashboardComponent);
-                        }
-
-                        if (component.BaseObject is Dictionary<string, object> dictionary)
-                        {
-                            page.Components.Add(new GenericComponent(dictionary));
-                        }
-
-						if (component.BaseObject is Hashtable hashtable)
-                        {
-                            page.Components.Add(new GenericComponent(hashtable));
-                        }
-                    }
-
-                    page.Name = page.Name.TrimStart('/');
-					page.Dynamic = false;
+					page.Url = "/" + Name.Replace(' ', '-');
 				}
+
+				page.Name = Name;
+				page.Callback = Content.GenerateCallback(Id, this, SessionState, ArgumentList);
+				page.Callback.IsPage = true;
+				page.Callback.Page = page;
+				page.Dynamic = true;
 			}
 			catch (Exception ex)
 			{
 				WriteError(new ErrorRecord(ex, string.Empty, ErrorCategory.SyntaxError, page));
-
-				page.Error = new Error
-				{
-					Message = ex.Message,
-					Location = this.MyInvocation.PositionMessage
-				};
+				page.Error = new Error(ex);
 			}
 
 			Log.Debug(JsonConvert.SerializeObject(page));

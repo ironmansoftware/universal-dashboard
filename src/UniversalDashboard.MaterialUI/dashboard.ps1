@@ -19,6 +19,18 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         }
     }
 
+    New-UDPage -Name 'Autocomplete' -Content {
+        New-UDAutocomplete -Id 'autoComplete' -Options @('Test', 'Test2', 'Test3', 'Test4') -OnChange {
+            Set-TestData $Body 
+        }
+
+        New-UDAutocomplete -Id 'autoCompleteDynamic' -OnLoadOptions { 
+            @('Test', 'Test2', 'Test3', 'Test4') | Where-Object { $_ -match $Body } | ConvertTo-Json
+        } -OnChange {
+            Set-TestData $Body 
+        }
+    }
+
     New-UDPage -Name "Avatar" -Content {
         New-UDAvatar -Image 'https://avatars2.githubusercontent.com/u/34351424?s=460&v=4' -Alt 'alon gvili avatar' -Id 'avatarContent' -Variant small
 
@@ -217,6 +229,16 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         } 
     }
 
+    New-UDPage -Name 'Clipboard' -Content {
+        New-UDButton -Text 'Click' -Id 'btnClip' -OnClick {
+            Show-UDModal -Content {
+                New-UDButton -Text 'Clicker' -Id 'btnClip2' -OnClick {
+                    Set-UDClipboard -Data 'hello world!'
+                }
+            }
+        }
+    }
+
     New-UDPage -Name 'Expansion Panel' -Content {
         New-UDExpansionPanelGroup -Children {
             New-UDExpansionPanel -Title "Hello" -Id 'expTitle' -Children {}
@@ -273,6 +295,9 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
                 New-UDRadio -Value 'Alon' -Label 'Alon' -Id 'alon'
                 New-UDRadio -Value 'Lee' -Label 'Lee' -Id 'lee'
             } -Value 'Adam'
+
+            New-UDAutocomplete -Id 'autoCompleteForm' -Options @('Test', 'Test2', 'Test3', 'Test4') 
+
         } -OnSubmit {
             Show-UDToast -Message $Body
             $Fields = $Body | ConvertFrom-Json
@@ -347,6 +372,20 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
 
         } -OnSubmit {
             New-UDElement -Id 'newElement' -Tag 'div' -Content {'hello'}
+        }
+
+        New-UDForm -Id 'validateForm' -Content {
+            New-UDTextbox -Id 'txtValidateForm'
+        } -OnValidate {
+            $FormContent = $Body | ConvertFrom-Json 
+
+            if ($FormContent.txtValidateForm -eq $null -or $FormContent.txtValidateForm -eq '') {
+                New-UDFormValidationResult -ValidationError "txtValidateForm is required"
+            } else {
+                New-UDFormValidationResult -Valid
+            }
+        } -OnSubmit {
+            Set-TestData ($Body | ConvertFrom-Json)
         }
     }
 
@@ -505,6 +544,36 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         } -SubHeader 'USERS'
     }
 
+    New-UDPage -Name 'Modal' -Content {
+        New-UDButton -Text 'Basic' -OnClick {
+            Show-UDModal -Content {
+                New-UDTypography -Text "Hello"
+            }
+        }
+
+        New-UDButton -Text 'Full Screen' -OnClick {
+            Show-UDModal -Content {
+                New-UDTypography -Text "Hello"
+            } -Footer {
+                New-UDButton -Text "Close" -OnClick { Hide-UDModal }
+            }  -FullScreen
+        }
+
+        New-UDButton -Text 'Full Width' -OnClick {
+            Show-UDModal -Content {
+                New-UDTypography -Text "Hello"
+            } -FullWidth -MaxWidth 'md'
+        }
+
+        New-UDButton -Text 'Persistent' -OnClick {
+            Show-UDModal -Content {
+                New-UDTypography -Text "Hello"
+            } -Footer {
+                New-UDButton -Text "Close" -OnClick { Hide-UDModal }
+            } -Persistent
+        }
+    }
+
     New-UDPage -Name "Paper" -Content {
         New-UDPaper -Content {
             New-UDHeading -Text "hi" -Id 'paperContent'
@@ -532,54 +601,128 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
     }
 
     New-UDPage -Name 'Select' -Content {
-        New-UDSelect -Label '1-3' -Id 'select' -Option {
-            New-UDSelectOption -Name "One" -Value 1
-            New-UDSelectOption -Name "Two" -Value 2
-            New-UDSelectOption -Name "Three" -Value 3
-        } -DefaultValue 2 -OnChange { 
-            $EventData = $Body | ConvertFrom-Json
-            Set-TestData $EventData 
-        }
-
-        New-UDSelect -Id 'selectGrouped' -Option {
-            New-UDSelectGroup -Name "Category 1" -Option {
+        New-UDContainer -Children {
+            New-UDSelect -Label '1-3' -Id 'select' -Option {
                 New-UDSelectOption -Name "One" -Value 1
                 New-UDSelectOption -Name "Two" -Value 2
                 New-UDSelectOption -Name "Three" -Value 3
-            }
-            New-UDSelectGroup -Name "Category 2" -Option {
-                New-UDSelectOption -Name "Four" -Value 4
-                New-UDSelectOption -Name "Five" -Value 5
-                New-UDSelectOption -Name "Six" -Value 6
-            }
-        } -DefaultValue 2 -OnChange { Set-TestData $EventData }
-
-        New-UDButton -Text 'Get State' -OnClick {
-            $State = Get-UDElement -Id 'select'
-            Show-UDToast -Message ($State | ConvertTo-Json)
-        }
-
-        New-UDButton -Text 'Set State' -OnClick {
-            $Select = New-UDSelect -Label '10-12' -Id 'select' -Option {
-                New-UDSelectOption -Name "Ten" -Value 10
-                New-UDSelectOption -Name "Eleven" -Value 11
-                New-UDSelectOption -Name "Twelve" -Value 12
-            } -DefaultValue 10 -OnChange { 
+            } -DefaultValue 2 -OnChange { 
                 $EventData = $Body | ConvertFrom-Json
                 Set-TestData $EventData 
             }
+    
+            New-UDSelect -Id 'selectGrouped' -Option {
+                New-UDSelectGroup -Name "Category 1" -Option {
+                    New-UDSelectOption -Name "One" -Value 1
+                    New-UDSelectOption -Name "Two" -Value 2
+                    New-UDSelectOption -Name "Three" -Value 3
+                }
+                New-UDSelectGroup -Name "Category 2" -Option {
+                    New-UDSelectOption -Name "Four" -Value 4
+                    New-UDSelectOption -Name "Five" -Value 5
+                    New-UDSelectOption -Name "Six" -Value 6
+                }
+            } -DefaultValue 2 -OnChange { Set-TestData $EventData }
+    
+            New-UDButton -Text 'Get State' -OnClick {
+                $State = Get-UDElement -Id 'select'
+                Show-UDToast -Message ($State | ConvertTo-Json)
+            }
+    
+            New-UDButton -Text 'Set State' -OnClick {
+                $Select = New-UDSelect -Label '10-12' -Id 'select' -Option {
+                    New-UDSelectOption -Name "Ten" -Value 10
+                    New-UDSelectOption -Name "Eleven" -Value 11
+                    New-UDSelectOption -Name "Twelve" -Value 12
+                } -DefaultValue 10 -OnChange { 
+                    $EventData = $Body | ConvertFrom-Json
+                    Set-TestData $EventData 
+                }
+    
+                Set-UDElement -Id 'select' -Properties $Select
+            }
+    
+            New-UDSelect -Label '1-3' -Id 'selectMultiple' -Option {
+                New-UDSelectOption -Name "One" -Value 1
+                New-UDSelectOption -Name "Two" -Value 2
+                New-UDSelectOption -Name "Three" -Value 3
+            } -DefaultValue 2 -OnChange { 
+                $EventData = $Body | ConvertFrom-Json
+                Set-TestData $EventData.Length
+            } -Multiple
 
-            Set-UDElement -Id 'select' -Properties $Select
+            New-UDDynamic -Id 'spacingGrid' -Content {
+                $Spacing = (Get-UDElement -Id 'spacingSelect').value
+            
+                New-UDGrid -Spacing $Spacing -Container -Content {
+                    New-UDGrid -Item -ExtraSmallSize 3 -Content {
+                        New-UDPaper -Content { "xs-3" } -Elevation 2
+                    }
+                    New-UDGrid -Item -ExtraSmallSize 3 -Content {
+                        New-UDPaper -Content { "xs-3" } -Elevation 2
+                    }
+                    New-UDGrid -Item -ExtraSmallSize 3 -Content {
+                        New-UDPaper -Content { "xs-3" } -Elevation 2
+                    }
+                    New-UDGrid -Item -ExtraSmallSize 3 -Content {
+                        New-UDPaper -Content { "xs-3" } -Elevation 2
+                    }
+                }
+            }
+            
+            New-UDSelect -Id 'spacingSelect' -Label Spacing -Option {
+                for($i = 0; $i -lt 10; $i++)
+                {
+                    New-UDSelectOption -Name $i -Value $i
+                }
+            } -OnChange { Sync-UDElement -Id 'spacingGrid' } -DefaultValue 3
         }
+    }
 
-        New-UDSelect -Label '1-3' -Id 'selectMultiple' -Option {
-            New-UDSelectOption -Name "One" -Value 1
-            New-UDSelectOption -Name "Two" -Value 2
-            New-UDSelectOption -Name "Three" -Value 3
-        } -DefaultValue 2 -OnChange { 
-            $EventData = $Body | ConvertFrom-Json
-            Set-TestData $EventData.Length
-        } -Multiple
+    New-UDPage -Name 'Slider' -Content {
+        New-UDContainer {
+            New-UDSlider -Id 'slider' -Value 1
+            New-UDSlider -Id 'sliderMinMax' -Min 10 -Max 1000
+            New-UDSlider -Id 'sliderCustomStep' -Min 10 -Max 1000 -Step 100
+            New-UDSlider -Id 'sliderDisabled' -Disabled
+            New-UDSlider -Id 'sliderMarks' -Marks
+            
+            New-UDSlider -Id 'sliderOnChange' -OnChange {
+                Show-UDToast -Message $Body 
+                Set-TestData $Body
+            }
+
+            New-UDSlider -Id 'rangeSlider' -Value @(1, 10)
+    
+            New-UDCard -Content {
+                New-UDSlider -Id 'sliderVertical' -Orientation vertical
+            }
+        }
+    }
+
+    New-UDPage -Name 'Stepper' -Content {
+        New-UDStepper -Id 'stepper' -Steps {
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 1" }
+                New-UDTextbox -Id 'txtStep1' 
+            } -Label "Step 1"
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 2" }
+                New-UDElement -tag 'div' -Content { "Previous data: $Body" }
+                New-UDTextbox -Id 'txtStep2' 
+                Set-TestData ($Body | ConvertFrom-Json)
+            } -Label "Step 2"
+            New-UDStep -OnLoad {
+                New-UDElement -tag 'div' -Content { "Step 3" }
+                New-UDElement -tag 'div' -Content { "Previous data: $Body" }
+                New-UDTextbox -Id 'txtStep3' 
+                Set-TestData ($Body | ConvertFrom-Json)
+            } -Label "Step 3"
+        } -OnFinish {
+            New-UDTypography -Text 'Nice! You did it!' -Variant h3
+            New-UDElement -Tag 'div' -Id 'result' -Content {$Body}
+            Set-TestData ($Body | ConvertFrom-Json)
+        }
     }
 
     New-UDPage -Name 'Switch' -Content {
@@ -693,6 +836,12 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
                 @{Dessert = 'Gingerbread'; Calories = (Get-Random); Fat = 6.0; Carbs = 24; Protein = 4.0}
             ) | Out-UDTableData -Page 0 -TotalCount 5 -Properties $Query.Properties 
         }
+
+        $Data = ConvertFrom-Json '[{"Name":"AttributeTesting","Description":null,"ID":"162c27f4-7ad1-4a6c-b62c-20090151dcc7"},{"Name":"test","Description":"testing","ID":"1c229a64-d499-4d91-9102-829412efb6b0"},{"Name":"Auto","Description":null,"ID":"52103d0b-3144-4fe3-aa94-e3f986926e7c"},{"Name":"Person","Description":null,"ID":"72ae0e64-c35c-4a0a-aad1-39e056c51d48"},{"Name":"Person2","Description":null,"ID":"9a166c5b-0ddf-4759-84b0-b7c15c4d59bd"}]'
+        New-UDTable -Data $Data -Id 'customData'
+
+        $NullData = $Null
+        New-UDTable -Data $NullData -Id 'emptyTable'
     }
 
     New-UDPage -Name "Tabs" -Id 'Tabs' -Content {
@@ -786,4 +935,12 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
             Set-TestData $EventData
         }
     }
+
+    New-UDPage -Name 'Named Page' -Content { New-UDElement -Tag div -Id 'namedPage' }
+    New-UDPage -Name 'URL Page' -Url '/myurl' -Content { New-UDElement -Tag div -Id 'urlPage' }
+    New-UDPage -Name 'URL with variable' -Url '/myurl/:test' -Content { param($test) New-UDElement -Tag div -Id 'urlPageWithVariable' -Content { $test } }
+    New-UDPage -Name 'Page with loading' -Url '/loading' -Content { Start-Sleep -Seconds 3 } -OnLoading {
+        New-UDElement -Id 'loading' -Tag 'div' -Content { 'Loading...' }
+    }
+
 )

@@ -18,6 +18,8 @@ namespace UniversalDashboard
         public SwitchParameter AutoRefresh { get; set; }
         [Parameter]
         public int AutoRefreshInterval { get; set; } = 10;
+        [Parameter]
+        public ScriptBlock LoadingComponent { get; set; }
 
         protected override void EndProcessing() 
         {
@@ -28,7 +30,8 @@ namespace UniversalDashboard
                 { "autoRefresh", AutoRefresh.IsPresent },
                 { "autoRefreshInterval", AutoRefreshInterval},
                 { "type", "dynamic"},
-                { "isPlugin", true }
+                { "isPlugin", true },
+                { "loadingComponent", LoadingComponent?.Invoke() }
             });
         }
     }
