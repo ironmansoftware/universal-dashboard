@@ -1,5 +1,6 @@
 import React from 'react'
 import { Global } from 'viser-react'
+import dark from '../theme/dark'
 import { useThemeUI } from 'theme-ui'
 
 export function testLight() {
@@ -63,7 +64,7 @@ const monitorReducer = (state, action) => {
       if (action.payload.title === 'light') {
         Global.setTheme(testLight())
       } else {
-        Global.setTheme(testDark())
+        Global.setTheme(dark)
       }
       return {
         ...state,

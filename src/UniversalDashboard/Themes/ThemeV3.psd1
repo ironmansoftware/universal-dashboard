@@ -2,7 +2,7 @@
     name       = "basic"
     definition = @{
         colors  = @{
-            primary    = "#df5656"
+            primary    = "#d32029"
             secondary  = "#fdc533"
             background = "#c1c1c1"
             text       = "#333"
@@ -10,7 +10,7 @@
         }
         modes   = @{
             dark = @{
-                primary    = "#eaa22222"
+                primary    = "#1890ff"
                 secondary  = "#fdc533"
                 background = "#333"
                 text       = "#fff"
@@ -37,6 +37,9 @@
                 borderRadius = '50%'
             }
         }
+        limeBadge = @{
+            backgroundColor = "#52c41a"
+        }
         chart   = @{
             width   = $null
             height  = 400
@@ -57,11 +60,7 @@
                 }
                 defaultColor = "#1890ff"
                 axis         = @{
-                    label  = @{
-                        textStyle = @{ 
-                            fill = '#1890ff'
-                        }
-                    }
+                   
                     bottom = @{
                         label = @{
                             textStyle = @{ 
@@ -123,11 +122,7 @@
                     marginBottom  = 0
                 }
                 axis         = @{
-                    label  = @{
-                        textStyle = @{ 
-                            fill = '#f37370'
-                        }
-                    }
+                   
                     bottom = @{
                         label = @{
                             textStyle = @{ 

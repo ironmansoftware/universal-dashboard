@@ -1,4 +1,4 @@
-  import React, { lazy } from 'react'
+import React, { lazy } from 'react'
 import { MonitorProvider } from './api/MonitorState'
 import Monitor from './instance'
 import ToolBar from './parts/toolbar'
@@ -15,7 +15,6 @@ const Title = lazy(() =>
 const Description = lazy(() =>
   import(/* webpackChunkName: 'Description' */ './parts/description'),
 )
-
 
 export default ({ title, description, ...props }) => {
   return (

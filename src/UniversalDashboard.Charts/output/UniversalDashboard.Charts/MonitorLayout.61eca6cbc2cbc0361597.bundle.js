@@ -1,2 +1,0 @@
-(window.webpackJsonpcharts=window.webpackJsonpcharts||[]).push([[1],{282:function(e,o,r){"use strict";r.r(o);var t=r(0),n=r.n(t),a=r(9),c=r(57);r(89);o.default=function(e){var o=e.children,r=Object(a.useThemeUI)(),t=r.theme,u=r.colorMode;return n.a.createElement(c.a,{id:"ud-monitor-layout",style:{backgroundColor:t.chart[u].background.fill}},o)}}}]);
-//# sourceMappingURL=MonitorLayout.61eca6cbc2cbc0361597.bundle.map

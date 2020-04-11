@@ -1,2 +1,0 @@
-(window.webpackJsonpcharts=window.webpackJsonpcharts||[]).push([[3],{283:function(e,t,c){"use strict";c.r(t);var a=c(5),n=c(0),r=c.n(n),o=c(9);t.default=function(e){var t=e.title,c=Object(o.useThemeUI)(),n=c.theme,s=c.colorMode;return r.a.createElement("h3",{style:Object(a.a)({},n.chart[s].title)},t)}}}]);
-//# sourceMappingURL=Title.61eca6cbc2cbc0361597.bundle.map

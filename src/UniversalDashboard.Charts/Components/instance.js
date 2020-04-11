@@ -1,11 +1,11 @@
-import { Chart, Tooltip, Legend, View } from 'viser-react'
+import { Chart, Tooltip, Legend, View, Axis } from 'viser-react'
 import { useMonitor } from './api/MonitorState'
 import DataSet from '@antv/data-set'
 import React, { useState } from 'react'
 import ReactInterval from 'react-interval'
 import { useThemeUI } from 'theme-ui'
 
-import Axis from './parts/axis'
+// import Axis from './parts/axis'
 import StackArea from './parts/stackArea'
 import Line from './parts/lineArea'
 
@@ -67,6 +67,19 @@ export default ({ height, width, ...props }) => {
     '1h': 1000 * 60 * 60,
   }
 
+  const scales = [
+    {
+      dataKey: 'time',
+      type: 'time',
+      mask: 'HH:mm:ss',
+      sync: true,
+    },
+    {
+      dataKey: `${props.fields[0]}`,
+      min: 0,
+      sync: true,
+    },
+  ]
   return (
     <Content
       style={{
@@ -83,24 +96,11 @@ export default ({ height, width, ...props }) => {
         data={currentData}
         background={{ fill: 'transparent' }}
       >
-        <Axis {...theme.chart[colorMode].axis} />
+        {/* <Axis {...theme.chart[colorMode].axis} /> */}
+        <Axis />
         <Tooltip />
-        <Legend dataKey={props.color} show={true} position="top-left" />
-        <View
-          scale={[
-            {
-              dataKey: 'time',
-              type: 'time',
-              mask: 'HH:mm:ss',
-              sync: true
-            },
-            {
-              dataKey: `${props.fields[0]}`,
-              min: 0,
-              sync: true,
-            },
-          ]}
-        >
+        <Legend show={true} position="top-left" />
+        <View scale={scales}>
           {settings.chartType === 'area' ? (
             <StackArea fields={props.fields} color={props.color} />
           ) : (

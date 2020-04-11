@@ -133,7 +133,7 @@ var dark = {
       "label": {
         "offset": 14,
         "textStyle": {
-          "fill": "#797979",
+          "fill": "#1890ff",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -167,7 +167,7 @@ var dark = {
         "offset": 22,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#797979",
+          "fill": "#1890ff",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -200,7 +200,7 @@ var dark = {
         "offset": 12,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#797979",
+          "fill": "#1890ff",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",
@@ -233,7 +233,7 @@ var dark = {
         "offset": 12,
         "autoRotate": true,
         "textStyle": {
-          "fill": "#797979",
+          "fill": "#1890ff",
           "fontSize": 12,
           "lineHeight": 20,
           "textBaseline": "middle",

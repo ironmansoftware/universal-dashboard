@@ -156,7 +156,8 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         #     Select-Object -First 20  name, @{n = 'issues'; e = { $_.open_issues_count } }, language
         # ) -Fields @('name', 'issues') -ColorBy 'language'  
 
-        
+        New-UDAntdIcon -Icon BookFill -Size 2x
+        New-UDAntdIcon -Icon TrophyTwoTone -Size 4x
         New-UDMonitor -Content {
             @{
                 used     = Get-Counter -Counter '\Processor Information(_Total)\% Processor Time' | Select-Object -expand CounterSamples | Select-Object -expand  CookedValue
@@ -182,6 +183,8 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
 
         New-UDCheckBox -Label 'Demo' -Id 'chkLabelPlacementEnd' -OnChange {} -LabelPlacement end
 
+          New-UDAntdIcon -Icon BookFill -Size 2x
+        New-UDAntdIcon -Icon TrophyTwoTone -Size 4x
         $Icon = New-UDIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon' -Regular
         $CheckedIcon = New-UDIcon -Icon angry -Size lg  -Id 'demo-checkbox-icon-checked' 
         New-UDCheckBox -Id 'btnCustomIcon' -Icon $Icon -CheckedIcon $CheckedIcon -OnChange {} -Style @{color = '#2196f3'}
