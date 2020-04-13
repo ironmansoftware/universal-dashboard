@@ -7,7 +7,7 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
                 })
         }
     }
-    New-UDPage -Title 'Bages' -url '/Badge/colors' -Endpoint {
+    New-UDPage -Title 'Bages' -Name Badges -url '/Badge/colors' -Endpoint {
         
         (Get-Command -Name New-UDAntdBadge).Parameters["PresetColor"].Attributes.ValidValues | ForEach-Object {
             New-UDAntdBadge -PresetColor $_ -Content ( New-UDAntdIcon -Icon BellOutlined -Size 2x )
@@ -27,14 +27,14 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
             Set-UDElement -Id "info" -Properties @{visible = $true; description = $EventData }
         }
     }
-    New-UDPage -Title 'Profile' -Url "/members/:userId/settings/:profileName" -Endpoint {
+    New-UDPage -Title 'Profile' -Name Profile -Url "/members/:userId/settings/:profileName" -Endpoint {
         param($userId, $profileName)
         New-UDAntdNotification -Id "userInfo" -Title "Universal Dashboard" -Description "The UserID is: $($userId) and its name is:  $($profileName)" -Preset "info"
         New-UDAntdButton -Label Demo -ButtonType primary -OnClick {
             Set-UDElement -Id "userInfo" -Properties @{visible = $true }
         }
     }
-    New-UDPage -Title 'Dynamic' -Url "/counter" -Endpoint {
+    New-UDPage -Title 'Dynamic' -Name Dynamic -Url "/counter" -Endpoint {
         New-UDAntdCard -Content {
             1..250 | Get-Random 
         }
@@ -43,15 +43,7 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
         New-UDAntdResult -Title "404" -SubTitle "Sorry, the page you visited does not exist."
     }
 )
-# $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Content {
-#     New-UDAntdRoute -Path "/Badge" -Exact -Content @(
-#         New-UDAntdBadge -PresetColor lime -Content ( New-UDAntdIcon -Icon BellOutlined -Size 2x )
-#         New-UDAntdNotification -Id "userInfo" -Title "Universal Dashboard" -Description "Demo using UDRoute" -Preset "info"
-#         New-UDAntdButton -Label Demo -ButtonType primary -OnClick {
-#             Set-UDElement -Id "userInfo" -Properties @{visible = $true }
-#         }
-#     )
-# }
+
 
 $Dashboard.FrameworkAssetId = [UniversalDashboard.Services.AssetService]::Instance.Frameworks[“Antd”]
 $Dashboard

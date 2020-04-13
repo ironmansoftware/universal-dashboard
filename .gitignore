@@ -270,3 +270,4 @@ TEST-*.xml
 *.bom.xml
 bom.xml
 src/client/package-lock.json
+src/client/package-lock.json
