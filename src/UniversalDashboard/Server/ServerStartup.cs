@@ -54,7 +54,7 @@ namespace UniversalDashboard
             {
                 x.PayloadSerializerSettings.ContractResolver = new CustomContractResolver();
             });
-            services.AddTransient<StateRequestService>();
+            services.AddTransient<IStateRequestService, StateRequestService>();
             services.AddSingleton<IHostedService, ScheduledEndpointManager>();
             services.AddTransient<IExecutionService, ExecutionService>();
             services.AddTransient<ILanguageExecutionService, PowerShellExecutionService>();

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.SignalR;
 using System;
 using UniversalDashboard.Services;
 using System.Collections;
+using UniversalDashboard.Interfaces;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -28,7 +29,7 @@ namespace UniversalDashboard.Cmdlets
 
         protected override void EndProcessing()
 		{
-            var stateRequestService = this.GetVariableValue("StateRequestService") as StateRequestService;
+            var stateRequestService = this.GetStateRequestService();
 
             var retry = 0;
             while(retry < 10) {

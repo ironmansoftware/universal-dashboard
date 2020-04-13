@@ -44,6 +44,16 @@ namespace UniversalDashboard.Cmdlets
             return hub;
         }
 
+        public static IStateRequestService GetStateRequestService(this PSCmdlet cmdlet)
+        {
+            var service = cmdlet.GetVariableValue(Constants.StateRequestService) as IStateRequestService;
+            if (service == null)
+            {
+                throw new Exception("This cmdlet can only be caused from within a Universal Dashboard endpoint.");
+            }
+            return service;
+        }
+
         public static Endpoint TryGenerateEndpoint(this object obj, string id, PSCmdlet cmdlet, System.Management.Automation.SessionState sessionState, object[] argumentList = null)
         {
             if (obj == null)

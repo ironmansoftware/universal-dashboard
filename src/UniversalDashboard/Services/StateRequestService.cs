@@ -1,16 +1,16 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
-using UniversalDashboard.Models.Basics;
 using System;
 using System.Threading;
 using System.Collections;
+using UniversalDashboard.Interfaces;
 
 namespace UniversalDashboard.Services
 {
-    public class StateRequestService
+    public class StateRequestService : IStateRequestService
     {
         private readonly IMemoryCache _memoryCache;
 
-        public AutoResetEvent EventAvailable = new AutoResetEvent(false);
+        public AutoResetEvent EventAvailable { get; }= new AutoResetEvent(false);
 
         public StateRequestService(IMemoryCache memoryCache)
         {

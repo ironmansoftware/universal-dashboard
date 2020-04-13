@@ -1,5 +1,4 @@
 
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Caching.Memory;
 using NLog;
 using UniversalDashboard.Models;
@@ -30,13 +29,13 @@ namespace UniversalDashboard.Execution
 		private readonly IUDRunspaceFactory _runspace;
 		private readonly IDashboardService _dashboardService;
         private readonly IDashboardCallbackService _dashboardCallbackService;
-        private readonly StateRequestService _stateRequestService;
+        private readonly IStateRequestService _stateRequestService;
         private readonly IMemoryCache _memoryCache;
 
         public PowerShellExecutionService(
             IDashboardService dashboardService, 
             IDashboardCallbackService dashboardCallbackService, 
-            StateRequestService stateRequestService,
+            IStateRequestService stateRequestService,
             IMemoryCache memoryCache)
 		{
 			Log.Debug("ExecutionService constructor");
@@ -155,7 +154,7 @@ namespace UniversalDashboard.Execution
                     
                     SetVariable(ps, Constants.DashboardCallbackService, _dashboardCallbackService);
                     SetVariable(ps, "Cache", _memoryCache);
-                    SetVariable(ps, "StateRequestService", _stateRequestService);
+                    SetVariable(ps, Constants.StateRequestService, _stateRequestService);
                     SetVariable(ps, "ConnectionId", context.ConnectionId);
                     SetVariable(ps, Constants.SessionId, context.SessionId);
                     SetVariable(ps, Constants.ExecutionService, this);
