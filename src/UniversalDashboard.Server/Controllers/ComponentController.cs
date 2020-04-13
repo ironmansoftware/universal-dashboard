@@ -28,14 +28,14 @@ namespace UniversalDashboard.Controllers
         private readonly IDashboardService _dashboardService;
         private readonly IMemoryCache _memoryCache;
         private readonly IStateRequestService _stateRequestService;
-        private readonly ConnectionManager _connectionManager;
+        private readonly IConnectionManager _connectionManager;
 
         public ComponentController(
             IExecutionService executionService, 
             IDashboardService dashboardService, 
             IMemoryCache memoryCache, 
             IStateRequestService stateRequestService, 
-            ConnectionManager connectionManager,
+            IConnectionManager connectionManager,
             ILogger<ComponentController> logger
         )
         {

@@ -1,13 +1,12 @@
 using System.Collections.Concurrent;
-using System.Collections.Generic;
+using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Services
 {
-    public class ConnectionManager
+    public class ConnectionManager : IConnectionManager
     {
-        public ConcurrentDictionary<string, Connection> Connections { get; private set; }
-        private static object Sync = new object();
+        private ConcurrentDictionary<string, Connection> Connections { get; set; }
 
         public ConnectionManager()
         {

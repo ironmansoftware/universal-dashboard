@@ -62,7 +62,7 @@ namespace UniversalDashboard
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddMemoryCache();
-            services.AddSingleton(new ConnectionManager());
+            services.AddSingleton<IConnectionManager>(new ConnectionManager());
             
             var mvc = services.AddMvc().AddJsonOptions(x => {
                 x.SerializerSettings.ContractResolver = new CustomContractResolver();
