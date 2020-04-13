@@ -21,7 +21,7 @@ namespace UniversalDashboard.Cmdlets
         {
             var content = Content?.Invoke().Select(m => m.BaseObject).ToArray();
 
-            var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+            var hub = this.GetCallbackService();
 
             if (Broadcast)
             {

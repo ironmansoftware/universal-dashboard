@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using NLog;
+﻿using NLog;
 using System.Management.Automation;
 
 namespace UniversalDashboard.Cmdlets
@@ -16,7 +15,7 @@ namespace UniversalDashboard.Cmdlets
 
         protected override void ProcessRecord()
         {
-            var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+            var hub = this.GetCallbackService();
 
             if (hub == null)
             {

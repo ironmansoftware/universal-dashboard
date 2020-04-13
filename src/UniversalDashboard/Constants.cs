@@ -16,5 +16,6 @@ namespace UniversalDashboard {
         public static readonly string UDPage = "UDPage";
         public static readonly string ExecutionService = "UDExecutionService";
         public static readonly string ClaimsPrincipal = "ClaimsPrincipal";
+        public static readonly string DashboardCallbackService = nameof(DashboardCallbackService);
     }
 }

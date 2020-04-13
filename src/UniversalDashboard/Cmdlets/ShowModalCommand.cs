@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.SignalR;
-using System.Linq;
+﻿using System.Linq;
 using System.Management.Automation;
 using UniversalDashboard.Models;
 
@@ -38,7 +37,7 @@ namespace UniversalDashboard.Cmdlets
                 FullScreen = FullScreen
             };
 
-            var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+            var hub = this.GetCallbackService();
             if (hub != null)
             {
                 var connectionId = this.GetVariableValue("ConnectionId") as string;

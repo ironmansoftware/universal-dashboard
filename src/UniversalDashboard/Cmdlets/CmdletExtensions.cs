@@ -6,6 +6,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
 using UniversalDashboard.Execution;
+using UniversalDashboard.Interfaces;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -31,6 +32,16 @@ namespace UniversalDashboard.Cmdlets
             }
 
             return cmdlet.Host.PrivateData.BaseObject as HostState;
+        }
+
+        public static IDashboardCallbackService GetCallbackService(this PSCmdlet cmdlet)
+        {
+            var hub = cmdlet.GetVariableValue(Constants.DashboardCallbackService) as IDashboardCallbackService;
+            if (hub == null)
+            {
+                throw new Exception("This cmdlet can only be caused from within a Universal Dashboard endpoint.");
+            }
+            return hub;
         }
 
         public static Endpoint TryGenerateEndpoint(this object obj, string id, PSCmdlet cmdlet, System.Management.Automation.SessionState sessionState, object[] argumentList = null)

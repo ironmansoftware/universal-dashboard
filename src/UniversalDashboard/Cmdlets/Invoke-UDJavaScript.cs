@@ -14,7 +14,7 @@ namespace UniversalDashboard.Cmdlets
 
         protected override void EndProcessing()
         {
-            var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+            var hub = this.GetCallbackService();
             var connectionId = this.GetVariableValue("ConnectionId") as string;   
             hub.InvokeJavaScript(connectionId, JavaScript).Wait();
 		}

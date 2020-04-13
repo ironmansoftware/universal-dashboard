@@ -1,21 +1,12 @@
-using Newtonsoft.Json;
 using NLog;
 using UniversalDashboard.Models;
 using System.Management.Automation;
-using UniversalDashboard.Models.Enums;
-using UniversalDashboard.Models.Basics;
-using System.Collections;
-using System.Linq;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.SignalR;
-using System.Security.Claims;
 using System;
-using Microsoft.Extensions.Caching.Memory;
 using System.Drawing;
 
 namespace UniversalDashboard.Cmdlets
 {
-	[Cmdlet(VerbsCommon.Show, "UDToast")]
+    [Cmdlet(VerbsCommon.Show, "UDToast")]
     public class ShowToastCommand : PSCmdlet
     {
 		private readonly Logger Log = LogManager.GetLogger(nameof(ShowToastCommand));
@@ -105,7 +96,7 @@ namespace UniversalDashboard.Cmdlets
                     transitionOut = TransitionOut
                 };
 
-                var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+                var hub = this.GetCallbackService();
                 if (Broadcast.IsPresent) {
                     hub.ShowToast(options).Wait();
                 } else {    

@@ -10,7 +10,7 @@ namespace UniversalDashboard.Cmdlets
         public string Id { get; set; }
         protected override void EndProcessing()
         {
-            var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+            var hub = this.GetCallbackService();
             if (hub != null)
             {
                 var connectionId = this.GetVariableValue("ConnectionId") as string;

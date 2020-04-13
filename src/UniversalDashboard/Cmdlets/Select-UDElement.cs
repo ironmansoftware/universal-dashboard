@@ -1,6 +1,5 @@
 using NLog;
 using System.Management.Automation;
-using Microsoft.AspNetCore.SignalR;
 
 namespace UniversalDashboard.Cmdlets
 {
@@ -19,7 +18,7 @@ namespace UniversalDashboard.Cmdlets
         public SwitchParameter ToTop { get; set; }
         protected override void EndProcessing()
         {
-            var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+            var hub = this.GetCallbackService();
             var connectionId = this.GetVariableValue("ConnectionId") as string;   
             if (ParameterSetName == "Normal") {
                 

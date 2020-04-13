@@ -115,13 +115,6 @@ namespace UniversalDashboard
         {
             await hub.Clients.All.SendAsync("syncElement", componentId);
         }
-
-        // PS Host
-
-        public static async Task Write(this IHubContext<DashboardHub> hub, string clientId, string message, MessageType messageType)
-        {
-            await hub.Clients.Client(clientId).SendAsync("write", message, messageType);
-        }
     }
 
     public class DashboardHub : Hub

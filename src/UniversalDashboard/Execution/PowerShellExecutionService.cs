@@ -29,13 +29,13 @@ namespace UniversalDashboard.Execution
         private static readonly Logger Log = LogManager.GetLogger(nameof(PowerShellExecutionService));
 		private readonly IUDRunspaceFactory _runspace;
 		private readonly IDashboardService _dashboardService;
-        private readonly IHubContext<DashboardHub> _hubContext;
+        private readonly IDashboardCallbackService _dashboardCallbackService;
         private readonly StateRequestService _stateRequestService;
         private readonly IMemoryCache _memoryCache;
 
         public PowerShellExecutionService(
             IDashboardService dashboardService, 
-            IHubContext<DashboardHub> hubContext, 
+            IDashboardCallbackService dashboardCallbackService, 
             StateRequestService stateRequestService,
             IMemoryCache memoryCache)
 		{
@@ -43,7 +43,7 @@ namespace UniversalDashboard.Execution
 
 			_runspace = dashboardService.RunspaceFactory;
 			_dashboardService = dashboardService;
-            _hubContext = hubContext;
+            _dashboardCallbackService = dashboardCallbackService;
             _stateRequestService = stateRequestService;
             _memoryCache = memoryCache;
         }
@@ -153,7 +153,7 @@ namespace UniversalDashboard.Execution
                     var hostState = host.PrivateData.BaseObject as HostState;
                     hostState.EndpointService = _dashboardService.EndpointService;
                     
-                    SetVariable(ps, "DashboardHub", _hubContext);
+                    SetVariable(ps, Constants.DashboardCallbackService, _dashboardCallbackService);
                     SetVariable(ps, "Cache", _memoryCache);
                     SetVariable(ps, "StateRequestService", _stateRequestService);
                     SetVariable(ps, "ConnectionId", context.ConnectionId);
@@ -164,7 +164,6 @@ namespace UniversalDashboard.Execution
 
                     SetVariable(ps, "Session", _dashboardService.EndpointService.SessionManager.GetSession(context.SessionId));
 
-                    ui.HubContext = _hubContext;
                     ui.ConnectionId = context.ConnectionId;
 
                     if (context.User != null)

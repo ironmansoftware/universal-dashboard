@@ -58,6 +58,7 @@ namespace UniversalDashboard
             services.AddSingleton<IHostedService, ScheduledEndpointManager>();
             services.AddTransient<IExecutionService, ExecutionService>();
             services.AddTransient<ILanguageExecutionService, PowerShellExecutionService>();
+            services.AddTransient<IDashboardCallbackService, DashboardCallbackService>();
 			services.AddCors();
 			services.AddDirectoryBrowser();
 			services.AddMemoryCache();

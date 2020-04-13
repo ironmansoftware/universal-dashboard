@@ -76,7 +76,6 @@ namespace UniversalDashboard.Services
 
         public override PSHostRawUserInterface RawUI => null;
 
-        public IHubContext<DashboardHub> HubContext { get; set; }
         public string ConnectionId { get; set; }
 
         public override Dictionary<string, PSObject> Prompt(string caption, string message, Collection<FieldDescription> descriptions)
@@ -112,31 +111,26 @@ namespace UniversalDashboard.Services
         public override void Write(ConsoleColor foregroundColor, ConsoleColor backgroundColor, string value)
         {
             Log.Trace(value);
-            //HubContext.Write(ConnectionId, value, MessageType.Informational).ConfigureAwait(false);
         }
 
         public override void Write(string value)
         {
             Log.Trace(value);
-            //HubContext.Write(ConnectionId, value, MessageType.Informational).ConfigureAwait(false);
         }
 
         public override void WriteDebugLine(string message)
         {
             Log.Trace("[DEBUG]:" + message);
-            //HubContext.Write(ConnectionId, message + Environment.NewLine, MessageType.Debug).ConfigureAwait(false);
         }
 
         public override void WriteErrorLine(string value)
         {
             Log.Trace("[ERROR]:" + value);
-            //HubContext.Write(ConnectionId, value + Environment.NewLine, MessageType.Error).ConfigureAwait(false);
         }
 
         public override void WriteLine(string value)
         {
             Log.Trace("[DEBUG]:" + value);
-            //HubContext.Write(ConnectionId, value + Environment.NewLine, MessageType.Informational).ConfigureAwait(false);
         }
 
         public override void WriteProgress(long sourceId, ProgressRecord record)
@@ -147,13 +141,11 @@ namespace UniversalDashboard.Services
         public override void WriteVerboseLine(string message)
         {
             Log.Trace("[VERBOSE]:" + message);
-            //HubContext.Write(ConnectionId, message + Environment.NewLine, MessageType.Verbose).ConfigureAwait(false);
         }
 
         public override void WriteWarningLine(string message)
         {
             Log.Trace("[WARNING]:" + message);
-            //HubContext.Write(ConnectionId, message + Environment.NewLine, MessageType.Warning).ConfigureAwait(false);
         }
     }
 }

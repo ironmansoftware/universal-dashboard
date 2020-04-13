@@ -19,7 +19,7 @@ namespace UniversalDashboard.Cmdlets
 
         protected override void BeginProcessing()
         {
-            var hub = this.GetVariableValue("DashboardHub") as IHubContext<DashboardHub>;
+            var hub = this.GetCallbackService();
             var connectionId = this.GetVariableValue("ConnectionId") as string;  
 
             _requestId = Guid.NewGuid().ToString();
