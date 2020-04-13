@@ -1,7 +1,8 @@
 import "./public-path";
 import "@babel/polyfill";
 import React from "react";
-import ReactDOM from "react-dom";
+import { render } from "react-dom";
+import $ from "jquery";
 import "whatwg-fetch";
 import Promise from "promise-polyfill";
 import { UniversalDashboardService } from "./services/universal-dashboard-service.jsx";
@@ -22,8 +23,4 @@ if (!window.Promise) {
 window.UniversalDashboard = UniversalDashboardService;
 require("./component-registration");
 
-const rootEl = document.getElementById("app");
-const root = ReactDOM.createRoot(rootEl);
-root.Render(<App />);
-
-// render(<App/>, document.getElementById('app'));
+render(<App />, document.getElementById("app"));
