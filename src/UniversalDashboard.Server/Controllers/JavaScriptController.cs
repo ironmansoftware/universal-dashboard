@@ -2,8 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Text;
 using UniversalDashboard.Interfaces;
-using UniversalDashboard.Services;
 using System.IO;
+using Microsoft.Extensions.Logging;
+using UniversalDashboard.Models;
 
 namespace PowerShellProTools.UniversalDashboard.Controllers
 {
@@ -11,30 +12,32 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
     public class JavaScriptController : Controller
     {
         private readonly ILogger _logger;
-        private readonly IDashboardService _dashboardService;
-        public JavaScriptController(IDashboardService dashboardService, ILogger<JavaScriptController> logger) {
-            _dashboardService = dashboardService;
+        private readonly Dashboard _dashboard; 
+        private readonly IAssetService _assetService;
+        public JavaScriptController(Dashboard dashboard, IAssetService assetService, ILogger<JavaScriptController> logger) {
+            _assetService = assetService;
+            _dashboard = dashboard;
             _logger = logger;
         }
 
         [Route("framework")]
         public IActionResult Framework() {
-            if (_dashboardService.Dashboard.FrameworkAssetId.StartsWith("http")) {
-                return Redirect(_dashboardService.Dashboard.FrameworkAssetId);
+            if (_dashboard.FrameworkAssetId.StartsWith("http")) {
+                return Redirect(_dashboard.FrameworkAssetId);
             }
 
-            if (Path.IsPathRooted(_dashboardService.Dashboard.FrameworkAssetId))
+            if (Path.IsPathRooted(_dashboard.FrameworkAssetId))
             {
-                return PhysicalFile(_dashboardService.Dashboard.FrameworkAssetId, "text/javascript");
+                return PhysicalFile(_dashboard.FrameworkAssetId, "text/javascript");
             }
 
-            return Index(_dashboardService.Dashboard.FrameworkAssetId);
+            return Index(_dashboard.FrameworkAssetId);
         }
 
         [Route("plugin")]
         public IActionResult Plugin() {
             var stringBuilder = new StringBuilder();
-            foreach(var plugin in AssetService.Instance.Plugins) {
+            foreach(var plugin in _assetService.Plugins) {
 
                 if (plugin.StartsWith("http")) {
                     return Redirect(plugin);
@@ -50,10 +53,10 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
         [Route("{asset}")]
         public IActionResult Index(string asset)
         {
-            var filePath = AssetService.Instance.FindAsset(asset);
+            var filePath = _assetService.FindAsset(asset);
             if (filePath == null)
             {
-                Log.Warn($"Unknown element script: {asset}");
+                _logger.LogWarning($"Unknown element script: {asset}");
                 return StatusCode(404);
             }
 
@@ -63,7 +66,7 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
 
             if (!System.IO.File.Exists(filePath))
             {
-                Log.Warn($"Static file [{filePath}] does not exist.");
+                _logger.LogWarning($"Static file [{filePath}] does not exist.");
 
                 return StatusCode(404);
             }

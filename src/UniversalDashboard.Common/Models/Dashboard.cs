@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation.Runspaces;
 using Newtonsoft.Json;
 
 namespace UniversalDashboard.Models
 {
-	public class Dashboard
+    public class Dashboard
     {
 		[JsonProperty("id")]
 		public Guid Id { get; set;}

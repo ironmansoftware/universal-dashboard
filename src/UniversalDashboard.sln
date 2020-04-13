@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{A666D7E6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Common", "UniversalDashboard.Common\UniversalDashboard.Common.csproj", "{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversalDashboard.Server", "UniversalDashboard.Server\UniversalDashboard.Server.csproj", "{9078E89E-B973-42C6-822C-046A48B10842}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EE93AE9-7C10-48D4-B804-CCC0C8CA39B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9078E89E-B973-42C6-822C-046A48B10842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9078E89E-B973-42C6-822C-046A48B10842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9078E89E-B973-42C6-822C-046A48B10842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9078E89E-B973-42C6-822C-046A48B10842}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

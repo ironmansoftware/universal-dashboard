@@ -3,7 +3,6 @@ using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UniversalDashboard.Models;
-using UniversalDashboard.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,22 +16,23 @@ using Microsoft.AspNetCore.Http.Features;
 using UniversalDashboard.Interfaces;
 using Microsoft.Extensions.Primitives;
 using System.Collections;
+using Microsoft.Extensions.Logging;
 
 namespace UniversalDashboard.Controllers
 {
     [Route("api/internal/component")]
     public class ComponentController : Controller
     {
-        private static readonly ILogger Log;
+        private readonly ILogger Log;
         private readonly IExecutionService _executionService;
-        private readonly IDashboardService _dashboardService;
+        private readonly IEndpointService _endpointService;
         private readonly IMemoryCache _memoryCache;
         private readonly IStateRequestService _stateRequestService;
         private readonly IConnectionManager _connectionManager;
 
         public ComponentController(
             IExecutionService executionService, 
-            IDashboardService dashboardService, 
+            IEndpointService endpointService, 
             IMemoryCache memoryCache, 
             IStateRequestService stateRequestService, 
             IConnectionManager connectionManager,
@@ -40,11 +40,11 @@ namespace UniversalDashboard.Controllers
         )
         {
             _executionService = executionService;
-            _dashboardService = dashboardService;
+            _endpointService = endpointService;
             _memoryCache = memoryCache;
             _stateRequestService = stateRequestService;
             _connectionManager = connectionManager;
-            _logger = logger;
+            Log = logger;
         }
 
         public virtual async Task<IActionResult> RunScript(AbstractEndpoint endpoint, Dictionary<string, object> parameters = null, bool noSerialization = false)
@@ -71,7 +71,7 @@ namespace UniversalDashboard.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Log.Error("RunScript() Exception processing geolocation. " + ex.Message);
+                    Log.LogError("RunScript() Exception processing geolocation. " + ex.Message);
                 }
 
                 ExecutionContext executionContext = new ExecutionContext(endpoint, variables, parameters, HttpContext?.User);
@@ -89,7 +89,7 @@ namespace UniversalDashboard.Controllers
                 return actionResult;
             }
             catch (Exception ex) {
-                Log.Warn("RunScript() " + ex.Message + Environment.NewLine + ex.StackTrace);
+                Log.LogWarning("RunScript() " + ex.Message + Environment.NewLine + ex.StackTrace);
                 throw ex;
             }
         }
@@ -105,23 +105,17 @@ namespace UniversalDashboard.Controllers
             var resString = result as string;
             if (resString != null)
             {
-                Log.Debug("ConvertToActionResult() " + resString);
+                Log.LogDebug("ConvertToActionResult() " + resString);
                 var contentType = string.IsNullOrEmpty(Request.ContentType) ? "application/json; charset=utf-8" : Request.ContentType;
                 return Content(resString, contentType);
             }
             else if (Request.ContentType?.Equals("application/json; charset=utf-8", StringComparison.OrdinalIgnoreCase) == true)
             {
-                Log.Debug("ConvertToActionResult() " + result);
+                Log.LogDebug("ConvertToActionResult() " + result);
                 return Json(result);
             }
             else
             {
-                if (Log.IsDebugEnabled)
-                {
-                    var json = JsonConvert.SerializeObject(result);
-                    Log.Debug("ConvertToActionResult() " + json);
-                }
-
                 return Json(result);
             }
         }
@@ -146,13 +140,13 @@ namespace UniversalDashboard.Controllers
                 }
             }
 
-            Log.Debug($"Element - id = {id}");
+            Log.LogDebug($"Element - id = {id}");
 
-            var endpoint = _dashboardService.EndpointService.Get(id, SessionId);
+            var endpoint = _endpointService.Get(id, SessionId);
 
             if (endpoint == null)
             {
-                Log.Warn($"Endpoint {id} not found.");
+                Log.LogWarning($"Endpoint {id} not found.");
                 return NotFound();
             }
 
@@ -175,13 +169,13 @@ namespace UniversalDashboard.Controllers
                 variables.Add("body", body);
             }
 
-            Log.Debug($"Element POST - id = {id}");
+            Log.LogDebug($"Element POST - id = {id}");
 
-            var endpoint = _dashboardService.EndpointService.Get(id, SessionId);
+            var endpoint = _endpointService.Get(id, SessionId);
 
             if (endpoint == null)
             {
-                Log.Warn($"Endpoint {id} not found.");
+                Log.LogWarning($"Endpoint {id} not found.");
                 return NotFound();
             }
 
@@ -194,18 +188,18 @@ namespace UniversalDashboard.Controllers
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
 
-			Log.Info($"GetEndpoint - {parts}");
+			Log.LogInformation($"GetEndpoint - {parts}");
 
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
 
-            var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "GET", variables);
+            var endpoint = _endpointService.GetByUrl(parts, "GET", variables);
             if (endpoint != null)
             {
                 return await RunScript(endpoint, variables);
             }
 
-			Log.Info("Did not match endpoint.");
+			Log.LogInformation("Did not match endpoint.");
 
 			return StatusCode(404);
 		}
@@ -216,7 +210,7 @@ namespace UniversalDashboard.Controllers
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
 
-			Log.Info($"DeleteEndpoint - {parts}");
+			Log.LogInformation($"DeleteEndpoint - {parts}");
 
             var variables = new Dictionary<string, object>();
 
@@ -230,13 +224,13 @@ namespace UniversalDashboard.Controllers
                 ProcessBodyAsRaw(Request, variables);                              
             }
 
-            var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "DELETE", variables);
+            var endpoint = _endpointService.GetByUrl(parts, "DELETE", variables);
             if (endpoint != null)
             {
                 return await RunScript(endpoint, variables);
             }
 
-            Log.Info("Did not match endpoint.");
+            Log.LogInformation("Did not match endpoint.");
 
 			return StatusCode(404);
 		}
@@ -245,7 +239,7 @@ namespace UniversalDashboard.Controllers
         {
             if (HttpContext.Request.HasFormContentType)
             {     
-                Log.Debug("HasFormContentType");
+                Log.LogDebug("HasFormContentType");
 
                 var form = await Request.ReadFormAsync(new FormOptions() { BufferBody = true });
 
@@ -271,18 +265,18 @@ namespace UniversalDashboard.Controllers
         {
             if (HttpContext.Request.ContentType.Contains("image/") || HttpContext.Request.ContentType.Contains("file/")) 
             {
-                Log.Debug("HasFileOrImageContenttype");
+                Log.LogDebug("HasFileOrImageContenttype");
                 using (MemoryStream stream = new MemoryStream())
                 {
                     await HttpContext.Request.Body.CopyToAsync(stream);
                     if (stream != null) {
                         variables.Add("File", stream.ToArray());
-                        Log.Debug("File from RESTAPI found.");
+                        Log.LogDebug("File from RESTAPI found.");
                         return true;
                     }
                     else 
                     {
-                        Log.Debug("Filestream is empty.");
+                        Log.LogDebug("Filestream is empty.");
                         return false;
                     }
                 }
@@ -292,7 +286,7 @@ namespace UniversalDashboard.Controllers
 
         private void ProcessBodyAsRaw(HttpRequest request, Dictionary<string, object> variables)
         {
-            Log.Debug($"Content type: {HttpContext.Request.ContentType}");
+            Log.LogDebug($"Content type: {HttpContext.Request.ContentType}");
             using (var streamReader = new StreamReader(Request.Body))
             {
                 var body = streamReader.ReadToEnd();
@@ -306,7 +300,7 @@ namespace UniversalDashboard.Controllers
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
 
-			Log.Info($"PostEndpoint - {parts}");
+			Log.LogInformation($"PostEndpoint - {parts}");
 
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
@@ -318,21 +312,21 @@ namespace UniversalDashboard.Controllers
                     //If we made it here we either have a non-form content type
                     //or the request was made with the default content type of form
                     //when it is really something else (probably application/json)
-                    Log.Debug("Processing as RAW");
+                    Log.LogDebug("Processing as RAW");
                     ProcessBodyAsRaw(Request, variables);                              
                 }
             }
 
             
-            var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "POST", variables);
+            var endpoint = _endpointService.GetByUrl(parts, "POST", variables);
  
             if (endpoint.AcceptFileUpload) {
                 if (await TryProcessFile(Request, variables)) {
-                    Log.Debug("Reccieved a file!");
+                    Log.LogDebug("Reccieved a file!");
                     
                 }
                 else {
-                    Log.Debug("Endpoint supported file content, but no files present.");
+                    Log.LogDebug("Endpoint supported file content, but no files present.");
                 }
             }
             if (endpoint != null)
@@ -340,7 +334,7 @@ namespace UniversalDashboard.Controllers
                 return await RunScript(endpoint, variables);
             }
 
-            Log.Info("Did not match endpoint.");
+            Log.LogInformation("Did not match endpoint.");
 
 			return StatusCode(404);
 		}
@@ -351,7 +345,7 @@ namespace UniversalDashboard.Controllers
         {
             var parts = HttpContext.GetRouteValue("parts") as string;
 
-            Log.Info($"PatchEndpoint - {parts}");
+            Log.LogInformation($"PatchEndpoint - {parts}");
 
             var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
@@ -364,13 +358,13 @@ namespace UniversalDashboard.Controllers
                 ProcessBodyAsRaw(Request, variables);
             }
 
-            var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "PATCH", variables);
+            var endpoint = _endpointService.GetByUrl(parts, "PATCH", variables);
             if (endpoint != null)
             {
                 return await RunScript(endpoint, variables);
             }
 
-            Log.Info("Did not match endpoint.");
+            Log.LogInformation("Did not match endpoint.");
 
             return StatusCode(404);
         }
@@ -381,7 +375,7 @@ namespace UniversalDashboard.Controllers
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
 
-			Log.Info($"PutEndpoint - {parts}");
+			Log.LogInformation($"PutEndpoint - {parts}");
 
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
@@ -394,13 +388,13 @@ namespace UniversalDashboard.Controllers
                 ProcessBodyAsRaw(Request, variables);
             }
 
-            var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "PUT", variables);
+            var endpoint = _endpointService.GetByUrl(parts, "PUT", variables);
             if (endpoint != null)
             {
                 return await RunScript(endpoint, variables);
             }
 
-            Log.Info("Did not match endpoint.");
+            Log.LogInformation("Did not match endpoint.");
 
 			return StatusCode(404);
 		}
@@ -411,7 +405,7 @@ namespace UniversalDashboard.Controllers
 		{
 			var parts = HttpContext.GetRouteValue("parts") as string;
 
-			Log.Info($"OptionsEndpoint - {parts}");
+			Log.LogInformation($"OptionsEndpoint - {parts}");
 
 			var variables = new Dictionary<string, object>();
             SetQueryStringValues(variables);
@@ -424,13 +418,13 @@ namespace UniversalDashboard.Controllers
                 ProcessBodyAsRaw(Request, variables);
             }
 
-            var endpoint = _dashboardService.EndpointService.GetByUrl(parts, "OPTIONS", variables);
+            var endpoint = _endpointService.GetByUrl(parts, "OPTIONS", variables);
             if (endpoint != null)
             {
                 return await RunScript(endpoint, variables);
             }
 
-            Log.Info("Did not match endpoint.");
+            Log.LogInformation("Did not match endpoint.");
 
 			return StatusCode(404);
 		}

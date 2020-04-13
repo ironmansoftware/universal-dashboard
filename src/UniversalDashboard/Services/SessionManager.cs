@@ -2,20 +2,11 @@ using NLog;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using UniversalDashboard.Interfaces;
 using UniversalDashboard.Models;
 
 namespace UniversalDashboard.Services
 {
-    public interface ISessionManager
-    {
-        void StartSession(string id);
-        void EndSession(string id);
-        bool SessionExists(string id);
-        SessionState GetSession(string id);
-        ConcurrentDictionary<string, SessionState> Sessions { get; }
-        void ClearTimedOutSessions(TimeSpan timespan);
-    }
-
     public class SessionManager : ISessionManager
     {
         private readonly Logger logger = LogManager.GetLogger(nameof(SessionManager));

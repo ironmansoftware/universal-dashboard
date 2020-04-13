@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
-using UniversalDashboard.Utilities;
+using UniversalDashboard.Interfaces;
 
 namespace UniversalDashboard.Services
 {
-    public class AssetService
+    public class AssetService : IAssetService
     {
         public ConcurrentDictionary<string, string> Frameworks;
         public IEnumerable<string> Plugins => _plugins.Keys;
