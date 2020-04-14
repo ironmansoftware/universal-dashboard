@@ -34,6 +34,13 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
             Set-UDElement -Id "userInfo" -Properties @{visible = $true }
         }
     }
+    New-UDPage -Title 'Utils' -Name Utils -Content {
+        New-UDAntdNotification -Id "pageInfo" -Title "Page Info" -Description "" -Preset "info" 
+        New-UDAntdButton -Label "Get Page Info" -ButtonType primary -OnClick {
+            $info = Get-UDAntdPage -Name Icons
+            Set-UDElement -Id "pageInfo" -Properties @{visible = $true; description = $info }
+        }
+    }
     New-UDPage -Title 'Dynamic' -Name Dynamic -Url "/counter" -Endpoint {
         New-UDAntdCard -Content {
             1..250 | Get-Random 
