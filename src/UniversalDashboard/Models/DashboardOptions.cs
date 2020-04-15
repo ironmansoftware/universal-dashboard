@@ -24,5 +24,6 @@ namespace UniversalDashboard
         public IPAddress ListenAddress { get; set; }
         public bool DisableTelemetry { get; set ;}
         public Dictionary<string, object> Properties { get; set; }
+        public int ParentProcessId { get; set; }
     }
 }

@@ -33,6 +33,7 @@ namespace UniversalDashboard.Services
             Debugger = new Debugger();
         }
         
+        public int ParentProcessId { get; set; }
         public Dashboard Dashboard { get; private set; }
         public DashboardOptions DashboardOptions { get; private set; }
 		public Dictionary<Guid, string> ElementScripts {get; private set;}

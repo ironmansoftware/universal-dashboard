@@ -13,6 +13,7 @@ namespace PowerShellProTools.UniversalDashboard.Controllers
     {
         private readonly Logger Log = LogManager.GetLogger(nameof(JavaScriptController));
         private readonly IDashboardService _dashboardService;
+        private readonly IUDRunspaceFactory _runspaceFactory;
         public JavaScriptController(IDashboardService dashboardService) {
             _dashboardService = dashboardService;
         }

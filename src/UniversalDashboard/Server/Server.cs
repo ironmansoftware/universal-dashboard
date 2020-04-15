@@ -14,6 +14,11 @@ using UniversalDashboard.Interfaces;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.ApplicationInsights;
 using UniversalDashboard.Cmdlets;
+using System.Management.Automation.Runspaces;
+using System.Net;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using UniversalDashboard.Models;
 
 namespace UniversalDashboard
 {
@@ -22,6 +27,15 @@ namespace UniversalDashboard
 		static Server()
 		{
 			AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolver.OnAssemblyResolve;
+		}
+
+		public Server(int port) {
+			Name = $"Dashboard{_lastId}";
+            Port = port;
+			if (Servers.Any(m => m.Name.Equals(Name, StringComparison.OrdinalIgnoreCase)))
+			{
+				throw new Exception($"Server with name {Name} already exists.");
+			}
 		}
 		
 		public Server(string name, string fileName, bool autoReload, PSHost host, int port, bool https)
@@ -75,6 +89,21 @@ namespace UniversalDashboard
 		
 		private string _reloadKey;
 
+		public static void Main(string[] args)
+		{
+			var parentProcessId = args[0];
+			var server = new Server(1000);
+
+			var dashboardOptions = new DashboardOptions();
+			dashboardOptions.Dashboard = new Dashboard ();
+			dashboardOptions.EndpointInitialSessionState = InitialSessionState.CreateDefault2();
+			dashboardOptions.Port = 1000;
+			dashboardOptions.Wait = true;
+			dashboardOptions.ListenAddress = IPAddress.Any;
+			dashboardOptions.ParentProcessId = int.Parse(parentProcessId);
+			server.Start(dashboardOptions);
+		}
+
 		public void Start(DashboardOptions dashboardOptions)
 		{
 			IsRestApi = dashboardOptions.Dashboard == null;
@@ -98,7 +127,10 @@ namespace UniversalDashboard
 			var calc = new CustomAssemblyLoadContext();
 			calc.LoadNativeLibraries();
 
-			var builder = new WebHostBuilder()
+			var builder = Host.CreateDefaultBuilder(new string[0])
+				.ConfigureLogging(logging => {
+					logging.AddConsole();
+				})
 				.ConfigureServices((y) =>
 				{
 					DashboardService = new DashboardService(dashboardOptions, _reloadKey);
@@ -122,66 +154,69 @@ namespace UniversalDashboard
 					if (_reloader != null)
 						y.Add(new ServiceDescriptor(typeof(AutoReloader), _reloader));
 				});
-				builder = builder.UseKestrel(options =>
-				{
-					// If we have a certificate configured
-					if (dashboardOptions.Certificate != null || dashboardOptions.CertificateFile != null)
-					{
-						Action<ListenOptions> listenOptionsAction = (ListenOptions listenOptions) => {
-								if (dashboardOptions.Certificate != null)
-								{
-									listenOptions.UseHttps(dashboardOptions.Certificate);
-								}
 
-								if (dashboardOptions.CertificateFile != null)
-								{
-									listenOptions.UseHttps(dashboardOptions.CertificateFile, SecureStringToString(dashboardOptions.Password));
-								}
-						};
-						
-						// If the ports are different, listen on HTTP and HTTPS
-						if (dashboardOptions.Port != dashboardOptions.HttpsPort)
+				builder.ConfigureWebHost(webhost => {
+					webhost.UseKestrel(options =>
+					{
+						// If we have a certificate configured
+						if (dashboardOptions.Certificate != null || dashboardOptions.CertificateFile != null)
 						{
-							options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port);
-							options.Listen(dashboardOptions.ListenAddress, dashboardOptions.HttpsPort, listenOptionsAction);
+							Action<ListenOptions> listenOptionsAction = (ListenOptions listenOptions) => {
+									if (dashboardOptions.Certificate != null)
+									{
+										listenOptions.UseHttps(dashboardOptions.Certificate);
+									}
+
+									if (dashboardOptions.CertificateFile != null)
+									{
+										listenOptions.UseHttps(dashboardOptions.CertificateFile, SecureStringToString(dashboardOptions.Password));
+									}
+							};
+							
+							// If the ports are different, listen on HTTP and HTTPS
+							if (dashboardOptions.Port != dashboardOptions.HttpsPort)
+							{
+								options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port);
+								options.Listen(dashboardOptions.ListenAddress, dashboardOptions.HttpsPort, listenOptionsAction);
+							}
+							// If the ports are the same, just listen on the port and configure HTTPS
+							else
+							{
+								options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port, listenOptionsAction);
+							}
 						}
-						// If the ports are the same, just listen on the port and configure HTTPS
+						// If no certificate is configured, just listen on the port
 						else
 						{
-							options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port, listenOptionsAction);
+							options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port);
 						}
-					}
-					// If no certificate is configured, just listen on the port
-					else
-					{
-						options.Listen(dashboardOptions.ListenAddress, dashboardOptions.Port);
-					}
 
-					options.Limits.MaxRequestBodySize = null;
+						options.Limits.MaxRequestBodySize = null;
+					})
+					.UseSockets()
+					.UseStartup<ServerStartup>()
+					.CaptureStartupErrors(true);
+
 				});
 
-			builder = builder
-                .UseSetting("detailedErrors", "true")
-                .UseSockets()
-                .UseStartup<ServerStartup>()
-				.CaptureStartupErrors(true);
+				
+				if (Directory.Exists(libraryDirectory)) {
+					builder.UseContentRoot(libraryDirectory);
+				}
 
-			if (Directory.Exists(libraryDirectory)) {
-				builder.UseContentRoot(libraryDirectory);
-			}
 
-			host = builder.Build();
+			var host2 = builder.Build();
 
 			Servers.Add(this);
 			this.Running = true;
 
 			if (dashboardOptions.Wait)
 			{
-				this.host.Run();
+				host2.Run();
 			}
 			else
 			{
-				this.host.Start();
+				host2.Start();
 			}
 		}
 
@@ -201,7 +236,7 @@ namespace UniversalDashboard
 			}
 		}
 
-		String SecureStringToString(SecureString value)
+		static String SecureStringToString(SecureString value)
 		{
 			IntPtr valuePtr = IntPtr.Zero;
 			try

@@ -9,13 +9,11 @@ using System;
 using System.Linq;
 using UniversalDashboard.Execution;
 using NLog;
-using NLog.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using UniversalDashboard.Interfaces;
-using Microsoft.AspNetCore.Mvc.Filters;
 using System.IO;
-using UniversalDashboard.Utilities;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
 
 namespace UniversalDashboard
 {
@@ -26,9 +24,9 @@ namespace UniversalDashboard
 		private AutoReloader _reloader;
         public static List<Action<IServiceCollection>> ConfigureServiceActions { get; } = new List<Action<IServiceCollection>>();
         public static List<Action<IMvcBuilder>> ConfigureMvcActions { get; } = new List<Action<IMvcBuilder>>();
-        public static List<Action<IApplicationBuilder, Microsoft.AspNetCore.Hosting.IHostingEnvironment, ILoggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime>> ConfigureActions { get; } = new List<Action<IApplicationBuilder, Microsoft.AspNetCore.Hosting.IHostingEnvironment, ILoggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime>>();
+        public static List<Action<IApplicationBuilder, IWebHostEnvironment, ILoggerFactory, IHostApplicationLifetime>> ConfigureActions { get; } = new List<Action<IApplicationBuilder, IWebHostEnvironment, ILoggerFactory, IHostApplicationLifetime>>();
 
-        public ServerStartup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public ServerStartup(IWebHostEnvironment env)
 		{
 			var builder =
 				new ConfigurationBuilder()
@@ -50,24 +48,27 @@ namespace UniversalDashboard
 			services.AddSignalR(hubOptions =>
             {
                 hubOptions.EnableDetailedErrors = true;
-            }).AddJsonProtocol(x =>
-            {
-                x.PayloadSerializerSettings.ContractResolver = new CustomContractResolver();
             });
+            
+            // .AddJsonProtocol(x =>
+            // {
+            //     x.PayloadSerializerSettings.ContractResolver = new CustomContractResolver();
+            // });
             services.AddTransient<StateRequestService>();
-            services.AddSingleton<IHostedService, ScheduledEndpointManager>();
+            //services.AddSingleton<IHostedService, ScheduledEndpointManager>();
             services.AddTransient<IExecutionService, ExecutionService>();
             services.AddTransient<ILanguageExecutionService, PowerShellExecutionService>();
-			services.AddCors();
-			services.AddDirectoryBrowser();
+            services.AddDistributedMemoryCache();
 			services.AddMemoryCache();
             services.AddSingleton(new ConnectionManager());
+            services.AddControllers();
+            services.AddSession();
             
-            var mvc = services.AddMvc().AddJsonOptions(x => {
-                x.SerializerSettings.ContractResolver = new CustomContractResolver();
-            });
+            // var mvc = services.AddMvc().AddNewtonsoftJson(x => {
+            //     x.SerializerSettings.ContractResolver = new CustomContractResolver();
+            // });
 
-            ConfigureMvcActions.ForEach(x => x(mvc));
+            // ConfigureMvcActions.ForEach(x => x(mvc));
 
             if (dashboardService?.DashboardOptions?.Certificate != null || dashboardService?.DashboardOptions?.CertificateFile != null) 
             {
@@ -91,14 +92,9 @@ namespace UniversalDashboard
                 options.Cookie.HttpOnly = true;
                 options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
             });
-
-            var serviceDescriptor = services.FirstOrDefault(descriptor => descriptor.ServiceType.Name == "IRegistryPolicyResolver");
-            services.Remove(serviceDescriptor);
-
-            dashboardService.ServiceProvider = services.BuildServiceProvider();
         }
 
-        public void Configure(IApplicationBuilder app, Microsoft.AspNetCore.Hosting.IHostingEnvironment env, ILoggerFactory loggerFactory, Microsoft.AspNetCore.Hosting.IApplicationLifetime lifetime)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IHostApplicationLifetime lifetime)
 		{
 			var provider = new Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider();
 			// Add new mappings
@@ -108,6 +104,7 @@ namespace UniversalDashboard
 			provider.Mappings[".log"] 	= "text/plain";
 			provider.Mappings[".yml"] 	= "text/plain";
 
+            app.UseRouting();
 			app.UseResponseCompression();
             app.UseStatusCodePages(async context => {
 
@@ -178,18 +175,15 @@ namespace UniversalDashboard
 				}
 			}
 
-			app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
-
-			app.UseSignalR(routes =>
-            {
-                routes.MapHub<DashboardHub>("/dashboardhub");
-            });
-            
-			app.UseWebSockets();
-
+            app.UseWebSockets();
 			app.UseSession();
 
-            app.UseMvc();
+            app.UseEndpoints(x => {
+                x.MapHub<DashboardHub>("/dashboardhub");
+                x.MapControllers();
+            });
+
+
 		}
 	}
 }

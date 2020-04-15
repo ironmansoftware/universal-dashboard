@@ -71,8 +71,8 @@ namespace UniversalDashboard.Services
 
             var assemblyBasePath = Path.GetDirectoryName(this.GetType().GetTypeInfo().Assembly.Location);
             var tempPath = Path.Combine(assemblyBasePath, "..", Constants.ModuleManifest);
-			_initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
-			_initialSessionState.ImportPSModule(new [] {tempPath});
+		//	_initialSessionState.Variables.Add(new SessionStateVariableEntry("DashboardService", _dashboardService, "DashboardService", ScopedItemOptions.ReadOnly));
+		//	_initialSessionState.ImportPSModule(new [] {tempPath});
 
 			_runspacePool = new ObjectPool<Runspace>(CreateRunspace);
 		}
@@ -104,7 +104,8 @@ namespace UniversalDashboard.Services
         }
 
 		private Runspace CreateRunspace() {
-			var runspace = RunspaceFactory.CreateRunspace(new UDHost(), _initialSessionState);
+            var tt = TypeTable.LoadDefaultTypeFiles();
+            var runspace = RunspaceFactory.CreateRunspace(new NamedPipeConnectionInfo(_dashboardService.ParentProcessId), new UDHost(), tt);
 			runspace.Open();
             return runspace;
 		}

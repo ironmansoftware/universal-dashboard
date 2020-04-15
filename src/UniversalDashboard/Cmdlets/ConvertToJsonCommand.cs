@@ -16,6 +16,7 @@ using Newtonsoft.Json.Converters;
 using System.Linq;
 using UniversalDashboard.Models.Basics;
 using UniversalDashboard.Models;
+using AllowNullAttribute = System.Management.Automation.AllowNullAttribute;
 
 // FxCop suppressions for resource strings:
 [module: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", Scope = "resource", Target = "WebCmdletStrings.resources", MessageId = "json")]

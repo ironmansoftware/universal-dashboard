@@ -26,9 +26,7 @@ if (-not $Minimal)
 
 & dotnet clean "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj"
 & dotnet restore "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" 
-  
-& dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f netstandard2.0
-& dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f net472
+& dotnet publish -c $Configuration "$PSScriptRoot\UniversalDashboard\UniversalDashboard.csproj" -f netcoreapp3.1
 
 $public = Join-Path $PSScriptRoot ".\client\src\public"
 if ((Test-Path $public)) {
@@ -70,21 +68,18 @@ if ((Test-Path $bomDirectory)) {
 
 New-Item -ItemType Directory $bomDirectory
 
-$net472 = Join-Path $outputDirectory "net472"
-$netstandard20 = Join-Path $outputDirectory "netstandard2.0"
+$net31 = Join-Path $outputDirectory "netcoreapp3.1"
 $help = Join-Path $outputDirectory "en-US"
 $client = Join-Path $outputDirectory "client"
 $poshud = Join-Path $outputDirectory "poshud"
 $childModules = Join-Path $outputDirectory "Modules"
 
-New-Item -ItemType Directory $net472
-New-Item -ItemType Directory $netstandard20
+New-Item -ItemType Directory $net31
 New-Item -ItemType Directory $help
 New-Item -ItemType Directory $client
 New-Item -ItemType Directory $childModules
 
-Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\netstandard2.0\publish\*" $netstandard20 -Recurse
-Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\net472\publish\*" $net472 -Recurse
+Copy-Item "$PSScriptRoot\UniversalDashboard\bin\$Configuration\netcoreapp3.1\publish\*" $net31 -Recurse
 
 Copy-Item "$PSScriptRoot\client\src\public\*" $client -Recurse
 

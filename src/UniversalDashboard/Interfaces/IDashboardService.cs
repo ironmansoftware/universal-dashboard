@@ -8,6 +8,7 @@ namespace UniversalDashboard.Interfaces
 {
     public interface IDashboardService : IDisposable
     {
+        int ParentProcessId { get; set; }
         void SetDashboard(Dashboard dashboard);
         void SetRestEndpoints(Endpoint[] endpoints);
         Dashboard Dashboard { get; }
