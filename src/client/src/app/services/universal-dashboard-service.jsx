@@ -86,6 +86,9 @@ export const UniversalDashboardService = {
     publish: PubSub.publishSync,
     toaster: toaster,
     connectionId: '',
+    sessionId: '',
+    sessionTimedOut: false,
+    onSessionTimedOut: () => {}, 
     renderComponent,
     provideDashboardComponents: function (state) {
 

@@ -27,13 +27,14 @@ Describe "Sessions" {
         Start-sleep 2
 
         It "should timeout session" {
-
-            Stop-SeDriver $Driver
-
             Start-Sleep 8
+
+            Find-SeElement -Id 'sessionTimedOut' -Driver $Driver | Should not be $null
 
             $Dashboard = Get-UDDashboard
             $Dashboard.DashboardService.EndpointService.SessionManager.Sessions.Count | Should be 0
         }
+
+        Stop-SeDriver $Driver
     }
 }
