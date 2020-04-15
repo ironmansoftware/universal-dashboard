@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v3.0.0-beta3 - Unreleased
+
+### Added
+
+- Session timeout pop up by [adamdriscoll](https://github.com/adamdriscoll)
+
+### Changed
+
+- Fixed an issue where clicking a button with an OnClick endpoint defined with New-UDEndpoint would not work by [adamdriscoll](https://github.com/adamdriscoll)
+
 ## v3.0.0-beta2 - 4-10-2020 
 
 ### Added 
