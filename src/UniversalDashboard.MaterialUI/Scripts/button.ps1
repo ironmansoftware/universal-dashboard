@@ -64,7 +64,7 @@ function New-UDButton {
         [switch]$FullWidth,
 
         [Parameter (Position = 7)]
-        [object]$OnClick,
+        [Endpoint]$OnClick,
 
         [Parameter (Position = 8)]
         [ValidateSet("small", "medium", "large")]
@@ -83,13 +83,9 @@ function New-UDButton {
 
     End {
 
-        if ($null -ne $OnClick) {
-            if ($OnClick -is [scriptblock]) {
-                $OnClick = New-UDEndpoint -Endpoint $OnClick -Id ($Id + "onClick")
-            }
-            elseif ($OnClick -isnot [UniversalDashboard.Models.Endpoint]) {
-                throw "OnClick must be a script block or UDEndpoint"
-            }
+        if ($OnClick)
+        {
+            $OnClick.Register($Id, $PSCmdlet)
         }
 
         @{
