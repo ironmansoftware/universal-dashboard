@@ -1,6 +1,6 @@
 import {getApiPath} from 'config'
 
-export const fetchGet = function(url, success, history) {
+export const fetchGet = function(url, success, history, failure) {
     fetch(getApiPath() + url, {
         credentials: 'include',
         headers: {
@@ -26,6 +26,10 @@ export const fetchGet = function(url, success, history) {
         }
     })
     .catch(function(e) {
+        if (failure)
+        {
+            failure(e)
+        }
         console.log(e)
     });
 }

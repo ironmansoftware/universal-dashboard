@@ -42,6 +42,8 @@ namespace UniversalDashboard.Services
 
         public void EndSession(string id)
         {
+            if (!Sessions.ContainsKey(id)) return;
+
             var session = Sessions[id];
             session.LastTouched = DateTime.UtcNow;
             session.Connections--;
@@ -49,6 +51,7 @@ namespace UniversalDashboard.Services
 
         public bool SessionExists(string id)
         {
+            if (id == null) return false;
             return Sessions.ContainsKey(id);
         }
 

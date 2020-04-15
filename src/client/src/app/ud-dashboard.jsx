@@ -198,6 +198,16 @@ function loadJavascript(url, onLoad) {
   document.body.appendChild(jsElm)
 }
 
+var sessionCheckToken = null;
+
+const checkSession = () => {
+  UniversalDashboard.get(`/api/internal/session/${UniversalDashboard.sessionId}`, () => {}, null, () => {
+      UniversalDashboard.sessionTimedOut = true;
+      UniversalDashboard.onSessionTimedOut();
+      clearInterval(sessionCheckToken);
+  })
+}
+
 function loadData(setDashboard, setLocation, history, location, setLoading) {
   UniversalDashboard.get(
     '/api/internal/dashboard',
@@ -209,6 +219,9 @@ function loadData(setDashboard, setLocation, history, location, setLoading) {
       if (dashboard.scripts) dashboard.scripts.map(loadJavascript)
 
       connectWebSocket(json.sessionId, location, setLoading, history)
+      UniversalDashboard.sessionId = json.sessionId;
+
+      sessionCheckToken = setInterval(checkSession, 5000);
 
       UniversalDashboard.design = dashboard.design
 

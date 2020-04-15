@@ -5,7 +5,7 @@ import Icon from "./icon";
 import Paper from "./paper";
 import IconButton from "./icon-button";
 import { UDList, UDListItem } from "./list";
-import Button from "./button";
+import UDButton from "./button";
 import UDMuCard from "./card";
 import UDCardMedia from "./card-media";
 import UDCardToolBar from "./card-toolbar";
@@ -42,6 +42,7 @@ import UDAutocomplete from './autocomplete';
 import UDErrorCard from './framework/error-card';
 import {UDStep, UDStepper} from './stepper';
 import UDSlider from './slider'
+import Button from '@material-ui/core/Button';
 
 import {
     Route,
@@ -55,7 +56,7 @@ UniversalDashboard.register("mu-paper", Paper);
 UniversalDashboard.register("mu-icon-button", IconButton);
 UniversalDashboard.register("mu-list", UDList);
 UniversalDashboard.register("mu-list-item", UDListItem);
-UniversalDashboard.register("mu-button", Button);
+UniversalDashboard.register("mu-button", UDButton);
 UniversalDashboard.register("mu-card", UDMuCard);
 UniversalDashboard.register("mu-card-media", UDCardMedia);
 UniversalDashboard.register("mu-card-toolbar", UDCardToolBar);
@@ -160,7 +161,13 @@ const MaterialUI = (props) => {
             <UDModal />
         </Suspense>
     ]
+}
 
+UniversalDashboard.onSessionTimedOut = () => { 
+    UniversalDashboard.publish('modal.open', {
+        content: [<div id="sessionTimedOut">Your session has timed out</div>],
+        footer: [<Button onClick={() => window.location.reload()}>Refresh Page</Button>]
+    })
 }
 
 UniversalDashboard.renderDashboard = ({ dashboard, history }) => <MaterialUI dashboard={dashboard} history={history} />;
