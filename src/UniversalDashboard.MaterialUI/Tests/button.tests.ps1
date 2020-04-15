@@ -2,6 +2,11 @@ Enter-SeUrl -Target $Driver -Url "http://localhost:10000/button"
 
 Describe "button" {
 
+    It 'works with argumentlist' {
+        Find-SeElement -Id 'arugmentList' -Driver $Driver | Invoke-SeClick
+        Get-TestData | Should be "Some Text"
+    }
+
     It 'has default variant' {
         $Element = Find-SeElement -Id 'btnDefault' -Driver $Driver
         $Element.GetAttribute("class").Contains('MuiButton-contained') | should be $true

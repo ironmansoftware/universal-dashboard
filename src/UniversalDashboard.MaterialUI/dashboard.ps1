@@ -76,6 +76,13 @@ New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Pages @(
         New-UDButton -Text "Submit" -Id "btnClick" -Icon $Icon -OnClick {
             Set-TestData -Data "OnClick"
         }
+
+        $MyVariable = "Some Text"
+        New-UDButton -Text "Click me!" -Id 'arugmentList' -OnClick (
+            New-UDEndpoint -Endpoint {
+                Set-TestData -Data $ArgumentList[0]
+            } -ArgumentList @($MyVariable)
+        )
     }
 
     New-UDPage -Name 'Card' -Content {

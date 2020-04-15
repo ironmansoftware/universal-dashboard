@@ -24,7 +24,7 @@ const UdButton = props => {
 
   const handleClick = () => {
     if (props.onClick == null) return
-    props.notifyOfEvent('onClick', '')
+    props.onClick();
   }
 
   var icon = props.icon ? (
