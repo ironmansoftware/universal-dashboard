@@ -15,7 +15,7 @@ namespace UniversalDashboard.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{sessionId}")]
         public IActionResult Index(string sessionId) 
         {
             if (_dashboardService.EndpointService.SessionManager.SessionExists(sessionId))
