@@ -13,43 +13,44 @@ using System.Collections;
 namespace UniversalDashboard.Cmdlets
 {
     [Cmdlet(VerbsCommon.New, "UDDashboard")]
-	public class NewDashboardCommand : PSCmdlet, IDynamicParameters
-	{
-		private readonly Logger Log = LogManager.GetLogger(nameof(NewDashboardCommand));
-
-		[Parameter]
-		public string Title { get; set; } = "PowerShell Universal Dashboard";
-
-		[Parameter(ParameterSetName = "Content", Mandatory = true)]
-		public ScriptBlock Content { get; set; }
-
-		[Parameter(ParameterSetName = "Pages", Mandatory = true)]
-		public Page[] Pages { get; set; }
+    public class NewDashboardCommand : PSCmdlet, IDynamicParameters
+    {
+        private readonly Logger Log = LogManager.GetLogger(nameof(NewDashboardCommand));
 
         [Parameter]
-		public Hashtable[] NavbarLinks { get; set; }
+        public string Title { get; set; } = "PowerShell Universal Dashboard";
 
-		[Parameter]
-		public string[] Scripts { get; set; }
+        [Parameter(ParameterSetName = "Content", Mandatory = true)]
+        public ScriptBlock Content { get; set; }
 
-		[Parameter]
-		public string[] Stylesheets { get; set; }
+        [Parameter(ParameterSetName = "Pages", Mandatory = true)]
+        public Page[] Pages { get; set; }
 
-		[Parameter]
-		public InitialSessionState EndpointInitialization { get; set; }
+        [Parameter]
+        public Hashtable[] NavbarLinks { get; set; }
 
-		[Parameter]
-		public Theme Theme { get; set; }
+        [Parameter]
+        public string[] Scripts { get; set; }
 
-		[Parameter]
-		public SwitchParameter GeoLocation { get; set; }
+        [Parameter]
+        public string[] Stylesheets { get; set; }
 
-		[Parameter]
-		public TimeSpan IdleTimeout { get; set; } = TimeSpan.FromMinutes(25);
+        [Parameter]
+        public InitialSessionState EndpointInitialization { get; set; }
 
-		internal string DefaultFramework { get; set; } = "MaterialUI";
+        [Parameter]
+        public Theme Theme { get; set; }
 
-		public static RuntimeDefinedParameterDictionary DynamicParameters { get; } = new RuntimeDefinedParameterDictionary();
+        [Parameter]
+        public SwitchParameter GeoLocation { get; set; }
+
+        [Parameter]
+        public TimeSpan IdleTimeout { get; set; } = TimeSpan.FromMinutes(25);
+       
+	    [Parameter]
+        public string DefaultFramework { get; set; } = "MaterialUI";
+
+        public static RuntimeDefinedParameterDictionary DynamicParameters { get; } = new RuntimeDefinedParameterDictionary();
 
         public object GetDynamicParameters()
         {
@@ -57,69 +58,70 @@ namespace UniversalDashboard.Cmdlets
         }
 
         protected override void EndProcessing()
-	    {
-			if (EndpointInitialization == null)
-			{
-				EndpointInitialization = UDRunspaceFactory.GenerateInitialSessionState(SessionState);
-			}
+        {
+            if (EndpointInitialization == null)
+            {
+                EndpointInitialization = UDRunspaceFactory.GenerateInitialSessionState(SessionState);
+            }
 
-			var dashboard = new Dashboard();
-			dashboard.Title = Title;
-			dashboard.Scripts = Scripts;
-			dashboard.Stylesheets = Stylesheets;
-			dashboard.EndpointInitialSessionState = EndpointInitialization;
-			dashboard.GeoLocation = GeoLocation;
-			dashboard.IdleTimeout = IdleTimeout;
-			dashboard.Theme = Theme;
-			dashboard.Properties = MyInvocation.BoundParameters;
+            var dashboard = new Dashboard();
+            dashboard.Title = Title;
+            dashboard.Scripts = Scripts;
+            dashboard.Stylesheets = Stylesheets;
+            dashboard.EndpointInitialSessionState = EndpointInitialization;
+            dashboard.GeoLocation = GeoLocation;
+            dashboard.IdleTimeout = IdleTimeout;
+            dashboard.Theme = Theme;
+            dashboard.Properties = MyInvocation.BoundParameters;
+            dashboard.FrameworkAssetId = AssetService.Instance.Frameworks[DefaultFramework];
 
-			if (!AssetService.Instance.Frameworks.ContainsKey(DefaultFramework)) {
-				throw new Exception($"Invalid DefaultFramework specified. Valid frameworks are {AssetService.Instance.Frameworks.Keys.Aggregate((x,y) => x + ", " + y )}");
-			}
+            // if (!AssetService.Instance.Frameworks.ContainsKey(DefaultFramework)) {
+            // 	throw new Exception($"Invalid DefaultFramework specified. Valid frameworks are {AssetService.Instance.Frameworks.Keys.Aggregate((x,y) => x + ", " + y )}");
+            // }
 
-			dashboard.FrameworkAssetId = AssetService.Instance.Frameworks[DefaultFramework];
+            // dashboard.FrameworkAssetId = AssetService.Instance.Frameworks[DefaultFramework];
 
             // if (Theme != null) {
-			// 	var themeService = new ThemeService();
-			// 	Theme.RenderedContent = themeService.Create(Theme);
-			// 	dashboard.Themes = new [] {Theme};
-			// } else {
-			// 	var themeService = new ThemeService();
-			// 	var defaultTheme = themeService.LoadThemes().First(m => m.Name.Equals("Default"));
-			// 	defaultTheme.RenderedContent = themeService.Create(defaultTheme);
-			// 	dashboard.Themes = new [] {defaultTheme};
-			// }
+            // 	var themeService = new ThemeService();
+            // 	Theme.RenderedContent = themeService.Create(Theme);
+            // 	dashboard.Themes = new [] {Theme};
+            // } else {
+            // 	var themeService = new ThemeService();
+            // 	var defaultTheme = themeService.LoadThemes().First(m => m.Name.Equals("Default"));
+            // 	defaultTheme.RenderedContent = themeService.Create(defaultTheme);
+            // 	dashboard.Themes = new [] {defaultTheme};
+            // }
 
-		    if (ParameterSetName == "Content")
-		    {
-				var page = new Page();
-				page.Name = "home";
-				dashboard.Pages.Add(page);
+            if (ParameterSetName == "Content")
+            {
+                var page = new Page();
+                page.Name = "home";
+                dashboard.Pages.Add(page);
 
-				try
-				{
-					page.Id = Guid.NewGuid().ToString();
-					page.Callback = Content.GenerateCallback(page.Id, this, SessionState, new object[0]);
-					page.Callback.IsPage = true;
-					page.Callback.Page = page;
-					page.Dynamic = true;
-				}
-				catch (Exception ex)
-				{
-					WriteError(new ErrorRecord(ex, string.Empty, ErrorCategory.SyntaxError, dashboard));
+                try
+                {
+                    page.Id = Guid.NewGuid().ToString();
+                    page.Callback = Content.GenerateCallback(page.Id, this, SessionState, new object[0]);
+                    page.Callback.IsPage = true;
+                    page.Callback.Page = page;
+                    page.Dynamic = true;
+                }
+                catch (Exception ex)
+                {
+                    WriteError(new ErrorRecord(ex, string.Empty, ErrorCategory.SyntaxError, dashboard));
 
-					dashboard.Error = ex.Message;
-				}
-			}
+                    dashboard.Error = ex.Message;
+                }
+            }
 
-		    if (ParameterSetName == "Pages")
-		    {
-			    dashboard.Pages.AddRange(Pages);
-		    }
+            if (ParameterSetName == "Pages")
+            {
+                dashboard.Pages.AddRange(Pages);
+            }
 
-			Log.Debug(JsonConvert.SerializeObject(dashboard));
+            Log.Debug(JsonConvert.SerializeObject(dashboard));
 
-		    WriteObject(dashboard);
-	    }
+            WriteObject(dashboard);
+        }
     }
 }

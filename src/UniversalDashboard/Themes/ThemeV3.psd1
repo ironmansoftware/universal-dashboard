@@ -2,7 +2,7 @@
     name       = "basic"
     definition = @{
         colors  = @{
-            primary    = "#d32029"
+            primary    = "#1890ff"
             secondary  = "#fdc533"
             background = "#c1c1c1"
             text       = "#333"
