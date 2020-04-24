@@ -9,7 +9,12 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
         }
     }
     New-UDPage -Title 'Bages' -Name Badges -url '/Badge/colors' -Endpoint {
-        New-UDAntdPageHeader -SubTitle "this is the badges color page"
+        New-UDAntdPageHeader -SubTitle "this is the badges color page" -Tags @(
+            New-UDAntdTag -Color "pink" -Content "ud v.3"
+            New-UDAntdTag -Color "lime" -Content "ud v.2"
+            New-UDAntdTag -Color "#cd201f" -Content "Youtube" -Closable -Icon "😂🤣"
+            New-UDAntdTag -Color "#55acee" -Content "Twitter" -Closable -Icon ( New-UDAntdIcon -Icon TwitterOutlined -Size xs)
+        )
         (Get-Command -Name New-UDAntdBadge).Parameters["PresetColor"].Attributes.ValidValues | ForEach-Object {
             New-UDAntdBadge -PresetColor $_ -Content ( New-UDAntdIcon -Icon BellOutlined -Size 2x )
         }   
@@ -41,6 +46,14 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
                     New-UDAntdRadioButton -Value "VS" -Content {"Visual Studio"}
                 } 
             )
+            New-UDAntdFormItem -Name 'Tags' -Content (
+                
+                    New-UDAntdTagCheckable -Color "pink" -Content "ud v.3"
+                    # New-UDAntdTagCheckable -Color "lime" -Content "ud v.2"
+                    # New-UDAntdTagCheckable -Color "#cd201f" -Content "Youtube" -Icon "😂🤣"
+                    # New-UDAntdTagCheckable -Color "#55acee" -Content "Twitter" -Icon ( New-UDAntdIcon -Icon TwitterOutlined -Size xs)
+                
+            )
         } -Layout vertical -OnSubmit {
             Set-UDElement -Id "info" -Properties @{visible = $true; description = $EventData}            
         }
@@ -66,7 +79,7 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
                 }
             } -AutoRefresh -RefreshInterval 8000
 
-        }
+        } -Gutter 16
     }  
 
 ) -DefaultFramework Antd 
