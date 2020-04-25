@@ -81,6 +81,25 @@ namespace UniversalDashboard.Controllers
 
             return NotFound();
         }
+       
+        [Route("pages")]
+        [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
+        public async Task<IActionResult> Pages()
+        {
+            return await GetPages();
+        }
+
+        public virtual async Task<IActionResult> GetPages()
+        {
+            await Task.CompletedTask;
+            var allPages = _dashboard.Pages;    
+            if (allPages != null)
+            {
+                return Json(allPages);
+            }
+
+            return NotFound();
+        }
 
 		[Route("theme")]
         [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]

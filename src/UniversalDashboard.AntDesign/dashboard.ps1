@@ -25,10 +25,25 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
         New-UDAntdForm -Id 'demoForm' -Variant small -Content {
             New-UDAntdFormItem -Name 'username' -Content (
                 New-UDAntdInput -PlaceHolder 'Enter your user name' -Prefix ( New-UDAntdIcon -Icon UserOutlined )
-            ) -Required
+            ) -Rules @(@{
+                required = $true
+                message = "you must enter a user name."
+            })
+            New-UDAntdFormItem -Name 'group' -Content (
+                New-UDAntdInput -PlaceHolder 'Enter your group name' -Prefix ( New-UDAntdIcon -Icon UserOutlined )
+            ) -Rules @(@{
+                required = $true
+                message = "you must enter a valid group name."
+                enum = @('dev', 'ops', 'qa')
+                type = 'enum'
+            })
             New-UDAntdFormItem -Name 'email' -Content (
                 New-UDAntdInput -PlaceHolder 'Enter your email address' -Prefix ( New-UDAntdIcon -Icon MailOutlined  )
-            )
+            ) -Rules @(@{
+                    required = $true
+                    message  = "you must enter a email address."
+                    type = 'email'
+                })
             New-UDAntdFormItem -Name 'textbox' -Content (
                 New-UDAntdInputTextArea -PlaceHolder '??' 
             )
@@ -46,16 +61,8 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
                     New-UDAntdRadioButton -Value "VS" -Content {"Visual Studio"}
                 } 
             )
-            New-UDAntdFormItem -Name 'Tags' -Content (
-                
-                    New-UDAntdTagCheckable -Color "pink" -Content "ud v.3"
-                    # New-UDAntdTagCheckable -Color "lime" -Content "ud v.2"
-                    # New-UDAntdTagCheckable -Color "#cd201f" -Content "Youtube" -Icon "😂🤣"
-                    # New-UDAntdTagCheckable -Color "#55acee" -Content "Twitter" -Icon ( New-UDAntdIcon -Icon TwitterOutlined -Size xs)
-                
-            )
         } -Layout vertical -OnSubmit {
-            Set-UDElement -Id "info" -Properties @{visible = $true; description = $EventData}            
+            Set-UDElement -Id "info" -Properties @{visible = $true; description = (ConvertFrom-Json -InputObject $EventData | ConvertTo-Json  )}            
         }
     }
     New-UDPage -Title 'Profile' -Name Profile -Url "/members/:userId/settings/:profileName" -Endpoint {
@@ -70,13 +77,15 @@ $Dashboard = New-UDDashboard -Title "Dashboard" -Theme (get-udtheme basic) -Page
         New-UDAntdRow -Content {
             New-UDAntdColumn -span 12 -Content {
                 New-UDAntdCard -Content {
-                    1..250 | Get-Random 
-                }
+                    New-UDAntdStatistic -Value { 1..250 | Get-Random  } -Title Followers -Prefix ( New-UDAntdIcon -Icon GitlabOutlined -Size 2x )
+                } -Title "GitLab Stats" -BodyStyle @{padding = 24 }
             } -AutoRefresh -RefreshInterval 8000
             New-UDAntdColumn -span 12 -Content {
                 New-UDAntdCard -Content {
-                    1..250 | Get-Random 
-                }
+                    New-UDAntdStatistic -Value { 1..250 | Get-Random  } -Title Following -Prefix ( New-UDAntdIcon -Icon GithubOutlined -Size 2x )
+                } -Title "GitHub Stats" -BodyStyle @{padding = 24} -Extra @(
+                    New-UDAntdTag -Color "#333" -Content "Github" -Icon ( New-UDAntdIcon -Icon GithubOutlined -Size xs)
+                ) -Bordered
             } -AutoRefresh -RefreshInterval 8000
 
         } -Gutter 16
