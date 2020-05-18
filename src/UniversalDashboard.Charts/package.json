@@ -1,0 +1,45 @@
+{
+  "name": "ud-charts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack -p --env production",
+    "dev": "webpack-dev-server --config webpack.config.js -p --env development"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nivo/bar": "^0.58.0",
+    "@nivo/bullet": "^0.58.0",
+    "@nivo/calendar": "^0.58.0",
+    "@nivo/chord": "^0.58.0",
+    "@nivo/circle-packing": "^0.58.0",
+    "@nivo/heatmap": "^0.58.0",
+    "@nivo/line": "^0.58.0",
+    "@nivo/parallel-coordinates": "^0.58.0",
+    "@nivo/pie": "^0.58.0",
+    "@nivo/radar": "^0.58.0",
+    "@nivo/sankey": "^0.58.0",
+    "@nivo/scatterplot": "^0.58.0",
+    "@nivo/stream": "^0.58.0",
+    "@nivo/sunburst": "^0.58.0",
+    "@nivo/treemap": "^0.58.0",
+    "@nivo/voronoi": "^0.58.0",
+    "@nivo/waffle": "^0.58.0",
+    "react-sparklines": "^1.7.0"
+  },
+  "devDependencies": {
+    "@babel/core": "7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0",
+    "babel-loader": "8.0.4",
+    "webpack": "4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "3.5.1"
+  }
+}

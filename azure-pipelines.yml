@@ -8,61 +8,14 @@ pool:
 
 steps:
 
-- powershell: .\src\Selenium\Selenium.ps1 
+- powershell: Install-Module Selenium -Scope CurrentUser -Force
   displayName: Install Selenium
   errorActionPreference: continue
 
-- powershell: .\src\build.ps1 -Configuration Release
-  displayName: Start Building The Module
+- powershell: Install-Module InvokeBuild -Scope CurrentUser -Force
+  displayName: Install InvokeBuild
   errorActionPreference: continue
 
-- powershell: .\src\UniversalDashboard.UITest\shebang.tests.ps1 -Release -Integration
-  displayName: Start Integration Tests
+- powershell: Invoke-Build -File .\src\build.ps1
+  displayName: Build
   errorActionPreference: continue
-
-- powershell: .\src\UniversalDashboard.MaterialUI\Tests\driver.ps1 -OutputTestResultXml
-  displayName: MaterialUI Tests
-  errorActionPreference: continue
-  
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'NUnit' # Options: JUnit, NUnit, VSTest, xUnit
-    testResultsFiles: '**/*TEST-*.xml' 
-    searchFolder: '$(System.DefaultWorkingDirectory)' # Optional
-    mergeTestResults: true # Optional
-    #testRunTitle: 
-    #buildPlatform: # Optional
-    #buildConfiguration: # Optional
-    publishRunAttachments: true # Optional
-
-- task: DeleteFiles@1
-  inputs:
-    contents: '.\src\output\dashboard.ps1' 
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '.\src\output' 
-    includeRootFolder: false
-    #archiveType: 'zip' # Options: zip, 7z, tar, wim
-    #tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
-    archiveFile: '$(Build.ArtifactStagingDirectory)/UniversalDashboard.Community.$(Build.BuildId).zip' 
-    #replaceExistingArchive: true 
-    #verbose: # Optional
-    #quiet: # Optional
-
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '.\src\boms' 
-    includeRootFolder: false
-    #archiveType: 'zip' # Options: zip, 7z, tar, wim
-    #tarCompression: 'gz' # Optional. Options: gz, bz2, xz, none
-    archiveFile: '$(Build.ArtifactStagingDirectory)/UniversalDashboard.Community.Bom.$(Build.BuildId).zip' 
-    #replaceExistingArchive: true 
-    #verbose: # Optional
-    #quiet: # Optional    
-
-# Publish Pipeline Artifact
-- task: PublishPipelineArtifact@0
-  inputs:
-    artifactName: 'UniversalDashboard.Community'
-    targetPath: $(Build.ArtifactStagingDirectory)
