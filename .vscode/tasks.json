@@ -2,23 +2,11 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "ud: build material-ui module",
+            "label": "Build and Test",
             "type": "shell",
-            "command": "${workspaceFolder}/src/UniversalDashboard.MaterialUI/build.ps1",
-            "group": "build"
-        },
-        {
-            "label": "ud: run pester tests on material-ui module",
-            "type": "shell",
-            "command": "${workspaceFolder}/src/UniversalDashboard.MaterialUI/tests/driver.ps1",
-            "group": "test"
-        },
-        {
-            "label": "ud: build universal dashboard module",
-            "type": "shell",
-            "command": "${workspaceFolder}/src/build.ps1 -Configuration Release",
+            "command": "pwsh -Command ' & { Invoke-Build -File ${workspaceFolder}/src/build.ps1 }' ",
             "group": "build",
-        },
-
+            "problemMatcher": []
+        }
     ]
 }

@@ -64,4 +64,18 @@ The Universal Dashboard frameworks and components are JavaScript libraries built
 
 ### Building 
 
-To build the Universal Dashboard frameworks and components, run `Invoke-Build` from the root source directory. 
+You can build this entire repository by running the build.ps1 script in the root of the src directory.
+
+```
+Set-Location ./src
+Invoke-Build Build
+```
+
+### Running Tests
+
+To run tests, you can use the build.ps1 Test task.
+
+```
+Set-Location ./src
+Invoke-Build Test
+```

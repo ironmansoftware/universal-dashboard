@@ -9,18 +9,13 @@ task Clean {
     Remove-Item "$Env:ProgramData\PowerShellUniversal" -Force -Recurse -ErrorAction SilentlyContinue
 }
 
-task DownloadUniversal {
-    $Version = (Invoke-WebRequest 'https://imsreleases.blob.core.windows.net/universal/production/version.txt' -UseBasicParsing).Content.Trim()
-    $TempFile = [IO.Path]::GetTempFileName() + '.zip'
-    Invoke-WebRequest "https://imsreleases.blob.core.windows.net/universal/production/$Version/Universal.$Version.zip" -OutFile $TempFile
-    Expand-Archive $TempFile -DestinationPath $OutputPath
-}
-
 task InitTests {
     Import-Module "$OutputPath\Universal.psm1"
     Import-Module "$OutputPath\Universal.Cmdlets.dll"
 
+    Push-Location "$PSScriptRoot\..\..\"
     Start-Process "$OutputPath\Universal.Server.exe"
+    Pop-Location
 
     while($true) {
         try {
@@ -37,7 +32,7 @@ task InitTests {
         $AppToken = (Invoke-WebRequest "$Address/api/v1/apptoken/grant" -WebSession $PUWS).Content | ConvertFrom-Json
     
         Connect-UAServer -ComputerName $Address -AppToken $AppToken.Token
-        $Framework = Add-UDDashboardFramework -Name 'Test' -Version 'Test' -ModulePath "$PSScriptRoot\output\UniversalDashboard.Materialize.psm1" -Path "$PSScriptRoot\output"
+        $Framework = Add-UDDashboardFramework -Name 'Test' -Version '1.0.0' -Path "$PSScriptRoot\output"
         Add-UDDashboard -Name 'Test' -FilePath "$PSScriptRoot\Tests\dashboard.ps1" -Framework $Framework -BaseUrl '/test' 
     }
     catch 
