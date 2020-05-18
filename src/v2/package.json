@@ -30,7 +30,7 @@
     "clipboard-polyfill": "^2.8.6",
     "glamor-jss": "^1.4.1",
     "griddle-react": "1.13.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "js-cookie": "2.2.1",
     "material-components-web": "^4.0.0",
     "materialize-css": "1.0.0",
