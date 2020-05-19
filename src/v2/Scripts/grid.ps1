@@ -31,7 +31,7 @@ function New-UDGrid {
         [Parameter()]
         [Switch]$NoFilter,
         [Parameter(Mandatory)]
-        [object]$Endpoint,
+        [Endpoint]$Endpoint,
         [Parameter()]
         [object[]]$ArgumentList,
         [Parameter()]
@@ -44,14 +44,7 @@ function New-UDGrid {
 
     End {
 
-        if ($null -ne $Endpoint) {
-            if ($Endpoint -is [scriptblock]) {
-                $Endpoint = New-UDEndpoint -Endpoint $Endpoint -Id $Id -ArgumentList $ArgumentList
-            }
-            elseif ($Endpoint -isnot [UniversalDashboard.Models.Endpoint]) {
-                throw "Endpoint must be a script block or UDEndpoint"
-            }
-        }
+        $Endpoint.Register($Id, $PSCmdlet)
 
         @{
             type = 'ud-grid'

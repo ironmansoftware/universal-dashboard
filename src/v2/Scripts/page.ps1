@@ -33,7 +33,7 @@ function New-UDPage
     }
 
     [array]$c = @()
-    if ($Content) { [array]$c = & $Content}
+    if ($Content) { [array]$c = . $Content}
 
     @{
         name = $Name
