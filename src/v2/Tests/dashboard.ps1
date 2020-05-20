@@ -151,7 +151,239 @@ $Pages += New-UDPage -Name 'Fab' -Content {
 }
 
 $Pages += New-UDPage -Name 'Grid' -Content {
+    $Cache:refreshdata = @(
+        [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+        [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+    )
 
+    New-UDGrid -Title "Grid" -Id "RefreshGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+        $data = $Cache:refreshdata
+        $data | Out-UDGridData 
+    }
+
+    New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+        $data = @(
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+        )
+
+        $data | Out-UDGridData 
+    }
+
+    New-UDGrid -Title "Grid" -Id "SingleItemGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+        [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"} | Out-UDGridData 
+    }
+
+    New-UDGrid -Title "Grid" -Id "NoPagingGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+        $data = @(
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+        )
+
+        $data | Out-UDGridData 
+    } -NoPaging
+
+    New-UDGrid -Title "Grid" -Id "PageSizeGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+        $data = @(
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+        )
+
+        $data | Sort-Object -Property day | Out-UDGridData 
+    } -PageSize 5
+
+    New-UDGrid -Title "Grid" -Id "ServerSideGrid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
+        $data = @(
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+        )
+
+        if ($filterText -ne $null -and $filterText -ne "") {
+            $data = $data | Where  {$_.day -eq $filterText -or $_.jpg -eq $filterText -or $_.mp4 -eq $filterText }
+        }
+
+        $sortDescending = -not $sortAscending
+        $data = $data | Sort-Object -Property $sortColumn -Descending:$sortDescending
+
+        $total = $data.length
+        $data = $data | Select-Object -First $take -Skip $skip
+
+        $data | Out-UDGridData -TotalItems $total
+    }
+
+    New-UDGrid -Title "Grid" -Id "RefreshFilterGrid" -RefreshInterval 5 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+        $data = @(
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+        )
+
+
+        $data | Out-UDGridData 
+    } 
+
+    New-UDGrid -Title "Grid" -Id "SimpleGrid" -Endpoint {
+        $data = @(
+            [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
+            [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
+            [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDIcon -Icon check -Color Green)}
+        )
+
+        $data | Out-UDGridData 
+    } 
+
+    
+    $Variable = "Test"
+
+    New-UDGrid -Title "Grid" -Id "CustomGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+        $data = @(
+            [PSCustomObject]@{"day" = 1; jpg = $Variable; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= (Get-Date -Day 2 -Month 12 -Year 2007)}
+            [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDButton -Id button -Text "Hey" -OnClick{ Set-UDElement -Id "Hey" -Content {"Hey"}})}
+            [PSCustomObject]@{"day" = 3; jpg = $true; mp4= (New-UDIcon -Icon check -Color Green)}
+        )
+
+        $data | Out-UDGridData 
+    } -Links @(
+        (New-UDLink -Text "Other link" -Url "http://www.google.com")
+    )
+    New-UDElement -Id "Hey" -Tag "div"
+
+    New-UDGrid -Title "Grid" -Id "Grid1" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+        $data = @()
+
+        $data | Out-UDGridData 
+    } 
+
+    New-UDGrid -Title "Grid" -Id "Grid2" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+        $data = @()
+
+        "Has" | Out-UDGridData 
+    } 
+
+    New-UDGrid -Title "Service Grid with filter" -Id "Grid3" -Headers @("Name", "DisplayName", "Status") -Properties @("Name", "DisplayName", "Status") -Endpoint {
+        [PSCustomObject]@{
+            Name = "bits"
+            DisplayName = "bits"
+            Status = "Stopped"
+        }  | Select Name, DisplayName,
+        @{
+            Name       = "Status"
+            Expression = {New-UDElement -Id "nested-element" -Tag div -Attributes @{ className = "red white-text" } -Content { $_.status.tostring() }}
+        } | Out-UDGridData
+    } 
+
+    New-UDGrid -Title "Grid" -Id "ThrowGrid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+        try {
+            throw "WTF"
+            $data = @()
+        }
+        catch {
+
+        }
+
+        $data | Out-UDGridData 
+    } 
+
+    New-UDGrid -Title "Grid" -Id "DefaultSortGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+        $data = @(
+            [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= (New-UDLink -Text "This is text" -Url "http://www.google.com")}
+            [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "200"}
+            [PSCustomObject]@{"day" = 3; jpg = "30"; mp4= "10"}
+        )
+
+        $data | Out-UDGridData 
+    } -Links @(
+        (New-UDLink -Text "Other link" -Url "http://www.google.com")
+    )
+
+    New-UDGrid -Title "Grid" -Id "RefreshGrid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+        $data = @(
+            [PSCustomObject]@{"hour" = [DateTime]::Now.Hour; "minute" = [DateTime]::Now.Minute; "second" = [DateTime]::Now.Second;}
+        )
+
+        $data | Out-UDGridData 
+    } 
 }
 
 New-UDDashboard -Title 'Test' -Pages $Pages

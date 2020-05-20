@@ -1,3 +1,5 @@
+param($Script)
+
 Import-Module Selenium
 
 $OutputPath = "$PSScriptRoot\..\..\output"
@@ -56,13 +58,19 @@ task Run {
 
     Push-Location $PSScriptRoot
 
-    $Completed = @("button.tests.ps1", "card.tests.ps1", "checkbox.tests.ps1", 'collapsible.tests.ps1', 'collection.tests.ps1', "column.tests.ps1", 
-    "fab.tests.ps1")
-
-    $Completed | ForEach-Object {
-        . (Join-Path "$PSScriptRoot\Tests" $_)
+    if ($Script)
+    {
+        . (Join-Path "$PSScriptRoot\Tests" $Script)
     }
-
+    else 
+    {
+        $Completed = @("button.tests.ps1", "card.tests.ps1", "checkbox.tests.ps1", 'collapsible.tests.ps1', 'collection.tests.ps1', "column.tests.ps1", 
+        "fab.tests.ps1", "grid.tests.ps1")
+    
+        $Completed | ForEach-Object {
+            . (Join-Path "$PSScriptRoot\Tests" $_)
+        }
+    }
  #   Get-ChildItem "$PSScriptRoot\Tests" -Filter "*.tests.ps1" | ForEach-Object {
   #      . $_.FullName
    # }
