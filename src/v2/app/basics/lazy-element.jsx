@@ -1,5 +1,5 @@
 import React from 'react';
-import {getApiPath} from './../config.jsx'
+import {getApiPath, getDashboardId} from './../config.jsx'
 import renderComponent from './../services/render-service.jsx';
 
 export default class LazyElement extends React.Component {
@@ -12,11 +12,12 @@ export default class LazyElement extends React.Component {
         }
     }
     componentWillMount() {
+        const dashboardId = getDashboardId();
         var script = document.createElement('script');
         script.onload = function() {
             this.setState({loading:false});
         }.bind(this)
-        script.src = getApiPath() + "/" + this.props.component.assetId;
+        script.src = getApiPath() + `/api/internal/javascript/${this.props.component.assetId}?dashboardId=${dashboardId}`;
         document.head.appendChild(script); 
     }
 

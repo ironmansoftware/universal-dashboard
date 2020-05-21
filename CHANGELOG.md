@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added UDGrid, UDLayout, UDModal, UDLink Tests
 - Fixed *-UDElement cmdlets
 - Added dependency on Universal module
+- Fixed custom component loading
 
 ## v3.0.0-beta3
 
