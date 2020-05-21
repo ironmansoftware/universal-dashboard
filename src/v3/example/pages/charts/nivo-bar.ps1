@@ -9,4 +9,4 @@ New-ComponentPage -Title 'Nivo Bar' -Description 'Creates a bar chart based on t
         }
         New-UDNivoChart -Bar -Keys "Value" -IndexBy 'name' -Data $Data -Height 500 -Width 1000
     }
-} -Cmdlet @("New-UDNivoChart") -Enterprise
+} -Cmdlet @("New-UDNivoChart")

@@ -12,4 +12,4 @@ New-ComponentPage -Title 'Nivo Stream' -Description 'Creates a stream chart' -Co
 
         New-UDNivoChart -Stream -Data $Data -Height 500 -Width 1000 -Keys @("Adam", "Alon", "Lee", "Frank", "Bill")
     }
-} -Cmdlet @("New-UDNivoChart") -Enterprise
+} -Cmdlet @("New-UDNivoChart")

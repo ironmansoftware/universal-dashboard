@@ -32,5 +32,5 @@ New-ComponentPage -Title 'Nivo Heatmap' -Description 'Creates a heatmap' -Conten
         )
         New-UDNivoChart -Heatmap -Data $Data -IndexBy 'state' -keys @('cats', 'dogs', 'moose', 'bears')  -Height 500 -Width 1000 -MarginTop 50 -MarginRight 130 -MarginBottom 50 -MarginLeft 60
     }
-} -Cmdlet @("New-UDNivoChart") -Enterprise
+} -Cmdlet @("New-UDNivoChart")
 

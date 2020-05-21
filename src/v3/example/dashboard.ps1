@@ -11,9 +11,7 @@ function New-ComponentPage {
         [Parameter(Mandatory)]
         [ScriptBlock]$Content,
         [Parameter(Mandatory)] 
-        [string[]]$Cmdlet,
-        [Parameter()]
-        [Switch]$Enterprise
+        [string[]]$Cmdlet
         ) 
 
     $AdditionalParameters = @{}
@@ -30,13 +28,6 @@ function New-ComponentPage {
                 New-UDTypography -Text $Description -Variant 'h4'
             }
 
-            if ($Enterprise)
-            {
-                New-UDButton -Text 'Premium or Enterprise License Required' -Icon (New-UDIcon -Icon Rocket) -Variant 'contained' -OnClick {
-                    Invoke-UDRedirect -Url "https://www.ironmansoftware.com/powershell-universal-dashboard" -OpenInNewWindow
-                }
-            }
-        
             New-UDElement -tag 'div' -Attributes @{ style = @{ marginTop = '20px' }} -Content {
                 New-UDElement -Tag 'div' -Content { $SecondDescription }
             }
@@ -98,7 +89,7 @@ function New-Example {
     New-UDTypography -Text $Title -Variant 'h4'
     New-UDElement -Tag 'div' -Content { $Description }
 
-    New-UDPaper -Children {
+    New-UDCard -Content {
         New-UDElement -tag 'div' -Attributes @{
             style = @{
                 minHeight = '100px'
@@ -107,7 +98,7 @@ function New-Example {
         } -Content $Example
     }
 
-    New-UDPaper -Children {
+    New-UDCard -Children {
         New-UDElement -Tag 'pre' -Content { $Example.ToString().Trim() }
     }
 }
@@ -119,7 +110,7 @@ function New-AppBar {
         New-UDList -Children {
             New-UDListItem -Label "Home" -OnClick { Invoke-UDRedirect -Url "/powershell-universal-dashboard" }
             New-UDListItem -Label "Layout" -Children {
-                New-UDListItem -Label "Container" -OnClick { Invoke-UDRedirect -Url '/container' }
+                <#New-UDListItem -Label "Container" -OnClick { Invoke-UDRedirect -Url '/container' }#>
                 New-UDListItem -Label "Grid" -OnClick { Invoke-UDRedirect -Url '/grid' }
             }
             New-UDListItem -Label "Inputs" -Children {
@@ -164,19 +155,16 @@ function New-AppBar {
                 New-UDListItem -Label "Typography" -OnClick { Invoke-UDRedirect -Url '/typography' }
             }
             New-UDListItem -Label "Data Visualization" -Children {
-                if ($Cache:Enterprise)
-                {
-                    New-UDListItem -Label 'Nivo' -Children {
-                        New-UDListItem -Label "Overview" -OnClick { Invoke-UDRedirect -Url '/nivo' }
-                        New-UDListItem -Label "Bar" -OnClick { Invoke-UDRedirect -Url '/nivo-bar' }
-                        New-UDListItem -Label "Calendar" -OnClick { Invoke-UDRedirect -Url '/nivo-calendar' }
-                        New-UDListItem -Label "Heatmap" -OnClick { Invoke-UDRedirect -Url '/nivo-heatmap' }
-                        New-UDListItem -Label "Line" -OnClick { Invoke-UDRedirect -Url '/nivo-line' }
-                        New-UDListItem -Label "Stream" -OnClick { Invoke-UDRedirect -Url '/nivo-stream' }
-                        New-UDListItem -Label "Treemap" -OnClick { Invoke-UDRedirect -Url '/nivo-treemap' }
-                    }
-                    New-UDListItem -Label "Sparklines" -OnClick { Invoke-UDRedirect -Url '/sparklines' }
+                New-UDListItem -Label 'Nivo' -Children {
+                    New-UDListItem -Label "Overview" -OnClick { Invoke-UDRedirect -Url '/nivo' }
+                    New-UDListItem -Label "Bar" -OnClick { Invoke-UDRedirect -Url '/nivo-bar' }
+                    New-UDListItem -Label "Calendar" -OnClick { Invoke-UDRedirect -Url '/nivo-calendar' }
+                    New-UDListItem -Label "Heatmap" -OnClick { Invoke-UDRedirect -Url '/nivo-heatmap' }
+                    New-UDListItem -Label "Line" -OnClick { Invoke-UDRedirect -Url '/nivo-line' }
+                    New-UDListItem -Label "Stream" -OnClick { Invoke-UDRedirect -Url '/nivo-stream' }
+                    New-UDListItem -Label "Treemap" -OnClick { Invoke-UDRedirect -Url '/nivo-treemap' }
                 }
+                New-UDListItem -Label "Sparklines" -OnClick { Invoke-UDRedirect -Url '/sparklines' }
             }
         }
     }
@@ -201,25 +189,23 @@ $Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard
             New-UDGrid -Item -SmallSize 9 -Content { 
                 New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
                 New-UDTypography -Text "The most popular web framework for PowerShell" -Variant h4
-                New-UDButton -Variant outlined -Text "Get Started" -OnClick { Invoke-UDRedirect -Url "/get-started" }
+                New-UDTypography -Text "Part of PowerShell Universal" -Variant h4
+                New-UDButton -Variant outlined -Text "Get Started" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/downloads" }
             }
         }
 
         New-UDGrid -Container -Content {
             New-UDGrid -Item -SmallSize 6 -Content {
                 New-UDCard -Title "Installation" -Content {
-                    New-UDTypography -Text "Universal Dashboard can be installed from the PowerShell Gallery" -Paragraph
-                    New-UDElement -Tag pre -Content { "Install-Module UniversalDashboard" }
-                } 
+                    New-UDTypography -Text "Universal Dashboard is included with the PowerShell Universal installer" -Paragraph
+                    New-UDButton -Variant outlined -Text "Download" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/downloads" }
+                }
             }
 
             New-UDGrid -Item -SmallSize 6 -Content {
-                New-UDCard -Title "Usage" -Content {
-                    New-UDTypography -Text "To start Universal Dashboard, you can just use the Start-UDDashboard cmdlet." -Paragraph
-                    New-UDElement -tag 'p' -Content {}
-                    New-UDElement -Tag pre -Content { "Import-Module UniversalDashboard
-    Start-UDDashboard -Port 10000
-    Start-Process http://localhost:10000" }
+                New-UDCard -Title "Get Started" -Content {
+                    New-UDTypography -Text "Learn more on our docs" -Paragraph
+                    New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://docs.ironmansoftware.com/getting-started" }
                 }
             }
         }

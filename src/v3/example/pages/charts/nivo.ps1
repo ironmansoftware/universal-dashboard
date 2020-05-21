@@ -90,4 +90,4 @@ New-ComponentPage -Title 'Nivo' -Description 'Nivo chart library' -Content {
         }
     }
 
-} -Cmdlet @("New-UDNivoChart") -Enterprise
+} -Cmdlet @("New-UDNivoChart")

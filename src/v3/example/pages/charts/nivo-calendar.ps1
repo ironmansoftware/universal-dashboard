@@ -13,5 +13,5 @@ New-ComponentPage -Title 'Nivo Calendar' -Description 'Creates a calendar displa
         
         New-UDNivoChart -Calendar -Data $Data -From $From -To $To -Height 500 -Width 1000 -MarginTop 50 -MarginRight 130 -MarginBottom 50 -MarginLeft 60
     }
-} -Cmdlet @("New-UDNivoChart") -Enterprise
+} -Cmdlet @("New-UDNivoChart")
 

@@ -15,4 +15,4 @@ New-ComponentPage -Title 'Nivo Line' -Description 'Creates a line chart' -Conten
 
         New-UDNivoChart -Line -Data $Data -Height 500 -Width 1000 -UseMesh -LineWidth 1
     }
-} -Cmdlet @("New-UDNivoChart") -Enterprise
+} -Cmdlet @("New-UDNivoChart")

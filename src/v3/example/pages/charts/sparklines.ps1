@@ -1,5 +1,4 @@
 New-ComponentPage -Title 'Sparklines' `
-    -Enterprise `
     -Description 'Sparklines are tiny, little charts.' `
     -SecondDescription "Sparklines are great for putting in other controls like AppBars or tables. " -Content {
 
