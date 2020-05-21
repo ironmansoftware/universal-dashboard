@@ -1,6 +1,9 @@
 param($Script)
 
 Import-Module Selenium
+Import-Module Universal -Scope Global
+Import-Module "$PSScriptRoot\output\*.psd1" -Scope Global
+
 
 $OutputPath = "$PSScriptRoot\..\..\output"
 $Address = 'http://localhost:5000'
@@ -52,6 +55,7 @@ task Run {
         Invoke-RestMethod "$Address/api/internal/component/element/testdata" -Headers @{dashboardid = 1}
     }
 
+    
     $OutputPath = "$PSScriptRoot\test-results" 
     Remove-Item $OutputPath -Recurse -ErrorAction SilentlyContinue -Force
     New-Item -Path $OutputPath -ItemType Directory
@@ -65,7 +69,8 @@ task Run {
     else 
     {
         $Completed = @("button.tests.ps1", "card.tests.ps1", "checkbox.tests.ps1", 'collapsible.tests.ps1', 'collection.tests.ps1', "column.tests.ps1", 
-        "fab.tests.ps1", "grid.tests.ps1")
+        "fab.tests.ps1", "grid.tests.ps1", 'layout.tests.ps1',
+        'link.tests.ps1', 'modal.tests.ps1')
     
         $Completed | ForEach-Object {
             . (Join-Path "$PSScriptRoot\Tests" $_)

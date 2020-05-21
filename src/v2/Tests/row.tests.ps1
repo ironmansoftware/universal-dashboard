@@ -1,29 +1,11 @@
-Describe "New-UDRow" {
-    Context "static content" {
-        Set-TestDashboard -Content {
-            New-UDRow -Columns {
-                New-UDColumn -Content {
-                    New-UDElement -Id "hi" -Tag "div"
-                }
-            }
-        }
+Enter-SeUrl -Target $Driver -Url "$Address/Test/Row"
 
-        It "should have content" {
-            Find-SeElement -Id "hi" -Driver $Driver | Should not be $null
-        }
+Describe "New-UDRow" {
+    It "should have content" {
+        Find-SeElement -Id "hi" -Driver $Driver | Should not be $null
     }
 
-    Context "dynamic content" {
-        Set-TestDashboard -Content {
-            New-UDRow -Endpoint {
-                New-UDColumn -Content {
-                    New-UDElement -Id "hi" -Tag "div"
-                }
-            }
-        }
-
-        It "should have content" {
-            Find-SeElement -Id "hi" -Driver $Driver | Should not be $null
-        }
+    It "should have content" {
+        Find-SeElement -Id "hi2" -Driver $Driver | Should not be $null
     }
 }

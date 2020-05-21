@@ -95,22 +95,17 @@ export default class UdModal extends React.Component {
 
         var header = null;
         if (this.state.header != null) {
-            header = this.state.header.map(x => UniversalDashboard.renderComponent(x));
+            header = UniversalDashboard.renderComponent(this.state.header);
         }
 
         var content = null;
         if (this.state.content != null) {
-            content = this.state.content.map(x => UniversalDashboard.renderComponent(x));
+            content = UniversalDashboard.renderComponent(this.state.content);
         }
 
         var footer = null;
         if (this.state.footer != null) {
-            if (this.state.footer.map) {
-                footer = this.state.footer.map(x => UniversalDashboard.renderComponent(x));
-            }
-            else {
-                footer = UniversalDashboard.renderComponent(this.state.footer);
-            }
+            footer = UniversalDashboard.renderComponent(this.state.footer);
         }
 
         return (
