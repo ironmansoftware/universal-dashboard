@@ -386,4 +386,78 @@ $Pages += New-UDPage -Name 'Grid' -Content {
     } 
 }
 
+$Pages += New-UDPage -Name "Image Carousel" -Content {
+    <#
+    $FirstSlide = @{
+        backgroundRepeat = 'no-repeat'
+        BackgroundImage = 'https://stmed.net/sites/default/files/lady-deadpool-wallpapers-27626-5413437.jpg'
+        BackgroundColor  = 'transparent'
+        BackgroundSize = 'cover'
+        BackgroundPosition = '0% 0%'
+        Url  = 'https://universaldashboard.io/'
+    }
+    $SecondSlide = @{
+        BackgroundColor  = 'transparent'
+        BackgroundSize = 'cover'
+        BackgroundPosition = '0% 0%'
+        Url  = 'images/thor_-ragnarok-wallpapers-30137-2449291.jpg'
+        BackgroundImage  = 'images/thor_-ragnarok-wallpapers-30137-2449291.jpg'
+    }
+    $ThirdSlide = @{
+        BackgroundColor  = 'transparent'
+        BackgroundSize = 'cover'
+        BackgroundPosition = '0% 0%'
+        Url  = 'https://stmed.net/sites/default/files/ultimate-spider-man-wallpapers-27724-2035627.jpg'
+        BackgroundImage  = 'https://stmed.net/sites/default/files/ultimate-spider-man-wallpapers-27724-2035627.jpg'
+    }
+    New-UDImageCarousel -Id 'carousel-demo' -Items {
+        New-UDImageCarouselItem @FirstSlide
+        New-UDImageCarouselItem @SecondSlide
+        New-UDImageCarouselItem @ThirdSlide
+    }  -Height 750 -FullWidth -ShowIndicators -Speed 8000
+#>
+}
+
+$Pages += New-UDPage -Name "Layout" -Content {
+    New-UDElement -Tag 'div' -Id layout1 -Content {
+        New-UDLayout -Columns 3 -Content {
+            New-UDCard -Title "Test" -Content {}
+            New-UDCard -Title "Test" -Content {}
+            New-UDCard -Title "Test" -Content {}
+            New-UDCard -Title "Test" -Content {}
+        }
+    }
+}
+
+$Pages += New-UDPage -Name "Link" -Content {
+    New-UDLink -Text "hi" -Id 'link' -OnClick {
+        Set-TestData -Data "Clicked"
+    }
+}
+
+$Pages += New-UDPage -Name "Modal" -Content {
+    New-UDButton -Text "Show" -Id 'buttonShow' -OnClick {
+        Show-UDModal -Content {
+            New-UDElement -Tag 'div' -Id 'modal-content1'
+        }
+    }
+
+    New-UDButton -Text "Show" -Id 'button2' -OnClick {
+        Show-UDModal -Content {
+            New-UDElement -Tag 'div' -Id 'modal-content2'
+            New-UDButton -OnClick { Hide-UDModal } -Text "Hide" -Id 'hide'
+        }
+    }
+
+    New-UDButton -Text "Click" -Id "Click" -OnClick {
+        Show-UDModal -Header {
+            New-UDHeading -Size 4 -Text "Heading" -Id "Heading"
+        } -Content {
+            New-UDButton -Text "Press me" -Id "Close" -OnClick {
+                Hide-UDModal
+            }
+        } 
+    }
+}
+
 New-UDDashboard -Title 'Test' -Pages $Pages
