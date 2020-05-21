@@ -26,7 +26,7 @@ try
 
     Connect-UAServer -ComputerName $Address -AppToken $AppToken.Token
     $Framework = Get-UDDashboardFramework | Where-Object { $_.Version.StartsWith("3")} 
-    Add-UDDashboard -Name 'Test' -FilePath "$PSScriptRoot\dashboard.ps1" -Framework $Framework -BaseUrl '/test' 
+    Add-UDDashboard -Name 'Test' -FilePath "$PSScriptRoot\dashboard.ps1" -Framework $Framework -BaseUrl '/' 
 }
 catch 
 {

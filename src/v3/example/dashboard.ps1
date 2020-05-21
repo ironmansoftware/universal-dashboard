@@ -98,7 +98,7 @@ function New-Example {
         } -Content $Example
     }
 
-    New-UDCard -Children {
+    New-UDCard -Content {
         New-UDElement -Tag 'pre' -Content { $Example.ToString().Trim() }
     }
 }
@@ -189,25 +189,47 @@ $Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard
             New-UDGrid -Item -SmallSize 9 -Content { 
                 New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
                 New-UDTypography -Text "The most popular web framework for PowerShell" -Variant h4
-                New-UDTypography -Text "Part of PowerShell Universal" -Variant h4
-                New-UDButton -Variant outlined -Text "Get Started" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/downloads" }
             }
         }
 
         New-UDGrid -Container -Content {
             New-UDGrid -Item -SmallSize 6 -Content {
                 New-UDCard -Title "Installation" -Content {
-                    New-UDTypography -Text "Universal Dashboard is included with the PowerShell Universal installer" -Paragraph
-                    New-UDButton -Variant outlined -Text "Download" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/downloads" }
+                    New-UDElement -Tag p -Content {
+                        New-UDTypography -Text "Universal Dashboard is included with the PowerShell Universal installer" -Paragraph
+                    }
+                    New-UDElement -Tag p -Content {
+                        New-UDButton -Variant outlined -Text "Download" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/downloads" }
+                    }
                 }
             }
 
             New-UDGrid -Item -SmallSize 6 -Content {
                 New-UDCard -Title "Get Started" -Content {
-                    New-UDTypography -Text "Learn more on our docs" -Paragraph
-                    New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://docs.ironmansoftware.com/getting-started" }
+                    New-UDElement -Tag p -Content {
+                        New-UDTypography -Text "Learn how to get up and running witrh PowerShell Universal" -Paragraph
+                        New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://docs.ironmansoftware.com/getting-started" }
+                    }
                 }
             }
+        }
+
+        New-UDTypography -Text "What's new" -Variant h2 
+
+        New-UDTypography -Text "Now part of PowerShell Universal" -Variant h4
+
+        New-UDTypography -Text "Universal Dashboard is now part of the PowerShell Universal platform. PSU provides a centralized administrative interface, integration with Universal Automation and a robust architecture designed for a resiliant enterprise experience." -Paragraph
+
+        New-UDElement -Tag p -Content {
+            New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/powershell-universal" }
+        }
+        
+        New-UDTypography -Text "Marketplace" -Variant h2 
+
+        New-UDTypography -Text "Access a huge collection of community contributed controls and dashboards." -Paragraph
+
+        New-UDElement -Tag p -Content {
+            New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://marketplace.universaldashboard.io" }
         }
     }
 }
