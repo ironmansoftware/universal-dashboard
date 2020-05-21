@@ -8,6 +8,10 @@ pool:
 
 steps:
 
+- powershell: Install-Module Universal -Scope CurrentUser -Force
+  displayName: Install Universal
+  errorActionPreference: continue
+
 - powershell: Install-Module Selenium -Scope CurrentUser -Force
   displayName: Install Selenium
   errorActionPreference: continue

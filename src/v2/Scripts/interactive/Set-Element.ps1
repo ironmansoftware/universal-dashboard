@@ -4,14 +4,25 @@ function Set-UDElement
         [Parameter(Mandatory)]
 		[string]$Id,
         [Parameter()]
-        [Hashtable]$Properties,
+        [Hashtable]$Attributes,
+        [Parameter()]
+        [ScriptBlock]$Content,
         [Parameter()]
         [Switch]$Broadcast
     )
 
+    $c = @()
+    if ($Content)
+    {
+        $c = . $Content
+    }
+
     $Data = @{
         componentId = $Id 
-        state = $Properties
+        state = @{
+            attributes = $Attributes
+            content = $c
+        }
     }
 
     if ($Broadcast)
