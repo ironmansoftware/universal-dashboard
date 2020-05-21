@@ -1,29 +1,16 @@
 import React, { Suspense, useState, useEffect } from 'react'
 
-import { getApiPath } from './config.jsx'
+import { getApiPath, getDashboardId } from './config.jsx'
 import PubSub from 'pubsub-js'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
 import { ThemeProvider } from 'theme-ui'
 import { ColorModeProvider } from '@theme-ui/color-modes'
 import { base } from '@theme-ui/presets'
 import toaster from './services/toaster'
-import LazyElement from './basics/lazy-element.jsx'
 import copy from 'copy-to-clipboard'
 import ErrorCard from './../Components/framework/error-card'
 
-function getMeta(metaName) {
-  const metas = document.getElementsByTagName('meta');
-
-  for (let i = 0; i < metas.length; i++) {
-    if (metas[i].getAttribute('name') === metaName) {
-      return metas[i].getAttribute('content');
-    }
-  }
-
-  return '';
-}
-
-const dashboardId = getMeta('ud-dashboard');
+const dashboardId = getDashboardId();
 
 var connection
 
@@ -315,7 +302,7 @@ function Dashboard({ history }) {
   })
 
   if (hasError) {
-    return <ErrorCard message={error} />
+    return <ErrorCard errorRecords={[{message: error}]} />
   }
 
   if (loading) {

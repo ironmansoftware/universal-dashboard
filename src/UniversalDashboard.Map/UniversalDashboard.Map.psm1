@@ -29,10 +29,3 @@ if ($Env:Debug -eq $true) {
         [UniversalDashboard.Services.AssetService]::Instance.RegisterAsset($item.FullName) | Out-Null
     }
 }
-
-
-
-Get-ChildItem (Join-Path $PSScriptRoot "Scripts") -File | ForEach-Object {
-    . $_.FullName
-}
-
