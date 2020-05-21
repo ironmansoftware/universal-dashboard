@@ -104,7 +104,7 @@ function New-Example {
 }
 
 function New-AppBar {
-    param($title)
+    param($title, [Switch]$NoPadding)
 
     $Drawer = New-UDDrawer -Children {
         New-UDList -Children {
@@ -173,22 +173,43 @@ function New-AppBar {
         New-UDElement -Tag 'div' -Content {$title}
     } -Drawer $Drawer
 
-    New-UDElement -Tag 'div' -Attributes @{ style = @{ paddingTop = '20px'}} -Content {}
+    if (-not $NoPadding) {
+        New-UDElement -Tag 'div' -Attributes @{ style = @{ paddingTop = '20px'}} -Content {}
+    }   
 }
 
 $Pages = @()
 $Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard" -Content {
     
-    New-AppBar -Title "PowerShell Universal Dashboard"
+    New-AppBar -Title "PowerShell Universal Dashboard" -NoPadding
+
+    New-UDElement -Tag 'div' -Content {
+        New-UDContainer {
+            New-UDGrid -Container -Content {
+                New-UDGrid -Item -SmallSize 3 -Content {
+                    New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png'
+                }
+                New-UDGrid -Item -SmallSize 9 -Content { 
+                    New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
+                    New-UDTypography -Text "The most popular web framework for PowerShell" -Variant h4
+                }
+            }
+        }
+    } -Attributes @{
+        style = @{
+            width = '100%'
+            backgroundColor = 'white'
+            paddingBottom = '20px'
+            paddingTop = '20px'
+        }
+    }
 
     New-UDContainer {
-        New-UDGrid -Container -Content {
-            New-UDGrid -Item -SmallSize 3 -Content {
-                New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png'
-            }
-            New-UDGrid -Item -SmallSize 9 -Content { 
-                New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
-                New-UDTypography -Text "The most popular web framework for PowerShell" -Variant h4
+        New-UDElement -Tag 'div' -Content {
+        
+        } -Attributes @{
+            style = @{
+                height = '25px'
             }
         }
 
