@@ -1,3 +1,5 @@
+Enter-SeUrl "$Address/Test/Grid" -Target $Driver
+
 Describe "Grid" {
     It "should set grid to single item" {
         $Cache:refreshdata =  @([PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"})
@@ -45,8 +47,8 @@ Describe "Grid" {
     }
 
     It "should headings" {
-        $Element = Find-SeElement -Id "Grid" -Driver $Driver
-        $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Element[0]
+        $Element = Find-SeElement -Id "AGrid" -Driver $Driver
+        $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Target $Element
         $Element.Length | Should be 3
         $Element[0].Text.Contains('day') | should be $true
         $Element[1].Text | should be "jpg"
@@ -54,8 +56,9 @@ Describe "Grid" {
     }
 
     It "should have data" {
-        $Element = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-        $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Element[0] 
+        $Element = Find-SeElement -Id "AGrid" -Driver $Driver
+        $Element = Find-SeElement -ClassName "griddle-row" -Target $Element
+        $Element = Find-SeElement -ClassName "griddle-cell" -Target $Element[0] 
         $Element.Length | Should be 3
         $Element[0].Text | should be "1"
         $Element[1].Text | should be "10"
@@ -63,25 +66,28 @@ Describe "Grid" {
     }
 
     It "should sort data" {
-        
-        $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+        $Element = Find-SeElement -Id "AGrid" -Driver $Driver
+        $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Target $Element
         $header = $element[0]
         Invoke-SeClick $header
 
-        $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-        $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
+        $Element = Find-SeElement -Id "AGrid" -Driver $Driver
+        $Row = Find-SeElement -ClassName "griddle-row" -Target $Element
+        $Element = Find-SeElement -ClassName "griddle-cell" -Target $Row[0] 
         $Element[0].Text | should be "1"
-        $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
+        $Element = Find-SeElement -ClassName "griddle-cell" -Target $Row[1] 
         $Element[0].Text | should be "1"
         
-        $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Driver $Driver
+        $Element = Find-SeElement -Id "AGrid" -Driver $Driver
+        $Element = Find-SeElement -ClassName "griddle-table-heading-cell" -Target $Element
         $header = $element[0]
         Invoke-SeClick $header
 
-        $Row = Find-SeElement -ClassName "griddle-row" -Driver $Driver
-        $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
+        $Element = Find-SeElement -Id "AGrid" -Driver $Driver
+        $Row = Find-SeElement -ClassName "griddle-row" -Target $Element
+        $Element = Find-SeElement -ClassName "griddle-cell" -Target $Row[0] 
         $Element[0].Text | should be "3"
-        $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
+        $Element = Find-SeElement -ClassName "griddle-cell" -Target $Row[1] 
         $Element[0].Text | should be "3"
     }
 
@@ -109,9 +115,13 @@ Describe "Grid" {
 
         $pagination  = Find-SeElement -ClassName "pagination" -Target $Grid[0] | Select-Object -First 1
         $pagination | should be $null
+
+        $Element = Find-SeElement -Id 'ServerSideGrid' -Target $Driver
+        $Element = Find-SeElement -ClassName "griddle-filter" -Target $Element
+        $Element.Clear();
+        Start-Sleep 1
     }
 
-    
     It "should page data" {
 
         $Element = Find-SeElement -Id 'ServerSideGrid' -Target $Driver
@@ -121,7 +131,7 @@ Describe "Grid" {
         Start-Sleep 1
 
         $Element = Find-SeElement -Id 'ServerSideGrid' -Target $Driver
-        $Row = Find-SeElement -ClassName "griddle-row" -Target $Target
+        $Row = Find-SeElement -ClassName "griddle-row" -Target $Element
         $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[7] 
         $Element[0].Text | should be "3"
     }
@@ -140,7 +150,7 @@ Describe "Grid" {
 
     It "should sort data" {
         $Element = Find-SeElement -Id 'ServerSideGrid' -Target $Driver
-        $Row = Find-SeElement -ClassName "griddle-row" -Target $Target
+        $Row = Find-SeElement -ClassName "griddle-row" -Target $Element
         $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[0] 
         $Element[0].Text | should be "1"
         $Element = Find-SeElement -ClassName "griddle-cell" -Driver $Row[1] 
@@ -173,7 +183,7 @@ Describe "Grid" {
 
     It "should filter data" {
         $Element = Find-SeElement -Id 'ServerSideGrid' -Target $Driver
-        $Element = Find-SeElement -ClassName "griddle-filter" -Target $Target
+        $Element = Find-SeElement -ClassName "griddle-filter" -Target $Element
 
         Send-SeKeys -Element $Element[0] -Keys "2"
         Sleep 1
@@ -308,14 +318,14 @@ Describe "Grid" {
     It "should refresh" {
         $previousText = ""
 
-        $Element = Find-SeElement -Id "RefreshGrid" -Driver $Driver
+        $Element = Find-SeElement -Id "RefreshGrid2" -Driver $Driver
         $Element = Find-SeElement -ClassName "griddle-row" -Target $Element
         $Element = Find-SeElement -ClassName "griddle-cell" -Target $Element[0] 
         $text = $Element[2].text 
 
         Start-Sleep 3
 
-        $Element = Find-SeElement -Id "RefreshGrid" -Driver $Driver
+        $Element = Find-SeElement -Id "RefreshGrid2" -Driver $Driver
         $NewElement = Find-SeElement -ClassName "griddle-row" -Target $Element
         (Find-SeElement -ClassName "griddle-cell" -Target $NewElement[0])[2].Text | should not be $text     
     }

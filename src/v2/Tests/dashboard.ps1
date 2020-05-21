@@ -161,7 +161,7 @@ $Pages += New-UDPage -Name 'Grid' -Content {
         $data | Out-UDGridData 
     }
 
-    New-UDGrid -Title "Grid" -Id "Grid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
+    New-UDGrid -Title "Grid" -Id "AGrid" -Headers @("day", "jpg", "mp4")  -Properties @("day", "jpg", "mp4") -EndPoint {
         $data = @(
             [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
             [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
@@ -240,7 +240,7 @@ $Pages += New-UDPage -Name 'Grid' -Content {
         $data | Sort-Object -Property day | Out-UDGridData 
     } -PageSize 5
 
-    New-UDGrid -Title "Grid" -Id "ServerSideGrid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
+    New-UDGrid -Title "ServerSideGrid" -Id "ServerSideGrid" -Headers @("day", "jpg", "mp4") -Properties @("day", "jpg", "mp4") -ServerSideProcessing -DefaultSortColumn "day" -EndPoint {
         $data = @(
             [PSCustomObject]@{"day" = 1; jpg = "10"; mp4= "30"}
             [PSCustomObject]@{"day" = 2; jpg = "20"; mp4= "20"}
@@ -377,7 +377,7 @@ $Pages += New-UDPage -Name 'Grid' -Content {
         (New-UDLink -Text "Other link" -Url "http://www.google.com")
     )
 
-    New-UDGrid -Title "Grid" -Id "RefreshGrid" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
+    New-UDGrid -Title "Grid" -Id "RefreshGrid2" -Headers @("hour", "minute", "second")  -Properties @("hour", "minute", "second") -RefreshInterval 1 -AutoRefresh -DefaultSortColumn "jpg" -DefaultSortDescending -EndPoint {
         $data = @(
             [PSCustomObject]@{"hour" = [DateTime]::Now.Hour; "minute" = [DateTime]::Now.Minute; "second" = [DateTime]::Now.Second;}
         )
