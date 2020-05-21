@@ -192,6 +192,8 @@ $Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard
             }
         }
 
+        New-UDTypography -Text "Get Started" -Variant h2 
+
         New-UDGrid -Container -Content {
             New-UDGrid -Item -SmallSize 6 -Content {
                 New-UDCard -Title "Installation" -Content {
@@ -212,24 +214,28 @@ $Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard
                     }
                 }
             }
-        }
 
-        New-UDTypography -Text "What's new" -Variant h2 
+            New-UDGrid -Item -SmallSize 6 -Content {
+                New-UDCard -Title "Marketplace" -Content {
+                    New-UDElement -Tag p -Content {
+                        New-UDTypography -Text "Access a huge collection of community contributed controls and dashboards." -Paragraph
+                    }
+                    New-UDElement -Tag p -Content {
+                        New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://marketplace.universaldashboard.io" }
+                    }
+                }
+            }
 
-        New-UDTypography -Text "Now part of PowerShell Universal" -Variant h4
-
-        New-UDTypography -Text "Universal Dashboard is now part of the PowerShell Universal platform. PSU provides a centralized administrative interface, integration with Universal Automation and a robust architecture designed for a resiliant enterprise experience." -Paragraph
-
-        New-UDElement -Tag p -Content {
-            New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/powershell-universal" }
-        }
-        
-        New-UDTypography -Text "Marketplace" -Variant h2 
-
-        New-UDTypography -Text "Access a huge collection of community contributed controls and dashboards." -Paragraph
-
-        New-UDElement -Tag p -Content {
-            New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://marketplace.universaldashboard.io" }
+            New-UDGrid -Item -SmallSize 6 -Content {
+                New-UDCard -Title "PowerShell Universal" -Content {
+                    New-UDElement -Tag p -Content {
+                        New-UDTypography -Text "PowerShell Universal Dashboard is now part of the PowerShell Universal platform. " -Paragraph
+                    }
+                    New-UDElement -Tag p -Content {
+                        New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://ironmansoftware.com/ud-ua-powershell-universal/" }
+                    }
+                }
+            }
         }
     }
 }
