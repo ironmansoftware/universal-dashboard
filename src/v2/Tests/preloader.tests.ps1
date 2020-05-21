@@ -1,11 +1,7 @@
-Describe "New-UDPreloader" {
-    Context "indeterminate" {
-        Set-TestDashboard -Content {
-            New-UDPreloader
-        }
+Enter-SeUrl -Url "$Address/Test/Preloader" -Target $Driver
 
-        It 'should be indeterminate' {
-            Find-SeElement -ClassName 'progress'-Driver $Driver | Should not be $null
-        }
+Describe "New-UDPreloader" {
+    It 'should be indeterminate' {
+        Find-SeElement -ClassName 'progress'-Driver $Driver | Should not be $null
     }
 }

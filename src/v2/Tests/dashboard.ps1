@@ -460,4 +460,107 @@ $Pages += New-UDPage -Name "Modal" -Content {
     }
 }
 
+$Pages += New-UDPage -Name "Preloader" -Content {
+    New-UDPreloader
+}
+
+$Pages += New-UDPage -Name "Radio" -Content {
+    New-UDRadio -Group '1' -Id 'first'
+    New-UDRadio -Group '1' -Id 'second'
+    New-UDRadio -Group '1' -Id 'third'
+
+    New-UDRadio -Group '2' -Id 'first2' -onChange { Set-TestData -Data $true }
+    New-UDRadio -Group '2' -Id 'second2'
+    New-UDRadio -Group '2' -Id 'third2'
+
+    New-UDRadio -Group '3' -Id 'first3' -Checked
+    New-UDRadio -Group '3' -Id 'second3'
+    New-UDRadio -Group '3' -Id 'third3'
+
+    New-UDRadio -Group '4' -Id 'first4' -Disabled
+    New-UDRadio -Group '4' -Id 'second4'
+    New-UDRadio -Group '4' -Id 'third4'
+}
+
+$Pages += New-UDPage -Name "Row" -Content {
+    New-UDRow -Columns {
+        New-UDColumn -Content {
+            New-UDElement -Id "hi" -Tag "div"
+        }
+    }
+
+    New-UDRow -Endpoint {
+        New-UDColumn -Content {
+            New-UDElement -Id "hi2" -Tag "div"
+        }
+    }
+}
+
+$Pages += New-UDPage -Name "Select" -Content {
+    New-UDElement -Tag 'div' -Id 'largeSelectTest' -Content {
+        New-UDButton -Text "Button" -Id 'btn1' -OnClick {
+            $Value = (Get-UDElement -Id 'test').Attributes['value'] 
+    
+            Set-TestData -Data $Value
+        }
+    
+        New-UDGrid -Title "" -Endpoint {
+            @([PSCustomObject]@{
+                Name = New-UDSelect -Label "Test" -Id 'largeSelect' -Option {
+                    1..150 | ForEach-Object {
+                        New-UDSelectOption -Name "Test $_" -Value "$_"
+                    }
+                } -OnChange {
+                    Set-TestData -Data $EventData
+                }
+            }) | Out-UDGridData
+        }
+    }
+
+    New-UDElement -Tag 'div' -Id 'onSelectTest' -Content {
+        New-UDButton -Text "Button" -Id 'btn2' -OnClick {
+            $Value = (Get-UDElement -Id 'test').Attributes['value'] 
+    
+            Set-TestData -Data $Value
+        }
+    
+        New-UDSelect -Label "Test" -Id 'onSelectSelect' -Option {
+            New-UDSelectOption -Nam "Test 1" -Value "1"
+            New-UDSelectOption -Nam "Test 2" -Value "2"
+            New-UDSelectOption -Nam "Test 3" -Value "3"
+        } -OnChange {
+            Set-TestData -Data $EventData
+        }
+    }
+
+    New-UDElement -Tag 'div' -Id 'getElementTest' -Content {
+        New-UDButton -Text "Button" -Id 'btn3' -OnClick {
+            $Value = (Get-UDElement -Id 'test').Attributes['value'] 
+    
+            Set-TestData -Data $Value
+        }
+    
+        New-UDSelect -Label "Test" -Id 'getElementSelect' -Option {
+            New-UDSelectOption -Nam "Test 1" -Value "1"
+            New-UDSelectOption -Nam "Test 2" -Value "2"
+            New-UDSelectOption -Nam "Test 3" -Value "3"
+        }
+    }    
+}
+
+$Pages += New-UDPage -Name "Switch" -Content {
+    New-UDSwitch -On -Id 'switch1'
+    New-UDSwitch -Id 'switch2' -Disabled
+    New-UDSwitch -Id 'switch3' -OnChange {
+        Set-TestData -Data $true
+    }
+}
+
+$Pages += New-UDPage -Name "Tabs" -Content {
+    New-UDTabContainer -Tabs {
+        New-UDTab -Text "Tab1" -Content { New-UDCard -Title "Hi" -Content {} }
+        New-UDTab -Text "Tab2" -Content { New-UDCard -Title "Hi2" -Content {} }
+    }
+}
+
 New-UDDashboard -Title 'Test' -Pages $Pages
