@@ -46,7 +46,7 @@ const UdButton = props => {
       href={props.href}
       onClick={handleClick}
       style={{ ...props.style }}
-      sx={{ bg: 'primary', color: 'text' }}
+      //sx={{ bg: 'primary', color: 'text' }}
       id={props.id}
     >
       {props.iconAlignment === 'left' ? icon : null}

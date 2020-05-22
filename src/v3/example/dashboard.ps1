@@ -1,11 +1,10 @@
-$Cache:Help = @{}
-
+$DebugPreference = 'Continue'
 function New-ComponentPage {
     param(
         [Parameter(Mandatory)]
-        [string]$Title, 
-        [Parameter(Mandatory)]
         [string]$Description, 
+        [Parameter(Mandatory)]
+        [string]$Title, 
         [Parameter()]
         [string]$SecondDescription, 
         [Parameter(Mandatory)]
@@ -14,9 +13,7 @@ function New-ComponentPage {
         [string[]]$Cmdlet
         ) 
 
-    $AdditionalParameters = @{}
-
-    New-UDPage @AdditionalParameters -Name $Title -Content {
+    New-UDPage -Name $Title -Content {
         New-UDContainer {
             New-AppBar -Title $title
             
@@ -45,36 +42,28 @@ function New-ComponentPage {
                 New-UDTypography -Text 'Parameters' -Variant h4
             }
     
-            New-UDDynamic -Content {
-                foreach($item in $Cmdlet)
-                {
-                    if ($Cache:Help.ContainsKey($item)) {
-                        $Parameters = $Cache:Help[$item]
-                    }
-                    else 
-                    {
-                        $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
-                            $Parameter = $_.Key
-        
-                            $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
-                            
-                            if ($null -ne $Help)
-                            {
-                                @{
-                                    name = $Help.name 
-                                    type = $Help.type.name
-                                    description = $Help.description.text
-                                    required = $Help.required
-                                }
-                            }
-                        }
-                        $Cache:Help[$item] = $Parameters
-                    }
+            foreach($item in $Cmdlet)
+            {
+                $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
                     
-                    if ($Parameters)
+                    $Parameter = $_.Key
+
+                    $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
+                    
+                    if ($null -ne $Help)
                     {
-                        New-UDTable -Title $item -Data $Parameters -Columns $Columns
+                        @{
+                            name = $Help.name 
+                            type = $Help.type.name
+                            description = $Help.description.text
+                            required = $Help.required
+                        }
                     }
+                }
+                 
+                if ($Parameters)
+                {
+                    New-UDTable -Title $item -Data $Parameters -Columns $Columns
                 }
             }
         }
@@ -187,7 +176,7 @@ $Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard
         New-UDContainer {
             New-UDGrid -Container -Content {
                 New-UDGrid -Item -SmallSize 3 -Content {
-                    New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png'
+                    New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png' -Height 128
                 }
                 New-UDGrid -Item -SmallSize 9 -Content { 
                     New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
@@ -228,7 +217,7 @@ $Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard
             }
 
             New-UDGrid -Item -SmallSize 6 -Content {
-                New-UDCard -Title "Get Started" -Content {
+                New-UDCard -Title "Documentation" -Content {
                     New-UDElement -Tag p -Content {
                         New-UDTypography -Text "Learn how to get up and running witrh PowerShell Universal" -Paragraph
                         New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://docs.ironmansoftware.com/getting-started" }

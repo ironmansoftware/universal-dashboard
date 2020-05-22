@@ -16,7 +16,7 @@ function New-UDContainer
             assetId = $MUAssetId
             type = "mu-container"
 
-            children = & $Children
+            children = . $Children
         }
     }
 }

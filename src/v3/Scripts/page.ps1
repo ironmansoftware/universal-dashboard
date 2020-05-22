@@ -34,7 +34,7 @@ function New-UDPage
 
     if ($OnLoading)
     {
-        $LoadingContent = & $OnLoading
+        $LoadingContent = . $OnLoading
     }
     
 

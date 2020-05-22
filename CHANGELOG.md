@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v3.0.0-beta3
 
+### Changed 
+
 - Added dependency on Universal module
 - Fixed custom component loading
 - Updated demo dashboard
+- Removed styles that made paper and buttons look weird

@@ -15,6 +15,8 @@ function New-UDDynamic
         [ScriptBlock]$LoadingComponent = {}
     )
 
+    Write-Debug "UDynamic: $id"
+
     $Content.Register($Id, $PSCmdlet)
 
     @{
@@ -23,6 +25,6 @@ function New-UDDynamic
         autoRefreshInterval = $AutoRefreshInterval
         type = "dynamic"
         isPlugin = $true 
-        loadingComponent = & $LoadingComponent
+        loadingComponent = . $LoadingComponent
     }
 }
