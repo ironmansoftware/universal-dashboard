@@ -144,6 +144,7 @@ function New-AppBar {
                 New-UDListItem -Label "Typography" -OnClick { Invoke-UDRedirect -Url '/typography' }
             }
             New-UDListItem -Label "Data Visualization" -Children {
+                New-UDListItem -Label "Maps" -OnClick { Invoke-UDRedirect -Url '/maps' }
                 New-UDListItem -Label 'Nivo' -Children {
                     New-UDListItem -Label "Overview" -OnClick { Invoke-UDRedirect -Url '/nivo' }
                     New-UDListItem -Label "Bar" -OnClick { Invoke-UDRedirect -Url '/nivo-bar' }
