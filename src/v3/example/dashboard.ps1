@@ -1,11 +1,9 @@
-$Cache:Help = @{}
-
 function New-ComponentPage {
     param(
         [Parameter(Mandatory)]
-        [string]$Title, 
-        [Parameter(Mandatory)]
         [string]$Description, 
+        [Parameter(Mandatory)]
+        [string]$Title, 
         [Parameter()]
         [string]$SecondDescription, 
         [Parameter(Mandatory)]
@@ -14,9 +12,7 @@ function New-ComponentPage {
         [string[]]$Cmdlet
         ) 
 
-    $AdditionalParameters = @{}
-
-    New-UDPage @AdditionalParameters -Name $Title -Content {
+    New-UDPage -Name $Title -Content {
         New-UDContainer {
             New-AppBar -Title $title
             
@@ -45,36 +41,28 @@ function New-ComponentPage {
                 New-UDTypography -Text 'Parameters' -Variant h4
             }
     
-            New-UDDynamic -Content {
-                foreach($item in $Cmdlet)
-                {
-                    if ($Cache:Help.ContainsKey($item)) {
-                        $Parameters = $Cache:Help[$item]
-                    }
-                    else 
-                    {
-                        $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
-                            $Parameter = $_.Key
-        
-                            $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
-                            
-                            if ($null -ne $Help)
-                            {
-                                @{
-                                    name = $Help.name 
-                                    type = $Help.type.name
-                                    description = $Help.description.text
-                                    required = $Help.required
-                                }
-                            }
-                        }
-                        $Cache:Help[$item] = $Parameters
-                    }
+            foreach($item in $Cmdlet)
+            {
+                $Parameters = (Get-Command $item).Parameters.GetEnumerator() | ForEach-Object {
                     
-                    if ($Parameters)
+                    $Parameter = $_.Key
+
+                    $Help = Get-Help -Name $item -Parameter $Parameter -ErrorAction SilentlyContinue
+                    
+                    if ($null -ne $Help)
                     {
-                        New-UDTable -Title $item -Data $Parameters -Columns $Columns
+                        @{
+                            name = $Help.name 
+                            type = $Help.type.name
+                            description = $Help.description.text
+                            required = $Help.required
+                        }
                     }
+                }
+                 
+                if ($Parameters)
+                {
+                    New-UDTable -Title $item -Data $Parameters -Columns $Columns
                 }
             }
         }
@@ -98,13 +86,13 @@ function New-Example {
         } -Content $Example
     }
 
-    New-UDCard -Children {
+    New-UDCard -Content {
         New-UDElement -Tag 'pre' -Content { $Example.ToString().Trim() }
     }
 }
 
 function New-AppBar {
-    param($title)
+    param($title, [Switch]$NoPadding)
 
     $Drawer = New-UDDrawer -Children {
         New-UDList -Children {
@@ -155,6 +143,7 @@ function New-AppBar {
                 New-UDListItem -Label "Typography" -OnClick { Invoke-UDRedirect -Url '/typography' }
             }
             New-UDListItem -Label "Data Visualization" -Children {
+                New-UDListItem -Label "Maps" -OnClick { Invoke-UDRedirect -Url '/maps' }
                 New-UDListItem -Label 'Nivo' -Children {
                     New-UDListItem -Label "Overview" -OnClick { Invoke-UDRedirect -Url '/nivo' }
                     New-UDListItem -Label "Bar" -OnClick { Invoke-UDRedirect -Url '/nivo-bar' }
@@ -173,39 +162,88 @@ function New-AppBar {
         New-UDElement -Tag 'div' -Content {$title}
     } -Drawer $Drawer
 
-    New-UDElement -Tag 'div' -Attributes @{ style = @{ paddingTop = '20px'}} -Content {}
+    if (-not $NoPadding) {
+        New-UDElement -Tag 'div' -Attributes @{ style = @{ paddingTop = '20px'}} -Content {}
+    }   
 }
 
 $Pages = @()
 $Pages += New-UDPage @AdditionalParameters -Name "PowerShell Universal Dashboard" -Content {
     
-    New-AppBar -Title "PowerShell Universal Dashboard"
+    New-AppBar -Title "PowerShell Universal Dashboard" -NoPadding
 
-    New-UDContainer {
-        New-UDGrid -Container -Content {
-            New-UDGrid -Item -SmallSize 3 -Content {
-                New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png'
-            }
-            New-UDGrid -Item -SmallSize 9 -Content { 
-                New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
-                New-UDTypography -Text "The most popular web framework for PowerShell" -Variant h4
-                New-UDTypography -Text "Part of PowerShell Universal" -Variant h4
-                New-UDButton -Variant outlined -Text "Get Started" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/downloads" }
+    New-UDElement -Tag 'div' -Content {
+        New-UDContainer {
+            New-UDGrid -Container -Content {
+                New-UDGrid -Item -SmallSize 3 -Content {
+                    New-UDImage -Url 'https://github.com/ironmansoftware/universal-dashboard/raw/master/images/logo.png' -Height 128
+                }
+                New-UDGrid -Item -SmallSize 9 -Content { 
+                    New-UDTypography -Text 'PowerShell Universal Dashboard' -Variant h2 
+                    New-UDTypography -Text "The most popular web framework for PowerShell" -Variant h4
+                }
             }
         }
+    } -Attributes @{
+        style = @{
+            width = '100%'
+            backgroundColor = 'white'
+            paddingBottom = '20px'
+            paddingTop = '20px'
+        }
+    }
+
+    New-UDContainer {
+        New-UDElement -Tag 'div' -Content {
+        
+        } -Attributes @{
+            style = @{
+                height = '25px'
+            }
+        }
+
+        New-UDTypography -Text "Get Started" -Variant h2 
 
         New-UDGrid -Container -Content {
             New-UDGrid -Item -SmallSize 6 -Content {
                 New-UDCard -Title "Installation" -Content {
-                    New-UDTypography -Text "Universal Dashboard is included with the PowerShell Universal installer" -Paragraph
-                    New-UDButton -Variant outlined -Text "Download" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/downloads" }
+                    New-UDElement -Tag p -Content {
+                        New-UDTypography -Text "Universal Dashboard is included with the PowerShell Universal installer" -Paragraph
+                    }
+                    New-UDElement -Tag p -Content {
+                        New-UDButton -Variant outlined -Text "Download" -OnClick { Invoke-UDRedirect -Url "https://www.ironmansoftware.com/downloads" }
+                    }
                 }
             }
 
             New-UDGrid -Item -SmallSize 6 -Content {
-                New-UDCard -Title "Get Started" -Content {
-                    New-UDTypography -Text "Learn more on our docs" -Paragraph
-                    New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://docs.ironmansoftware.com/getting-started" }
+                New-UDCard -Title "Documentation" -Content {
+                    New-UDElement -Tag p -Content {
+                        New-UDTypography -Text "Learn how to get up and running witrh PowerShell Universal" -Paragraph
+                        New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://docs.ironmansoftware.com/getting-started" }
+                    }
+                }
+            }
+
+            New-UDGrid -Item -SmallSize 6 -Content {
+                New-UDCard -Title "Marketplace" -Content {
+                    New-UDElement -Tag p -Content {
+                        New-UDTypography -Text "Access a huge collection of community contributed controls and dashboards." -Paragraph
+                    }
+                    New-UDElement -Tag p -Content {
+                        New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://marketplace.universaldashboard.io" }
+                    }
+                }
+            }
+
+            New-UDGrid -Item -SmallSize 6 -Content {
+                New-UDCard -Title "PowerShell Universal" -Content {
+                    New-UDElement -Tag p -Content {
+                        New-UDTypography -Text "PowerShell Universal Dashboard is now part of the PowerShell Universal platform. " -Paragraph
+                    }
+                    New-UDElement -Tag p -Content {
+                        New-UDButton -Variant outlined -Text "Learn More" -OnClick { Invoke-UDRedirect -Url "https://ironmansoftware.com/ud-ua-powershell-universal/" }
+                    }
                 }
             }
         }
