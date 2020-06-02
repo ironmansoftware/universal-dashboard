@@ -1,15 +1,11 @@
 param($Script)
 
 Import-Module Selenium
-Import-Module Universal -Scope Global
-Import-Module "$PSScriptRoot\output\*.psd1" -Scope Global
-
 
 $OutputPath = "$PSScriptRoot\..\..\output"
 $Address = 'http://localhost:5000'
 
 task Clean {
-   # Remove-Item $OutputPath -Force -Recurse
     Remove-Item "$Env:ProgramData\UniversalAutomation" -Force -Recurse -ErrorAction SilentlyContinue
     Remove-Item "$Env:ProgramData\PowerShellUniversal" -Force -Recurse -ErrorAction SilentlyContinue
 }

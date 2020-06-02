@@ -3,12 +3,12 @@ import React, { Suspense, useState, useEffect } from 'react';
 import { getApiPath, getDashboardId } from './config.jsx';
 import { fetchGet } from './services/fetch-service.jsx';
 import PubSub from 'pubsub-js';
-import { HubConnectionBuilder, LogLevel, HttpTransportType } from '@microsoft/signalr';
+import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr';
 
 import toaster from './services/toaster';
-import LazyElement from './basics/lazy-element.jsx';
 import copy from 'copy-to-clipboard'
 import ErrorCard from './../Components/error-card';
+import useErrorBoundary from 'use-error-boundary';
 
 var connection;
 
@@ -231,9 +231,9 @@ function getLocation(setLocation) {
 }
 
 function Dashboard({ history }) {
+    const { ErrorBoundary, didCatch, error } = useErrorBoundary()
     const [dashboard, setDashboard] = useState(null);
-    const [hasError, setHasError] = useState(false);
-    const [error, setError] = useState(null);
+    const [dashboardError, setDashboardError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [location, setLocation] = useState(null);
 
@@ -243,8 +243,7 @@ function Dashboard({ history }) {
             var dashboard = json.dashboard;
     
             if (dashboard.error) {
-                setError(dashboard.error);
-                setHasError(true);
+                setDashboardError(dashboard.error);
                 return;
             }
     
@@ -283,14 +282,18 @@ function Dashboard({ history }) {
             loadData()
         }
         catch (err) {
-            setError(err);
-            setHasError(true);
+            setDashboardError(err);
         }
     });
 
-    if (hasError)
+    if (didCatch)
     {
         return <ErrorCard message={error}/>
+    }
+
+    if (dashboardError)
+    {
+        return <ErrorCard message={dashboardError}/>
     }
 
     if (loading) {
@@ -305,11 +308,13 @@ function Dashboard({ history }) {
 
         var pluginComponents = UniversalDashboard.provideDashboardComponents();
 
-        return  [component, pluginComponents]
+        return <ErrorBoundary>
+            {component}
+            {pluginComponents}
+        </ErrorBoundary>
     }
     catch (err) {
-        setError(err);
-        setHasError(true);
+        setDashboardError(err);
     }
 
     return null;

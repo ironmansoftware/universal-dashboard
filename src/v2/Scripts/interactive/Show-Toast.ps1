@@ -70,7 +70,7 @@ function Show-UDToast
         position = $Position
         backgroundColor = $BackgroundColor.HtmlColor
         theme = $Theme
-        #icon = Icon == FontAwesomeIcons.None ? "" : $"fa fa-{Icon.ToString().Replace("_", "-")}",
+        icon = if ($Icon -eq [FontAwesomeIcons]::None) { "" } else { [UniversalDashboard.Models.FontAwesomeIconsExtensions]::GetIconName($Icon) }
         iconColor = $IconColor.HtmlColor
         displayMode = if ($ReplaceToast.IsPresent) {2 } else { 0 }
         rtl = $RightToLeft.IsPresent

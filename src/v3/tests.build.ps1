@@ -1,3 +1,5 @@
+param($Script)
+
 Import-Module Selenium
 
 $OutputPath = "$PSScriptRoot\..\..\output"
@@ -26,13 +28,12 @@ task InitTests {
 
     try 
     {
-
         Invoke-WebRequest "$Address/api/v1/signin" -Method Post -Body (@{ username = 'admin'; password = '1234' } | ConvertTo-Json) -SessionVariable 'PUWS' -ContentType 'application/json' | out-null
         $AppToken = (Invoke-WebRequest "$Address/api/v1/apptoken/grant" -WebSession $PUWS).Content | ConvertFrom-Json
     
         Connect-UAServer -ComputerName $Address -AppToken $AppToken.Token
         $Framework = Add-UDDashboardFramework -Name 'Test' -Version 'Test' -Path "$PSScriptRoot\output"
-        Add-UDDashboard -Name 'Test' -FilePath "$PSScriptRoot\dashboard.ps1" -Framework $Framework -BaseUrl '/test' 
+        Add-UDDashboard -Name 'Test' -FilePath "$PSScriptRoot\dashboard.ps1" -Framework $Framework -BaseUrl '/test' | Out-Null
     }
     catch 
     {
@@ -51,12 +52,21 @@ task Run {
 
     $OutputPath = "$PSScriptRoot\test-results" 
     Remove-Item $OutputPath -Recurse -ErrorAction SilentlyContinue -Force
-    New-Item -Path $OutputPath -ItemType Directory
+    New-Item -Path $OutputPath -ItemType Directory | Out-Null
 
     Push-Location $PSScriptRoot
 
-    Get-ChildItem "$PSScriptRoot\Tests" -Filter "*.tests.ps1" | ForEach-Object {
-        . $_.FullName
+    
+    if ($Script)
+    {
+        . (Join-Path "$PSScriptRoot\Tests" $Script)
+    }
+    else 
+    {
+        Get-ChildItem "$PSScriptRoot\Tests" -Filter "*.tests.ps1" | ForEach-Object {
+            . $_.FullName
+        }
+    
     }
 
     Pop-Location

@@ -13,7 +13,16 @@ function New-UDSideNav {
     )
 
     [array]$c = @()
-    if ($Content) { [array]$c = & $Content }
+    if ($Content) { 
+        try 
+        {
+            [array]$c = & $Content 
+        }
+        catch 
+        {
+            [array]$c = @(New-UDError -Message $_)
+        }
+    }
 
     @{
         content = $c
@@ -26,6 +35,9 @@ function New-UDSideNav {
 
 function New-UDSideNavItem {
     param( 
+        [Parameter()]
+        [string]$Id = [Guid]::NewGuid(),
+
         [Parameter(ParameterSetName = "Divider")]
         [Switch]$Divider,
 
@@ -59,7 +71,15 @@ function New-UDSideNavItem {
     )
 
     [array]$c = @()
-    if ($Children) { [array]$c = & $Children;  }
+    if ($Children) { 
+        try {
+            [array]$c = & $Children;      
+        }
+        catch {
+            [array]$c = @(New-UDError -Message $_)
+        }
+        
+    }
 
     if ($OnClick) {
         $OnClick.Register($Id + "onClick", $PSCmdlet) | Out-Null

@@ -9,6 +9,7 @@ import { base } from '@theme-ui/presets'
 import toaster from './services/toaster'
 import copy from 'copy-to-clipboard'
 import ErrorCard from './../Components/framework/error-card'
+import useErrorBoundary from 'use-error-boundary';
 
 const dashboardId = getDashboardId();
 
@@ -250,9 +251,9 @@ function getLocation(setLocation) {
 }
 
 function Dashboard({ history }) {
+  const { ErrorBoundary, didCatch, error } = useErrorBoundary()
   const [dashboard, setDashboard] = useState(null)
-  const [hasError, setHasError] = useState(false)
-  const [error, setError] = useState(null)
+  const [dashboardError, setDashboardError] = useState(null)
   const [loading, setLoading] = useState(true)
   const [location, setLocation] = useState(null)
 
@@ -263,8 +264,7 @@ function Dashboard({ history }) {
         var dashboard = json.dashboard
 
         if (dashboard.error) {
-          setError(dashboard.error);
-          setHasError(true);
+          setDashboardError(dashboard.error);
           return;
         }
 
@@ -296,12 +296,16 @@ function Dashboard({ history }) {
     try {
       loadData()
     } catch (err) {
-      setError(err)
-      setHasError(true)
+      setDashboardError(err)
     }
   })
 
-  if (hasError) {
+  if (didCatch)
+  {
+      return <ErrorCard errorRecords={[{message: error}]}/>
+  }
+
+  if (dashboardError) {
     return <ErrorCard errorRecords={[{message: error}]} />
   }
 
@@ -347,13 +351,14 @@ function Dashboard({ history }) {
     // }
     
     return (
-      <ThemeProvider theme={theme}>
-        <ColorModeProvider>{[component, pluginComponents]}</ColorModeProvider>
-      </ThemeProvider>
+      <ErrorBoundary>
+        <ThemeProvider theme={theme}>
+          <ColorModeProvider>{[component, pluginComponents]}</ColorModeProvider>
+        </ThemeProvider>
+      </ErrorBoundary>
     )
   } catch (err) {
-    setError(err)
-    setHasError(true)
+    setDashboardError(err)
   }
 
   return null

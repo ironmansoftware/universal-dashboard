@@ -1,13 +1,15 @@
 function New-UDPage 
 {
     param(
-		[Parameter(Position = 0, Mandatory = $true, ParameterSetName = "name")]
+        [Parameter()]
+        [string]$Id = [Guid]::NewGuid(),
+		[Parameter(Position = 0, Mandatory = $true)]
 		[string]$Name,
 	    [Parameter(Position = 1)]
 		[string]$Icon, 
-	    [Parameter(Position = 2)]
+	    [Parameter(Position = 2, ParameterSetName = "content")]
 		[ScriptBlock]$Content,
-		[Parameter(Position = 0, Mandatory = $true, ParameterSetName = "url")]
+		[Parameter(Position = 5)]
 		[string]$Url,
 		[Parameter(Position = 3)]
 		[Switch]$DefaultHomePage,
@@ -17,23 +19,32 @@ function New-UDPage
         [Endpoint]$Endpoint
     )
 
-    if ($PSCmdlet.ParameterSetName -eq 'endpoint')
+    if ($Endpoint)
     {
-        $Endpoint.Register($Name, $PSCmdlet)    
+        $Endpoint.Register($Id, $PSCmdlet)    
     }
 
-    if ($null -ne $Url -and -not $Url.StartsWith("/"))
+    if (-not [string]::IsNullOrEmpty($Url) -and -not $Url.StartsWith("/"))
     {
         $Url = "/" + $Url
     }
 
-    if ($Null -eq $Url -and $null -ne $Name)
+    if ([string]::IsNullOrEmpty($Url) -and $null -ne $Name)
     {
         $Url = "/" + $Name.Replace(' ', '-');
     }
 
     [array]$c = @()
-    if ($Content) { [array]$c = . $Content}
+    if ($Content) { 
+        try 
+        {
+            [array]$c = . $Content
+        }
+        catch 
+        {
+            [array]$c = New-UDError -Message $_ 
+        }
+    }
 
     @{
         name = $Name

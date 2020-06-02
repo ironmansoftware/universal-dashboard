@@ -13,7 +13,12 @@ function New-UDSplitPane {
         [int]$DefaultSize
     )
 
-    $Children = & $Content
+    try {
+        $Children = & $Content
+    }
+    catch {
+        $Children = New-UDError -Message $_
+    }
 
     if ($Children.Length -ne 2) {
         Write-Error "Split pane requires exactly two components in Content"

@@ -1,4 +1,4 @@
-Write-Warning -Message "This module is no longer supported. Universal Dashboard functionality has been moved into PowerShell Universal. To learn more, visit: https://www.ironmansoftware.com/powershell-universal"
+Write-Warning -Message "This module is no longer supported. Universal Dashboard functionality has been moved into PowerShell Universal. You can still host your UD Community dashboards for free within PowerShell Universal. To learn more, visit: https://www.ironmansoftware.com/powershell-universal"
 # SIG # Begin signature block
 # MIIXvwYJKoZIhvcNAQcCoIIXsDCCF6wCAQExCzAJBgUrDgMCGgUAMGkGCisGAQQB
 # gjcCAQSgWzBZMDQGCisGAQQBgjcCAR4wJgIDAQAABBAfzDtgWUsITrck0sYpfvNR

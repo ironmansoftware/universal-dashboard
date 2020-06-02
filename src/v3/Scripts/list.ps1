@@ -39,13 +39,20 @@ function New-UDList {
     )
     End
     {
+        try {
+            $c = & $Children
+        }
+        catch {
+            $c = New-UDError -Message $_
+        }
+
         @{
             type = 'mu-list'
             isPlugin = $true
             assetId = $MUAssetId
 
             id = $Id
-            children = & $Children
+            children = $c
             subHeader = $SubHeader
             style = $Style
         }
@@ -163,7 +170,13 @@ function New-UDListItem {
         }
 
         if($null -ne $Children){
-            $CardContent = &$Children
+            try {
+                $CardContent = & $Children    
+            }
+            catch {
+                $CardContent = New-UDError -Message $_
+            }
+            
         }else{
             $CardContent = $null
         }

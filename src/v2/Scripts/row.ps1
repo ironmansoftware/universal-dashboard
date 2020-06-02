@@ -16,11 +16,11 @@ function New-UDRow {
     if ($PSCmdlet.ParameterSetName -eq 'static') {
         New-UDElement -Tag 'div' -Attributes @{
             className = 'row'
-        } -Content $Columns
+        } -Content $Columns -Id $Id
     }
     else {
         New-UDElement -Tag 'div' -Attributes @{
             className = 'row'
-        } -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval 
+        } -Endpoint $Endpoint -AutoRefresh:$AutoRefresh -RefreshInterval $RefreshInterval -Id $Id
     }
 }

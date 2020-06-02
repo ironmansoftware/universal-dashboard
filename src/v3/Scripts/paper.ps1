@@ -51,6 +51,12 @@ function New-UDPaper {
 
     End 
     {
+        try {
+            $c = & $Children
+        }
+        catch {
+            $c = New-UDError -Message $_
+        }
         @{
             type = 'mu-paper'
             isPlugin = $true
@@ -58,7 +64,7 @@ function New-UDPaper {
             
             id = $Id
             width  = $Width 
-            children = & $Children
+            children = $c
             height = $Height
             square = $Square.IsPresent
             style = $Style

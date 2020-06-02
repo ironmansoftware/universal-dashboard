@@ -288,6 +288,12 @@ New-UDDashboard -Title "Dashboard" -Pages @(
                 New-UDElement -Tag 'div' -id 'expContentDiv' -Content { "Hello" }
             }
         }
+
+        New-UDExpansionPanelGroup -Children {
+            New-UDExpansionPanel -Title "Hello" -Id 'expContent2' -Children {
+                New-UDElement -Tag 'div' -id 'expContentDiv2' -Content { "Hello" }
+            }
+        }
     }
 
     New-UDPage -Name 'Typography' -Content {

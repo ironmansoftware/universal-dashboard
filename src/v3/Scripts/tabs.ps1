@@ -77,11 +77,19 @@ function New-UDTabs {
     )
 
     End {
+
+        try {
+            $c = & $Tabs 
+        }
+        catch {
+            $c = New-UDError -Message $_
+        }
+
         @{
             isPlugin        = $true
             assetId         = $MUAssetId
             type            = "mu-tabs"
-            tabs            = $Tabs.Invoke()
+            tabs            = $c
             id              = $id
             renderOnClick   = $RenderOnActive.IsPresent
             orientation     = $Orientation
@@ -112,13 +120,19 @@ function New-UDTab {
             New-UDEndpoint -Id $Id -Endpoint $Content | Out-Null
         }
 
+        try {
+            $c = & $Content 
+        } catch {
+            $c = New-UDError -Message $_
+        }
+
         @{
             isPlugin = $true
             assetId  = $MUAssetId
             type     = "mu-tab"
             label     = $Text
             icon = $Icon
-            content  = $Content.Invoke()
+            content  = $c
             id       = $Id
             stacked = $Stacked.IsPresent
             dynamic = $Dynamic.IsPresent

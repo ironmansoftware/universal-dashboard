@@ -36,7 +36,7 @@ const UdPaper = (props) => {
       height={height}
       width={width}
       square={square}  
-      //sx={{ bg: 'primary', color: 'text'}}
+      sx={{ bg: 'primary', color: 'text'}}
     >
       {props.render(props.children)}
     </Paper>

@@ -73,6 +73,13 @@ function New-UDGrid {
     )
 
     End {
+        try {
+            $c = & $Children
+        }
+        catch {
+            $c = New-UDError -Message $_
+        }
+
         @{
             id = $Id 
             isPlugin = $true 
@@ -89,7 +96,7 @@ function New-UDGrid {
             container = $Container.IsPresent
             item = $Item.IsPresent
 
-            children = & $Children
+            children = $c
         }
     }
 }

@@ -25,8 +25,8 @@ try
     $AppToken = (Invoke-WebRequest "$Address/api/v1/apptoken/grant" -WebSession $PUWS).Content | ConvertFrom-Json
 
     Connect-UAServer -ComputerName $Address -AppToken $AppToken.Token
-    $Framework = Add-UDDashboardFramework -Name 'Test' -Version 'Test' -Path "$PSScriptRoot\..\output"
-    Add-UDDashboard -Name 'Test' -FilePath "$PSScriptRoot\dashboard.ps1" -Framework $Framework -BaseUrl '/' 
+    $Framework = Get-UDDashboardFramework | Where-Object { $_.Version.StartsWith("3")} 
+    Add-UDDashboard -Name 'Test' -FilePath "$PSScriptRoot\dashboard.ps1" -Framework $Framework -BaseUrl '/test' 
 }
 catch 
 {

@@ -40,11 +40,17 @@ function New-UDDrawer
         [ScriptBlock]$Children
     )
 
+    try {
+        $c = & $Children
+    } catch {
+        $c = New-UDError -Message $_
+    }
+
     @{
         type = 'mu-drawer'
         id = $Id 
         isPlugin = $true 
         assetId = $MUAssetId
-        children = & $Children
+        children = $c
     }
 }

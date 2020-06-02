@@ -1,8 +1,7 @@
 $TAType = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelerators')
 $TAtype::Add('DashboardColor', 'UniversalDashboard.Models.DashboardColor')
 $TAtype::Add('Endpoint', 'UniversalDashboard.Models.Endpoint')
-
-
+$TAtype::Add('FontAwesomeIcons', 'UniversalDashboard.Models.FontAwesomeIcons')
 
 function Find-Object {
     param(
@@ -121,7 +120,9 @@ function Out-UDChartData {
 		[Parameter()]
 		[UniversalDashboard.Models.DashboardColor[]]$HoverBackgroundColor = @("#807B210C"),
 		[Parameter()]
-		[UniversalDashboard.Models.DashboardColor[]]$HoverBorderColor = @("#FF7B210C")
+		[UniversalDashboard.Models.DashboardColor[]]$HoverBorderColor = @("#FF7B210C"),
+		[Parameter()]
+		[int[]]$BorderWidth
 	)
 
     Begin {
@@ -149,7 +150,7 @@ function Out-UDChartData {
 					borderColor = $BorderColor.HtmlColor
 					hoverBackgroundColor = $HoverBackgroundColor.HtmlColor
 					hoverBorderColor = $HoverBorderColor.HtmlColor
-					borderWidth = 1
+					borderWidth = $BorderWidth
 					data = @($Items | ForEach-Object { $_.$DataProperty })
 				}
 		}

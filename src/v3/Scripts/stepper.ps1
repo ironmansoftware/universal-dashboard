@@ -78,6 +78,12 @@ function New-UDStepper {
         $OnValidateStep.Register($Id + "onValidate", $PSCmdlet)
     }
 
+    try {
+        $c = & $Children
+    } catch {
+        $c = New-UDError -Message $_
+    }
+
 
     @{
         id = $id 
@@ -85,7 +91,7 @@ function New-UDStepper {
         type = 'mu-stepper'
         assetId = $MUAssetId 
 
-        children = & $Children
+        children = $c
         nonLinear = $NonLinear.IsPresent 
         alternativeLabel = $AlternativeLabel.IsPresent
         onFinish = $OnFinish

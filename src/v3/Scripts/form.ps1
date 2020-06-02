@@ -76,6 +76,13 @@ function New-UDForm
 
     $OnSubmit.Register($id, $PSCmdlet)
 
+    try {
+        $c = & $Children 
+    }
+    catch {
+        $c = New-UDError -Message $_
+    }
+
     @{
         id = $Id 
         assetId = $MUAssetId 
@@ -85,7 +92,7 @@ function New-UDForm
         onSubmit = $OnSubmit 
         onValidate = $OnValidate
         loadingComponent = $LoadingComponent
-        children = & $Children
+        children = $c
     }
 }
 

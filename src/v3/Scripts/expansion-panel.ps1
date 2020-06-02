@@ -47,13 +47,20 @@ function New-UDExpansionPanelGroup {
         [String]$Type = 'Expandable'
     )
 
+    try {
+        $c = & $Children
+    }
+    catch {
+        $c = New-UDError -Message $_
+    }
+
     @{
         type = 'mu-expansion-panel-group'
         isPlugin = $true
         assetId = $AssetId
 
         id = $id
-        children = & $Children
+        children = $c
         popout = $Popout.IsPresent
         accordion = $Type -eq 'Accordion'
     }

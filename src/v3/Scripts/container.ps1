@@ -9,6 +9,13 @@ function New-UDContainer
         [ScriptBlock]$Children        
     )
 
+    try {
+        $c = & $Children    
+    }
+    catch {
+        $c = New-UDError -Message $_
+    }
+    
     Process {
         @{
             isPlugin = $true 
@@ -16,7 +23,7 @@ function New-UDContainer
             assetId = $MUAssetId
             type = "mu-container"
 
-            children = . $Children
+            children = $c
         }
     }
 }

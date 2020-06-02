@@ -5,6 +5,7 @@ task Stage {
         Get-Content $_.FullName -Raw | Out-File "$PSScriptRoot\output\UniversalDashboard.MaterialUI.psm1" -Append -Encoding UTF8
     }
     Copy-Item "$PSScriptRoot\UniversalDashboard.psd1" "$PSScriptRoot\output" 
+    Copy-Item "$PSScriptRoot\example.ps1" "$PSScriptRoot\output" 
 
     Pop-Location
 }

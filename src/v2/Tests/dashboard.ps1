@@ -1,3 +1,4 @@
+$DebugPreference = 'Continue'
 $Cache:StateCollection = New-Object -TypeName 'System.Collections.Concurrent.BlockingCollection[object]'
 
 New-UDEndpoint -Id 'testdata' -Endpoint {
@@ -26,7 +27,7 @@ $Pages += New-UDPage -Name Button -Content {
     New-UDButton -Text "Click Me" -Id "button5" -OnClick {
         Set-TestData -Data $true
     }
-    New-UDButton -Text "Click Me" -Id button6 -Icon user
+    New-UDButton -Text "Click Me" -Id button6 -Icon user -IconAlignment right
     New-UDButton -Text "Click Me" -Id button7 -BackgroundColor red -FontColor black
 }
 
@@ -58,6 +59,32 @@ $Pages += New-UDPage -Name Card -Content {
     }
 
     New-UDCard -Title "Test" -Text "Text" -Id "Card-Watermark" -Watermark address_book
+}
+
+$Pages += New-UDPage -Name 'Monitor' -Content {
+    New-UDMonitor -Title "DatagramsPersec" -Type Line -Width 20vw -Height 22vw -DataPointHistory 200 -RefreshInterval 1 -Endpoint {
+        Get-Random | Out-UDMonitorData
+      } -Options @{
+          scales = @{
+            yAxes = @(
+              @{
+                ticks = @{
+                  beginAtZero = $true
+                  min = 0
+                  max = [int]::MaxValue
+                }
+              }
+            )
+            xAxes = @(
+              @{
+                display = $false
+              }
+            )
+          }
+          legend = @{
+            display = $false
+          }
+        }
 }
 
 $Pages += New-UDPage -Name 'Checkbox' -Content {
@@ -135,6 +162,10 @@ $Pages += New-UDPage -Name 'Column' -Content {
     New-UDColumn -Endpoint {
         New-UDCard -Id "card2"
     }
+}
+
+$Pages += New-UDPage -Name 'Error' -Content {
+    throw "Exception"
 }
 
 $Pages += New-UDPage -Name 'Fab' -Content {
@@ -418,6 +449,87 @@ $Pages += New-UDPage -Name "Image Carousel" -Content {
 #>
 }
 
+$Pages += New-UDPage -Name 'Input1' -Endpoint {
+    New-UDInput -Title "Simple Form" -Id "Form1" -Content {
+        New-UDInputField -Name 'checkbox' -Type 'checkbox'
+        New-UDInputField -Name 'textbox' -Type 'textbox'
+    } -Endpoint {
+        param($checkbox, $textbox)
+
+        Set-TestData -Data @{
+            checkbox = $checkbox.GetType().Name
+            textbox = $textbox.GetType().Name 
+        }
+    }
+}
+
+$Pages += New-UDPage -Name 'Input2' -Endpoint {
+    New-UDInput -Title "Simple Form" -Id "Form2" -Endpoint {
+        New-UDInputAction -Content { New-UDElement -Tag 'div' -Id 'hello' }
+    }
+}
+
+$Pages += New-UDPage -Name 'Input3' -Endpoint {
+    New-UDInput -Title "Simple Form" -Id "Form3" -Content {
+        New-UDInputField -Type 'textbox' -Name 'test' -Placeholder 'Test testbox' -DefaultValue "Test"
+        New-UDInputField -Type 'checkbox' -Name 'test2' -Placeholder 'checkbox'
+        New-UDInputField -Type 'select' -Name 'test3' -Placeholder 'select' -Values @("Test", "Test2", "Test3") -DefaultValue "Test"
+        New-UDInputField -Type 'radioButtons' -Name 'test4' -Values @("MyTestValue", "MyTestValue2", "MyTestValue3")
+
+        New-UDInputField -Type 'password' -Name 'test5' -Placeholder 'Password'
+        New-UDInputField -Type 'textarea' -Name 'test6' -Placeholder 'Big Box o Text'
+        New-UDInputField -Type 'switch' -Name 'test7' -Placeholder @("Yes", "No")
+        New-UDInputField -Type 'select' -Name 'test8' -Placeholder 'select2'
+        New-UDInputField -Type 'date' -Name 'test9' -Placeholder 'My Time' 
+        New-UDInputField -Type 'time' -Name 'test10' -Placeholder 'My Date' 
+        New-UDInputField -Type 'radioButtons' -Name 'test11' -Values @("1", "2", "3")
+    } -Endpoint {
+        param($Test, $Test2, $Test3, $Test4, $Test5, $Test6, $Test7, $Test8, $Test9, $Test10, $test11)
+
+        Set-TestData @{
+            test = $test
+            test2 = $test2 
+            test3 = $test3
+            test4 = $test4
+            test5 = $test5
+            test6 = $test6
+            test7 = $test7
+            test8 = $test8
+            test9 = $test9
+            test10 = $test10
+            test11 = $test11
+        } 
+    } 
+
+}
+
+$Pages += New-UDPage -Name 'Input4' -Content {
+    New-UDInput -Title "Simple Form" -Id "Form4" -Endpoint {
+        param(
+            [Parameter(HelpMessage = "My Textbox")][string]$Textbox, 
+            [Parameter(HelpMessage = "My Checkbox")][bool]$Checkbox, 
+            [Switch]$Checkbox2, 
+            [Parameter(HelpMessage = "Day of the week")]
+            [System.DayOfWeek]$DayOfWeek,
+            [Parameter(HelpMessage = "Favorite Fruit")]
+            [ValidateSet("Banana", "Apple", "Grape")]$Fruit,
+            [Parameter()]
+            [System.Security.SecureString]$SecureString,
+            [Parameter()]
+            [String[]]$ArrayOfStrings)
+
+        Set-TestData @{
+            Textbox = $Textbox
+            Checkbox = $Checkbox 
+            Checkbox2= [bool]$Checkbox2
+            DayOfWeek = $DayOfWeek
+            Vals = $Vals
+            SecureString = $SecureString
+            Strings = $ArrayOfStrings
+        } 
+    }
+}
+
 $Pages += New-UDPage -Name "Layout" -Content {
     New-UDElement -Tag 'div' -Id layout1 -Content {
         New-UDLayout -Columns 3 -Content {
@@ -460,6 +572,12 @@ $Pages += New-UDPage -Name "Modal" -Content {
     }
 }
 
+$Pages += New-UDPage -Name 'Toast' -Content {
+    New-UDButton -Id 'button' -OnClick {
+        Show-UDToast -Message 'hello' -Icon 'user' -Duration 5000
+    }
+}
+
 $Pages += New-UDPage -Name "Preloader" -Content {
     New-UDPreloader
 }
@@ -492,6 +610,12 @@ $Pages += New-UDPage -Name "Row" -Content {
     New-UDRow -Endpoint {
         New-UDColumn -Content {
             New-UDElement -Id "hi2" -Tag "div"
+        }
+    }
+
+    New-UDRow -Id 'MyRow' -Columns {
+        New-UDColumn -Content {
+            New-UDElement -Id 'content' -Tag "div"
         }
     }
 }
@@ -563,4 +687,21 @@ $Pages += New-UDPage -Name "Tabs" -Content {
     }
 }
 
-New-UDDashboard -Title 'Test' -Pages $Pages
+$Pages += New-UDPage -Name "SingleItem" -Content {
+    New-UDParagraph -Text "Stuff"
+}
+
+$Footer = New-UDFooter -Copyright "Test" -Links @(
+    New-UDLink -Text "test"
+    New-UDLink -Text "test2"
+) 
+
+$Navigation = New-UDSideNav -Content {
+    New-UDSideNavItem -Text "Text" -Url "/Button" -Id 'sideNav1'
+    New-UDSideNavItem -Text "testpage" -PageName "testpage" -icon home -id 'sideNav4'
+    New-UDSideNavItem -Text "Text2" -Id 'sideNav2' -Children {
+        New-UDSideNavItem -Text "Text3" -Url "/Button" -Id 'sideNav3'
+    } 
+}
+
+New-UDDashboard -Title 'Test' -Pages $Pages -Footer $Footer -Navigation $Navigation

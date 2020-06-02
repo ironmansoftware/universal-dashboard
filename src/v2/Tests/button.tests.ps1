@@ -30,6 +30,6 @@ Describe "New-UDButton" {
     It "has colors" {
         $Element = Find-SeElement -Id 'button7' -Driver $Driver
         $Style = Get-SeElementAttribute -Element $Element -Attribute "style"    
-        $Style | Should be "background-color: rgb(255, 0, 0); color: rgb(0, 0, 0);"
+        $Style | Should be "color: rgb(0, 0, 0); background-color: rgb(255, 0, 0); "
     }
 }

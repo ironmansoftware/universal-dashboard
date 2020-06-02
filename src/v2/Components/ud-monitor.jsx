@@ -243,25 +243,25 @@ export default class UdMonitor extends React.Component {
         }
 
         var chart = null;
-        switch(this.props.chartType) {
+        switch(this.props.chartType.toLowerCase()) {
             // Bar
-            case 0:
+            case "bar":
                 chart = this.renderBar(data, options);
                 break;
             // Line
-            case 1:
+            case "line":
                 chart = this.renderLine(data, options);
                 break;
             // Area
-            case 2:
+            case "area":
                 chart = this.renderArea(data, options);
                 break;
             // Doughnut
-            case 3:
+            case "doughnut":
                 chart = this.renderDoughnut(data, options);
                 break;
             // Radar
-                case 3:
+                case "radar":
                 chart = this.renderRadar(data, options);
                 break;
         }

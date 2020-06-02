@@ -64,8 +64,23 @@ export default class UDButton extends React.Component {
         }
 
         var icon = null; 
+        var content = this.state.text; 
         if (this.state.icon) {
-            icon = <UdIcon icon={this.state.icon} style={{marginRight: this.state.floating || !this.state.text ? 'unset' : '5px'}}/>
+
+            var style = {}
+            const margin = this.state.floating || !this.state.text ? 'unset' : '5px';
+            if (margin === '5px' && this.props.iconAlignment === "left")
+            {
+                style["marginRight"] = margin;
+            }
+
+            if (margin === '5px' && this.props.iconAlignment === "right")
+            {
+                style["marginLeft"] = margin;
+            }
+
+            icon = <UdIcon icon={this.state.icon} style={style}/>
+            content = this.props.iconAlignment === "left" ? [icon, content] : [content, icon];
         }
 
         return <Button 
@@ -77,8 +92,7 @@ export default class UDButton extends React.Component {
                     floating={this.state.floating} 
                     style={this.state.style}
                 >
-                    {icon}
-                    {this.state.text}
+                    {content}
                 </Button>
     }
 }
