@@ -6,7 +6,9 @@ function New-UDDashboard
         [Parameter(ParameterSetName = "Content", Mandatory)]
         [Endpoint]$Content,
         [Parameter(ParameterSetName = "Pages", Mandatory)]
-        [Hashtable[]]$Pages = @()
+        [Hashtable[]]$Pages = @(),
+        [Parameter()]
+        [Hashtable]$Theme = @{}
     )    
 
     if ($PSCmdlet.ParameterSetName -eq 'Content')
@@ -17,5 +19,6 @@ function New-UDDashboard
     @{
         title = $Title 
         pages = $Pages
+        theme = $Theme
     }
 }

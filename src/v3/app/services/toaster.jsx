@@ -1,5 +1,5 @@
 import iziToast from 'izitoast/dist/js/iziToast.min.js'
-import 'izitoast/dist/css/iziToast.min.css';
+require('izitoast/dist/css/iziToast.min.css')
 
 const toaster = {
     show: (model) => {

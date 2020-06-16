@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import React, {useEffect} from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,7 +9,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { withComponentFeatures } from './universal-dashboard';
 import {FormContext} from './form';
-import {jsx} from 'theme-ui'
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -74,9 +72,7 @@ const UDSelect = (props) => {
     }, true)
 
     return (
-        <FormControl className={classes.formControl} key={props.id} 
-        //sx={{bg: 'background', color: 'text'}}
-        >
+        <FormControl className={classes.formControl} key={props.id} >
             <InputLabel htmlFor={props.id}>{props.label}</InputLabel>
             <Select 
                 defaultValue={defaultValue} 

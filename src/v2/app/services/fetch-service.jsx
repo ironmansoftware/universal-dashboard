@@ -24,6 +24,8 @@ export const fetchGet = function(url, success, history) {
                     return text;   
                 }
             }).then(success);
+        } else if (response.status == 401) {
+            window.location.href = `/login?returnurl=${window.location.pathname}`
         } else {
             throw new Error(response.statusText);
         }

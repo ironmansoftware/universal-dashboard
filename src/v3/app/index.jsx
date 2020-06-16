@@ -11,8 +11,6 @@ import App from './App';
 window.react = require('react');
 window['reactdom'] = require('react-dom');
 window['reactrouterdom'] = require('react-router-dom');
-window['themeui'] = require('theme-ui');
-window['themeuicolormodes'] = require('@theme-ui/color-modes');
 
 // To add to window
 if (!window.Promise) {

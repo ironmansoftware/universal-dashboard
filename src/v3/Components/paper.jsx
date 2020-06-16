@@ -1,9 +1,7 @@
-/** @jsx jsx */
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import classNames from "classnames"
-import {jsx} from 'theme-ui'
 import { withComponentFeatures } from './universal-dashboard';
 
 const useStyles = makeStyles(theme => ({
@@ -36,7 +34,6 @@ const UdPaper = (props) => {
       height={height}
       width={width}
       square={square}  
-      sx={{ bg: 'primary', color: 'text'}}
     >
       {props.render(props.children)}
     </Paper>

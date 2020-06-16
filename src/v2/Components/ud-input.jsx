@@ -11,7 +11,7 @@ export default class Input extends React.Component {
         super(props);
 
         this.state = {
-            fields: props.fields,
+            fields: Array.isArray(props.fields) ? props.fields : [props.fields],
             newContent: [],
             loading: false,
             canSubmit: !props.validate

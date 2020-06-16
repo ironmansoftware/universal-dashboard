@@ -1,12 +1,11 @@
-/** @jsx jsx */
 import React, {useState} from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import { withComponentFeatures } from './universal-dashboard'
 import { makeStyles } from '@material-ui/core/styles'
-import { jsx } from 'theme-ui'
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import ToggleColorModes from './framework/togglecolormodes';
 
 const useStyles = makeStyles(theme => ({
   button: {
@@ -49,6 +48,7 @@ const UDAppBar = props => {
         <Toolbar>
             {drawerButton}
             {props.render(props.children)}
+            <ToggleColorModes />
         </Toolbar>
     </AppBar>,
     drawer

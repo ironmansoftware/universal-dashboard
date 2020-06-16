@@ -1,9 +1,7 @@
-/** @jsx jsx */
 import React, { useEffect } from 'react';
 import {withComponentFeatures} from './universal-dashboard';
 import Slider from '@material-ui/core/Slider';
 import {FormContext} from './form';
-import {jsx} from 'theme-ui'
 
 const UDSliderWithContext = (props) => {
     return (

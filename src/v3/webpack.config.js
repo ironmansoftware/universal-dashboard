@@ -28,10 +28,7 @@ module.exports = (env) => {
           exclude: [/node_modules/, /output/],
           use: ['babel-loader']
         },
-        {
-          test: /\.css$/,
-          loader: 'css-loader',
-        },
+        { test: /\.css$/, loader: "style-loader!css-loader" },
         {
           test: /\.(eot|ttf|woff2?|otf|svg)$/,
           loader: 'file-loader'

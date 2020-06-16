@@ -1,9 +1,7 @@
-/** @jsx jsx */
 import React from 'react'
 import Drawer from '@material-ui/core/Drawer'
 import { withComponentFeatures } from './universal-dashboard'
 import { makeStyles } from '@material-ui/core/styles'
-import { jsx } from 'theme-ui'
 
 const useStyles = makeStyles(theme => ({
   button: {

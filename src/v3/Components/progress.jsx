@@ -1,8 +1,6 @@
-/** @jsx jsx */
 import React from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {jsx} from 'theme-ui'
 
 export default function Progress(props) {
 
@@ -10,5 +8,5 @@ export default function Progress(props) {
         return <CircularProgress id={props.id} sx={{ color: 'primary'}}/>
     }
 
-    return <LinearProgress variant={props.variant} value={props.percentComplete} id={props.id} sx={{ bg: 'primary'}}/>
+    return <LinearProgress variant={props.variant} value={props.percentComplete} id={props.id}/>
 }

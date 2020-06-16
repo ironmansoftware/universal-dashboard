@@ -1,10 +1,8 @@
-/** @jsx jsx */
 import React from 'react'
 import PropTypes from 'prop-types'
 import Typography from '@material-ui/core/Typography'
 import { ReactInterval } from 'react-interval/lib/Component'
 import classNames from 'classnames'
-import { jsx, Styled } from 'theme-ui'
 
 export default class UdMuTypography extends React.Component {
   state = {
@@ -78,14 +76,7 @@ export default class UdMuTypography extends React.Component {
       align={align}
       gutterBottom={gutterBottom}
       noWrap={noWrap}
-      variant={variant}    
-      // sx={{ 
-      //   color:['white', 'hotpink', 'blue'],
-      //   // fontSize:3
-      //   fontSize:[2,4,7]
-      //  }}
-      >
-        {/* <Styled.root>{this.props.children}</Styled.root> */}
+      variant={variant} >
         {text}
         <ReactInterval
           timeout={refreshInterval * 1000}

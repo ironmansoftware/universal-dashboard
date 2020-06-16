@@ -27,6 +27,13 @@ export const fetchGet = function(url, success, history, failure) {
         UniversalDashboard.invokeMiddleware('GET', url, history, response);
 
         if (response.status === 200) {
+
+            if (response.headers.has("UDAUTH"))
+            {
+                window.location = response.headers.get("location");
+                return;
+            }
+
             response.text().then(text => {
                 try 
                 {
@@ -38,7 +45,7 @@ export const fetchGet = function(url, success, history, failure) {
                 }
             }).then(success);
         } else if (response.status == 401) {
-            window.location.href = "/login"
+            window.location.href = `/login?returnurl=${window.location.pathname}`
         } else {
             throw new Error(response.statusText);
         }

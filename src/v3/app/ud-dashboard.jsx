@@ -3,13 +3,15 @@ import React, { Suspense, useState, useEffect } from 'react'
 import { getApiPath, getDashboardId } from './config.jsx'
 import PubSub from 'pubsub-js'
 import { HubConnectionBuilder, LogLevel } from '@microsoft/signalr'
-import { ThemeProvider } from 'theme-ui'
-import { ColorModeProvider } from '@theme-ui/color-modes'
-import { base } from '@theme-ui/presets'
+import {
+  ThemeProvider,
+  createMuiTheme
+} from '@material-ui/core/styles';
 import toaster from './services/toaster'
 import copy from 'copy-to-clipboard'
 import ErrorCard from './../Components/framework/error-card'
 import useErrorBoundary from 'use-error-boundary';
+import { AppContext } from './app-context';
 
 const dashboardId = getDashboardId();
 
@@ -257,6 +259,9 @@ function Dashboard({ history }) {
   const [loading, setLoading] = useState(true)
   const [location, setLocation] = useState(null)
 
+  const defaultTheme = sessionStorage.getItem('theme');
+  const [theme, setTheme] = useState(defaultTheme ? defaultTheme : 'light');
+
   const loadData = () => {
     UniversalDashboard.get(
       '/api/internal/dashboard',
@@ -318,44 +323,28 @@ function Dashboard({ history }) {
       dashboard: dashboard,
       history: history,
     })
-
-    var pluginComponents = UniversalDashboard.provideDashboardComponents()
-
-    let theme = {      
-        colors : {
-        primary: "#df5656",
-        secondary: "#fdc533",
-        background: "#c1c1c1",
-        text: "#333",
-        muted: "#d6d6d6"
-    }
-  }
-
-    // const { colors, modes, ...rest } = dashboard.themes[0].definition
-    // let theme = {
-    //   ...base,
-    //   colors: {
-    //     ...colors,
-    //     modes: {
-    //       ...modes,
-    //     },
-    //   },
-    //   ...rest,
-    //   styles: {
-    //     ...base.styles,
-    //     h1: {
-    //       ...base.styles.h1,
-    //       fontSize: [4, 5, 6],
-    //     },
-    //   },
-    // }
     
+    const muiTheme = createMuiTheme({
+      palette: {
+        type: theme
+      },
+      ...dashboard.theme
+    });
+
+    const appContext = {
+      theme, 
+      setTheme
+    }
+
     return (
-      <ErrorBoundary>
-        <ThemeProvider theme={theme}>
-          <ColorModeProvider>{[component, pluginComponents]}</ColorModeProvider>
-        </ThemeProvider>
-      </ErrorBoundary>
+      <AppContext.Provider value={appContext}>
+        <ErrorBoundary>
+          <ThemeProvider theme={muiTheme}>
+            {component}
+          </ThemeProvider>
+        </ErrorBoundary>
+      </AppContext.Provider>
+
     )
   } catch (err) {
     setDashboardError(err)

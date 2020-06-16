@@ -9,14 +9,15 @@ function New-UDContainer
         [ScriptBlock]$Children        
     )
 
-    try {
-        $c = & $Children    
-    }
-    catch {
-        $c = New-UDError -Message $_
-    }
-    
     Process {
+        try {
+            $c = & $Children    
+        }
+        catch {
+            $c = New-UDError -Message $_
+        }
+        
+
         @{
             isPlugin = $true 
             id = $id 

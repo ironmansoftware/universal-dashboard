@@ -1,9 +1,7 @@
-/** @jsx jsx */
 import React, { useEffect } from 'react';
 import {withComponentFeatures} from './universal-dashboard';
 import TextField from '@material-ui/core/TextField';
 import {FormContext} from './form';
-import {jsx} from 'theme-ui'
 
 const UDTextFieldWithContext = (props) => {
     return (

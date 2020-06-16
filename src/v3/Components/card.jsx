@@ -1,4 +1,3 @@
-/** @jsx jsx */
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -10,7 +9,6 @@ import UDCardBody from "./card-body";
 import UDCardExpand from "./card-expand";
 import UDCardFooter from "./card-footer";
 import UDCardMedia from './card-media';
-import {jsx} from 'theme-ui'
 
 const styles = theme => ({
   root: {
@@ -76,7 +74,6 @@ export class UDMuCard extends React.Component {
           onMouseEnter={this.onMouseEnterEvent}
           onMouseLeave={this.onMouseLeaveEvent}
           style={{ ...style }}
-          //sx={{ bg: 'background', color: 'text'}}
           >
 
           {toolbar !== null && showToolBar ?

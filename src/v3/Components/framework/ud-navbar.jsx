@@ -1,7 +1,5 @@
-/** @jsx jsx */
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import ToggleColorMode from './togglecolormodes'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -10,13 +8,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 import Drawer from '@material-ui/core/Drawer';
-import {jsx} from 'theme-ui'
 
 import { withComponentFeatures } from './../universal-dashboard'
+import ToggleColorMode from './togglecolormodes.jsx';
 
 const useStyles = makeStyles({
     list: {
@@ -76,7 +73,7 @@ const UdNavbar = (props) => {
 
     return [
         drawer,
-        <AppBar position="static" sx={{bg: 'primary', color: 'text'}}>
+        <AppBar position="static">
             <Toolbar>
                 {menuButton}
                 <Typography variant="h6">
@@ -84,6 +81,7 @@ const UdNavbar = (props) => {
                 </Typography>
                 <ToggleColorMode />
                 {children}
+                
             </Toolbar>
         </AppBar>
     ]

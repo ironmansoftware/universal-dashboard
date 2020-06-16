@@ -1,9 +1,7 @@
-/** @jsx jsx */
 import React, {useEffect} from 'react';
 import Switch from '@material-ui/core/Switch';
 import { withComponentFeatures } from './universal-dashboard';
 import {FormContext} from './form';
-import {jsx} from 'theme-ui'
 
 const UDSwitchWithContext = (props) => {
     return (
@@ -38,7 +36,6 @@ const UDSwitch = (props) => {
             checked={props.checked}
             onChange={event => onChange(event)}
             disabled={props.disabled}
-            sx={{ color: 'primary' }}
         />
     )
 }

@@ -1,9 +1,6 @@
-/** @jsx jsx */
-
 import React, {useEffect} from 'react';
 import { withComponentFeatures } from './universal-dashboard';
 import {FormContext} from './form';
-import {jsx} from 'theme-ui'
 import RadioGroup from '@material-ui/core/RadioGroup';
 import Radio from '@material-ui/core/Radio';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
