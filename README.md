@@ -1,4 +1,4 @@
-# PowerShell Universal Dashboard 
+# Universal Dashboard 
 
 [![Build Status](https://dev.azure.com/ironmansoftware/universal-dashboard/_apis/build/status/ironmansoftware.universal-dashboard?branchName=master)](https://dev.azure.com/ironmansoftware/universal-dashboard/_build/latest?definitionId=1&branchName=master)
 
