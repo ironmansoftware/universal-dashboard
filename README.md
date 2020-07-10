@@ -1,4 +1,6 @@
-# Universal Dashboard  !!!!
+# Universal Dashboard
+
+# Universal Dashboard is now a part of PowerShell Universal. Please submit issues on the [PowerShell Universal](https://github.com/ironmansoftware/powershell-universal) repository.
 
 [![Build Status](https://dev.azure.com/ironmansoftware/universal-dashboard/_apis/build/status/ironmansoftware.universal-dashboard?branchName=master)](https://dev.azure.com/ironmansoftware/universal-dashboard/_build/latest?definitionId=1&branchName=master)
 
