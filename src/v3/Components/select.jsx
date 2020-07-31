@@ -7,7 +7,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { withComponentFeatures } from './universal-dashboard';
+import { withComponentFeatures } from 'universal-dashboard';
 import {FormContext} from './form';
 
 const useStyles = makeStyles(theme => ({

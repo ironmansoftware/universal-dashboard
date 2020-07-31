@@ -9,11 +9,11 @@ function Set-UDClipboard
         [Switch]$ToastOnError
     )
 
-    $Data = @{
+    $cpData = @{
         data = $Data 
         toastOnSuccess = $ToastOnSuccess.IsPresent
         toastOnError = $ToastOnError.IsPresent
     }
 
-    $DashboardHub.SendWebSocketMessage($ConnectionId, "clipboard", $Data)
+    $DashboardHub.SendWebSocketMessage($ConnectionId, "clipboard", $cpData)
 }

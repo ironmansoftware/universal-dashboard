@@ -1,18 +1,6 @@
-import {getApiPath} from './../config.jsx'
+import {getApiPath, getDashboardId } from './../config.jsx'
 
-function getMeta(metaName) {
-    const metas = document.getElementsByTagName('meta');
-  
-    for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') === metaName) {
-        return metas[i].getAttribute('content');
-      }
-    }
-  
-    return '';
-}
-
-const dashboardId = getMeta('ud-dashboard');
+const dashboardId = getDashboardId();
 
 
 export const fetchGet = function(url, success, history, failure) {

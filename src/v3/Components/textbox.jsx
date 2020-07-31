@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {withComponentFeatures} from './universal-dashboard';
+import {withComponentFeatures} from 'universal-dashboard';
 import TextField from '@material-ui/core/TextField';
 import {FormContext} from './form';
 

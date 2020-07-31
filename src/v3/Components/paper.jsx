@@ -2,7 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import classNames from "classnames"
-import { withComponentFeatures } from './universal-dashboard';
+import { withComponentFeatures } from 'universal-dashboard';
 
 const useStyles = makeStyles(theme => ({
   root: {

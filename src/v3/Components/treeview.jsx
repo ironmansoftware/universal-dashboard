@@ -5,7 +5,7 @@ import TreeView from '@material-ui/lab/TreeView';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
-import { withComponentFeatures } from './universal-dashboard';
+import { withComponentFeatures } from 'universal-dashboard';
 
 const useStyles = makeStyles({
   root: {

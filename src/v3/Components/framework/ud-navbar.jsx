@@ -12,7 +12,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import Drawer from '@material-ui/core/Drawer';
 
-import { withComponentFeatures } from './../universal-dashboard'
+import { withComponentFeatures } from 'universal-dashboard'
 import ToggleColorMode from './togglecolormodes.jsx';
 
 const useStyles = makeStyles({

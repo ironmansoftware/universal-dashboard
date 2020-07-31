@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {withComponentFeatures} from './universal-dashboard';
+import {withComponentFeatures} from 'universal-dashboard';
 import Slider from '@material-ui/core/Slider';
 import {FormContext} from './form';
 

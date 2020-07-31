@@ -61,11 +61,11 @@ function New-UDStepper {
         [Parameter()]
         [Switch]$AlternativeLabel,
         [Parameter(Mandatory)]
-        [Endpoint]$OnFinish
+        [Endpoint]$OnFinish,
         # [Parameter()]
         # [Endpoint]$OnCompleteStep,
-        # [Parameter()]
-        # [Endpoint]$OnValidateStep
+        [Parameter()]
+        [Endpoint]$OnValidateStep
     )
 
     $OnFinish.Register($Id + "onFinish", $PSCmdlet)

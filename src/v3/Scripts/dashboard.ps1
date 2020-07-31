@@ -8,7 +8,11 @@ function New-UDDashboard
         [Parameter(ParameterSetName = "Pages", Mandatory)]
         [Hashtable[]]$Pages = @(),
         [Parameter()]
-        [Hashtable]$Theme = @{}
+        [Hashtable]$Theme = @{},
+        [Parameter()]
+        [string[]]$Scripts = @(),
+        [Parameter()]
+        [string[]]$Stylesheets = @()
     )    
 
     if ($PSCmdlet.ParameterSetName -eq 'Content')
@@ -16,9 +20,13 @@ function New-UDDashboard
         $Pages += New-UDPage -Name 'Home' -Content $Content
     }
 
+    $Cache:Pages = $Pages
+
     @{
         title = $Title 
         pages = $Pages
         theme = $Theme
+        scripts = $Scripts
+        stylesheets = $Stylesheets
     }
 }

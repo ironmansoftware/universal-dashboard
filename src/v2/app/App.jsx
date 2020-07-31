@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom'
 import {getApiPath} from './config.jsx';
 import Spinner from 'react-spinkit';
+import ErrorCard from '../Components/error-card.jsx';
 
 export default class App extends React.Component {
 
@@ -14,7 +15,9 @@ export default class App extends React.Component {
 
         this.state = {
             loading: true,
-            loadingMessage: 'Loading framework...'
+            loadingMessage: 'Loading framework...',
+            error: null,
+            errorInfo: null
         }
     }
 
@@ -32,8 +35,18 @@ export default class App extends React.Component {
         })
     }
 
+    componentDidCatch(error, errorInfo) {
+        this.setState({
+            error,
+            errorInfo
+        })
+    }
+
     render () {
-        var regex = new RegExp('^dashboard(?!.*(\/login))(?!.*(\/license)).*$');
+        
+        if (this.state.error) {
+            return <ErrorCard message={this.state.error && this.state.error.toString()} location={this.state.errorInfo.componentStack} />
+        }
 
         if (this.state.loading) {
             return <div style={{backgroundColor: '#FFFFFF'}} className="v-wrap">

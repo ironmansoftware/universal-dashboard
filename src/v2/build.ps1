@@ -4,7 +4,7 @@ task Stage {
     Get-ChildItem "$PSScriptRoot\Scripts" -File -Recurse -Filter "*.ps1" | ForEach-Object {
         Get-Content $_.FullName -Raw | Out-File "$PSScriptRoot\output\UniversalDashboard.Materialize.psm1" -Append -Encoding UTF8
     }
-    Copy-Item "$PSScriptRoot\Themes" "$PSScriptRoot\output\Themes" -Container -Recurse
+    Copy-Item "$PSScriptRoot\themes" "$PSScriptRoot\output\Themes" -Container -Recurse
     Copy-Item "$PSScriptRoot\UniversalDashboard.psd1" "$PSScriptRoot\output" 
 
     Pop-Location

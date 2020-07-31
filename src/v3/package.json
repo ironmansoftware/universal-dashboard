@@ -51,6 +51,7 @@
     "tslib": "^1.9.3",
     "typeface-roboto": "0.0.75",
     "typeface-roboto-condensed": "0.0.75",
+    "universal-dashboard": "1.0.0",
     "use-error-boundary": "^1.2.3",
     "whatwg-fetch": "^2.0.3"
   },

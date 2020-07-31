@@ -99,6 +99,7 @@ namespace UniversalDashboard.Enterprise
         [Parameter(ParameterSetName = "Pie")]
         [Parameter(ParameterSetName = "Stream")]
         [Parameter(ParameterSetName = "Treemap")]
+        [Parameter(ParameterSetName = "Bubble")]
         public int BorderWidth
         {
             set
@@ -111,6 +112,7 @@ namespace UniversalDashboard.Enterprise
         [Parameter(ParameterSetName = "Pie")]
         [Parameter(ParameterSetName = "Stream")]
         [Parameter(ParameterSetName = "Treemap")]
+        [Parameter(ParameterSetName = "Bubble")]
         public string BorderColor
         {
             set
@@ -379,6 +381,7 @@ namespace UniversalDashboard.Enterprise
         [Parameter(ParameterSetName = "Bar")]
         [Parameter(ParameterSetName = "Heatmap")]
         [Parameter(ParameterSetName = "Stream")]
+        [Parameter(ParameterSetName = "Bubble")]
         public SwitchParameter DisableAnimations
         {
             set
@@ -390,6 +393,7 @@ namespace UniversalDashboard.Enterprise
         [Parameter(ParameterSetName = "Bar")]
         [Parameter(ParameterSetName = "Heatmap")]
         [Parameter(ParameterSetName = "Stream")]
+        [Parameter(ParameterSetName = "Bubble")]
         public int MotionStiffness
         {
             set
@@ -401,6 +405,7 @@ namespace UniversalDashboard.Enterprise
         [Parameter(ParameterSetName = "Bar")]
         [Parameter(ParameterSetName = "Heatmap")]
         [Parameter(ParameterSetName = "Stream")]
+        [Parameter(ParameterSetName = "Bubble")]
         public int MotionDamping
         {
             set
@@ -574,6 +579,7 @@ namespace UniversalDashboard.Enterprise
 
         [Parameter(ParameterSetName = "Bar")]
         [Parameter(ParameterSetName = "Treemap")]
+        [Parameter(ParameterSetName = "Bubble")]
         public SwitchParameter DisableLabel
         {
             set
@@ -1106,6 +1112,7 @@ namespace UniversalDashboard.Enterprise
         }
 
         [Parameter(ParameterSetName = "Treemap")]
+        [Parameter(ParameterSetName = "Bubble")]
         public string Identity
         {
             set
@@ -1115,6 +1122,7 @@ namespace UniversalDashboard.Enterprise
         }
 
         [Parameter(ParameterSetName = "Treemap")]
+        [Parameter(ParameterSetName = "Bubble")]
         public string Value
         {
             set
@@ -1134,6 +1142,7 @@ namespace UniversalDashboard.Enterprise
         }
 
         [Parameter(ParameterSetName = "Treemap")]
+        [Parameter(ParameterSetName = "Bubble")]
         public SwitchParameter LeavesOnly
         {
             set
@@ -1154,9 +1163,22 @@ namespace UniversalDashboard.Enterprise
 
         #endregion
 
+        #region Bubble 
+
+        [Parameter(ParameterSetName = "Bubble")]
+        public SwitchParameter Bubble
+        {
+            set
+            {
+                _values.Add("type", "nivo-bubble");
+            }
+        }
+
+        #endregion
+
         protected override void ProcessRecord()
         {
-            if (ParameterSetName == "Treemap")
+            if (ParameterSetName == "Treemap" || ParameterSetName == "Bubble")
             {
                 _values["root"] = _values["data"];
                 _values.Remove("data");

@@ -13,7 +13,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import React, { useState } from "react";
 import classNames from "classnames"
-import { withComponentFeatures } from './universal-dashboard';
+import { withComponentFeatures } from 'universal-dashboard';
 
 const useStyles = makeStyles(theme => ({
   root: {

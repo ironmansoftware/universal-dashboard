@@ -96,19 +96,21 @@ function New-UDForm
     }
 }
 
-function New-UDFormValidationResult {
+New-Alias -Name 'New-UDFormValidationResult' -Value 'New-UDValidationResult'
+
+function New-UDValidationResult {
     <#
     .SYNOPSIS
-    Creates a new form validation result. 
+    Creates a new validation result. 
     
     .DESCRIPTION
-    Creates a new form validation result. This cmdlet should return its value from the OnValidate script block parameter on New-UDForm. 
+    Creates a new validation result. This cmdlet should return its value from the OnValidate script block parameter on New-UDForm or New-UDStepper. 
     
     .PARAMETER Valid
-    Whether the form status is considered valid. 
+    Whether the status is considered valid. 
     
     .PARAMETER ValidationError
-    An error to display if the form is not valid. 
+    An error to display if the is not valid. 
     
     .EXAMPLE
     An example
@@ -124,4 +126,28 @@ function New-UDFormValidationResult {
         valid = $Valid.IsPresent
         validationError = $ValidationError
     }
+}
+
+function Test-UDForm {
+    <#
+    .SYNOPSIS
+    Invokes validation for a form.
+    
+    .DESCRIPTION
+    Invokes validation for a form.
+    
+    .PARAMETER Id
+    Id of the form to invoke validation for.
+    
+    .EXAMPLE
+    New-UDButton -Text 'Validate' -OnClick {
+        Test-UDForm -Id 'myForm'
+    }
+    #>
+    param(
+        [Parameter(Mandatory)]
+        [string]$Id
+    )
+
+    $DashboardHub.SendWebSocketMessage($ConnectionId, "testForm", $Id)
 }

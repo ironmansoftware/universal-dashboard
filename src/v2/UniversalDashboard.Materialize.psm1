@@ -2,6 +2,7 @@ $TAType = [psobject].Assembly.GetType('System.Management.Automation.TypeAccelera
 $TAtype::Add('DashboardColor', 'UniversalDashboard.Models.DashboardColor')
 $TAtype::Add('Endpoint', 'UniversalDashboard.Models.Endpoint')
 $TAtype::Add('FontAwesomeIcons', 'UniversalDashboard.Models.FontAwesomeIcons')
+$TAtype::Add('Element', 'UniversalDashboard.Models.Basics.Element')
 
 function Find-Object {
     param(

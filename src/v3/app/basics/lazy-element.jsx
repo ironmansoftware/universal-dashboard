@@ -47,7 +47,11 @@ export default class LazyElement extends React.Component {
         if (this.state.error !== "") {
             return renderComponent({
                 type: 'error', 
-                message: `There was an error rendering component of type ${this.props.component.type}. ${this.state.error}`
+                errorRecords: [
+                    {
+                        message: `There was an error rendering component of type ${this.props.component.type}. ${this.state.error}`
+                    }
+                ]
             });
         }
 

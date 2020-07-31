@@ -90,6 +90,13 @@ function connectWebSocket(sessionId, location, setLoading, history) {
     })
   })
 
+  connection.on('testForm', componentId => {
+    PubSub.publish(componentId, {
+      type: 'testForm',
+      componentId: componentId,
+    })
+  })
+
   connection.on('addElement', json => {
     var data = JSON.parse(json);
 

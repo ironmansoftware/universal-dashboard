@@ -10,6 +10,12 @@ function New-UDDashboard
         [Parameter()]
         [Hashtable[]]$NavbarLinks,
         [Parameter()]
+        [Element]$NavBarLogo,
+        [Parameter()]
+        [DashboardColor]$NavBarColor,
+        [Parameter()]
+        [DashboardColor]$NavBarFontColor,
+        [Parameter()]
         [Hashtable]$Footer,
         [Parameter()]
         [Hashtable]$Navigation,
@@ -27,6 +33,8 @@ function New-UDDashboard
         $Pages += New-UDPage -Name 'Home' -Content $Content
     }
 
+    $Cache:Pages = $Pages
+
     foreach($page in $Pages) {
         New-UDEndpoint -Id "$($page.Name)" -Endpoint {
             $page
@@ -40,5 +48,8 @@ function New-UDDashboard
         footer = $Footer
         navigation = $Navigation
         theme = ConvertTo-UDThemeCss -Theme $Theme
+        navBarLogo = $NavBarLogo
+        navBarColor = $NavBarColor.HtmlColor
+        navBarFontColor = $NavBarFontColor.HtmlColor
     }
 }

@@ -10,7 +10,7 @@ module.exports = (env) => {
 
   return {
     entry: {
-      'index' : __dirname + '/components/index.js'
+      'index' : __dirname + '/Components/index.js'
     },
     output: {
       path: BUILD_DIR,

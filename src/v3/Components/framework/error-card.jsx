@@ -27,18 +27,26 @@ export default function ErrorCard(props) {
     const classes = useStyles();
     var icon = UniversalDashboard.renderComponent({type: 'icon', icon:'ExclamationTriangle', color: 'red'})
 
-    var records = props.errorRecords.map(x => {
-       return (
-         <React.Fragment>
-            <Typography>
-                {x.message}
-            </Typography>
-            <pre>
-                {x.location}
-            </pre>
-         </React.Fragment>
-       )
-    })
+    var records = null;
+    if (!Array.isArray(props.errorRecords))
+    {
+        records = <Typography>Unknown error occurred</Typography>
+    } 
+    else 
+    {
+      records = props.errorRecords.map(x => {
+        return (
+          <React.Fragment>
+             <Typography>
+                 {x.message}
+             </Typography>
+             <pre>
+                 {x.location}
+             </pre>
+          </React.Fragment>
+        )
+     })
+    }
 
     return (
         <Card id={props.id}>

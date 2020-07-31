@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {FormContext} from './form';
-import { withComponentFeatures } from './universal-dashboard'
+import { withComponentFeatures } from 'universal-dashboard'
 import throttle from 'lodash/throttle';
 
 

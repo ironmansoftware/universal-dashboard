@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ErrorCard from './error-card.jsx';
 import ReactInterval from 'react-interval';
-import {withComponentFeatures} from '../universal-dashboard';
+import {withComponentFeatures} from 'universal-dashboard';
 import Skeleton from '@material-ui/lab/Skeleton';
 import UdNavBar from './ud-navbar';
 

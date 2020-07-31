@@ -5,7 +5,7 @@ import CheckBoxIconBlank from "@material-ui/icons/CheckBoxOutlineBlank"
 import FormControlLabel from "@material-ui/core/FormControlLabel"
 import classNames from "classnames";
 import {FormContext} from './form';
-import {withComponentFeatures} from './universal-dashboard';
+import {withComponentFeatures} from 'universal-dashboard';
 
 const UDCheckboxWithContext = (props) => {
   return (

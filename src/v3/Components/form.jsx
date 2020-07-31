@@ -1,7 +1,7 @@
 import React, {useState, useReducer, useEffect} from 'react';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import { withComponentFeatures } from './universal-dashboard';
+import { withComponentFeatures } from 'universal-dashboard';
 import { makeStyles } from '@material-ui/core/styles';
 import UDIcon from './icon';
 
@@ -41,6 +41,34 @@ const UDForm = (props) => {
     const [hideSubmit, setHideSubmit] = useState(false);
     const [submitting, setSubmitting] = useState(false);
 
+    const validate = () => {
+        props.onValidate(fields).then(x => {
+
+            var json = JSON.parse(x);
+
+            if (Array.isArray(json))
+            {
+                json = json[0]
+            }
+
+            setValid(json.valid);
+            setValidationError(json.validationError);
+        });
+    }
+
+    const incomingEvent = (type, event) => {
+        if (type === "testForm" && props.onValidate) {
+            validate();
+        }
+    }
+
+    useEffect(() => {
+        const token = props.subscribeToIncomingEvents(props.id, incomingEvent)
+        return () => {
+            props.unsubscribeFromIncomingEvents(token)
+        }
+    });
+
     var components = [];
     
     if (Object.keys(content).length > 0)
@@ -74,18 +102,7 @@ const UDForm = (props) => {
     if (props.onValidate)
     {
         useEffect(() => {
-            props.onValidate(fields).then(x => {
-
-                var json = JSON.parse(x);
-
-                if (Array.isArray(json))
-                {
-                    json = json[0]
-                }
-
-                setValid(json.valid);
-                setValidationError(json.validationError);
-            });
+            validate();
         }, [fields]);
     }
     

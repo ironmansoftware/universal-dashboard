@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { CircularProgress } from '@material-ui/core';
-import { withComponentFeatures } from './universal-dashboard';
+import { withComponentFeatures } from 'universal-dashboard';
 import ReactInterval from 'react-interval';
 
 const UDDynamic = (props) => {

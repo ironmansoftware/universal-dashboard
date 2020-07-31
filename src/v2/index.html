@@ -7,6 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PowerShell Universal Dashboard</title>
     <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        main {
+            flex: 1 0 auto;
+        }
         .v-wrap{
             height: 100% !important;
             white-space: nowrap !important;
@@ -31,11 +39,16 @@
             white-space: normal;
         }
         .ud-dashboard {
+            display: flex;
             min-height: 100vh;
+            flex-direction: column;
         }
-
+        .app {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
         .ud-footer {
-            position: absolute;
             left: 0;
             right: 0;
             bottom: 0;

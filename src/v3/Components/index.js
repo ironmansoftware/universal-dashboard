@@ -42,6 +42,7 @@ import UDAutocomplete from './autocomplete';
 import UDErrorCard from './framework/error-card';
 import {UDStep, UDStepper} from './stepper';
 import UDSlider from './slider'
+import UDUpload from './upload'
 import Button from '@material-ui/core/Button';
 
 import {
@@ -94,6 +95,7 @@ UniversalDashboard.register("error", UDErrorCard);
 UniversalDashboard.register("mu-stepper-step", UDStep);
 UniversalDashboard.register("mu-stepper", UDStepper);
 UniversalDashboard.register("mu-slider", UDSlider);
+UniversalDashboard.register("mu-upload", UDUpload);
 
 // Framework Support
 import UdPage from './framework/ud-page';

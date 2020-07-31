@@ -18,7 +18,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import SortArrowIcon from '@material-ui/icons/ArrowUpward';
 import ThirdStateCheckIcon from '@material-ui/icons/Remove';
 import ViewColumnIcon from '@material-ui/icons/ViewColumn';
-import { withComponentFeatures } from './universal-dashboard';
+import { withComponentFeatures } from 'universal-dashboard';
 import Skeleton from '@material-ui/lab/Skeleton';
 import ErrorCard from './framework/error-card';
 
@@ -85,7 +85,7 @@ const UDTable = (props) => {
         }
     });
 
-    const columns = props.columns ? props.columns.map(column => {
+    const columns = props.columns && Array.isArray(props.columns) ? props.columns.map(column => {
 
         var render = null;
         if (column.render)
