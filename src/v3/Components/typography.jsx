@@ -58,7 +58,7 @@ export default class UdMuTypography extends React.Component {
     const {
       id,
       // classes,
-      // style,
+      style,
       align,
       gutterBottom,
       noWrap,
@@ -76,6 +76,7 @@ export default class UdMuTypography extends React.Component {
       align={align}
       gutterBottom={gutterBottom}
       noWrap={noWrap}
+      style={style}
       variant={variant} >
         {text}
         <ReactInterval

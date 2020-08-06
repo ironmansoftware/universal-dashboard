@@ -4,7 +4,7 @@ function New-UDMonitor {
         [string]$Id = [Guid]::NewGuid(),
         [Parameter()]
         [ValidateSet('bar', 'line', 'area', 'doughnut', 'radar', 'pie', 'horizontalBar')]
-		[string]$Type,
+		[string]$Type = 'line',
 		[Parameter(Mandatory)]
 		[string]$Title,
 		[Parameter()]
@@ -20,7 +20,7 @@ function New-UDMonitor {
 		[Parameter()]
 		[string]$Width,
 		[Parameter()]
-		[string]$Height,
+		[string]$Height = '500px',
 		[Parameter()]
 		[DashboardColor]$FontColor,
 		[Parameter()]
@@ -34,7 +34,7 @@ function New-UDMonitor {
         [Parameter()]
         [Switch]$AutoRefresh,
         [Parameter()]
-        [int]$RefreshInterval,
+        [int]$RefreshInterval = 5,
         [Parameter(Mandatory)]
         [Endpoint]$Endpoint
     )
