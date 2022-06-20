@@ -1,0 +1,24 @@
+import React from 'react';
+const NivoBar = React.lazy(() => import('./nivo-bar'));
+const NivoCalendar = React.lazy(() => import('./nivo-calendar'));
+const NivoHeatmap = React.lazy(() => import('./nivo-heatmap'));
+const NivoLine = React.lazy(() => import('./nivo-line'));
+const NivoPie = React.lazy(() => import('./nivo-pie'));
+const NivoStream = React.lazy(() => import('./nivo-stream'));
+const NivoTreemap = React.lazy(() => import('./nivo-treemap'));
+const NivoBubble = React.lazy(() => import('./nivo-bubble'));
+const UDSparklines = React.lazy(() => import('./sparklines'));
+const UDChart = React.lazy(() => import('./ud-chart'));
+const UdMonitor = React.lazy(() => import('./monitor'));
+
+UniversalDashboard.register("nivo-bar", NivoBar);
+UniversalDashboard.register("nivo-calendar", NivoCalendar);
+UniversalDashboard.register("nivo-heatmap", NivoHeatmap);
+UniversalDashboard.register("nivo-line", NivoLine);
+UniversalDashboard.register("nivo-pie", NivoPie);
+UniversalDashboard.register("nivo-stream", NivoStream);
+UniversalDashboard.register("nivo-treemap", NivoTreemap);
+UniversalDashboard.register("nivo-bubble", NivoBubble);
+UniversalDashboard.register("sparklines", UDSparklines);
+UniversalDashboard.register("ud-chartjs", UDChart);
+UniversalDashboard.register("chartjs-monitor", UdMonitor);

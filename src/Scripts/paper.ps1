@@ -1,0 +1,72 @@
+function New-UDPaper {
+    <#
+    .SYNOPSIS
+    Creates a paper. 
+    
+    .DESCRIPTION
+    Creates a paper. Paper is used to highlight content within a page. 
+    
+    .PARAMETER Id
+    The ID of the component. It defaults to a random GUID.
+    
+    .PARAMETER Children
+    The content of this paper element. 
+    
+    .PARAMETER Width
+    The width of this paper.
+    
+    .PARAMETER Height
+    The height of this paper.
+    
+    .PARAMETER Square
+    Whether this paper is square.
+    
+    .PARAMETER Style
+    The CSS style to apply to this paper.
+    
+    .PARAMETER Elevation
+    The elevation of this paper. 
+    
+    .EXAMPLE
+    Creates paper with a heading, custom style and an elevation of 4. 
+
+    New-UDPaper -Children {
+        New-UDHeading -Text "hi" -Id 'hi'
+    } -Style @{
+        backgroundColor = '#90caf9'
+    } -Id 'paperElevation' -Elevation 4
+    
+    .NOTES
+    General notes
+    #>
+    param(
+        [Parameter()][string]$Id = ([Guid]::NewGuid()).ToString(),
+        [Parameter()][Alias("Content")][ScriptBlock]$Children,
+        [Parameter()][string]$Width = '500',
+        [Parameter()][string]$Height = '500',
+        [Parameter()][Switch]$Square,
+        [Parameter()][Hashtable]$Style,
+        [Parameter()][int]$Elevation,
+        [Parameter()]
+        [string]$ClassName
+    )
+
+    End {
+        $c = New-UDErrorBoundary -Content $Children
+        
+        @{
+            type      = 'mu-paper'
+            isPlugin  = $true
+            assetId   = $MUAssetId
+            
+            id        = $Id
+            width     = $Width 
+            children  = $c
+            height    = $Height
+            square    = $Square.IsPresent
+            style     = $Style
+            elevation = $Elevation
+            className = $ClassName
+        }
+    }
+}
